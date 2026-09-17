@@ -1,4 +1,14 @@
-"""Boku1-nanoの意味ASTを直接実行する参照インタプリタ。"""
+"""Boku1-nanoの意味ASTを直接実行する参照インタプリタ。
+
+生成対象の ``solve`` 関数とは実装経路を分けるため、値の操作には
+``operator``、``itertools``、``heapq``、``collections.deque`` を使う。
+コード生成器のテンプレート、対応表、補助関数は共有しない。
+"""
+
+from collections import deque
+import heapq
+import itertools
+import operator
 
 
 def interpret(semantic_ast: dict, xs: list[int], k: int) -> list[int]:
@@ -98,36 +108,34 @@ def _apply_filter(argument: object, xs: list[int], k: int) -> list[int]:
     # 引数を検証してfilterの述語名を取得する
     name = _single_name(argument, "filter")
 
-    # 述語名から判定関数への対応表
-    predicates = {
-        # 偶数だけ残す（Pythonの%は負数でも0か1を返す）
-        "even": lambda x: x % 2 == 0,
-        # 奇数だけ残す
-        "odd": lambda x: x % 2 != 0,
-        # kより大きい要素だけ残す
-        "gt_k": lambda x: x > k,
-        # k以上の要素だけ残す
-        "ge_k": lambda x: x >= k,
-        # kより小さい要素だけ残す
-        "lt_k": lambda x: x < k,
-        # k以下の要素だけ残す
-        "le_k": lambda x: x <= k,
-        # kの倍数だけ残す（kは1以上なのでゼロ除算はない）
-        "multiple_of_k": lambda x: x % k == 0,
-        # 正の数だけ残す（0は除く）
-        "positive": lambda x: x > 0,
-        # 負の数だけ残す
-        "negative": lambda x: x < 0,
-        # 0だけ残す
-        "zero": lambda x: x == 0,
-    }
-
-    # 対応表にない述語名は受け付けない
-    if name not in predicates:
-        # 未知の述語名はエラーにする
+    # 選択子の列を作り、compressで元の順序を保ったまま要素を選ぶ
+    if name == "even":
+        remainders = map(operator.mod, xs, itertools.repeat(2))
+        selectors = map(operator.not_, remainders)
+    elif name == "odd":
+        selectors = map(operator.mod, xs, itertools.repeat(2))
+    elif name == "gt_k":
+        selectors = map(operator.gt, xs, itertools.repeat(k))
+    elif name == "ge_k":
+        selectors = map(operator.ge, xs, itertools.repeat(k))
+    elif name == "lt_k":
+        selectors = map(operator.lt, xs, itertools.repeat(k))
+    elif name == "le_k":
+        selectors = map(operator.le, xs, itertools.repeat(k))
+    elif name == "multiple_of_k":
+        # kは1以上なのでゼロ除算はない
+        remainders = map(operator.mod, xs, itertools.repeat(k))
+        selectors = map(operator.not_, remainders)
+    elif name == "positive":
+        selectors = map(operator.gt, xs, itertools.repeat(0))
+    elif name == "negative":
+        selectors = map(operator.lt, xs, itertools.repeat(0))
+    elif name == "zero":
+        selectors = map(operator.eq, xs, itertools.repeat(0))
+    else:
         raise ValueError(f"未知のfilter操作です: {name}")
-    # 述語を満たす要素だけを元の順序で集めた新しいリストを返す
-    return [x for x in xs if predicates[name](x)]
+
+    return list(itertools.compress(xs, selectors))
 
 
 def _apply_map(argument: object, xs: list[int], k: int) -> list[int]:
@@ -146,51 +154,61 @@ def _apply_map(argument: object, xs: list[int], k: int) -> list[int]:
             raise ValueError(f"mul_constの形式が不正です: {argument!r}")
         # 掛ける定数を取り出す
         multiplier = argument[1]
-        # 全要素を定数倍した新しいリストを返す
-        return [x * multiplier for x in xs]
+        # 2つのイテラブルをmapへ渡し、各要素を定数倍する
+        return list(map(operator.mul, xs, itertools.repeat(multiplier)))
 
     # mul_const以外は定数を取らないので要素1つだけ
     if len(argument) != 1:
         # 余分な要素があればエラーにする
         raise ValueError(f"mapの形式が不正です: {argument!r}")
 
-    # 変換名から変換関数への対応表
-    transforms = {
-        # 各要素にkを足す
-        "add_k": lambda x: x + k,
-        # 各要素からkを引く
-        "sub_k": lambda x: x - k,
-        # 各要素にkを掛ける
-        "mul_k": lambda x: x * k,
-        # 各要素の符号を反転する
-        "negate": lambda x: -x,
-        # 各要素の絶対値を取る（組み込み関数をそのまま使う）
-        "abs": abs,
-        # 各要素を2乗する
-        "square": lambda x: x * x,
-    }
-
-    # 対応表にない変換名は受け付けない
-    if name not in transforms:
-        # 未知の変換名はエラーにする
+    # lambdaや内包表記を使わず、operatorとmapで各要素を変換する
+    if name == "add_k":
+        mapped = map(operator.add, xs, itertools.repeat(k))
+    elif name == "sub_k":
+        # xsを第1引数にすることで、k - xではなくx - kにする
+        mapped = map(operator.sub, xs, itertools.repeat(k))
+    elif name == "mul_k":
+        mapped = map(operator.mul, xs, itertools.repeat(k))
+    elif name == "negate":
+        mapped = map(operator.neg, xs)
+    elif name == "abs":
+        mapped = map(operator.abs, xs)
+    elif name == "square":
+        mapped = map(operator.pow, xs, itertools.repeat(2))
+    else:
         raise ValueError(f"未知のmap操作です: {name}")
-    # 全要素に変換を適用した新しいリストを返す
-    return [transforms[name](x) for x in xs]
+
+    return list(mapped)
 
 
 def _apply_order(argument: object, xs: list[int]) -> list[int]:
     # 昇順に並べ替える
     if argument == "ascending":
-        # sortedは新しいリストを返すのでxsは変更されない
-        return sorted(xs)
+        # nsmallestは内部でsortedへ委譲するため使わず、明示的にヒープを空にする
+        heap = list(xs)
+        heapq.heapify(heap)
+        result = []
+        while heap:
+            result.append(heapq.heappop(heap))
+        return result
     # 降順に並べ替える
     if argument == "descending":
-        # reverse=Trueで大きい順にする
-        return sorted(xs, reverse=True)
+        # 符号反転した値の最小ヒープを使い、元の値を大きい順に取り出す
+        heap = list(map(operator.neg, xs))
+        heapq.heapify(heap)
+        result = []
+        while heap:
+            result.append(operator.neg(heapq.heappop(heap)))
+        return result
     # 並べ替えではなく現在の順序を逆にする
     if argument == "reverse":
-        # reversedのイテレータをリストに変換して返す
-        return list(reversed(xs))
+        # スライスやreversedを使わず、末尾から順に取り出す
+        remaining = deque(xs)
+        result = []
+        while remaining:
+            result.append(remaining.pop())
+        return result
     # 3種類のいずれでもなければエラーにする
     raise ValueError(f"未知のorder操作です: {argument}")
 
@@ -201,15 +219,15 @@ def _apply_slice(argument: object, xs: list[int], k: int) -> list[int]:
 
     # 先頭からk個取り出す
     if name == "take_first_k":
-        # 要素数がkより少なければあるだけ返る
-        return xs[:k]
+        # isliceは要素数がkより少なければあるだけ返す
+        return list(itertools.islice(xs, 0, k))
     # 末尾からk個取り出す
     if name == "take_last_k":
-        # kは1以上なので添字が0になって全体が返ることはない
-        return xs[-k:]
+        # maxlen付きdequeに、末尾側の最大k要素だけを保持させる
+        return list(deque(xs, maxlen=k))
     # 1つ飛ばしで取り出す
     if name == "every_other":
-        # 添字0,2,4...の要素を集める
-        return xs[::2]
+        # 位置0からstep=2で取得する
+        return list(itertools.islice(xs, 0, None, 2))
     # 3種類のいずれでもなければエラーにする
     raise ValueError(f"未知のslice操作です: {name}")

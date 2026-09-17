@@ -1,5 +1,7 @@
 """参照インタプリタで24操作と全組み合わせASTを実行確認する。"""
 
+# 参照実装が生成対象の表現へ戻っていないかPython構文木で確認するために使う
+import ast
 # JSONL形式のデータを読み書きするために使う
 import json
 # 操作数ごとの件数を数えるために使う
@@ -23,6 +25,8 @@ from reference_interpreter import interpret
 ATOMIC_PATH = PROJECT_ROOT / "data/atomic_semantic_asts.jsonl"
 # 1〜3操作の組み合わせASTが入ったファイル
 COMBINED_PATH = PROJECT_ROOT / "data/combined_semantic_asts.jsonl"
+# 生成対象のコードとは別経路で実装する参照インタプリタ本体
+REFERENCE_PATH = PROJECT_ROOT / "reference_interpreter.py"
 
 # 単独操作の検証に使う入力リスト（正・負・0を混ぜてある）
 ATOMIC_XS = [3, -4, 6, 0, -1, 4, 2, -3, 1]
@@ -101,6 +105,90 @@ COMBINATION_CASES = (
 )
 
 
+def _call_name(node: ast.Call):
+    """単純な関数呼び出しを検査用の名前へ変換する。"""
+
+    if isinstance(node.func, ast.Name):
+        return node.func.id
+    if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name):
+        return f"{node.func.value.id}.{node.func.attr}"
+    return None
+
+
+def verify_implementation_separation() -> None:
+    """4個の操作ハンドラが規定した独立経路を守っているか確認する。"""
+
+    source = REFERENCE_PATH.read_text(encoding="utf-8")
+    tree = ast.parse(source, filename=str(REFERENCE_PATH))
+    handler_names = {"_apply_filter", "_apply_map", "_apply_order", "_apply_slice"}
+    handlers = {
+        node.name: node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef) and node.name in handler_names
+    }
+    if set(handlers) != handler_names:
+        missing = sorted(handler_names - set(handlers))
+        raise AssertionError(f"参照実装の操作ハンドラが不足しています: {missing}")
+
+    forbidden_nodes = (ast.Lambda, ast.ListComp, ast.Slice)
+    forbidden_calls = {
+        "abs",
+        "compile",
+        "eval",
+        "exec",
+        "heapq.nlargest",
+        "heapq.nsmallest",
+        "reversed",
+        "sorted",
+    }
+    forbidden_binary_operators = (ast.Add, ast.Sub, ast.Mult, ast.Pow, ast.Mod)
+    required_calls = {
+        "_apply_filter": {"itertools.compress", "map"},
+        "_apply_map": {"map"},
+        "_apply_order": {"deque", "heapq.heapify", "heapq.heappop"},
+        "_apply_slice": {"deque", "itertools.islice"},
+    }
+
+    for handler_name, handler in handlers.items():
+        actual_calls = {
+            call_name
+            for node in ast.walk(handler)
+            if isinstance(node, ast.Call)
+            if (call_name := _call_name(node)) is not None
+        }
+        missing_calls = required_calls[handler_name] - actual_calls
+        if missing_calls:
+            raise AssertionError(
+                f"{handler_name} が規定の参照経路を使用していません: "
+                f"{sorted(missing_calls)}"
+            )
+
+        for node in ast.walk(handler):
+            if isinstance(node, forbidden_nodes):
+                raise AssertionError(
+                    f"{handler_name} が生成対象の構文を直接使用しています: "
+                    f"{type(node).__name__}"
+                )
+            if isinstance(node, ast.Call) and _call_name(node) in forbidden_calls:
+                raise AssertionError(
+                    f"{handler_name} が禁止された関数を呼んでいます: "
+                    f"{_call_name(node)}"
+                )
+            if isinstance(node, ast.BinOp) and isinstance(
+                node.op, forbidden_binary_operators
+            ):
+                raise AssertionError(
+                    f"{handler_name} が生成対象の演算子を直接使用しています: "
+                    f"{type(node.op).__name__}"
+                )
+            if handler_name in {"_apply_filter", "_apply_map"} and isinstance(
+                node, ast.For
+            ):
+                raise AssertionError(
+                    f"{handler_name} が集約にforループを使用しています"
+                )
+
+
 def load_jsonl(path: Path) -> list[dict]:
     # UTF-8で開いて1行ずつ読む
     with path.open(encoding="utf-8") as source:
@@ -176,6 +264,8 @@ def verify_combinations(records: list[dict]) -> Counter:
 
 
 def main() -> None:
+    # 参照側が規定した実装経路を守っていることを確認する
+    verify_implementation_separation()
     # 単独操作ASTを読み込む
     atomic_records = load_jsonl(ATOMIC_PATH)
     # 組み合わせASTを読み込む
@@ -186,6 +276,8 @@ def main() -> None:
     # 全組み合わせASTを実行し、操作数の内訳を受け取る
     operation_counts = verify_combinations(combined_records)
 
+    # 実装分離の検証が通ったことを表示する
+    print("参照実装: 規定した独立経路を確認")
     # 単独操作の検証が通ったことを表示する
     print("24個の単独操作: 期待結果と一致")
     # 1操作ASTの確認件数を表示する
