@@ -8,14 +8,14 @@
 
 参照インタプリタは、学習対象となるPythonコードの生成器とは実装経路を分離している。コード文字列やPython ASTを生成せず、`eval`、`exec`、`compile`も使用しない。コード生成器のテンプレート、操作対応表、補助関数は共有せず、意味ASTから値を直接計算する。
 
-生成対象の`solve`関数では、import、属性アクセス、`while`、`map`などを許可しない。参照側では、これら生成対象外の仕組みを利用して要素の選択、集約、順序変更、切り出しを実行する。参照側で使用した表現を理由に、学習用コードの候補を除外することはない。
+生成対象の`solve`関数では、import、属性アクセス、`while`、Python組み込み関数`map`などを許可しない。参照側では、これら生成対象外の仕組みを利用して要素の選択、集約、順序変更、切り出しを実行する。参照側で使用した表現を理由に、学習用コードの候補を除外することはない。
 
 代表的な実装経路の違いは次のとおりである。
 
 | 操作 | 参照インタプリタ | 生成コードで使用できる表現の例 |
 |---|---|---|
-| 抽出 | `itertools.compress`、`map`、`operator` | 内包表記、`for`ループ、条件式 |
-| 変換 | 複数イテラブルの`map`、`operator` | 内包表記、`for`ループ、算術式 |
+| 抽出 | `itertools.compress`、Python組み込み関数`map`、`operator` | 内包表記、`for`ループ、条件式 |
+| 変換 | 複数イテラブルを受け取るPython組み込み関数`map`、`operator` | 内包表記、`for`ループ、算術式 |
 | 昇順 | `heapify`後に`heappop`を反復 | `sorted` |
 | 降順 | 符号反転、`heapify`、`heappop` | `sorted(..., reverse=True)`、`sorted(...)[::-1]` |
 | 現在順の反転 | `deque.pop` | `[::-1]`、`reversed` |
@@ -24,7 +24,7 @@
 
 `heapq.nsmallest`と`heapq.nlargest`は、要素数と取得数が等しい場合に内部で`sorted`へ委譲するため使用しない。参照側では、`heapify`したヒープが空になるまで`heappop`を繰り返す。
 
-`operator.add`と`+`のような基本整数演算は、同じPython整数演算に基づく信頼プリミティブとして扱う。`operator`の使用目的は、生成コードと関数や式テンプレートを共有せず、参照側の集約処理を`compress`や`map`で構成することである。独立性は主に、要素の選択、集約、順序、境界、操作列の適用経路で確保する。
+`operator.add`と`+`のような基本整数演算は、同じPython整数演算に基づく信頼プリミティブとして扱う。`operator`の使用目的は、生成コードと関数や式テンプレートを共有せず、参照側の集約処理を`compress`やPython組み込み関数`map`で構成することである。独立性は主に、要素の選択、集約、順序、境界、操作列の適用経路で確保する。
 
 ```python
 from reference_interpreter import interpret
@@ -46,12 +46,12 @@ assert result == [6, 10]
 
 参照インタプリタは、`data/atomic_semantic_asts.jsonl`で定義した次の24操作に対応している。
 
-| 分類 | 対応する操作 |
-|---|---|
-| `filter` | `even`、`odd`、`gt_k`、`ge_k`、`lt_k`、`le_k`、`multiple_of_k`、`positive`、`negative`、`zero` |
-| `map` | `add_k`、`sub_k`、`mul_k`、`mul_const 2`、`mul_const 3`、`negate`、`abs`、`square` |
-| `order` | `ascending`、`descending`、`reverse` |
-| `slice` | `take_first_k`、`take_last_k`、`every_other` |
+| 分類 | 意味ASTのキー | 対応する操作 |
+|---|---|---|
+| 抽出 | `filter` | `even`、`odd`、`gt_k`、`ge_k`、`lt_k`、`le_k`、`multiple_of_k`、`positive`、`negative`、`zero` |
+| 変換 | `map` | `add_k`、`sub_k`、`mul_k`、`mul_const 2`、`mul_const 3`、`negate`、`abs`、`square` |
+| 並べ替え | `order` | `ascending`、`descending`、`reverse` |
+| 切り出し | `slice` | `take_first_k`、`take_last_k`、`every_other` |
 
 `ascending`と`descending`は値を基準に並べ替える。`reverse`は値を比較せず、現在のリストの順序を反転する。
 

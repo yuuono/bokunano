@@ -49,11 +49,11 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 
 | 操作対ID | 操作A | 操作B |
 |---|---|---|
-| `pair-01` | `filter even` | `order descending` |
-| `pair-02` | `filter odd` | `map add_k` |
-| `pair-03` | `filter ge_k` | `slice take_last_k` |
-| `pair-04` | `map mul_const 2` | `order reverse` |
-| `pair-05` | `map abs` | `slice every_other` |
+| `pair-01` | 偶数だけを残す抽出 | 降順の並べ替え |
+| `pair-02` | 奇数だけを残す抽出 | `k`を加える変換 |
+| `pair-03` | `k`以上を残す抽出 | 末尾`k`個の切り出し |
+| `pair-04` | 2倍する変換 | 現在順を反転する並べ替え |
+| `pair-05` | 絶対値を取る変換 | 先頭から1個おきの切り出し |
 
 各操作対について、2操作の順序違い2件と、その2操作を両方含む3操作ASTを訓練から除外して`compositional`へ割り当てる。
 
@@ -228,8 +228,8 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 - `normal`と同じ意味ASTを使用する
 - 訓練用表現辞書を使用する
 - 空リスト、1要素、すべて同値、負数のみなどの境界値入力で評価する
-- `filter`を含むASTでは、非空入力の全要素が除外される「すべて不合格」の入力を作る
-- `filter`を含まないASTでは、「すべて不合格」は適用対象外とする
+- 抽出を含む意味ASTでは、非空入力の全要素が除外される「すべて不合格」の入力を作る
+- 抽出を含まない意味ASTでは、「すべて不合格」は適用対象外とする
 
 ### repetition
 

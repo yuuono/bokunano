@@ -96,7 +96,7 @@ A → B
 B → A
 ```
 
-例えば、`filter even`と`order descending`を選んだ場合は、次の両方を組合せ汎化テスト側に置く。
+例えば、偶数だけを残す抽出と降順の並べ替えを選んだ場合は、次の両方を組合せ汎化テスト側に置く。
 
 ```json
 {"sequence":[{"filter":["even"]},{"order":"descending"}]}
@@ -127,11 +127,11 @@ C → B → A
 
 | ペアID | 操作A | 操作B |
 |---|---|---|
-| `pair-01` | `atomic-000001`: `filter even` | `atomic-000020`: `order descending` |
-| `pair-02` | `atomic-000002`: `filter odd` | `atomic-000011`: `map add_k` |
-| `pair-03` | `atomic-000004`: `filter ge_k` | `atomic-000023`: `slice take_last_k` |
-| `pair-04` | `atomic-000014`: `map mul_const 2` | `atomic-000021`: `order reverse` |
-| `pair-05` | `atomic-000017`: `map abs` | `atomic-000024`: `slice every_other` |
+| `pair-01` | `atomic-000001`: 偶数だけを残す抽出 | `atomic-000020`: 降順の並べ替え |
+| `pair-02` | `atomic-000002`: 奇数だけを残す抽出 | `atomic-000011`: `k`を加える変換 |
+| `pair-03` | `atomic-000004`: `k`以上を残す抽出 | `atomic-000023`: 末尾`k`個の切り出し |
+| `pair-04` | `atomic-000014`: 2倍する変換 | `atomic-000021`: 現在順を反転する並べ替え |
+| `pair-05` | `atomic-000017`: 絶対値を取る変換 | `atomic-000024`: 先頭から1個おきの切り出し |
 
 各ペアについて、`A → B`と`B → A`の両方を訓練から除外する。
 
@@ -164,11 +164,11 @@ C → B → A
 
 | ペアID | 3操作ASTの選択条件 | 件数 |
 |---|---|---:|
-| `pair-01` | `filter even`と`order descending`を両方含む | 132 |
-| `pair-02` | `filter odd`と`map add_k`を両方含む | 132 |
-| `pair-03` | `filter ge_k`と`slice take_last_k`を両方含む | 132 |
-| `pair-04` | `map mul_const 2`と`order reverse`を両方含む | 132 |
-| `pair-05` | `map abs`と`slice every_other`を両方含む | 132 |
+| `pair-01` | 偶数だけを残す抽出と降順の並べ替えを両方含む | 132 |
+| `pair-02` | 奇数だけを残す抽出と`k`を加える変換を両方含む | 132 |
+| `pair-03` | `k`以上を残す抽出と末尾`k`個の切り出しを両方含む | 132 |
+| `pair-04` | 2倍する変換と現在順を反転する並べ替えを両方含む | 132 |
+| `pair-05` | 絶対値を取る変換と先頭から1個おきの切り出しを両方含む | 132 |
 | 合計 | 重複なし | **660** |
 
 現在の12,144件の3操作ASTのうち、660件を組合せ汎化テスト用として訓練から除外する方針とする。残る3操作ASTは11,484件である。
