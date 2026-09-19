@@ -2,3 +2,9 @@
 __pycache__/
 *.py[cod]
 .ruff_cache/
+
+# 2・3操作の展開済みコード候補は、ZIPだけをGitで管理する。
+data/code_candidates/train/two_operation/python_code_candidates.jsonl
+data/code_candidates/train/three_operation/python_code_candidates.jsonl
+data/code_candidates/compositional/two_operation/python_code_candidates.jsonl
+data/code_candidates/compositional/three_operation/python_code_candidates.jsonl
