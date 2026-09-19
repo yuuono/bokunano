@@ -1,6 +1,6 @@
 """意味ASTのJSONLから検証済みPythonコード候補のJSONLを生成する。
 
-変数名、意味AST当たりの候補上限、出力先は実行時に必ず指定する。
+正式生成では設定JSONを読み、予備確認では同じ項目をコマンド引数で指定できる。
 このスクリプトをimportしただけでは生成処理を開始しない。
 """
 
@@ -25,9 +25,11 @@ from generated_code_verifier import (  # noqa: E402
     verify_generated_code,
 )
 from python_code_generator import (  # noqa: E402
+    GENERATOR_VERSION,
     GeneratorConfig,
     generate_python_code,
     make_code_candidate_record,
+    sha256_text,
 )
 from structural_variant_generator import StructuralVariantGenerator  # noqa: E402
 
@@ -36,34 +38,39 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="意味ASTごとに構造的変種を作り、実行検証後のコードだけを保存します。"
     )
-    parser.add_argument("--input", type=Path, required=True, help="意味ASTの入力JSONL")
-    parser.add_argument("--output", type=Path, required=True, help="コード候補の出力JSONL")
+    parser.add_argument(
+        "--config",
+        type=Path,
+        help="正式生成の設定JSON。指定時は生成条件をJSONから読みます。",
+    )
+    parser.add_argument(
+        "--validate-config",
+        action="store_true",
+        help="設定JSONを検査し、コードを生成せず終了します。",
+    )
+    parser.add_argument("--input", type=Path, help="意味ASTの入力JSONL")
+    parser.add_argument("--output", type=Path, help="コード候補の出力JSONL")
     parser.add_argument(
         "--rejections",
         type=Path,
-        required=True,
         help="不採用候補と理由を保存するJSONL",
     )
     parser.add_argument(
         "--stats",
         type=Path,
-        required=True,
         help="件数集計を保存するJSON",
     )
     parser.add_argument(
         "--element-names",
-        required=True,
         help="承認済み要素変数名。カンマ区切りで指定します。",
     )
     parser.add_argument(
         "--result-names",
-        required=True,
         help="承認済み結果変数名。カンマ区切りで2つ以上指定します。",
     )
     parser.add_argument(
         "--target-verified-per-ast",
         type=int,
-        required=True,
         help="1意味ASTから確保する、完全重複除外後の検証済みコード目標数。",
     )
     parser.add_argument(
@@ -77,15 +84,16 @@ def parse_args() -> argparse.Namespace:
         choices=(1, 2, 3),
         help="指定した操作数の意味ASTだけを入力JSONLから選びます。",
     )
-    parser.add_argument("--seed", type=int, default=0)
-    parser.add_argument("--max-source-chars", type=int, default=4_096)
-    parser.add_argument("--random-test-count", type=int, default=32)
-    parser.add_argument("--timeout-seconds", type=float, default=2.0)
+    parser.add_argument("--seed", type=int)
+    parser.add_argument("--random-test-seed", type=int)
+    parser.add_argument("--max-source-chars", type=int)
+    parser.add_argument("--random-test-count", type=int)
+    parser.add_argument("--timeout-seconds", type=float)
     parser.add_argument(
         "--exclude-code-jsonl",
         type=Path,
         action="append",
-        default=[],
+        default=None,
         help="完全一致を除外する既存コードレコード。複数回指定できます。",
     )
     parser.add_argument(
@@ -93,7 +101,262 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="既存出力を置き換える場合だけ指定します。",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+    return _resolve_settings(args)
+
+
+def _resolve_settings(args: argparse.Namespace) -> argparse.Namespace:
+    """コマンド引数または正式設定JSONから実行条件を確定する。"""
+
+    if args.validate_config and args.config is None:
+        raise ValueError("--validate-configには--configが必要です")
+
+    if args.config is not None:
+        conflicts = [
+            option
+            for option, value in (
+                ("--input", args.input),
+                ("--output", args.output),
+                ("--rejections", args.rejections),
+                ("--stats", args.stats),
+                ("--element-names", args.element_names),
+                ("--result-names", args.result_names),
+                ("--target-verified-per-ast", args.target_verified_per_ast),
+                ("--operation-count", args.operation_count),
+                ("--seed", args.seed),
+                ("--random-test-seed", args.random_test_seed),
+                ("--max-source-chars", args.max_source_chars),
+                ("--random-test-count", args.random_test_count),
+                ("--timeout-seconds", args.timeout_seconds),
+                ("--exclude-code-jsonl", args.exclude_code_jsonl),
+            )
+            if value is not None
+        ]
+        if args.single_operation_only:
+            conflicts.append("--single-operation-only")
+        if conflicts:
+            raise ValueError(
+                "--configと生成条件の個別指定は併用できません: "
+                + ", ".join(conflicts)
+            )
+        _apply_config_file(args)
+        return args
+
+    required = {
+        "--input": args.input,
+        "--output": args.output,
+        "--rejections": args.rejections,
+        "--stats": args.stats,
+        "--element-names": args.element_names,
+        "--result-names": args.result_names,
+        "--target-verified-per-ast": args.target_verified_per_ast,
+    }
+    missing = [option for option, value in required.items() if value is None]
+    if missing:
+        raise ValueError("必須引数がありません: " + ", ".join(missing))
+
+    args.seed = 0 if args.seed is None else args.seed
+    args.random_test_seed = (
+        args.seed if args.random_test_seed is None else args.random_test_seed
+    )
+    args.max_source_chars = 4_096 if args.max_source_chars is None else args.max_source_chars
+    args.random_test_count = 32 if args.random_test_count is None else args.random_test_count
+    args.timeout_seconds = 2.0 if args.timeout_seconds is None else args.timeout_seconds
+    args.exclude_code_jsonl = args.exclude_code_jsonl or []
+    args.config_hash = None
+    return args
+
+
+def _apply_config_file(args: argparse.Namespace) -> None:
+    config_path = args.config.resolve()
+    try:
+        config_text = config_path.read_text(encoding="utf-8")
+        raw = json.loads(config_text)
+    except FileNotFoundError as error:
+        raise ValueError(f"設定JSONが見つかりません: {config_path}") from error
+    except json.JSONDecodeError as error:
+        raise ValueError(f"設定JSONが不正です: {config_path}") from error
+    if not isinstance(raw, dict):
+        raise ValueError("設定JSONのルートは辞書にしてください")
+
+    expected_keys = {
+        "config_version",
+        "phase",
+        "input",
+        "output",
+        "rejections",
+        "stats",
+        "operation_count_filter",
+        "target_verified_per_ast",
+        "generator_version",
+        "generator_seed",
+        "element_names",
+        "result_names",
+        "max_source_chars",
+        "verification",
+        "exact_duplicate_check",
+        "exclude_code_jsonl",
+        "python",
+    }
+    if set(raw) != expected_keys:
+        missing = sorted(expected_keys - set(raw))
+        extra = sorted(set(raw) - expected_keys)
+        raise ValueError(f"設定JSONの項目が不正です: 不足={missing}, 余分={extra}")
+    if raw["config_version"] != 1:
+        raise ValueError("config_versionは1にしてください")
+    if not isinstance(raw["phase"], str) or not raw["phase"]:
+        raise ValueError("phaseは空でない文字列にしてください")
+    if raw["generator_version"] != GENERATOR_VERSION:
+        raise ValueError(
+            f"generator_versionが実装と一致しません: "
+            f"{raw['generator_version']!r} != {GENERATOR_VERSION!r}"
+        )
+
+    args.input = _project_path(_config_string(raw, "input"))
+    args.output = _project_path(_config_string(raw, "output"))
+    args.rejections = _project_path(_config_string(raw, "rejections"))
+    args.stats = _project_path(_config_string(raw, "stats"))
+    if not args.input.is_file():
+        raise ValueError(f"入力JSONLが見つかりません: {args.input}")
+
+    operation_count = raw["operation_count_filter"]
+    if type(operation_count) is not int or operation_count not in {1, 2, 3}:
+        raise ValueError("operation_count_filterは1、2、3のいずれかにしてください")
+    args.operation_count = operation_count
+    args.target_verified_per_ast = _positive_int(raw, "target_verified_per_ast")
+    args.seed = _integer(raw, "generator_seed")
+    args.element_names = ",".join(_name_list(raw, "element_names"))
+    args.result_names = ",".join(_name_list(raw, "result_names"))
+    args.max_source_chars = _positive_int(raw, "max_source_chars")
+    args.single_operation_only = False
+
+    verification = _mapping(raw, "verification")
+    expected_verification_keys = {
+        "reference",
+        "boundary_case_count",
+        "random_case_count",
+        "random_seed",
+        "timeout_seconds",
+        "require_input_unchanged",
+    }
+    _require_exact_keys(verification, expected_verification_keys, "verification")
+    reference_path = _project_path(_config_string(verification, "reference"))
+    if not reference_path.is_file():
+        raise ValueError(f"参照インタプリタが見つかりません: {reference_path}")
+    args.random_test_count = _nonnegative_int(verification, "random_case_count")
+    args.random_test_seed = _integer(verification, "random_seed")
+    boundary_count = _nonnegative_int(verification, "boundary_case_count")
+    actual_boundary_count = len(build_verification_cases(args.random_test_seed, 0))
+    if boundary_count != actual_boundary_count:
+        raise ValueError(
+            f"boundary_case_countが実装と一致しません: "
+            f"{boundary_count} != {actual_boundary_count}"
+        )
+    timeout_seconds = verification["timeout_seconds"]
+    if type(timeout_seconds) not in {int, float} or timeout_seconds <= 0:
+        raise ValueError("timeout_secondsは正の数にしてください")
+    args.timeout_seconds = float(timeout_seconds)
+    if verification["require_input_unchanged"] is not True:
+        raise ValueError("require_input_unchangedはtrueにしてください")
+
+    duplicate_check = _mapping(raw, "exact_duplicate_check")
+    _require_exact_keys(
+        duplicate_check,
+        {"lookup", "final_comparison"},
+        "exact_duplicate_check",
+    )
+    if duplicate_check != {
+        "lookup": "sha256",
+        "final_comparison": "full_reference_code",
+    }:
+        raise ValueError("完全重複判定はSHA-256検索後の全文比較にしてください")
+
+    excluded = raw["exclude_code_jsonl"]
+    if not isinstance(excluded, list) or any(
+        not isinstance(path, str) or not path for path in excluded
+    ):
+        raise ValueError("exclude_code_jsonlはパス文字列のリストにしてください")
+    args.exclude_code_jsonl = [_project_path(path) for path in excluded]
+    missing_exclusions = [str(path) for path in args.exclude_code_jsonl if not path.is_file()]
+    if missing_exclusions:
+        raise ValueError("除外用JSONLが見つかりません: " + ", ".join(missing_exclusions))
+
+    python_settings = _mapping(raw, "python")
+    _require_exact_keys(python_settings, {"version", "lockfile"}, "python")
+    requested_python = _config_string(python_settings, "version")
+    actual_python = ".".join(platform.python_version().split(".")[:2])
+    if requested_python != actual_python:
+        raise ValueError(
+            f"Pythonバージョンが設定と一致しません: "
+            f"{requested_python} != {actual_python}"
+        )
+    lockfile = _project_path(_config_string(python_settings, "lockfile"))
+    if not lockfile.is_file():
+        raise ValueError(f"ロックファイルが見つかりません: {lockfile}")
+
+    args.config = config_path
+    args.config_hash = sha256_text(config_text)
+
+
+def _project_path(value: str) -> Path:
+    path = Path(value)
+    return path if path.is_absolute() else PROJECT_ROOT / path
+
+
+def _mapping(record: Mapping[str, Any], key: str) -> dict[str, Any]:
+    value = record.get(key)
+    if not isinstance(value, dict):
+        raise ValueError(f"{key}は辞書にしてください")
+    return value
+
+
+def _config_string(record: Mapping[str, Any], key: str) -> str:
+    value = record.get(key)
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"{key}は空でない文字列にしてください")
+    return value
+
+
+def _integer(record: Mapping[str, Any], key: str) -> int:
+    value = record.get(key)
+    if type(value) is not int:
+        raise ValueError(f"{key}は整数にしてください")
+    return value
+
+
+def _positive_int(record: Mapping[str, Any], key: str) -> int:
+    value = _integer(record, key)
+    if value <= 0:
+        raise ValueError(f"{key}は正の整数にしてください")
+    return value
+
+
+def _nonnegative_int(record: Mapping[str, Any], key: str) -> int:
+    value = _integer(record, key)
+    if value < 0:
+        raise ValueError(f"{key}は0以上の整数にしてください")
+    return value
+
+
+def _name_list(record: Mapping[str, Any], key: str) -> list[str]:
+    value = record.get(key)
+    if (
+        not isinstance(value, list)
+        or not value
+        or any(not isinstance(name, str) or not name for name in value)
+        or len(value) != len(set(value))
+    ):
+        raise ValueError(f"{key}は重複のない文字列リストにしてください")
+    return value
+
+
+def _require_exact_keys(
+    record: Mapping[str, Any], expected: set[str], label: str
+) -> None:
+    if set(record) != expected:
+        missing = sorted(expected - set(record))
+        extra = sorted(set(record) - expected)
+        raise ValueError(f"{label}の項目が不正です: 不足={missing}, 余分={extra}")
 
 
 def main() -> None:
@@ -101,19 +364,29 @@ def main() -> None:
     if args.target_verified_per_ast <= 0:
         raise ValueError("target-verified-per-astは正の整数にしてください")
 
+    config = GeneratorConfig(
+        element_names=_parse_names(args.element_names, "element-names"),
+        result_names=_parse_names(args.result_names, "result-names"),
+        max_source_chars=args.max_source_chars,
+    )
+    if args.validate_config:
+        _check_paths(
+            input_path=args.input,
+            excluded_paths=args.exclude_code_jsonl,
+            output_paths=(args.output, args.rejections, args.stats),
+            overwrite=True,
+        )
+        print(f"設定JSONは有効です: {args.config}")
+        return
+
     _check_paths(
         input_path=args.input,
         excluded_paths=args.exclude_code_jsonl,
         output_paths=(args.output, args.rejections, args.stats),
         overwrite=args.overwrite,
     )
-    config = GeneratorConfig(
-        element_names=_parse_names(args.element_names, "element-names"),
-        result_names=_parse_names(args.result_names, "result-names"),
-        max_source_chars=args.max_source_chars,
-    )
     variant_generator = StructuralVariantGenerator(config, seed=args.seed)
-    cases = build_verification_cases(args.seed, args.random_test_count)
+    cases = build_verification_cases(args.random_test_seed, args.random_test_count)
     excluded_codes = _load_excluded_codes(args.exclude_code_jsonl)
 
     counters: Counter[str] = Counter()
@@ -243,6 +516,8 @@ def main() -> None:
     stats = {
         "input": str(args.input),
         "output": str(args.output),
+        "config": str(args.config) if args.config is not None else None,
+        "config_hash": args.config_hash,
         "generator_seed": args.seed,
         "target_verified_per_ast": args.target_verified_per_ast,
         "single_operation_only": args.single_operation_only,
@@ -252,6 +527,7 @@ def main() -> None:
         "max_source_chars": config.max_source_chars,
         "boundary_test_count": len(cases) - args.random_test_count,
         "random_test_count": args.random_test_count,
+        "random_test_seed": args.random_test_seed,
         "verification_case_count": len(cases),
         "timeout_seconds": args.timeout_seconds,
         "python_version": platform.python_version(),

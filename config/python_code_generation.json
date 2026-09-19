@@ -30,6 +30,7 @@
     "lookup": "sha256",
     "final_comparison": "full_reference_code"
   },
+  "exclude_code_jsonl": [],
   "python": {
     "version": "3.12",
     "lockfile": "uv.lock"

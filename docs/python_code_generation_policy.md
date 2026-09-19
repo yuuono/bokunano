@@ -393,7 +393,24 @@ list(reversed(values))
 
 1操作ASTごとに検証済み固有コードを20件確保する次の実行で使う設定は、[`config/python_code_generation.json`](../config/python_code_generation.json)に固定する。この設定には、入出力ファイル、対象操作数、1 AST当たりの目標数、変数名、seed、長さ上限、検証入力数、時間制限、完全重複の判定方法、Python環境を保存する。
 
-このJSONは次の正式生成用であり、24操作を1件ずつ確認した既存の実行結果とは分けて管理する。現時点で、この設定による20件生成はまだ実行していない。
+このJSONは正式生成用であり、24操作を1件ずつ確認した既存の実行結果とは分けて管理する。2026年9月20日にこの設定を読み込んで単一操作ASTごと20件を生成した。結果は[単一操作のPythonコード候補生成結果](single_operation_python_code_generation_results.md)に記録する。
+
+設定の項目、Pythonバージョン、ロックファイル、入力ファイルを検査する場合は、次を実行する。このコマンドはコード候補を生成しない。
+
+```bash
+uv run python scripts/generate_python_code_candidates.py \
+  --config config/python_code_generation.json \
+  --validate-config
+```
+
+正式生成では次を実行する。生成条件の個別引数は`--config`と併用できず、JSONの値だけを使う。
+
+```bash
+uv run python scripts/generate_python_code_candidates.py \
+  --config config/python_code_generation.json
+```
+
+24操作を1件ずつ生成した予備確認は、設定JSONの接続前に必要な生成条件をコマンド引数で個別に渡して実行した。目標数は正式生成の20件ではなく1件であり、実際に使った値は`data/atomic_python_code_generation_stats.json`に保存してある。そのため、24件の検証結果は「各24操作から1件の正しいコードを生成できた」ことの予備確認として有効である。
 
 ## 実装の進め方
 
