@@ -39,10 +39,10 @@
 
 | 値 | このデータでの意味 |
 |---|---|
-| `expression_comprehension` | 一時変数を使わず、結果の式を直接`return`する |
-| `staged_comprehension` | 結果を一時変数へ代入してから`return`し、通常の`for`ループを使わない |
-| `staged_loop` | 結果用の一時変数と通常の`for`ループを使う |
-| `mixed` | 複数操作で内包表記と通常の`for`ループが混在する |
+| `expression_comprehension`（内包表記・組み込み関数・スライスを直接`return`する形式） | 一時変数を使わず、結果の式を直接`return`する |
+| `staged_comprehension`（内包表記・組み込み関数・スライスに一時変数を使う形式） | 結果を一時変数へ代入してから`return`し、通常の`for`ループを使わない |
+| `staged_loop`（通常の`for`ループ形式） | 結果用の一時変数と通常の`for`ループを使う |
+| `mixed`（内包表記と`for`ループの混合形式） | 複数操作で内包表記と通常の`for`ループが混在する |
 
 名称に`comprehension`を含む2値にも、`sorted`、`reversed`、スライスを使ったコードが入る。内包表記を実際に使っているかは、`style_spec.collection_form`と`style_spec.operation_styles`で判定する。
 
