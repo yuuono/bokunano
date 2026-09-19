@@ -28,6 +28,8 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 }
 ```
 
+この抽出ファイルでは、`test_suite: "compositional"`自体がテスト用であることを表すため、`split: "test"`は重複して保存しない。
+
 同じ操作が連続する1,152件は、この670件には含めない。そちらには別の`test_suite`を設定する。
 
 ```json

@@ -265,7 +265,7 @@ input_set:  build | hidden | boundary
 
 `train`と`val`では`test_suite`を空欄または`null`にする。`test`では5種類のいずれかを設定する。
 
-`normal`、`paraphrase`、`boundary`は同じ意味ASTを使うため、同じ元問題から派生したレコードであることを追跡できる共通IDも持たせる。共通IDのフィールド名は、データレコードのスキーマを決める段階で確定する。
+`normal`、`paraphrase`、`boundary`は同じ意味ASTを使うため、同じ元問題から派生したレコードであることを追跡できる`family_id`を持たせる。IDの計算方法と最終レコードの項目は、[データレコードの作成・管理方針](data_record_policy.md)で定める。
 
 ## 分割後の確認
 
@@ -288,6 +288,5 @@ input_set:  build | hidden | boundary
 
 - `repetition`で使用する日本語表現辞書
 - `repetition`で使用する実行入力集合
-- `normal`、`paraphrase`、`boundary`を結び付ける共通IDのフィールド名
 
 これらは該当するデータ生成を始める前に決定する。
