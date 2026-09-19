@@ -2,10 +2,10 @@
 
 ## 実行内容
 
-2026年9月20日に、[`config/python_code_generation.json`](../config/python_code_generation.json)を生成スクリプトから読み、24種類の単一操作ASTごとに検証済み固有コードを20件生成した。日本語指示はまだ生成していない。
+2026年9月20日に、[`config/python_code_generation.json`](../../config/python_code_generation.json)を生成スクリプトから読み、24種類の単一操作ASTごとに検証済み固有コードを20件生成した。日本語指示はまだ生成していない。
 
 ```bash
-uv run python scripts/generate_python_code_candidates.py \
+uv run python scripts/code_generation/generate_python_code_candidates.py \
   --config config/python_code_generation.json
 ```
 
@@ -87,8 +87,8 @@ uv run python scripts/generate_python_code_candidates.py \
 
 | ファイル | 内容 |
 |---|---|
-| `data/python_code_candidates.jsonl` | 検証済みコード候補480件 |
-| `data/rejected_python_codes.jsonl` | 不採用候補0件 |
-| `data/python_code_generation_stats.json` | 設定、全体集計、操作別集計 |
+| `data/code_candidates/single_operation/python_code_candidates.jsonl` | 検証済みコード候補480件 |
+| `data/code_candidates/single_operation/rejected_python_codes.jsonl` | 不採用候補0件 |
+| `data/code_candidates/single_operation/python_code_generation_stats.json` | 設定、全体集計、操作別集計 |
 
-実行時の設定JSONのSHA-256は`a17097c66a148758fa8e87c7c08f97245b48029b5e8c48735444c136fc6287e4`である。
+実行時の設定JSONのSHA-256は`9389216d3604875e1d7dd0c35129e6fc83c3fe3a6b29b18d7d50ed0222107a25`である。

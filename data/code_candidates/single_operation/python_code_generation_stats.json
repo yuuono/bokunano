@@ -1,16 +1,16 @@
 {
   "boundary_test_count": 9,
   "config": "/Users/s33207/git_project/bokunano/config/python_code_generation.json",
-  "config_hash": "a17097c66a148758fa8e87c7c08f97245b48029b5e8c48735444c136fc6287e4",
+  "config_hash": "9389216d3604875e1d7dd0c35129e6fc83c3fe3a6b29b18d7d50ed0222107a25",
   "element_names": [
     "x",
     "value"
   ],
   "generator_seed": 0,
-  "input": "/Users/s33207/git_project/bokunano/data/train_semantic_asts.jsonl",
+  "input": "/Users/s33207/git_project/bokunano/data/semantic_asts/train_semantic_asts.jsonl",
   "max_source_chars": 4096,
   "operation_count_filter": 1,
-  "output": "/Users/s33207/git_project/bokunano/data/python_code_candidates.jsonl",
+  "output": "/Users/s33207/git_project/bokunano/data/code_candidates/single_operation/python_code_candidates.jsonl",
   "per_spec": {
     "combined-000001": {
       "available_style_count": 72,

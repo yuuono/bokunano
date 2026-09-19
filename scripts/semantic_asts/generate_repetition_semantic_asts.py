@@ -4,9 +4,10 @@ import json
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-INPUT_PATH = PROJECT_ROOT / "data" / "atomic_semantic_asts.jsonl"
-OUTPUT_PATH = PROJECT_ROOT / "data" / "repetition_semantic_asts.jsonl"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATA_DIR = PROJECT_ROOT / "data" / "semantic_asts"
+INPUT_PATH = DATA_DIR / "atomic_semantic_asts.jsonl"
+OUTPUT_PATH = DATA_DIR / "repetition_semantic_asts.jsonl"
 EXPECTED_COUNTS = {
     "A → A": 24,
     "A → A → B": 552,

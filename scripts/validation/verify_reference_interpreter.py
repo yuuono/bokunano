@@ -13,18 +13,18 @@ import sys
 
 
 # このファイルの位置からリポジトリのルートディレクトリを求める
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 # ルート直下のモジュールをimportできるように探索パスの先頭に追加する
 sys.path.insert(0, str(PROJECT_ROOT))
 
 # 検証対象の参照インタプリタ本体を読み込む（sys.path追加後なのでここでimportする）
-from reference_interpreter import interpret
+from reference_interpreter import interpret  # noqa: E402
 
 
 # 24個の単独操作ASTが入ったファイル
-ATOMIC_PATH = PROJECT_ROOT / "data/atomic_semantic_asts.jsonl"
+ATOMIC_PATH = PROJECT_ROOT / "data/semantic_asts/atomic_semantic_asts.jsonl"
 # 1〜3操作の組み合わせASTが入ったファイル
-COMBINED_PATH = PROJECT_ROOT / "data/combined_semantic_asts.jsonl"
+COMBINED_PATH = PROJECT_ROOT / "data/semantic_asts/combined_semantic_asts.jsonl"
 # 生成対象のコードとは別経路で実装する参照インタプリタ本体
 REFERENCE_PATH = PROJECT_ROOT / "reference_interpreter.py"
 

@@ -8,10 +8,14 @@ import json
 from pathlib import Path
 
 
+# このファイルの位置からリポジトリのルートを求める
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# 意味ASTをまとめるディレクトリ
+DATA_DIR = PROJECT_ROOT / "data" / "semantic_asts"
 # 入力となる24個の単独操作ASTのファイル
-INPUT_PATH = Path("data/atomic_semantic_asts.jsonl")
+INPUT_PATH = DATA_DIR / "atomic_semantic_asts.jsonl"
 # 生成した組み合わせASTを書き出すファイル
-OUTPUT_PATH = Path("data/combined_semantic_asts.jsonl")
+OUTPUT_PATH = DATA_DIR / "combined_semantic_asts.jsonl"
 # 組み合わせる操作数の下限
 MIN_OPERATIONS = 1
 # 組み合わせる操作数の上限

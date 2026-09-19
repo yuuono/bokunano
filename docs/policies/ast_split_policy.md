@@ -67,7 +67,7 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 
 この詳細は[組合せ汎化テストの方針](compositional_generalization_test_policy.md)で定める。
 
-670件は`scripts/extract_compositional_semantic_asts.py`で既存の12,720件から抽出し、`data/compositional_semantic_asts.jsonl`に保存済みである。
+670件は`scripts/semantic_asts/extract_compositional_semantic_asts.py`で既存の12,720件から抽出し、`data/semantic_asts/compositional_semantic_asts.jsonl`に保存済みである。
 
 ## 組合せ汎化用670件を確保した後の件数
 
@@ -107,11 +107,11 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 
 ## 採用した割り当て方式
 
-案Bの「ハッシュ順に並べて指定件数で切る」を採用する。実装は`scripts/split_semantic_asts.py`とする。
+案Bの「ハッシュ順に並べて指定件数で切る」を採用する。実装は`scripts/semantic_asts/split_semantic_asts.py`とする。
 
 ハッシュと割り当ては次の手順で決定する。
 
-1. `data/combined_semantic_asts.jsonl`の12,720件から、`data/compositional_semantic_asts.jsonl`の670件を`spec_id`と意味ASTの両方が一致することを確認して除く。
+1. `data/semantic_asts/combined_semantic_asts.jsonl`の12,720件から、`data/semantic_asts/compositional_semantic_asts.jsonl`の670件を`spec_id`と意味ASTの両方が一致することを確認して除く。
 2. 意味ASTを、JSONの辞書キーを昇順、区切り文字を`,`と`:`、日本語をそのまま保持する形式で正規化する。
 3. 正規化したUTF-8文字列のSHA-256を計算する。
 4. 残った12,050件を1操作、2操作、3操作に分け、それぞれをSHA-256の16進文字列の昇順に並べる。同じハッシュになった場合の順序は正規化文字列の昇順で決める。
@@ -127,13 +127,13 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 
 ## 分割の実行結果
 
-2026年9月17日に`scripts/split_semantic_asts.py`を実行し、次の3ファイルを生成した。
+2026年9月17日に`scripts/semantic_asts/split_semantic_asts.py`を実行し、次の3ファイルを生成した。
 
 | 分類 | 出力ファイル | 件数 | `split` | `test_suite` |
 |---|---|---:|---|---|
-| 訓練 | `data/train_semantic_asts.jsonl` | 9,646 | `train` | `null` |
-| 検証 | `data/val_semantic_asts.jsonl` | 1,202 | `val` | `null` |
-| 通常テスト | `data/normal_semantic_asts.jsonl` | 1,202 | `test` | `normal` |
+| 訓練 | `data/semantic_asts/train_semantic_asts.jsonl` | 9,646 | `train` | `null` |
+| 検証 | `data/semantic_asts/val_semantic_asts.jsonl` | 1,202 | `val` | `null` |
+| 通常テスト | `data/semantic_asts/normal_semantic_asts.jsonl` | 1,202 | `test` | `normal` |
 | 合計 |  | 12,050 |  |  |
 
 出力では、抽出元の`spec_id`と`semantic_ast`を変更せず、`split`と`test_suite`を追加した。`normal`を再利用する`paraphrase`と`boundary`の派生レコードは、この分割処理ではまだ生成しない。
@@ -142,9 +142,9 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 
 | 出力ファイル | SHA-256 |
 |---|---|
-| `data/train_semantic_asts.jsonl` | `e4e94207820d852f9da8cd4962b7ca24dec4be892d14731cd0d1d517822e3d38` |
-| `data/val_semantic_asts.jsonl` | `95adb06d425b00585782cd1a904d1c405f8642ae5c51f1e9a11e0621a4e83d8f` |
-| `data/normal_semantic_asts.jsonl` | `69a2d5718a08ff823a0827f6d6e9cd4c644f57fd2fa1d22e66994a8f988123c9` |
+| `data/semantic_asts/train_semantic_asts.jsonl` | `e4e94207820d852f9da8cd4962b7ca24dec4be892d14731cd0d1d517822e3d38` |
+| `data/semantic_asts/val_semantic_asts.jsonl` | `95adb06d425b00585782cd1a904d1c405f8642ae5c51f1e9a11e0621a4e83d8f` |
+| `data/semantic_asts/normal_semantic_asts.jsonl` | `69a2d5718a08ff823a0827f6d6e9cd4c644f57fd2fa1d22e66994a8f988123c9` |
 
 保存前に、次を機械的に確認した。
 
@@ -234,7 +234,7 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 ### repetition
 
 - 同一操作が隣接する2操作24件、3操作1,128件の合計1,152件を使用する
-- 現在の12,720件とは別に`data/repetition_semantic_asts.jsonl`へ生成済み
+- 現在の12,720件とは別に`data/semantic_asts/repetition_semantic_asts.jsonl`へ生成済み
 - 日本語表現と実行入力の方針はまだ決定していない
 
 反復テストの詳細は[反復汎化テストの方針](repetition_generalization_test_policy.md)で定める。

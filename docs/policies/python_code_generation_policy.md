@@ -17,7 +17,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ## 入力と出力
 
-入力は、[単独操作の意味AST定義](atomic_semantic_asts.md)に従う単独操作、または1〜3個の操作を格納した`sequence`形式の意味ASTとする。
+入力は、[単独操作の意味AST定義](../specifications/atomic_semantic_asts.md)に従う単独操作、または1〜3個の操作を格納した`sequence`形式の意味ASTとする。
 
 ```json
 {
@@ -42,7 +42,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ## 参照インタプリタからの独立性
 
-コード生成器と[参照インタプリタ](reference_interpreter.md)に同じ誤りが入ることを避けるため、両者を独立した実装にする。
+コード生成器と[参照インタプリタ](../specifications/reference_interpreter.md)に同じ誤りが入ることを避けるため、両者を独立した実装にする。
 
 - コード生成器から`reference_interpreter.py`をimportしない
 - コード生成器から`interpret`を呼び出さない
@@ -51,7 +51,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 - 参照インタプリタは整数リストを直接処理し、コード生成器はPythonの式または文を生成する
 - 共有してよいものは、意味ASTの公開仕様、操作名、入力条件などの宣言的な定義に限る
 
-参照インタプリタでは、生成対象外の`itertools.compress`、複数イテラブルを受け取るPython組み込み関数`map`、`heapq.heapify`と`heapq.heappop`、`collections.deque`、`itertools.islice`を使用する。コード生成器は参照側の実装表現に制約されず、この文書で許可した内包表記、`for`ループ、スライス、`sorted`、`reversed`などをすべて生成候補にできる。具体的な分離方針は[参照インタプリタ](reference_interpreter.md)で定める。
+参照インタプリタでは、生成対象外の`itertools.compress`、複数イテラブルを受け取るPython組み込み関数`map`、`heapq.heapify`と`heapq.heappop`、`collections.deque`、`itertools.islice`を使用する。コード生成器は参照側の実装表現に制約されず、この文書で許可した内包表記、`for`ループ、スライス、`sorted`、`reversed`などをすべて生成候補にできる。具体的な分離方針は[参照インタプリタ](../specifications/reference_interpreter.md)で定める。
 
 生成器の正しさは、生成器自身のロジックでは判定しない。別の検証処理が生成コードを実行し、その結果を参照インタプリタの結果と比較する。
 
@@ -172,7 +172,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ### 変数名
 
-[課題文の「コードの構造的変換」](../boku1-nano.md#コードの構造的変換)では、変数名を変更したコードも作ることだけが決められており、使用する名前や候補数は指定されていない。次の名前はコード生成器で使用できる候補例であり、確定した許可リストではない。
+[課題文の「コードの構造的変換」](../../boku1-nano.md#コードの構造的変換)では、変数名を変更したコードも作ることだけが決められており、使用する名前や候補数は指定されていない。次の名前はコード生成器で使用できる候補例であり、確定した許可リストではない。
 
 - 処理中のリスト: `values`、`items`、`result`、`current`
 - 新しいリスト: `selected`、`mapped`、`output`、`next_values`
@@ -182,7 +182,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ### 条件式の向き
 
-[課題文の「条件式の順序変更」](../boku1-nano.md#コードの構造的変換)は、抽出条件にある比較式の左右を入れ替え、同じ意味を保つ表現を生成するものとする。
+[課題文の「条件式の順序変更」](../../boku1-nano.md#コードの構造的変換)は、抽出条件にある比較式の左右を入れ替え、同じ意味を保つ表現を生成するものとする。
 
 ```python
 x > k
@@ -283,7 +283,7 @@ list(reversed(values))
 
 ## 訓練データの選抜基準
 
-コード生成器が作れる候補の総数は、訓練データの採用基準にしない。[課題文の「データの検証と選抜」](../boku1-nano.md#データの検証と選抜)に従い、検証を通過した候補から次の分布を均等に近づける。
+コード生成器が作れる候補の総数は、訓練データの採用基準にしない。[課題文の「データの検証と選抜」](../../boku1-nano.md#データの検証と選抜)に従い、検証を通過した候補から次の分布を均等に近づける。
 
 - 操作数1、2、3
 - 各演算子の出現頻度
@@ -391,14 +391,14 @@ list(reversed(values))
 
 ## 正式生成前の設定
 
-1操作ASTごとに検証済み固有コードを20件確保する次の実行で使う設定は、[`config/python_code_generation.json`](../config/python_code_generation.json)に固定する。この設定には、入出力ファイル、対象操作数、1 AST当たりの目標数、変数名、seed、長さ上限、検証入力数、時間制限、完全重複の判定方法、Python環境を保存する。
+1操作ASTごとに検証済み固有コードを20件確保する次の実行で使う設定は、[`config/python_code_generation.json`](../../config/python_code_generation.json)に固定する。この設定には、入出力ファイル、対象操作数、1 AST当たりの目標数、変数名、seed、長さ上限、検証入力数、時間制限、完全重複の判定方法、Python環境を保存する。
 
-このJSONは正式生成用であり、24操作を1件ずつ確認した既存の実行結果とは分けて管理する。2026年9月20日にこの設定を読み込んで単一操作ASTごと20件を生成した。結果は[単一操作のPythonコード候補生成結果](single_operation_python_code_generation_results.md)に記録する。
+このJSONは正式生成用であり、24操作を1件ずつ確認した既存の実行結果とは分けて管理する。2026年9月20日にこの設定を読み込んで単一操作ASTごと20件を生成した。結果は[単一操作のPythonコード候補生成結果](../results/single_operation_python_code_generation_results.md)に記録する。
 
 設定の項目、Pythonバージョン、ロックファイル、入力ファイルを検査する場合は、次を実行する。このコマンドはコード候補を生成しない。
 
 ```bash
-uv run python scripts/generate_python_code_candidates.py \
+uv run python scripts/code_generation/generate_python_code_candidates.py \
   --config config/python_code_generation.json \
   --validate-config
 ```
@@ -406,11 +406,11 @@ uv run python scripts/generate_python_code_candidates.py \
 正式生成では次を実行する。生成条件の個別引数は`--config`と併用できず、JSONの値だけを使う。
 
 ```bash
-uv run python scripts/generate_python_code_candidates.py \
+uv run python scripts/code_generation/generate_python_code_candidates.py \
   --config config/python_code_generation.json
 ```
 
-24操作を1件ずつ生成した予備確認は、設定JSONの接続前に必要な生成条件をコマンド引数で個別に渡して実行した。目標数は正式生成の20件ではなく1件であり、実際に使った値は`data/atomic_python_code_generation_stats.json`に保存してある。そのため、24件の検証結果は「各24操作から1件の正しいコードを生成できた」ことの予備確認として有効である。
+24操作を1件ずつ生成した予備確認は、設定JSONの接続前に必要な生成条件をコマンド引数で個別に渡して実行した。目標数は正式生成の20件ではなく1件であり、実際に使った値は`data/code_candidates/atomic_preview/atomic_python_code_generation_stats.json`に保存してある。そのため、24件の検証結果は「各24操作から1件の正しいコードを生成できた」ことの予備確認として有効である。
 
 ## 実装の進め方
 

@@ -94,9 +94,9 @@ family-<semantic_hash>
 
 訓練、検証、通常テストへ分割した意味ASTレコードでは`split`も必須とする。組合せ汎化と反復汎化の抽出・生成ファイルでは、`test_suite`がそれぞれ`compositional`、`repetition`であるため、`split: "test"`を重複して保存しない。コード候補を作る段階で、`test_suite`が`null`でなく`split`が省略されている場合に限り、`split: "test"`を設定する。
 
-正式な訓練・検証コード候補は、分割が完了した意味ASTレコードから生成する。分割前の操作一覧である`data/atomic_semantic_asts.jsonl`を、そのまま正式なコード候補生成の入力には使用しない。
+正式な訓練・検証コード候補は、分割が完了した意味ASTレコードから生成する。分割前の操作一覧である`data/semantic_asts/atomic_semantic_asts.jsonl`を、そのまま正式なコード候補生成の入力には使用しない。
 
-24種類の1操作ASTは、意味ASTの分割方針ですべて訓練へ割り当てられている。そのため、この24件から作る正式なコード候補は`data/train_semantic_asts.jsonl`内の1操作レコードを入力とし、すべて`split: "train"`、`test_suite: null`とする。ここでの`test_suite: null`は項目の欠落ではなく、訓練用なので評価テスト集合に属さないことを表す。
+24種類の1操作ASTは、意味ASTの分割方針ですべて訓練へ割り当てられている。そのため、この24件から作る正式なコード候補は`data/semantic_asts/train_semantic_asts.jsonl`内の1操作レコードを入力とし、すべて`split: "train"`、`test_suite: null`とする。ここでの`test_suite: null`は項目の欠落ではなく、訓練用なので評価テスト集合に属さないことを表す。
 
 ## コード候補レコード
 
@@ -173,7 +173,7 @@ family-<semantic_hash>
 
 ## 訓練データの均等選抜
 
-[課題文の「データの検証と選抜」](../boku1-nano.md#データの検証と選抜)に従い、検証を通過したレコードから単純な均等抽出を行う。基準は次の5項目だけとする。
+[課題文の「データの検証と選抜」](../../boku1-nano.md#データの検証と選抜)に従い、検証を通過したレコードから単純な均等抽出を行う。基準は次の5項目だけとする。
 
 - 操作数1、2、3
 - 各演算子の出現頻度
@@ -211,7 +211,7 @@ family-<semantic_hash>
 
 ### 固有データと学習中の延べ使用回数
 
-[課題文](../boku1-nano.md#データの検証と選抜)では、操作数1、2、3を「同数にする」ではなく「均等に近づける」としている。
+[課題文](../../boku1-nano.md#データの検証と選抜)では、操作数1、2、3を「同数にする」ではなく「均等に近づける」としている。
 
 最終的な固有レコード数は、意味ASTの件数だけでは決められない。各意味ASTから得られる検証済みコードの数、日本語指示の承認済みテンプレート、コードの完全重複除外、`max_records_per_semantic_ast`をすべて反映した後に確定する。したがって、意味ASTの件数だけを根拠に「1・2・3操作を同数にできる」または「同数にできない」と事前に断定しない。実際にコードと日本語指示を結合した候補を作り、検証と重複除外を終えた時点の件数を使って、どこまで均等に近づけられるかを判断する。
 
@@ -383,10 +383,10 @@ input_set: build | hidden | boundary
 
 | ファイル | 内容 |
 |---|---|
-| `data/python_code_candidates.jsonl` | 生成した未選抜コード候補 |
-| `data/verified_python_codes.jsonl` | 検証・重複除外・最大件数選抜を通過したコード |
-| `data/rejected_python_codes.jsonl` | 不採用コードと理由 |
-| `data/final_dataset_records.jsonl` | 日本語指示とコードを結合した最終レコード |
+| `data/code_candidates/single_operation/python_code_candidates.jsonl` | 生成した未選抜コード候補 |
+| `data/code_candidates/selected/verified_python_codes.jsonl` | 検証・重複除外・最大件数選抜を通過したコード |
+| `data/code_candidates/single_operation/rejected_python_codes.jsonl` | 不採用コードと理由 |
+| `data/final/final_dataset_records.jsonl` | 日本語指示とコードを結合した最終レコード |
 
 hidden入力を別管理する場合は、公開またはモデル入力用のファイルへ実データを複製せず、テストケースIDだけを保存する。
 

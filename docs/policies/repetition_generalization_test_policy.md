@@ -83,17 +83,17 @@ A → B → A
 
 `repetition`に属する1,152件は、訓練・検証・通常テスト・言い換えテスト・組合せ汎化テストには入れない。
 
-既存の12,720件は、同じ単独操作を1つの意味AST内で繰り返さない。そのため、今回対象とする1,152件は既存の12,720件には含まれない。1,152件は独立したテストデータとして`data/repetition_semantic_asts.jsonl`に保存する。
+既存の12,720件は、同じ単独操作を1つの意味AST内で繰り返さない。そのため、今回対象とする1,152件は既存の12,720件には含まれない。1,152件は独立したテストデータとして`data/semantic_asts/repetition_semantic_asts.jsonl`に保存する。
 
 矛盾・冗長な意味ASTも除外しない。例えば、偶数だけを残す抽出の反復や、現在順を反転する並べ替えの反復も、このテスト集合へ含める。
 
 ## 意味ASTの生成
 
-`scripts/generate_repetition_semantic_asts.py`が、`data/atomic_semantic_asts.jsonl`の24操作から方針どおりに1,152件を生成する。
+`scripts/semantic_asts/generate_repetition_semantic_asts.py`が、`data/semantic_asts/atomic_semantic_asts.jsonl`の24操作から方針どおりに1,152件を生成する。
 
 ```text
-入力: data/atomic_semantic_asts.jsonl
-出力: data/repetition_semantic_asts.jsonl
+入力: data/semantic_asts/atomic_semantic_asts.jsonl
+出力: data/semantic_asts/repetition_semantic_asts.jsonl
 ```
 
 各レコードは次の形式とする。

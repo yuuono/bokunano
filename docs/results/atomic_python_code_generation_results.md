@@ -16,8 +16,8 @@
 - 実行検証: 各コードにつき41入力（境界値9件、seed 0のランダム入力32件）
 - 制限時間: 各コード5秒
 - 完全重複判定: 生成コード全文のSHA-256で候補を検索し、最後に全文を比較
-- コード候補: `data/atomic_python_code_candidates.jsonl`
-- 集計: `data/atomic_python_code_generation_stats.json`
+- コード候補: `data/code_candidates/atomic_preview/atomic_python_code_candidates.jsonl`
+- 集計: `data/code_candidates/atomic_preview/atomic_python_code_generation_stats.json`
 
 ## 全体集計
 
@@ -48,7 +48,7 @@
 
 ## `split`が`train`である理由
 
-意味ASTの分割方針では、24種類の1操作ASTをすべて訓練へ割り当てている。この結果は`data/train_semantic_asts.jsonl`から1操作ASTだけを選んで生成しているため、全24件が`split: "train"`、`test_suite: null`となる。
+意味ASTの分割方針では、24種類の1操作ASTをすべて訓練へ割り当てている。この結果は`data/semantic_asts/train_semantic_asts.jsonl`から1操作ASTだけを選んで生成しているため、全24件が`split: "train"`、`test_suite: null`となる。
 
 ## 個別結果
 

@@ -9,7 +9,7 @@ import sys
 from typing import Any
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
@@ -130,7 +130,7 @@ def _build_report(
         "",
         "## `split`が`train`である理由",
         "",
-        "意味ASTの分割方針では、24種類の1操作ASTをすべて訓練へ割り当てている。この結果は`data/train_semantic_asts.jsonl`から1操作ASTだけを選んで生成しているため、全24件が`split: \"train\"`、`test_suite: null`となる。",
+        "意味ASTの分割方針では、24種類の1操作ASTをすべて訓練へ割り当てている。この結果は`data/semantic_asts/train_semantic_asts.jsonl`から1操作ASTだけを選んで生成しているため、全24件が`split: \"train\"`、`test_suite: null`となる。",
         "",
         "## 個別結果",
         "",

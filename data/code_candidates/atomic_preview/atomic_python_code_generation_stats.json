@@ -1,14 +1,16 @@
 {
   "boundary_test_count": 9,
+  "config": null,
+  "config_hash": null,
   "element_names": [
     "x",
     "value"
   ],
   "generator_seed": 0,
-  "input": "data/train_semantic_asts.jsonl",
+  "input": "data/semantic_asts/train_semantic_asts.jsonl",
   "max_source_chars": 4096,
   "operation_count_filter": 1,
-  "output": "data/atomic_python_code_candidates.jsonl",
+  "output": "data/code_candidates/atomic_preview/atomic_python_code_candidates.jsonl",
   "per_spec": {
     "combined-000001": {
       "available_style_count": 72,
@@ -157,6 +159,7 @@
   },
   "python_version": "3.12.3",
   "random_test_count": 32,
+  "random_test_seed": 0,
   "result_names": [
     "result",
     "output"

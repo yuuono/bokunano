@@ -4,10 +4,11 @@ import json
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-ATOMIC_PATH = PROJECT_ROOT / "data" / "atomic_semantic_asts.jsonl"
-COMBINED_PATH = PROJECT_ROOT / "data" / "combined_semantic_asts.jsonl"
-OUTPUT_PATH = PROJECT_ROOT / "data" / "compositional_semantic_asts.jsonl"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATA_DIR = PROJECT_ROOT / "data" / "semantic_asts"
+ATOMIC_PATH = DATA_DIR / "atomic_semantic_asts.jsonl"
+COMBINED_PATH = DATA_DIR / "combined_semantic_asts.jsonl"
+OUTPUT_PATH = DATA_DIR / "compositional_semantic_asts.jsonl"
 
 # 方針文書で確定した、互いに単独操作を共有しない5ペア
 PAIR_ATOMIC_IDS = {

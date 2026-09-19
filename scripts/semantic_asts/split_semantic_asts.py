@@ -6,14 +6,15 @@ from collections import Counter
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-ATOMIC_PATH = PROJECT_ROOT / "data" / "atomic_semantic_asts.jsonl"
-COMBINED_PATH = PROJECT_ROOT / "data" / "combined_semantic_asts.jsonl"
-COMPOSITIONAL_PATH = PROJECT_ROOT / "data" / "compositional_semantic_asts.jsonl"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATA_DIR = PROJECT_ROOT / "data" / "semantic_asts"
+ATOMIC_PATH = DATA_DIR / "atomic_semantic_asts.jsonl"
+COMBINED_PATH = DATA_DIR / "combined_semantic_asts.jsonl"
+COMPOSITIONAL_PATH = DATA_DIR / "compositional_semantic_asts.jsonl"
 OUTPUT_PATHS = {
-    "train": PROJECT_ROOT / "data" / "train_semantic_asts.jsonl",
-    "val": PROJECT_ROOT / "data" / "val_semantic_asts.jsonl",
-    "normal": PROJECT_ROOT / "data" / "normal_semantic_asts.jsonl",
+    "train": DATA_DIR / "train_semantic_asts.jsonl",
+    "val": DATA_DIR / "val_semantic_asts.jsonl",
+    "normal": DATA_DIR / "normal_semantic_asts.jsonl",
 }
 
 EXPECTED_COMBINED_COUNT = 12_720

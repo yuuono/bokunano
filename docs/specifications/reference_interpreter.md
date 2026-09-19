@@ -44,7 +44,7 @@ assert result == [6, 10]
 
 ## 24個の操作
 
-参照インタプリタは、`data/atomic_semantic_asts.jsonl`で定義した次の24操作に対応している。
+参照インタプリタは、`data/semantic_asts/atomic_semantic_asts.jsonl`で定義した次の24操作に対応している。
 
 | 分類 | 意味ASTのキー | 対応する操作 |
 |---|---|---|
@@ -86,7 +86,7 @@ assert result == [6, 10]
 
 ## 実行確認
 
-確認プログラム `scripts/verify_reference_interpreter.py` を作成した。
+確認プログラム `scripts/validation/verify_reference_interpreter.py` を作成した。
 
 最初にPython構文木を検査し、4個の操作ハンドラが規定した参照経路を使用していることを確認する。内包表記、スライス、ラムダ、直接の算術演算子、`sorted`、`reversed`、`abs`、`heapq.nsmallest`、`heapq.nlargest`が操作ハンドラへ入った場合は検証を失敗させる。
 
@@ -100,7 +100,7 @@ assert result == [6, 10]
 実行方法は次のとおりである。
 
 ```bash
-python3 scripts/verify_reference_interpreter.py
+python3 scripts/validation/verify_reference_interpreter.py
 ```
 
 実行確認の結果、24個の単独操作はすべて期待結果と一致した。また、組み合わせASTは次の全件を実行できた。

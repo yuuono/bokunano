@@ -4,7 +4,7 @@
 
 日本語の指示やPythonコードを生成する前に、問題が表す処理を意味ASTとして定義する。
 
-現時点では操作を組み合わせず、対象となる24種類の操作を、それぞれ独立した意味ASTとして定義している。定義したデータは `data/atomic_semantic_asts.jsonl` に、1操作につき1レコードで保存する。
+現時点では操作を組み合わせず、対象となる24種類の操作を、それぞれ独立した意味ASTとして定義している。定義したデータは `data/semantic_asts/atomic_semantic_asts.jsonl` に、1操作につき1レコードで保存する。
 
 ## レコード形式
 
@@ -126,10 +126,10 @@
 
 矛盾する組み合わせや冗長な組み合わせも、この段階では除外せずに含めている。
 
-生成結果は `data/combined_semantic_asts.jsonl` に、1つの意味ASTにつき1レコードで保存している。生成プログラムは `scripts/generate_combined_semantic_asts.py` である。
+生成結果は `data/semantic_asts/combined_semantic_asts.jsonl` に、1つの意味ASTにつき1レコードで保存している。生成プログラムは `scripts/semantic_asts/generate_combined_semantic_asts.py` である。
 
 プロジェクトのルートで次を実行すると、同じ組み合わせを再生成できる。
 
 ```bash
-python3 scripts/generate_combined_semantic_asts.py
+python3 scripts/semantic_asts/generate_combined_semantic_asts.py
 ```

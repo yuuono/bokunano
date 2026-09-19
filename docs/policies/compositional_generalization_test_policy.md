@@ -83,7 +83,7 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 }
 ```
 
-これらの詳しい対象形式と件数は、`docs/repetition_generalization_test_policy.md`で定める。
+これらの詳しい対象形式と件数は、`docs/policies/repetition_generalization_test_policy.md`で定める。
 
 ## 順序違いも訓練から除外する
 
@@ -193,15 +193,15 @@ C → B → A
 
 | 用途 | ファイル |
 |---|---|
-| 24個の単独操作と`atomic-*` IDの対応 | `data/atomic_semantic_asts.jsonl` |
-| 抽出元となる12,720件 | `data/combined_semantic_asts.jsonl` |
-| 抽出コード | `scripts/extract_compositional_semantic_asts.py` |
-| 抽出結果 | `data/compositional_semantic_asts.jsonl` |
+| 24個の単独操作と`atomic-*` IDの対応 | `data/semantic_asts/atomic_semantic_asts.jsonl` |
+| 抽出元となる12,720件 | `data/semantic_asts/combined_semantic_asts.jsonl` |
+| 抽出コード | `scripts/semantic_asts/extract_compositional_semantic_asts.py` |
+| 抽出結果 | `data/semantic_asts/compositional_semantic_asts.jsonl` |
 
 抽出は次の順序で行う。
 
-1. `data/atomic_semantic_asts.jsonl`を読み、5ペアの`atomic-*` IDを実際の単独操作ASTへ変換する。
-2. `data/combined_semantic_asts.jsonl`を先頭から順に調べる。
+1. `data/semantic_asts/atomic_semantic_asts.jsonl`を読み、5ペアの`atomic-*` IDを実際の単独操作ASTへ変換する。
+2. `data/semantic_asts/combined_semantic_asts.jsonl`を先頭から順に調べる。
 3. 2操作ASTでは、選択したペアの2操作を両方含むものを抽出する。これにより、`A → B`と`B → A`の2件が対象になる。
 4. 3操作ASTでは、選択したペアの2操作を両方含むものを抽出する。3個目の操作と並び順を限定しないため、各ペアについて22操作×6順序の132件が対象になる。
 5. 抽出元の`spec_id`と`semantic_ast`を変更せず、`test_suite: "compositional"`を追加する。
@@ -227,13 +227,13 @@ C → B → A
 - 抽出元に同じ操作を繰り返す意味ASTが混入していない
 - 全レコードの`test_suite`が`compositional`である
 
-2026年9月17日時点で、この手法により670件を`data/compositional_semantic_asts.jsonl`へ抽出済みである。
+2026年9月17日時点で、この手法により670件を`data/semantic_asts/compositional_semantic_asts.jsonl`へ抽出済みである。
 
 ## コード生成後の完全重複の除外
 
 意味ASTの入出力関係が同じであることだけを理由に、意味AST全体を訓練候補から除外しない。各意味ASTから生成したコードは、`boku1-nano.md`の「データの検証と選抜」に従ってレコード単位で判定する。
 
-具体的な判定手順と除外記録は、`docs/code_duplicate_exclusion_policy.md`で定める。
+具体的な判定手順と除外記録は、`docs/policies/code_duplicate_exclusion_policy.md`で定める。
 
 次の場合は、該当する訓練レコードを採用しない。
 
