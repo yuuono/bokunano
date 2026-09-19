@@ -21,8 +21,8 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from generated_code_verifier import (  # noqa: E402
+    GeneratedCodeVerifierSession,
     build_verification_cases,
-    verify_generated_code,
 )
 from python_code_generator import (  # noqa: E402
     GENERATOR_VERSION,
@@ -394,9 +394,15 @@ def main() -> None:
     seen_codes: dict[str, tuple[str, str | None]] = dict(excluded_codes)
     shortfall_specs: list[dict[str, Any]] = []
 
-    with _atomic_text_writer(args.output) as output_file, _atomic_text_writer(
-        args.rejections
-    ) as rejection_file:
+    with (
+        GeneratedCodeVerifierSession(
+            cases,
+            args.timeout_seconds,
+            config.max_source_chars,
+        ) as verifier,
+        _atomic_text_writer(args.output) as output_file,
+        _atomic_text_writer(args.rejections) as rejection_file,
+    ):
         for input_record in _read_jsonl(args.input):
             spec_id = _required_string(input_record, "spec_id")
             semantic_ast = input_record.get("semantic_ast")
@@ -438,12 +444,9 @@ def main() -> None:
                     counters["static_rejected_count"] += 1
                     continue
 
-                verification = verify_generated_code(
+                verification = verifier.verify(
                     generated.reference_code,
                     semantic_ast,
-                    cases,
-                    timeout_seconds=args.timeout_seconds,
-                    max_source_chars=config.max_source_chars,
                 )
                 if not verification.tests_passed:
                     _write_jsonl(

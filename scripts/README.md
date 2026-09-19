@@ -29,4 +29,5 @@ uv run python scripts/code_generation/generate_python_code_candidates.py \
 
 ```bash
 uv run python scripts/validation/verify_reference_interpreter.py
+uv run python scripts/validation/verify_multi_operation_code_candidates.py
 ```
