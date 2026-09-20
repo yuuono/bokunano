@@ -397,6 +397,8 @@ list(reversed(values))
 
 2操作・3操作についても、2026年9月20日に1意味AST当たり20件を生成した。訓練用と組合せ汎化テスト用、2操作と3操作をそれぞれ別の設定JSONに固定した。生成順は、組合せ汎化2操作、組合せ汎化3操作、訓練2操作、訓練3操作とする。後から生成する集合は、それ以前に生成した比較対象のコードJSONLを`exclude_code_jsonl`へ指定する。結果は[2操作・3操作のPythonコード候補生成結果](../results/multi_operation_python_code_generation_results.md)に記録する。
 
+検証、通常テスト、反復汎化についても、2操作と3操作を別の設定JSONに固定し、同日に1意味AST当たり20件を生成した。結果は[検証・通常テスト・反復汎化のPythonコード候補生成結果](../results/evaluation_python_code_generation_results.md)に記録する。
+
 設定の項目、Pythonバージョン、ロックファイル、入力ファイルを検査する場合は、次を実行する。このコマンドはコード候補を生成しない。
 
 ```bash

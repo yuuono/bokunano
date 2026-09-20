@@ -388,6 +388,9 @@ input_set: build | hidden | boundary
 | `data/code_candidates/train/three_operation/python_code_candidates.jsonl` | 訓練用3操作の未選抜コード候補 |
 | `data/code_candidates/compositional/two_operation/python_code_candidates.jsonl` | 組合せ汎化用2操作のコード候補 |
 | `data/code_candidates/compositional/three_operation/python_code_candidates.jsonl` | 組合せ汎化用3操作のコード候補 |
+| `data/code_candidates/validation/{two_operation,three_operation}/python_code_candidates.jsonl` | 検証用2・3操作のコード候補 |
+| `data/code_candidates/normal/{two_operation,three_operation}/python_code_candidates.jsonl` | 通常テスト用2・3操作のコード候補 |
+| `data/code_candidates/repetition/{two_operation,three_operation}/python_code_candidates.jsonl` | 反復汎化用2・3操作のコード候補 |
 | `data/code_candidates/selected/verified_python_codes.jsonl` | 検証・重複除外・最大件数選抜を通過したコード |
 | 各コード候補ディレクトリの`rejected_python_codes.jsonl` | 不採用コードと理由 |
 | `data/final/final_dataset_records.jsonl` | 日本語指示とコードを結合した最終レコード |

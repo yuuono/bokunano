@@ -1,0 +1,32 @@
+{
+  "config_version": 1,
+  "phase": "normal_three_operation",
+  "input": "data/semantic_asts/normal_semantic_asts.jsonl",
+  "output": "data/code_candidates/normal/three_operation/python_code_candidates.jsonl",
+  "rejections": "data/code_candidates/normal/three_operation/rejected_python_codes.jsonl",
+  "stats": "data/code_candidates/normal/three_operation/python_code_generation_stats.json",
+  "operation_count_filter": 3,
+  "target_verified_per_ast": 20,
+  "generator_version": "1",
+  "generator_seed": 0,
+  "element_names": ["x", "value"],
+  "result_names": ["result", "output"],
+  "max_source_chars": 4096,
+  "verification": {
+    "reference": "reference_interpreter.py",
+    "boundary_case_count": 9,
+    "random_case_count": 32,
+    "random_seed": 0,
+    "timeout_seconds": 5.0,
+    "require_input_unchanged": true
+  },
+  "exact_duplicate_check": {
+    "lookup": "sha256",
+    "final_comparison": "full_reference_code"
+  },
+  "exclude_code_jsonl": [],
+  "python": {
+    "version": "3.12",
+    "lockfile": "uv.lock"
+  }
+}

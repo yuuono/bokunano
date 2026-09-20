@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections import Counter
 import hashlib
+from itertools import combinations
 import json
 from pathlib import Path
 from typing import Any, Iterable
@@ -52,6 +53,66 @@ GROUPS = (
         "test_suite": None,
         "side": "train",
     },
+    {
+        "name": "validation_two_operation",
+        "path": PROJECT_ROOT
+        / "data/code_candidates/validation/two_operation/python_code_candidates.jsonl",
+        "operation_count": 2,
+        "spec_count": 54,
+        "split": "val",
+        "test_suite": None,
+        "side": "validation",
+    },
+    {
+        "name": "validation_three_operation",
+        "path": PROJECT_ROOT
+        / "data/code_candidates/validation/three_operation/python_code_candidates.jsonl",
+        "operation_count": 3,
+        "spec_count": 1_148,
+        "split": "val",
+        "test_suite": None,
+        "side": "validation",
+    },
+    {
+        "name": "normal_two_operation",
+        "path": PROJECT_ROOT
+        / "data/code_candidates/normal/two_operation/python_code_candidates.jsonl",
+        "operation_count": 2,
+        "spec_count": 54,
+        "split": "test",
+        "test_suite": "normal",
+        "side": "normal",
+    },
+    {
+        "name": "normal_three_operation",
+        "path": PROJECT_ROOT
+        / "data/code_candidates/normal/three_operation/python_code_candidates.jsonl",
+        "operation_count": 3,
+        "spec_count": 1_148,
+        "split": "test",
+        "test_suite": "normal",
+        "side": "normal",
+    },
+    {
+        "name": "repetition_two_operation",
+        "path": PROJECT_ROOT
+        / "data/code_candidates/repetition/two_operation/python_code_candidates.jsonl",
+        "operation_count": 2,
+        "spec_count": 24,
+        "split": "test",
+        "test_suite": "repetition",
+        "side": "repetition",
+    },
+    {
+        "name": "repetition_three_operation",
+        "path": PROJECT_ROOT
+        / "data/code_candidates/repetition/three_operation/python_code_candidates.jsonl",
+        "operation_count": 3,
+        "spec_count": 1_128,
+        "split": "test",
+        "test_suite": "repetition",
+        "side": "repetition",
+    },
 )
 
 SINGLE_OPERATION_PATH = (
@@ -66,6 +127,9 @@ def main() -> None:
     side_codes: dict[str, dict[str, tuple[str, str]]] = {
         "train": {},
         "compositional": {},
+        "validation": {},
+        "normal": {},
+        "repetition": {},
     }
     all_code_ids: set[str] = set()
 
@@ -77,29 +141,32 @@ def main() -> None:
             all_code_ids,
         )
 
-    exact_overlap = 0
+    exact_overlap_by_pair: dict[str, int] = {}
     hash_collisions = 0
-    for code_hash, (evaluation_source, evaluation_code_id) in side_codes[
-        "compositional"
-    ].items():
-        train_match = side_codes["train"].get(code_hash)
-        if train_match is None:
-            continue
-        train_source, train_code_id = train_match
-        if train_source == evaluation_source:
-            exact_overlap += 1
-            raise ValueError(
-                "訓練側と組合せ汎化側に完全重複があります: "
-                f"{train_code_id}, {evaluation_code_id}"
-            )
-        hash_collisions += 1
-        raise ValueError(f"SHA-256衝突があります: {code_hash}")
+    for left, right in combinations(side_codes, 2):
+        overlap_count = 0
+        for code_hash, (right_source, right_code_id) in side_codes[right].items():
+            left_match = side_codes[left].get(code_hash)
+            if left_match is None:
+                continue
+            left_source, left_code_id = left_match
+            if left_source == right_source:
+                overlap_count += 1
+                raise ValueError(
+                    f"{left}と{right}に完全重複があります: "
+                    f"{left_code_id}, {right_code_id}"
+                )
+            hash_collisions += 1
+            raise ValueError(f"SHA-256衝突があります: {code_hash}")
+        exact_overlap_by_pair[f"{left}__{right}"] = overlap_count
 
     result = {
         "groups": summaries,
-        "train_code_count_including_single_operation": len(side_codes["train"]),
-        "compositional_code_count": len(side_codes["compositional"]),
-        "train_compositional_exact_overlap": exact_overlap,
+        "code_count_by_set": {
+            side: len(codes) for side, codes in side_codes.items()
+        },
+        "all_code_count": sum(len(codes) for codes in side_codes.values()),
+        "exact_overlap_by_pair": exact_overlap_by_pair,
         "sha256_collision_count": hash_collisions,
         "all_checks_passed": True,
     }
