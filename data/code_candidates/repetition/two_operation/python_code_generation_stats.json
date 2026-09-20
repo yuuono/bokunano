@@ -1,0 +1,179 @@
+{
+  "boundary_test_count": 9,
+  "config": "/Users/s33207/git_project/bokunano/config/python_code_generation_repetition_two_operation.json",
+  "config_hash": "e13fd663fb9b4ce50621df6b305d14c3805b1a03c4beb9dd4d488eca56c4e9d5",
+  "element_names": [
+    "x",
+    "value"
+  ],
+  "generator_seed": 0,
+  "input": "/Users/s33207/git_project/bokunano/data/semantic_asts/repetition_semantic_asts.jsonl",
+  "max_source_chars": 4096,
+  "operation_count_filter": 2,
+  "output": "/Users/s33207/git_project/bokunano/data/code_candidates/repetition/two_operation/python_code_candidates.jsonl",
+  "per_spec": {
+    "repetition-000001": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000002": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000003": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000004": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000005": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000006": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000007": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000008": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000009": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000010": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000011": {
+      "available_style_count": 200,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000012": {
+      "available_style_count": 200,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000013": {
+      "available_style_count": 200,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000014": {
+      "available_style_count": 200,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000015": {
+      "available_style_count": 200,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000016": {
+      "available_style_count": 200,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000017": {
+      "available_style_count": 200,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000018": {
+      "available_style_count": 800,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000019": {
+      "available_style_count": 72,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000020": {
+      "available_style_count": 72,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000021": {
+      "available_style_count": 72,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000022": {
+      "available_style_count": 72,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000023": {
+      "available_style_count": 72,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    },
+    "repetition-000024": {
+      "available_style_count": 72,
+      "candidate_count": 20,
+      "deduplicated_count": 20,
+      "verified_count": 20
+    }
+  },
+  "python_version": "3.12.3",
+  "random_test_count": 32,
+  "random_test_seed": 0,
+  "result_names": [
+    "result",
+    "output"
+  ],
+  "shortfall_specs": [],
+  "single_operation_only": false,
+  "target_verified_per_ast": 20,
+  "timeout_seconds": 5.0,
+  "totals": {
+    "available_style_count": 10632,
+    "candidate_count": 480,
+    "deduplicated_count": 480,
+    "skipped_input_count": 1128,
+    "verified_count": 480
+  },
+  "verification_case_count": 41
+}
