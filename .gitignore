@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 .ruff_cache/
+.vscode/
+.DS_Store
 
 # 2・3操作の展開済みコード候補は、ZIPだけをGitで管理する。
 data/code_candidates/train/two_operation/python_code_candidates.jsonl
