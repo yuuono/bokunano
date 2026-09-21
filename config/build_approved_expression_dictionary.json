@@ -1,0 +1,9 @@
+{
+  "config_version": 1,
+  "candidates": "data/instruction_dictionaries/expression_candidates.jsonl",
+  "review_csv": "data/instruction_dictionaries/expression_review.csv",
+  "output": "data/instruction_dictionaries/approved_expressions.jsonl",
+  "stats": "data/instruction_dictionaries/approved_expression_stats.json",
+  "minimum_approved_per_operation": 10,
+  "maximum_approved_per_operation": 30
+}
