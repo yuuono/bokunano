@@ -1,0 +1,37 @@
+{
+  "config_version": 1,
+  "phase": "atomic_expression_candidates",
+  "input": "data/semantic_asts/atomic_semantic_asts.jsonl",
+  "operation_definitions": "config/japanese_atomic_operations.json",
+  "output": "data/instruction_dictionaries/expression_candidates.jsonl",
+  "raw_responses": "data/instruction_dictionaries/atomic_expression_raw_responses.jsonl",
+  "review_csv": "data/instruction_dictionaries/expression_review.csv",
+  "stats": "data/instruction_dictionaries/atomic_expression_generation_stats.json",
+  "prompts": {
+    "system": "prompts/japanese_instruction_generation/atomic_expression_system.txt",
+    "user": "prompts/japanese_instruction_generation/atomic_expression_user.txt"
+  },
+  "target_candidates_per_operation": 20,
+  "max_attempts_per_operation": 4,
+  "generator_version": "1",
+  "generator_seed": 20260920,
+  "max_expression_chars": 80,
+  "model": {
+    "model_id": "Qwen/Qwen3-4B-AWQ",
+    "revision": "74d4bd2bd4bff9cafc9345221320bffb08b406a3",
+    "device_map": "auto",
+    "attn_implementation": "sdpa",
+    "trust_remote_code": false,
+    "local_files_only": false,
+    "require_cuda": true,
+    "enable_thinking": false
+  },
+  "sampling": {
+    "max_new_tokens": 1024,
+    "do_sample": true,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "repetition_penalty": 1.05
+  }
+}

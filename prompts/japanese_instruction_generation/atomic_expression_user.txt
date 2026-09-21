@@ -1,0 +1,11 @@
+次の単一操作について、日本語表現を$count件生成してください。
+
+操作ID: $operation_id
+意味AST: $semantic_ast
+正準な意味: $canonical_meaning_ja
+厳守事項: $must_preserve_ja
+
+すでに生成済みの次の表現は出力しないでください。
+$existing_expressions
+
+各候補は1行で読める短い句にし、意味を保ったまま他の操作と前後に接続できる形にしてください。

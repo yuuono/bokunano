@@ -1,0 +1,149 @@
+{
+  "config_version": 1,
+  "operations": [
+    {
+      "operation_id": "atomic-000001",
+      "semantic_ast": {"filter": ["even"]},
+      "canonical_meaning_ja": "偶数だけを残す",
+      "must_preserve_ja": "整数の偶数だけを選び、奇数を除く。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000002",
+      "semantic_ast": {"filter": ["odd"]},
+      "canonical_meaning_ja": "奇数だけを残す",
+      "must_preserve_ja": "整数の奇数だけを選び、偶数を除く。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000003",
+      "semantic_ast": {"filter": ["gt_k"]},
+      "canonical_meaning_ja": "kより大きい値だけを残す",
+      "must_preserve_ja": "kと等しい値は含めない。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000004",
+      "semantic_ast": {"filter": ["ge_k"]},
+      "canonical_meaning_ja": "k以上の値だけを残す",
+      "must_preserve_ja": "kと等しい値を含める。『kより大きい』へ変えない。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000005",
+      "semantic_ast": {"filter": ["lt_k"]},
+      "canonical_meaning_ja": "kより小さい値だけを残す",
+      "must_preserve_ja": "kと等しい値は含めない。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000006",
+      "semantic_ast": {"filter": ["le_k"]},
+      "canonical_meaning_ja": "k以下の値だけを残す",
+      "must_preserve_ja": "kと等しい値を含める。『kより小さい』へ変えない。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000007",
+      "semantic_ast": {"filter": ["multiple_of_k"]},
+      "canonical_meaning_ja": "kの倍数だけを残す",
+      "must_preserve_ja": "kで割り切れる値を選ぶ。kの約数を選ぶ操作へ変えない。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000008",
+      "semantic_ast": {"filter": ["positive"]},
+      "canonical_meaning_ja": "正の値だけを残す",
+      "must_preserve_ja": "0より大きい値を選び、0を含めない。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000009",
+      "semantic_ast": {"filter": ["negative"]},
+      "canonical_meaning_ja": "負の値だけを残す",
+      "must_preserve_ja": "0より小さい値を選び、0を含めない。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000010",
+      "semantic_ast": {"filter": ["zero"]},
+      "canonical_meaning_ja": "ゼロだけを残す",
+      "must_preserve_ja": "値が0である要素だけを選ぶ。元の要素順は変えない。"
+    },
+    {
+      "operation_id": "atomic-000011",
+      "semantic_ast": {"map": ["add_k"]},
+      "canonical_meaning_ja": "各要素にkを加える",
+      "must_preserve_ja": "リストの全要素をx+kへ変換する。"
+    },
+    {
+      "operation_id": "atomic-000012",
+      "semantic_ast": {"map": ["sub_k"]},
+      "canonical_meaning_ja": "各要素からkを引く",
+      "must_preserve_ja": "リストの全要素をx-kへ変換する。k-xへ変えない。"
+    },
+    {
+      "operation_id": "atomic-000013",
+      "semantic_ast": {"map": ["mul_k"]},
+      "canonical_meaning_ja": "各要素にkを掛ける",
+      "must_preserve_ja": "リストの全要素をx*kへ変換する。"
+    },
+    {
+      "operation_id": "atomic-000014",
+      "semantic_ast": {"map": ["mul_const", 2]},
+      "canonical_meaning_ja": "各要素を2倍する",
+      "must_preserve_ja": "リストの全要素を2倍する。k倍や3倍へ変えない。"
+    },
+    {
+      "operation_id": "atomic-000015",
+      "semantic_ast": {"map": ["mul_const", 3]},
+      "canonical_meaning_ja": "各要素を3倍する",
+      "must_preserve_ja": "リストの全要素を3倍する。k倍や2倍へ変えない。"
+    },
+    {
+      "operation_id": "atomic-000016",
+      "semantic_ast": {"map": ["negate"]},
+      "canonical_meaning_ja": "各要素の符号を反転する",
+      "must_preserve_ja": "各要素xを-xへ変換する。リストの並び順を反転する操作ではない。"
+    },
+    {
+      "operation_id": "atomic-000017",
+      "semantic_ast": {"map": ["abs"]},
+      "canonical_meaning_ja": "各要素の絶対値を取る",
+      "must_preserve_ja": "リストの全要素を絶対値へ変換する。"
+    },
+    {
+      "operation_id": "atomic-000018",
+      "semantic_ast": {"map": ["square"]},
+      "canonical_meaning_ja": "各要素を二乗する",
+      "must_preserve_ja": "リストの全要素xをxの2乗へ変換する。2倍へ変えない。"
+    },
+    {
+      "operation_id": "atomic-000019",
+      "semantic_ast": {"order": "ascending"},
+      "canonical_meaning_ja": "値を昇順に並べる",
+      "must_preserve_ja": "値の小さい順に並べ替える。現在の順序を単に反転する操作ではない。"
+    },
+    {
+      "operation_id": "atomic-000020",
+      "semantic_ast": {"order": "descending"},
+      "canonical_meaning_ja": "値を降順に並べる",
+      "must_preserve_ja": "値の大きい順に並べ替える。現在の順序を単に反転する操作ではない。"
+    },
+    {
+      "operation_id": "atomic-000021",
+      "semantic_ast": {"order": "reverse"},
+      "canonical_meaning_ja": "現在の要素順を反転する",
+      "must_preserve_ja": "値を比較せず、現在の並びを後ろから前へ反転する。降順整列へ変えない。"
+    },
+    {
+      "operation_id": "atomic-000022",
+      "semantic_ast": {"slice": ["take_first_k"]},
+      "canonical_meaning_ja": "先頭からk個を取る",
+      "must_preserve_ja": "位置に基づいて先頭側の最大k個を取る。値の大小で選ばない。"
+    },
+    {
+      "operation_id": "atomic-000023",
+      "semantic_ast": {"slice": ["take_last_k"]},
+      "canonical_meaning_ja": "末尾からk個を取る",
+      "must_preserve_ja": "位置に基づいて末尾側の最大k個を取り、取得した要素の順序は保つ。値の大小で選ばない。"
+    },
+    {
+      "operation_id": "atomic-000024",
+      "semantic_ast": {"slice": ["every_other"]},
+      "canonical_meaning_ja": "先頭から1個おきに取る",
+      "must_preserve_ja": "位置0、2、4、6、…の要素を取る。値が偶数の要素を選ぶ操作ではない。"
+    }
+  ]
+}
