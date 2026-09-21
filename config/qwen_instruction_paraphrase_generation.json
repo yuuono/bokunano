@@ -1,0 +1,37 @@
+{
+  "config_version": 1,
+  "phase": "instruction_paraphrase_candidates",
+  "input": "data/instructions/rule_generated_instructions.jsonl",
+  "operation_definitions": "config/japanese_atomic_operations.json",
+  "output": "data/instructions/teacher_paraphrase_candidates.jsonl",
+  "raw_responses": "data/instructions/teacher_paraphrase_raw_responses.jsonl",
+  "review_csv": "data/instructions/teacher_paraphrase_review.csv",
+  "stats": "data/instructions/teacher_paraphrase_generation_stats.json",
+  "prompts": {
+    "system": "prompts/japanese_instruction_generation/paraphrase_system.txt",
+    "user": "prompts/japanese_instruction_generation/paraphrase_user.txt"
+  },
+  "selection_rate": 0.05,
+  "maximum_source_instructions": 1000,
+  "paraphrases_per_instruction": 1,
+  "generator_version": "1",
+  "generator_seed": 20260920,
+  "model": {
+    "model_id": "Qwen/Qwen3-4B-AWQ",
+    "revision": "74d4bd2bd4bff9cafc9345221320bffb08b406a3",
+    "device_map": "auto",
+    "attn_implementation": "sdpa",
+    "trust_remote_code": false,
+    "local_files_only": false,
+    "require_cuda": true,
+    "enable_thinking": false
+  },
+  "sampling": {
+    "max_new_tokens": 1024,
+    "do_sample": true,
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "repetition_penalty": 1.05
+  }
+}

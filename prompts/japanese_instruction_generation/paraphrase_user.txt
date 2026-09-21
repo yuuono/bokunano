@@ -1,0 +1,15 @@
+次の指示文を$count件言い換えてください。
+
+意味AST:
+$semantic_ast
+
+操作の正準な意味と順番:
+$operation_sequence
+
+変更してはいけない事項:
+$must_preserve_ja
+
+元の指示文:
+$source_instruction
+
+意味と処理順を完全に保った候補だけをJSONで返してください。
