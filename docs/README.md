@@ -3,6 +3,7 @@
 ```text
 docs/
 ├── policies/        # データ分割、コード生成、選抜、評価の方針
+├── procedures/      # データ生成作業の具体的な手順
 ├── specifications/  # 意味ASTと参照インタプリタの仕様
 └── results/         # 実行済みの生成・検証結果
 ```
@@ -16,6 +17,10 @@ docs/
 - [`policies/python_code_generation_policy.md`](policies/python_code_generation_policy.md): Pythonコード生成
 - [`policies/code_duplicate_exclusion_policy.md`](policies/code_duplicate_exclusion_policy.md): 生成コードの完全重複除外
 - [`policies/data_record_policy.md`](policies/data_record_policy.md): データレコードと選抜
+
+## 手順
+
+- [`procedures/japanese_instruction_generation.md`](procedures/japanese_instruction_generation.md): 日本語指示の候補生成、人間承認、ルール結合、教師言い換え
 
 ## 仕様
 
