@@ -105,90 +105,155 @@ COMBINATION_CASES = (
 )
 
 
+# この工程を担当する関数を定義する
 def _call_name(node: ast.Call):
     """単純な関数呼び出しを検査用の名前へ変換する。"""
 
+    # 条件を満たす場合だけ次の処理を行う
     if isinstance(node.func, ast.Name):
+        # 処理結果を呼び出し元へ返す
         return node.func.id
+    # 条件を満たす場合だけ次の処理を行う
     if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name):
+        # 処理結果を呼び出し元へ返す
         return f"{node.func.value.id}.{node.func.attr}"
+    # 処理結果を呼び出し元へ返す
     return None
 
 
+# この工程を担当する関数を定義する
 def verify_implementation_separation() -> None:
     """4個の操作ハンドラが規定した独立経路を守っているか確認する。"""
 
+    # sourceへこの工程で使用する値を設定する
     source = REFERENCE_PATH.read_text(encoding="utf-8")
+    # treeへこの工程で使用する値を設定する
     tree = ast.parse(source, filename=str(REFERENCE_PATH))
+    # handler_namesへこの工程で使用する値を設定する
     handler_names = {"_apply_filter", "_apply_map", "_apply_order", "_apply_slice"}
+    # handlersへこの工程で使用する値を設定する
     handlers = {
+        # 次の値または処理を現在の構造へ組み込む
         node.name: node
+        # 対象を一件ずつ取り出して処理する
         for node in tree.body
+        # 条件を満たす場合だけ次の処理を行う
         if isinstance(node, ast.FunctionDef) and node.name in handler_names
     }
+    # 条件を満たす場合だけ次の処理を行う
     if set(handlers) != handler_names:
+        # missingへこの工程で使用する値を設定する
         missing = sorted(handler_names - set(handlers))
+        # 不正な状態を例外として通知して処理を停止する
         raise AssertionError(f"参照実装の操作ハンドラが不足しています: {missing}")
 
+    # forbidden_nodesへこの工程で使用する値を設定する
     forbidden_nodes = (ast.Lambda, ast.ListComp, ast.Slice)
+    # forbidden_callsへこの工程で使用する値を設定する
     forbidden_calls = {
+        # この処理で扱う文字列を一覧へ加える
         "abs",
+        # この処理で扱う文字列を一覧へ加える
         "compile",
+        # この処理で扱う文字列を一覧へ加える
         "eval",
+        # この処理で扱う文字列を一覧へ加える
         "exec",
+        # この処理で扱う文字列を一覧へ加える
         "heapq.nlargest",
+        # この処理で扱う文字列を一覧へ加える
         "heapq.nsmallest",
+        # この処理で扱う文字列を一覧へ加える
         "reversed",
+        # この処理で扱う文字列を一覧へ加える
         "sorted",
     }
+    # forbidden_binary_operatorsへこの工程で使用する値を設定する
     forbidden_binary_operators = (ast.Add, ast.Sub, ast.Mult, ast.Pow, ast.Mod)
+    # required_callsへこの工程で使用する値を設定する
     required_calls = {
+        # 出力レコードの項目と値を設定する
         "_apply_filter": {"itertools.compress", "map"},
+        # 出力レコードの項目と値を設定する
         "_apply_map": {"map"},
+        # 出力レコードの項目と値を設定する
         "_apply_order": {"deque", "heapq.heapify", "heapq.heappop"},
+        # 出力レコードの項目と値を設定する
         "_apply_slice": {"deque", "itertools.islice"},
     }
 
+    # 対象を一件ずつ取り出して処理する
     for handler_name, handler in handlers.items():
+        # actual_callsへこの工程で使用する値を設定する
         actual_calls = {
+            # 次の値または処理を現在の構造へ組み込む
             call_name
+            # 対象を一件ずつ取り出して処理する
             for node in ast.walk(handler)
+            # 条件を満たす場合だけ次の処理を行う
             if isinstance(node, ast.Call)
+            # 条件を満たす場合だけ次の処理を行う
             if (call_name := _call_name(node)) is not None
         }
+        # missing_callsへこの工程で使用する値を設定する
         missing_calls = required_calls[handler_name] - actual_calls
+        # 条件を満たす場合だけ次の処理を行う
         if missing_calls:
+            # 不正な状態を例外として通知して処理を停止する
             raise AssertionError(
+                # 次の値または処理を現在の構造へ組み込む
                 f"{handler_name} が規定の参照経路を使用していません: "
+                # 次の値または処理を現在の構造へ組み込む
                 f"{sorted(missing_calls)}"
             )
 
+        # 対象を一件ずつ取り出して処理する
         for node in ast.walk(handler):
+            # 条件を満たす場合だけ次の処理を行う
             if isinstance(node, forbidden_nodes):
+                # 不正な状態を例外として通知して処理を停止する
                 raise AssertionError(
+                    # 次の値または処理を現在の構造へ組み込む
                     f"{handler_name} が生成対象の構文を直接使用しています: "
+                    # 次の値または処理を現在の構造へ組み込む
                     f"{type(node).__name__}"
                 )
+            # 条件を満たす場合だけ次の処理を行う
             if isinstance(node, ast.Call) and _call_name(node) in forbidden_calls:
+                # 不正な状態を例外として通知して処理を停止する
                 raise AssertionError(
+                    # 次の値または処理を現在の構造へ組み込む
                     f"{handler_name} が禁止された関数を呼んでいます: "
+                    # 次の値または処理を現在の構造へ組み込む
                     f"{_call_name(node)}"
                 )
+            # 条件を満たす場合だけ次の処理を行う
             if isinstance(node, ast.BinOp) and isinstance(
+                # 次の値または処理を現在の構造へ組み込む
                 node.op, forbidden_binary_operators
+            # 次の値または処理を現在の構造へ組み込む
             ):
+                # 不正な状態を例外として通知して処理を停止する
                 raise AssertionError(
+                    # 次の値または処理を現在の構造へ組み込む
                     f"{handler_name} が生成対象の演算子を直接使用しています: "
+                    # 次の値または処理を現在の構造へ組み込む
                     f"{type(node.op).__name__}"
                 )
+            # 条件を満たす場合だけ次の処理を行う
             if handler_name in {"_apply_filter", "_apply_map"} and isinstance(
+                # 次の値または処理を現在の構造へ組み込む
                 node, ast.For
+            # 次の値または処理を現在の構造へ組み込む
             ):
+                # 不正な状態を例外として通知して処理を停止する
                 raise AssertionError(
+                    # 次の値または処理を現在の構造へ組み込む
                     f"{handler_name} が集約にforループを使用しています"
                 )
 
 
+# この工程を担当する関数を定義する
 def load_jsonl(path: Path) -> list[dict]:
     # UTF-8で開いて1行ずつ読む
     with path.open(encoding="utf-8") as source:
@@ -196,6 +261,7 @@ def load_jsonl(path: Path) -> list[dict]:
         return [json.loads(line) for line in source if line.strip()]
 
 
+# この工程を担当する関数を定義する
 def verify_atomic_operations(records: list[dict]) -> None:
     # 単独操作は24件ちょうどのはず
     if len(records) != 24:
@@ -214,6 +280,7 @@ def verify_atomic_operations(records: list[dict]) -> None:
         if actual != expected:
             # 不一致なら実際と期待の両方を示して中断する
             raise AssertionError(
+                # 次の値または処理を現在の構造へ組み込む
                 f"{record['spec_id']} の結果が不一致です: {actual} != {expected}"
             )
         # 渡したリストが書き換えられていないか確認する
@@ -222,6 +289,7 @@ def verify_atomic_operations(records: list[dict]) -> None:
             raise AssertionError(f"{record['spec_id']} が入力xsを変更しました")
 
 
+# この工程を担当する関数を定義する
 def verify_combinations(records: list[dict]) -> Counter:
     # 24 + 24*23 + 24*23*22 = 12,720件のはず
     if len(records) != 12_720:
@@ -263,6 +331,7 @@ def verify_combinations(records: list[dict]) -> Counter:
     return operation_counts
 
 
+# この工程を担当する関数を定義する
 def main() -> None:
     # 参照側が規定した実装経路を守っていることを確認する
     verify_implementation_separation()
@@ -294,4 +363,5 @@ def main() -> None:
 
 # スクリプトとして直接実行されたときだけmainを走らせる
 if __name__ == "__main__":
+    # 次の値または処理を現在の構造へ組み込む
     main()

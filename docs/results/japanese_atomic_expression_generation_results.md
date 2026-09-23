@@ -12,7 +12,7 @@ uv run --python 3.12.12 scripts/instruction_generation/generate_atomic_expressio
 
 モデルは`local_files_only=true`で読み込み、Hubへのモデル取得は行っていない。途中で残っていた旧条件の生成だけは利用者の指示で停止したが、それ以外の実行中スクリプトやプロセスには停止シグナルを送っていない。
 
-実行時の環境は、現在`pyproject.toml`の`instruction-generation` dependency group、`uv.lock`、`.python-version`へ固定している。別環境では`uv sync --group instruction-generation`で同じ直接依存・推移依存とPython 3.12.12を復元し、`uv run --group instruction-generation python ...`で実行する。
+実行時の環境は、現在`pyproject.toml`の`instruction-generation` dependency group、`uv.lock`、`.python-version`へ固定している。別環境では`uv sync --python 3.12.12 --group instruction-generation`で同じ直接依存・推移依存とPython 3.12.12を復元し、`uv run --group instruction-generation --python 3.12.12 python ...`で実行する。
 
 ## 候補の形式
 

@@ -131,5 +131,5 @@
 プロジェクトのルートで次を実行すると、同じ組み合わせを再生成できる。
 
 ```bash
-python3 scripts/semantic_asts/generate_combined_semantic_asts.py
+uv run --python 3.12.12 python scripts/semantic_asts/generate_combined_semantic_asts.py
 ```

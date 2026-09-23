@@ -60,5 +60,5 @@ unzip data/archives/evaluation_python_code_candidates_2026-09-20.zip -d .
 展開後は次で、件数、保存済み検証結果、コード全文の完全重複を再確認できる。
 
 ```bash
-uv run python scripts/validation/verify_multi_operation_code_candidates.py
+uv run --python 3.12.12 python scripts/validation/verify_multi_operation_code_candidates.py
 ```

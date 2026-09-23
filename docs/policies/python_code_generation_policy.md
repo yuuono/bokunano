@@ -462,7 +462,7 @@ list(reversed(values))
 設定の項目、Pythonバージョン、ロックファイル、入力ファイルを検査する場合は、次を実行する。このコマンドはコード候補を生成しない。
 
 ```bash
-uv run python scripts/code_generation/generate_python_code_candidates.py \
+uv run --python 3.12.12 python scripts/code_generation/generate_python_code_candidates.py \
   --config config/python_code_generation.json \
   --validate-config
 ```
@@ -470,7 +470,7 @@ uv run python scripts/code_generation/generate_python_code_candidates.py \
 正式生成では次を実行する。生成条件の個別引数は`--config`と併用できず、JSONの値だけを使う。
 
 ```bash
-uv run python scripts/code_generation/generate_python_code_candidates.py \
+uv run --python 3.12.12 python scripts/code_generation/generate_python_code_candidates.py \
   --config config/python_code_generation.json
 ```
 

@@ -90,7 +90,7 @@ data/
 最初に、モデルを読み込まず設定を確認する。
 
 ```bash
-uv run --group instruction-generation python scripts/instruction_generation/generate_atomic_expression_candidates.py \
+uv run --group instruction-generation --python 3.12.12 python scripts/instruction_generation/generate_atomic_expression_candidates.py \
   --config config/qwen_atomic_expression_generation.json \
   --validate-config
 ```
@@ -117,7 +117,7 @@ RTX 5090環境で確認済みの実行時バージョンは次のとおりであ
 システムのPython 3.12.3には`Python.h`がなく、Tritonの実行時コンパイルに失敗したため使用しない。また、PyTorch 2.6.0はRTX 5090のCUDA capability `sm_120`に対応していない。TransformersはAutoAWQ 0.2.9とのAPI互換性を保つため4.51.3へ固定する。
 
 ```bash
-uv run --group instruction-generation python scripts/instruction_generation/generate_atomic_expression_candidates.py \
+uv run --group instruction-generation --python 3.12.12 python scripts/instruction_generation/generate_atomic_expression_candidates.py \
   --config config/qwen_atomic_expression_generation.json
 ```
 
@@ -143,7 +143,7 @@ Qwen3は`enable_thinking=false`で使用する。標準設定では各操作30�
 既存の確認CSVを除外元として使う場合は、次のように指定する。
 
 ```bash
-uv run --group instruction-generation python scripts/instruction_generation/generate_atomic_expression_candidates.py \
+uv run --group instruction-generation --python 3.12.12 python scripts/instruction_generation/generate_atomic_expression_candidates.py \
   --config config/qwen_atomic_expression_generation_every_other.json \
   --operation-id atomic-000024 \
   --existing-review-csv data/instruction_dictionaries/expression_review_approved_v2.csv \
@@ -159,7 +159,7 @@ uv run --group instruction-generation python scripts/instruction_generation/gene
 既存の候補出力を明示的に置き換えて再生成する場合だけ、次のように`--overwrite`を付ける。
 
 ```bash
-uv run --group instruction-generation python scripts/instruction_generation/generate_atomic_expression_candidates.py \
+uv run --group instruction-generation --python 3.12.12 python scripts/instruction_generation/generate_atomic_expression_candidates.py \
   --config config/qwen_atomic_expression_generation.json \
   --overwrite
 ```
@@ -299,7 +299,7 @@ k以上の値だけを残す
 確認後、次を実行して承認済み辞書を作る。
 
 ```bash
-uv run python scripts/instruction_generation/build_approved_expression_dictionary.py \
+uv run --python 3.12.12 python scripts/instruction_generation/build_approved_expression_dictionary.py \
   --config config/build_approved_expression_dictionary.json
 ```
 
@@ -479,7 +479,7 @@ op3 connective: 降順に並べて
 `data/instructions/rule_generated_instructions.jsonl`を作成した後、CUDA対応環境で次を実行する。ここでも同じ`/home/ono_yusuke/Qwen3-4B-AWQ`のローカル重みだけを読み込む。
 
 ```bash
-uv run --group instruction-generation python scripts/instruction_generation/generate_instruction_paraphrase_candidates.py \
+uv run --group instruction-generation --python 3.12.12 python scripts/instruction_generation/generate_instruction_paraphrase_candidates.py \
   --config config/qwen_instruction_paraphrase_generation.json
 ```
 

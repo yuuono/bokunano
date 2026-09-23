@@ -45,7 +45,7 @@
 再確認には次を使用する。
 
 ```bash
-uv run python scripts/validation/verify_multi_operation_code_candidates.py
+uv run --python 3.12.12 python scripts/validation/verify_multi_operation_code_candidates.py
 ```
 
 ## 設定JSON

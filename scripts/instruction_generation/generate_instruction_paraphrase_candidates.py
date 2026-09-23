@@ -1,5 +1,6 @@
 """ルール生成指示の一部をQwen3で言い換える。"""
 
+# 必要な定義を対象モジュールから読み込む
 from __future__ import annotations
 
 # コマンドライン引数を解析するために使う
@@ -26,13 +27,21 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.instruction_generation.qwen_teacher import (  # noqa: E402
+    # 次の値または処理を現在の構造へ組み込む
     QwenTeacher,
+    # 次の値または処理を現在の構造へ組み込む
     canonical_json,
+    # 次の値または処理を現在の構造へ組み込む
     parse_json_string_list,
+    # 次の値または処理を現在の構造へ組み込む
     prompt_hash,
+    # 次の値または処理を現在の構造へ組み込む
     render_prompt,
+    # 次の値または処理を現在の構造へ組み込む
     sha256_text,
+    # 次の値または処理を現在の構造へ組み込む
     validate_model_config,
+    # 次の値または処理を現在の構造へ組み込む
     validate_sampling_config,
 )
 
@@ -41,17 +50,22 @@ from scripts.instruction_generation.qwen_teacher import (  # noqa: E402
 GENERATOR_VERSION = "1"
 
 
+# この工程を担当する関数を定義する
 def parse_args() -> argparse.Namespace:
     # このスクリプト用の引数解析器を作る
     parser = argparse.ArgumentParser(
+        # descriptionへこの工程で使用する値を設定する
         description="ルール生成済み日本語指示の一部をQwen3で言い換えます。"
     )
     # 全文言い換えの生成条件を持つ設定JSONを受け取る
     parser.add_argument("--config", required=True, type=Path)
     # clone先でローカルモデルの配置場所だけを差し替えられるようにする
     parser.add_argument(
+        # この処理で扱う文字列を一覧へ加える
         "--model-path",
+        # typeへこの工程で使用する値を設定する
         type=Path,
+        # helpへこの工程で使用する値を設定する
         help=(
             "設定JSONのmodel.model_pathを今回の実行だけ上書きする"
             "ローカルQwenモデルのディレクトリです。"
@@ -65,6 +79,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+# この工程を担当する関数を定義する
 def main() -> None:
     # コマンドライン引数を取得する
     args = parse_args()
@@ -80,9 +95,13 @@ def main() -> None:
     source_records = _read_jsonl(settings["input"])
     # 全件ではなく設定割合だけを決定的に選ぶ
     selected = _select_sources(
+        # 次の値または処理を現在の構造へ組み込む
         source_records,
+        # rateへこの工程で使用する値を設定する
         rate=settings["selection_rate"],
+        # maximumへこの工程で使用する値を設定する
         maximum=settings["maximum_source_instructions"],
+        # seedへこの工程で使用する値を設定する
         seed=settings["generator_seed"],
     )
 
@@ -90,27 +109,35 @@ def main() -> None:
     if args.validate_config:
         # 入力件数と言い換え対象件数を表示する
         print(
+            # 次の値または処理を現在の構造へ組み込む
             f"設定は有効です: input={len(source_records)}, selected={len(selected)}"
         )
         # 教師生成へ進まず終了する
         return
     # 抽出結果が0件なら設定ミスの可能性があるため停止する
     if not selected:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("言い換え対象が0件です。selection_rateまたは入力を確認してください")
 
     # この実行で作成する4つの出力パスをまとめる
     output_paths = [
+        # 次の値または処理を現在の構造へ組み込む
         settings["output"],
+        # 次の値または処理を現在の構造へ組み込む
         settings["raw_responses"],
+        # 次の値または処理を現在の構造へ組み込む
         settings["review_csv"],
+        # 次の値または処理を現在の構造へ組み込む
         settings["stats"],
     ]
     # すでに存在する出力パスだけを抽出する
     existing = [str(path) for path in output_paths if path.exists()]
     # 上書き指定なしで既存出力があれば誤消去を防ぐため停止する
     if existing and not args.overwrite:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError(
             "既存出力があります。置き換える場合は--overwriteを指定してください: "
+            # 次の値または処理を現在の構造へ組み込む
             + ", ".join(existing)
         )
 
@@ -145,28 +172,40 @@ def main() -> None:
             definition = definitions.get(canonical_json(operation))
             # 未定義操作があれば誤った言い換えを防ぐため停止する
             if definition is None:
+                # 不正な状態を例外として通知して処理を停止する
                 raise ValueError(
+                    # 次の値または処理を現在の構造へ組み込む
                     f"操作定義にない意味ASTです: {instruction_id}: {operation!r}"
                 )
             # 操作位置と正準意味をプロンプト用一覧へ追加する
             operation_details.append(
+                # 次の値または処理を現在の構造へ組み込む
                 f"{position}. {definition['canonical_meaning_ja']}"
             )
             # 操作位置と厳守事項をプロンプト用一覧へ追加する
             preserve_details.append(
+                # 次の値または処理を現在の構造へ組み込む
                 f"{position}. {definition['must_preserve_ja']}"
             )
 
         # AST、操作順、厳守事項、元文をuser promptへ埋め込む
         user_prompt = render_prompt(
+            # 次の値または処理を現在の構造へ組み込む
             settings["user_prompt"],
+            # 次の値または処理を現在の構造へ組み込む
             {
+                # 出力レコードの項目と値を設定する
                 "count": settings["paraphrases_per_instruction"],
+                # 出力レコードの項目と値を設定する
                 "semantic_ast": canonical_json(semantic_ast),
+                # 出力レコードの項目と値を設定する
                 "operation_sequence": "\n".join(operation_details),
+                # 出力レコードの項目と値を設定する
                 "must_preserve_ja": "\n".join(preserve_details),
+                # 出力レコードの項目と値を設定する
                 "source_instruction": instruction,
             },
+        # 次の値または処理を現在の構造へ組み込む
         ).strip()
         # 実際に使用するsystem/user promptからハッシュを計算する
         current_prompt_hash = prompt_hash(system_prompt, user_prompt)
@@ -176,25 +215,39 @@ def main() -> None:
         generated_at = datetime.now(timezone.utc).isoformat()
         # Qwen3を非thinkingモードで実行して言い換え候補を得る
         result = teacher.generate(
+            # system_promptへこの工程で使用する値を設定する
             system_prompt=system_prompt,
+            # user_promptへこの工程で使用する値を設定する
             user_prompt=user_prompt,
+            # samplingへこの工程で使用する値を設定する
             sampling=settings["sampling"],
+            # seedへこの工程で使用する値を設定する
             seed=seed,
         )
         # 解析成否にかかわらず保存する生出力レコードを作る
         raw_record: dict[str, Any] = {
+            # 出力レコードの項目と値を設定する
             "source_instruction_id": instruction_id,
+            # 出力レコードの項目と値を設定する
             "seed": seed,
+            # 出力レコードの項目と値を設定する
             "prompt_hash": current_prompt_hash,
+            # 出力レコードの項目と値を設定する
             "system_prompt": system_prompt,
+            # 出力レコードの項目と値を設定する
             "user_prompt": user_prompt,
+            # 出力レコードの項目と値を設定する
             "raw_response": result.text,
+            # 出力レコードの項目と値を設定する
             "generated_at": generated_at,
+            # 出力レコードの項目と値を設定する
             "parsed_ok": False,
+            # 出力レコードの項目と値を設定する
             "parse_error": None,
         }
         # Qwen出力をparaphrases文字列配列として解析する
         try:
+            # paraphrasesへこの工程で使用する値を設定する
             paraphrases = parse_json_string_list(result.text, "paraphrases")
         # JSON形式が不正な場合も生出力と原因を保存して次へ進む
         except ValueError as error:
@@ -204,6 +257,7 @@ def main() -> None:
             raw_records.append(raw_record)
             # 元指示IDと失敗理由を集計へ追加する
             failures.append(
+                # 次の値または処理を現在の構造へ組み込む
                 {"source_instruction_id": instruction_id, "reason": str(error)}
             )
             # 次の元指示へ進む
@@ -219,20 +273,27 @@ def main() -> None:
         for paraphrase in paraphrases:
             # 元文と完全一致する候補や同一応答内の重複を除外する
             if paraphrase == instruction or paraphrase in unique_paraphrases:
+                # 現在の対象を終えて次の対象へ進む
                 continue
             # thinkingタグまたはコードフェンスが混入した候補を除外する
             if "<think>" in paraphrase or "```" in paraphrase:
+                # 現在の対象を終えて次の対象へ進む
                 continue
             # 形式検査を通過した言い換え候補を追加する
             unique_paraphrases.append(paraphrase)
             # 設定件数に達したら余分な候補は採用しない
             if len(unique_paraphrases) >= settings["paraphrases_per_instruction"]:
+                # 条件を満たしたため繰り返しを終了する
                 break
         # 固有候補を一件も得られなかった場合を失敗として記録する
         if not unique_paraphrases:
+            # 次の値または処理を現在の構造へ組み込む
             failures.append(
+                # 次の値または処理を現在の構造へ組み込む
                 {
+                    # 出力レコードの項目と値を設定する
                     "source_instruction_id": instruction_id,
+                    # 出力レコードの項目と値を設定する
                     "reason": "固有の言い換え候補を取得できませんでした",
                 }
             )
@@ -243,30 +304,52 @@ def main() -> None:
         for paraphrase in unique_paraphrases:
             # 元指示IDと候補本文から一意な候補IDを作る
             candidate_id = "instruction-teacher-candidate-" + sha256_text(
+                # 次の値または処理を現在の構造へ組み込む
                 instruction_id + "\0" + paraphrase
             )
             # 元文、AST、モデル情報を含む候補レコードを追加する
             candidates.append(
+                # 次の値または処理を現在の構造へ組み込む
                 {
+                    # 出力レコードの項目と値を設定する
                     "instruction_id": candidate_id,
+                    # 出力レコードの項目と値を設定する
                     "source_instruction_id": instruction_id,
+                    # 出力レコードの項目と値を設定する
                     "spec_id": source.get("spec_id"),
+                    # 出力レコードの項目と値を設定する
                     "semantic_ast": semantic_ast,
+                    # 出力レコードの項目と値を設定する
                     "source_instruction_ja": instruction,
+                    # 出力レコードの項目と値を設定する
                     "instruction_ja": paraphrase,
+                    # 出力レコードの項目と値を設定する
                     "instruction_source": "teacher",
+                    # 出力レコードの項目と値を設定する
                     "dictionary": source.get("dictionary"),
+                    # 出力レコードの項目と値を設定する
                     "review_status": "pending",
+                    # 出力レコードの項目と値を設定する
                     "teacher_model": settings["model"]["model_id"],
+                    # 出力レコードの項目と値を設定する
                     "teacher_revision": result.resolved_revision,
+                    # 出力レコードの項目と値を設定する
                     "teacher_quantization": "AWQ 4-bit",
+                    # 出力レコードの項目と値を設定する
                     "teacher_library": "transformers",
+                    # 出力レコードの項目と値を設定する
                     "teacher_library_version": result.transformers_version,
+                    # 出力レコードの項目と値を設定する
                     "teacher_torch_version": result.torch_version,
+                    # 出力レコードの項目と値を設定する
                     "teacher_seed": seed,
+                    # 出力レコードの項目と値を設定する
                     "teacher_sampling": settings["sampling"],
+                    # 出力レコードの項目と値を設定する
                     "teacher_generated_at": generated_at,
+                    # 出力レコードの項目と値を設定する
                     "prompt_hash": current_prompt_hash,
+                    # 出力レコードの項目と値を設定する
                     "text_hash": sha256_text(paraphrase),
                 }
             )
@@ -279,88 +362,142 @@ def main() -> None:
     _write_review_csv(settings["review_csv"], candidates)
     # 実行条件、件数、失敗内容を持つ集計レコードを作る
     stats = {
+        # 出力レコードの項目と値を設定する
         "phase": "instruction_paraphrase_candidates",
+        # 出力レコードの項目と値を設定する
         "input_count": len(source_records),
+        # 出力レコードの項目と値を設定する
         "selected_source_count": len(selected),
+        # 出力レコードの項目と値を設定する
         "candidate_count": len(candidates),
+        # 出力レコードの項目と値を設定する
         "failure_count": len(failures),
+        # 出力レコードの項目と値を設定する
         "failures": failures,
+        # 出力レコードの項目と値を設定する
         "selection_rate": settings["selection_rate"],
+        # 出力レコードの項目と値を設定する
         "maximum_source_instructions": settings["maximum_source_instructions"],
+        # 出力レコードの項目と値を設定する
         "model_id": settings["model"]["model_id"],
+        # 出力レコードの項目と値を設定する
         "model_path": teacher.model_path,
+        # 出力レコードの項目と値を設定する
         "requested_revision": settings["model"]["revision"],
+        # 出力レコードの項目と値を設定する
         "resolved_revision": teacher.resolved_revision,
+        # 出力レコードの項目と値を設定する
         "enable_thinking": False,
+        # 出力レコードの項目と値を設定する
         "sampling": settings["sampling"],
+        # 出力レコードの項目と値を設定する
         "generator_version": GENERATOR_VERSION,
+        # 出力レコードの項目と値を設定する
         "generator_seed": settings["generator_seed"],
+        # 出力レコードの項目と値を設定する
         "config_hash": sha256_text(config_text),
+        # 出力レコードの項目と値を設定する
         "generated_at": datetime.now(timezone.utc).isoformat(),
     }
     # 集計レコードを整形JSONとして保存する
     _write_json(settings["stats"], stats)
     # 対象件数、候補件数、失敗件数を表示する
     print(
+        # 次の値または処理を現在の構造へ組み込む
         f"言い換え候補生成完了: selected={len(selected)}, "
+        # 次の値または処理を現在の構造へ組み込む
         f"candidates={len(candidates)}, failures={len(failures)}"
     )
     # 作成者本人が次に開く確認用CSVの場所を表示する
     print(f"確認用CSV: {settings['review_csv']}")
 
 
+# この工程を担当する関数を定義する
 def _override_model_path(
+    # 次の値または処理を現在の構造へ組み込む
     config: dict[str, Any], model_path: Path | None
+# 次の値または処理を現在の構造へ組み込む
 ) -> dict[str, Any]:
     """CLI指定がある場合だけローカルモデルの配置場所を上書きする。"""
 
+    # 条件を満たす場合だけ次の処理を行う
     if model_path is None:
+        # 処理結果を呼び出し元へ返す
         return config
+    # modelへこの工程で使用する値を設定する
     model = config.get("model")
+    # 条件を満たす場合だけ次の処理を行う
     if not isinstance(model, dict):
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("設定のmodelはobjectにしてください")
+    # overriddenへこの工程で使用する値を設定する
     overridden = dict(config)
+    # 次の値または処理を現在の構造へ組み込む
     overridden["model"] = dict(model)
+    # 次の値または処理を現在の構造へ組み込む
     overridden["model"]["model_path"] = str(model_path.resolve())
+    # 処理結果を呼び出し元へ返す
     return overridden
 
 
+# この工程を担当する関数を定義する
 def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     # 設定JSONに必要なキーを厳密に列挙する
     expected = {
+        # この処理で扱う文字列を一覧へ加える
         "config_version",
+        # この処理で扱う文字列を一覧へ加える
         "phase",
+        # この処理で扱う文字列を一覧へ加える
         "input",
+        # この処理で扱う文字列を一覧へ加える
         "operation_definitions",
+        # この処理で扱う文字列を一覧へ加える
         "output",
+        # この処理で扱う文字列を一覧へ加える
         "raw_responses",
+        # この処理で扱う文字列を一覧へ加える
         "review_csv",
+        # この処理で扱う文字列を一覧へ加える
         "stats",
+        # この処理で扱う文字列を一覧へ加える
         "prompts",
+        # この処理で扱う文字列を一覧へ加える
         "selection_rate",
+        # この処理で扱う文字列を一覧へ加える
         "maximum_source_instructions",
+        # この処理で扱う文字列を一覧へ加える
         "paraphrases_per_instruction",
+        # この処理で扱う文字列を一覧へ加える
         "generator_version",
+        # この処理で扱う文字列を一覧へ加える
         "generator_seed",
+        # この処理で扱う文字列を一覧へ加える
         "model",
+        # この処理で扱う文字列を一覧へ加える
         "sampling",
     }
     # 設定キーが過不足なく一致することを確認する
     if set(config) != expected:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("言い換え生成設定の項目が不正です")
     # 対応する設定形式のバージョンを確認する
     if config["config_version"] != 1:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("config_versionは1にしてください")
     # このスクリプト用の処理段階名であることを確認する
     if config["phase"] != "instruction_paraphrase_candidates":
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("phaseが不正です")
     # 設定と実装の生成器バージョンが一致することを確認する
     if config["generator_version"] != GENERATOR_VERSION:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("generator_versionが実装と一致しません")
     # promptファイル設定を辞書として取得する
     prompts = _required_mapping(config, "prompts")
     # systemとuser以外のpromptキーを許可しない
     if set(prompts) != {"system", "user"}:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("promptsにはsystemとuserだけを指定してください")
     # モデル設定をモデル読込前に検査する
     model = validate_model_config(_required_mapping(config, "model"))
@@ -369,12 +506,19 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     settings = dict(config)
     # 入出力に使う各パスを順番に絶対パスへ変換する
     for key in (
+        # この処理で扱う文字列を一覧へ加える
         "input",
+        # この処理で扱う文字列を一覧へ加える
         "operation_definitions",
+        # この処理で扱う文字列を一覧へ加える
         "output",
+        # この処理で扱う文字列を一覧へ加える
         "raw_responses",
+        # この処理で扱う文字列を一覧へ加える
         "review_csv",
+        # この処理で扱う文字列を一覧へ加える
         "stats",
+    # 次の値または処理を現在の構造へ組み込む
     ):
         # パス設定を文字列として検査してプロジェクト基準へ変換する
         settings[key] = _project_path(_required_string(config, key))
@@ -386,17 +530,20 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     settings["model"] = model
     # sampling設定を検査して解決済み設定へ格納する
     settings["sampling"] = validate_sampling_config(
+        # 次の値または処理を現在の構造へ組み込む
         _required_mapping(config, "sampling")
     )
     # 生成開始前から必要な入力ファイルを順番に確認する
     for key in ("input", "operation_definitions", "system_prompt", "user_prompt"):
         # 入力ファイルがなければモデルを読み込む前に停止する
         if not settings[key].is_file():
+            # 不正な状態を例外として通知して処理を停止する
             raise ValueError(f"入力ファイルが見つかりません: {settings[key]}")
     # 全ルール生成指示から選ぶ割合を取得する
     rate = config["selection_rate"]
     # 選択割合を0より大きく1以下の数へ制限する
     if isinstance(rate, bool) or not isinstance(rate, (int, float)) or not 0 < rate <= 1:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("selection_rateは0より大きく1以下にしてください")
     # 言い換える元指示数の上限を確認する
     _required_int(config, "maximum_source_instructions")
@@ -408,6 +555,7 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     return settings
 
 
+# この工程を担当する関数を定義する
 def _load_operation_definitions(path: Path) -> dict[str, dict[str, str]]:
     # 24操作の日本語定義JSONを読み込む
     value, _ = _load_json_object(path)
@@ -415,6 +563,7 @@ def _load_operation_definitions(path: Path) -> dict[str, dict[str, str]]:
     operations = value.get("operations")
     # 設定バージョンと配列形式を確認する
     if value.get("config_version") != 1 or not isinstance(operations, list):
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("操作定義が不正です")
     # 意味ASTから日本語定義を引ける辞書を作る
     result: dict[str, dict[str, str]] = {}
@@ -422,26 +571,33 @@ def _load_operation_definitions(path: Path) -> dict[str, dict[str, str]]:
     for operation in operations:
         # 各操作定義がJSONオブジェクトであることを確認する
         if not isinstance(operation, dict):
+            # 不正な状態を例外として通知して処理を停止する
             raise ValueError("操作定義の各要素はオブジェクトにしてください")
         # 意味ASTを決定的JSONにして検索キーを作る
         key = canonical_json(operation.get("semantic_ast"))
         # 正準意味と厳守事項を検索辞書へ登録する
         result[key] = {
+            # 出力レコードの項目と値を設定する
             "canonical_meaning_ja": _required_string(
+                # 次の値または処理を現在の構造へ組み込む
                 operation, "canonical_meaning_ja"
             ),
+            # 出力レコードの項目と値を設定する
             "must_preserve_ja": _required_string(operation, "must_preserve_ja"),
         }
     # 重複のない24操作が登録されたことを確認する
     if len(result) != 24:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("操作定義には重複のない24操作が必要です")
     # 意味ASTをキーとする操作定義辞書を返す
     return result
 
 
+# この工程を担当する関数を定義する
 def _normalize_sequence(semantic_ast: object) -> list[object]:
     # 意味ASTがJSONオブジェクトであることを確認する
     if not isinstance(semantic_ast, dict):
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("semantic_astはオブジェクトにしてください")
     # sequenceだけを持つ意味ASTは複数操作として扱う
     if set(semantic_ast) == {"sequence"}:
@@ -449,6 +605,7 @@ def _normalize_sequence(semantic_ast: object) -> list[object]:
         sequence = semantic_ast["sequence"]
         # 課題範囲である1〜3操作の配列か確認する
         if not isinstance(sequence, list) or not 1 <= len(sequence) <= 3:
+            # 不正な状態を例外として通知して処理を停止する
             raise ValueError("sequenceには1〜3操作が必要です")
         # 呼び出し元で変更されても元ASTを壊さないようコピーして返す
         return list(sequence)
@@ -456,12 +613,19 @@ def _normalize_sequence(semantic_ast: object) -> list[object]:
     return [semantic_ast]
 
 
+# この工程を担当する関数を定義する
 def _select_sources(
+    # 次の値または処理を現在の構造へ組み込む
     records: list[dict[str, Any]],
+    # 次の値または処理を現在の構造へ組み込む
     *,
+    # 次の値または処理を現在の構造へ組み込む
     rate: float,
+    # 次の値または処理を現在の構造へ組み込む
     maximum: int,
+    # 次の値または処理を現在の構造へ組み込む
     seed: int,
+# 次の値または処理を現在の構造へ組み込む
 ) -> list[dict[str, Any]]:
     # ハッシュ順位とレコードの組を格納する配列を作る
     ranked: list[tuple[str, dict[str, Any]]] = []
@@ -483,19 +647,29 @@ def _select_sources(
     return [record for _, record in ranked[:maximum]]
 
 
+# この工程を担当する関数を定義する
 def _write_review_csv(path: Path, records: list[dict[str, Any]]) -> None:
     # 保存先ディレクトリがなければ作成する
     path.parent.mkdir(parents=True, exist_ok=True)
     # 元文と教師候補を比較するためのCSV列を定義する
     fieldnames = [
+        # この処理で扱う文字列を一覧へ加える
         "instruction_id",
+        # この処理で扱う文字列を一覧へ加える
         "source_instruction_id",
+        # この処理で扱う文字列を一覧へ加える
         "semantic_ast",
+        # この処理で扱う文字列を一覧へ加える
         "source_instruction_ja",
+        # この処理で扱う文字列を一覧へ加える
         "instruction_ja",
+        # この処理で扱う文字列を一覧へ加える
         "review_status",
+        # この処理で扱う文字列を一覧へ加える
         "edited_instruction_ja",
+        # この処理で扱う文字列を一覧へ加える
         "reviewer",
+        # この処理で扱う文字列を一覧へ加える
         "reviewed_at",
     ]
     # 確認用CSVをUTF-8で新規作成する
@@ -508,20 +682,31 @@ def _write_review_csv(path: Path, records: list[dict[str, Any]]) -> None:
         for record in records:
             # 元文と候補を埋め、確認者入力欄は空欄で出力する
             writer.writerow(
+                # 次の値または処理を現在の構造へ組み込む
                 {
+                    # 出力レコードの項目と値を設定する
                     "instruction_id": record["instruction_id"],
+                    # 出力レコードの項目と値を設定する
                     "source_instruction_id": record["source_instruction_id"],
+                    # 出力レコードの項目と値を設定する
                     "semantic_ast": canonical_json(record["semantic_ast"]),
+                    # 出力レコードの項目と値を設定する
                     "source_instruction_ja": record["source_instruction_ja"],
+                    # 出力レコードの項目と値を設定する
                     "instruction_ja": record["instruction_ja"],
+                    # 出力レコードの項目と値を設定する
                     "review_status": "",
+                    # 出力レコードの項目と値を設定する
                     "edited_instruction_ja": "",
+                    # 出力レコードの項目と値を設定する
                     "reviewer": "",
+                    # 出力レコードの項目と値を設定する
                     "reviewed_at": "",
                 }
             )
 
 
+# この工程を担当する関数を定義する
 def _load_json_object(path: Path) -> tuple[dict[str, Any], str]:
     # JSONファイルを文字列として読み、辞書へ解析する
     try:
@@ -531,17 +716,21 @@ def _load_json_object(path: Path) -> tuple[dict[str, Any], str]:
         value = json.loads(text)
     # ファイルが存在しない場合は対象パスを示して停止する
     except FileNotFoundError as error:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError(f"JSONファイルが見つかりません: {path}") from error
     # JSON構文が不正な場合は対象パスを示して停止する
     except json.JSONDecodeError as error:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError(f"JSONファイルが不正です: {path}") from error
     # JSONのルートがオブジェクトであることを確認する
     if not isinstance(value, dict):
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError("JSONのルートはオブジェクトにしてください")
     # 解析済み辞書と元文字列を返す
     return value, text
 
 
+# この工程を担当する関数を定義する
 def _read_jsonl(path: Path) -> list[dict[str, Any]]:
     # 読み込んだルール生成指示を格納する配列を作る
     records: list[dict[str, Any]] = []
@@ -551,15 +740,19 @@ def _read_jsonl(path: Path) -> list[dict[str, Any]]:
         for line_number, line in enumerate(handle, start=1):
             # 空行は読み飛ばす
             if not line.strip():
+                # 現在の対象を終えて次の対象へ進む
                 continue
             # 一行をJSONとして解析する
             try:
+                # valueへこの工程で使用する値を設定する
                 value = json.loads(line)
             # JSON構文エラーへファイル名と行番号を付ける
             except json.JSONDecodeError as error:
+                # 不正な状態を例外として通知して処理を停止する
                 raise ValueError(f"JSONLが不正です: {path}:{line_number}") from error
             # 各レコードがJSONオブジェクトであることを確認する
             if not isinstance(value, dict):
+                # 不正な状態を例外として通知して処理を停止する
                 raise ValueError(f"JSONLレコードが不正です: {path}:{line_number}")
             # 検査済みレコードを追加する
             records.append(value)
@@ -567,6 +760,7 @@ def _read_jsonl(path: Path) -> list[dict[str, Any]]:
     return records
 
 
+# この工程を担当する関数を定義する
 def _write_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
     # 保存先ディレクトリがなければ作る
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -580,16 +774,20 @@ def _write_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
             handle.write("\n")
 
 
+# この工程を担当する関数を定義する
 def _write_json(path: Path, value: object) -> None:
     # 保存先ディレクトリがなければ作る
     path.parent.mkdir(parents=True, exist_ok=True)
     # 集計値を人間が読める整形JSONで保存する
     path.write_text(
+        # 次の値または処理を現在の構造へ組み込む
         json.dumps(value, ensure_ascii=False, indent=2) + "\n",
+        # encodingへこの工程で使用する値を設定する
         encoding="utf-8",
     )
 
 
+# この工程を担当する関数を定義する
 def _project_path(value: str) -> Path:
     # 設定文字列をPathへ変換する
     path = Path(value)
@@ -597,31 +795,41 @@ def _project_path(value: str) -> Path:
     return path if path.is_absolute() else PROJECT_ROOT / path
 
 
+# この工程を担当する関数を定義する
 def _required_mapping(values: Mapping[str, Any], key: str) -> Mapping[str, Any]:
     # 指定キーの値を取得する
     value = values.get(key)
     # JSONオブジェクトに対応する辞書以外は拒否する
     if not isinstance(value, dict):
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError(f"{key}はオブジェクトにしてください")
     # 検査済み辞書を返す
     return value
 
 
+# この工程を担当する関数を定義する
 def _required_string(values: Mapping[str, Any], key: str) -> str:
     # 指定キーの値を取得する
     value = values.get(key)
     # 空でない文字列以外は拒否する
     if not isinstance(value, str) or not value:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError(f"{key}は空でない文字列にしてください")
     # 検査済み文字列を返す
     return value
 
 
+# この工程を担当する関数を定義する
 def _required_int(
+    # 次の値または処理を現在の構造へ組み込む
     values: Mapping[str, Any],
+    # 次の値または処理を現在の構造へ組み込む
     key: str,
+    # 次の値または処理を現在の構造へ組み込む
     *,
+    # allow_zeroへこの工程で使用する値を設定する
     allow_zero: bool = False,
+# 次の値または処理を現在の構造へ組み込む
 ) -> int:
     # 指定キーの値を取得する
     value = values.get(key)
@@ -629,6 +837,7 @@ def _required_int(
     minimum = 0 if allow_zero else 1
     # boolを含まない整数で、下限以上であることを確認する
     if type(value) is not int or value < minimum:
+        # 不正な状態を例外として通知して処理を停止する
         raise ValueError(f"{key}は{minimum}以上の整数にしてください")
     # 検査済み整数を返す
     return value
@@ -636,4 +845,5 @@ def _required_int(
 
 # importされたときはQwenを実行せず、直接実行時だけmainを呼ぶ
 if __name__ == "__main__":
+    # 次の値または処理を現在の構造へ組み込む
     main()

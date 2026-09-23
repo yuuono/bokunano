@@ -5,7 +5,7 @@
 2026年9月20日に、[`config/python_code_generation.json`](../../config/python_code_generation.json)を生成スクリプトから読み、24種類の単一操作ASTごとに検証済み固有コードを20件生成した。日本語指示はまだ生成していない。
 
 ```bash
-uv run python scripts/code_generation/generate_python_code_candidates.py \
+uv run --python 3.12.12 python scripts/code_generation/generate_python_code_candidates.py \
   --config config/python_code_generation.json
 ```
 

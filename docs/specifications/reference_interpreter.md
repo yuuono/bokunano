@@ -100,7 +100,7 @@ assert result == [6, 10]
 実行方法は次のとおりである。
 
 ```bash
-python3 scripts/validation/verify_reference_interpreter.py
+uv run --python 3.12.12 python scripts/validation/verify_reference_interpreter.py
 ```
 
 実行確認の結果、24個の単独操作はすべて期待結果と一致した。また、組み合わせASTは次の全件を実行できた。

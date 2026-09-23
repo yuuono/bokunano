@@ -22,6 +22,7 @@ MIN_OPERATIONS = 1
 MAX_OPERATIONS = 3
 
 
+# この工程を担当する関数を定義する
 def load_atomic_asts(path: Path) -> list[dict]:
     # UTF-8で開いて1行ずつ読む
     with path.open(encoding="utf-8") as source:
@@ -44,6 +45,7 @@ def load_atomic_asts(path: Path) -> list[dict]:
     return records
 
 
+# この工程を担当する関数を定義する
 def generate_records(atomic_records: list[dict]):
     # 出力するspec_idの連番（1から始める）
     record_number = 1
@@ -56,6 +58,7 @@ def generate_records(atomic_records: list[dict]):
             yield {
                 # 連番を6桁ゼロ埋めしたIDを振る
                 "spec_id": f"combined-{record_number:06d}",
+                # 出力レコードの項目と値を設定する
                 "semantic_ast": {
                     # 選んだ操作のASTを選択順に並べる
                     "sequence": [record["semantic_ast"] for record in selected]
@@ -65,6 +68,7 @@ def generate_records(atomic_records: list[dict]):
             record_number += 1
 
 
+# この工程を担当する関数を定義する
 def save_jsonl(records, path: Path) -> int:
     # 実際に書き出した件数
     count = 0
@@ -72,6 +76,7 @@ def save_jsonl(records, path: Path) -> int:
     with path.open("w", encoding="utf-8", newline="\n") as destination:
         # ジェネレータから1件ずつ受け取る
         for record in records:
+            # 次の値または処理を現在の構造へ組み込む
             destination.write(
                 # 日本語をエスケープせず、余分な空白も入れずに1行のJSONにする
                 json.dumps(record, ensure_ascii=False, separators=(",", ":")) + "\n"
@@ -82,6 +87,7 @@ def save_jsonl(records, path: Path) -> int:
     return count
 
 
+# この工程を担当する関数を定義する
 def main() -> None:
     # 24個の単独操作を読み込んで検証する
     atomic_records = load_atomic_asts(INPUT_PATH)
@@ -101,4 +107,5 @@ def main() -> None:
 
 # スクリプトとして直接実行されたときだけmainを走らせる
 if __name__ == "__main__":
+    # 次の値または処理を現在の構造へ組み込む
     main()
