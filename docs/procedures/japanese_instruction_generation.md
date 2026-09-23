@@ -12,12 +12,13 @@
 
 その後、必要な一部の指示文だけを教師モデルで言い換える。
 
-### 現在の進捗（2026年9月21日）
+### 現在の進捗（2026年9月24日）
 
 - [x] Qwen3で24操作それぞれ30件、合計720件の表現候補を生成した
 - [x] 終止形と接続形の組として720件を出力した
-- [ ] 作成者本人が720件を確認する
-- [ ] 承認済み表現辞書を作成する
+- [x] 作成者本人が初回候補と追加生成候補を確認した
+- [x] 545件の承認済み表現を確定した
+- [x] 人手選定により`train=522件`、`test_only=23件`へ分けた
 - [ ] 承認済み辞書からルール生成指示を作成する
 - [ ] 必要な一部の指示だけをQwen3で全文言い換えする
 
@@ -250,7 +251,7 @@ k以上の値だけを残す
 
 確認用の形式は、CSV、スプレッドシート、簡単な確認画面のどれでもよい。確認後はJSONLへ戻せるように、`expression_id`を変更しない。
 
-標準スクリプトは`data/instruction_dictionaries/expression_review.csv`を出力する。終止形を直す場合は`edited_expression_ja`、接続形を直す場合は`edited_connective_expression_ja`へ記入する。使用する行は`review_status`へ`approved`、使用しない行は`unused`を記入する。承認行には`dictionary`、`reviewer`、`reviewed_at`も記入する。
+標準スクリプトは`data/instruction_dictionaries/expression_review.csv`を出力する。終止形を直す場合は`edited_expression_ja`、接続形を直す場合は`edited_connective_expression_ja`へ記入する。使用する行は`review_status`へ`approved`、使用しない行は`unused`を記入する。承認行には`reviewer`と`reviewed_at`も記入する。`dictionary`区分は候補の承認とは別工程で人手選定結果から一括付与するため、この段階では空欄でよい。
 
 ### 4.2 確認する内容
 
@@ -282,25 +283,29 @@ k以上の値だけを残す
 
 ```json
 {
-  "expression_id": "expr-...",
+  "expression_id": "expr-candidate-...",
   "operation_id": "atomic-000004",
   "operation_ast": {"filter": ["ge_k"]},
+  "canonical_meaning_ja": "k以上の値だけを残す",
+  "must_preserve_ja": "k以上の整数だけを選ぶ。元の要素順は変えない。",
   "expression_ja": "k以上の要素に絞り込む",
   "connective_expression_ja": "k以上の要素に絞り込み",
   "dictionary": "train",
-  "approved_by": "...",
-  "approved_at": "...",
-  "source_candidate_id": "expr-candidate-..."
+  "dictionary_selection_method": "human_reviewed",
+  "human_edited": false,
+  "generation_record": {},
+  "dictionary_version": "..."
 }
 ```
 
 24操作のそれぞれについて、最終的に10〜30種類の承認済み表現を用意する。足りない場合は追加候補を作り、同じ手順で確認する。
 
-確認後、次を実行して承認済み辞書を作る。
+確認後、まず[`publishing_japanese_expression_dictionary.md`](publishing_japanese_expression_dictionary.md)の手順で公開CSVと来歴JSONLを作る。その2ファイルを入力として、次を実行し、承認済み辞書を分割する。
 
 ```bash
 uv run --python 3.12.12 python scripts/instruction_generation/build_approved_expression_dictionary.py \
-  --config config/build_approved_expression_dictionary.json
+  --config config/build_approved_expression_dictionary.json \
+  --overwrite
 ```
 
 ### 4.4 訓練用とテスト専用に分ける
@@ -312,14 +317,9 @@ uv run --python 3.12.12 python scripts/instruction_generation/build_approved_exp
 
 `test_only`へ入れた表現は、訓練用指示文や訓練用プロンプトへ入れない。
 
-偶数・奇数フィルタでは、次の語句を使う表現を言い換えテスト専用として予約する。これらは`dictionary=test_only`へ割り当て、訓練、検証、通常テスト、組合せ汎化テスト、境界値テストでは使用しない。
+最終承認した545件のうち、作成者が言い換えテスト用として人手選定した23件を`test_only`、残り522件を`train`とする。語句一致、乱数、操作ごとの先頭行などでは自動選定しない。23件の`expression_id`は設定JSONへ固定し、終止形と接続形を常に同じ区分で扱う。
 
-| 操作ID | 意味 | `test_only`へ予約する語句 |
-|---|---|---|
-| `atomic-000001` | 偶数だけを残す | `2で割り切れる値`、`奇数を除く` |
-| `atomic-000002` | 奇数だけを残す | `2で割り切れない値`、`偶数を除く` |
-
-終止形・接続形へ展開した場合も、上表の語句を含む表現は同じく`test_only`として扱う。訓練側では「偶数」「奇数」を直接選ぶ表現を使用し、この4語句を露出させない。
+選定表現、辞書外の9候補との違い、再現手順、検査条件は、[`japanese_paraphrase_test_policy.md`](../policies/japanese_paraphrase_test_policy.md)を正とする。辞書外9件は承認済み545件に含まれず、現時点ではJSONLも作成していない。
 
 辞書を確定したら、内容ハッシュまたはバージョンを付ける。以後の指示文には、使用した辞書のバージョンを記録する。
 

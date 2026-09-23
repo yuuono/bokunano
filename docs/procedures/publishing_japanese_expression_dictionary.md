@@ -21,8 +21,9 @@ JSONLはCSVと同じ件数・同じ`expression_id`順にする。各行の`appro
 - ラウンド別の候補JSONLとレビューCSV
 - モデルのraw responseと生成stats
 - 未承認、`unused`、未判定の候補
+- 公開物から再生成できる`approved_expressions.jsonl`と分割stats
 
-これらは削除せずローカルに保持する。`.gitignore`では`data/instruction_dictionaries/`全体をいったん除外し、`release/`の上記2ファイルだけを再許可している。これにより、作業中の候補や生応答を誤って一括追加しない。
+これらは削除せずローカルに保持する。`.gitignore`では`data/instruction_dictionaries/`全体をいったん除外し、`release/`の上記2ファイルだけを再許可している。これにより、作業中の候補や生応答を誤って一括追加しない。`approved_expressions.jsonl`の人手選定結果は`config/build_approved_expression_dictionary.json`へ固定し、公開済み2ファイルから再生成できる。
 
 ## 3. 公開物の更新
 

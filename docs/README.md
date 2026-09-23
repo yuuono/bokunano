@@ -17,6 +17,7 @@ docs/
 - [`policies/python_code_generation_policy.md`](policies/python_code_generation_policy.md): Pythonコード生成
 - [`policies/code_duplicate_exclusion_policy.md`](policies/code_duplicate_exclusion_policy.md): 生成コードの完全重複除外
 - [`policies/data_record_policy.md`](policies/data_record_policy.md): データレコードと選抜
+- [`policies/japanese_paraphrase_test_policy.md`](policies/japanese_paraphrase_test_policy.md): 人手選定した未学習表現による日本語言い換えテスト
 
 ## 手順
 
@@ -35,3 +36,4 @@ docs/
 - [`results/multi_operation_python_code_generation_results.md`](results/multi_operation_python_code_generation_results.md): 2・3操作を各AST 20件生成した結果
 - [`results/japanese_atomic_expression_generation_results.md`](results/japanese_atomic_expression_generation_results.md): Qwen3による24操作各30件の初回生成パラメータ、結果、人間確認で見つかった問題
 - [`results/japanese_atomic_expression_expansion_history.md`](results/japanese_atomic_expression_expansion_history.md): 各操作20件以上を目指した追加生成、承認数の推移、生成履歴保存の経緯
+- [`results/japanese_atomic_expression_split_results.md`](results/japanese_atomic_expression_split_results.md): 人手選定による545件のtrain・test_only分割結果

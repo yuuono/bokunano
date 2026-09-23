@@ -78,7 +78,7 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 - `review_status`: 使用する表現は`approved`、使用しない表現は`unused`
 - `edited_expression_ja`: 終止形を直す場合だけ記入
 - `edited_connective_expression_ja`: 接続形を直す場合だけ記入
-- `dictionary`: `train`または`test_only`
+- `dictionary`: この確認段階では空欄とし、後の人手選定結果から一括付与
 - `reviewer`: 確認者名
 - `reviewed_at`: 確認日時
 
@@ -86,8 +86,11 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 
 ```bash
 uv run --python 3.12.12 python scripts/instruction_generation/build_approved_expression_dictionary.py \
-  --config config/build_approved_expression_dictionary.json
+  --config config/build_approved_expression_dictionary.json \
+  --overwrite
 ```
+
+この処理は公開済みの承認表現545件を読み、人手選定IDで`train=522件`、`test_only=23件`へ分ける。分割は自動抽出や乱数ではなく、設定JSONへ固定した23件を使う。出力JSONLには公開表現に加えて元の生成レコードも保持する。詳しい選定内容は[`japanese_paraphrase_test_policy.md`](../docs/policies/japanese_paraphrase_test_policy.md)に記録する。
 
 承認済みマスターから`unused`を除き、GitHub公開用の最終CSVと来歴JSONLを作る。
 
