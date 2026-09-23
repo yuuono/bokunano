@@ -18,11 +18,12 @@
   "generator_seed": 20260920,
   "model": {
     "model_id": "Qwen/Qwen3-4B-AWQ",
+    "model_path": "/home/ono_yusuke/Qwen3-4B-AWQ",
     "revision": "74d4bd2bd4bff9cafc9345221320bffb08b406a3",
     "device_map": "auto",
     "attn_implementation": "sdpa",
     "trust_remote_code": false,
-    "local_files_only": false,
+    "local_files_only": true,
     "require_cuda": true,
     "enable_thinking": false
   },

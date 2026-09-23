@@ -157,6 +157,8 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 教師には、公式の`Qwen/Qwen3-4B-AWQ`を第一候補とする。同モデルは4-bit AWQ版として公開され、モデルページとLICENSEにはApache License 2.0が示されている。[モデルカード](https://huggingface.co/Qwen/Qwen3-4B-AWQ)、[LICENSE](https://huggingface.co/Qwen/Qwen3-4B-AWQ/blob/main/LICENSE)
 
+今回の日本語表現候補生成では、`/home/ono_yusuke/Qwen3-4B-AWQ`に配置したローカル重みを`local_files_only=true`で使用した。clone先では同じrevisionのモデルを任意の場所へ配置し、生成コマンドの`--model-path`で絶対パスを指定する。実行環境、固定した依存バージョン、sampling設定、720件の生成結果は、[`docs/results/japanese_atomic_expression_generation_results.md`](docs/results/japanese_atomic_expression_generation_results.md)に記録する。
+
 教師モデルは主として次の用途に使用する。
 
 - 日本語指示の言い換え
@@ -221,7 +223,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 - 奇数を取り除く
 - 偶数に該当する要素を選ぶ
 
-教師が生成した文には、「以上」が「より大きい」に変わるなど、意味を変える言い換えがあるため、そのまま無条件で採用するべきではない。人間のチェックを下ならう入れること。
+教師が生成した文には、「以上」が「より大きい」に変わるなど、意味を変える言い換えがあるため、そのまま無条件で採用するべきではない。人間のチェックを必ず入れること。
+
+旧方式の候補生成では、簡体字・中国語の混入や比較境界の意味変更が確認された。現在は各候補に終止形と接続形を持たせ、最終指示を自然な一文としてルール結合する。旧方式の問題例と今回の生成パラメータは、[`単純操作の日本語表現候補生成結果`](docs/results/japanese_atomic_expression_generation_results.md#旧方式で人間確認から見つかった問題)に記録する。
 
 ### コードの構造的変換
 

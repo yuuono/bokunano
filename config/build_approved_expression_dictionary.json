@@ -1,5 +1,5 @@
 {
-  "config_version": 1,
+  "config_version": 2,
   "candidates": "data/instruction_dictionaries/expression_candidates.jsonl",
   "review_csv": "data/instruction_dictionaries/expression_review.csv",
   "output": "data/instruction_dictionaries/approved_expressions.jsonl",

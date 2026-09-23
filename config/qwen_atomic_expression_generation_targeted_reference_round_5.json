@@ -3,18 +3,18 @@
   "phase": "atomic_expression_candidates",
   "input": "data/semantic_asts/atomic_semantic_asts.jsonl",
   "operation_definitions": "config/japanese_atomic_operations.json",
-  "output": "data/instruction_dictionaries/expression_candidates.jsonl",
-  "raw_responses": "data/instruction_dictionaries/atomic_expression_raw_responses.jsonl",
-  "review_csv": "data/instruction_dictionaries/expression_review.csv",
-  "stats": "data/instruction_dictionaries/atomic_expression_generation_stats.json",
+  "output": "data/instruction_dictionaries/targeted_reference_round_5_expression_candidates.jsonl",
+  "raw_responses": "data/instruction_dictionaries/targeted_reference_round_5_atomic_expression_raw_responses.jsonl",
+  "review_csv": "data/instruction_dictionaries/targeted_reference_round_5_expression_review.csv",
+  "stats": "data/instruction_dictionaries/targeted_reference_round_5_atomic_expression_generation_stats.json",
   "prompts": {
     "system": "prompts/japanese_instruction_generation/atomic_expression_system.txt",
-    "user": "prompts/japanese_instruction_generation/atomic_expression_user.txt"
+    "user": "prompts/japanese_instruction_generation/atomic_expression_user_with_references.txt"
   },
   "target_candidates_per_operation": 30,
   "max_attempts_per_operation": 20,
-  "generator_version": "6",
-  "generator_seed": 20260923,
+  "generator_version": "7",
+  "generator_seed": 20260928,
   "max_expression_chars": 80,
   "model": {
     "model_id": "Qwen/Qwen3-4B-AWQ",

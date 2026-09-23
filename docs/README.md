@@ -21,6 +21,7 @@ docs/
 ## 手順
 
 - [`procedures/japanese_instruction_generation.md`](procedures/japanese_instruction_generation.md): 日本語指示の候補生成、人間承認、ルール結合、教師言い換え
+- [`procedures/publishing_japanese_expression_dictionary.md`](procedures/publishing_japanese_expression_dictionary.md): 最終表現CSVと生成来歴JSONLだけをGitHubへ公開する手順
 
 ## 仕様
 
@@ -32,3 +33,5 @@ docs/
 - [`results/atomic_python_code_generation_results.md`](results/atomic_python_code_generation_results.md): 各操作1件の予備確認
 - [`results/single_operation_python_code_generation_results.md`](results/single_operation_python_code_generation_results.md): 各操作20件の生成結果
 - [`results/multi_operation_python_code_generation_results.md`](results/multi_operation_python_code_generation_results.md): 2・3操作を各AST 20件生成した結果
+- [`results/japanese_atomic_expression_generation_results.md`](results/japanese_atomic_expression_generation_results.md): Qwen3による24操作各30件の初回生成パラメータ、結果、人間確認で見つかった問題
+- [`results/japanese_atomic_expression_expansion_history.md`](results/japanese_atomic_expression_expansion_history.md): 各操作20件以上を目指した追加生成、承認数の推移、生成履歴保存の経緯

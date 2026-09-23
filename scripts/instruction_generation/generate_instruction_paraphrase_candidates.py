@@ -1,12 +1,3 @@
-# /// script
-# requires-python = ">=3.12"
-# dependencies = [
-#   "accelerate>=1.6.0",
-#   "autoawq>=0.2.9",
-#   "torch>=2.6.0",
-#   "transformers>=4.51.0,<5",
-# ]
-# ///
 """ルール生成指示の一部をQwen3で言い換える。"""
 
 from __future__ import annotations
@@ -57,6 +48,15 @@ def parse_args() -> argparse.Namespace:
     )
     # 全文言い換えの生成条件を持つ設定JSONを受け取る
     parser.add_argument("--config", required=True, type=Path)
+    # clone先でローカルモデルの配置場所だけを差し替えられるようにする
+    parser.add_argument(
+        "--model-path",
+        type=Path,
+        help=(
+            "設定JSONのmodel.model_pathを今回の実行だけ上書きする"
+            "ローカルQwenモデルのディレクトリです。"
+        ),
+    )
     # モデルを読み込まず設定と入力だけを確認するオプションを追加する
     parser.add_argument("--validate-config", action="store_true")
     # 既存出力を明示的に置き換えるオプションを追加する
@@ -70,6 +70,8 @@ def main() -> None:
     args = parse_args()
     # 設定JSONを辞書と元文字列の両方で読み込む
     config, config_text = _load_json_object(args.config.resolve())
+    # clone先固有のモデル配置場所が指定された場合だけ設定値を差し替える
+    config = _override_model_path(config, args.model_path)
     # 設定値を検査し、パスを絶対パスへ変換する
     settings = _validate_config(config)
     # 24操作の正準意味と厳守事項を意味ASTから引ける形で読み込む
@@ -286,6 +288,7 @@ def main() -> None:
         "selection_rate": settings["selection_rate"],
         "maximum_source_instructions": settings["maximum_source_instructions"],
         "model_id": settings["model"]["model_id"],
+        "model_path": teacher.model_path,
         "requested_revision": settings["model"]["revision"],
         "resolved_revision": teacher.resolved_revision,
         "enable_thinking": False,
@@ -304,6 +307,22 @@ def main() -> None:
     )
     # 作成者本人が次に開く確認用CSVの場所を表示する
     print(f"確認用CSV: {settings['review_csv']}")
+
+
+def _override_model_path(
+    config: dict[str, Any], model_path: Path | None
+) -> dict[str, Any]:
+    """CLI指定がある場合だけローカルモデルの配置場所を上書きする。"""
+
+    if model_path is None:
+        return config
+    model = config.get("model")
+    if not isinstance(model, dict):
+        raise ValueError("設定のmodelはobjectにしてください")
+    overridden = dict(config)
+    overridden["model"] = dict(model)
+    overridden["model"]["model_path"] = str(model_path.resolve())
+    return overridden
 
 
 def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:

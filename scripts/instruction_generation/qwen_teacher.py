@@ -65,6 +65,7 @@ def validate_model_config(model_config: Mapping[str, Any]) -> dict[str, Any]:
     # モデル設定として認めるキーを列挙する
     expected = {
         "model_id",
+        "model_path",
         "revision",
         "device_map",
         "attn_implementation",
@@ -78,6 +79,21 @@ def validate_model_config(model_config: Mapping[str, Any]) -> dict[str, Any]:
         raise ValueError("model設定の項目が不正です")
     # モデルIDが空でない文字列であることを確認する
     _required_string(model_config, "model_id")
+    # 実際に読み込むローカル重みのディレクトリを確認する
+    model_path = Path(_required_string(model_config, "model_path"))
+    if not model_path.is_absolute():
+        raise ValueError("model_pathは絶対パスにしてください")
+    if not model_path.is_dir():
+        raise ValueError(f"model_pathが見つかりません: {model_path}")
+    # Transformersが最低限必要とする設定、tokenizer、重みの存在を確認する
+    required_files = ("config.json", "tokenizer_config.json", "tokenizer.json")
+    missing_files = [
+        name for name in required_files if not (model_path / name).is_file()
+    ]
+    if missing_files:
+        raise ValueError(f"model_pathに必要なファイルがありません: {missing_files}")
+    if not any(model_path.glob("*.safetensors")):
+        raise ValueError("model_pathにsafetensors重みがありません")
     # モデルrevisionが再現可能な40桁のコミットIDであることを確認する
     _commit_id(model_config, "revision")
     # デバイス割当方法が空でない文字列であることを確認する
@@ -100,6 +116,9 @@ def validate_model_config(model_config: Mapping[str, Any]) -> dict[str, Any]:
     # 思考過程を保存しない課題方針に合わせてthinkingを必ず無効にする
     if model_config["enable_thinking"] is not False:
         raise ValueError("Qwen3はenable_thinking=falseで使用してください")
+    # ローカル重みだけを使い、実行時にHubへ接続しない設定を必須にする
+    if model_config["local_files_only"] is not True:
+        raise ValueError("ローカル重みの使用時はlocal_files_only=trueにしてください")
     # 呼び出し元が安全に保持できるよう設定辞書をコピーして返す
     return dict(model_config)
 
@@ -136,8 +155,8 @@ def validate_sampling_config(sampling: Mapping[str, Any]) -> dict[str, Any]:
     return dict(sampling)
 
 
-def parse_json_string_list(raw_text: str, key: str) -> list[str]:
-    """モデル出力から、指定キーに入った文字列配列を取り出す。"""
+def _parse_json_object(raw_text: str) -> dict[str, Any]:
+    """モデル出力からJSONオブジェクトを取り出す。"""
 
     # モデル出力の前後に付いた空白と改行を除く
     text = raw_text.strip()
@@ -170,8 +189,20 @@ def parse_json_string_list(raw_text: str, key: str) -> list[str]:
         except json.JSONDecodeError as error:
             raise ValueError("モデル出力のJSONを解析できません") from error
 
+    # ルートがJSONオブジェクトであることを確認する
+    if not isinstance(parsed, dict):
+        raise ValueError("モデル出力のルートはJSONオブジェクトにしてください")
+    # 後続の形式別検査へ渡す
+    return parsed
+
+
+def parse_json_string_list(raw_text: str, key: str) -> list[str]:
+    """モデル出力から、指定キーに入った文字列配列を取り出す。"""
+
+    # コードフェンスや前後の説明を処理してJSONオブジェクトを取得する
+    parsed = _parse_json_object(raw_text)
     # 指定キー一つだけを持つJSONオブジェクトであることを確認する
-    if not isinstance(parsed, dict) or set(parsed) != {key}:
+    if set(parsed) != {key}:
         raise ValueError(f"モデル出力はキー{key!r}だけを持つJSONにしてください")
     # 指定キーに対応する候補一覧を取り出す
     values = parsed[key]
@@ -194,6 +225,49 @@ def parse_json_string_list(raw_text: str, key: str) -> list[str]:
         # 検査を通過した候補を結果へ追加する
         result.append(candidate)
     # 検査済み候補一覧を返す
+    return result
+
+
+def parse_json_string_object_list(
+    raw_text: str,
+    key: str,
+    object_keys: set[str],
+) -> list[dict[str, str]]:
+    """指定キー配下から、同じ文字列キーを持つオブジェクト配列を取り出す。"""
+
+    # コードフェンスや前後の説明を処理してJSONオブジェクトを取得する
+    parsed = _parse_json_object(raw_text)
+    # 最上位には指定された配列キー一つだけを許可する
+    if set(parsed) != {key}:
+        raise ValueError(f"モデル出力はキー{key!r}だけを持つJSONにしてください")
+    # 指定キーに対応する候補一覧を取り出す
+    values = parsed[key]
+    # 候補一覧が空でない配列であることを確認する
+    if not isinstance(values, list) or not values:
+        raise ValueError(f"{key!r}は空でない配列にしてください")
+
+    # 検査済みの文字列オブジェクトを格納する
+    result: list[dict[str, str]] = []
+    # 配列内の各オブジェクトを順番に検査する
+    for value in values:
+        # オブジェクト以外やキーの過不足を拒否する
+        if not isinstance(value, dict) or set(value) != object_keys:
+            raise ValueError(
+                f"{key!r}の各要素はキー{sorted(object_keys)!r}だけを持つ"
+                "オブジェクトにしてください"
+            )
+        # 各フィールドの前後空白を除いて保持する
+        item: dict[str, str] = {}
+        for object_key in sorted(object_keys):
+            field = value[object_key]
+            if not isinstance(field, str) or not field.strip():
+                raise ValueError(
+                    f"{key!r}内の{object_key!r}は空でない文字列にしてください"
+                )
+            item[object_key] = field.strip()
+        # すべてのフィールドが検査済みの候補だけを追加する
+        result.append(item)
+    # 検査済みオブジェクト配列を返す
     return result
 
 
@@ -239,12 +313,16 @@ class QwenTeacher:
         self._torch = torch
         # seed固定とバージョン参照のためTransformersを保持する
         self._transformers = transformers
-        # 使用するHugging FaceモデルIDを設定から取得する
-        self._model_id = _required_string(model_config, "model_id")
+        # 単独利用時にも同じ厳密な設定検査を必ず適用する
+        validated_config = validate_model_config(model_config)
+        # 生成物へ記録するHugging FaceモデルIDを設定から取得する
+        self._model_id = _required_string(validated_config, "model_id")
+        # モデルとtokenizerを読み込むローカルディレクトリを取得する
+        self._model_path = Path(_required_string(validated_config, "model_path"))
         # 要求するモデルrevisionを40桁の固定コミットIDとして取得する
-        revision = _commit_id(model_config, "revision")
+        revision = _commit_id(validated_config, "revision")
         # CUDAを必須にするかを設定から取得する
-        require_cuda = bool(model_config.get("require_cuda", True))
+        require_cuda = bool(validated_config.get("require_cuda", True))
         # AWQモデルをCUDA必須設定でCPU実行しようとした場合は早期停止する
         if require_cuda and not torch.cuda.is_available():
             raise RuntimeError(
@@ -254,37 +332,35 @@ class QwenTeacher:
 
         # tokenizer読込時に渡す再現性・安全性設定をまとめる
         tokenizer_kwargs = {
-            "revision": revision,
-            "trust_remote_code": bool(model_config.get("trust_remote_code", False)),
-            "local_files_only": bool(model_config.get("local_files_only", False)),
+            "trust_remote_code": bool(validated_config.get("trust_remote_code", False)),
+            "local_files_only": True,
         }
-        # 指定モデルとrevisionに対応するtokenizerを読み込む
+        # 指定されたローカルディレクトリからtokenizerを読み込む
         self._tokenizer = AutoTokenizer.from_pretrained(
-            self._model_id,
+            self._model_path,
             **tokenizer_kwargs,
         )
 
         # モデル読込時に渡すデバイス割当と安全性設定をまとめる
         model_kwargs: dict[str, Any] = {
-            "revision": revision,
-            "device_map": model_config.get("device_map", "auto"),
-            "trust_remote_code": bool(model_config.get("trust_remote_code", False)),
-            "local_files_only": bool(model_config.get("local_files_only", False)),
+            "device_map": validated_config.get("device_map", "auto"),
+            "trust_remote_code": bool(validated_config.get("trust_remote_code", False)),
+            "local_files_only": True,
             "low_cpu_mem_usage": True,
         }
         # 任意指定のAttention実装名を取り出す
-        attn_implementation = model_config.get("attn_implementation")
+        attn_implementation = validated_config.get("attn_implementation")
         # Attention実装が指定された場合だけモデル引数へ追加する
         if attn_implementation is not None:
             model_kwargs["attn_implementation"] = attn_implementation
-        # Qwen3の因果言語モデルを指定revisionから読み込む
+        # Qwen3の因果言語モデルを指定されたローカル重みから読み込む
         self._model = AutoModelForCausalLM.from_pretrained(
-            self._model_id,
+            self._model_path,
             **model_kwargs,
         )
         # Dropoutなどの学習時動作を止めて推論モードにする
         self._model.eval()
-        # 実際に解決されたコミットIDを優先して記録する
+        # ローカル設定にコミットIDがあれば優先し、なければ固定設定値を記録する
         self._resolved_revision = (
             getattr(self._model.config, "_commit_hash", None)
             or getattr(self._tokenizer, "_commit_hash", None)
@@ -300,6 +376,11 @@ class QwenTeacher:
     def model_id(self) -> str:
         # 実際に読み込んだモデルIDを返す
         return self._model_id
+
+    @property
+    def model_path(self) -> str:
+        # 実際に読み込んだローカルモデルディレクトリを返す
+        return str(self._model_path)
 
     def generate(
         self,

@@ -12,6 +12,17 @@
 
 その後、必要な一部の指示文だけを教師モデルで言い換える。
 
+### 現在の進捗（2026年9月21日）
+
+- [x] Qwen3で24操作それぞれ30件、合計720件の表現候補を生成した
+- [x] 終止形と接続形の組として720件を出力した
+- [ ] 作成者本人が720件を確認する
+- [ ] 承認済み表現辞書を作成する
+- [ ] 承認済み辞書からルール生成指示を作成する
+- [ ] 必要な一部の指示だけをQwen3で全文言い換えする
+
+候補生成の実行環境、設定、検証結果は、[`japanese_atomic_expression_generation_results.md`](../results/japanese_atomic_expression_generation_results.md)に記録している。
+
 ## 2. 入力と成果物
 
 ### 入力
@@ -79,36 +90,110 @@ data/
 最初に、モデルを読み込まず設定を確認する。
 
 ```bash
-uv run python scripts/instruction_generation/generate_atomic_expression_candidates.py \
+uv run --group instruction-generation python scripts/instruction_generation/generate_atomic_expression_candidates.py \
   --config config/qwen_atomic_expression_generation.json \
   --validate-config
 ```
 
-実生成はCUDA対応環境で行う。
+設定では、実際の読込元を次のローカルディレクトリに固定している。
+
+```text
+/home/ono_yusuke/Qwen3-4B-AWQ
+```
+
+`config.json`、tokenizerファイル、safetensors重みがこのディレクトリに揃っていることを設定検査で確認する。実生成はCUDA対応環境で行う。
+
+RTX 5090環境で確認済みの実行時バージョンは次のとおりである。`pyproject.toml`の`instruction-generation` dependency groupへ直接依存を固定し、推移依存を`uv.lock`へ記録する。初回実行前に`uv sync --group instruction-generation`で環境を復元する。
+
+| 項目 | バージョン |
+|---|---|
+| Python | 3.12.12（uv管理版、Tritonのコンパイルに必要なヘッダーを含む） |
+| PyTorch | 2.13.0 |
+| Transformers | 4.51.3 |
+| AutoAWQ | 0.2.9 |
+| Accelerate | 1.15.0 |
+| Triton | 3.7.1 |
+
+システムのPython 3.12.3には`Python.h`がなく、Tritonの実行時コンパイルに失敗したため使用しない。また、PyTorch 2.6.0はRTX 5090のCUDA capability `sm_120`に対応していない。TransformersはAutoAWQ 0.2.9とのAPI互換性を保つため4.51.3へ固定する。
 
 ```bash
-uv run scripts/instruction_generation/generate_atomic_expression_candidates.py \
+uv run --group instruction-generation python scripts/instruction_generation/generate_atomic_expression_candidates.py \
   --config config/qwen_atomic_expression_generation.json
 ```
 
-Qwen3は`enable_thinking=false`で使用する。標準設定では各操作20件、合計480件の候補を生成する。
+Qwen3は`enable_thinking=false`で使用する。標準設定では各操作30件、合計720件の候補を生成する。この30件は各操作で最終的に20件以上を人間承認するための候補母数であり、30件をそのまま採用する目標ではない。
 
-`model_id`と`revision`は別の情報である。
+現在の生成設定は、seed `20260923`、`max_new_tokens=2048`、`temperature=0.9`、`top_p=0.95`、`top_k=50`、`repetition_penalty=1.1`、1操作当たり最大20試行である。再試行時も30件を要求し、既存候補と重複しない不足分だけを採用する。1回目で一部操作が目標未達になった場合は、`--resume`で既存候補を保持し、不足操作だけを別seedで追加生成できる。
 
-- `model_id`: 使用するモデルの名前。例: `Qwen/Qwen3-4B-AWQ`
-- `revision`: そのモデルのどの版を使うかを表す40桁のコミットID。現在の固定値は`74d4bd2bd4bff9cafc9345221320bffb08b406a3`
+#### 候補30件の決まり方
 
-`main`もTransformersへ渡せるrevision名ではあるが、モデル提供者が更新すると参照内容が変わる。そのため、正式生成では`main`や短縮ハッシュを禁止し、完全なコミットIDを設定してからモデルを読み込む。保存する`teacher_revision`には、実際に読み込まれたコミットIDを記録する。
+各操作の30件は、教師モデルが一度に返した候補から品質順に選んだ30件ではない。生成器は、次の手順で人間確認前の候補を蓄積する。
+
+1. `--existing-review-csv`を指定しない初回は生成済み表現を「なし」として、教師モデルへ30件の生成を要求する。指定した場合は、CSVから現在の`operation_id`に対応する既存表現を取り出し、初回から既存表現一覧として渡す。
+2. 応答全体をJSONとして解析する。JSON構造またはキーが不正な場合は、その応答から一件も採用せず、次の試行へ進む。
+3. 解析できた各組について、改行、文字数、禁止文字列、終止形と接続形の語尾、終止形と接続形が同一でないことを機械検査する。
+4. 検査を通過した組のうち、確認CSVの既存例または今回すでに蓄積した候補と終止形、もしくは終止形・接続形の組が完全一致しないものを、モデルの出力順に追加する。
+5. 次の試行では、確認CSVの既存例と、それまでに追加した新規候補をuser promptの「すでに生成済み」の一覧へ入れる。解析失敗または形式検査不合格になった組は、この一覧へ入れない。
+6. 蓄積数が30件へ達した時点で、その応答に残りの候補があっても採用を終了する。設定または`--max-attempts-per-operation`で指定した最大試行回数後も30件に届かなければ、目標未達として集計へ記録する。
+
+再試行時も要求件数は不足数ではなく常に30件である。例えば24件を蓄積済みの場合も30件を要求し、既存24件と完全一致せず形式検査を通過した候補を先頭から6件だけ追加する。`--resume`を指定した場合は、前回保存した候補と試行回数を引き継ぎ、同じ方法で不足分を追加する。
+
+この段階の重複判定は文字列の完全一致だけであり、意味的に同じ表現や表面的に近い表現をまとめる処理は行わない。また、機械検査は意味の正しさ、日本語の自然さ、候補間の実質的な多様性を保証しない。したがって、出力される30件は「形式検査と完全一致重複除外を通過して先に蓄積された候補30件」であり、承認済み表現または品質上の上位30件ではない。意味と日本語品質は後続の人間確認で判定する。
+
+既存の確認CSVを除外元として使う場合は、次のように指定する。
+
+```bash
+uv run --group instruction-generation python scripts/instruction_generation/generate_atomic_expression_candidates.py \
+  --config config/qwen_atomic_expression_generation_every_other.json \
+  --operation-id atomic-000024 \
+  --existing-review-csv data/instruction_dictionaries/expression_review_approved_v2.csv \
+  --overwrite
+```
+
+生成器はCSVの`operation_id`で対象操作を対応付けるため、`atomic-000024`の生成には同じIDの行だけを使用する。`review_status`にかかわらず元の終止形・接続形を既存例として扱い、人間修正版があれば修正版も追加する。これらはプロンプトと重複判定にだけ使用し、設定した新規候補の目標数には含めず、出力候補へもコピーしない。CSV先頭にExcel由来の`Column1`行がある場合も、実際の`operation_id`ヘッダーを探して読み込む。
+
+同じ専用出力先に前回の候補がある状態では、`--existing-review-csv`だけを追加しても上書きしない。設定した件数を新たに生成し直す場合は上記のように`--overwrite`を、前回の未達分だけを補う場合は`--resume`を指定する。標準設定は1操作30件だが、特定操作だけの追加生成では`target_candidates_per_operation`を最大100件まで指定できる。`qwen_atomic_expression_generation_every_other.json`では追加生成用に50件を指定している。
+
+操作ごとの最大試行回数は設定JSONの`max_attempts_per_operation`を既定値とし、今回の実行だけ変える場合は`--max-attempts-per-operation`を指定する。例えば`--max-attempts-per-operation 1`では各操作について教師モデルを一度だけ呼び出す。一度の応答から形式検査と重複除外を通過した候補が30件未満なら、追加試行せず、別出力と集計へ実件数および目標未達を記録する。複数の操作だけを一括生成する場合は、`--operation-id`を操作ごとに繰り返して指定する。
+
+既存の候補出力を明示的に置き換えて再生成する場合だけ、次のように`--overwrite`を付ける。
+
+```bash
+uv run --group instruction-generation python scripts/instruction_generation/generate_atomic_expression_candidates.py \
+  --config config/qwen_atomic_expression_generation.json \
+  --overwrite
+```
+
+`model_id`、`model_path`、`revision`は別の情報である。
+
+- `model_id`: 生成物へ出典として記録するモデル名。現在値は`Qwen/Qwen3-4B-AWQ`
+- `model_path`: Transformersが実際に読み込むローカル重みの絶対パス。現在値は`/home/ono_yusuke/Qwen3-4B-AWQ`
+- `revision`: ローカル重みを取得したモデル版を表す40桁のコミットID。現在の固定値は`74d4bd2bd4bff9cafc9345221320bffb08b406a3`
+
+正式生成ではHubからモデルを取得せず、`local_files_only=true`を必須とする。`main`や短縮ハッシュは禁止し、ローカル重みを取得した完全なコミットIDを設定へ残す。保存する`teacher_revision`にはこの固定コミットIDを、集計ファイルの`model_path`には実際の読込元を記録する。
+
+clone先では設定JSONを書き換えず、同じrevisionのモデルを任意の絶対パスへ配置し、`--model-path`でその場所を指定する。
+
+```bash
+uv sync --group instruction-generation
+uv run --group instruction-generation --python 3.12.12 python \
+  scripts/instruction_generation/generate_atomic_expression_candidates.py \
+  --config config/qwen_atomic_expression_generation.json \
+  --model-path /absolute/path/to/Qwen3-4B-AWQ
+```
+
+この指定は今回の実行だけ`model.model_path`を置き換える。モデルID、revision、seed、sampling、prompt、操作定義、生成器バージョンはリポジトリの固定値を使う。実行時に使用した絶対パスもstatsへ記録する。候補生成後の`approved`または`unused`判定は人間による実験工程であり、自動再現の対象には含めない。
 
 非thinkingモードを指定していても、出力に`<think>`または`</think>`タグが一つでも含まれた場合は、その応答全体を拒否する。該当応答は表現候補にも生出力記録にも保存しない。
 
-候補は、後で他の操作と接続できる短い表現にする。
+候補は、同じ意味を持つ終止形と接続形の組にする。
 
 ```text
-偶数の要素だけを残す
-2で割り切れる値のみを選ぶ
-奇数の要素を取り除く
+expression_ja: 偶数の要素だけを残す
+connective_expression_ja: 偶数の要素だけを残し
 ```
+
+`expression_ja`は最終操作として文末へ置く動詞基本形、`connective_expression_ja`は後続操作へつなぐ連用形またはて形とする。接続形には読点を含めず、ルール生成器が結合位置に付ける。プロンプトでは個別の禁止文字を列挙せず、「中国語の漢字や中国語表現を使わない」とだけ指示する。生成器も中国語の個別文字リストでは除外せず、採否は人間確認で決める。
 
 候補には、次の内容を含めない。
 
@@ -136,6 +221,7 @@ k以上の値だけを残す
   "operation_ast": {"filter": ["ge_k"]},
   "canonical_meaning_ja": "k以上の値だけを残す",
   "expression_ja": "k以上の要素に絞り込む",
+  "connective_expression_ja": "k以上の要素に絞り込み",
   "review_status": "pending",
   "teacher_model": "Qwen/Qwen3-4B-AWQ",
   "teacher_revision": "...",
@@ -144,6 +230,8 @@ k以上の値だけを残す
 ```
 
 候補生成時点では、訓練データに使用しない。
+
+2026年9月21日の正式生成結果は、[`japanese_atomic_expression_generation_results.md`](../results/japanese_atomic_expression_generation_results.md)に記録する。
 
 ## 4. 手順2: 作成者が表現を確認する
 
@@ -156,20 +244,24 @@ k以上の値だけを残す
 | 操作ID | `atomic-000004`など |
 | 意味AST | `{"filter":["ge_k"]}`など |
 | 正準な意味 | `k`以上の値だけを残す |
-| 表現候補 | `k`以上の要素に絞り込む |
+| 終止形候補 | `k`以上の要素に絞り込む |
+| 接続形候補 | `k`以上の要素に絞り込み |
 | 確認結果 | 承認、修正、不使用 |
 
 確認用の形式は、CSV、スプレッドシート、簡単な確認画面のどれでもよい。確認後はJSONLへ戻せるように、`expression_id`を変更しない。
 
-標準スクリプトは`data/instruction_dictionaries/expression_review.csv`を出力する。使用する行は`review_status`へ`approved`、使用しない行は`unused`を記入する。承認行には`dictionary`、`reviewer`、`reviewed_at`も記入する。
+標準スクリプトは`data/instruction_dictionaries/expression_review.csv`を出力する。終止形を直す場合は`edited_expression_ja`、接続形を直す場合は`edited_connective_expression_ja`へ記入する。使用する行は`review_status`へ`approved`、使用しない行は`unused`を記入する。承認行には`dictionary`、`reviewer`、`reviewed_at`も記入する。
 
 ### 4.2 確認する内容
 
-各表現について、次の3点を確認する。
+各組について、次の4点を確認する。
 
 1. 意味ASTと同じ処理を表しているか
 2. 日本語として自然で、単独で意味が分かるか
-3. 他の操作と前後に接続できる形になっているか
+3. 終止形が基本的に動詞で終わっているか
+4. 接続形が同じ意味を保ち、後続操作へ自然につながるか
+
+旧方式の生成では、簡体字・中国語混入、比較境界の意味変更、不自然な日本語が実際に見つかった。今回の720件は生成後の内容検査を行っていないため、機械的に正しいとみなさず、終止形と接続形の両方を人が確認する。
 
 特に、次の意味を混同しないようにする。
 
@@ -179,6 +271,8 @@ k以上の値だけを残す
 - 「値を降順に並べる」と「現在の並び順を逆にする」
 - 「先頭から`k`個」と「末尾から`k`個」
 - 「1個おきに取る」と「偶数だけを取る」
+
+さらに、日本語以外の文字や表現が混ざっていないかを確認する。今回検出した`筛`、`滤`、`负`、`减`、`个`、`项`、`离`のような簡体字、`每个数值减去k`のような中国語、`olan`のような他言語を含む候補は、そのまま承認しない。
 
 修正した表現は、修正後の文をもう一度確認してから承認する。
 
@@ -192,6 +286,7 @@ k以上の値だけを残す
   "operation_id": "atomic-000004",
   "operation_ast": {"filter": ["ge_k"]},
   "expression_ja": "k以上の要素に絞り込む",
+  "connective_expression_ja": "k以上の要素に絞り込み",
   "dictionary": "train",
   "approved_by": "...",
   "approved_at": "...",
@@ -216,6 +311,15 @@ uv run python scripts/instruction_generation/build_approved_expression_dictionar
 - `test_only`: 言い換えテストだけで使用する
 
 `test_only`へ入れた表現は、訓練用指示文や訓練用プロンプトへ入れない。
+
+偶数・奇数フィルタでは、次の語句を使う表現を言い換えテスト専用として予約する。これらは`dictionary=test_only`へ割り当て、訓練、検証、通常テスト、組合せ汎化テスト、境界値テストでは使用しない。
+
+| 操作ID | 意味 | `test_only`へ予約する語句 |
+|---|---|---|
+| `atomic-000001` | 偶数だけを残す | `2で割り切れる値`、`奇数を除く` |
+| `atomic-000002` | 奇数だけを残す | `2で割り切れない値`、`偶数を除く` |
+
+終止形・接続形へ展開した場合も、上表の語句を含む表現は同じく`test_only`として扱う。訓練側では「偶数」「奇数」を直接選ぶ表現を使用し、この4語句を露出させない。
 
 辞書を確定したら、内容ハッシュまたはバージョンを付ける。以後の指示文には、使用した辞書のバージョンを記録する。
 
@@ -243,33 +347,27 @@ uv run python scripts/instruction_generation/build_approved_expression_dictionar
 
 ### 5.3 操作順を保って結合する
 
-1操作の場合は、その表現をそのまま使用する。
+番号付き指示は生成器のデバッグと意味確認にだけ使用し、最終訓練データには保存しない。最終指示は、最後以外の操作に`connective_expression_ja`、最後の操作に`expression_ja`を使って自然な一文へ結合する。
+
+1操作の場合は終止形を使用する。
 
 ```text
-1. {op1}
+整数リストxsから{op1_final}solve関数を書いてください。
 ```
 
-2操作の場合は、2番目の操作が1番目の結果に適用されることを明記する。
+2操作の場合は、1番目を接続形にする。
 
 ```text
-1. {op1}
-2. その結果に対して、{op2}
+整数リストxsから{op1_connective}、{op2_final}solve関数を書いてください。
 ```
 
-3操作の場合も同様に接続する。
+3操作の場合は、最初の二つを接続形にする。読点はルール生成器が必要な結合位置へ付ける。
 
 ```text
-1. {op1}
-2. その結果に対して、{op2}
-3. その結果に対して、{op3}
+整数リストxsから{op1_connective}、{op2_connective}{op3_final}solve関数を書いてください。
 ```
 
-外側の文テンプレートは、例えば次のようにする。
-
-```text
-整数リストxsと整数kを受け取り、以下の処理を上から順に行って、結果の整数リストを返すsolve関数を書いてください。
-{operations}
-```
+入力に`k`を使う操作が含まれる場合は、「整数リストxsと整数kを受け取り」など、入力契約と一致する外側テンプレートを選ぶ。操作順と結合はルールベースで固定し、Qwenには任せない。
 
 ### 5.4 結合例
 
@@ -285,21 +383,21 @@ uv run python scripts/instruction_generation/build_approved_expression_dictionar
 }
 ```
 
-辞書から次の表現を選ぶ。
+辞書から次の組を選ぶ。
 
 ```text
-op1: k以上の値だけに絞る
-op2: 各要素を2倍する
-op3: 値の大きい順に並べ替える
+op1 final: k以上の値だけを残す
+op1 connective: k以上の値だけを残し
+op2 final: 各要素を2倍する
+op2 connective: それぞれを2倍して
+op3 final: 降順に並べる
+op3 connective: 降順に並べて
 ```
 
 生成する指示文は次のとおりである。
 
 ```text
-整数リストxsと整数kを受け取り、以下の処理を上から順に行って、結果の整数リストを返すsolve関数を書いてください。
-1. k以上の値だけに絞る
-2. その結果に対して、各要素を2倍する
-3. その結果に対して、値の大きい順に並べ替える
+整数リストxsからk以上の値だけを残し、それぞれを2倍して降順に並べるsolve関数を書いてください。
 ```
 
 ### 5.5 複数の指示文を作る
@@ -342,12 +440,12 @@ op3: 値の大きい順に並べ替える
 
 この工程は追加の独自仕様ではなく、[`boku1-nano.md`の「日本語指示の生成」4番](../../boku1-nano.md#日本語指示の生成)にある「一部についてのみ、教師モデルに文全体の言い換えを行わせる」に対応する。
 
-承認済み表現辞書で変化するのは、基本的に「偶数だけを残す」などの各操作部分である。外側の文テンプレートや操作同士の接続方法はルール生成器が作るため、そのままではすべての指示文が似た文型になりやすい。
+承認済み表現辞書で変化するのは、基本的に「偶数だけを残す／偶数だけを残し」などの各操作部分である。外側の文テンプレートや操作同士の接続方法はルール生成器が作るため、そのままではすべての指示文が似た文型になりやすい。
 
 そこで、一部のルール生成指示についてだけ、次のような文全体の違いを追加する。
 
-- 箇条書きを自然な一文または複数文へ変える
-- 「その結果に対して」を別の自然な接続表現へ変える
+- 自然な一文の語順や文型を変える
+- 接続形を保ったまま別の自然な接続表現へ変える
 - 操作順を保ったまま、語順や文末表現を変える
 
 この工程で新しい問題、意味AST、正解コードを作るわけではない。元の意味ASTと正解コードは固定したまま、日本語の文型だけを増やす。
@@ -378,10 +476,10 @@ op3: 値の大きい順に並べ替える
 - user prompt: `prompts/japanese_instruction_generation/paraphrase_user.txt`
 - 実行設定: `config/qwen_instruction_paraphrase_generation.json`
 
-`data/instructions/rule_generated_instructions.jsonl`を作成した後、CUDA対応環境で次を実行する。
+`data/instructions/rule_generated_instructions.jsonl`を作成した後、CUDA対応環境で次を実行する。ここでも同じ`/home/ono_yusuke/Qwen3-4B-AWQ`のローカル重みだけを読み込む。
 
 ```bash
-uv run scripts/instruction_generation/generate_instruction_paraphrase_candidates.py \
+uv run --group instruction-generation python scripts/instruction_generation/generate_instruction_paraphrase_candidates.py \
   --config config/qwen_instruction_paraphrase_generation.json
 ```
 

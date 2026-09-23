@@ -29,6 +29,10 @@ from scripts.instruction_generation.qwen_teacher import (  # noqa: E402
     canonical_json,
     sha256_text,
 )
+from scripts.instruction_generation.generate_atomic_expression_candidates import (  # noqa: E402
+    _valid_connective_expression,
+    _valid_expression,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -87,8 +91,8 @@ def main() -> None:
     approved: list[dict[str, Any]] = []
     # 確認CSV内の候補ID重複を検出する集合を作る
     seen_review_ids: set[str] = set()
-    # 同じ操作・辞書・表現の重複を検出する集合を作る
-    seen_dictionary_entries: set[tuple[str, str, str]] = set()
+    # 同じ操作・辞書・終止形・接続形の重複を検出する集合を作る
+    seen_dictionary_entries: set[tuple[str, str, str, str]] = set()
     # ヘッダーを除く実際のCSV行番号付きで各確認結果を処理する
     for row_number, row in enumerate(review_rows, start=2):
         # 元候補を示すexpression_idを取得する
@@ -130,26 +134,48 @@ def main() -> None:
             raise ValueError(
                 f"承認行にはreviewerとreviewed_atが必要です: 行{row_number}"
             )
-        # 確認者が修正した表現があれば取得する
+        # 確認者が修正した終止形と接続形があればそれぞれ取得する
         edited = row["edited_expression_ja"].strip()
+        edited_connective = row["edited_connective_expression_ja"].strip()
         # 修正版があれば優先し、なければQwenの元候補を使う
         expression = edited or _required_string(candidate, "expression_ja")
-        # 単純操作辞書の表現は一行だけに制限する
-        if "\n" in expression or "\r" in expression:
-            raise ValueError(f"承認表現は1行にしてください: 行{row_number}")
+        connective_expression = edited_connective or _required_string(
+            candidate,
+            "connective_expression_ja",
+        )
+        # 承認後の終止形にも生成時と同じ形式検査を適用する
+        if not _valid_expression(expression, max_chars=80):
+            raise ValueError(f"承認した終止形の形式が不正です: 行{row_number}")
+        # 承認後の接続形にも生成時と同じ形式検査を適用する
+        if not _valid_connective_expression(connective_expression, max_chars=80):
+            raise ValueError(f"承認した接続形の形式が不正です: 行{row_number}")
+        # 二つの形が同一なら接続形として採用しない
+        if expression == connective_expression:
+            raise ValueError(f"終止形と接続形を別の形にしてください: 行{row_number}")
 
         # 元候補から対象操作IDを取得する
         operation_id = _required_string(candidate, "operation_id")
-        # 操作・辞書・本文を組にして重複確認キーを作る
-        duplicate_key = (operation_id, dictionary, expression)
+        # 操作・辞書・二つの本文を組にして重複確認キーを作る
+        duplicate_key = (
+            operation_id,
+            dictionary,
+            expression,
+            connective_expression,
+        )
         # 同じ辞書エントリがすでにあれば停止する
         if duplicate_key in seen_dictionary_entries:
             raise ValueError(f"同じ承認表現が重複しています: 行{row_number}")
         # 新しい辞書エントリを重複確認集合へ追加する
         seen_dictionary_entries.add(duplicate_key)
-        # 操作・辞書・本文から承認済み表現の一意IDを作る
+        # 操作・辞書・二つの本文から承認済み表現の一意IDを作る
         expression_id = "expr-" + sha256_text(
-            operation_id + "\0" + dictionary + "\0" + expression
+            operation_id
+            + "\0"
+            + dictionary
+            + "\0"
+            + expression
+            + "\0"
+            + connective_expression
         )
         # 承認情報とQwen生成元を追跡できるレコードを追加する
         approved.append(
@@ -158,12 +184,18 @@ def main() -> None:
                 "operation_id": operation_id,
                 "operation_ast": candidate["operation_ast"],
                 "expression_ja": expression,
+                "connective_expression_ja": connective_expression,
                 "dictionary": dictionary,
                 "approved_by": reviewer,
                 "approved_at": reviewed_at,
                 "source_candidate_id": source_id,
                 "source_expression_ja": candidate["expression_ja"],
-                "human_edited": bool(edited),
+                "source_connective_expression_ja": candidate[
+                    "connective_expression_ja"
+                ],
+                "human_edited": bool(edited or edited_connective),
+                "final_expression_edited": bool(edited),
+                "connective_expression_edited": bool(edited_connective),
                 "teacher_model": candidate.get("teacher_model"),
                 "teacher_revision": candidate.get("teacher_revision"),
                 "prompt_hash": candidate.get("prompt_hash"),
@@ -245,8 +277,8 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     if set(config) != expected:
         raise ValueError("承認済み辞書設定の項目が不正です")
     # 対応している設定形式のバージョンを確認する
-    if config["config_version"] != 1:
-        raise ValueError("config_versionは1にしてください")
+    if config["config_version"] != 2:
+        raise ValueError("config_versionは2にしてください")
     # 元設定を壊さないよう解決済み設定用のコピーを作る
     settings = dict(config)
     # 入出力パスを順番にプロジェクトルート基準へ変換する
@@ -278,8 +310,10 @@ def _read_review_csv(path: Path) -> list[dict[str, str]]:
         "canonical_meaning_ja",
         "must_preserve_ja",
         "expression_ja",
+        "connective_expression_ja",
         "review_status",
         "edited_expression_ja",
+        "edited_connective_expression_ja",
         "dictionary",
         "reviewer",
         "reviewed_at",
