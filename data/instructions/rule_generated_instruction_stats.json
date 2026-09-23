@@ -1,0 +1,170 @@
+{
+  "generator_version": "1",
+  "generator_seed": 20260924,
+  "dictionary_version": "9bd2d2b3b1585e9240cb77e8b1ddefe68a14618d5c87fa5402353c21406dc398",
+  "semantic_ast_count": 13872,
+  "instruction_count": 277420,
+  "maximum_instructions_per_ast": 20,
+  "counts_by_source": {
+    "compositional": 13400,
+    "normal": 24040,
+    "repetition": 23040,
+    "train": 192900,
+    "validation": 24040
+  },
+  "counts_by_operation_count": {
+    "1": 460,
+    "2": 11520,
+    "3": 265440
+  },
+  "used_train_expression_count": 522,
+  "expression_usage_by_operation": {
+    "atomic-000001": {
+      "expression_count": 20,
+      "minimum_usage": 1638,
+      "maximum_usage": 1797,
+      "mean_usage": 1708.0
+    },
+    "atomic-000002": {
+      "expression_count": 20,
+      "minimum_usage": 1659,
+      "maximum_usage": 1790,
+      "mean_usage": 1708.0
+    },
+    "atomic-000003": {
+      "expression_count": 27,
+      "minimum_usage": 1200,
+      "maximum_usage": 1312,
+      "mean_usage": 1265.1851851851852
+    },
+    "atomic-000004": {
+      "expression_count": 24,
+      "minimum_usage": 1343,
+      "maximum_usage": 1497,
+      "mean_usage": 1423.3333333333333
+    },
+    "atomic-000005": {
+      "expression_count": 24,
+      "minimum_usage": 1353,
+      "maximum_usage": 1492,
+      "mean_usage": 1423.3333333333333
+    },
+    "atomic-000006": {
+      "expression_count": 20,
+      "minimum_usage": 1644,
+      "maximum_usage": 1793,
+      "mean_usage": 1708.0
+    },
+    "atomic-000007": {
+      "expression_count": 16,
+      "minimum_usage": 2072,
+      "maximum_usage": 2182,
+      "mean_usage": 2134.75
+    },
+    "atomic-000008": {
+      "expression_count": 19,
+      "minimum_usage": 1731,
+      "maximum_usage": 1856,
+      "mean_usage": 1797.842105263158
+    },
+    "atomic-000009": {
+      "expression_count": 18,
+      "minimum_usage": 1835,
+      "maximum_usage": 1983,
+      "mean_usage": 1897.6666666666667
+    },
+    "atomic-000010": {
+      "expression_count": 11,
+      "minimum_usage": 3062,
+      "maximum_usage": 3153,
+      "mean_usage": 3104.6363636363635
+    },
+    "atomic-000011": {
+      "expression_count": 25,
+      "minimum_usage": 1291,
+      "maximum_usage": 1444,
+      "mean_usage": 1366.4
+    },
+    "atomic-000012": {
+      "expression_count": 27,
+      "minimum_usage": 1215,
+      "maximum_usage": 1325,
+      "mean_usage": 1265.1851851851852
+    },
+    "atomic-000013": {
+      "expression_count": 25,
+      "minimum_usage": 1322,
+      "maximum_usage": 1416,
+      "mean_usage": 1366.4
+    },
+    "atomic-000014": {
+      "expression_count": 21,
+      "minimum_usage": 1579,
+      "maximum_usage": 1680,
+      "mean_usage": 1626.6666666666667
+    },
+    "atomic-000015": {
+      "expression_count": 26,
+      "minimum_usage": 1238,
+      "maximum_usage": 1373,
+      "mean_usage": 1313.8461538461538
+    },
+    "atomic-000016": {
+      "expression_count": 19,
+      "minimum_usage": 1751,
+      "maximum_usage": 1878,
+      "mean_usage": 1797.842105263158
+    },
+    "atomic-000017": {
+      "expression_count": 23,
+      "minimum_usage": 1434,
+      "maximum_usage": 1574,
+      "mean_usage": 1485.2173913043478
+    },
+    "atomic-000018": {
+      "expression_count": 24,
+      "minimum_usage": 1381,
+      "maximum_usage": 1486,
+      "mean_usage": 1423.3333333333333
+    },
+    "atomic-000019": {
+      "expression_count": 17,
+      "minimum_usage": 1952,
+      "maximum_usage": 2091,
+      "mean_usage": 2009.235294117647
+    },
+    "atomic-000020": {
+      "expression_count": 23,
+      "minimum_usage": 1434,
+      "maximum_usage": 1533,
+      "mean_usage": 1485.2173913043478
+    },
+    "atomic-000021": {
+      "expression_count": 24,
+      "minimum_usage": 1366,
+      "maximum_usage": 1495,
+      "mean_usage": 1423.3333333333333
+    },
+    "atomic-000022": {
+      "expression_count": 21,
+      "minimum_usage": 1593,
+      "maximum_usage": 1665,
+      "mean_usage": 1626.6666666666667
+    },
+    "atomic-000023": {
+      "expression_count": 26,
+      "minimum_usage": 1249,
+      "maximum_usage": 1377,
+      "mean_usage": 1313.8461538461538
+    },
+    "atomic-000024": {
+      "expression_count": 22,
+      "minimum_usage": 1502,
+      "maximum_usage": 1596,
+      "mean_usage": 1552.7272727272727
+    }
+  },
+  "output_sha256": "419f26ed8797296975c801fab0adb2a944dcedd584470ed756f1c0bf1055a0a8",
+  "output_bytes": 300622921,
+  "archive_member": "data/instructions/rule_generated_instructions.jsonl"
+}
