@@ -13,14 +13,7 @@ uv sync --python 3.12.12 --group instruction-generation
 
 ## Pythonソースのコメント
 
-初学者が処理を上から追えるよう、リポジトリ内のPythonソースは各論理処理行の直前、または同じ行に日本語の説明コメントを置く。空行、docstring、括弧だけの行は対象外とする。新しい処理を追加した後は次を実行し、未コメント行がないことを確認する。
-
-```bash
-uv run --python 3.12.12 python \
-  scripts/validation/ensure_python_line_comments.py
-```
-
-既存コードへコメントを機械補完する必要がある場合だけ`--write`を指定する。補完後は内容に合う説明になっているか差分を読み、Ruffと単体テストを再実行する。
+初学者が処理を上から追えるよう、リポジトリ内のPythonソースは各論理処理行の直前、または同じ行に日本語の説明コメントを置く。空行、docstring、括弧だけの行は対象外とし、追加・変更時に差分を人が確認する。
 
 ```text
 scripts/
@@ -124,5 +117,4 @@ Qwen3はすべて`enable_thinking=false`、`local_files_only=true`で実行す�
 ```bash
 uv run --python 3.12.12 python scripts/validation/verify_reference_interpreter.py
 uv run --python 3.12.12 python scripts/validation/verify_multi_operation_code_candidates.py
-uv run --python 3.12.12 python scripts/validation/ensure_python_line_comments.py
 ```
