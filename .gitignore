@@ -24,6 +24,7 @@ data/instruction_dictionaries/*
 data/instruction_dictionaries/release/*
 !data/instruction_dictionaries/release/japanese_atomic_expressions.csv
 !data/instruction_dictionaries/release/japanese_atomic_expression_provenance.jsonl
+!data/instruction_dictionaries/release/paraphrase_test_external_expressions.jsonl
 
 # ルール生成した展開済み全文指示はZIPだけをGitで管理する。
 data/instructions/rule_generated_instructions.jsonl

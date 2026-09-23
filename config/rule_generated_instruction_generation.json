@@ -31,8 +31,18 @@
   ],
   "output": "data/instructions/rule_generated_instructions.jsonl",
   "stats": "data/instructions/rule_generated_instruction_stats.json",
-  "archive": "data/archives/rule_generated_instructions_2026-09-24.zip",
-  "archive_member": "data/instructions/rule_generated_instructions.jsonl",
+  "archives": {
+    "train": {
+      "path": "data/archives/rule_generated_train_instructions_2026-09-24.zip",
+      "member": "data/instructions/rule_generated_train_instructions.jsonl",
+      "expected_count": 192900
+    },
+    "evaluation": {
+      "path": "data/archives/rule_generated_evaluation_instructions_2026-09-24.zip",
+      "member": "data/instructions/rule_generated_evaluation_instructions.jsonl",
+      "expected_count": 84520
+    }
+  },
   "maximum_instructions_per_ast": 20,
   "expected_ast_count": 13872,
   "expected_instruction_count": 277420,

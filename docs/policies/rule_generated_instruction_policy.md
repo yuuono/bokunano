@@ -106,11 +106,12 @@ generator_seed + spec_id + 正規化semantic_ast
 生JSONLは約287 MiBあり、Gitで直接管理するには大きい。既存の複数操作Pythonコード候補と同様に、生JSONLはローカル派生物として`.gitignore`へ入れ、固定メタデータ・deflate level 9で作るZIPだけをGitへ保存する。
 
 ```text
-ローカル: data/instructions/rule_generated_instructions.jsonl
-Git管理:  data/archives/rule_generated_instructions_2026-09-24.zip
+ローカル:  data/instructions/rule_generated_instructions.jsonl
+Git管理1: data/archives/rule_generated_train_instructions_2026-09-24.zip
+Git管理2: data/archives/rule_generated_evaluation_instructions_2026-09-24.zip
 ```
 
-ZIP内には元の相対パス`data/instructions/rule_generated_instructions.jsonl`で格納する。設定、生成器、集計JSON、結果文書はZIPへ入れず通常ファイルとしてGit管理する。
+GitHubの推奨50 MiBを超えないよう、`split=train`の192,900件と、それ以外のvalidation・normal・compositional・repetition 84,520件へ分ける。前者をtrain用、後者を評価用と呼ぶ。設定、生成器、集計JSON、結果文書はZIPへ入れず通常ファイルとしてGit管理する。
 
 ## 8. 再生成コマンド
 
@@ -123,8 +124,9 @@ uv run --python 3.12.12 python \
   --overwrite
 ```
 
-clone後にZIPから展開する場合は次を実行する。
+clone後にZIPから展開する場合は次を実行する。二つのZIPは別名のJSONLへ展開されるため、用途ごとにそのまま利用できる。
 
 ```bash
-unzip data/archives/rule_generated_instructions_2026-09-24.zip -d .
+unzip data/archives/rule_generated_train_instructions_2026-09-24.zip -d .
+unzip data/archives/rule_generated_evaluation_instructions_2026-09-24.zip -d .
 ```

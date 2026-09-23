@@ -319,7 +319,7 @@ uv run --python 3.12.12 python scripts/instruction_generation/build_approved_exp
 
 最終承認した545件のうち、作成者が言い換えテスト用として人手選定した23件を`test_only`、残り522件を`train`とする。語句一致、乱数、操作ごとの先頭行などでは自動選定しない。23件の`expression_id`は設定JSONへ固定し、終止形と接続形を常に同じ区分で扱う。
 
-選定表現、辞書外の9候補との違い、再現手順、検査条件は、[`japanese_paraphrase_test_policy.md`](../policies/japanese_paraphrase_test_policy.md)を正とする。辞書外9件は承認済み545件に含まれず、現時点ではJSONLも作成していない。
+選定表現、辞書外9件との違い、再現手順、検査条件は、[`japanese_paraphrase_test_policy.md`](../policies/japanese_paraphrase_test_policy.md)を正とする。辞書外9件は承認済み545件に混ぜず、`paraphrase_test_external_expressions.jsonl`へ人手作成表現として分離する。23件と9件の合計32件で全24操作を覆う。
 
 辞書を確定したら、内容ハッシュまたはバージョンを付ける。以後の指示文には、使用した辞書のバージョンを記録する。
 
@@ -432,7 +432,7 @@ op3 connective: 降順に並べて
 
 保存前に、意味ASTの操作数と`expression_ids`の数が一致し、各表現の`operation_ast`が同じ位置の操作と一致することを機械的に確認する。
 
-生JSONLは277,420件、約287 MiBになったためGitへ直接置かない。固定メタデータで圧縮した`data/archives/rule_generated_instructions_2026-09-24.zip`だけをGit管理する。実行件数とハッシュは[`rule_generated_instruction_results.md`](../results/rule_generated_instruction_results.md)に記録する。
+生JSONLは277,420件、約287 MiBになったためGitへ直接置かない。固定メタデータで圧縮し、train用192,900件と評価用84,520件の2つのZIPだけをGit管理する。実行件数とハッシュは[`rule_generated_instruction_results.md`](../results/rule_generated_instruction_results.md)に記録する。
 
 ## 6. 手順4: 一部だけ教師モデルで言い換える
 

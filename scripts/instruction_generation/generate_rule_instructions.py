@@ -112,7 +112,14 @@ def main() -> None:
         return
 
     # この実行で作る出力パスをまとめる
-    output_paths = (settings["output"], settings["stats"], settings["archive"])
+    output_paths = (
+        # 生JSONLの出力パスを含める
+        settings["output"],
+        # 集計JSONの出力パスを含める
+        settings["stats"],
+        # train用と評価用のZIP出力パスを加える
+        *(item["path"] for item in settings["archives"].values()),
+    )
     # すでに存在する出力だけを抽出する
     existing = [str(path) for path in output_paths if path.exists()]
     # 上書き指定なしで既存出力があれば停止する
@@ -127,8 +134,10 @@ def main() -> None:
     settings["output"].parent.mkdir(parents=True, exist_ok=True)
     # 集計先ディレクトリがなければ作る
     settings["stats"].parent.mkdir(parents=True, exist_ok=True)
-    # アーカイブ先ディレクトリがなければ作る
-    settings["archive"].parent.mkdir(parents=True, exist_ok=True)
+    # 二つのアーカイブ先ディレクトリを順番に確認する
+    for archive_setting in settings["archives"].values():
+        # アーカイブ先ディレクトリがなければ作る
+        archive_setting["path"].parent.mkdir(parents=True, exist_ok=True)
 
     # 集合別の生成指示数を数える
     counts_by_source = Counter()
@@ -223,6 +232,42 @@ def main() -> None:
     usage_by_operation = _summarize_expression_usage(
         expressions_by_operation, expression_usage
     )
+    # train用と評価用のZIP情報を格納する
+    archive_stats: dict[str, dict[str, Any]] = {}
+    # 二つのアーカイブ設定を順番に処理する
+    for archive_name, archive_setting in settings["archives"].items():
+        # trainアーカイブだけsplit=trainを含める
+        include_train = archive_name == "train"
+        # 生JSONLをsplitで分けて固定メタデータのZIPへ保存する
+        archived_count = _write_partitioned_zip(
+            # 生JSONLのパスを渡す
+            settings["output"],
+            # 現在区分のZIP出力先を渡す
+            archive_setting["path"],
+            # ZIP内の相対パスを渡す
+            archive_setting["member"],
+            # trainを含める区分かどうかを渡す
+            include_train=include_train,
+        )
+        # ZIPへ格納した件数が設定値と一致することを確認する
+        if archived_count != archive_setting["expected_count"]:
+            # 不完全な分割を区分名と件数付きで通知する
+            raise ValueError(
+                f"{archive_name} ZIPの件数が期待値と一致しません: {archived_count}"
+            )
+        # 現在ZIPの件数、サイズ、ハッシュを集計へ保存する
+        archive_stats[archive_name] = {
+            # ZIPのリポジトリ相対パスを保存する
+            "path": _relative_project_path(archive_setting["path"]),
+            # ZIP内の相対パスを保存する
+            "member": archive_setting["member"],
+            # 格納したJSONLレコード数を保存する
+            "record_count": archived_count,
+            # ZIPファイルのバイト数を保存する
+            "bytes": archive_setting["path"].stat().st_size,
+            # ZIPファイルのSHA-256を保存する
+            "sha256": _sha256_file(archive_setting["path"]),
+        }
     # 実行結果を確認できる集計オブジェクトを作る
     stats = {
         # 生成器の版を保存する
@@ -254,20 +299,11 @@ def main() -> None:
         "output_sha256": output_sha256,
         # 生JSONLのバイト数を保存する
         "output_bytes": settings["output"].stat().st_size,
-        # ZIP内で使用するパスを保存する
-        "archive_member": settings["archive_member"],
+        # train用と評価用に分けたZIP情報を保存する
+        "archives": archive_stats,
     }
     # 集計JSONを可読形式で保存する
     _write_json(settings["stats"], stats)
-    # 固定メタデータを使って生JSONLをZIPへ圧縮する
-    _write_deterministic_zip(
-        # 生JSONLのパスを渡す
-        settings["output"],
-        # ZIPの出力パスを渡す
-        settings["archive"],
-        # ZIP内の相対パスを渡す
-        settings["archive_member"],
-    )
     # 完了件数と出力先を表示する
     print(
         f"ルール生成指示を作成しました: asts={len(semantic_records)}, "
@@ -275,8 +311,13 @@ def main() -> None:
     )
     # 再現性確認用の出力ハッシュを表示する
     print(f"output_sha256={output_sha256}")
-    # 作成したZIPのパスとサイズを表示する
-    print(f"archive={settings['archive']} bytes={settings['archive'].stat().st_size}")
+    # 作成した二つのZIP情報を順番に表示する
+    for archive_name, archive_stat in archive_stats.items():
+        # 区分、パス、件数、サイズを一行で表示する
+        print(
+            f"archive_{archive_name}={archive_stat['path']} "
+            f"records={archive_stat['record_count']} bytes={archive_stat['bytes']}"
+        )
 
 
 # この工程を担当する関数を定義する
@@ -291,8 +332,7 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
         "semantic_ast_inputs",
         "output",
         "stats",
-        "archive",
-        "archive_member",
+        "archives",
         "maximum_instructions_per_ast",
         "expected_ast_count",
         "expected_instruction_count",
@@ -315,7 +355,7 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     # 元の設定を壊さないようコピーする
     settings = dict(config)
     # 単独の入出力パスをプロジェクトルート基準へ変換する
-    for key in ("dictionary", "output", "stats", "archive"):
+    for key in ("dictionary", "output", "stats"):
         # 空でない文字列をPathへ変換する
         settings[key] = _project_path(_required_string(config, key))
     # 承認済み辞書が存在することを確認する
@@ -375,18 +415,69 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
         raise ValueError("maximum_instructions_per_astは1以上にしてください")
     # 生成器の版を空でない文字列として取得する
     settings["generator_version"] = _required_string(config, "generator_version")
-    # ZIP内パスを空でない相対パスとして取得する
-    settings["archive_member"] = _required_string(config, "archive_member")
-    # ZIP内パスが絶対パスなら拒否する
-    if Path(settings["archive_member"]).is_absolute():
-        # 安全でないアーカイブメンバー名を通知する
-        raise ValueError("archive_memberは相対パスにしてください")
+    # train用と評価用のアーカイブ設定を検査する
+    settings["archives"] = _validate_archive_settings(config["archives"])
+    # 二つのZIP予定件数が全指示数と一致することを確認する
+    if (
+        sum(item["expected_count"] for item in settings["archives"].values())
+        != settings["expected_instruction_count"]
+    ):
+        # 分割件数の不足または重複を通知する
+        raise ValueError("archivesの期待件数合計が全指示数と一致しません")
     # 外側文テンプレートを検査する
     settings["sentence_templates"] = _validate_sentence_templates(
         config["sentence_templates"]
     )
     # 検査済み設定を返す
     return settings
+
+
+# この工程を担当する関数を定義する
+def _validate_archive_settings(value: Any) -> dict[str, dict[str, Any]]:
+    """train用と評価用のZIP設定を検査する。"""
+
+    # trainとevaluationの二区分だけがあることを確認する
+    if not isinstance(value, dict) or set(value) != {"train", "evaluation"}:
+        # 不正なアーカイブ区分を拒否する
+        raise ValueError("archivesはtrainとevaluationを指定してください")
+    # 検査済みアーカイブ設定を格納する
+    archives: dict[str, dict[str, Any]] = {}
+    # 二つの区分を固定順で処理する
+    for archive_name in ("train", "evaluation"):
+        # 現在区分の設定を取得する
+        item = value[archive_name]
+        # パス、メンバー、件数だけを持つオブジェクトか確認する
+        if not isinstance(item, dict) or set(item) != {
+            "path",
+            "member",
+            "expected_count",
+        }:
+            # 不正な区分名を通知する
+            raise ValueError(f"archives.{archive_name}が不正です")
+        # ZIP出力パスをプロジェクトルート基準へ解決する
+        path = _project_path(_required_string(item, "path"))
+        # ZIP内の相対パスを取得する
+        member = _required_string(item, "member")
+        # ZIP内パスが絶対パスまたは親参照を含む場合は拒否する
+        if Path(member).is_absolute() or ".." in Path(member).parts:
+            # 安全でないメンバー名を通知する
+            raise ValueError(
+                f"archives.{archive_name}.memberは安全な相対パスにしてください"
+            )
+        # 格納予定件数を0以上の整数として取得する
+        expected_count = _required_nonnegative_int(item, "expected_count")
+        # 検査済み設定を保存する
+        archives[archive_name] = {
+            "path": path,
+            "member": member,
+            "expected_count": expected_count,
+        }
+    # 二つのZIP出力先が異なることを確認する
+    if archives["train"]["path"] == archives["evaluation"]["path"]:
+        # 上書きし合う設定を拒否する
+        raise ValueError("trainとevaluationのZIP出力先は分けてください")
+    # 検査済みアーカイブ設定を返す
+    return archives
 
 
 # この工程を担当する関数を定義する
@@ -875,11 +966,83 @@ def _write_deterministic_zip(source: Path, archive_path: Path, member: str) -> N
 
 
 # この工程を担当する関数を定義する
+def _write_partitioned_zip(
+    source: Path,
+    archive_path: Path,
+    member: str,
+    *,
+    include_train: bool,
+) -> int:
+    """全文JSONLをtrainか非trainに分けて決定的なZIPへ保存する。"""
+
+    # ZIP内ファイルの固定メタデータを作る
+    info = zipfile.ZipInfo(member, date_time=ZIP_TIMESTAMP)
+    # Unix上の通常ファイル権限644を固定する
+    info.external_attr = 0o100644 << 16
+    # deflate圧縮を指定する
+    info.compress_type = zipfile.ZIP_DEFLATED
+    # UTF-8ファイル名フラグを有効にする
+    info.flag_bits |= 0x800
+    # ZIPへ格納したレコード数を初期化する
+    record_count = 0
+    # 既存ZIPを置き換えて新規作成する
+    with zipfile.ZipFile(
+        archive_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9
+    ) as archive:
+        # 生JSONLをバイナリで開く
+        with source.open("rb") as source_handle:
+            # ZIPメンバーを書き込み用に開く
+            with archive.open(info, "w", force_zip64=True) as archive_handle:
+                # 生JSONLを一行ずつ処理する
+                for line_number, line in enumerate(source_handle, start=1):
+                    # 空行は分割対象にせず無視する
+                    if not line.strip():
+                        # 次の行へ進む
+                        continue
+                    # 分割判定に必要なsplitをJSONから取得する
+                    record = json.loads(line)
+                    # 各行がJSONオブジェクトであることを確認する
+                    if not isinstance(record, dict):
+                        # 不正な行番号を通知する
+                        raise ValueError(
+                            f"JSONLレコードが不正です: {source}:{line_number}"
+                        )
+                    # split=trainかどうかを判定する
+                    is_train = record.get("split") == "train"
+                    # 現在ZIPの対象外なら書き込まない
+                    if is_train != include_train:
+                        # 次のJSONL行へ進む
+                        continue
+                    # 元JSONLのバイト列を変更せずZIPへ書く
+                    archive_handle.write(line)
+                    # 格納件数を1増やす
+                    record_count += 1
+    # ZIPへ格納したレコード数を返す
+    return record_count
+
+
+# この工程を担当する関数を定義する
 def _copy_binary(source: BinaryIO, destination: BinaryIO) -> None:
     """バイナリストリームを固定バッファサイズでコピーする。"""
 
     # 1 MiBのバッファで末尾までコピーする
     shutil.copyfileobj(source, destination, length=1024 * 1024)
+
+
+# この工程を担当する関数を定義する
+def _sha256_file(path: Path) -> str:
+    """大きなファイルを逐次読み込みSHA-256を返す。"""
+
+    # SHA-256計算器を初期化する
+    hasher = hashlib.sha256()
+    # 対象ファイルをバイナリで開く
+    with path.open("rb") as handle:
+        # 1 MiBずつ末尾まで読む
+        while chunk := handle.read(1024 * 1024):
+            # 現在のバイト列をハッシュへ加える
+            hasher.update(chunk)
+    # 16進文字列のSHA-256を返す
+    return hasher.hexdigest()
 
 
 # この工程を担当する関数を定義する
@@ -981,6 +1144,16 @@ def _project_path(value: str) -> Path:
     path = Path(value)
     # 絶対パスはそのまま、相対パスはプロジェクトルートへ結合する
     return path if path.is_absolute() else PROJECT_ROOT / path
+
+
+# この工程を担当する関数を定義する
+def _relative_project_path(path: Path) -> str:
+    """プロジェクト内パスをPOSIX形式の相対文字列で返す。"""
+
+    # 解決済みパスをプロジェクトルートからの相対パスへ変換する
+    relative = path.resolve().relative_to(PROJECT_ROOT.resolve())
+    # OSに依存しないスラッシュ区切り文字列を返す
+    return relative.as_posix()
 
 
 # この工程を担当する関数を定義する

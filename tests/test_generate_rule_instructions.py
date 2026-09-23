@@ -9,6 +9,9 @@ import tempfile
 # 単体テストの枠組みを使う
 import unittest
 
+# ZIP内ファイルを検査するために使う
+import zipfile
+
 # ファイルのパスを扱う
 from pathlib import Path
 
@@ -21,6 +24,8 @@ from scripts.instruction_generation.generate_rule_instructions import (
     _affine_permutation_parameters,
     # 一つの意味ASTから全文指示を作る
     _generate_for_ast,
+    # 全文JSONLをtrainと評価へ分けてZIPにする
+    _write_partitioned_zip,
     # 固定メタデータのZIPを作る
     _write_deterministic_zip,
 )
@@ -128,6 +133,60 @@ class RuleInstructionGenerationTests(unittest.TestCase):
                 hashlib.sha256(first.read_bytes()).hexdigest(),
                 hashlib.sha256(second.read_bytes()).hexdigest(),
             )
+
+    # この工程を担当するテストを定義する
+    def test_partitioned_zip_separates_train_and_evaluation(self) -> None:
+        """split=trainだけをtrain ZIPへ入れ、それ以外を評価ZIPへ入れる。"""
+
+        # 一時ディレクトリを自動的に後片付けする
+        with tempfile.TemporaryDirectory() as directory:
+            # 一時ディレクトリをPathへ変換する
+            root = Path(directory)
+            # 三区分を持つ小さな入力JSONLのパスを作る
+            source = root / "instructions.jsonl"
+            # train、val、testを一行ずつ保存する
+            source.write_text(
+                '{"instruction_id":"train","split":"train"}\n'
+                '{"instruction_id":"val","split":"val"}\n'
+                '{"instruction_id":"test","split":"test"}\n',
+                encoding="utf-8",
+            )
+            # train ZIPの出力パスを作る
+            train_zip = root / "train.zip"
+            # 評価ZIPの出力パスを作る
+            evaluation_zip = root / "evaluation.zip"
+            # trainだけをZIPへ格納する
+            train_count = _write_partitioned_zip(
+                source,
+                train_zip,
+                "train.jsonl",
+                include_train=True,
+            )
+            # train以外を評価ZIPへ格納する
+            evaluation_count = _write_partitioned_zip(
+                source,
+                evaluation_zip,
+                "evaluation.jsonl",
+                include_train=False,
+            )
+            # 分割件数が1件と2件になることを確認する
+            self.assertEqual((train_count, evaluation_count), (1, 2))
+            # train ZIP内のJSONL本文を読む
+            with zipfile.ZipFile(train_zip) as archive:
+                # trainメンバーをUTF-8文字列へ戻す
+                train_text = archive.read("train.jsonl").decode("utf-8")
+            # 評価ZIP内のJSONL本文を読む
+            with zipfile.ZipFile(evaluation_zip) as archive:
+                # 評価メンバーをUTF-8文字列へ戻す
+                evaluation_text = archive.read("evaluation.jsonl").decode("utf-8")
+            # train ZIPにtrainだけがあることを確認する
+            self.assertIn('"instruction_id":"train"', train_text)
+            # train ZIPにvalidationがないことを確認する
+            self.assertNotIn('"instruction_id":"val"', train_text)
+            # 評価ZIPにvalidationとtestがあることを確認する
+            self.assertIn('"instruction_id":"val"', evaluation_text)
+            # 評価ZIPにtrainがないことを確認する
+            self.assertNotIn('"instruction_id":"train"', evaluation_text)
 
 
 # 直接実行された場合だけ単体テストを開始する

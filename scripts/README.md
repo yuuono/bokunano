@@ -114,7 +114,7 @@ uv run --python 3.12.12 python \
   --overwrite
 ```
 
-生JSONLは`data/instructions/rule_generated_instructions.jsonl`へ出力し、同じ実行でGit管理用ZIPも作る。選択・結合・重複除外方針は[`rule_generated_instruction_policy.md`](../docs/policies/rule_generated_instruction_policy.md)に従う。
+生JSONLは`data/instructions/rule_generated_instructions.jsonl`へ出力し、同じ実行でGit管理用のtrain ZIPと評価ZIPを作る。選択・結合・重複除外方針は[`rule_generated_instruction_policy.md`](../docs/policies/rule_generated_instruction_policy.md)に従う。
 
 ルール生成指示が完成した後、その一部について教師言い換え候補を作る。
 

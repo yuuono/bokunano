@@ -2,12 +2,13 @@
 
 ## 1. 公開するもの
 
-GitHubへ公開するデータは、`data/instruction_dictionaries/release/`の次の2ファイルだけとする。
+GitHubへ公開するデータは、`data/instruction_dictionaries/release/`の次の3ファイルとする。
 
 | ファイル | 内容 |
 |---|---|
 | `japanese_atomic_expressions.csv` | 人間が最終承認した、実際に使用する終止形・接続形 |
 | `japanese_atomic_expression_provenance.jsonl` | 各表現に対応する生成条件と修正前候補の来歴 |
+| `paraphrase_test_external_expressions.jsonl` | 承認済み545件の外から人手追加した言い換えテスト専用9表現 |
 
 CSVにはレビュー作業用の`review_status`、編集欄、確認者欄を含めない。`edited_expression_ja`または`edited_connective_expression_ja`がある場合は、その内容を公開CSVの`expression_ja`と`connective_expression_ja`へ反映する。
 
@@ -23,7 +24,7 @@ JSONLはCSVと同じ件数・同じ`expression_id`順にする。各行の`appro
 - 未承認、`unused`、未判定の候補
 - 公開物から再生成できる`approved_expressions.jsonl`と分割stats
 
-これらは削除せずローカルに保持する。`.gitignore`では`data/instruction_dictionaries/`全体をいったん除外し、`release/`の上記2ファイルだけを再許可している。これにより、作業中の候補や生応答を誤って一括追加しない。`approved_expressions.jsonl`の人手選定結果は`config/build_approved_expression_dictionary.json`へ固定し、公開済み2ファイルから再生成できる。
+これらは削除せずローカルに保持する。`.gitignore`では`data/instruction_dictionaries/`全体をいったん除外し、`release/`の上記3ファイルだけを再許可している。これにより、作業中の候補や生応答を誤って一括追加しない。`approved_expressions.jsonl`の人手選定結果は`config/build_approved_expression_dictionary.json`へ固定し、公開済みCSVと来歴JSONLから再生成できる。辞書外9件はQwen生成来歴を持たないため、出所を`human_authored_out_of_dictionary`として第三のファイルへ分離する。
 
 ## 3. 公開物の更新
 
@@ -78,6 +79,7 @@ git push origin main
 git add \
   data/instruction_dictionaries/release/japanese_atomic_expressions.csv \
   data/instruction_dictionaries/release/japanese_atomic_expression_provenance.jsonl \
+  data/instruction_dictionaries/release/paraphrase_test_external_expressions.jsonl \
   docs/results/japanese_atomic_expression_generation_results.md \
   docs/results/japanese_atomic_expression_expansion_history.md
 git diff --cached --check
@@ -86,7 +88,7 @@ git commit -m "Publish reviewed Japanese atomic expressions"
 git push origin main
 ```
 
-`git add -f`は使わない。`git add data/instruction_dictionaries/`も避け、公開する2ファイルを明示する。各pushの直前に、意図した区分のファイルだけがstageされていることを確認する。結果commitでは次を確認する。
+`git add -f`は使わない。`git add data/instruction_dictionaries/`も避け、公開する3ファイルを明示する。各pushの直前に、意図した区分のファイルだけがstageされていることを確認する。結果commitでは次を確認する。
 
 - 公開CSVとJSONLが同数である。
 - 両ファイルの`expression_id`が行単位で一致する。
