@@ -105,6 +105,17 @@ uv run --python 3.12.12 python \
 
 公開対象とcommit・push時の確認事項は、[`publishing_japanese_expression_dictionary.md`](../docs/procedures/publishing_japanese_expression_dictionary.md)に従う。
 
+分割済みの承認表現辞書と5集合の意味ASTから、全文日本語指示をルール生成する。
+
+```bash
+uv run --python 3.12.12 python \
+  scripts/instruction_generation/generate_rule_instructions.py \
+  --config config/rule_generated_instruction_generation.json \
+  --overwrite
+```
+
+生JSONLは`data/instructions/rule_generated_instructions.jsonl`へ出力し、同じ実行でGit管理用ZIPも作る。選択・結合・重複除外方針は[`rule_generated_instruction_policy.md`](../docs/policies/rule_generated_instruction_policy.md)に従う。
+
 ルール生成指示が完成した後、その一部について教師言い換え候補を作る。
 
 ```bash

@@ -1,0 +1,51 @@
+{
+  "config_version": 1,
+  "phase": "rule_generated_instructions",
+  "dictionary": "data/instruction_dictionaries/approved_expressions.jsonl",
+  "semantic_ast_inputs": [
+    {
+      "name": "train",
+      "path": "data/semantic_asts/train_semantic_asts.jsonl",
+      "expected_count": 9646
+    },
+    {
+      "name": "validation",
+      "path": "data/semantic_asts/val_semantic_asts.jsonl",
+      "expected_count": 1202
+    },
+    {
+      "name": "normal",
+      "path": "data/semantic_asts/normal_semantic_asts.jsonl",
+      "expected_count": 1202
+    },
+    {
+      "name": "compositional",
+      "path": "data/semantic_asts/compositional_semantic_asts.jsonl",
+      "expected_count": 670
+    },
+    {
+      "name": "repetition",
+      "path": "data/semantic_asts/repetition_semantic_asts.jsonl",
+      "expected_count": 1152
+    }
+  ],
+  "output": "data/instructions/rule_generated_instructions.jsonl",
+  "stats": "data/instructions/rule_generated_instruction_stats.json",
+  "archive": "data/archives/rule_generated_instructions_2026-09-24.zip",
+  "archive_member": "data/instructions/rule_generated_instructions.jsonl",
+  "maximum_instructions_per_ast": 20,
+  "expected_ast_count": 13872,
+  "expected_instruction_count": 277420,
+  "generator_version": "1",
+  "generator_seed": 20260924,
+  "sentence_templates": {
+    "without_k": {
+      "template_id": "sentence-xs-from-v1",
+      "text": "整数リストxsから{operations}solve関数を書いてください。"
+    },
+    "with_k": {
+      "template_id": "sentence-xs-k-input-v1",
+      "text": "整数リストxsと整数kを受け取り、{operations}solve関数を書いてください。"
+    }
+  }
+}
