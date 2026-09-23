@@ -40,15 +40,16 @@ data/
 
 日本語指示を結合した最終データは、作成時に`data/final/`へ保存する。
 
-## コード候補のZIP
+## 大容量生成物のZIP
 
-2操作・3操作の`python_code_candidates.jsonl`は容量が大きいため、展開済みファイルをGitでは管理しない。Gitでは次のZIPを管理する。
+2・3操作の`python_code_candidates.jsonl`と展開済み全文指示JSONLは容量が大きいため、Gitでは直接管理しない。Gitでは次のZIPを管理する。
 
 | ファイル | 対象 | 収録ファイル | 収録コード | SHA-256 |
 |---|---|---:|---:|---|
 | `archives/multi_operation_python_code_candidates_2026-09-20.zip` | 訓練・組合せ汎化 | 4 | 205,840件 | `369fb2175c715f15c6c7aeccd6d3ce96191404dac4537da8d72774e52d862a8e` |
 | `archives/evaluation_python_code_candidates_2026-09-20.zip` | 検証・通常テスト・反復汎化 | 6 | 71,120件 | `5fcab861bcc6d69fb12758fb62325e02a00ab00e5da55db25c7b2e03134821d4` |
-| `archives/rule_generated_instructions_2026-09-24.zip` | train・validation・normal・compositional・repetitionの全文日本語指示 | 1 | 277,420件 | `643ffab5dc0d2215ab7b6b9c3eccf328021b2a655644f8fcd6ee5afd9c056ac6` |
+| `archives/rule_generated_train_instructions_2026-09-24.zip` | trainの全文日本語指示 | 1 | 192,900件 | `6299f0c09b0fcbe095d1537a55dc9f4f0fa5dd815f5ba01f0fd75e7c9a871d24` |
+| `archives/rule_generated_evaluation_instructions_2026-09-24.zip` | validation・normal・compositional・repetitionの全文日本語指示 | 1 | 84,520件 | `1a9e25807c2921359f308fb4951faabf13c9fbb9fbd1f0e5e7019f8be6f6ed3b` |
 
 設定JSON、集計JSON、不採用記録、生成・検証スクリプトはZIPへ入れず、通常のファイルとしてGitで管理する。
 
@@ -57,7 +58,8 @@ data/
 ```bash
 unzip data/archives/multi_operation_python_code_candidates_2026-09-20.zip -d .
 unzip data/archives/evaluation_python_code_candidates_2026-09-20.zip -d .
-unzip data/archives/rule_generated_instructions_2026-09-24.zip -d .
+unzip data/archives/rule_generated_train_instructions_2026-09-24.zip -d .
+unzip data/archives/rule_generated_evaluation_instructions_2026-09-24.zip -d .
 ```
 
 展開後は次で、件数、保存済み検証結果、コード全文の完全重複を再確認できる。

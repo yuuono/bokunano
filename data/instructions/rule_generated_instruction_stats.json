@@ -166,5 +166,20 @@
   },
   "output_sha256": "419f26ed8797296975c801fab0adb2a944dcedd584470ed756f1c0bf1055a0a8",
   "output_bytes": 300622921,
-  "archive_member": "data/instructions/rule_generated_instructions.jsonl"
+  "archives": {
+    "train": {
+      "path": "data/archives/rule_generated_train_instructions_2026-09-24.zip",
+      "member": "data/instructions/rule_generated_train_instructions.jsonl",
+      "record_count": 192900,
+      "bytes": 37809698,
+      "sha256": "6299f0c09b0fcbe095d1537a55dc9f4f0fa5dd815f5ba01f0fd75e7c9a871d24"
+    },
+    "evaluation": {
+      "path": "data/archives/rule_generated_evaluation_instructions_2026-09-24.zip",
+      "member": "data/instructions/rule_generated_evaluation_instructions.jsonl",
+      "record_count": 84520,
+      "bytes": 14918313,
+      "sha256": "1a9e25807c2921359f308fb4951faabf13c9fbb9fbd1f0e5e7019f8be6f6ed3b"
+    }
+  }
 }

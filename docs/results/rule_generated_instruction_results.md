@@ -51,7 +51,7 @@
 
 ## 出力とZIP
 
-生JSONLとZIPの情報は次のとおりである。
+生JSONLと分割後ZIPの情報は次のとおりである。
 
 | 項目 | 値 |
 |---|---|
@@ -59,12 +59,16 @@
 | レコード数 | 277,420 |
 | 生JSONLサイズ | 300,622,921 bytes（約287 MiB） |
 | 生JSONL SHA-256 | `419f26ed8797296975c801fab0adb2a944dcedd584470ed756f1c0bf1055a0a8` |
-| ZIP | `data/archives/rule_generated_instructions_2026-09-24.zip` |
-| ZIPサイズ | 52,727,143 bytes（約50.3 MiB） |
-| ZIP SHA-256 | `643ffab5dc0d2215ab7b6b9c3eccf328021b2a655644f8fcd6ee5afd9c056ac6` |
-| ZIP内パス | `data/instructions/rule_generated_instructions.jsonl` |
+| train ZIP | `data/archives/rule_generated_train_instructions_2026-09-24.zip` |
+| train ZIP収録数 | 192,900件 |
+| train ZIPサイズ | 37,809,698 bytes（約36.1 MiB） |
+| train ZIP SHA-256 | `6299f0c09b0fcbe095d1537a55dc9f4f0fa5dd815f5ba01f0fd75e7c9a871d24` |
+| 評価ZIP | `data/archives/rule_generated_evaluation_instructions_2026-09-24.zip` |
+| 評価ZIP収録数 | 84,520件 |
+| 評価ZIPサイズ | 14,918,313 bytes（約14.2 MiB） |
+| 評価ZIP SHA-256 | `1a9e25807c2921359f308fb4951faabf13c9fbb9fbd1f0e5e7019f8be6f6ed3b` |
 
-生JSONLはGitHubへ直接置かず、ZIPだけをGit管理する。ZIPはGitHubの単一ファイル上限100 MiB未満で、既存のコード候補アーカイブと同じ方法で展開できる。設定・スクリプト・集計JSONを通常ファイルとして併せて管理するため、ZIPだけで生成条件が不明になることはない。
+生JSONLはGitHubへ直接置かず、train用と評価用のZIPだけをGit管理する。両ZIPともGitHubの推奨50 MiB未満で、既存のコード候補アーカイブと同じ方法で展開できる。設定・スクリプト・集計JSONを通常ファイルとして併せて管理するため、ZIPだけで生成条件が不明になることはない。
 
 ## 実行コマンド
 
