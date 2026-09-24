@@ -77,8 +77,52 @@ uv run --group instruction-generation --python 3.12.12 python \
 
 候補JSONL、生応答JSONL、確認CSVは人手承認前の作業物であり、GitHubへ公開する最終訓練データではない。そのためローカルに保持し、Gitでは追跡しない。再現条件と70件の除外IDを含む集計JSON、および本結果MDはGitで管理する。
 
+### 4.1 どれが生データか
+
+「元データ」と「モデルの生データ」を区別する。各ファイルの役割は次のとおりである。
+
+| ファイル | 区分 | 内容 | 人が編集するか |
+|---|---|---|---|
+| `data/instructions/rule_generated_instructions.jsonl` | 言い換え元データ | ルールベースで作成した277,420指示。ここから96,460件を選抜した | 編集しない |
+| `data/instructions/teacher_paraphrase_raw_responses.jsonl` | **モデル生データ** | Qwenへ渡したsystem/user prompt、Qwenが返した未変更の`raw_response`、seed、prompt hash、解析状態 | 編集しない |
+| `data/instructions/teacher_paraphrase_candidates.jsonl` | 解析・検査済み候補 | 生応答をJSON解析し、元文一致、thinking、コードフェンスを除外した96,390候補。元文、意味AST、モデル来歴も保持する | 直接編集しない |
+| `data/instructions/teacher_paraphrase_review.csv` | 人手レビュー用表示 | 候補JSONLから、意味AST、元文、言い換え文、判定欄を表形式へ展開したもの | **このCSVだけをレビュー時に編集する** |
+| `data/instructions/teacher_paraphrase_generation_stats.json` | 集計データ | 実行条件、件数、70件の除外IDと理由 | 編集しない |
+| `docs/results/instruction_paraphrase_generation_results.md` | 結果報告 | 実行条件、検証結果、ファイルの役割を人が読める形でまとめたもの | 結果確定時だけ更新する |
+
+データの流れは次のとおりである。
+
+```text
+言い換え元データ
+  rule_generated_instructions.jsonl
+    ↓ 固定seedで各意味ASTから10件選抜
+モデル生データ
+  teacher_paraphrase_raw_responses.jsonl
+    ↓ JSON解析・既知末尾補正・形式検査
+解析済み候補
+  teacher_paraphrase_candidates.jsonl
+    ↓ 人手確認用の列へ展開
+レビュー作業ファイル
+  teacher_paraphrase_review.csv
+    ↓ approvedだけを来歴付きで統合（次工程）
+承認済み言い換え
+  approved_teacher_paraphrases.jsonl
+```
+
+`raw_responses.jsonl`の`raw_response`は、末尾引用符を補正した10,404件についても変更していない。補正結果は候補作成時だけ使用し、生データ側には`parse_repaired=true`を追加して区別している。また、レビューCSVを編集しても候補JSONLへ自動反映されない。承認結果をJSONLへ統合する専用処理が別途必要である。
+
 ## 5. 現在の状態と次工程
 
 生成された96,390件はすべて`review_status=pending`であり、まだ訓練データへ採用していない。次工程では`teacher_paraphrase_review.csv`を使い、意味AST、元文、言い換え文を比較して意味、定数、比較境界、操作順が同じ候補だけを人手承認する。
 
 承認済み候補を作成するときは、元指示ID、意味AST、モデルrevision、sampling設定、seed、prompt hashを候補JSONLから失わず引き継ぐ。未承認候補を含む現時点ではZIPを作成せず、承認済みデータだけを最終成果物として別途アーカイブする。
+
+次に行う作業は、次の順番とする。
+
+1. `teacher_paraphrase_review.csv`の各行について、意味、定数、比較境界、操作順が元文と一致するか確認する。
+2. 採用する行へ`review_status=approved`、採用しない行へ`review_status=unused`を記入する。修正文を採用する場合は`edited_instruction_ja`へ記入し、`reviewer`と`reviewed_at`も埋める。
+3. レビューCSVの`approved`だけを候補JSONLへ突き合わせ、全来歴を保持した`data/instructions/approved_teacher_paraphrases.jsonl`を作る。
+4. 承認済み言い換えを意味ASTで検証済みコードへ対応付け、`test_only`表現が混ざっていないことを検査する。
+5. 最終採用データだけをZIPへまとめ、件数、SHA-256、結合結果を別の結果MDへ記録する。
+
+現時点では、3の「レビューCSVから承認済みJSONLを作る専用スクリプト」はまだ実装されていない。したがって、直近の実装課題はこの統合スクリプトを作ることであり、直近の人手作業はレビューCSVの判定方針と一回に確認する範囲を決めることである。

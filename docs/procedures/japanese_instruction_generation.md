@@ -519,6 +519,15 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 
 意味と操作順が同じであることを確認できた文だけを採用する。
 
+生成後のファイルは、次の区分で扱う。
+
+- `teacher_paraphrase_raw_responses.jsonl`: Qwenの未変更応答を持つモデル生データ。編集しない
+- `teacher_paraphrase_candidates.jsonl`: 生応答を解析・形式検査した候補データ。直接編集しない
+- `teacher_paraphrase_review.csv`: 元文と候補を並べた人手レビュー用ファイル。このファイルへ判定を記入する
+- `teacher_paraphrase_generation_stats.json`: 実行条件と除外理由の集計。編集しない
+
+詳細な対応関係と実行件数は、[`instruction_paraphrase_generation_results.md`](../results/instruction_paraphrase_generation_results.md#41-どれが生データか)を参照する。
+
 採用時は、元の指示ID、教師モデル名、revision、`prompt_hash`を保存する。
 
 ```json
@@ -575,7 +584,7 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 
 ### 教師言い換えと最終結合
 
-- [ ] ルール生成指示の一部だけを教師モデルで言い換えた
+- [x] ルール生成指示の一部だけを教師モデルで言い換えた
 - [ ] 作成者本人が元文と教師言い換えを比較した
 - [ ] 承認済み言い換えだけを採用した
 - [ ] 指示文と検証済みコードを同じ意味ASTで結合した
