@@ -34,3 +34,6 @@ data/instructions/paraphrase_test_instructions.jsonl
 data/instructions/teacher_paraphrase_candidates.jsonl
 data/instructions/teacher_paraphrase_raw_responses.jsonl
 data/instructions/teacher_paraphrase_review.csv
+
+# 承認済み教師言い換えは生JSONLではなく決定的ZIPをGitで管理する。
+data/instructions/approved_teacher_paraphrases.jsonl

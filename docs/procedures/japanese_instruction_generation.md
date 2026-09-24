@@ -530,6 +530,8 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 
 採用時は、元の指示ID、教師モデル名、revision、`prompt_hash`を保存する。
 
+2026年9月24日の候補96,390件は、利用者の明示指示により個別CSV判定を行わず全件承認した。承認方式は`approval_mode=blanket_all_candidates`として各レコードへ残し、個別に元文と比較した承認とは区別する。実行結果は[`instruction_paraphrase_approval_results.md`](../results/instruction_paraphrase_approval_results.md)を参照する。
+
 ```json
 {
   "instruction_id": "instruction-teacher-...",
@@ -586,9 +588,9 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 
 - [x] ルール生成指示の一部だけを教師モデルで言い換えた
 - [ ] 作成者本人が元文と教師言い換えを比較した
-- [ ] 承認済み言い換えだけを採用した
+- [x] 利用者の明示指示により全候補を一括承認した
 - [ ] 指示文と検証済みコードを同じ意味ASTで結合した
-- [ ] `test_only`表現が訓練データへ入っていないことを確認した
+- [x] 承認済み言い換えがすべて`dictionary=train`であることを確認した
 - [ ] 最終レコードの必須項目とハッシュを確認した
 
 ## 9. 完了条件

@@ -130,6 +130,22 @@ Qwen3はすべて`enable_thinking=false`、`local_files_only=true`で実行す�
 
 実行結果は[`instruction_paraphrase_generation_results.md`](../docs/results/instruction_paraphrase_generation_results.md)に記録する。候補JSONL、生応答JSONL、確認CSVは人手承認前の作業物なのでGitへ追加せず、集計JSONと結果MDだけを管理する。
 
+候補をすべて一括承認する場合は、誤操作防止の`--approve-all`、承認者、タイムゾーン付き承認日時、期待件数を明示する。元候補の全項目を保持した承認済みJSONL、Git管理用の決定的ZIP、集計JSONを同時に作る。
+
+```bash
+uv run --python 3.12.12 python scripts/instruction_generation/prepare_approved_teacher_paraphrases.py \
+  --candidate-jsonl data/instructions/teacher_paraphrase_candidates.jsonl \
+  --output-jsonl data/instructions/approved_teacher_paraphrases.jsonl \
+  --archive data/archives/approved_teacher_paraphrases_2026-09-24.zip \
+  --stats data/instructions/approved_teacher_paraphrases_stats.json \
+  --reviewer ono_yusuke \
+  --approved-at 2026-09-24T20:51:52+09:00 \
+  --expected-count 96390 \
+  --approve-all
+```
+
+一括承認では`review_status=approved`へ更新し、元の`pending`は`candidate_review_status`へ保存する。さらに`approved_by`、`approved_at`、`approval_mode=blanket_all_candidates`を追加する。結果は[`instruction_paraphrase_approval_results.md`](../docs/results/instruction_paraphrase_approval_results.md)に記録する。
+
 ## 検証
 
 ```bash
