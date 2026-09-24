@@ -18,6 +18,9 @@ from pathlib import Path
 # 単体テストの枠組みを使う
 import unittest
 
+# ZIP内の生成済みJSONLを読むために使う
+import zipfile
+
 
 # このテストファイルから一階層上をプロジェクトルートとして取得する
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -161,6 +164,93 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
         )
         # 表現一件につき一文なので、予定する評価指示数が32件になる
         self.assertEqual(sum(counts.values()), 32)
+        # Git管理する言い換え評価ZIPのパスを作る
+        archive_path = (
+            PROJECT_ROOT
+            / "data/archives/paraphrase_test_instructions_2026-09-24.zip"
+        )
+        # ZIP内の固定JSONLパスを定義する
+        archive_member = "data/instructions/paraphrase_test_instructions.jsonl"
+        # ZIPを読み取り専用で開く
+        with zipfile.ZipFile(archive_path) as archive:
+            # ZIP内JSONLをUTF-8文字列へ戻す
+            archived_text = archive.read(archive_member).decode("utf-8")
+        # 空行を除いて生成済みレコードを解析する
+        instruction_rows = [
+            # 現在行をJSONオブジェクトへ変換する
+            json.loads(line)
+            # JSONLを一行ずつ処理する
+            for line in archived_text.splitlines()
+            # 空行は読み飛ばす
+            if line.strip()
+        ]
+        # ZIPが32件の評価指示を含むことを確認する
+        self.assertEqual(len(instruction_rows), 32)
+        # 表現IDから元のテスト専用表現を引く対応表を作る
+        expression_by_id = {
+            # 表現IDをキーに元レコードを保存する
+            row["expression_id"]: row
+            # テスト専用32表現を処理する
+            for row in test_rows
+        }
+        # kを明示的な入力に持つ操作ID集合を定義する
+        k_operation_ids = {
+            "atomic-000003",
+            "atomic-000004",
+            "atomic-000005",
+            "atomic-000006",
+            "atomic-000007",
+            "atomic-000011",
+            "atomic-000012",
+            "atomic-000013",
+            "atomic-000022",
+            "atomic-000023",
+        }
+        # 生成済み32レコードを一件ずつ検査する
+        for record in instruction_rows:
+            # 各文がテスト用の単独操作レコードであることを確認する
+            self.assertEqual(record["split"], "test")
+            # テスト集合が言い換え評価であることを確認する
+            self.assertEqual(record["test_suite"], "paraphrase")
+            # 辞書区分がtest_onlyであることを確認する
+            self.assertEqual(record["dictionary"], "test_only")
+            # 一つの表現IDだけが使われることを確認する
+            self.assertEqual(len(record["expression_ids"]), 1)
+            # 一つの操作IDだけが使われることを確認する
+            self.assertEqual(len(record["operation_ids"]), 1)
+            # 意味ASTの操作列長が1であることを確認する
+            self.assertEqual(len(record["semantic_ast"]["sequence"]), 1)
+            # 使用表現IDに対応する元表現を取得する
+            source_expression = expression_by_id[record["expression_ids"][0]]
+            # 使用操作IDが元表現の操作IDと一致することを確認する
+            self.assertEqual(
+                record["operation_ids"][0], source_expression["operation_id"]
+            )
+            # CSV側だけ文字列になっている操作ASTを辞書へ戻す
+            expected_operation_ast = source_expression["operation_ast"]
+            # 文字列ならJSONとして解析する
+            if isinstance(expected_operation_ast, str):
+                # 比較可能な操作AST辞書にする
+                expected_operation_ast = json.loads(expected_operation_ast)
+            # 意味ASTが元表現の単独操作だけを含むことを確認する
+            self.assertEqual(
+                record["semantic_ast"]["sequence"], [expected_operation_ast]
+            )
+            # kを使う操作かどうかを判定する
+            requires_k = source_expression["operation_id"] in k_operation_ids
+            # k有無に対応する外側テンプレートで期待全文を作る
+            expected_instruction = (
+                "整数リストxsと整数kを受け取り、"
+                if requires_k
+                else "整数リストxsから"
+            ) + source_expression["expression_ja"] + "solve関数を書いてください。"
+            # 完成全文が終止形を一度だけ使う期待文と一致することを確認する
+            self.assertEqual(record["instruction_ja"], expected_instruction)
+        # 32個の表現IDがZIP内で一度ずつ使われることを確認する
+        self.assertEqual(
+            {record["expression_ids"][0] for record in instruction_rows},
+            set(expression_by_id),
+        )
 
 
 # 直接実行された場合だけ単体テストを開始する

@@ -1,0 +1,28 @@
+{
+  "config_version": 1,
+  "phase": "paraphrase_test_instructions",
+  "approved_dictionary": "data/instruction_dictionaries/approved_expressions.jsonl",
+  "external_expressions": "data/instruction_dictionaries/release/paraphrase_test_external_expressions.jsonl",
+  "single_operation_asts": "data/semantic_asts/train_semantic_asts.jsonl",
+  "output": "data/instructions/paraphrase_test_instructions.jsonl",
+  "stats": "data/instructions/paraphrase_test_instruction_stats.json",
+  "archive": {
+    "path": "data/archives/paraphrase_test_instructions_2026-09-24.zip",
+    "member": "data/instructions/paraphrase_test_instructions.jsonl"
+  },
+  "expected_approved_expression_count": 23,
+  "expected_external_expression_count": 9,
+  "expected_instruction_count": 32,
+  "expected_operation_count": 24,
+  "generator_version": "1",
+  "sentence_templates": {
+    "without_k": {
+      "template_id": "sentence-xs-from-v1",
+      "text": "整数リストxsから{operations}solve関数を書いてください。"
+    },
+    "with_k": {
+      "template_id": "sentence-xs-k-input-v1",
+      "text": "整数リストxsと整数kを受け取り、{operations}solve関数を書いてください。"
+    }
+  }
+}

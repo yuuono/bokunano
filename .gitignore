@@ -28,3 +28,4 @@ data/instruction_dictionaries/release/*
 
 # ルール生成した展開済み全文指示はZIPだけをGitで管理する。
 data/instructions/rule_generated_instructions.jsonl
+data/instructions/paraphrase_test_instructions.jsonl
