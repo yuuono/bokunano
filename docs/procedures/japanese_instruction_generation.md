@@ -341,9 +341,11 @@ uv run --python 3.12.12 python scripts/instruction_generation/build_approved_exp
 意味AST内の各操作について、同じ`operation_ast`を持つ承認済み表現を1件選ぶ。
 
 - 言い換えテスト以外: `train`辞書から選ぶ
-- 言い換えテスト: `test_only`辞書から選ぶ
+- 言い換えテスト: 32件の`test_only`表現をそれぞれ対応する単独操作ASTへ1件ずつ割り当てる
 
 選択した`expression_id`は、意味ASTと同じ順番で記録する。
+
+言い換え評価は2・3操作の結合を行わない。表現1件につき1操作の全文指示を1文作るため、合計32文になる。終止形だけを本文に使用し、接続形は辞書情報として保持する。詳細は[`japanese_paraphrase_test_policy.md`](../policies/japanese_paraphrase_test_policy.md)を正とする。
 
 ### 5.3 操作順を保って結合する
 
@@ -406,7 +408,7 @@ op3 connective: 降順に並べて
 
 ただし、辞書内の全表現を無制限に直積で組み合わせない。1つの意味ASTから作る件数の上限を20件とし、固定seed、`spec_id`、正規化意味ASTから決めた直積上の開始位置と歩幅で固有全文を選ぶ。同じ全文は除外し、20件未満しか作れないASTを同じ文で水増ししない。
 
-選択は固定seedを使って再現可能にする。train、validation、normal、compositional、repetitionの13,872意味ASTを対象とし、`train`表現522件だけを使用する。normalの指示は境界値テストでも再利用し、`test_only`を使う言い換えテストは別工程とする。詳細は[`rule_generated_instruction_policy.md`](../policies/rule_generated_instruction_policy.md)を正とする。
+選択は固定seedを使って再現可能にする。train、validation、normal、compositional、repetitionの13,872意味ASTを対象とし、`train`表現522件だけを使用する。normalの指示は境界値テストでも再利用する。`test_only`を使う言い換えテストは、単独操作だけの32文を作る別工程とする。詳細は[`rule_generated_instruction_policy.md`](../policies/rule_generated_instruction_policy.md)を正とする。
 
 ### 5.6 生成結果を保存する
 

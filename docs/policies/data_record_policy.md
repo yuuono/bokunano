@@ -65,7 +65,7 @@ record-<SHA-256(code_id + "\0" + instruction_ja + "\0" + test_suite + "\0" + tes
 
 ### `family_id`
 
-同じ元問題から派生した`normal`、`paraphrase`、`boundary`を結び付けるIDである。この3集合では同じ値を使用する。
+同じ意味ASTから派生したレコードを結び付けるIDである。`normal`と`boundary`の対応、および同じ単独操作ASTを使う`paraphrase`内の複数表現を追跡する。
 
 ```text
 family-<semantic_hash>
@@ -316,9 +316,10 @@ input_set: build | hidden | boundary
 - `train`と`val`では`test_suite`を`null`にする
 - `paraphrase`では`dictionary`を`test_only`にする
 - `normal`と`compositional`では`input_set`を`hidden`にする
-- `paraphrase`では`normal`と同じhidden入力を使用する
+- `paraphrase`は32件とし、各レコードに単独操作AST、表現ID1件、単独操作用hidden入力を保存する
 - `boundary`では`input_set`を`boundary`にする
-- `normal`、`paraphrase`、`boundary`では同じ`family_id`を使用する
+- `normal`と対応する`boundary`では同じ`family_id`を使用する
+- `paraphrase`では単独操作ASTの`semantic_hash`から`family_id`を計算し、同じ操作の複数表現では同じ値を使用する
 
 `tests`は内部検証・評価用であり、通常の学習プロンプトへ含めない。hidden入力を訓練データやモデル入力へ混入させてはいけない。
 
@@ -406,7 +407,7 @@ hidden入力を別管理する場合は、公開またはモデル入力用の�
 3. 最終レコードに元の必須項目がすべて存在する。
 4. 教師未使用時の教師項目が欠落ではなく`null`になっている。
 5. `split`と`test_suite`の組み合わせが規定どおりである。
-6. `normal`、`paraphrase`、`boundary`が同じ`family_id`を持つ。
+6. 対応する`normal`と`boundary`が同じ`family_id`を持ち、`paraphrase`は単独操作ASTごとに同じ`family_id`を持つ。
 7. 各ハッシュを再計算して保存値と照合できる。
 8. 採用レコードの全`verification`項目が合格条件を満たす。
 9. hidden入力が訓練プロンプトまたは訓練用入力へ含まれていない。

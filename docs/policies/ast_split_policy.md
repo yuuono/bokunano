@@ -29,19 +29,19 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 
 ## テスト集合は別々の軸として扱う
 
-通常テストを基準とし、言い換えテストでは日本語表現だけ、境界値テストでは実行入力だけを変更する。組合せ汎化テストでは意味ASTだけを変更する。
+通常テストを基準とし、境界値テストでは実行入力だけを変更する。言い換えテストは複合操作を扱わず、訓練済みの24単独操作に未学習表現を割り当てる独立評価とする。組合せ汎化テストでは意味ASTだけを変更する。
 
 | test_suite | 意味AST | 日本語表現 | 実行入力 |
 |---|---|---|---|
 | `normal` | 訓練に含まれない通常テスト用AST | 訓練用表現辞書 | hidden test入力 |
-| `paraphrase` | `normal`と同じAST | テスト専用表現辞書 | `normal`と同じhidden test入力 |
+| `paraphrase` | 24個の単独操作AST | テスト専用32表現 | 単独操作用hidden test入力 |
 | `compositional` | 選択した5操作対に基づく670件 | 訓練用表現辞書 | hidden test入力 |
 | `boundary` | `normal`と同じAST | 訓練用表現辞書 | 境界値入力 |
 | `repetition` | 同一操作が隣接する1,152件 | 未決定 | 未決定 |
 
-`normal`、`paraphrase`、`boundary`で同じ意味ASTを使うのは意図的である。3集合の差を1軸だけにすることで、通常テストからの性能低下が日本語表現によるものか、境界値入力によるものかを切り分ける。
+`normal`と`boundary`で同じ意味ASTを使うのは意図的である。2集合の差を実行入力だけにすることで、通常テストからの性能低下が境界値入力によるものかを切り分ける。
 
-`paraphrase`と`boundary`は`normal`のASTを再利用するため、追加の意味ASTを消費しない。`compositional`は12,720件から670件を使用する。`repetition`は現在の12,720件には含まれず、別に1,152件を生成済みである。
+`paraphrase`は、訓練へ割り当てた24個の単独操作の意味を参照し、32表現から1操作1文を作る。train、validation、normalのAST分割数は消費しない。`boundary`は`normal`のASTを再利用する。`compositional`は12,720件から670件を使用する。`repetition`は現在の12,720件には含まれず、別に1,152件を生成済みである。
 
 ## 組合せ汎化テストを先に確保する
 
@@ -103,7 +103,7 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 
 12,050件に対して訓練約80.0%、検証約10.0%、通常テスト約10.0%になる。1操作ASTをすべて訓練へ入れるため、操作数ごとに一律80対10対10にはならない。
 
-検証と通常テストへ割り当てるASTは重複させない。`paraphrase`と`boundary`は、分割後の`normal`用1,202 ASTを再利用する。
+検証と通常テストへ割り当てるASTは重複させない。`boundary`は、分割後の`normal`用1,202 ASTを再利用する。`paraphrase`はこの分割とは別に、24個の単独操作ASTを使う。
 
 ## 採用した割り当て方式
 
@@ -136,7 +136,7 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 | 通常テスト | `data/semantic_asts/normal_semantic_asts.jsonl` | 1,202 | `test` | `normal` |
 | 合計 |  | 12,050 |  |  |
 
-出力では、抽出元の`spec_id`と`semantic_ast`を変更せず、`split`と`test_suite`を追加した。`normal`を再利用する`paraphrase`と`boundary`の派生レコードは、この分割処理ではまだ生成しない。
+出力では、抽出元の`spec_id`と`semantic_ast`を変更せず、`split`と`test_suite`を追加した。`normal`を再利用する`boundary`の派生レコードと、単独操作ASTを使う`paraphrase`レコードは、この分割処理では生成しない。
 
 再生成した3ファイルのSHA-256は次のとおりである。
 
@@ -211,10 +211,11 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 
 ### paraphrase
 
-- `normal`と同じ意味ASTを使用する
-- テスト専用表現辞書を使用する
-- `normal`と同じhidden test入力で評価する
-- ASTと実行入力を固定し、日本語表現だけを変更する
+- 24個の単独操作ASTだけを使用し、2操作・3操作ASTは使用しない
+- テスト専用の32表現を1件ずつ対応する単独操作ASTへ割り当てる
+- 表現1件につき1操作の全文指示を1文作り、合計32文とする
+- 単独操作用hidden test入力で評価する
+- 操作の意味は訓練済みとし、未学習の日本語表現を理解できるかを測る
 
 ### compositional
 
@@ -265,18 +266,19 @@ input_set:  build | hidden | boundary
 
 `train`と`val`では`test_suite`を空欄または`null`にする。`test`では5種類のいずれかを設定する。
 
-`normal`、`paraphrase`、`boundary`は同じ意味ASTを使うため、同じ元問題から派生したレコードであることを追跡できる`family_id`を持たせる。IDの計算方法と最終レコードの項目は、[データレコードの作成・管理方針](data_record_policy.md)で定める。
+`normal`と`boundary`は同じ意味ASTを使うため、同じ元問題から派生したレコードであることを追跡できる`family_id`を持たせる。`paraphrase`にも単独操作ASTの`semantic_hash`から計算した`family_id`を付けるが、normal用2・3操作ASTとの対応は要求しない。IDの計算方法と最終レコードの項目は、[データレコードの作成・管理方針](data_record_policy.md)で定める。
 
 ## 分割後の確認
 
 分割後に、少なくとも次を機械的に確認する。
 
 1. 訓練用の正規化意味ASTが、検証用または通常テスト用の意味ASTと完全一致していない
-2. `normal`、`paraphrase`、`boundary`が同じ意味ASTを共有している
-3. テスト専用表現辞書のエントリが、訓練用指示文に使われていない
-4. `compositional`用の5操作対が、訓練用意味AST内で共起していない
-5. 24個すべての単独操作が、訓練用の1操作ASTとして存在する
-6. 各操作の出現頻度を操作数別、split別に集計する
+2. `normal`と`boundary`が同じ意味ASTを共有している
+3. `paraphrase`が32件の1操作文だけで構成され、24操作を覆っている
+4. テスト専用表現辞書のエントリが、訓練用指示文に使われていない
+5. `compositional`用の5操作対が、訓練用意味AST内で共起していない
+6. 24個すべての単独操作が、訓練用の1操作ASTとして存在する
+7. 各操作の出現頻度を操作数別、split別に集計する
 
 コード生成と完全重複除外の後には、さらに次を確認する。
 

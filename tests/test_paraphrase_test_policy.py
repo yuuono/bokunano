@@ -1,4 +1,4 @@
-"""言い換えテスト用32表現の分離と組合せ件数を検証する。"""
+"""言い換えテスト用32表現の分離と単独操作対応を検証する。"""
 
 # 必要な定義を対象モジュールから読み込む
 from __future__ import annotations
@@ -29,7 +29,7 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
 
     # この工程を担当するテストを定義する
     def test_32_test_only_expressions_cover_all_operations(self) -> None:
-        """32件がtrainと重複せず24操作を覆い、全直積が2,653件になる。"""
+        """32件がtrainと重複せず、24個の単独操作ASTを覆う。"""
 
         # 公開済みの承認表現CSVを読む
         with (
@@ -113,45 +113,54 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
-        # 正規化操作ASTから操作IDを引く対応表を作る
-        operation_id_by_ast = {
-            # 操作ASTをキー順固定JSONへ変換する
-            json.dumps(
-                item["semantic_ast"],
-                ensure_ascii=False,
-                sort_keys=True,
-                separators=(",", ":"),
-            ): item["operation_id"]
+        # 操作IDから正式な単独操作ASTを引く対応表を作る
+        operation_ast_by_id = {
+            # 現在操作のIDと意味ASTを対応付ける
+            item["operation_id"]: item["semantic_ast"]
             # 24操作の定義を順番に処理する
             for item in operation_config["operations"]
         }
-        # normalの1,202意味ASTに対する全直積件数を初期化する
-        exhaustive_count = 0
-        # normal意味ASTを一行ずつ読む
-        with (PROJECT_ROOT / "data/semantic_asts/normal_semantic_asts.jsonl").open(
-            encoding="utf-8"
-        ) as handle:
-            # 各意味ASTを処理する
-            for line in handle:
-                # 現在行の意味ASTレコードを解析する
-                semantic_record = json.loads(line)
-                # 現在ASTの直積件数を1で初期化する
-                combinations = 1
-                # 操作列を元の順序で処理する
-                for operation in semantic_record["semantic_ast"]["sequence"]:
-                    # 操作ASTを正規JSONへ変換する
-                    operation_key = json.dumps(
-                        operation,
-                        ensure_ascii=False,
-                        sort_keys=True,
-                        separators=(",", ":"),
-                    )
-                    # 現在操作で使えるtest_only表現数を掛ける
-                    combinations *= counts[operation_id_by_ast[operation_key]]
-                # 現在ASTの組合せ数を総数へ加える
-                exhaustive_count += combinations
-        # 全組合せ診断集合が2,653件になることを確認する
-        self.assertEqual(exhaustive_count, 2653)
+        # 32件を一件ずつ処理する
+        for row in test_rows:
+            # CSV側だけJSON文字列になっている操作ASTを辞書へ戻す
+            operation_ast = row["operation_ast"]
+            # 文字列ならJSONとして解析する
+            if isinstance(operation_ast, str):
+                # 単独操作ASTの辞書を得る
+                operation_ast = json.loads(operation_ast)
+            # 各表現が対応する正式な単独操作ASTと一致することを確認する
+            self.assertEqual(operation_ast, operation_ast_by_id[row["operation_id"]])
+            # 複数操作を表すsequence形式が混ざっていないことを確認する
+            self.assertNotIn("sequence", operation_ast)
+        # 操作別の表現数が人手で確定した分布と一致することを確認する
+        self.assertEqual(
+            counts,
+            Counter(
+                {
+                    "atomic-000001": 3,
+                    "atomic-000002": 3,
+                    "atomic-000003": 2,
+                    "atomic-000013": 2,
+                    "atomic-000014": 2,
+                    "atomic-000015": 2,
+                    **{
+                        operation_id: 1
+                        for operation_id in operation_ast_by_id
+                        if operation_id
+                        not in {
+                            "atomic-000001",
+                            "atomic-000002",
+                            "atomic-000003",
+                            "atomic-000013",
+                            "atomic-000014",
+                            "atomic-000015",
+                        }
+                    },
+                }
+            ),
+        )
+        # 表現一件につき一文なので、予定する評価指示数が32件になる
+        self.assertEqual(sum(counts.values()), 32)
 
 
 # 直接実行された場合だけ単体テストを開始する
