@@ -1,0 +1,13 @@
+{
+  "phase": "approved_teacher_paraphrases",
+  "approval_mode": "blanket_all_candidates",
+  "approved_by": "ono_yusuke",
+  "approved_at": "2026-09-24T20:51:52+09:00",
+  "approved_count": 96390,
+  "candidate_jsonl": "/home/ono_yusuke/my_git/bokunano/data/instructions/teacher_paraphrase_candidates.jsonl",
+  "candidate_sha256": "49067416be23e92a15886ff9a8840c1203f9ba91f4ba231fc7933d2c0001be35",
+  "output_jsonl": "/home/ono_yusuke/my_git/bokunano/data/instructions/approved_teacher_paraphrases.jsonl",
+  "output_sha256": "b20b136627504d52168e977cd52ce2ebf3d55fb7406d36754ad678305313e4e1",
+  "archive": "/home/ono_yusuke/my_git/bokunano/data/archives/approved_teacher_paraphrases_2026-09-24.zip",
+  "archive_sha256": "1f5d0b5fb68478414b51798374d84cd10943bdfef605895c4140695b1d955d49"
+}
