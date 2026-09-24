@@ -1,0 +1,311 @@
+{
+  "phase": "instruction_paraphrase_candidates",
+  "input_count": 277420,
+  "selected_source_count": 96460,
+  "candidate_count": 96390,
+  "failure_count": 70,
+  "failures": [
+    {
+      "source_instruction_id": "instruction-rule-ac6352a3e90fa76fe92846fcc0de2dd5c3fe5cf983ec257c4e012722512387c1",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-5e5af07cd545283310266d3b15cb093cf5b06e630c9d8a33b667855c40802aea",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-ecefe7c50f3d41b15ac363c0d03f0e7c36815c567b20770b09a1b8152a8b7b80",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-1b03943275287b13d1764a52406be1957165d00f0461f98e6d9e8a407bbd55b7",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-7490d4485292531cde71368e7b6e620ce704d417442ccbc036fc865741a13404",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-050f4554ce80e34c2aa8335f33262338e92b53cbac942957111d204c8345aa39",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-4a1c826e277b259ffb7fc89e7dcdc922b09ed64e7214af90b26cfea3f1fe46bd",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-01dd50c9b3480070cafa23f6bdf0f78e868fed5f89bbcd33f95ea69b6f28f722",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-f92c95f50d8e8f8e74810e53141184808895525308aadf1ef54e55e97a286ad6",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-91a7a2e8c104c9bbbf8536a3cc0afc3fbd68d971358e170264349e5ef8f4977a",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-02edb2e4007dc66263df563bae399cd7197128cdddb417c443fc6d68fb22b5a0",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-0ec8de7636fc2561c65bb836cf4c2df36c387871f6434fe6c8b12f14b6f8a39d",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-5f583c5c6f33ced2f75b3a0451810fbc5d93d4fb495396c931575b613ba5056d",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-fb939c1552eb6c05fe2d0784c65ed835952b2ae406c3081fb88acc56b2e3f5a7",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-89a1279325434e50ceb014bdfec78b1730361ca5ac5256f08b6e55a1fc5c7dde",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-9b11b60a8740a3bbd9f215668076ba51c5a637b485fc058f1270033695d2cc04",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-767edd6a8e746158ba8ed8afdc8b7060c9ad6e1c786442a8211770c6d15982df",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-a80f3fdcceb9daee88b156fe74a4d2157c5c9f3a175e09406fc791be16e5729f",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-ac132dff8f15193ea4ecec6b5b152a42c114812fe10caf48736d5eeaef85a6d3",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-f133f5c70ff6ff0275454f80b18bbeb61463c3c719d99b90f629515504554584",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-8c8e2f055d93ad725c2e16613d955dce858adaac0ad809f609c58dcfc2d55a92",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-88c3f485590a3fe5f6f83263865e0ad91c2bf3adea692030bcc7003d4bf961f2",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-612bdf962a36bcb186e5ea59221162b8399bea0f4c7d0ff86519dfc8c4d36aca",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-b4fecced521c78c0cb2ca883b058729a1b03e142a681c1a34620513ec2ba19e7",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-3e2507c83df18960acd9d1335539b306f3e742cf9ac6bf6e85926c1a1d5f40ef",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-01775aa9744a4165c7473347f52581ad580c02e4ce8a4c6462736c39b4cdef11",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-10d470507f6b8195c0b6a8a091b7be467827ee7db0b1f7df2c2bcbfe299aa537",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-9d218d293d4d59cbbab497b4c3cce9358eafba1c8a0e12112e3dcf73db694e46",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-ce9c9331f6ba905f93509a79ed64bdf6c774071274067f7892a2664793651578",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-9ccf445e5303ef7fd89b40c0495ab5e1626f790b37f0231321fbdb4ce6c22244",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-edc853175066841c9597a83e24ce2bcee421c537b1feec1fd470b1ba652a734e",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-c4517923bbe071faa5b289b482ac807db95dcef014414193ba47a23a4aa50e6b",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-1b60cc57985c567a21d57e2f04ef00419f8752544e456862979c24383808d083",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-3bd9e2b1aa430be5f09f529a34423bb7163cbbe8e11bfc28da4fef0674b5d37c",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-037efc476b78d94d0742efbb398692e9455c23fe8402ec12b0f55e9b43cf8b20",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-ece11f79c5a03e791666e75ad5bf8e55361d0888bf72f6ed58a31ca619d9fe43",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-296ff6f83a766e7915ee2dfe341447d491aa2ec9332415150af903d912dbe013",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-ad4611cbd502865e632a5e3512f5e2f844d954aca16b92ef7523e5b1a1fafe4d",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-ee11e09b34920993a63189202590b8231404e24e5660e55266e4e9b9ed404a33",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-003d53051c1827b43c4d96ba1c817f09d52e5135d7c6b0e2f1c151632e8c71ad",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-8c7104d2c51531ad6141d69d64f17f7e37d4d1ce53d331ec88106a08b9ca60a1",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-5e27d644b3eecce0b3305091a11f3f2e1cd16db6c85ddbdb9f3ef6efec3a1668",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-e68215931a59b672cfa9fdf987a8e9b6708c57e7680c78fbd559372b5b9cd091",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-4a1dc70b22889610b3baf5840f708a755e13d594fe05393b8e8b52badeb44ad5",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-088805209c14a6e39d8a5cab35fce484a5c3eba6f036d2213b00cdc39b380685",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-c2558b2ee97cebd196eb56734b5c3db23eba59e69cabb5bfc08153193ea3de98",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-438d6b01a24f41556e13646a90845b8b2ef83819efd47817719189ae68aefe9a",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-16b00ab112974115a13efb27a306d78ecb368c88c2929020825cc01e5ef38927",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-45052d86b6bb3e1dd752e7a2a8d67b1722155974602b67171beee61002b61495",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-8aee007a0bdcd20bb4b883a4ff9e0c8b3cbfce5f98ae845f337092c4d7b138b5",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-086999e03619952de87050d360ec547477e67cd74f8218b4380c45c3825f354e",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-fec57763c3d4aa322316fb00602ea79ebc3a4fa74cddecb6cdc4bce73e7fae9c",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-90d5551e755f69dd73f2602a3612338e561344708ede10cdd43e24776ea1c636",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-b274077ce4fa2f8e10cfdce0c390d1ca91231d8bc2b85b01bd8d72c85fc549f4",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-ac63050158d6a87dd1418ec5cc3f9cd864e836078e02127907a892057985a02e",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-b2dd35eeead0e367a564deeac8f8a6218d2ab747c5bb89d0e39bb9412bb3b4c7",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-b87292f0f9dc327636c51040c645626dd8687031eb7189b58e927b7314782c42",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-e819b2aa0ab16e651744723678d52ad6af28cbba59e2a6d1374a718287c68ad6",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-e96c829d54711dc50ad3ca85d507c21cf129dc78e7eccfd57f52f308dd16b13f",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-1d2e6074a173a48e3fe558a06f726fef48149f5a792075488fe4f3de44b2a77d",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-19ffad165efa1ef0ada6b3e0e52dd40569e9b9ff21faf79879189e646258ee50",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-205683fd7266671f532e604da60094dcb285aa1660393d894cc197a31bbc31a8",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-9459dfdc29ab1cd363e6bf046faf5895cfe60486e4abcd7af9524ae3b699ad9b",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-f7a97544265a9087c994ec35f0565cfe9dff71d5509cc464695cac3723bfea63",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-789ad7202491b6fb91e77f23dac64015c55b070cc02d45cf518498d1db22734f",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-3b3750ae3e7e9dd349ce7789d8bd20dc3bda99b797c3347ac95752bf622bde9a",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-e147338e731530ed4132ee163ce4f3fced8c6e11222daae0d23639d70f4d3e40",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-438791155f537bd3e90b9467abca08c70f31d5ef37c8843848f1c139e41104b4",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-8c2d5f2e92e77cb496cee5336293010805ae619cc76241db5d2120a80bc75625",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    },
+    {
+      "source_instruction_id": "instruction-rule-f62663e4d9123f80f73f647eb630a130e8c287df7c072d12f359e644b15dfe5c",
+      "reason": "固有の言い換え候補を取得できませんでした"
+    }
+  ],
+  "source_split": "train",
+  "source_dictionary": "train",
+  "source_instructions_per_ast": 10,
+  "selected_source_ast_count": 9646,
+  "model_id": "Qwen/Qwen3-4B-AWQ",
+  "model_path": "/home/ono_yusuke/Qwen3-4B-AWQ",
+  "requested_revision": "74d4bd2bd4bff9cafc9345221320bffb08b406a3",
+  "resolved_revision": "74d4bd2bd4bff9cafc9345221320bffb08b406a3",
+  "enable_thinking": false,
+  "sampling": {
+    "max_new_tokens": 256,
+    "do_sample": true,
+    "temperature": 0.9,
+    "top_p": 0.8,
+    "top_k": 20,
+    "repetition_penalty": 1.05
+  },
+  "generator_version": "2",
+  "generator_seed": 20260920,
+  "batch_size": 96,
+  "config_hash": "95ad971654c7fff3f7276ff95e552bae62d3f156341a8155ef26885ee2fb08c1",
+  "generated_at": "2026-09-24T08:37:57.111256+00:00"
+}
