@@ -97,27 +97,40 @@ def main() -> None:
     selected = _select_sources(
         # 次の値または処理を現在の構造へ組み込む
         source_records,
-        # rateへこの工程で使用する値を設定する
-        rate=settings["selection_rate"],
-        # maximumへこの工程で使用する値を設定する
-        maximum=settings["maximum_source_instructions"],
+        # splitへこの工程で使用する値を設定する
+        split=settings["source_split"],
+        # dictionaryへこの工程で使用する値を設定する
+        dictionary=settings["source_dictionary"],
+        # per_astへこの工程で使用する値を設定する
+        per_ast=settings["source_instructions_per_ast"],
         # seedへこの工程で使用する値を設定する
         seed=settings["generator_seed"],
     )
+    # 選抜後の意味AST数を数える
+    selected_ast_count = len({record["spec_id"] for record in selected})
+    # 意味AST数が設定した期待値と一致することを確認する
+    if selected_ast_count != settings["expected_source_ast_count"]:
+        # 入力または選抜条件のずれを通知する
+        raise ValueError(f"選抜元の意味AST数が不一致です: {selected_ast_count}")
+    # 選抜指示数が設定した期待値と一致することを確認する
+    if len(selected) != settings["expected_selected_source_count"]:
+        # 各意味ASTから10件を得られていない状態を通知する
+        raise ValueError(f"言い換え元の選抜件数が不一致です: {len(selected)}")
 
     # 設定検査だけの場合はモデルを読み込まない
     if args.validate_config:
         # 入力件数と言い換え対象件数を表示する
         print(
             # 次の値または処理を現在の構造へ組み込む
-            f"設定は有効です: input={len(source_records)}, selected={len(selected)}"
+            f"設定は有効です: input={len(source_records)}, "
+            f"asts={selected_ast_count}, selected={len(selected)}"
         )
         # 教師生成へ進まず終了する
         return
     # 抽出結果が0件なら設定ミスの可能性があるため停止する
     if not selected:
         # 不正な状態を例外として通知して処理を停止する
-        raise ValueError("言い換え対象が0件です。selection_rateまたは入力を確認してください")
+        raise ValueError("言い換え対象が0件です。split、dictionary、入力を確認してください")
 
     # この実行で作成する4つの出力パスをまとめる
     output_paths = [
@@ -375,9 +388,13 @@ def main() -> None:
         # 出力レコードの項目と値を設定する
         "failures": failures,
         # 出力レコードの項目と値を設定する
-        "selection_rate": settings["selection_rate"],
+        "source_split": settings["source_split"],
         # 出力レコードの項目と値を設定する
-        "maximum_source_instructions": settings["maximum_source_instructions"],
+        "source_dictionary": settings["source_dictionary"],
+        # 出力レコードの項目と値を設定する
+        "source_instructions_per_ast": settings["source_instructions_per_ast"],
+        # 出力レコードの項目と値を設定する
+        "selected_source_ast_count": selected_ast_count,
         # 出力レコードの項目と値を設定する
         "model_id": settings["model"]["model_id"],
         # 出力レコードの項目と値を設定する
@@ -463,9 +480,15 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
         # この処理で扱う文字列を一覧へ加える
         "prompts",
         # この処理で扱う文字列を一覧へ加える
-        "selection_rate",
+        "source_split",
         # この処理で扱う文字列を一覧へ加える
-        "maximum_source_instructions",
+        "source_dictionary",
+        # この処理で扱う文字列を一覧へ加える
+        "source_instructions_per_ast",
+        # この処理で扱う文字列を一覧へ加える
+        "expected_source_ast_count",
+        # この処理で扱う文字列を一覧へ加える
+        "expected_selected_source_count",
         # この処理で扱う文字列を一覧へ加える
         "paraphrases_per_instruction",
         # この処理で扱う文字列を一覧へ加える
@@ -539,14 +562,23 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
         if not settings[key].is_file():
             # 不正な状態を例外として通知して処理を停止する
             raise ValueError(f"入力ファイルが見つかりません: {settings[key]}")
-    # 全ルール生成指示から選ぶ割合を取得する
-    rate = config["selection_rate"]
-    # 選択割合を0より大きく1以下の数へ制限する
-    if isinstance(rate, bool) or not isinstance(rate, (int, float)) or not 0 < rate <= 1:
-        # 不正な状態を例外として通知して処理を停止する
-        raise ValueError("selection_rateは0より大きく1以下にしてください")
-    # 言い換える元指示数の上限を確認する
-    _required_int(config, "maximum_source_instructions")
+    # 言い換え対象のsplitを取得する
+    settings["source_split"] = _required_string(config, "source_split")
+    # 言い換え対象の辞書区分を取得する
+    settings["source_dictionary"] = _required_string(config, "source_dictionary")
+    # 意味ASTごとに選ぶ元指示数を確認する
+    _required_int(config, "source_instructions_per_ast")
+    # 対象となる意味ASTの期待数を確認する
+    _required_int(config, "expected_source_ast_count")
+    # 選抜後の元指示の期待数を確認する
+    _required_int(config, "expected_selected_source_count")
+    # 意味AST数とASTごとの件数の積が全選抜数になることを確認する
+    if (
+        config["source_instructions_per_ast"] * config["expected_source_ast_count"]
+        != config["expected_selected_source_count"]
+    ):
+        # 設定内の件数不整合を通知する
+        raise ValueError("意味AST数、ASTごとの選抜数、全選抜数が不一致です")
     # 一つの元指示から作る候補数を確認する
     _required_int(config, "paraphrases_per_instruction")
     # 選択と生成に使う基準seedを確認する
@@ -620,31 +652,51 @@ def _select_sources(
     # 次の値または処理を現在の構造へ組み込む
     *,
     # 次の値または処理を現在の構造へ組み込む
-    rate: float,
+    split: str,
     # 次の値または処理を現在の構造へ組み込む
-    maximum: int,
+    dictionary: str,
+    # 次の値または処理を現在の構造へ組み込む
+    per_ast: int,
     # 次の値または処理を現在の構造へ組み込む
     seed: int,
 # 次の値または処理を現在の構造へ組み込む
 ) -> list[dict[str, Any]]:
-    # ハッシュ順位とレコードの組を格納する配列を作る
-    ranked: list[tuple[str, dict[str, Any]]] = []
-    # 256-bitハッシュ空間に対する選択割合の閾値を計算する
-    threshold = int(rate * (2**256 - 1))
-    # 入力指示を一件ずつ決定的に選抜する
+    # 意味ASTごとにハッシュ順位とレコードの組を格納する辞書を作る
+    ranked_by_spec: dict[str, list[tuple[str, dict[str, Any]]]] = {}
+    # 入力指示を一件ずつ対象区分へ絞り込む
     for record in records:
+        # 設定したsplit以外は教師言い換え対象にしない
+        if record.get("split") != split:
+            # 次の入力指示へ進む
+            continue
+        # 設定した辞書区分以外は教師言い換え対象にしない
+        if record.get("dictionary") != dictionary:
+            # 次の入力指示へ進む
+            continue
+        # 意味ASTを識別するIDを取得する
+        spec_id = _required_string(record, "spec_id")
         # 選択単位となる指示IDを取得する
         instruction_id = _required_string(record, "instruction_id")
-        # seedと指示IDから選択用ハッシュを作る
-        digest = sha256_text(f"{seed}\0{instruction_id}")
-        # ハッシュ値が割合閾値以下の指示だけを候補にする
-        if int(digest, 16) <= threshold:
-            # 後で決定的に並べられるようハッシュとレコードを保存する
-            ranked.append((digest, record))
-    # 選択されたレコードをハッシュ昇順に並べる
-    ranked.sort(key=lambda item: item[0])
-    # 最大件数までのレコード本体だけを返す
-    return [record for _, record in ranked[:maximum]]
+        # seed、意味AST ID、指示IDからランダム順位用ハッシュを作る
+        digest = sha256_text(f"{seed}\0{spec_id}\0{instruction_id}")
+        # 現在意味ASTの候補配列へハッシュとレコードを保存する
+        ranked_by_spec.setdefault(spec_id, []).append((digest, record))
+    # 選抜したレコードを意味AST順に格納する配列を作る
+    selected: list[dict[str, Any]] = []
+    # 意味AST ID順に各候補群を処理する
+    for spec_id in sorted(ranked_by_spec):
+        # 現在意味ASTの候補を固定seed由来のハッシュ昇順に並べる
+        ranked = sorted(ranked_by_spec[spec_id], key=lambda item: item[0])
+        # 10件未満など設定数に届かない意味ASTがあれば停止する
+        if len(ranked) < per_ast:
+            # 不足している意味ASTと実件数を通知する
+            raise ValueError(
+                f"意味ASTの言い換え元が{per_ast}件未満です: {spec_id}: {len(ranked)}"
+            )
+        # 固定ランダム順位の先頭から設定件数だけを採用する
+        selected.extend(record for _, record in ranked[:per_ast])
+    # 意味ASTごとに同数選んだ全レコードを返す
+    return selected
 
 
 # この工程を担当する関数を定義する

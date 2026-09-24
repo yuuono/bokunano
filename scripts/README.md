@@ -118,6 +118,8 @@ uv run --python 3.12.12 python \
 
 ルール生成指示が完成した後、その一部について教師言い換え候補を作る。
 
+対象は`split=train`かつ`dictionary=train`に限定し、訓練用9,646意味ASTのそれぞれから固定seedによるランダム順位で10指示ずつ、合計96,460件を選ぶ。元文1件につき候補1件を`temperature=0.9`で生成し、人手確認前には採用しない。
+
 ```bash
 uv run --group instruction-generation --python 3.12.12 python scripts/instruction_generation/generate_instruction_paraphrase_candidates.py \
   --config config/qwen_instruction_paraphrase_generation.json \

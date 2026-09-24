@@ -480,6 +480,18 @@ op3 connective: 降順に並べて
 - user prompt: `prompts/japanese_instruction_generation/paraphrase_user.txt`
 - 実行設定: `config/qwen_instruction_paraphrase_generation.json`
 
+全文言い換えの元文は、`split=train`かつ`dictionary=train`のルール生成指示だけから選ぶ。validationおよび`test_suite`を持つ全テスト集合は対象にしない。
+
+訓練用9,646意味ASTのそれぞれについて、対応するルール生成指示から10件を重複なしで選び、各元文を1件ずつ全文言い換えする。したがって、言い換え元の合計は次の96,460件である。
+
+```text
+9,646意味AST × 10指示 = 96,460元文
+```
+
+選択は実行ごとの非決定的な乱数にはしない。固定した`generator_seed`、`spec_id`、`instruction_id`からSHA-256を計算し、意味AST内でハッシュ順が小さい10件を選ぶ。これにより、各意味AST内ではランダム相当の選択を行いながら、同じ入力とseedから同じ96,460件を再現できる。10件未満しかない意味ASTが一つでもあれば生成前に停止する。
+
+Qwenのsamplingは`temperature=0.9`、`top_p=0.8`、`top_k=20`とする。元文1件につき候補1件を要求し、自動採用はしない。
+
 `data/instructions/rule_generated_instructions.jsonl`を作成した後、CUDA対応環境で次を実行する。ここでも同じ`/home/ono_yusuke/Qwen3-4B-AWQ`のローカル重みだけを読み込む。
 
 ```bash

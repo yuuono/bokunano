@@ -609,29 +609,67 @@ class ParaphraseSelectionTests(unittest.TestCase):
         )
 
     # この工程を担当する関数を定義する
-    def test_selection_is_deterministic_and_bounded(self) -> None:
-        # 選抜確認用に100件の指示レコードを作る
+    def test_selection_is_deterministic_and_balanced_per_ast(self) -> None:
+        # 選抜確認用に2意味ASTそれぞれ20件の訓練指示を作る
         records = [
             # 次の値または処理を現在の構造へ組み込む
             {
                 # 出力レコードの項目と値を設定する
                 "instruction_id": f"instruction-{index}",
                 # 出力レコードの項目と値を設定する
+                "spec_id": f"spec-{index // 20}",
+                # 出力レコードの項目と値を設定する
                 "instruction_ja": str(index),
                 # 出力レコードの項目と値を設定する
                 "semantic_ast": {"filter": ["even"]},
+                # 訓練指示だけを選ぶための区分を設定する
+                "split": "train",
+                # 訓練辞書だけを選ぶための区分を設定する
+                "dictionary": "train",
             }
             # 対象を一件ずつ取り出して処理する
-            for index in range(100)
+            for index in range(40)
         ]
+        # 除外される評価用指示を追加する
+        records.append(
+            {
+                "instruction_id": "instruction-test",
+                "spec_id": "spec-test",
+                "instruction_ja": "評価用",
+                "semantic_ast": {"filter": ["even"]},
+                "split": "test",
+                "dictionary": "train",
+            }
+        )
         # 固定seedで最初の選抜を実行する
-        first = _select_sources(records, rate=0.5, maximum=10, seed=123)
+        first = _select_sources(
+            records,
+            split="train",
+            dictionary="train",
+            per_ast=10,
+            seed=123,
+        )
         # 同じ条件でもう一度選抜する
-        second = _select_sources(records, rate=0.5, maximum=10, seed=123)
+        second = _select_sources(
+            records,
+            split="train",
+            dictionary="train",
+            per_ast=10,
+            seed=123,
+        )
         # 同じseedなら選抜結果と順序が同一になることを確認する
         self.assertEqual(first, second)
-        # 選抜件数が設定上限を超えないことを確認する
-        self.assertLessEqual(len(first), 10)
+        # 2意味ASTから10件ずつ選ばれることを確認する
+        self.assertEqual(len(first), 20)
+        # 各意味ASTの選抜件数を数える
+        counts = {
+            spec_id: sum(record["spec_id"] == spec_id for record in first)
+            for spec_id in {record["spec_id"] for record in first}
+        }
+        # 両方の意味ASTが10件ずつになることを確認する
+        self.assertEqual(counts, {"spec-0": 10, "spec-1": 10})
+        # 評価用指示が選ばれないことを確認する
+        self.assertNotIn("instruction-test", {record["instruction_id"] for record in first})
 
 
 # 関連する状態と処理をまとめるクラスを定義する
