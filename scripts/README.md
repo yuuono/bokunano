@@ -118,7 +118,7 @@ uv run --python 3.12.12 python \
 
 ルール生成指示が完成した後、その一部について教師言い換え候補を作る。
 
-対象は`split=train`かつ`dictionary=train`に限定し、訓練用9,646意味ASTのそれぞれから固定seedによるランダム順位で10指示ずつ、合計96,460件を選ぶ。元文1件につき候補1件を`temperature=0.9`で生成し、人手確認前には採用しない。
+対象は`split=train`かつ`dictionary=train`に限定し、訓練用9,646意味ASTのそれぞれから固定seedによるランダム順位で10指示ずつ、合計96,460件を選ぶ。元文1件につき候補1件を`temperature=0.9`で生成し、人手確認前には採用しない。実行は設定JSONの`batch_size=96`で行い、候補JSONLと生応答JSONLを生成済みレコードごとに逐次保存する。
 
 ```bash
 uv run --group instruction-generation --python 3.12.12 python scripts/instruction_generation/generate_instruction_paraphrase_candidates.py \
@@ -127,6 +127,8 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 ```
 
 Qwen3はすべて`enable_thinking=false`、`local_files_only=true`で実行する。`model_path`にはローカル重みの絶対パス、`revision`にはその重みを取得した版の40桁のコミットIDを指定する。モデルが返した生出力、読込パス、解決済みrevision、プロンプトハッシュ、sampling設定、seedも生成物と一緒に保存する。ただし、`<think>`または`</think>`タグを含む応答は保存前に全体を拒否する。
+
+実行結果は[`instruction_paraphrase_generation_results.md`](../docs/results/instruction_paraphrase_generation_results.md)に記録する。候補JSONL、生応答JSONL、確認CSVは人手承認前の作業物なのでGitへ追加せず、集計JSONと結果MDだけを管理する。
 
 ## 検証
 

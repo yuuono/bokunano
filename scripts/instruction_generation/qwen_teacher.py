@@ -595,6 +595,147 @@ class QwenTeacher:
             torch_version=self._torch.__version__,
         )
 
+    # この工程を担当する関数を定義する
+    def generate_batch(
+        # 次の値または処理を現在の構造へ組み込む
+        self,
+        # 次の値または処理を現在の構造へ組み込む
+        *,
+        # 次の値または処理を現在の構造へ組み込む
+        system_prompt: str,
+        # 次の値または処理を現在の構造へ組み込む
+        user_prompts: list[str],
+        # 次の値または処理を現在の構造へ組み込む
+        sampling: Mapping[str, Any],
+        # 次の値または処理を現在の構造へ組み込む
+        seed: int,
+    # 次の値または処理を現在の構造へ組み込む
+    ) -> list[GenerationResult]:
+        """同じsystem promptを使う複数件をnon-thinkingで一括生成する。"""
+
+        # 空バッチはモデルを呼ばず空配列として返す
+        if not user_prompts:
+            # 処理結果を呼び出し元へ返す
+            return []
+        # バッチ内の各user promptをchat templateへ変換する配列を作る
+        rendered_prompts: list[str] = []
+        # 各user promptを順番にモデル入力文字列へ変換する
+        for user_prompt in user_prompts:
+            # Qwen3のchat templateへ渡すsystem/userメッセージを作る
+            messages = [
+                # system指示を会話の先頭へ配置する
+                {"role": "system", "content": system_prompt},
+                # 言い換え対象ごとのuser指示を続けて配置する
+                {"role": "user", "content": user_prompt},
+            ]
+            # thinkingを明示的に無効化したモデル入力文字列を追加する
+            rendered_prompts.append(
+                # tokenizer固有のchat templateを適用する
+                self._tokenizer.apply_chat_template(
+                    # 今回の二つのメッセージを渡す
+                    messages,
+                    # ここでは文字列を得て後でまとめてtokenizeする
+                    tokenize=False,
+                    # assistant回答開始位置までを入力へ加える
+                    add_generation_prompt=True,
+                    # Qwen3のthinking出力を無効化する
+                    enable_thinking=False,
+                )
+            )
+
+        # decoder-onlyモデルのバッチ生成に必要な左paddingへ一時的に切り替える
+        previous_padding_side = self._tokenizer.padding_side
+        # 短い入力の左側へpaddingを置いて末尾位置を揃える
+        self._tokenizer.padding_side = "left"
+        # 長さの異なる入力を一つのPyTorchテンソルへまとめる
+        model_inputs = self._tokenizer(
+            # chat template適用済み文字列をまとめて渡す
+            rendered_prompts,
+            # PyTorchテンソルとして返す
+            return_tensors="pt",
+            # バッチ内の最大長までpaddingする
+            padding=True,
+        )
+        # tokenizerを共有する他の呼び出しへ影響を残さないよう元の設定へ戻す
+        self._tokenizer.padding_side = previous_padding_side
+        # 入力テンソルをモデルが配置されたデバイスへ移す
+        model_inputs = {
+            # 各テンソルをモデルの主デバイスへ移す
+            name: tensor.to(self._model.device)
+            # tokenizerが返した入力項目を順番に処理する
+            for name, tensor in model_inputs.items()
+        }
+
+        # バッチ全体のsampling乱数を固定して同一条件の再実行を可能にする
+        self._transformers.set_seed(seed)
+        # CUDAが有効な場合は全CUDAデバイスのseedも固定する
+        if self._torch.cuda.is_available():
+            # CUDA側のsampling乱数seedを固定する
+            self._torch.cuda.manual_seed_all(seed)
+
+        # 検査済みsampling値をmodel.generate用引数へ変換する
+        generation_kwargs = {
+            # 新しく生成してよい最大トークン数を設定する
+            "max_new_tokens": _positive_int(sampling, "max_new_tokens"),
+            # samplingを使うかを設定する
+            "do_sample": bool(sampling.get("do_sample", True)),
+            # 出力分布の温度を設定する
+            "temperature": _positive_number(sampling, "temperature"),
+            # nucleus samplingの累積確率を設定する
+            "top_p": _probability(sampling, "top_p"),
+            # 候補語彙数の上限を設定する
+            "top_k": _positive_int(sampling, "top_k"),
+            # 同じ表現の過剰な反復を抑える係数を設定する
+            "repetition_penalty": _positive_number(sampling, "repetition_penalty"),
+            # paddingにはtokenizerのEOS IDを使う
+            "pad_token_id": self._tokenizer.eos_token_id,
+        }
+        # 勾配計算を無効化してバッチをまとめて生成する
+        with self._torch.inference_mode():
+            # 全入力の続きを一回のmodel.generateで作る
+            generated = self._model.generate(**model_inputs, **generation_kwargs)
+        # 左padding後の共通入力幅を生成部分の開始位置として取得する
+        prompt_length = model_inputs["input_ids"].shape[1]
+        # 各生成結果を再現性メタデータ付きで返す配列を作る
+        results: list[GenerationResult] = []
+        # バッチ内の生成結果を入力順に一件ずつ復号する
+        for generated_ids in generated:
+            # 入力部分を除き新しく生成されたトークンだけを取り出す
+            completion_ids = generated_ids[prompt_length:]
+            # thinking用特殊トークンも見える検査文字列へ戻す
+            unchecked_text = self._tokenizer.decode(
+                # 今回の生成トークンを渡す
+                completion_ids,
+                # thinking混入を検出できるよう特殊トークンを残す
+                skip_special_tokens=False,
+            )
+            # non-thinking条件に反する出力があれば採用せず停止する
+            reject_thinking_output(unchecked_text)
+            # 検査後に特殊トークンを除いて保存用文字列へ戻す
+            text = self._tokenizer.decode(
+                # 今回の生成トークンを渡す
+                completion_ids,
+                # EOSなどの特殊トークンを保存文から除く
+                skip_special_tokens=True,
+            # 前後の空白を除いてJSON解析しやすい文字列にする
+            ).strip()
+            # 一件分の生成文と実行環境メタデータを追加する
+            results.append(
+                # 既存の単件生成と同じ結果型を使う
+                GenerationResult(
+                    # 復号した生成文を保存する
+                    text=text,
+                    # 実際に読み込んだモデルrevisionを保存する
+                    resolved_revision=self.resolved_revision,
+                    # Transformersのバージョンを保存する
+                    transformers_version=self._transformers.__version__,
+                    # PyTorchのバージョンを保存する
+                    torch_version=self._torch.__version__,
+                )
+            )
+        # 入力と同じ順番の生成結果を返す
+        return results
+
 
 # この工程を担当する関数を定義する
 def _required_string(values: Mapping[str, Any], key: str) -> str:

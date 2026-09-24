@@ -29,3 +29,8 @@ data/instruction_dictionaries/release/*
 # ルール生成した展開済み全文指示はZIPだけをGitで管理する。
 data/instructions/rule_generated_instructions.jsonl
 data/instructions/paraphrase_test_instructions.jsonl
+
+# 教師による全文言い換えの候補・生応答・確認CSVは人手承認前の作業物としてローカルに保持する。
+data/instructions/teacher_paraphrase_candidates.jsonl
+data/instructions/teacher_paraphrase_raw_responses.jsonl
+data/instructions/teacher_paraphrase_review.csv

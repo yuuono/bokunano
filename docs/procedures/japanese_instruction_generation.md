@@ -479,6 +479,7 @@ op3 connective: 降順に並べて
 - system prompt: `prompts/japanese_instruction_generation/paraphrase_system.txt`
 - user prompt: `prompts/japanese_instruction_generation/paraphrase_user.txt`
 - 実行設定: `config/qwen_instruction_paraphrase_generation.json`
+- 実行結果: [`instruction_paraphrase_generation_results.md`](../results/instruction_paraphrase_generation_results.md)
 
 全文言い換えの元文は、`split=train`かつ`dictionary=train`のルール生成指示だけから選ぶ。validationおよび`test_suite`を持つ全テスト集合は対象にしない。
 
@@ -490,7 +491,9 @@ op3 connective: 降順に並べて
 
 選択は実行ごとの非決定的な乱数にはしない。固定した`generator_seed`、`spec_id`、`instruction_id`からSHA-256を計算し、意味AST内でハッシュ順が小さい10件を選ぶ。これにより、各意味AST内ではランダム相当の選択を行いながら、同じ入力とseedから同じ96,460件を再現できる。10件未満しかない意味ASTが一つでもあれば生成前に停止する。
 
-Qwenのsamplingは`temperature=0.9`、`top_p=0.8`、`top_k=20`とする。元文1件につき候補1件を要求し、自動採用はしない。
+Qwenのsamplingは`temperature=0.9`、`top_p=0.8`、`top_k=20`とする。元文1件につき候補1件を要求し、自動採用はしない。実行時は固定選択順の96件を一つのバッチとして処理し、`generator_seed + batch_start`をバッチseedにする。したがって厳密な再現には、入力、モデルrevision、sampling値だけでなく`batch_size=96`も固定する。生成上限は、JSON object内の日本語一文を十分格納できる`max_new_tokens=256`とする。
+
+長時間実行中に中断しても完了済み情報を失わないよう、候補JSONLと生応答JSONLは生成済みレコードを逐次追記し、正常終了時に全件を正規順で書き直す。Qwenが所定JSONの最後の閉じ二重引用符だけを単一引用符にする既知の出力（`']}`）は、先頭schemaと末尾が完全一致する場合だけ`"]}`へ補正する。元の生応答は変更せず保存し、`parse_repaired=true`を記録する。それ以外の不正JSONを推測で修復しない。
 
 `data/instructions/rule_generated_instructions.jsonl`を作成した後、CUDA対応環境で次を実行する。ここでも同じ`/home/ono_yusuke/Qwen3-4B-AWQ`のローカル重みだけを読み込む。
 

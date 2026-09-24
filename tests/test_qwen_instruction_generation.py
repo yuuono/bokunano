@@ -17,6 +17,8 @@ from scripts.instruction_generation.generate_instruction_paraphrase_candidates i
     # 次の値または処理を現在の構造へ組み込む
     _override_model_path as _override_paraphrase_model_path,
     # 次の値または処理を現在の構造へ組み込む
+    _parse_paraphrase_response,
+    # 次の値または処理を現在の構造へ組み込む
     _select_sources,
 )
 # 必要な定義を対象モジュールから読み込む
@@ -61,6 +63,25 @@ from scripts.instruction_generation.qwen_teacher import (
 
 # 関連する状態と処理をまとめるクラスを定義する
 class QwenTeacherUtilityTests(unittest.TestCase):
+    # この工程を担当する関数を定義する
+    def test_paraphrase_response_repairs_only_known_closing_quote_error(self) -> None:
+        # Qwenが末尾の二重引用符だけを単一引用符にした実出力を用意する
+        raw = '{"paraphrases":["偶数のみを抽出してください。\']}'
+        # 本文を変えず候補を取得し、補正済みフラグが立つことを確認する
+        self.assertEqual(
+            # 実際の補正付き解析結果を取得する
+            _parse_paraphrase_response(raw),
+            # 期待する候補配列と補正フラグを設定する
+            (["偶数のみを抽出してください。"], True),
+        )
+
+    # この工程を担当する関数を定義する
+    def test_paraphrase_response_does_not_repair_unrelated_invalid_json(self) -> None:
+        # 所定の末尾崩れ以外は暗黙補正しないことを確認する
+        with self.assertRaises(ValueError):
+            # 配列終端そのものがない不正JSONを解析する
+            _parse_paraphrase_response('{"paraphrases":["候補"}')
+
     # この工程を担当する関数を定義する
     def test_model_path_can_be_overridden_without_changing_config(self) -> None:
         # clone先でモデル配置場所だけを差し替える場合の元設定を用意する

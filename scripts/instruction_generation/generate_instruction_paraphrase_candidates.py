@@ -5,6 +5,8 @@ from __future__ import annotations
 
 # コマンドライン引数を解析するために使う
 import argparse
+# 遅延生成されるバッチ結果の型注釈に使う
+from collections.abc import Iterator
 # 人間確認用CSVを書き出すために使う
 import csv
 # 教師生成日時をUTCで記録するために使う
@@ -47,7 +49,7 @@ from scripts.instruction_generation.qwen_teacher import (  # noqa: E402
 
 
 # 出力へ記録する全文言い換え生成器のバージョンを定義する
-GENERATOR_VERSION = "1"
+GENERATOR_VERSION = "2"
 
 
 # この工程を担当する関数を定義する
@@ -158,6 +160,10 @@ def main() -> None:
     system_prompt = settings["system_prompt"].read_text(encoding="utf-8").strip()
     # Qwen3モデルとtokenizerを一度だけ読み込む
     teacher = QwenTeacher(settings["model"])
+    # 中断時にも完了済み情報を残せるようJSONL出力を空の状態で作る
+    _write_jsonl(settings["output"], [])
+    # 生応答も各バッチ後に追記できる空のJSONLとして作る
+    _write_jsonl(settings["raw_responses"], [])
     # 人間確認前の言い換え候補を格納する配列を作る
     candidates: list[dict[str, Any]] = []
     # Qwenへ渡したプロンプトと生出力を格納する配列を作る
@@ -165,84 +171,51 @@ def main() -> None:
     # JSON解析失敗などを記録する配列を作る
     failures: list[dict[str, str]] = []
 
-    # 選ばれたルール生成指示を一件ずつ言い換える
-    for index, source in enumerate(selected):
+    # 選ばれた指示をバッチ生成し、結果を元の順番で一件ずつ処理する
+    for generated_item in _generate_selected(
+        # 選抜済み元指示を渡す
+        selected=selected,
+        # 意味ASTごとの正準定義を渡す
+        definitions=definitions,
+        # 検査済み生成設定を渡す
+        settings=settings,
+        # 読み込み済み教師モデルを渡す
+        teacher=teacher,
+        # 全件共通のsystem promptを渡す
+        system_prompt=system_prompt,
+    ):
+        # 後続の保存処理で使う生成情報を取り出す
+        source = generated_item["source"]
+        # 実際に使用したuser promptを取り出す
+        user_prompt = generated_item["user_prompt"]
+        # system/user promptの組に対応するハッシュを取り出す
+        current_prompt_hash = generated_item["prompt_hash"]
+        # バッチsamplingへ使ったseedを取り出す
+        seed = generated_item["seed"]
+        # 教師モデルを呼び出したUTC日時を取り出す
+        generated_at = generated_item["generated_at"]
+        # 一件分の教師モデル生成結果を取り出す
+        result = generated_item["result"]
+        # バッチ先頭の全体位置を取り出す
+        batch_start = generated_item["batch_start"]
+        # バッチ内の位置を取り出す
+        batch_position = generated_item["batch_position"]
         # 元指示を一意に識別するIDを取得する
         instruction_id = _required_string(source, "instruction_id")
         # Qwenへ渡す元の日本語指示を取得する
         instruction = _required_string(source, "instruction_ja")
         # 元指示が表す意味ASTを取得する
         semantic_ast = source.get("semantic_ast")
-        # 単独操作とsequence形式を同じ操作配列へ正規化する
-        sequence = _normalize_sequence(semantic_ast)
-        # Qwenへ示す操作の正準意味を順番に格納する配列を作る
-        operation_details = []
-        # Qwenが保持すべき注意事項を順番に格納する配列を作る
-        preserve_details = []
-        # 意味ASTの各操作を元の実行順どおりに処理する
-        for position, operation in enumerate(sequence, start=1):
-            # 操作の意味ASTから対応する正準定義を取得する
-            definition = definitions.get(canonical_json(operation))
-            # 未定義操作があれば誤った言い換えを防ぐため停止する
-            if definition is None:
-                # 不正な状態を例外として通知して処理を停止する
-                raise ValueError(
-                    # 次の値または処理を現在の構造へ組み込む
-                    f"操作定義にない意味ASTです: {instruction_id}: {operation!r}"
-                )
-            # 操作位置と正準意味をプロンプト用一覧へ追加する
-            operation_details.append(
-                # 次の値または処理を現在の構造へ組み込む
-                f"{position}. {definition['canonical_meaning_ja']}"
-            )
-            # 操作位置と厳守事項をプロンプト用一覧へ追加する
-            preserve_details.append(
-                # 次の値または処理を現在の構造へ組み込む
-                f"{position}. {definition['must_preserve_ja']}"
-            )
-
-        # AST、操作順、厳守事項、元文をuser promptへ埋め込む
-        user_prompt = render_prompt(
-            # 次の値または処理を現在の構造へ組み込む
-            settings["user_prompt"],
-            # 次の値または処理を現在の構造へ組み込む
-            {
-                # 出力レコードの項目と値を設定する
-                "count": settings["paraphrases_per_instruction"],
-                # 出力レコードの項目と値を設定する
-                "semantic_ast": canonical_json(semantic_ast),
-                # 出力レコードの項目と値を設定する
-                "operation_sequence": "\n".join(operation_details),
-                # 出力レコードの項目と値を設定する
-                "must_preserve_ja": "\n".join(preserve_details),
-                # 出力レコードの項目と値を設定する
-                "source_instruction": instruction,
-            },
-        # 次の値または処理を現在の構造へ組み込む
-        ).strip()
-        # 実際に使用するsystem/user promptからハッシュを計算する
-        current_prompt_hash = prompt_hash(system_prompt, user_prompt)
-        # 対象指示ごとに異なる決定的seedを計算する
-        seed = settings["generator_seed"] + index
-        # このQwen呼び出しのUTC日時を記録する
-        generated_at = datetime.now(timezone.utc).isoformat()
-        # Qwen3を非thinkingモードで実行して言い換え候補を得る
-        result = teacher.generate(
-            # system_promptへこの工程で使用する値を設定する
-            system_prompt=system_prompt,
-            # user_promptへこの工程で使用する値を設定する
-            user_prompt=user_prompt,
-            # samplingへこの工程で使用する値を設定する
-            sampling=settings["sampling"],
-            # seedへこの工程で使用する値を設定する
-            seed=seed,
-        )
         # 解析成否にかかわらず保存する生出力レコードを作る
         raw_record: dict[str, Any] = {
             # 出力レコードの項目と値を設定する
             "source_instruction_id": instruction_id,
             # 出力レコードの項目と値を設定する
             "seed": seed,
+            # 固定選択順におけるバッチ先頭位置を記録する
+            "batch_start": batch_start,
+            # バッチ内の0始まり位置を記録する
+            "batch_position": batch_position,
             # 出力レコードの項目と値を設定する
             "prompt_hash": current_prompt_hash,
             # 出力レコードの項目と値を設定する
@@ -255,19 +228,23 @@ def main() -> None:
             "generated_at": generated_at,
             # 出力レコードの項目と値を設定する
             "parsed_ok": False,
+            # 既知の閉じ引用符補正を適用したかの初期値を記録する
+            "parse_repaired": False,
             # 出力レコードの項目と値を設定する
             "parse_error": None,
         }
         # Qwen出力をparaphrases文字列配列として解析する
         try:
-            # paraphrasesへこの工程で使用する値を設定する
-            paraphrases = parse_json_string_list(result.text, "paraphrases")
+            # 厳密JSONまたは記録対象の既知末尾崩れとして解析する
+            paraphrases, parse_repaired = _parse_paraphrase_response(result.text)
         # JSON形式が不正な場合も生出力と原因を保存して次へ進む
         except ValueError as error:
             # 解析エラーを生出力レコードへ記録する
             raw_record["parse_error"] = str(error)
             # 失敗した応答も監査用に保存する
             raw_records.append(raw_record)
+            # 中断時にもこの生応答が残るよう直ちにJSONLへ追記する
+            _append_jsonl(settings["raw_responses"], [raw_record])
             # 元指示IDと失敗理由を集計へ追加する
             failures.append(
                 # 次の値または処理を現在の構造へ組み込む
@@ -277,8 +254,12 @@ def main() -> None:
             continue
         # JSON解析に成功したことを記録する
         raw_record["parsed_ok"] = True
+        # 既知の閉じ引用符だけを補正したかを監査用に記録する
+        raw_record["parse_repaired"] = parse_repaired
         # 成功した生出力も保存対象へ追加する
         raw_records.append(raw_record)
+        # 中断時にもこの生応答が残るよう直ちにJSONLへ追記する
+        _append_jsonl(settings["raw_responses"], [raw_record])
 
         # 元文と異なる固有候補だけを格納する配列を作る
         unique_paraphrases: list[str] = []
@@ -356,6 +337,10 @@ def main() -> None:
                     "teacher_torch_version": result.torch_version,
                     # 出力レコードの項目と値を設定する
                     "teacher_seed": seed,
+                    # 同一seedを共有したバッチ先頭位置を保存する
+                    "teacher_batch_start": batch_start,
+                    # 同一バッチ内の0始まり位置を保存する
+                    "teacher_batch_position": batch_position,
                     # 出力レコードの項目と値を設定する
                     "teacher_sampling": settings["sampling"],
                     # 出力レコードの項目と値を設定する
@@ -366,6 +351,8 @@ def main() -> None:
                     "text_hash": sha256_text(paraphrase),
                 }
             )
+        # この元指示から得た候補を中断耐性のあるJSONLへ直ちに追記する
+        _append_jsonl(settings["output"], candidates[-len(unique_paraphrases):])
 
     # 人間確認前の言い換え候補をJSONLへ保存する
     _write_jsonl(settings["output"], candidates)
@@ -411,6 +398,8 @@ def main() -> None:
         "generator_version": GENERATOR_VERSION,
         # 出力レコードの項目と値を設定する
         "generator_seed": settings["generator_seed"],
+        # 一回のmodel.generateへ渡した最大件数を記録する
+        "batch_size": settings["batch_size"],
         # 出力レコードの項目と値を設定する
         "config_hash": sha256_text(config_text),
         # 出力レコードの項目と値を設定する
@@ -427,6 +416,168 @@ def main() -> None:
     )
     # 作成者本人が次に開く確認用CSVの場所を表示する
     print(f"確認用CSV: {settings['review_csv']}")
+
+
+# この工程を担当する関数を定義する
+def _generate_selected(
+    # 選抜済み元指示を受け取る
+    *,
+    # 選抜済み元指示を受け取る
+    selected: list[dict[str, Any]],
+    # 意味ASTから正準定義を引く辞書を受け取る
+    definitions: Mapping[str, dict[str, str]],
+    # 検査済み設定を受け取る
+    settings: Mapping[str, Any],
+    # 読み込み済み教師モデルを受け取る
+    teacher: QwenTeacher,
+    # 全件共通のsystem promptを受け取る
+    system_prompt: str,
+# 一件ずつ後続処理へ渡すiteratorを返す
+) -> Iterator[dict[str, Any]]:
+    """promptを組み立て、設定件数ごとにQwenへまとめて渡す。"""
+
+    # 一回のmodel.generateへ渡す件数を設定から取得する
+    batch_size = settings["batch_size"]
+    # 全対象を固定した並びのままバッチ先頭位置ごとに処理する
+    for batch_start in range(0, len(selected), batch_size):
+        # 今回のバッチへ含める元指示を切り出す
+        batch_sources = selected[batch_start : batch_start + batch_size]
+        # Qwenへ渡すuser promptを入力順に格納する配列を作る
+        user_prompts: list[str] = []
+        # 各promptと一緒に保存するメタデータ配列を作る
+        prepared: list[dict[str, Any]] = []
+        # 今回の元指示を順番にpromptへ変換する
+        for batch_position, source in enumerate(batch_sources):
+            # 元指示を一意に識別するIDを取得する
+            instruction_id = _required_string(source, "instruction_id")
+            # Qwenへ渡す元の日本語指示を取得する
+            instruction = _required_string(source, "instruction_ja")
+            # 元指示が表す意味ASTを取得する
+            semantic_ast = source.get("semantic_ast")
+            # 単独操作とsequence形式を同じ操作配列へ正規化する
+            sequence = _normalize_sequence(semantic_ast)
+            # Qwenへ示す操作の正準意味を順番に格納する配列を作る
+            operation_details: list[str] = []
+            # Qwenが保持すべき注意事項を順番に格納する配列を作る
+            preserve_details: list[str] = []
+            # 意味ASTの各操作を元の実行順どおりに処理する
+            for position, operation in enumerate(sequence, start=1):
+                # 操作の意味ASTから対応する正準定義を取得する
+                definition = definitions.get(canonical_json(operation))
+                # 未定義操作があれば誤った言い換えを防ぐため停止する
+                if definition is None:
+                    # 不正な状態を例外として通知して処理を停止する
+                    raise ValueError(
+                        # どの元指示に未定義操作があったかを含める
+                        f"操作定義にない意味ASTです: {instruction_id}: {operation!r}"
+                    )
+                # 操作位置と正準意味をprompt用一覧へ追加する
+                operation_details.append(
+                    # 操作順が変わらないよう番号付きで記述する
+                    f"{position}. {definition['canonical_meaning_ja']}"
+                )
+                # 操作位置と厳守事項をprompt用一覧へ追加する
+                preserve_details.append(
+                    # 操作ごとの禁止変更事項を番号付きで記述する
+                    f"{position}. {definition['must_preserve_ja']}"
+                )
+            # AST、操作順、厳守事項、元文をuser promptへ埋め込む
+            user_prompt = render_prompt(
+                # 設定で指定したuser promptテンプレートを使う
+                settings["user_prompt"],
+                # テンプレート変数へ今回の意味情報を渡す
+                {
+                    # 元文一件から要求する候補数を設定する
+                    "count": settings["paraphrases_per_instruction"],
+                    # 意味ASTを決定的JSON文字列として設定する
+                    "semantic_ast": canonical_json(semantic_ast),
+                    # 操作順を改行区切りで設定する
+                    "operation_sequence": "\n".join(operation_details),
+                    # 保持事項を改行区切りで設定する
+                    "must_preserve_ja": "\n".join(preserve_details),
+                    # 実際に言い換える元指示を設定する
+                    "source_instruction": instruction,
+                },
+            # promptファイル末尾由来の余分な空白を除く
+            ).strip()
+            # バッチ生成へ渡すprompt配列へ追加する
+            user_prompts.append(user_prompt)
+            # 保存処理で必要な元レコードとprompt情報を保持する
+            prepared.append(
+                # 一件分の生成前メタデータをまとめる
+                {
+                    # 元の指示レコードを保持する
+                    "source": source,
+                    # 実際に使用するuser promptを保持する
+                    "user_prompt": user_prompt,
+                    # system/user promptの組からハッシュを計算する
+                    "prompt_hash": prompt_hash(system_prompt, user_prompt),
+                    # バッチ内の0始まり位置を保持する
+                    "batch_position": batch_position,
+                }
+            )
+        # 固定選択順のバッチ先頭位置からsampling seedを決める
+        batch_seed = settings["generator_seed"] + batch_start
+        # このQwenバッチ呼び出しのUTC日時を記録する
+        generated_at = datetime.now(timezone.utc).isoformat()
+        # Qwen3を非thinkingモードでバッチ実行する
+        results = teacher.generate_batch(
+            # 全件共通のsystem promptを渡す
+            system_prompt=system_prompt,
+            # 今回のuser prompt配列を渡す
+            user_prompts=user_prompts,
+            # temperatureなどのsampling設定を渡す
+            sampling=settings["sampling"],
+            # 今回のバッチ全体で使うseedを渡す
+            seed=batch_seed,
+        )
+        # モデルが入力件数と異なる結果数を返した場合は保存前に停止する
+        if len(results) != len(prepared):
+            # 入出力件数の不一致を例外として通知する
+            raise RuntimeError("Qwenのバッチ入力数と生成結果数が一致しません")
+        # 入力順を保ったまま一件ずつ後続処理へ渡す
+        for item, result in zip(prepared, results, strict=True):
+            # バッチ共通情報と一件分の結果をメタデータへ追加する
+            yield {
+                # 元指示を後続へ渡す
+                **item,
+                # 今回のバッチ先頭位置を保持する
+                "batch_start": batch_start,
+                # 今回のバッチ全体で使ったseedを保持する
+                "seed": batch_seed,
+                # バッチ呼び出し日時を保持する
+                "generated_at": generated_at,
+                # 一件分の生成結果を保持する
+                "result": result,
+            }
+        # 長時間実行の進捗をバッチ単位で標準出力へ表示する
+        print(
+            # 完了件数と全対象件数を同じ行へ表示する
+            f"言い換え生成進捗: {min(batch_start + len(batch_sources), len(selected))}"
+            f"/{len(selected)}"
+        )
+
+
+# この工程を担当する関数を定義する
+def _parse_paraphrase_response(text: str) -> tuple[list[str], bool]:
+    """厳密JSONを読み、Qwenの既知の閉じ引用符崩れだけを補正する。"""
+
+    # まず通常の厳密JSONとして解析する
+    try:
+        # 補正不要だったことと一緒に候補配列を返す
+        return parse_json_string_list(text, "paraphrases"), False
+    # 厳密JSONでなかった場合だけ既知パターンを確認する
+    except ValueError as original_error:
+        # 前後空白を除いて末尾を正確に比較できるようにする
+        stripped = text.strip()
+        # JSON文字列の閉じ二重引用符だけが単一引用符になった形に限定する
+        if stripped.startswith('{"paraphrases":["') and stripped.endswith("']}"):
+            # 最後の単一引用符、配列終端、object終端を正しいJSON末尾へ置き換える
+            repaired = stripped[:-3] + '"]}'
+            # 補正後も厳密な所定schemaを満たす場合だけ候補として返す
+            return parse_json_string_list(repaired, "paraphrases"), True
+        # 対象外の崩れは従来どおり失敗として呼び出し元へ返す
+        raise original_error
 
 
 # この工程を担当する関数を定義する
@@ -495,6 +646,8 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
         "generator_version",
         # この処理で扱う文字列を一覧へ加える
         "generator_seed",
+        # この処理で扱う文字列を一覧へ加える
+        "batch_size",
         # この処理で扱う文字列を一覧へ加える
         "model",
         # この処理で扱う文字列を一覧へ加える
@@ -583,6 +736,8 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     _required_int(config, "paraphrases_per_instruction")
     # 選択と生成に使う基準seedを確認する
     _required_int(config, "generator_seed", allow_zero=True)
+    # 一回のmodel.generateへ渡す件数を確認する
+    _required_int(config, "batch_size")
     # 検査とパス解決が終わった設定を返す
     return settings
 
@@ -819,6 +974,22 @@ def _write_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
     # 出力JSONLをUTF-8で新規作成する
     with path.open("w", encoding="utf-8") as handle:
         # 各レコードを一件ずつ書く
+        for record in records:
+            # 日本語を保った一行JSONへ変換して書く
+            handle.write(json.dumps(record, ensure_ascii=False, separators=(",", ":")))
+            # JSONLのレコード区切りとなる改行を書く
+            handle.write("\n")
+
+
+# この工程を担当する関数を定義する
+def _append_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
+    """長時間生成の完了済みレコードを既存JSONLへ追記する。"""
+
+    # 追記先ディレクトリがなければ作成する
+    path.parent.mkdir(parents=True, exist_ok=True)
+    # 既存内容を保持したままUTF-8でファイル末尾を開く
+    with path.open("a", encoding="utf-8") as handle:
+        # 今回完了した各レコードを順番に書く
         for record in records:
             # 日本語を保った一行JSONへ変換して書く
             handle.write(json.dumps(record, ensure_ascii=False, separators=(",", ":")))
