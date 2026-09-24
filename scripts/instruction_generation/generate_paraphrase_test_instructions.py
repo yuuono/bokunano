@@ -1,4 +1,4 @@
-"""テスト専用32表現から単独操作の言い換え評価指示を生成する。"""
+"""採用したテスト専用表現から単独操作の言い換え評価指示を生成する。"""
 
 # 必要な定義を対象モジュールから読み込む
 from __future__ import annotations
@@ -56,7 +56,7 @@ def parse_args() -> argparse.Namespace:
     # このスクリプト用の引数解析器を作る
     parser = argparse.ArgumentParser(
         # 実行内容をヘルプへ表示する
-        description="テスト専用32表現から1操作1文の言い換え評価指示を生成します。"
+        description="採用したテスト専用表現から1操作1文の評価指示を生成します。"
     )
     # 生成条件を持つ設定JSONを必須引数として受け取る
     parser.add_argument("--config", required=True, type=Path)
@@ -70,7 +70,7 @@ def parse_args() -> argparse.Namespace:
 
 # この工程を担当する関数を定義する
 def main() -> None:
-    """設定と入力を検査し、32文のJSONL、集計、ZIPを作る。"""
+    """設定と入力を検査し、1操作1文のJSONL、集計、ZIPを作る。"""
 
     # コマンドライン引数を取得する
     args = parse_args()
@@ -79,11 +79,11 @@ def main() -> None:
         # UTF-8の設定ファイルをJSONとして解析する
         json.loads(args.config.resolve().read_text(encoding="utf-8"))
     )
-    # 承認済み23件と辞書外9件を読み込む
+    # 承認済み辞書の採用分と辞書外9件を読み込む
     expressions, approved_dictionary_version = _load_test_expressions(settings)
     # 24個の単独操作ASTを訓練分割から読み込む
     single_asts = _load_single_operation_asts(settings["single_operation_asts"])
-    # 32表現を1操作1文へ変換する
+    # 採用表現を1操作1文へ変換する
     records, paraphrase_dictionary_version = _build_records(
         # テスト専用表現を渡す
         expressions,
@@ -127,7 +127,7 @@ def main() -> None:
     for path in output_paths:
         # 存在済みでも失敗しないよう再帰的に作る
         path.parent.mkdir(parents=True, exist_ok=True)
-    # 32レコードを固定キー順の一行JSONとして保存する
+    # 全レコードを固定キー順の一行JSONとして保存する
     output_text = "".join(
         # 日本語をエスケープせず改行付きJSONLへ変換する
         json.dumps(record, ensure_ascii=False, separators=(",", ":")) + "\n"
@@ -149,7 +149,7 @@ def main() -> None:
     counts_by_operation = Counter(
         # 各レコードが持つ唯一の操作IDを数える
         record["operation_ids"][0]
-        # 全32レコードを処理する
+        # 全生成レコードを処理する
         for record in records
     )
     # 実行結果を確認できる集計オブジェクトを作る
@@ -158,8 +158,16 @@ def main() -> None:
         "generator_version": settings["generator_version"],
         # 承認済み545件の辞書版を保存する
         "approved_dictionary_version": approved_dictionary_version,
-        # 言い換え専用32件の内容ハッシュを保存する
+        # 言い換え評価採用表現の内容ハッシュを保存する
         "paraphrase_dictionary_version": paraphrase_dictionary_version,
+        # 承認済み辞書内のtest_only総数を保存する
+        "dictionary_test_only_count": settings[
+            "expected_dictionary_test_only_count"
+        ],
+        # 指定により評価から除いた承認済み表現IDを保存する
+        "excluded_approved_expression_ids": settings[
+            "excluded_approved_expression_ids"
+        ],
         # 承認済み辞書から選んだ件数を保存する
         "approved_expression_count": settings[
             "expected_approved_expression_count"
@@ -230,6 +238,8 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
         "output",
         "stats",
         "archive",
+        "expected_dictionary_test_only_count",
+        "excluded_approved_expression_ids",
         "expected_approved_expression_count",
         "expected_external_expression_count",
         "expected_instruction_count",
@@ -269,6 +279,7 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
             raise ValueError(f"{key}が見つかりません: {settings[key]}")
     # 件数設定を0以上の整数として検査する
     for key in (
+        "expected_dictionary_test_only_count",
         "expected_approved_expression_count",
         "expected_external_expression_count",
         "expected_instruction_count",
@@ -290,6 +301,25 @@ def _validate_config(config: Mapping[str, Any]) -> dict[str, Any]:
     ):
         # 表現一件につき一文という規則違反を通知する
         raise ValueError("表現入力件数の合計とexpected_instruction_countが不一致です")
+    # 評価から除外する承認済み表現ID配列を取得する
+    excluded_ids = config["excluded_approved_expression_ids"]
+    # 空文字列や重複を含まない文字列配列であることを確認する
+    if (
+        not isinstance(excluded_ids, list)
+        or any(not isinstance(value, str) or not value for value in excluded_ids)
+        or len(set(excluded_ids)) != len(excluded_ids)
+    ):
+        # 不正な除外ID設定を拒否する
+        raise ValueError("excluded_approved_expression_idsが不正です")
+    # test_only総数から除外数を引いた件数が採用件数になることを確認する
+    if (
+        config["expected_dictionary_test_only_count"] - len(excluded_ids)
+        != config["expected_approved_expression_count"]
+    ):
+        # 評価採用件数との不整合を通知する
+        raise ValueError("test_only総数、除外数、承認済み採用数が不一致です")
+    # 検査済みの除外IDを設定へ保存する
+    settings["excluded_approved_expression_ids"] = excluded_ids
     # 生成器の版を空でない文字列として取得する
     settings["generator_version"] = _required_string(config, "generator_version")
     # ZIP設定が三つの必要項目だけを持つことを確認する
@@ -356,7 +386,7 @@ def _validate_sentence_templates(value: Any) -> dict[str, dict[str, str]]:
 def _load_test_expressions(
     settings: Mapping[str, Any],
 ) -> tuple[list[dict[str, Any]], str]:
-    """承認済み23件と辞書外9件を読み、来歴付きで返す。"""
+    """承認済み採用表現と辞書外9件を読み、来歴付きで返す。"""
 
     # 承認済み辞書の全レコードを読む
     approved_records = _read_jsonl(settings["approved_dictionary"])
@@ -380,8 +410,8 @@ def _load_test_expressions(
         # train区分だけを対象にする
         if record.get("dictionary") == "train"
     }
-    # 承認済み辞書のtest_only 23件だけを抽出する
-    selected = [
+    # 承認済み辞書のtest_only全件を抽出する
+    selected_all = [
         # 元レコードへ来歴区分を追加する
         {**record, "expression_origin": "approved_dictionary"}
         # 全承認済み表現を処理する
@@ -389,10 +419,33 @@ def _load_test_expressions(
         # test_only区分だけを採用する
         if record.get("dictionary") == "test_only"
     ]
-    # 承認済み側の件数が設定値と一致することを確認する
+    # test_only総数が設定値と一致することを確認する
+    if len(selected_all) != settings["expected_dictionary_test_only_count"]:
+        # 実件数を通知して停止する
+        raise ValueError(f"approved test_only件数が不一致です: {len(selected_all)}")
+    # 設定した評価除外IDを集合にする
+    excluded_ids = set(settings["excluded_approved_expression_ids"])
+    # 除外IDがすべてtest_only内に存在することを確認する
+    selected_all_ids = {record["expression_id"] for record in selected_all}
+    # 不明なIDがあれば停止する
+    if not excluded_ids <= selected_all_ids:
+        # 見つからないIDを通知する
+        raise ValueError(
+            f"評価除外IDがtest_onlyにありません: {sorted(excluded_ids - selected_all_ids)}"
+        )
+    # 指定された2件を除いて評価へ採用する
+    selected = [
+        # 除外対象でない元レコードを採用する
+        record
+        # test_only全件を入力順に処理する
+        for record in selected_all
+        # 設定した除外IDは評価へ入れない
+        if record["expression_id"] not in excluded_ids
+    ]
+    # 承認済み側の評価採用件数が設定値と一致することを確認する
     if len(selected) != settings["expected_approved_expression_count"]:
         # 実件数を通知して停止する
-        raise ValueError(f"approved test_only件数が不一致です: {len(selected)}")
+        raise ValueError(f"approved評価採用件数が不一致です: {len(selected)}")
     # 人手追加した辞書外9件を読む
     external = _read_jsonl(settings["external_expressions"])
     # 辞書外側の件数が設定値と一致することを確認する
@@ -415,20 +468,20 @@ def _load_test_expressions(
         # 辞書外9件を入力順に処理する
         for record in external
     ]
-    # 承認済み23件と辞書外9件を結合する
+    # 承認済み採用分と辞書外9件を結合する
     expressions = selected + external_with_origin
     # 表現IDの重複がないことを確認する
     expression_ids = [
         # 各レコードの必須IDを取得する
         _required_string(record, "expression_id")
-        # 32件を順番に処理する
+        # 評価採用表現を順番に処理する
         for record in expressions
     ]
-    # ID集合が32件でなければ停止する
+    # 表現IDの件数が採用表現数と一致しなければ停止する
     if len(set(expression_ids)) != len(expression_ids):
         # 重複IDの混入を通知する
         raise ValueError("言い換え評価表現のexpression_idが重複しています")
-    # 32件の表現組がtrain 522件と完全一致しないことを確認する
+    # 評価採用表現組がtrain 522件と完全一致しないことを確認する
     for record in expressions:
         # 現在表現の終止形・接続形組を作る
         pair = (record["expression_ja"], record["connective_expression_ja"])
@@ -444,7 +497,7 @@ def _load_test_expressions(
             record["expression_origin"] != "approved_dictionary",
         )
     )
-    # 32表現と唯一の承認済み辞書版を返す
+    # 評価採用表現と唯一の承認済み辞書版を返す
     return expressions, approved_versions.pop()
 
 
@@ -490,7 +543,7 @@ def _build_records(
     approved_dictionary_version: str,
     settings: Mapping[str, Any],
 ) -> tuple[list[dict[str, Any]], str]:
-    """32表現を各1件の単独操作全文指示へ変換する。"""
+    """評価採用表現を各1件の単独操作全文指示へ変換する。"""
 
     # 言い換え専用辞書版の計算対象を表現ID順に作る
     dictionary_payload = [
@@ -506,13 +559,13 @@ def _build_records(
         # ID順なら入力ファイル順に依存しない
         for record in sorted(expressions, key=lambda item: item["expression_id"])
     ]
-    # 32表現の正規JSONから辞書版ハッシュを計算する
+    # 評価採用表現の正規JSONから辞書版ハッシュを計算する
     paraphrase_dictionary_version = _sha256_text(_canonical_json(dictionary_payload))
     # 生成した全文指示レコードを格納する
     records: list[dict[str, Any]] = []
     # 全文の完全重複を検査する集合を作る
     seen_texts: set[str] = set()
-    # 32表現を操作ID順に処理する
+    # 評価採用表現を操作ID順に処理する
     for expression in expressions:
         # 操作IDを必須文字列として取得する
         operation_id = _required_string(expression, "operation_id")
@@ -601,7 +654,7 @@ def _build_records(
     ):
         # 2・3操作または複数表現の混入を通知する
         raise ValueError("1操作1文の規則に違反するレコードがあります")
-    # 32レコードと言い換え専用辞書版を返す
+    # 生成レコードと言い換え専用辞書版を返す
     return records, paraphrase_dictionary_version
 
 

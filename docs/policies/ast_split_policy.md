@@ -34,14 +34,14 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 | test_suite | 意味AST | 日本語表現 | 実行入力 |
 |---|---|---|---|
 | `normal` | 訓練に含まれない通常テスト用AST | 訓練用表現辞書 | hidden test入力 |
-| `paraphrase` | 24個の単独操作AST | テスト専用32表現 | 単独操作用hidden test入力 |
+| `paraphrase` | 24個の単独操作AST | テスト専用30表現 | 単独操作用hidden test入力 |
 | `compositional` | 選択した5操作対に基づく670件 | 訓練用表現辞書 | hidden test入力 |
 | `boundary` | `normal`と同じAST | 訓練用表現辞書 | 境界値入力 |
 | `repetition` | 同一操作が隣接する1,152件 | 未決定 | 未決定 |
 
 `normal`と`boundary`で同じ意味ASTを使うのは意図的である。2集合の差を実行入力だけにすることで、通常テストからの性能低下が境界値入力によるものかを切り分ける。
 
-`paraphrase`は、訓練へ割り当てた24個の単独操作の意味を参照し、32表現から1操作1文を作る。train、validation、normalのAST分割数は消費しない。`boundary`は`normal`のASTを再利用する。`compositional`は12,720件から670件を使用する。`repetition`は現在の12,720件には含まれず、別に1,152件を生成済みである。
+`paraphrase`は、訓練へ割り当てた24個の単独操作の意味を参照し、採用した30表現から1操作1文を作る。train、validation、normalのAST分割数は消費しない。`boundary`は`normal`のASTを再利用する。`compositional`は12,720件から670件を使用する。`repetition`は現在の12,720件には含まれず、別に1,152件を生成済みである。
 
 ## 組合せ汎化テストを先に確保する
 
@@ -212,8 +212,8 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 ### paraphrase
 
 - 24個の単独操作ASTだけを使用し、2操作・3操作ASTは使用しない
-- テスト専用の32表現を1件ずつ対応する単独操作ASTへ割り当てる
-- 表現1件につき1操作の全文指示を1文作り、合計32文とする
+- テスト専用の採用30表現を1件ずつ対応する単独操作ASTへ割り当てる
+- 表現1件につき1操作の全文指示を1文作り、合計30文とする
 - 単独操作用hidden test入力で評価する
 - 操作の意味は訓練済みとし、未学習の日本語表現を理解できるかを測る
 
@@ -274,7 +274,7 @@ input_set:  build | hidden | boundary
 
 1. 訓練用の正規化意味ASTが、検証用または通常テスト用の意味ASTと完全一致していない
 2. `normal`と`boundary`が同じ意味ASTを共有している
-3. `paraphrase`が32件の1操作文だけで構成され、24操作を覆っている
+3. `paraphrase`が30件の1操作文だけで構成され、24操作を覆っている
 4. テスト専用表現辞書のエントリが、訓練用指示文に使われていない
 5. `compositional`用の5操作対が、訓練用意味AST内で共起していない
 6. 24個すべての単独操作が、訓練用の1操作ASTとして存在する

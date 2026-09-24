@@ -319,7 +319,7 @@ uv run --python 3.12.12 python scripts/instruction_generation/build_approved_exp
 
 最終承認した545件のうち、作成者が言い換えテスト用として人手選定した23件を`test_only`、残り522件を`train`とする。語句一致、乱数、操作ごとの先頭行などでは自動選定しない。23件の`expression_id`は設定JSONへ固定し、終止形と接続形を常に同じ区分で扱う。
 
-選定表現、辞書外9件との違い、再現手順、検査条件は、[`japanese_paraphrase_test_policy.md`](../policies/japanese_paraphrase_test_policy.md)を正とする。辞書外9件は承認済み545件に混ぜず、`paraphrase_test_external_expressions.jsonl`へ人手作成表現として分離する。23件と9件の合計32件で全24操作を覆う。
+選定表現、辞書外9件との違い、再現手順、検査条件は、[`japanese_paraphrase_test_policy.md`](../policies/japanese_paraphrase_test_policy.md)を正とする。辞書外9件は承認済み545件に混ぜず、`paraphrase_test_external_expressions.jsonl`へ人手作成表現として分離する。候補は23件と9件の合計32件だが、指定表記と異なる旧表現2件を除き、評価採用30件で全24操作を覆う。
 
 辞書を確定したら、内容ハッシュまたはバージョンを付ける。以後の指示文には、使用した辞書のバージョンを記録する。
 
@@ -341,11 +341,11 @@ uv run --python 3.12.12 python scripts/instruction_generation/build_approved_exp
 意味AST内の各操作について、同じ`operation_ast`を持つ承認済み表現を1件選ぶ。
 
 - 言い換えテスト以外: `train`辞書から選ぶ
-- 言い換えテスト: 32件の`test_only`表現をそれぞれ対応する単独操作ASTへ1件ずつ割り当てる
+- 言い換えテスト: 採用した30件の`test_only`表現をそれぞれ対応する単独操作ASTへ1件ずつ割り当てる
 
 選択した`expression_id`は、意味ASTと同じ順番で記録する。
 
-言い換え評価は2・3操作の結合を行わない。表現1件につき1操作の全文指示を1文作るため、合計32文になる。終止形だけを本文に使用し、接続形は辞書情報として保持する。詳細は[`japanese_paraphrase_test_policy.md`](../policies/japanese_paraphrase_test_policy.md)を正とする。
+言い換え評価は2・3操作の結合を行わない。表現1件につき1操作の全文指示を1文作るため、合計30文になる。終止形だけを本文に使用し、接続形は辞書情報として保持する。詳細は[`japanese_paraphrase_test_policy.md`](../policies/japanese_paraphrase_test_policy.md)を正とする。
 
 ### 5.3 操作順を保って結合する
 
@@ -408,7 +408,7 @@ op3 connective: 降順に並べて
 
 ただし、辞書内の全表現を無制限に直積で組み合わせない。1つの意味ASTから作る件数の上限を20件とし、固定seed、`spec_id`、正規化意味ASTから決めた直積上の開始位置と歩幅で固有全文を選ぶ。同じ全文は除外し、20件未満しか作れないASTを同じ文で水増ししない。
 
-選択は固定seedを使って再現可能にする。train、validation、normal、compositional、repetitionの13,872意味ASTを対象とし、`train`表現522件だけを使用する。normalの指示は境界値テストでも再利用する。`test_only`を使う言い換えテストは、単独操作だけの32文を作る別工程とする。詳細は[`rule_generated_instruction_policy.md`](../policies/rule_generated_instruction_policy.md)を正とする。
+選択は固定seedを使って再現可能にする。train、validation、normal、compositional、repetitionの13,872意味ASTを対象とし、`train`表現522件だけを使用する。normalの指示は境界値テストでも再利用する。`test_only`を使う言い換えテストは、単独操作だけの30文を作る別工程とする。詳細は[`rule_generated_instruction_policy.md`](../policies/rule_generated_instruction_policy.md)を正とする。
 
 ### 5.6 生成結果を保存する
 

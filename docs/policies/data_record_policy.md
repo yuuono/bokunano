@@ -316,7 +316,7 @@ input_set: build | hidden | boundary
 - `train`と`val`では`test_suite`を`null`にする
 - `paraphrase`では`dictionary`を`test_only`にする
 - `normal`と`compositional`では`input_set`を`hidden`にする
-- `paraphrase`は32件とし、各レコードに単独操作AST、表現ID1件、単独操作用hidden入力を保存する
+- `paraphrase`は採用30件とし、各レコードに単独操作AST、表現ID1件、単独操作用hidden入力を保存する
 - `boundary`では`input_set`を`boundary`にする
 - `normal`と対応する`boundary`では同じ`family_id`を使用する
 - `paraphrase`では単独操作ASTの`semantic_hash`から`family_id`を計算し、同じ操作の複数表現では同じ値を使用する

@@ -1,10 +1,15 @@
 {
   "generator_version": "1",
   "approved_dictionary_version": "9bd2d2b3b1585e9240cb77e8b1ddefe68a14618d5c87fa5402353c21406dc398",
-  "paraphrase_dictionary_version": "705b912b523e972d87c01d1da8339cd4c683f0a21e4993584e5cb4522953363d",
-  "approved_expression_count": 23,
+  "paraphrase_dictionary_version": "08e73c6a8cee446c3ce16ea0b5e739234560873ad5cf863f85be51b71768b03e",
+  "dictionary_test_only_count": 23,
+  "excluded_approved_expression_ids": [
+    "expr-candidate-64fe4ff94c1588df8ae6cea836330ce586d96585ef61b0b55bce43046c8eb587",
+    "expr-candidate-373f07e7873c47832f8fd30497e0d70e7fea18d4911f18c5b2e957a652dd23ca"
+  ],
+  "approved_expression_count": 21,
   "external_expression_count": 9,
-  "instruction_count": 32,
+  "instruction_count": 30,
   "operation_count": 24,
   "counts_by_operation": {
     "atomic-000001": 3,
@@ -20,8 +25,8 @@
     "atomic-000011": 1,
     "atomic-000012": 1,
     "atomic-000013": 2,
-    "atomic-000014": 2,
-    "atomic-000015": 2,
+    "atomic-000014": 1,
+    "atomic-000015": 1,
     "atomic-000016": 1,
     "atomic-000017": 1,
     "atomic-000018": 1,
@@ -33,13 +38,13 @@
     "atomic-000024": 1
   },
   "output": "data/instructions/paraphrase_test_instructions.jsonl",
-  "output_bytes": 31982,
-  "output_sha256": "23c09b146c664f175cef0579cbecf2d664c31e41af945e9e3ab0650754ca195e",
+  "output_bytes": 30012,
+  "output_sha256": "bb23fbc2567a234824aae2bb32b2c6d51599cb6fa6ac038fd34ce1bfbf47e5c1",
   "archive": {
     "path": "data/archives/paraphrase_test_instructions_2026-09-24.zip",
     "member": "data/instructions/paraphrase_test_instructions.jsonl",
-    "record_count": 32,
-    "bytes": 5862,
-    "sha256": "b96b3c74f60f55b8d775126714febba192e6b5ba991685ea3d234e14ba3a54b6"
+    "record_count": 30,
+    "bytes": 5580,
+    "sha256": "0710b9f6eb107237bfa811447d78e0bfc39c1fbf430f0de5315808bd8dc5f97f"
   }
 }

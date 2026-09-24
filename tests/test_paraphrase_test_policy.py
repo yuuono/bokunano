@@ -1,4 +1,4 @@
-"""言い換えテスト用32表現の分離と単独操作対応を検証する。"""
+"""言い換え評価用30表現の分離と単独操作対応を検証する。"""
 
 # 必要な定義を対象モジュールから読み込む
 from __future__ import annotations
@@ -28,11 +28,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 # 関連する検査をまとめるクラスを定義する
 class ParaphraseTestPolicyTests(unittest.TestCase):
-    """承認済み23件と人手追加9件が安全な32件になることを確認する。"""
+    """候補32件から指定2件を除き、安全な30件になることを確認する。"""
 
     # この工程を担当するテストを定義する
-    def test_32_test_only_expressions_cover_all_operations(self) -> None:
-        """32件がtrainと重複せず、24個の単独操作ASTを覆う。"""
+    def test_30_test_only_expressions_cover_all_operations(self) -> None:
+        """採用30件がtrainと重複せず、24個の単独操作ASTを覆う。"""
 
         # 公開済みの承認表現CSVを読む
         with (
@@ -76,10 +76,45 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
         self.assertEqual(len(selected_rows), 23)
         # 人手追加側が9件であることを確認する
         self.assertEqual(len(external_rows), 9)
-        # 二つを合わせて32件になることを確認する
-        test_rows = selected_rows + external_rows
-        # 合計件数を確認する
-        self.assertEqual(len(test_rows), 32)
+        # 二つを合わせた候補が32件になることを確認する
+        candidate_rows = selected_rows + external_rows
+        # 候補総数を確認する
+        self.assertEqual(len(candidate_rows), 32)
+        # 言い換え評価指示の生成設定を読む
+        generation_config = json.loads(
+            (
+                PROJECT_ROOT / "config/paraphrase_test_instruction_generation.json"
+            ).read_text(encoding="utf-8")
+        )
+        # 指定により評価から除外する承認済み2件のIDを集合にする
+        excluded_ids = set(generation_config["excluded_approved_expression_ids"])
+        # 除外IDが2件であることを確認する
+        self.assertEqual(len(excluded_ids), 2)
+        # 除外後の評価採用30件を作る
+        test_rows = [
+            # 除外されていない候補を採用する
+            row
+            # 候補32件を順番に処理する
+            for row in candidate_rows
+            # 指定された2件を除く
+            if row["expression_id"] not in excluded_ids
+        ]
+        # 評価採用件数を確認する
+        self.assertEqual(len(test_rows), 30)
+        # 除外した本文が指定と異なる2表現であることを確認する
+        self.assertEqual(
+            {
+                row["expression_ja"]
+                for row in candidate_rows
+                if row["expression_id"] in excluded_ids
+            },
+            {"各要素を2倍にする", "全部を三倍する"},
+        )
+        # 指定どおり残す2表現が評価対象に存在することを確認する
+        self.assertTrue(
+            {"各要素を二倍にする", "全部を3倍する"}
+            <= {row["expression_ja"] for row in test_rows}
+        )
         # 24操作すべてを覆うことを確認する
         self.assertEqual(len({row["operation_id"] for row in test_rows}), 24)
         # 人手追加9件の区分と出所が固定値であることを確認する
@@ -100,12 +135,12 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
             # test_onlyに選ばれなかった522件だけを対象にする
             if row["expression_id"] not in selected_ids
         }
-        # 32件の表現組がtrain側と完全一致しないことを確認する
+        # 候補32件の表現組がtrain側と完全一致しないことを確認する
         self.assertTrue(
             all(
                 (row["expression_ja"], row["connective_expression_ja"])
                 not in train_pairs
-                for row in test_rows
+                for row in candidate_rows
             )
         )
         # 操作IDごとのtest_only表現数を数える
@@ -123,7 +158,7 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
             # 24操作の定義を順番に処理する
             for item in operation_config["operations"]
         }
-        # 32件を一件ずつ処理する
+        # 評価採用30件を一件ずつ処理する
         for row in test_rows:
             # CSV側だけJSON文字列になっている操作ASTを辞書へ戻す
             operation_ast = row["operation_ast"]
@@ -144,8 +179,6 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
                     "atomic-000002": 3,
                     "atomic-000003": 2,
                     "atomic-000013": 2,
-                    "atomic-000014": 2,
-                    "atomic-000015": 2,
                     **{
                         operation_id: 1
                         for operation_id in operation_ast_by_id
@@ -155,15 +188,13 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
                             "atomic-000002",
                             "atomic-000003",
                             "atomic-000013",
-                            "atomic-000014",
-                            "atomic-000015",
                         }
                     },
                 }
             ),
         )
-        # 表現一件につき一文なので、予定する評価指示数が32件になる
-        self.assertEqual(sum(counts.values()), 32)
+        # 表現一件につき一文なので、予定する評価指示数が30件になる
+        self.assertEqual(sum(counts.values()), 30)
         # Git管理する言い換え評価ZIPのパスを作る
         archive_path = (
             PROJECT_ROOT
@@ -184,13 +215,13 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
             # 空行は読み飛ばす
             if line.strip()
         ]
-        # ZIPが32件の評価指示を含むことを確認する
-        self.assertEqual(len(instruction_rows), 32)
+        # ZIPが30件の評価指示を含むことを確認する
+        self.assertEqual(len(instruction_rows), 30)
         # 表現IDから元のテスト専用表現を引く対応表を作る
         expression_by_id = {
             # 表現IDをキーに元レコードを保存する
             row["expression_id"]: row
-            # テスト専用32表現を処理する
+            # 評価採用30表現を処理する
             for row in test_rows
         }
         # kを明示的な入力に持つ操作ID集合を定義する
@@ -206,7 +237,7 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
             "atomic-000022",
             "atomic-000023",
         }
-        # 生成済み32レコードを一件ずつ検査する
+        # 生成済み30レコードを一件ずつ検査する
         for record in instruction_rows:
             # 各文がテスト用の単独操作レコードであることを確認する
             self.assertEqual(record["split"], "test")
@@ -246,7 +277,7 @@ class ParaphraseTestPolicyTests(unittest.TestCase):
             ) + source_expression["expression_ja"] + "solve関数を書いてください。"
             # 完成全文が終止形を一度だけ使う期待文と一致することを確認する
             self.assertEqual(record["instruction_ja"], expected_instruction)
-        # 32個の表現IDがZIP内で一度ずつ使われることを確認する
+        # 30個の表現IDがZIP内で一度ずつ使われることを確認する
         self.assertEqual(
             {record["expression_ids"][0] for record in instruction_rows},
             set(expression_by_id),

@@ -10,9 +10,14 @@
     "path": "data/archives/paraphrase_test_instructions_2026-09-24.zip",
     "member": "data/instructions/paraphrase_test_instructions.jsonl"
   },
-  "expected_approved_expression_count": 23,
+  "expected_dictionary_test_only_count": 23,
+  "excluded_approved_expression_ids": [
+    "expr-candidate-64fe4ff94c1588df8ae6cea836330ce586d96585ef61b0b55bce43046c8eb587",
+    "expr-candidate-373f07e7873c47832f8fd30497e0d70e7fea18d4911f18c5b2e957a652dd23ca"
+  ],
+  "expected_approved_expression_count": 21,
   "expected_external_expression_count": 9,
-  "expected_instruction_count": 32,
+  "expected_instruction_count": 30,
   "expected_operation_count": 24,
   "generator_version": "1",
   "sentence_templates": {
