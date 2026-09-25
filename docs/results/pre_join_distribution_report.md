@@ -44,6 +44,8 @@
 | 19 | 2 |
 | 20 | 9,640 |
 
+このうち20件未満の6意味ASTは次節にすべて示す。20件の9,640意味ASTを含む全件の対応は`data/instructions/pre_join_distribution_by_ast.jsonl`に保存する。
+
 ## 5. 20件未満の意味AST
 
 20件未満なのは単一操作の6意味ASTだけである。終止形が同じ全文を別IDとして水増ししなかった結果であり、教師置換後も件数は増減しない。
@@ -67,6 +69,73 @@
 | 8 | 6 |
 | 9 | 52 |
 | 10 | 9,586 |
+
+### 教師置換成功が10件未満の意味AST
+
+成功数7〜9件の60意味ASTを次にすべて示す。成功数10件の9,586意味ASTを含む全件の対応は`data/instructions/pre_join_distribution_by_ast.jsonl`で確認できる。
+
+| spec_id | semantic_ast | 操作数 | 選抜 | 置換成功 | 失敗・元文維持 | 置換後指示 |
+|---|---|---:|---:|---:|---:|---:|
+| `combined-003199` | `{"sequence":[{"filter":["le_k"]},{"filter":["lt_k"]},{"filter":["multiple_of_k"]}]}` | 3 | 10 | 7 | 3 | 20 |
+| `combined-003200` | `{"sequence":[{"filter":["le_k"]},{"filter":["lt_k"]},{"filter":["positive"]}]}` | 3 | 10 | 7 | 3 | 20 |
+| `combined-001152` | `{"sequence":[{"filter":["odd"]},{"filter":["lt_k"]},{"filter":["le_k"]}]}` | 3 | 10 | 8 | 2 | 20 |
+| `combined-001154` | `{"sequence":[{"filter":["odd"]},{"filter":["lt_k"]},{"filter":["positive"]}]}` | 3 | 10 | 8 | 2 | 20 |
+| `combined-003134` | `{"sequence":[{"filter":["le_k"]},{"filter":["odd"]},{"filter":["positive"]}]}` | 3 | 10 | 8 | 2 | 20 |
+| `combined-003153` | `{"sequence":[{"filter":["le_k"]},{"filter":["gt_k"]},{"filter":["ge_k"]}]}` | 3 | 10 | 8 | 2 | 20 |
+| `combined-003207` | `{"sequence":[{"filter":["le_k"]},{"filter":["lt_k"]},{"map":["mul_const",3]}]}` | 3 | 10 | 8 | 2 | 20 |
+| `combined-004713` | `{"sequence":[{"filter":["negative"]},{"filter":["lt_k"]},{"filter":["even"]}]}` | 3 | 10 | 8 | 2 | 20 |
+| `combined-000006` | `{"sequence":[{"filter":["le_k"]}]}` | 1 | 10 | 9 | 1 | 20 |
+| `combined-000120` | `{"sequence":[{"filter":["lt_k"]},{"filter":["ge_k"]}]}` | 2 | 10 | 9 | 1 | 20 |
+| `combined-000605` | `{"sequence":[{"filter":["even"]},{"filter":["gt_k"]},{"filter":["negative"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-000626` | `{"sequence":[{"filter":["even"]},{"filter":["ge_k"]},{"filter":["positive"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-000651` | `{"sequence":[{"filter":["even"]},{"filter":["lt_k"]},{"map":["add_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-000662` | `{"sequence":[{"filter":["even"]},{"filter":["lt_k"]},{"slice":["take_first_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-000668` | `{"sequence":[{"filter":["even"]},{"filter":["le_k"]},{"filter":["lt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-000938` | `{"sequence":[{"filter":["even"]},{"map":["square"]},{"map":["add_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-001136` | `{"sequence":[{"filter":["odd"]},{"filter":["ge_k"]},{"map":["sub_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-001155` | `{"sequence":[{"filter":["odd"]},{"filter":["lt_k"]},{"filter":["negative"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-001169` | `{"sequence":[{"filter":["odd"]},{"filter":["lt_k"]},{"slice":["take_last_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-001177` | `{"sequence":[{"filter":["odd"]},{"filter":["le_k"]},{"filter":["negative"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-001218` | `{"sequence":[{"filter":["odd"]},{"filter":["positive"]},{"filter":["lt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-001234` | `{"sequence":[{"filter":["odd"]},{"filter":["positive"]},{"slice":["take_first_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-002163` | `{"sequence":[{"filter":["ge_k"]},{"filter":["lt_k"]},{"filter":["gt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-002169` | `{"sequence":[{"filter":["ge_k"]},{"filter":["lt_k"]},{"map":["add_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-002179` | `{"sequence":[{"filter":["ge_k"]},{"filter":["lt_k"]},{"order":"reverse"}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-002616` | `{"sequence":[{"filter":["lt_k"]},{"filter":["even"]},{"map":["square"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-002755` | `{"sequence":[{"filter":["lt_k"]},{"filter":["negative"]},{"filter":["even"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003044` | `{"sequence":[{"filter":["lt_k"]},{"slice":["take_first_k"]},{"filter":["ge_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003082` | `{"sequence":[{"filter":["lt_k"]},{"slice":["take_last_k"]},{"order":"reverse"}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003108` | `{"sequence":[{"filter":["le_k"]},{"filter":["even"]},{"filter":["gt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003112` | `{"sequence":[{"filter":["le_k"]},{"filter":["even"]},{"filter":["positive"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003195` | `{"sequence":[{"filter":["le_k"]},{"filter":["lt_k"]},{"filter":["even"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003209` | `{"sequence":[{"filter":["le_k"]},{"filter":["lt_k"]},{"map":["abs"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003210` | `{"sequence":[{"filter":["le_k"]},{"filter":["lt_k"]},{"map":["square"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003239` | `{"sequence":[{"filter":["le_k"]},{"filter":["positive"]},{"filter":["even"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003250` | `{"sequence":[{"filter":["le_k"]},{"filter":["positive"]},{"map":["mul_const",2]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003261` | `{"sequence":[{"filter":["le_k"]},{"filter":["negative"]},{"filter":["even"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003280` | `{"sequence":[{"filter":["le_k"]},{"filter":["negative"]},{"slice":["take_first_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003407` | `{"sequence":[{"filter":["le_k"]},{"map":["mul_const",3]},{"map":["abs"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003472` | `{"sequence":[{"filter":["le_k"]},{"map":["square"]},{"map":["mul_const",3]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003551` | `{"sequence":[{"filter":["le_k"]},{"slice":["take_first_k"]},{"filter":["lt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-003682` | `{"sequence":[{"filter":["multiple_of_k"]},{"filter":["ge_k"]},{"filter":["lt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-004300` | `{"sequence":[{"filter":["positive"]},{"filter":["zero"]},{"filter":["le_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-004415` | `{"sequence":[{"filter":["positive"]},{"map":["mul_const",3]},{"map":["sub_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-004697` | `{"sequence":[{"filter":["negative"]},{"filter":["ge_k"]},{"filter":["positive"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-004719` | `{"sequence":[{"filter":["negative"]},{"filter":["lt_k"]},{"filter":["positive"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-004803` | `{"sequence":[{"filter":["negative"]},{"filter":["zero"]},{"filter":["gt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-005226` | `{"sequence":[{"filter":["zero"]},{"filter":["lt_k"]},{"filter":["negative"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-005246` | `{"sequence":[{"filter":["zero"]},{"filter":["le_k"]},{"filter":["multiple_of_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-006718` | `{"sequence":[{"map":["mul_k"]},{"filter":["ge_k"]},{"filter":["lt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-006928` | `{"sequence":[{"map":["mul_k"]},{"map":["mul_const",2]},{"map":["square"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-007013` | `{"sequence":[{"map":["mul_k"]},{"map":["square"]},{"map":["mul_const",2]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-010307` | `{"sequence":[{"order":"descending"},{"filter":["le_k"]},{"filter":["positive"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-010545` | `{"sequence":[{"order":"descending"},{"map":["abs"]},{"filter":["gt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-010555` | `{"sequence":[{"order":"descending"},{"map":["abs"]},{"map":["mul_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-010788` | `{"sequence":[{"order":"reverse"},{"filter":["lt_k"]},{"filter":["ge_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-010803` | `{"sequence":[{"order":"reverse"},{"filter":["lt_k"]},{"order":"descending"}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-010811` | `{"sequence":[{"order":"reverse"},{"filter":["le_k"]},{"filter":["lt_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-010850` | `{"sequence":[{"order":"reverse"},{"filter":["multiple_of_k"]},{"slice":["every_other"]}]}` | 3 | 10 | 9 | 1 | 20 |
+| `combined-010854` | `{"sequence":[{"order":"reverse"},{"filter":["positive"]},{"filter":["ge_k"]}]}` | 3 | 10 | 9 | 1 | 20 |
 
 ## 7. 結合方針への結論
 

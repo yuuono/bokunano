@@ -66,6 +66,1598 @@
   "semantic_ast_count": 9646,
   "teacher_failure_count": 70,
   "teacher_replacement_count": 96390,
+  "teacher_replacement_shortfall_asts": [
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "multiple_of_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003199",
+      "teacher_failure_count": 3,
+      "teacher_replacement_count": 7,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003200",
+      "teacher_failure_count": 3,
+      "teacher_replacement_count": 7,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "le_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-001152",
+      "teacher_failure_count": 2,
+      "teacher_replacement_count": 8,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-001154",
+      "teacher_failure_count": 2,
+      "teacher_replacement_count": 8,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "odd"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003134",
+      "teacher_failure_count": 2,
+      "teacher_replacement_count": 8,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "gt_k"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003153",
+      "teacher_failure_count": 2,
+      "teacher_replacement_count": 8,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "map": [
+              "mul_const",
+              3
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003207",
+      "teacher_failure_count": 2,
+      "teacher_replacement_count": 8,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "negative"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "even"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-004713",
+      "teacher_failure_count": 2,
+      "teacher_replacement_count": 8,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 1,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000006",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 2,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000120",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "even"
+            ]
+          },
+          {
+            "filter": [
+              "gt_k"
+            ]
+          },
+          {
+            "filter": [
+              "negative"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000605",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "even"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000626",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "even"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "map": [
+              "add_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000651",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "even"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "slice": [
+              "take_first_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000662",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "even"
+            ]
+          },
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000668",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "even"
+            ]
+          },
+          {
+            "map": [
+              "square"
+            ]
+          },
+          {
+            "map": [
+              "add_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000938",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          },
+          {
+            "map": [
+              "sub_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-001136",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "negative"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-001155",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "slice": [
+              "take_last_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-001169",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          },
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "negative"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-001177",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-001218",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          },
+          {
+            "slice": [
+              "take_first_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-001234",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "ge_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "gt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-002163",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "ge_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "map": [
+              "add_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-002169",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "ge_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "order": "reverse"
+          }
+        ]
+      },
+      "spec_id": "combined-002179",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "even"
+            ]
+          },
+          {
+            "map": [
+              "square"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-002616",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "negative"
+            ]
+          },
+          {
+            "filter": [
+              "even"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-002755",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "slice": [
+              "take_first_k"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003044",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "slice": [
+              "take_last_k"
+            ]
+          },
+          {
+            "order": "reverse"
+          }
+        ]
+      },
+      "spec_id": "combined-003082",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "even"
+            ]
+          },
+          {
+            "filter": [
+              "gt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003108",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "even"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003112",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "even"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003195",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "map": [
+              "abs"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003209",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "map": [
+              "square"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003210",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          },
+          {
+            "filter": [
+              "even"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003239",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          },
+          {
+            "map": [
+              "mul_const",
+              2
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003250",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "negative"
+            ]
+          },
+          {
+            "filter": [
+              "even"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003261",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "negative"
+            ]
+          },
+          {
+            "slice": [
+              "take_first_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003280",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "map": [
+              "mul_const",
+              3
+            ]
+          },
+          {
+            "map": [
+              "abs"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003407",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "map": [
+              "square"
+            ]
+          },
+          {
+            "map": [
+              "mul_const",
+              3
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003472",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "slice": [
+              "take_first_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003551",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "multiple_of_k"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-003682",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "positive"
+            ]
+          },
+          {
+            "filter": [
+              "zero"
+            ]
+          },
+          {
+            "filter": [
+              "le_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-004300",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "positive"
+            ]
+          },
+          {
+            "map": [
+              "mul_const",
+              3
+            ]
+          },
+          {
+            "map": [
+              "sub_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-004415",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "negative"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-004697",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "negative"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-004719",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "negative"
+            ]
+          },
+          {
+            "filter": [
+              "zero"
+            ]
+          },
+          {
+            "filter": [
+              "gt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-004803",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "zero"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "negative"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-005226",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "zero"
+            ]
+          },
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "multiple_of_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-005246",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_k"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-006718",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_k"
+            ]
+          },
+          {
+            "map": [
+              "mul_const",
+              2
+            ]
+          },
+          {
+            "map": [
+              "square"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-006928",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_k"
+            ]
+          },
+          {
+            "map": [
+              "square"
+            ]
+          },
+          {
+            "map": [
+              "mul_const",
+              2
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-007013",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "descending"
+          },
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-010307",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "descending"
+          },
+          {
+            "map": [
+              "abs"
+            ]
+          },
+          {
+            "filter": [
+              "gt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-010545",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "descending"
+          },
+          {
+            "map": [
+              "abs"
+            ]
+          },
+          {
+            "map": [
+              "mul_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-010555",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "reverse"
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-010788",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "reverse"
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          },
+          {
+            "order": "descending"
+          }
+        ]
+      },
+      "spec_id": "combined-010803",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "reverse"
+          },
+          {
+            "filter": [
+              "le_k"
+            ]
+          },
+          {
+            "filter": [
+              "lt_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-010811",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "reverse"
+          },
+          {
+            "filter": [
+              "multiple_of_k"
+            ]
+          },
+          {
+            "slice": [
+              "every_other"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-010850",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    },
+    {
+      "final_instruction_count": 20,
+      "operation_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "reverse"
+          },
+          {
+            "filter": [
+              "positive"
+            ]
+          },
+          {
+            "filter": [
+              "ge_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-010854",
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 9,
+      "teacher_selected_count": 10
+    }
+  ],
   "teacher_selected_source_count": 96460,
   "under_twenty_instruction_asts": [
     {
