@@ -180,6 +180,26 @@ uv run --python 3.12.12 python \
 
 置換成功レコードには、元の`source_instruction_id`、`source_instruction_ja`、`source_text_hash`、表現ID、文テンプレートID、ルール生成条件と、教師モデル・prompt・sampling・承認来歴の両方を保存する。教師生成に失敗した70件と非選抜96,440件は元文を変更せず維持し、理由を`retention_reason`へ保存する。結果は[`replacement_resolved_train_instruction_results.md`](../docs/results/replacement_resolved_train_instruction_results.md)に記録する。
 
+### 置換反映済み指示と検証済みコードの最終結合
+
+```bash
+uv run --python 3.12.12 python \
+  scripts/instruction_generation/build_final_train_records.py \
+  --instructions data/instructions/replacement_resolved_train_instructions.jsonl \
+  --single-operation-codes data/code_candidates/single_operation/python_code_candidates.jsonl \
+  --multi-operation-code-archive data/archives/multi_operation_python_code_candidates_2026-09-20.zip \
+  --output-jsonl data/final/final_dataset_records.jsonl \
+  --archive data/archives/final_train_dataset_records_2026-09-25.zip \
+  --rejected-codes data/final/rejected_train_code_candidates.jsonl \
+  --test-set-manifest data/final/build_verification_test_set.json \
+  --stats data/final/final_train_dataset_stats.json \
+  --expected-record-count 192900 \
+  --expected-code-count 192920 \
+  --pairing-seed 20260925
+```
+
+全9,646意味ASTを`spec_id`と正規化意味ASTで照合し、指示とコードを直積にせず一対一結合する。指示不足の6意味ASTではコード形式を均等化する決定的選抜を行い、余ったコードは元JSONL情報を保持した`rejected_train_code_candidates.jsonl`へ分離する。最終レコードはコード生成時の41検証入力を共有テスト集合IDで参照し、元の指示来歴とコード来歴を両方保存する。
+
 ## 検証
 
 ```bash

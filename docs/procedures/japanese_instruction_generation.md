@@ -580,6 +580,26 @@ uv run --python 3.12.12 python \
 
 最終レコードの形式は、[`data_record_policy.md`](../policies/data_record_policy.md)に従う。
 
+置換反映済み指示と検証済みコードを最終訓練レコードへ結合する場合は、次を実行する。
+
+```bash
+uv run --python 3.12.12 python \
+  scripts/instruction_generation/build_final_train_records.py \
+  --instructions data/instructions/replacement_resolved_train_instructions.jsonl \
+  --single-operation-codes data/code_candidates/single_operation/python_code_candidates.jsonl \
+  --multi-operation-code-archive data/archives/multi_operation_python_code_candidates_2026-09-20.zip \
+  --output-jsonl data/final/final_dataset_records.jsonl \
+  --archive data/archives/final_train_dataset_records_2026-09-25.zip \
+  --rejected-codes data/final/rejected_train_code_candidates.jsonl \
+  --test-set-manifest data/final/build_verification_test_set.json \
+  --stats data/final/final_train_dataset_stats.json \
+  --expected-record-count 192900 \
+  --expected-code-count 192920 \
+  --pairing-seed 20260925
+```
+
+この処理は全9,646意味ASTを`spec_id`と正規化意味ASTの両方で照合する。20対20の9,640意味ASTは全件を元順序で結合する。指示が20件未満の6意味ASTでは、コード形式ができるだけ均等になるよう決定的に必要数を選び、余る20コードを全来歴付きの不採用JSONLへ分離する。元の指示JSONL、1操作コードJSONL、2・3操作コードZIPは処理前後のSHA-256を比較し、変更がない場合だけ完了とする。
+
 ## 8. 実施順チェックリスト
 
 ### 表現辞書
@@ -606,9 +626,9 @@ uv run --python 3.12.12 python \
 - [x] ルール生成指示の一部だけを教師モデルで言い換えた
 - [ ] 作成者本人が元文と教師言い換えを比較した
 - [x] 利用者の明示指示により全候補を一括承認した
-- [ ] 指示文と検証済みコードを同じ意味ASTで結合した
+- [ ] 指示文と検証済みコードを同じ意味ASTで結合した（実行結果文書の作成後に完了扱いとする）
 - [x] 承認済み言い換えがすべて`dictionary=train`であることを確認した
-- [ ] 最終レコードの必須項目とハッシュを確認した
+- [ ] 最終レコードの必須項目とハッシュを確認した（実行結果文書の作成後に完了扱いとする）
 
 ## 9. 完了条件
 
