@@ -163,6 +163,23 @@ uv run --python 3.12.12 python scripts/instruction_generation/report_pre_join_di
 
 この検査では、承認済み言い換えの`source_instruction_id`、`spec_id`、意味ASTを元指示と照合し、教師生成に失敗した70件を元文維持として数える。さらに、単一・2・3操作の検証済みコードを照合し、意味ASTごとの置換後指示数とコード数を報告する。20指示未満だった単一操作6種類については、2操作・3操作を含む全訓練指示のうち、その操作を含む意味AST数、指示文数、操作出現回数も集計する。`pre_join_distribution_by_ast.jsonl`には、全9,646意味ASTの指示数、教師置換成功数、失敗数、コード数を一件ずつ保存する。
 
+承認済み教師言い換えを実際の訓練指示へ一対一で置換反映する場合は、次を実行する。元のルール生成指示と承認済み教師言い換えは読み取り専用入力として扱い、別の置換済みJSONLを作る。
+
+```bash
+uv run --python 3.12.12 python \
+  scripts/instruction_generation/build_replacement_resolved_train_instructions.py \
+  --rule-instructions data/instructions/rule_generated_instructions.jsonl \
+  --approved-paraphrases data/instructions/approved_teacher_paraphrases.jsonl \
+  --paraphrase-generation-stats data/instructions/teacher_paraphrase_generation_stats.json \
+  --output-jsonl data/instructions/replacement_resolved_train_instructions.jsonl \
+  --archive data/archives/replacement_resolved_train_instructions_2026-09-25.zip \
+  --stats data/instructions/replacement_resolved_train_instruction_stats.json \
+  --expected-output-count 192900 \
+  --expected-replacement-count 96390
+```
+
+置換成功レコードには、元の`source_instruction_id`、`source_instruction_ja`、`source_text_hash`、表現ID、文テンプレートID、ルール生成条件と、教師モデル・prompt・sampling・承認来歴の両方を保存する。教師生成に失敗した70件と非選抜96,440件は元文を変更せず維持し、理由を`retention_reason`へ保存する。結果は[`replacement_resolved_train_instruction_results.md`](../docs/results/replacement_resolved_train_instruction_results.md)に記録する。
+
 ## 検証
 
 ```bash

@@ -563,6 +563,21 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 
 同じ意味ASTの全コードと全指示の直積は作らない。意味AST内で置換後指示とコードを決定的に一対一対応させる。指示が20件未満の単一操作6意味ASTでは、追加の固有指示を作らない限り余剰コードを最終訓練レコードへ採用しない。
 
+2026年9月25日に、元のルール生成指示と承認済み教師言い換えを変更せず、置換を反映した第三のJSONLを作成した。教師言い換え96,390件、元文維持96,510件、合計192,900件である。置換成功レコードは元ID、元文、元文ハッシュ、ルール生成来歴と教師生成来歴を両方保持する。処理結果と入力未変更のハッシュ確認は[`replacement_resolved_train_instruction_results.md`](../results/replacement_resolved_train_instruction_results.md)を参照する。
+
+```bash
+uv run --python 3.12.12 python \
+  scripts/instruction_generation/build_replacement_resolved_train_instructions.py \
+  --rule-instructions data/instructions/rule_generated_instructions.jsonl \
+  --approved-paraphrases data/instructions/approved_teacher_paraphrases.jsonl \
+  --paraphrase-generation-stats data/instructions/teacher_paraphrase_generation_stats.json \
+  --output-jsonl data/instructions/replacement_resolved_train_instructions.jsonl \
+  --archive data/archives/replacement_resolved_train_instructions_2026-09-25.zip \
+  --stats data/instructions/replacement_resolved_train_instruction_stats.json \
+  --expected-output-count 192900 \
+  --expected-replacement-count 96390
+```
+
 最終レコードの形式は、[`data_record_policy.md`](../policies/data_record_policy.md)に従う。
 
 ## 8. 実施順チェックリスト

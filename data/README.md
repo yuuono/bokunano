@@ -50,6 +50,7 @@ data/
 | `archives/evaluation_python_code_candidates_2026-09-20.zip` | 検証・通常テスト・反復汎化 | 6 | 71,120件 | `5fcab861bcc6d69fb12758fb62325e02a00ab00e5da55db25c7b2e03134821d4` |
 | `archives/rule_generated_train_instructions_2026-09-24.zip` | trainの全文日本語指示 | 1 | 192,900件 | `6299f0c09b0fcbe095d1537a55dc9f4f0fa5dd815f5ba01f0fd75e7c9a871d24` |
 | `archives/rule_generated_evaluation_instructions_2026-09-24.zip` | validation・normal・compositional・repetitionの全文日本語指示 | 1 | 84,520件 | `1a9e25807c2921359f308fb4951faabf13c9fbb9fbd1f0e5e7019f8be6f6ed3b` |
+| `archives/replacement_resolved_train_instructions_2026-09-25.zip` | 教師言い換えを一対一置換したtrain指示 | 1 | 192,900件 | `7a90b24796e7ef2ad9d9510168e734df7556b18faa092a00f81466f96a9818c2` |
 
 設定JSON、集計JSON、不採用記録、生成・検証スクリプトはZIPへ入れず、通常のファイルとしてGitで管理する。
 
@@ -60,6 +61,7 @@ unzip data/archives/multi_operation_python_code_candidates_2026-09-20.zip -d .
 unzip data/archives/evaluation_python_code_candidates_2026-09-20.zip -d .
 unzip data/archives/rule_generated_train_instructions_2026-09-24.zip -d .
 unzip data/archives/rule_generated_evaluation_instructions_2026-09-24.zip -d .
+unzip data/archives/replacement_resolved_train_instructions_2026-09-25.zip -d data/instructions/
 ```
 
 展開後は次で、件数、保存済み検証結果、コード全文の完全重複を再確認できる。
