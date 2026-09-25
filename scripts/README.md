@@ -7,6 +7,7 @@
 ```bash
 uv sync --python 3.12.12
 uv sync --python 3.12.12 --group instruction-generation
+uv sync --python 3.12.12 --group tokenizer-training
 ```
 
 以降はシステムの`python`や`python3`を直接使わず、`uv run --python 3.12.12 python ...`を使う。`uv run`は`.venv/bin/python3`を自動的に選ぶため、手動activateは不要である。
@@ -20,6 +21,7 @@ scripts/
 ├── semantic_asts/    # 意味ASTの生成、抽出、分割
 ├── code_generation/  # Pythonコード候補の生成と結果文書の作成
 ├── instruction_generation/ # Qwen3による日本語候補生成と承認済み辞書作成
+├── tokenizer/        # BPE・Unigramトークナイザの訓練と全件検証
 └── validation/       # 参照インタプリタの検証
 ```
 
@@ -235,6 +237,44 @@ uv run --python 3.12.12 python \
 ```
 
 展開済み6 JSONLはローカル確認用であり、Gitへは追加しない。評価ZIPはvalidation、normal、compositional、paraphrase、repetition、boundaryの順で6メンバーを格納する。
+
+## トークナイザ訓練
+
+最終訓練ZIPの`instruction_ja`と`reference_code`だけを使い、BPEまたはUnigramの2,048語彙トークナイザを作る。評価データ、意味AST、ID、ハッシュ、検証情報は学習コーパスへ入れない。
+
+初回に専用依存を復元する。
+
+```bash
+uv sync --python 3.12.12 --group tokenizer-training
+```
+
+学習前にYAMLと入力ZIPのSHA-256・CRCだけを確認できる。
+
+```bash
+uv run --group tokenizer-training --python 3.12.12 python \
+  scripts/tokenizer/train_tokenizer.py \
+  --config config/tokenizer_bpe_2048.yaml \
+  --validate-config
+
+uv run --group tokenizer-training --python 3.12.12 python \
+  scripts/tokenizer/train_tokenizer.py \
+  --config config/tokenizer_unigram_2048.yaml \
+  --validate-config
+```
+
+実際に学習する場合は`--validate-config`を外す。
+
+```bash
+uv run --group tokenizer-training --python 3.12.12 python \
+  scripts/tokenizer/train_tokenizer.py \
+  --config config/tokenizer_bpe_2048.yaml
+
+uv run --group tokenizer-training --python 3.12.12 python \
+  scripts/tokenizer/train_tokenizer.py \
+  --config config/tokenizer_unigram_2048.yaml
+```
+
+出力済みディレクトリを意図的に再生成する場合だけ`--overwrite`を追加する。パラメータ、コーパス分離、比較条件、採用基準は[`tokenizer_training_policy.md`](../docs/policies/tokenizer_training_policy.md)に従う。
 
 ## 検証
 

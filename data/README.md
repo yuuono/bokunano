@@ -7,6 +7,7 @@ data/
 ├── semantic_asts/                  # Pythonコード生成前の意味AST
 ├── instructions/                   # 日本語指示の生成物と集計
 ├── final/                          # 最終訓練レコードの集計、テスト参照、不採用コード
+├── tokenizers/                     # BPE・Unigramトークナイザと訓練集計
 ├── evaluation_inputs/              # validation・hidden・boundaryの評価入力
 ├── archives/                       # Git管理する大容量JSONLのZIP
 └── code_candidates/
