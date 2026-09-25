@@ -157,10 +157,11 @@ uv run --python 3.12.12 python scripts/instruction_generation/report_pre_join_di
   --multi-operation-code-archive data/archives/multi_operation_python_code_candidates_2026-09-20.zip \
   --output-json data/instructions/pre_join_distribution_stats.json \
   --output-md docs/results/pre_join_distribution_report.md \
+  --output-by-ast-jsonl data/instructions/pre_join_distribution_by_ast.jsonl \
   --report-date 2026-09-25
 ```
 
-この検査では、承認済み言い換えの`source_instruction_id`、`spec_id`、意味ASTを元指示と照合し、教師生成に失敗した70件を元文維持として数える。さらに、単一・2・3操作の検証済みコードを照合し、意味ASTごとの置換後指示数とコード数を報告する。
+この検査では、承認済み言い換えの`source_instruction_id`、`spec_id`、意味ASTを元指示と照合し、教師生成に失敗した70件を元文維持として数える。さらに、単一・2・3操作の検証済みコードを照合し、意味ASTごとの置換後指示数とコード数を報告する。`pre_join_distribution_by_ast.jsonl`には、全9,646意味ASTの指示数、教師置換成功数、失敗数、コード数を一件ずつ保存する。
 
 ## 検証
 

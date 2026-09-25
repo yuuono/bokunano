@@ -51,6 +51,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-json", required=True, type=Path)
     # 人が確認するMarkdownレポートの保存先を受け取る
     parser.add_argument("--output-md", required=True, type=Path)
+    # 全意味ASTの件数を一行ずつ保存する明細JSONLの保存先を受け取る
+    parser.add_argument("--output-by-ast-jsonl", required=True, type=Path)
     # レポートに記録する基準日を受け取る
     parser.add_argument("--report-date", required=True)
     # 既存成果物を意図的に置き換える場合だけ使う
@@ -477,6 +479,8 @@ def build_summary(
     by_operation_count: dict[str, dict[str, int]] = {}
     # 20件未満の意味AST一覧を作る
     under_twenty: list[dict[str, Any]] = []
+    # 教師置換成功が10件未満の意味AST一覧を作る
+    teacher_replacement_shortfalls: list[dict[str, Any]] = []
     # 全意味ASTをID順に処理する
     for spec_id in sorted(specs):
         # この意味ASTの集計を取得する
@@ -547,6 +551,22 @@ def build_summary(
                     "instruction_shortfall": spec["code_count"] - final_count,
                 }
             )
+        # 教師置換成功が10件未満の意味ASTを詳細一覧へ追加する
+        if spec["teacher_replacement_count"] < teacher_stats["source_instructions_per_ast"]:
+            # 教師置換不足の明細を追加する
+            teacher_replacement_shortfalls.append(
+                {
+                    "spec_id": spec_id,
+                    "operation_count": spec["operation_count"],
+                    "semantic_ast": spec["semantic_ast"],
+                    "teacher_selected_count": (
+                        spec["teacher_replacement_count"] + spec["teacher_failure_count"]
+                    ),
+                    "teacher_replacement_count": spec["teacher_replacement_count"],
+                    "teacher_failure_count": spec["teacher_failure_count"],
+                    "final_instruction_count": final_count,
+                }
+            )
     # 全体のルール生成指示数を計算する
     total_rule = sum(spec["rule_instruction_count"] for spec in specs.values())
     # 全体の教師置換成功数を計算する
@@ -563,6 +583,11 @@ def build_summary(
     if code_count != sum(spec["code_count"] for spec in specs.values()):
         # コード集計の不整合を拒否する
         raise ValueError("コード総数と意味AST別コード数の合計が一致しません")
+    # 教師置換成功数と意味AST IDの順で不足一覧を並べる
+    teacher_replacement_shortfalls.sort(
+        # 置換成功数を優先し、同数なら意味AST IDで並べる
+        key=lambda item: (item["teacher_replacement_count"], item["spec_id"])
+    )
     # 機械可読な集計を組み立てる
     return {
         "report_date": report_date,
@@ -591,7 +616,40 @@ def build_summary(
         },
         "by_operation_count": by_operation_count,
         "under_twenty_instruction_asts": under_twenty,
+        "teacher_replacement_shortfall_asts": teacher_replacement_shortfalls,
     }
+
+
+# この工程を担当する関数を定義する
+def build_by_ast_records(specs: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    """全意味ASTの結合前件数をID順の明細レコードへ変換する。"""
+
+    # 全意味ASTの明細を保存する配列を作る
+    records: list[dict[str, Any]] = []
+    # 意味AST ID順に処理する
+    for spec_id in sorted(specs):
+        # 集計済み意味ASTを取得する
+        spec = specs[spec_id]
+        # 一件分の明細を追加する
+        records.append(
+            {
+                "spec_id": spec_id,
+                "semantic_ast": spec["semantic_ast"],
+                "operation_count": spec["operation_count"],
+                "rule_instruction_count": spec["rule_instruction_count"],
+                "teacher_selected_count": (
+                    spec["teacher_replacement_count"] + spec["teacher_failure_count"]
+                ),
+                "teacher_replacement_count": spec["teacher_replacement_count"],
+                "teacher_failure_count": spec["teacher_failure_count"],
+                "retained_rule_count": spec["retained_rule_count"],
+                "final_instruction_count": spec["final_instruction_count"],
+                "code_count": spec["code_count"],
+                "instruction_minus_code": spec["instruction_minus_code"],
+            }
+        )
+    # ID順の全明細を返す
+    return records
 
 
 # この工程を担当する関数を定義する
@@ -642,6 +700,19 @@ def render_markdown(summary: dict[str, Any]) -> str:
         # 教師置換成功数のヒストグラムを渡す
         summary["distribution"]["teacher_replacements_per_ast"]
     )
+    # 教師置換成功が10件未満の意味AST表を作る
+    replacement_shortfall_rows: list[str] = []
+    # 成功数、意味AST ID順の不足一覧を処理する
+    for item in summary["teacher_replacement_shortfall_asts"]:
+        # 意味AST本体を一行JSONへ変換する
+        semantic_ast = canonical_json(item["semantic_ast"])
+        # 教師置換不足の一行を追加する
+        replacement_shortfall_rows.append(
+            # ID、意味AST、操作数、選抜、成功、失敗、最終指示数を表示する
+            f"| `{item['spec_id']}` | `{semantic_ast}` | {item['operation_count']} | "
+            f"{item['teacher_selected_count']} | {item['teacher_replacement_count']} | "
+            f"{item['teacher_failure_count']} | {item['final_instruction_count']} |"
+        )
     # 置換後指示数分布の表を作る
     final_rows = markdown_histogram_rows(
         # 最終指示数のヒストグラムを渡す
@@ -727,6 +798,10 @@ def render_markdown(summary: dict[str, Any]) -> str:
         *final_rows,
         # 段落間の空行を追加する
         "",
+        # 分布と意味ASTの対応先を説明する
+        "このうち20件未満の6意味ASTは次節にすべて示す。20件の9,640意味ASTを含む全件の対応は`data/instructions/pre_join_distribution_by_ast.jsonl`に保存する。",
+        # 段落間の空行を追加する
+        "",
         # 不足一覧の節を追加する
         "## 5. 20件未満の意味AST",
         # 見出し後の空行を追加する
@@ -759,6 +834,22 @@ def render_markdown(summary: dict[str, Any]) -> str:
         *replacement_rows,
         # 段落間の空行を追加する
         "",
+        # 置換不足一覧の小見出しを追加する
+        "### 教師置換成功が10件未満の意味AST",
+        # 見出し後の空行を追加する
+        "",
+        # 一覧の範囲を説明する
+        "成功数7〜9件の60意味ASTを次にすべて示す。成功数10件の9,586意味ASTを含む全件の対応は`data/instructions/pre_join_distribution_by_ast.jsonl`で確認できる。",
+        # 段落間の空行を追加する
+        "",
+        # 教師置換不足表のヘッダーを追加する
+        "| spec_id | semantic_ast | 操作数 | 選抜 | 置換成功 | 失敗・元文維持 | 置換後指示 |",
+        # 区切り行を追加する
+        "|---|---|---:|---:|---:|---:|---:|",
+        # 教師置換不足行を展開する
+        *replacement_shortfall_rows,
+        # 段落間の空行を追加する
+        "",
         # 結論の節を追加する
         "## 7. 結合方針への結論",
         # 見出し後の空行を追加する
@@ -784,13 +875,17 @@ def write_outputs(
     output_json: Path,
     # Markdownの保存先を受け取る
     output_md: Path,
+    # 全意味AST明細JSONLの保存先を受け取る
+    output_by_ast_jsonl: Path,
+    # 全意味AST明細を受け取る
+    by_ast_records: list[dict[str, Any]],
     # 上書き可否を受け取る
     overwrite: bool,
 ) -> None:
     """検証済み集計をJSONとMarkdownへ保存する。"""
 
     # 作成対象をまとめる
-    outputs = (output_json, output_md)
+    outputs = (output_json, output_md, output_by_ast_jsonl)
     # 既存出力を抽出する
     existing = [str(path) for path in outputs if path.exists()]
     # 明示的な上書き指定なしでは既存成果物を保護する
@@ -801,6 +896,8 @@ def write_outputs(
     output_json.parent.mkdir(parents=True, exist_ok=True)
     # Markdown保存先ディレクトリを作る
     output_md.parent.mkdir(parents=True, exist_ok=True)
+    # 全意味AST明細保存先ディレクトリを作る
+    output_by_ast_jsonl.parent.mkdir(parents=True, exist_ok=True)
     # 集計JSONを読みやすい形式で保存する
     output_json.write_text(
         # 非ASCII文字を保持し、キー順を固定したJSONへ変換する
@@ -810,6 +907,13 @@ def write_outputs(
     )
     # Markdownレポートを保存する
     output_md.write_text(render_markdown(summary), encoding="utf-8")
+    # 全意味AST明細を一行一objectのJSONLとして保存する
+    output_by_ast_jsonl.write_text(
+        # キー順と空白を固定したJSONを改行で連結する
+        "".join(canonical_json(record) + "\n" for record in by_ast_records),
+        # UTF-8で保存する
+        encoding="utf-8",
+    )
 
 
 # この工程を担当する関数を定義する
@@ -851,6 +955,8 @@ def main() -> None:
     )
     # 置換後指示とコードの分布を作る
     summary = build_summary(specs, teacher_stats, code_count, args.report_date)
+    # 全意味ASTの明細レコードを作る
+    by_ast_records = build_by_ast_records(specs)
     # 集計JSONとMarkdownを保存する
     write_outputs(
         # 検証済み集計を渡す
@@ -859,6 +965,10 @@ def main() -> None:
         args.output_json.resolve(),
         # Markdownの絶対パスを渡す
         args.output_md.resolve(),
+        # 全意味AST明細JSONLの絶対パスを渡す
+        args.output_by_ast_jsonl.resolve(),
+        # 全意味AST明細を渡す
+        by_ast_records,
         # 上書き可否を渡す
         args.overwrite,
     )
