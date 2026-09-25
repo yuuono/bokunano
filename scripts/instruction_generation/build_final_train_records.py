@@ -581,7 +581,7 @@ def validate_final_record(record: dict[str, Any]) -> None:
 
 # 決定的ZIPを作る関数を定義する
 def write_deterministic_zip(source_path: Path, archive_path: Path) -> None:
-    """固定メタデータと圧縮レベル9で最終JSONLをZIPへ格納する。"""
+    """固定メタデータとLZMA圧縮で最終JSONLをZIPへ格納する。"""
 
     # ZIP内メンバー情報を作る
     member = zipfile.ZipInfo(ARCHIVE_MEMBER, date_time=ZIP_TIMESTAMP)
@@ -589,14 +589,13 @@ def write_deterministic_zip(source_path: Path, archive_path: Path) -> None:
     member.create_system = 3
     # 通常ファイルの0644権限を固定する
     member.external_attr = 0o100644 << 16
-    # deflate圧縮を指定する
-    member.compress_type = zipfile.ZIP_DEFLATED
+    # GitHubの単一ファイル上限内へ収めるため標準LZMA圧縮を指定する
+    member.compress_type = zipfile.ZIP_LZMA
     # ZIP64対応で新規ZIPを開く
     with zipfile.ZipFile(
         archive_path,
         mode="w",
-        compression=zipfile.ZIP_DEFLATED,
-        compresslevel=9,
+        compression=zipfile.ZIP_LZMA,
         allowZip64=True,
     ) as archive:
         # ZIP内メンバーを書込み用に開く
