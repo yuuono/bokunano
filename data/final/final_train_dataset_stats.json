@@ -1,0 +1,159 @@
+{
+  "archive": "/home/ono_yusuke/my_git/bokunano/data/archives/final_train_dataset_records_2026-09-25.zip",
+  "archive_bytes": 79184641,
+  "archive_member": "final_dataset_records.jsonl",
+  "archive_sha256": "799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807",
+  "counts_by_code_style": {
+    "expression_comprehension": 4458,
+    "mixed": 95043,
+    "staged_comprehension": 66058,
+    "staged_loop": 27341
+  },
+  "counts_by_instruction_source": {
+    "rule": 96510,
+    "teacher": 96390
+  },
+  "counts_by_operation_count": {
+    "1": 460,
+    "2": 8680,
+    "3": 183760
+  },
+  "counts_by_replacement_status": {
+    "rule_retained": 96510,
+    "teacher_replaced": 96390
+  },
+  "generator_version": "1",
+  "input_code_count": 192920,
+  "input_sha256_after": {
+    "instructions": "a33ec7d4cf9a7e14581113dbbf85266ce8c55796db9e947ebf2f9f7959cef73b",
+    "multi_operation_code_archive": "369fb2175c715f15c6c7aeccd6d3ce96191404dac4537da8d72774e52d862a8e",
+    "single_operation_codes": "885da0686230e80e08ee79f671f33f3d6ee952976d79ce50dad7ce4c99e8cca6"
+  },
+  "input_sha256_before": {
+    "instructions": "a33ec7d4cf9a7e14581113dbbf85266ce8c55796db9e947ebf2f9f7959cef73b",
+    "multi_operation_code_archive": "369fb2175c715f15c6c7aeccd6d3ce96191404dac4537da8d72774e52d862a8e",
+    "single_operation_codes": "885da0686230e80e08ee79f671f33f3d6ee952976d79ce50dad7ce4c99e8cca6"
+  },
+  "inputs": {
+    "instructions": "/home/ono_yusuke/my_git/bokunano/data/instructions/replacement_resolved_train_instructions.jsonl",
+    "multi_operation_code_archive": "/home/ono_yusuke/my_git/bokunano/data/archives/multi_operation_python_code_candidates_2026-09-20.zip",
+    "single_operation_codes": "/home/ono_yusuke/my_git/bokunano/data/code_candidates/single_operation/python_code_candidates.jsonl"
+  },
+  "instruction_count": 192900,
+  "output_jsonl": "/home/ono_yusuke/my_git/bokunano/data/final/final_dataset_records.jsonl",
+  "output_jsonl_bytes": 742098087,
+  "output_jsonl_sha256": "48f378c8d303d7c8faf3a8a1b98c8b42ead7e0ae5cd2188bf3f5ba31a3f2cdac",
+  "output_record_count": 192900,
+  "pairing_seed": 20260925,
+  "pairing_strategy": "source_order_with_balanced_code_style_shortfall_selection",
+  "phase": "final_train_record_join",
+  "records_per_semantic_ast_distribution": {
+    "11": 1,
+    "16": 1,
+    "17": 1,
+    "18": 1,
+    "19": 2,
+    "20": 9640
+  },
+  "rejected_code_count": 20,
+  "rejected_codes": "/home/ono_yusuke/my_git/bokunano/data/final/rejected_train_code_candidates.jsonl",
+  "rejected_codes_bytes": 29298,
+  "rejected_codes_sha256": "a73d292376d391e09e4065fd0701a80ceb529c2fc8c5942ad8ba7177c75c4aa8",
+  "selected_code_count": 192900,
+  "semantic_ast_count": 9646,
+  "shortfall_semantic_asts": [
+    {
+      "code_count": 20,
+      "instruction_count": 11,
+      "rejected_code_count": 9,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "zero"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000010"
+    },
+    {
+      "code_count": 20,
+      "instruction_count": 16,
+      "rejected_code_count": 4,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "multiple_of_k"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000007"
+    },
+    {
+      "code_count": 20,
+      "instruction_count": 18,
+      "rejected_code_count": 2,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "negative"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000009"
+    },
+    {
+      "code_count": 20,
+      "instruction_count": 19,
+      "rejected_code_count": 1,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "negate"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000016"
+    },
+    {
+      "code_count": 20,
+      "instruction_count": 17,
+      "rejected_code_count": 3,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "ascending"
+          }
+        ]
+      },
+      "spec_id": "combined-000019"
+    },
+    {
+      "code_count": 20,
+      "instruction_count": 19,
+      "rejected_code_count": 1,
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "spec_id": "combined-000008"
+    }
+  ],
+  "source_inputs_unchanged": true,
+  "test_case_count": 41,
+  "test_set_id": "build-verification-v1-seed-0-boundary-9-random-32",
+  "test_set_manifest": "/home/ono_yusuke/my_git/bokunano/data/final/build_verification_test_set.json",
+  "test_set_manifest_sha256": "72373d2dffce5adf01f83e0855572b0438308014eeb403dc8413f8cbc2090b32"
+}
