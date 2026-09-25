@@ -17,13 +17,22 @@ import json
 import os
 # 入出力パスを扱うために使う
 from pathlib import Path
+# ファイル指定実行時にリポジトリ直下をimport探索先へ加えるために使う
+import sys
 # 任意のJSON値とiteratorの型注釈に使う
 from typing import Any, Iterable, Iterator, TextIO
 # 入力ZIPの読込みと評価成果物ZIPの作成に使う
 import zipfile
 
+# このファイルから見たリポジトリ直下を取得する
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+# ファイル指定実行でもscriptsパッケージを読み込めるようにする
+if str(PROJECT_ROOT) not in sys.path:
+    # リポジトリ直下を探索順の先頭へ追加する
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 # 訓練最終結合と同じ正規化・ハッシュ規則を再利用する
-from scripts.instruction_generation.build_final_train_records import (
+from scripts.instruction_generation.build_final_train_records import (  # noqa: E402
     canonical_json,
     file_sha256,
     grouped_by_spec,
