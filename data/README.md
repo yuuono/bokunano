@@ -69,6 +69,7 @@ data/
 | `archives/rule_generated_evaluation_instructions_2026-09-24.zip` | validation・normal・compositional・repetitionの全文日本語指示 | 1 | 84,520件 | `1a9e25807c2921359f308fb4951faabf13c9fbb9fbd1f0e5e7019f8be6f6ed3b` |
 | `archives/replacement_resolved_train_instructions_2026-09-25.zip` | 教師言い換えを一対一置換したtrain指示 | 1 | 192,900件 | `7a90b24796e7ef2ad9d9510168e734df7556b18faa092a00f81466f96a9818c2` |
 | `archives/final_train_dataset_records_2026-09-25.zip` | 日本語指示と検証済みコードを一対一結合した最終trainレコード | 1 | 192,900件 | `799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807` |
+| `archives/final_evaluation_dataset_records_2026-09-25.zip` | 6集合の最終評価レコード | 6 | 108,590件 | `5b05b76202920f532cb379481d1cfab4adad74e936bdff518cb8b1750b33f0a1` |
 
 設定JSON、集計JSON、不採用記録、共有テスト集合、生成・検証スクリプトはZIPへ入れず、通常のファイルとしてGitで管理する。最終訓練ZIPはBZIP2方式で圧縮している。
 
@@ -82,6 +83,8 @@ unzip data/archives/rule_generated_evaluation_instructions_2026-09-24.zip -d .
 unzip data/archives/replacement_resolved_train_instructions_2026-09-25.zip -d data/instructions/
 mkdir -p data/final
 unzip data/archives/final_train_dataset_records_2026-09-25.zip -d data/final/
+mkdir -p data/final/evaluation
+unzip data/archives/final_evaluation_dataset_records_2026-09-25.zip -d data/final/evaluation/
 ```
 
 展開後は次で、件数、保存済み検証結果、コード全文の完全重複を再確認できる。
