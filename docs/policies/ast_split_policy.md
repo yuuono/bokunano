@@ -37,7 +37,7 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 | `paraphrase` | 24個の単独操作AST | テスト専用30表現 | 単独操作用hidden test入力 |
 | `compositional` | 選択した5操作対に基づく670件 | 訓練用表現辞書 | hidden test入力 |
 | `boundary` | `normal`と同じAST | 訓練用表現辞書 | 境界値入力 |
-| `repetition` | 同一操作が隣接する1,152件 | 未決定 | 未決定 |
+| `repetition` | 同一操作が隣接する1,152件 | 訓練用表現辞書 | repetition専用hidden入力 |
 
 `normal`と`boundary`で同じ意味ASTを使うのは意図的である。2集合の差を実行入力だけにすることで、通常テストからの性能低下が境界値入力によるものかを切り分ける。
 
@@ -251,7 +251,8 @@ test_suite: normal | paraphrase | compositional | boundary | repetition
 
 - 同一操作が隣接する2操作24件、3操作1,128件の合計1,152件を使用する
 - 現在の12,720件とは別に`data/semantic_asts/repetition_semantic_asts.jsonl`へ生成済み
-- 日本語表現と実行入力の方針はまだ決定していない
+- 訓練用表現辞書を使用し、日本語表現を新しい評価軸にしない
+- repetition専用hidden入力を使用し、他の評価集合と入力を共有しない
 
 反復テストの詳細は[反復汎化テストの方針](repetition_generalization_test_policy.md)で定める。
 
@@ -301,9 +302,6 @@ input_set:  build | hidden | boundary
 2. 訓練データ内に完全に同じコードが複数残っていない
 3. 除外した各レコードについて、理由、コードハッシュ、対応するテストIDが記録されている
 
-## 現時点で確定していないもの
+## 評価入力の確定
 
-- `repetition`で使用する日本語表現辞書
-- `repetition`で使用する実行入力集合
-
-これらは該当するデータ生成を始める前に決定する。
+validationと5種類のテスト集合で使用する入力の件数、seed、集合間分離、boundary固有ケースは、[評価入力の生成・分離方針](evaluation_input_policy.md)で定める。

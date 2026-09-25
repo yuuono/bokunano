@@ -19,6 +19,7 @@ docs/
 - [`policies/data_record_policy.md`](policies/data_record_policy.md): データレコードと選抜
 - [`policies/japanese_paraphrase_test_policy.md`](policies/japanese_paraphrase_test_policy.md): 人手選定した未学習表現による日本語言い換えテスト
 - [`policies/rule_generated_instruction_policy.md`](policies/rule_generated_instruction_policy.md): 承認済み表現と意味ASTから全文指示を決定的に作る方針
+- [`policies/evaluation_input_policy.md`](policies/evaluation_input_policy.md): validation・hidden・boundary評価入力の生成と分離
 
 ## 手順
 

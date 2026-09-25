@@ -202,6 +202,16 @@ uv run --python 3.12.12 python \
 
 最終JSONLを格納するZIPは、全来歴を保持したままGitHubの単一ファイル上限内へ収め、一般的な`unzip`でも扱えるよう、BZIP2方式で決定的に圧縮する。
 
+### 評価入力6集合の生成
+
+```bash
+uv run --python 3.12.12 python \
+  scripts/validation/generate_evaluation_input_sets.py \
+  --config config/evaluation_input_generation.json
+```
+
+validation用build入力64件、normal・compositional・paraphrase・repetition用の相互に分離したhidden入力各64件、boundary共通30件と抽出AST固有ケースを作る。訓練コード検証の41入力との完全一致を除外し、全対象意味ASTを参照インタプリタで実行して、入力不変と整数リスト出力を確認する。詳細は[`evaluation_input_policy.md`](../docs/policies/evaluation_input_policy.md)に記録する。
+
 ## 検証
 
 ```bash
