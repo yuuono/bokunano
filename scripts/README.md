@@ -8,6 +8,7 @@
 uv sync --python 3.12.12
 uv sync --python 3.12.12 --group instruction-generation
 uv sync --python 3.12.12 --group tokenizer-training
+uv sync --python 3.12.12 --group model-training
 ```
 
 以降はシステムの`python`や`python3`を直接使わず、`uv run --python 3.12.12 python ...`を使う。`uv run`は`.venv/bin/python3`を自動的に選ぶため、手動activateは不要である。
@@ -22,6 +23,7 @@ scripts/
 ├── code_generation/  # Pythonコード候補の生成と結果文書の作成
 ├── instruction_generation/ # Qwen3による日本語候補生成と承認済み辞書作成
 ├── tokenizer/        # BPE・Unigramトークナイザの訓練と全件検証
+├── model/            # Boku-nanoのモデル定義と本学習
 └── validation/       # 参照インタプリタの検証
 ```
 
@@ -275,6 +277,35 @@ uv run --group tokenizer-training --python 3.12.12 python \
 ```
 
 出力済みディレクトリを意図的に再生成する場合だけ`--overwrite`を追加する。パラメータ、コーパス分離、比較条件、採用基準は[`tokenizer_training_policy.md`](../docs/policies/tokenizer_training_policy.md)に従う。
+
+## Boku-nano本学習
+
+固定済みBPE 2,048語彙と最終訓練レコード192,900件から、15,735,168 parameterのDecoder-only Transformerをランダム初期値で3 epoch学習する。日本語promptはcontextとして入力し、`<|code|>`直後からPythonコードと`<|eos|>`だけを損失対象にする。
+
+依存環境を復元する。
+
+```bash
+uv sync --python 3.12.12 --group model-training
+```
+
+固定artifactとモデルparameter数だけを先に検査する。
+
+```bash
+uv run --group model-training --python 3.12.12 python \
+  scripts/model/train_boku_nano.py \
+  --config config/boku_nano_bpe_2048.yaml \
+  --validate-config
+```
+
+RTX 5090で本学習する。
+
+```bash
+uv run --group model-training --python 3.12.12 python \
+  scripts/model/train_boku_nano.py \
+  --config config/boku_nano_bpe_2048.yaml
+```
+
+各epoch終了後にvalidation 24,040件だけでlossを測る。normal、compositional、paraphrase、repetition、boundaryは学習中に使用しない。モデル構造、optimizer、保存物、再開方法は[`boku_nano_training_policy.md`](../docs/policies/boku_nano_training_policy.md)に従う。
 
 ## 検証
 

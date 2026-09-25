@@ -204,6 +204,12 @@ instruction-generation = [
     { name = "torch" },
     { name = "transformers" },
 ]
+model-training = [
+    { name = "pyyaml" },
+    { name = "safetensors" },
+    { name = "tokenizers" },
+    { name = "torch" },
+]
 tokenizer-training = [
     { name = "pyyaml" },
     { name = "tokenizers" },
@@ -218,6 +224,12 @@ instruction-generation = [
     { name = "autoawq", specifier = "==0.2.9" },
     { name = "torch", specifier = "==2.13.0" },
     { name = "transformers", specifier = "==4.51.3" },
+]
+model-training = [
+    { name = "pyyaml", specifier = "==6.0.3" },
+    { name = "safetensors", specifier = "==0.8.0" },
+    { name = "tokenizers", specifier = "==0.21.4" },
+    { name = "torch", specifier = "==2.13.0" },
 ]
 tokenizer-training = [
     { name = "pyyaml", specifier = "==6.0.3" },

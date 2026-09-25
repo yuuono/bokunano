@@ -42,3 +42,6 @@ data/instructions/approved_teacher_paraphrases.jsonl
 data/instructions/replacement_resolved_train_instructions.jsonl
 data/final/final_dataset_records.jsonl
 data/final/evaluation/*.jsonl
+
+# 本学習の重み、optimizer checkpoint、metricsは大容量の実行成果物なのでGitへ追加しない。
+data/models/

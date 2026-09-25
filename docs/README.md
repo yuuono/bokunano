@@ -21,6 +21,7 @@ docs/
 - [`policies/rule_generated_instruction_policy.md`](policies/rule_generated_instruction_policy.md): 承認済み表現と意味ASTから全文指示を決定的に作る方針
 - [`policies/evaluation_input_policy.md`](policies/evaluation_input_policy.md): validation・hidden・boundary評価入力の生成と分離
 - [`policies/tokenizer_training_policy.md`](policies/tokenizer_training_policy.md): 訓練データ限定のBPE・Unigram共通語彙作成と比較方針
+- [`policies/boku_nano_training_policy.md`](policies/boku_nano_training_policy.md): BPE 2,048語彙と約1,600万parameterモデルによる3 epoch本学習方針
 
 ## 手順
 
