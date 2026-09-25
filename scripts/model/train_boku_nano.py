@@ -75,6 +75,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", required=True, type=Path)
     # 実験時だけ成果物ディレクトリを差し替えられるようにする
     parser.add_argument("--output-dir", type=Path)
+    # 設定YAMLを変更せずepoch数だけを明示的に差し替える
+    parser.add_argument("--epochs", type=int)
     # 構成と固定成果物だけを検査して終了する選択肢を用意する
     parser.add_argument("--validate-config", action="store_true")
     # 短いsmoke testだけに使う最大optimizer step数を受け取る
@@ -845,7 +847,9 @@ def append_metric(path: Path, metric: dict[str, Any]) -> None:
 
 # 設定と固定成果物だけを検査する
 def validate_configuration(
-    config_path: Path, output_override: Path | None
+    config_path: Path,
+    output_override: Path | None,
+    epochs_override: int | None = None,
 ) -> dict[str, Any]:
     """本学習前にモデル規模、tokenizer、訓練ZIPを照合する。"""
 
@@ -857,6 +861,12 @@ def validate_configuration(
         config["output"] = dict(config["output"])
         # 実行時出力先を保存する
         config["output"]["directory"] = str(output_override)
+    # CLIでepoch数が指定された場合はtraining sectionだけをcopyして反映する
+    if epochs_override is not None:
+        # 元設定辞書を変更しないようcopyする
+        config["training"] = dict(config["training"])
+        # 実行時epoch数を設定する
+        config["training"]["epochs"] = epochs_override
     # モデル設定を検証する
     model_config = BokuNanoConfig.from_dict(config["model"])
     # tokenizer固定条件を検証する
@@ -891,6 +901,7 @@ def validate_configuration(
         "output_directory": display_path(configured_path(config["output"]["directory"])),
         "model_config": model_config.to_dict(),
         "parameter_count": parameter_count,
+        "epochs": int(config["training"]["epochs"]),
         "tokenizer_sha256": tokenizer_sha256,
         "tokenizer_special_ids": special_ids,
         "source_archive": display_path(archive_path),
@@ -907,11 +918,12 @@ def train(
     overwrite: bool,
     resume_from: Path | None,
     max_steps_override: int | None,
+    epochs_override: int | None,
 ) -> dict[str, Any]:
     """データ全件を3 epoch学習し、checkpointとmanifestを保存する。"""
 
     # 設定と固定成果物を先に検証する
-    validate_configuration(config_path, output_override)
+    validate_configuration(config_path, output_override, epochs_override)
     # YAMLをもう一度読み込む
     config = load_config(config_path)
     # CLI出力先があれば実行設定へ反映する
@@ -920,6 +932,12 @@ def train(
         config["output"] = dict(config["output"])
         # 実行時出力先を保存する
         config["output"]["directory"] = str(output_override)
+    # CLIでepoch数が指定された場合は本学習設定へ反映する
+    if epochs_override is not None:
+        # training sectionをcopyする
+        config["training"] = dict(config["training"])
+        # 3 epoch設定を今回の指定値だけ差し替える
+        config["training"]["epochs"] = epochs_override
     # 出力先を解決する
     output_dir = configured_path(config["output"]["directory"])
     # 既存成果物を保護しながら出力先を準備する
@@ -1336,10 +1354,14 @@ def main() -> None:
     if args.max_steps is not None and args.max_steps <= 0:
         # CLI利用誤りを示す
         raise ValueError("--max-stepsは正の整数にしてください")
+    # epoch数の不正値を早期に拒否する
+    if args.epochs is not None and args.epochs <= 0:
+        # CLI利用誤りを示す
+        raise ValueError("--epochsは正の整数にしてください")
     # 設定検査だけならGPU学習と全件token化を行わない
     if args.validate_config:
         # 固定成果物とモデル構造を検証する
-        result = validate_configuration(args.config, args.output_dir)
+        result = validate_configuration(args.config, args.output_dir, args.epochs)
     # 通常時は本学習を実行する
     else:
         # 全件をtoken化して学習する
@@ -1349,6 +1371,7 @@ def main() -> None:
             overwrite=args.overwrite,
             resume_from=args.resume_from,
             max_steps_override=args.max_steps,
+            epochs_override=args.epochs,
         )
     # 最終結果を読みやすいJSONで表示する
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))

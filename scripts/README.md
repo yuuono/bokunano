@@ -305,6 +305,14 @@ uv run --group model-training --python 3.12.12 python \
   --config config/boku_nano_bpe_2048.yaml
 ```
 
+3 epoch checkpointへ継ぎ足さず、学習率scheduleを10 epoch用に最初から組む追加実験は専用scriptでbackground実行する。
+
+```bash
+scripts/model/run_boku_nano_10epoch_nohup.sh
+```
+
+10 epoch結果は`data/models/boku_nano_bpe_2048_10epoch/`、console logは`data/models/boku_nano_bpe_2048_10epoch_console.log`へ分離する。
+
 各epoch終了後にvalidation 24,040件だけでlossを測る。normal、compositional、paraphrase、repetition、boundaryは学習中に使用しない。モデル構造、optimizer、保存物、再開方法は[`boku_nano_training_policy.md`](../docs/policies/boku_nano_training_policy.md)に従う。
 
 ## 検証
