@@ -212,6 +212,8 @@ uv run --python 3.12.12 python \
 
 validation用build入力64件、normal・compositional・paraphrase・repetition用の相互に分離したhidden入力各64件、boundary共通30件と抽出AST固有ケースを作る。訓練コード検証の41入力との完全一致を除外し、全対象意味ASTを参照インタプリタで実行して、入力不変と整数リスト出力を確認する。詳細は[`evaluation_input_policy.md`](../docs/policies/evaluation_input_policy.md)に記録する。
 
+2026年9月25日の実行件数、成果物SHA-256、filter全不合格へ到達不能な12 ASTは、[`evaluation_input_generation_results.md`](../docs/results/evaluation_input_generation_results.md)に記録する。
+
 ## 検証
 
 ```bash

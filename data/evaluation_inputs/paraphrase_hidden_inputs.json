@@ -1,0 +1,1277 @@
+{
+  "algorithm": "stratified_random_integer_list_v1",
+  "case_count": 64,
+  "cases": [
+    {
+      "case_id": "paraphrase-case-001",
+      "k": 6,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -82,
+        88,
+        6,
+        73,
+        -98,
+        -87
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-002",
+      "k": 5,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        5,
+        4,
+        6,
+        30,
+        54
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-003",
+      "k": 10,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -10,
+        10,
+        11,
+        -80,
+        -61,
+        -77,
+        100,
+        -40,
+        -1,
+        -17,
+        -76,
+        -50,
+        82,
+        14,
+        -88,
+        -55,
+        -68
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-004",
+      "k": 1,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -6,
+        -6,
+        100,
+        -98,
+        54,
+        -1
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-005",
+      "k": 4,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -48,
+        18,
+        79,
+        36,
+        -85,
+        -44,
+        52,
+        -16,
+        -86,
+        0,
+        72,
+        -49,
+        -84,
+        70
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-006",
+      "k": 3,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -18,
+        -48,
+        -15,
+        21,
+        25,
+        -42,
+        62,
+        36,
+        13
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-007",
+      "k": 6,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        36,
+        98
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-008",
+      "k": 5,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        86,
+        78,
+        71,
+        66,
+        59,
+        28,
+        27,
+        25,
+        0,
+        -20,
+        -28,
+        -29,
+        -36,
+        -48,
+        -60,
+        -71
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-009",
+      "k": 10,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -56,
+        84,
+        45,
+        71,
+        2,
+        -43,
+        3,
+        -82,
+        36,
+        -90
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-010",
+      "k": 7,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        7,
+        6,
+        8,
+        -96,
+        68,
+        47,
+        87,
+        94,
+        -33,
+        69,
+        -21,
+        61,
+        59,
+        -33,
+        -3,
+        30
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-011",
+      "k": 4,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -4,
+        4,
+        5,
+        26
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-012",
+      "k": 8,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        96,
+        96,
+        8,
+        -10,
+        -15,
+        -25,
+        20,
+        -59,
+        -79,
+        49,
+        -22,
+        -99
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-013",
+      "k": 8,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        55,
+        24
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-014",
+      "k": 6,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -21,
+        20,
+        20,
+        -73,
+        -88,
+        -53,
+        -33,
+        60
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-015",
+      "k": 10,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -93,
+        -61,
+        -39,
+        3,
+        98
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-016",
+      "k": 9,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        91,
+        85,
+        46,
+        31,
+        31,
+        -3,
+        -6,
+        -10,
+        -13,
+        -46,
+        -85,
+        -87,
+        -90
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-017",
+      "k": 9,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -17,
+        29,
+        0,
+        59,
+        -96,
+        -47,
+        -27,
+        97,
+        85,
+        -79
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-018",
+      "k": 4,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        4,
+        3,
+        5,
+        -50,
+        83,
+        -30
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-019",
+      "k": 10,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -10,
+        10
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-020",
+      "k": 9,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        1,
+        1,
+        -2,
+        52,
+        32,
+        -20,
+        -46,
+        40,
+        -85,
+        27,
+        -21,
+        -49,
+        -2,
+        8,
+        -33,
+        -72,
+        44,
+        -28
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-021",
+      "k": 9,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -75,
+        94
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-022",
+      "k": 8,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -58,
+        47,
+        35,
+        -25,
+        55,
+        -20,
+        -74,
+        -89,
+        8,
+        46
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-023",
+      "k": 6,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -62,
+        -50,
+        -8,
+        -3,
+        4,
+        50,
+        68,
+        78,
+        94
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-024",
+      "k": 3,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        -28,
+        -55
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-025",
+      "k": 3,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -86,
+        2
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-026",
+      "k": 8,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        8,
+        7,
+        9,
+        -71,
+        -45,
+        38
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-027",
+      "k": 4,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -4,
+        4,
+        5,
+        54,
+        14,
+        -28,
+        -82,
+        -56,
+        11,
+        45,
+        -75,
+        2,
+        27,
+        -87,
+        28,
+        64,
+        86,
+        -69,
+        -16,
+        78
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-028",
+      "k": 7,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -5,
+        -5,
+        -13,
+        -30,
+        -38,
+        -61,
+        3,
+        -90,
+        60,
+        17,
+        99,
+        -4,
+        58,
+        92,
+        -20,
+        46,
+        22,
+        -59,
+        1
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-029",
+      "k": 5,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -69,
+        41,
+        90,
+        -67,
+        11,
+        12,
+        -90,
+        -10,
+        66,
+        48,
+        -87,
+        -73,
+        64,
+        39
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-030",
+      "k": 3,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        36,
+        6,
+        88,
+        -75,
+        -52,
+        -67,
+        -58,
+        -53,
+        63,
+        10,
+        -71,
+        -47,
+        -47,
+        -46
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-031",
+      "k": 8,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -99,
+        -91,
+        -78,
+        -66,
+        -18,
+        -2,
+        1,
+        11,
+        17,
+        21,
+        29,
+        39,
+        43,
+        44,
+        49,
+        61,
+        66,
+        70,
+        73,
+        96
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-032",
+      "k": 6,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        59,
+        58,
+        48,
+        41,
+        39,
+        -3,
+        -12,
+        -17,
+        -24,
+        -69
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-033",
+      "k": 3,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -57,
+        -93,
+        -67,
+        -80,
+        -9,
+        30,
+        51
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-034",
+      "k": 4,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        4,
+        3,
+        5,
+        -90,
+        -16,
+        -23,
+        17,
+        -62,
+        -81,
+        -82,
+        -14,
+        94
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-035",
+      "k": 2,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -2,
+        2,
+        3,
+        -15,
+        44,
+        -64,
+        3,
+        65,
+        -15,
+        40,
+        59,
+        -81,
+        88,
+        85,
+        -48,
+        -80
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-036",
+      "k": 9,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        61,
+        61,
+        -78
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-037",
+      "k": 7,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        3,
+        26,
+        9
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-038",
+      "k": 1,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        56,
+        -96,
+        -34,
+        -60,
+        -26,
+        -9,
+        -94,
+        75,
+        -7,
+        31,
+        12,
+        -25,
+        -39,
+        91,
+        57,
+        15
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-039",
+      "k": 3,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -98,
+        -84,
+        -79,
+        -60,
+        -14,
+        9,
+        50,
+        72,
+        76
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-040",
+      "k": 1,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        61,
+        59,
+        23
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-041",
+      "k": 7,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -6,
+        5,
+        99,
+        66,
+        -10,
+        -59,
+        88,
+        65,
+        -52,
+        55,
+        18,
+        -66
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-042",
+      "k": 2,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        2,
+        1,
+        3,
+        -17,
+        -92,
+        -44,
+        -32,
+        -63,
+        -86,
+        92,
+        66,
+        47,
+        8,
+        -21,
+        42,
+        -76,
+        -75,
+        -30,
+        95
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-043",
+      "k": 2,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -2,
+        2
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-044",
+      "k": 1,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -37,
+        -37,
+        84,
+        66,
+        -72,
+        65,
+        -75
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-045",
+      "k": 4,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -10
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-046",
+      "k": 7,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -20,
+        33,
+        81,
+        26,
+        -15,
+        10,
+        84,
+        1
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-047",
+      "k": 1,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -100,
+        -93,
+        -81,
+        -53,
+        -52,
+        -48,
+        -37,
+        -15,
+        -13,
+        24,
+        38,
+        55,
+        62,
+        98
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-048",
+      "k": 9,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        96,
+        50,
+        -40
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-049",
+      "k": 9,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -11,
+        70,
+        77,
+        -36,
+        -29
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-050",
+      "k": 10,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        10,
+        9,
+        11,
+        -88
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-051",
+      "k": 2,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -2,
+        2,
+        3,
+        92,
+        52,
+        -29,
+        -80,
+        59,
+        49,
+        35,
+        -82,
+        86,
+        -48,
+        38,
+        -22
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-052",
+      "k": 6,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        74,
+        74,
+        6,
+        20,
+        50,
+        89,
+        -40,
+        62,
+        -20
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-053",
+      "k": 1,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        68,
+        -11,
+        55,
+        39,
+        -55
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-054",
+      "k": 1,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        75,
+        69,
+        -54,
+        -92,
+        67,
+        -3,
+        -48,
+        -84,
+        85,
+        -30,
+        -43,
+        -63,
+        -27,
+        -85,
+        -61,
+        -29
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-055",
+      "k": 4,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -98,
+        -89,
+        -87,
+        -79,
+        -49,
+        -42,
+        -41,
+        -37,
+        -27,
+        -16,
+        0,
+        12,
+        27,
+        40,
+        47,
+        76,
+        100
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-056",
+      "k": 4,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        24,
+        -17,
+        -34,
+        -94,
+        -98
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-057",
+      "k": 1,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -39,
+        -46,
+        67,
+        42,
+        77,
+        11,
+        -54,
+        -73,
+        -63,
+        -49,
+        -24
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-058",
+      "k": 6,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        6,
+        5,
+        7,
+        56,
+        11,
+        23,
+        -97,
+        -3,
+        -79,
+        50,
+        -52,
+        -75,
+        -99,
+        31,
+        33,
+        -13
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-059",
+      "k": 7,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -7,
+        7,
+        8,
+        -91,
+        89,
+        51,
+        14,
+        -96,
+        -59,
+        94
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-060",
+      "k": 1,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        33,
+        33,
+        66,
+        -30,
+        15,
+        66,
+        -98,
+        -19,
+        94,
+        26,
+        -37,
+        52,
+        56,
+        80,
+        44,
+        75
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-061",
+      "k": 9,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -17,
+        -36,
+        67,
+        -52,
+        -91
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-062",
+      "k": 6,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -36
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-063",
+      "k": 1,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -94,
+        -75,
+        -61,
+        -56,
+        -48,
+        -43,
+        -19,
+        16,
+        37,
+        60,
+        67
+      ]
+    },
+    {
+      "case_id": "paraphrase-case-064",
+      "k": 8,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        99,
+        98,
+        85,
+        75,
+        61,
+        53,
+        47,
+        29,
+        -11,
+        -13,
+        -14,
+        -17,
+        -17,
+        -21,
+        -23,
+        -82,
+        -87
+      ]
+    }
+  ],
+  "generator_version": "1",
+  "input_set": "hidden",
+  "name": "paraphrase",
+  "random_seed": 2026092604,
+  "reference": "reference_interpreter.py",
+  "split": "test",
+  "test_set_id": "paraphrase-hidden-v1-seed-2026092604-cases-64",
+  "test_suite": "paraphrase"
+}

@@ -43,6 +43,20 @@ data/
 
 日本語指示を結合した最終データは、作成時に`data/final/`へ保存する。
 
+## `evaluation_inputs`
+
+| ファイル | 内容 |
+|---|---|
+| `validation_inputs.json` | validation loss監視用のbuild入力64件 |
+| `normal_hidden_inputs.json` | 通常テスト専用hidden入力64件 |
+| `compositional_hidden_inputs.json` | 組合せ汎化テスト専用hidden入力64件 |
+| `paraphrase_hidden_inputs.json` | 24単独操作を評価する言い換えテスト専用hidden入力64件 |
+| `repetition_hidden_inputs.json` | 反復汎化テスト専用hidden入力64件 |
+| `boundary_inputs.json` | 共通境界30件、filter AST固有964件、到達不能12 ASTの記録 |
+| `evaluation_input_stats.json` | seed、参照実行数、重複検査、入力不変、SHA-256の集計 |
+
+各入力集合の方針は[`evaluation_input_policy.md`](../docs/policies/evaluation_input_policy.md)、実行結果は[`evaluation_input_generation_results.md`](../docs/results/evaluation_input_generation_results.md)を参照する。
+
 ## 大容量生成物のZIP
 
 2・3操作の`python_code_candidates.jsonl`と展開済み全文指示JSONLは容量が大きいため、Gitでは直接管理しない。Gitでは次のZIPを管理する。

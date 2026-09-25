@@ -1,0 +1,1310 @@
+{
+  "algorithm": "stratified_random_integer_list_v1",
+  "case_count": 64,
+  "cases": [
+    {
+      "case_id": "repetition-case-001",
+      "k": 5,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -86,
+        82,
+        94,
+        -35,
+        -73,
+        73,
+        -94,
+        -96,
+        57,
+        -11,
+        20,
+        88,
+        -73
+      ]
+    },
+    {
+      "case_id": "repetition-case-002",
+      "k": 8,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        8,
+        7,
+        9,
+        81,
+        -6,
+        53,
+        30,
+        73,
+        -27,
+        42,
+        -48,
+        21
+      ]
+    },
+    {
+      "case_id": "repetition-case-003",
+      "k": 7,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -7,
+        7,
+        8
+      ]
+    },
+    {
+      "case_id": "repetition-case-004",
+      "k": 9,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        51,
+        51
+      ]
+    },
+    {
+      "case_id": "repetition-case-005",
+      "k": 5,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -54,
+        -20,
+        -8,
+        -18,
+        31,
+        58,
+        -41,
+        -38,
+        53,
+        -83
+      ]
+    },
+    {
+      "case_id": "repetition-case-006",
+      "k": 5,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        27,
+        -70,
+        -96,
+        -90
+      ]
+    },
+    {
+      "case_id": "repetition-case-007",
+      "k": 2,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -68,
+        -64,
+        -35,
+        11,
+        26,
+        28,
+        29,
+        51,
+        95
+      ]
+    },
+    {
+      "case_id": "repetition-case-008",
+      "k": 7,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        58,
+        43,
+        38,
+        9,
+        -67,
+        -98
+      ]
+    },
+    {
+      "case_id": "repetition-case-009",
+      "k": 7,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -73,
+        6,
+        -13,
+        74,
+        -99,
+        87,
+        36,
+        28,
+        10,
+        56,
+        32,
+        31,
+        -38
+      ]
+    },
+    {
+      "case_id": "repetition-case-010",
+      "k": 8,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        8,
+        7,
+        9,
+        38
+      ]
+    },
+    {
+      "case_id": "repetition-case-011",
+      "k": 8,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -8,
+        8,
+        9,
+        -91,
+        90,
+        1,
+        -20,
+        -27,
+        -5,
+        26,
+        -31,
+        -58,
+        -36
+      ]
+    },
+    {
+      "case_id": "repetition-case-012",
+      "k": 8,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        66,
+        66
+      ]
+    },
+    {
+      "case_id": "repetition-case-013",
+      "k": 9,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        48,
+        -98
+      ]
+    },
+    {
+      "case_id": "repetition-case-014",
+      "k": 4,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -5,
+        37,
+        -65,
+        -13,
+        -28,
+        79,
+        -35,
+        12,
+        -34,
+        6,
+        1
+      ]
+    },
+    {
+      "case_id": "repetition-case-015",
+      "k": 5,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -87,
+        -12,
+        -7,
+        62,
+        89
+      ]
+    },
+    {
+      "case_id": "repetition-case-016",
+      "k": 7,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        55,
+        42,
+        21,
+        18,
+        17,
+        -4,
+        -37,
+        -42
+      ]
+    },
+    {
+      "case_id": "repetition-case-017",
+      "k": 2,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -69,
+        -55,
+        38,
+        -26,
+        -55,
+        -23,
+        68,
+        -5,
+        -87,
+        -51,
+        -95,
+        82,
+        76,
+        3,
+        91,
+        18,
+        59,
+        -23
+      ]
+    },
+    {
+      "case_id": "repetition-case-018",
+      "k": 10,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        10,
+        9,
+        11,
+        82,
+        -26,
+        95,
+        63,
+        19,
+        -85,
+        -19,
+        -69,
+        -99
+      ]
+    },
+    {
+      "case_id": "repetition-case-019",
+      "k": 9,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -9,
+        9,
+        10,
+        95,
+        -18,
+        -60
+      ]
+    },
+    {
+      "case_id": "repetition-case-020",
+      "k": 9,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -15,
+        -15,
+        -68,
+        -93,
+        25,
+        69,
+        95,
+        -8,
+        10,
+        -52,
+        63,
+        94,
+        -73,
+        19
+      ]
+    },
+    {
+      "case_id": "repetition-case-021",
+      "k": 8,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        31,
+        92,
+        -74,
+        36,
+        -90,
+        -37,
+        59,
+        29,
+        -4,
+        22,
+        -56,
+        -93,
+        74,
+        74,
+        -66
+      ]
+    },
+    {
+      "case_id": "repetition-case-022",
+      "k": 6,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -91,
+        -76,
+        96,
+        -28,
+        26,
+        -72,
+        -100,
+        78
+      ]
+    },
+    {
+      "case_id": "repetition-case-023",
+      "k": 3,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -100,
+        -98,
+        -97,
+        -89,
+        -76,
+        -71,
+        -57,
+        -40,
+        -39,
+        -31,
+        -30,
+        12,
+        16,
+        22,
+        30,
+        57,
+        59,
+        69,
+        74,
+        91
+      ]
+    },
+    {
+      "case_id": "repetition-case-024",
+      "k": 8,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        98,
+        83,
+        73,
+        48,
+        34,
+        5,
+        -6,
+        -10,
+        -24,
+        -25,
+        -65
+      ]
+    },
+    {
+      "case_id": "repetition-case-025",
+      "k": 5,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -43,
+        69,
+        51,
+        -44,
+        39,
+        19,
+        -9,
+        47,
+        -5,
+        78,
+        6,
+        -19,
+        16,
+        -46
+      ]
+    },
+    {
+      "case_id": "repetition-case-026",
+      "k": 9,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        9,
+        8,
+        10,
+        -1,
+        86,
+        42,
+        -18,
+        52,
+        -59,
+        81,
+        -7,
+        -36,
+        -14,
+        -54
+      ]
+    },
+    {
+      "case_id": "repetition-case-027",
+      "k": 5,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -5,
+        5,
+        6,
+        -73,
+        27,
+        87,
+        17,
+        -43,
+        -35,
+        -10
+      ]
+    },
+    {
+      "case_id": "repetition-case-028",
+      "k": 5,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -30,
+        -30,
+        -47,
+        -12
+      ]
+    },
+    {
+      "case_id": "repetition-case-029",
+      "k": 7,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -73,
+        49,
+        54,
+        -84,
+        41,
+        76,
+        -78,
+        -83,
+        90
+      ]
+    },
+    {
+      "case_id": "repetition-case-030",
+      "k": 8,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        87,
+        -42,
+        71
+      ]
+    },
+    {
+      "case_id": "repetition-case-031",
+      "k": 2,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -92,
+        -75,
+        -37,
+        50
+      ]
+    },
+    {
+      "case_id": "repetition-case-032",
+      "k": 10,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        97,
+        40,
+        37,
+        29,
+        23,
+        -14,
+        -21,
+        -61,
+        -80,
+        -88,
+        -91
+      ]
+    },
+    {
+      "case_id": "repetition-case-033",
+      "k": 4,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -62,
+        63,
+        30,
+        3,
+        51,
+        16,
+        78,
+        -97,
+        -57,
+        69,
+        -3,
+        -34,
+        62,
+        53,
+        -15,
+        79,
+        91,
+        22
+      ]
+    },
+    {
+      "case_id": "repetition-case-034",
+      "k": 10,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        10,
+        9,
+        11,
+        -57,
+        90,
+        81,
+        -95,
+        3,
+        -83
+      ]
+    },
+    {
+      "case_id": "repetition-case-035",
+      "k": 3,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -3,
+        3,
+        4,
+        14,
+        -66,
+        -96,
+        94,
+        -31,
+        -78,
+        -1,
+        19,
+        -91,
+        -99,
+        51,
+        80,
+        -35,
+        37
+      ]
+    },
+    {
+      "case_id": "repetition-case-036",
+      "k": 9,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        19,
+        19,
+        64,
+        -17,
+        72,
+        -41,
+        18,
+        -17,
+        59,
+        71,
+        56,
+        11,
+        6,
+        -100,
+        44,
+        -19,
+        25,
+        17,
+        87,
+        -83
+      ]
+    },
+    {
+      "case_id": "repetition-case-037",
+      "k": 6,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -71,
+        52
+      ]
+    },
+    {
+      "case_id": "repetition-case-038",
+      "k": 7,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -75,
+        20,
+        10,
+        -94,
+        23,
+        -29,
+        -15
+      ]
+    },
+    {
+      "case_id": "repetition-case-039",
+      "k": 6,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -88,
+        -76,
+        -20,
+        -10,
+        19,
+        35,
+        42,
+        65
+      ]
+    },
+    {
+      "case_id": "repetition-case-040",
+      "k": 5,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        93,
+        88,
+        80,
+        77,
+        62,
+        39,
+        34,
+        13,
+        7,
+        -1,
+        -4,
+        -11,
+        -63
+      ]
+    },
+    {
+      "case_id": "repetition-case-041",
+      "k": 9,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -7,
+        39,
+        -90,
+        9,
+        82,
+        32,
+        38,
+        11,
+        61,
+        -54,
+        42,
+        22,
+        -63,
+        -15,
+        60,
+        66,
+        -97
+      ]
+    },
+    {
+      "case_id": "repetition-case-042",
+      "k": 4,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        4,
+        3,
+        5,
+        -16,
+        -99,
+        -63,
+        16,
+        91,
+        11,
+        82,
+        78,
+        93,
+        49,
+        -35
+      ]
+    },
+    {
+      "case_id": "repetition-case-043",
+      "k": 3,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -3,
+        3,
+        4,
+        53,
+        73,
+        -32,
+        99,
+        58,
+        73,
+        -92,
+        83
+      ]
+    },
+    {
+      "case_id": "repetition-case-044",
+      "k": 8,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -23,
+        -23,
+        -31,
+        63,
+        -51
+      ]
+    },
+    {
+      "case_id": "repetition-case-045",
+      "k": 4,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -38,
+        44,
+        -87,
+        6,
+        7,
+        -42,
+        95,
+        -15,
+        65
+      ]
+    },
+    {
+      "case_id": "repetition-case-046",
+      "k": 3,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -88,
+        62
+      ]
+    },
+    {
+      "case_id": "repetition-case-047",
+      "k": 3,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -98,
+        -98,
+        -65,
+        -45,
+        -10,
+        99
+      ]
+    },
+    {
+      "case_id": "repetition-case-048",
+      "k": 1,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        -4,
+        -45,
+        -50,
+        -62
+      ]
+    },
+    {
+      "case_id": "repetition-case-049",
+      "k": 1,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -94,
+        32,
+        -96,
+        73,
+        -60,
+        -73,
+        46,
+        16,
+        -82,
+        35,
+        50,
+        12,
+        97,
+        -12
+      ]
+    },
+    {
+      "case_id": "repetition-case-050",
+      "k": 7,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        7,
+        6,
+        8,
+        7,
+        -93,
+        82,
+        91,
+        54,
+        2,
+        -96,
+        48,
+        82,
+        -12,
+        54,
+        -55,
+        -79,
+        -91,
+        -9,
+        -4,
+        65
+      ]
+    },
+    {
+      "case_id": "repetition-case-051",
+      "k": 8,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -8,
+        8,
+        9,
+        -85,
+        -20,
+        55,
+        80,
+        -13
+      ]
+    },
+    {
+      "case_id": "repetition-case-052",
+      "k": 10,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        32,
+        32,
+        91,
+        76,
+        42,
+        -55,
+        -98,
+        11,
+        -88,
+        -16,
+        -36,
+        -95,
+        95,
+        52,
+        -10,
+        -2,
+        100,
+        79,
+        96,
+        -17
+      ]
+    },
+    {
+      "case_id": "repetition-case-053",
+      "k": 7,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -61,
+        12,
+        7,
+        17,
+        -55,
+        -55,
+        67,
+        24,
+        80,
+        -56,
+        -55
+      ]
+    },
+    {
+      "case_id": "repetition-case-054",
+      "k": 10,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -98,
+        2,
+        46,
+        46,
+        -79,
+        -55,
+        82,
+        92,
+        -33,
+        86,
+        -19,
+        -38,
+        13
+      ]
+    },
+    {
+      "case_id": "repetition-case-055",
+      "k": 5,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -85,
+        -78,
+        -51,
+        -42,
+        6,
+        13,
+        14,
+        33,
+        38,
+        45,
+        59,
+        70,
+        85
+      ]
+    },
+    {
+      "case_id": "repetition-case-056",
+      "k": 4,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        87,
+        87,
+        79,
+        68,
+        42,
+        33,
+        11,
+        -6,
+        -81,
+        -83,
+        -97
+      ]
+    },
+    {
+      "case_id": "repetition-case-057",
+      "k": 10,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -5,
+        22,
+        43,
+        -92,
+        -17,
+        -94,
+        32,
+        14,
+        55
+      ]
+    },
+    {
+      "case_id": "repetition-case-058",
+      "k": 2,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        2,
+        1,
+        3,
+        -55,
+        -92,
+        -51,
+        -12
+      ]
+    },
+    {
+      "case_id": "repetition-case-059",
+      "k": 2,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -2,
+        2,
+        3,
+        69,
+        -26,
+        -36
+      ]
+    },
+    {
+      "case_id": "repetition-case-060",
+      "k": 4,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -60,
+        -60,
+        14,
+        58,
+        41,
+        16,
+        59,
+        90,
+        -2,
+        61,
+        -75
+      ]
+    },
+    {
+      "case_id": "repetition-case-061",
+      "k": 6,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        46,
+        48,
+        -100,
+        -33,
+        -82,
+        55,
+        -59,
+        -76,
+        43,
+        63,
+        -44,
+        -41
+      ]
+    },
+    {
+      "case_id": "repetition-case-062",
+      "k": 9,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -56,
+        -15,
+        -50,
+        -14,
+        25,
+        -100,
+        24,
+        95
+      ]
+    },
+    {
+      "case_id": "repetition-case-063",
+      "k": 3,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -53,
+        -32,
+        -21,
+        -17,
+        -16,
+        9,
+        22,
+        28,
+        31,
+        38,
+        59,
+        74,
+        75,
+        76,
+        93,
+        98
+      ]
+    },
+    {
+      "case_id": "repetition-case-064",
+      "k": 6,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        85,
+        74,
+        26,
+        14,
+        13,
+        0,
+        -12,
+        -85,
+        -92
+      ]
+    }
+  ],
+  "generator_version": "1",
+  "input_set": "hidden",
+  "name": "repetition",
+  "random_seed": 2026092605,
+  "reference": "reference_interpreter.py",
+  "split": "test",
+  "test_set_id": "repetition-hidden-v1-seed-2026092605-cases-64",
+  "test_suite": "repetition"
+}

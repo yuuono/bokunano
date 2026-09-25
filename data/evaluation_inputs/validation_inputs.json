@@ -1,0 +1,1347 @@
+{
+  "algorithm": "stratified_random_integer_list_v1",
+  "case_count": 64,
+  "cases": [
+    {
+      "case_id": "validation-case-001",
+      "k": 9,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -59,
+        -24,
+        43,
+        39,
+        2,
+        -58,
+        16,
+        35
+      ]
+    },
+    {
+      "case_id": "validation-case-002",
+      "k": 8,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        8,
+        7,
+        9,
+        -75,
+        -12,
+        -9,
+        87,
+        -95,
+        -87,
+        -48,
+        -3,
+        -35,
+        -36,
+        88,
+        -42,
+        -4,
+        46
+      ]
+    },
+    {
+      "case_id": "validation-case-003",
+      "k": 10,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -10,
+        10,
+        11,
+        -100,
+        -78,
+        100,
+        -87
+      ]
+    },
+    {
+      "case_id": "validation-case-004",
+      "k": 2,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        77,
+        77,
+        46,
+        -3,
+        -8,
+        -81,
+        -73
+      ]
+    },
+    {
+      "case_id": "validation-case-005",
+      "k": 4,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -75,
+        99,
+        -41,
+        -5,
+        90,
+        14,
+        -99,
+        60,
+        58,
+        42,
+        52
+      ]
+    },
+    {
+      "case_id": "validation-case-006",
+      "k": 9,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -13,
+        78
+      ]
+    },
+    {
+      "case_id": "validation-case-007",
+      "k": 5,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -42,
+        -39,
+        -39,
+        -37,
+        -36,
+        -35,
+        -22,
+        -3,
+        3,
+        6,
+        15,
+        29,
+        30,
+        52,
+        78,
+        81,
+        85,
+        96
+      ]
+    },
+    {
+      "case_id": "validation-case-008",
+      "k": 9,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        59,
+        36,
+        34,
+        27,
+        -3,
+        -16
+      ]
+    },
+    {
+      "case_id": "validation-case-009",
+      "k": 4,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -87,
+        88,
+        83,
+        -5,
+        -16,
+        -39,
+        -38,
+        -3,
+        -2,
+        47,
+        -99,
+        -34,
+        60,
+        -70,
+        -33,
+        18,
+        97,
+        40,
+        -19
+      ]
+    },
+    {
+      "case_id": "validation-case-010",
+      "k": 6,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        6,
+        5,
+        7,
+        -84,
+        70,
+        -33,
+        -9,
+        16,
+        -87
+      ]
+    },
+    {
+      "case_id": "validation-case-011",
+      "k": 6,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -6,
+        6,
+        7,
+        -99,
+        -89,
+        97,
+        41,
+        61,
+        40,
+        76,
+        46,
+        86,
+        59
+      ]
+    },
+    {
+      "case_id": "validation-case-012",
+      "k": 5,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        33,
+        33,
+        -54,
+        62,
+        27,
+        -33,
+        -49,
+        64,
+        49
+      ]
+    },
+    {
+      "case_id": "validation-case-013",
+      "k": 5,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -55
+      ]
+    },
+    {
+      "case_id": "validation-case-014",
+      "k": 1,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -58,
+        -66,
+        -4,
+        24,
+        43,
+        41,
+        40,
+        -56,
+        -65,
+        14,
+        -41,
+        -5,
+        52,
+        33,
+        99
+      ]
+    },
+    {
+      "case_id": "validation-case-015",
+      "k": 2,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -41,
+        -30,
+        3,
+        33,
+        44,
+        63,
+        67,
+        86
+      ]
+    },
+    {
+      "case_id": "validation-case-016",
+      "k": 9,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        70,
+        67,
+        60,
+        57,
+        42,
+        31,
+        24,
+        9,
+        1,
+        -6,
+        -27,
+        -61,
+        -73,
+        -91
+      ]
+    },
+    {
+      "case_id": "validation-case-017",
+      "k": 4,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -41,
+        -74,
+        -81,
+        -43,
+        99,
+        -35,
+        -100,
+        47,
+        -27,
+        -47,
+        -14,
+        32,
+        -71,
+        -20,
+        49,
+        18,
+        25,
+        49
+      ]
+    },
+    {
+      "case_id": "validation-case-018",
+      "k": 7,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        7,
+        6,
+        8,
+        61,
+        45,
+        86,
+        23,
+        62,
+        69,
+        -3,
+        -38,
+        96,
+        -2,
+        83,
+        19,
+        -24,
+        45,
+        -57,
+        76
+      ]
+    },
+    {
+      "case_id": "validation-case-019",
+      "k": 8,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -8,
+        8,
+        9,
+        22,
+        40,
+        -100,
+        36,
+        -22,
+        -40,
+        -98,
+        85,
+        19,
+        -40,
+        -94,
+        24
+      ]
+    },
+    {
+      "case_id": "validation-case-020",
+      "k": 2,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        10,
+        10,
+        -49,
+        -21,
+        -34,
+        -76,
+        72,
+        39,
+        99,
+        -30,
+        -100,
+        80,
+        97,
+        69,
+        -53,
+        98,
+        -96,
+        90,
+        -98
+      ]
+    },
+    {
+      "case_id": "validation-case-021",
+      "k": 3,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -50,
+        57,
+        -27
+      ]
+    },
+    {
+      "case_id": "validation-case-022",
+      "k": 3,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4
+      ]
+    },
+    {
+      "case_id": "validation-case-023",
+      "k": 2,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -57,
+        18,
+        23,
+        45,
+        100
+      ]
+    },
+    {
+      "case_id": "validation-case-024",
+      "k": 3,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        96,
+        88,
+        83,
+        79,
+        70,
+        61,
+        56,
+        8,
+        -17,
+        -24,
+        -52,
+        -57,
+        -94,
+        -95,
+        -98
+      ]
+    },
+    {
+      "case_id": "validation-case-025",
+      "k": 3,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -16,
+        28,
+        -16
+      ]
+    },
+    {
+      "case_id": "validation-case-026",
+      "k": 6,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        6,
+        5,
+        7,
+        -6,
+        -29,
+        49
+      ]
+    },
+    {
+      "case_id": "validation-case-027",
+      "k": 6,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -6,
+        6,
+        7,
+        -27,
+        -74,
+        -4,
+        66,
+        -75,
+        -57,
+        7,
+        17,
+        -54,
+        -66,
+        -98,
+        13
+      ]
+    },
+    {
+      "case_id": "validation-case-028",
+      "k": 4,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -86,
+        -86,
+        61,
+        3,
+        -46,
+        55,
+        -1,
+        73,
+        -62,
+        -42,
+        46,
+        -9,
+        60,
+        -7,
+        13,
+        -34
+      ]
+    },
+    {
+      "case_id": "validation-case-029",
+      "k": 1,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -35,
+        -83,
+        58,
+        -6,
+        -99,
+        -34,
+        -10,
+        -31,
+        -16,
+        -22,
+        -26,
+        65,
+        55
+      ]
+    },
+    {
+      "case_id": "validation-case-030",
+      "k": 9,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -15
+      ]
+    },
+    {
+      "case_id": "validation-case-031",
+      "k": 5,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -100,
+        -53,
+        -47,
+        -34,
+        -30,
+        -23,
+        -14,
+        3,
+        11,
+        22,
+        46,
+        51,
+        64,
+        70,
+        80,
+        87,
+        99
+      ]
+    },
+    {
+      "case_id": "validation-case-032",
+      "k": 7,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        99,
+        89,
+        56,
+        50,
+        48,
+        44,
+        39,
+        30,
+        24,
+        -2,
+        -6,
+        -9,
+        -21,
+        -32,
+        -37,
+        -52,
+        -75,
+        -100
+      ]
+    },
+    {
+      "case_id": "validation-case-033",
+      "k": 3,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -45,
+        -56,
+        27,
+        74,
+        58,
+        -2,
+        -14,
+        -56
+      ]
+    },
+    {
+      "case_id": "validation-case-034",
+      "k": 3,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        3,
+        2,
+        4,
+        26,
+        16,
+        -52,
+        -99,
+        53,
+        38,
+        -54,
+        -69,
+        -46,
+        44
+      ]
+    },
+    {
+      "case_id": "validation-case-035",
+      "k": 8,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -8,
+        8,
+        9,
+        -22,
+        38,
+        -6,
+        17,
+        -50
+      ]
+    },
+    {
+      "case_id": "validation-case-036",
+      "k": 2,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -48,
+        -48,
+        -3,
+        81,
+        -38,
+        -33,
+        -97,
+        69,
+        -99,
+        -37,
+        12
+      ]
+    },
+    {
+      "case_id": "validation-case-037",
+      "k": 3,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100
+      ]
+    },
+    {
+      "case_id": "validation-case-038",
+      "k": 10,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -9,
+        -16,
+        17,
+        93,
+        94,
+        -49,
+        -30,
+        31,
+        -14,
+        -18,
+        0,
+        76,
+        52
+      ]
+    },
+    {
+      "case_id": "validation-case-039",
+      "k": 3,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -97,
+        -37,
+        -12,
+        -6,
+        13,
+        27,
+        35,
+        79
+      ]
+    },
+    {
+      "case_id": "validation-case-040",
+      "k": 8,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        91,
+        81,
+        62,
+        50,
+        19,
+        10,
+        -23,
+        -27,
+        -38,
+        -45,
+        -83
+      ]
+    },
+    {
+      "case_id": "validation-case-041",
+      "k": 10,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -90,
+        -62,
+        -97,
+        -54,
+        70,
+        5,
+        -84,
+        2,
+        100,
+        39,
+        85,
+        -86,
+        -84,
+        -86,
+        70
+      ]
+    },
+    {
+      "case_id": "validation-case-042",
+      "k": 5,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        5,
+        4,
+        6,
+        53,
+        -11,
+        -80
+      ]
+    },
+    {
+      "case_id": "validation-case-043",
+      "k": 10,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -10,
+        10,
+        11,
+        -16,
+        52
+      ]
+    },
+    {
+      "case_id": "validation-case-044",
+      "k": 10,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        62,
+        62,
+        63,
+        -90,
+        45,
+        47,
+        85,
+        18,
+        -11,
+        54,
+        -11,
+        90,
+        70
+      ]
+    },
+    {
+      "case_id": "validation-case-045",
+      "k": 1,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -89
+      ]
+    },
+    {
+      "case_id": "validation-case-046",
+      "k": 8,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -78,
+        49,
+        -78,
+        27,
+        22,
+        42,
+        40,
+        6,
+        -13,
+        8,
+        30,
+        0
+      ]
+    },
+    {
+      "case_id": "validation-case-047",
+      "k": 7,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -76,
+        -35,
+        -30,
+        20,
+        39,
+        45,
+        62,
+        84
+      ]
+    },
+    {
+      "case_id": "validation-case-048",
+      "k": 8,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        86,
+        64,
+        36,
+        32,
+        12,
+        5,
+        -5,
+        -9,
+        -18,
+        -39,
+        -72,
+        -88,
+        -98,
+        -98
+      ]
+    },
+    {
+      "case_id": "validation-case-049",
+      "k": 7,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -100,
+        -4,
+        -65,
+        -84,
+        -23,
+        -56,
+        -49,
+        -22,
+        7,
+        -41
+      ]
+    },
+    {
+      "case_id": "validation-case-050",
+      "k": 3,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        3,
+        2,
+        4
+      ]
+    },
+    {
+      "case_id": "validation-case-051",
+      "k": 3,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -3,
+        3,
+        4,
+        25,
+        77,
+        -67,
+        -44,
+        -7,
+        42,
+        -82,
+        84,
+        10,
+        9,
+        87,
+        -56,
+        -76,
+        -6,
+        81
+      ]
+    },
+    {
+      "case_id": "validation-case-052",
+      "k": 5,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -22,
+        -22,
+        -17,
+        -27,
+        -11,
+        32,
+        29,
+        29,
+        82,
+        11,
+        17
+      ]
+    },
+    {
+      "case_id": "validation-case-053",
+      "k": 6,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        -48,
+        57,
+        84,
+        -76,
+        -35,
+        -5,
+        77,
+        1,
+        78,
+        76,
+        -22,
+        83,
+        -35,
+        5,
+        -43,
+        73
+      ]
+    },
+    {
+      "case_id": "validation-case-054",
+      "k": 3,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -60,
+        11,
+        -60,
+        -49,
+        96,
+        65,
+        7,
+        -56,
+        43,
+        26,
+        -89,
+        -66,
+        15,
+        30,
+        -64,
+        33
+      ]
+    },
+    {
+      "case_id": "validation-case-055",
+      "k": 10,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -98,
+        -93,
+        -89,
+        -85,
+        -70,
+        -64,
+        -54,
+        -1,
+        29,
+        54,
+        60,
+        68,
+        97
+      ]
+    },
+    {
+      "case_id": "validation-case-056",
+      "k": 2,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        84,
+        59,
+        -43,
+        -60,
+        -62,
+        -87,
+        -93
+      ]
+    },
+    {
+      "case_id": "validation-case-057",
+      "k": 7,
+      "tags": [
+        "contains_zero",
+        "mixed_sign"
+      ],
+      "xs": [
+        0,
+        -80,
+        73,
+        -50,
+        8,
+        -9,
+        31,
+        43,
+        12,
+        80,
+        38,
+        26,
+        -95,
+        98,
+        9,
+        -29,
+        93
+      ]
+    },
+    {
+      "case_id": "validation-case-058",
+      "k": 6,
+      "tags": [
+        "threshold_equal",
+        "threshold_neighbors"
+      ],
+      "xs": [
+        6,
+        5,
+        7,
+        -4,
+        32,
+        -92,
+        -93,
+        -34,
+        50,
+        -86,
+        18,
+        -51,
+        -89,
+        -62,
+        30,
+        11,
+        -99,
+        -51,
+        3
+      ]
+    },
+    {
+      "case_id": "validation-case-059",
+      "k": 7,
+      "tags": [
+        "multiples_and_nonmultiples"
+      ],
+      "xs": [
+        -7,
+        7,
+        8,
+        75,
+        -43,
+        -12,
+        23,
+        -98,
+        -78,
+        1,
+        -46,
+        55
+      ]
+    },
+    {
+      "case_id": "validation-case-060",
+      "k": 1,
+      "tags": [
+        "duplicates"
+      ],
+      "xs": [
+        -43,
+        -43,
+        98
+      ]
+    },
+    {
+      "case_id": "validation-case-061",
+      "k": 1,
+      "tags": [
+        "value_extremes",
+        "mixed_sign"
+      ],
+      "xs": [
+        -100,
+        100,
+        44,
+        -53,
+        88,
+        -17,
+        89,
+        94,
+        -41,
+        52,
+        -78,
+        28,
+        -95,
+        96,
+        -21,
+        26
+      ]
+    },
+    {
+      "case_id": "validation-case-062",
+      "k": 4,
+      "tags": [
+        "parity_mix",
+        "mixed_sign"
+      ],
+      "xs": [
+        -2,
+        3,
+        4,
+        -86,
+        58,
+        -13,
+        61,
+        -17,
+        -7,
+        -45,
+        -7,
+        -27
+      ]
+    },
+    {
+      "case_id": "validation-case-063",
+      "k": 1,
+      "tags": [
+        "already_ascending"
+      ],
+      "xs": [
+        -11,
+        27,
+        36,
+        57
+      ]
+    },
+    {
+      "case_id": "validation-case-064",
+      "k": 4,
+      "tags": [
+        "already_descending"
+      ],
+      "xs": [
+        96,
+        86,
+        64,
+        36,
+        21,
+        21,
+        21,
+        -9,
+        -43,
+        -60,
+        -69,
+        -83,
+        -91
+      ]
+    }
+  ],
+  "generator_version": "1",
+  "input_set": "build",
+  "name": "validation",
+  "random_seed": 2026092601,
+  "reference": "reference_interpreter.py",
+  "split": "val",
+  "test_set_id": "validation-build-v1-seed-2026092601-cases-64",
+  "test_suite": null
+}
