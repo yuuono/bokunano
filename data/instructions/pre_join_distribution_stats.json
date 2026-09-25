@@ -1721,5 +1721,233 @@
       "teacher_replacement_count": 10
     }
   ],
+  "under_twenty_operation_coverage": [
+    {
+      "atomic_only_instruction_count": 16,
+      "atomic_spec_id": "combined-000007",
+      "by_sequence_length": {
+        "1": {
+          "instruction_count": 16,
+          "operation_occurrence_count": 16,
+          "retained_rule_count": 6,
+          "semantic_ast_count": 1,
+          "teacher_replacement_count": 10
+        },
+        "2": {
+          "instruction_count": 800,
+          "operation_occurrence_count": 800,
+          "retained_rule_count": 400,
+          "semantic_ast_count": 40,
+          "teacher_replacement_count": 400
+        },
+        "3": {
+          "instruction_count": 23260,
+          "operation_occurrence_count": 23260,
+          "retained_rule_count": 11636,
+          "semantic_ast_count": 1163,
+          "teacher_replacement_count": 11624
+        }
+      },
+      "containing_instruction_count": 24076,
+      "containing_instruction_share": 0.12481078278900985,
+      "containing_retained_rule_count": 12042,
+      "containing_semantic_ast_count": 1204,
+      "containing_teacher_replacement_count": 12034,
+      "operation": {
+        "filter": [
+          "multiple_of_k"
+        ]
+      },
+      "operation_occurrence_count": 24076
+    },
+    {
+      "atomic_only_instruction_count": 19,
+      "atomic_spec_id": "combined-000008",
+      "by_sequence_length": {
+        "1": {
+          "instruction_count": 19,
+          "operation_occurrence_count": 19,
+          "retained_rule_count": 9,
+          "semantic_ast_count": 1,
+          "teacher_replacement_count": 10
+        },
+        "2": {
+          "instruction_count": 740,
+          "operation_occurrence_count": 740,
+          "retained_rule_count": 370,
+          "semantic_ast_count": 37,
+          "teacher_replacement_count": 370
+        },
+        "3": {
+          "instruction_count": 24200,
+          "operation_occurrence_count": 24200,
+          "retained_rule_count": 12119,
+          "semantic_ast_count": 1210,
+          "teacher_replacement_count": 12081
+        }
+      },
+      "containing_instruction_count": 24959,
+      "containing_instruction_share": 0.12938828408501815,
+      "containing_retained_rule_count": 12498,
+      "containing_semantic_ast_count": 1248,
+      "containing_teacher_replacement_count": 12461,
+      "operation": {
+        "filter": [
+          "positive"
+        ]
+      },
+      "operation_occurrence_count": 24959
+    },
+    {
+      "atomic_only_instruction_count": 18,
+      "atomic_spec_id": "combined-000009",
+      "by_sequence_length": {
+        "1": {
+          "instruction_count": 18,
+          "operation_occurrence_count": 18,
+          "retained_rule_count": 8,
+          "semantic_ast_count": 1,
+          "teacher_replacement_count": 10
+        },
+        "2": {
+          "instruction_count": 760,
+          "operation_occurrence_count": 760,
+          "retained_rule_count": 380,
+          "semantic_ast_count": 38,
+          "teacher_replacement_count": 380
+        },
+        "3": {
+          "instruction_count": 23520,
+          "operation_occurrence_count": 23520,
+          "retained_rule_count": 11772,
+          "semantic_ast_count": 1176,
+          "teacher_replacement_count": 11748
+        }
+      },
+      "containing_instruction_count": 24298,
+      "containing_instruction_share": 0.1259616381544842,
+      "containing_retained_rule_count": 12160,
+      "containing_semantic_ast_count": 1215,
+      "containing_teacher_replacement_count": 12138,
+      "operation": {
+        "filter": [
+          "negative"
+        ]
+      },
+      "operation_occurrence_count": 24298
+    },
+    {
+      "atomic_only_instruction_count": 11,
+      "atomic_spec_id": "combined-000010",
+      "by_sequence_length": {
+        "1": {
+          "instruction_count": 11,
+          "operation_occurrence_count": 11,
+          "retained_rule_count": 1,
+          "semantic_ast_count": 1,
+          "teacher_replacement_count": 10
+        },
+        "2": {
+          "instruction_count": 720,
+          "operation_occurrence_count": 720,
+          "retained_rule_count": 360,
+          "semantic_ast_count": 36,
+          "teacher_replacement_count": 360
+        },
+        "3": {
+          "instruction_count": 23640,
+          "operation_occurrence_count": 23640,
+          "retained_rule_count": 11824,
+          "semantic_ast_count": 1182,
+          "teacher_replacement_count": 11816
+        }
+      },
+      "containing_instruction_count": 24371,
+      "containing_instruction_share": 0.12634007257646448,
+      "containing_retained_rule_count": 12185,
+      "containing_semantic_ast_count": 1219,
+      "containing_teacher_replacement_count": 12186,
+      "operation": {
+        "filter": [
+          "zero"
+        ]
+      },
+      "operation_occurrence_count": 24371
+    },
+    {
+      "atomic_only_instruction_count": 19,
+      "atomic_spec_id": "combined-000016",
+      "by_sequence_length": {
+        "1": {
+          "instruction_count": 19,
+          "operation_occurrence_count": 19,
+          "retained_rule_count": 9,
+          "semantic_ast_count": 1,
+          "teacher_replacement_count": 10
+        },
+        "2": {
+          "instruction_count": 680,
+          "operation_occurrence_count": 680,
+          "retained_rule_count": 340,
+          "semantic_ast_count": 34,
+          "teacher_replacement_count": 340
+        },
+        "3": {
+          "instruction_count": 23520,
+          "operation_occurrence_count": 23520,
+          "retained_rule_count": 11760,
+          "semantic_ast_count": 1176,
+          "teacher_replacement_count": 11760
+        }
+      },
+      "containing_instruction_count": 24219,
+      "containing_instruction_share": 0.12555209953343702,
+      "containing_retained_rule_count": 12109,
+      "containing_semantic_ast_count": 1211,
+      "containing_teacher_replacement_count": 12110,
+      "operation": {
+        "map": [
+          "negate"
+        ]
+      },
+      "operation_occurrence_count": 24219
+    },
+    {
+      "atomic_only_instruction_count": 17,
+      "atomic_spec_id": "combined-000019",
+      "by_sequence_length": {
+        "1": {
+          "instruction_count": 17,
+          "operation_occurrence_count": 17,
+          "retained_rule_count": 7,
+          "semantic_ast_count": 1,
+          "teacher_replacement_count": 10
+        },
+        "2": {
+          "instruction_count": 760,
+          "operation_occurrence_count": 760,
+          "retained_rule_count": 380,
+          "semantic_ast_count": 38,
+          "teacher_replacement_count": 380
+        },
+        "3": {
+          "instruction_count": 23600,
+          "operation_occurrence_count": 23600,
+          "retained_rule_count": 11800,
+          "semantic_ast_count": 1180,
+          "teacher_replacement_count": 11800
+        }
+      },
+      "containing_instruction_count": 24377,
+      "containing_instruction_share": 0.12637117677553136,
+      "containing_retained_rule_count": 12187,
+      "containing_semantic_ast_count": 1219,
+      "containing_teacher_replacement_count": 12190,
+      "operation": {
+        "order": "ascending"
+      },
+      "operation_occurrence_count": 24377
+    }
+  ],
   "verified_code_count": 192920
 }
