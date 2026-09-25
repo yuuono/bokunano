@@ -4,6 +4,7 @@ __pycache__/
 .ruff_cache/
 .vscode/
 .DS_Store
+*.pt
 
 # 2・3操作の展開済みコード候補は、ZIPだけをGitで管理する。
 data/code_candidates/train/two_operation/python_code_candidates.jsonl
@@ -44,4 +45,4 @@ data/final/final_dataset_records.jsonl
 data/final/evaluation/*.jsonl
 
 # 本学習の重み、optimizer checkpoint、metricsは大容量の実行成果物なのでGitへ追加しない。
-data/models/
+# data/models/
