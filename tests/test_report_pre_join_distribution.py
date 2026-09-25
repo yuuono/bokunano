@@ -81,6 +81,8 @@ class PreJoinDistributionTest(unittest.TestCase):
         self.assertEqual(summary["instruction_minus_code"], 0)
         # 置換不足の意味ASTがないことを確認する
         self.assertEqual(summary["teacher_replacement_shortfall_asts"], [])
+        # 20件未満の意味ASTがないため包含集計も空であることを確認する
+        self.assertEqual(len(summary["under_twenty_operation_coverage"]), 0)
 
     # コード数が意味AST当たり20件でない入力を拒否することを検証する
     def test_build_summary_rejects_non_twenty_code_count(self) -> None:

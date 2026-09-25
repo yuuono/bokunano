@@ -588,6 +588,15 @@ def build_summary(
         # 置換成功数を優先し、同数なら意味AST IDで並べる
         key=lambda item: (item["teacher_replacement_count"], item["spec_id"])
     )
+    # 20件未満だった単一操作が全訓練指示へ含まれる量を集計する
+    under_twenty_operation_coverage = build_under_twenty_operation_coverage(
+        # 集計済み意味ASTを渡す
+        specs,
+        # 20件未満の単一操作一覧を渡す
+        under_twenty,
+        # 置換後指示総数を渡す
+        total_final,
+    )
     # 機械可読な集計を組み立てる
     return {
         "report_date": report_date,
@@ -616,6 +625,7 @@ def build_summary(
         },
         "by_operation_count": by_operation_count,
         "under_twenty_instruction_asts": under_twenty,
+        "under_twenty_operation_coverage": under_twenty_operation_coverage,
         "teacher_replacement_shortfall_asts": teacher_replacement_shortfalls,
     }
 
@@ -650,6 +660,113 @@ def build_by_ast_records(specs: dict[str, dict[str, Any]]) -> list[dict[str, Any
         )
     # ID順の全明細を返す
     return records
+
+
+# この工程を担当する関数を定義する
+def build_under_twenty_operation_coverage(
+    # 意味AST別集計を受け取る
+    specs: dict[str, dict[str, Any]],
+    # 単一操作で20指示未満だった意味AST一覧を受け取る
+    under_twenty: list[dict[str, Any]],
+    # 置換後の訓練指示総数を受け取る
+    total_final_instruction_count: int,
+) -> list[dict[str, Any]]:
+    """不足した単一操作が全訓練指示へ含まれる量を集計する。"""
+
+    # 対象操作ごとの集計を保存する配列を作る
+    coverage: list[dict[str, Any]] = []
+    # 20件未満の単一操作を意味AST ID順に処理する
+    for target in sorted(under_twenty, key=lambda item: item["spec_id"]):
+        # 対象操作の正規化JSONを取得する
+        operation_key = target["operation"]
+        # 操作数別の内訳を作る
+        by_sequence_length: dict[str, dict[str, int]] = {}
+        # 対象操作を含む意味AST数を初期化する
+        containing_ast_count = 0
+        # 対象操作を含む置換後指示数を初期化する
+        containing_instruction_count = 0
+        # 対象操作を含む教師置換指示数を初期化する
+        containing_teacher_replacement_count = 0
+        # 対象操作を含む元文維持指示数を初期化する
+        containing_retained_rule_count = 0
+        # 全指示内での対象操作出現回数を初期化する
+        operation_occurrence_count = 0
+        # 全訓練意味ASTを処理する
+        for spec in specs.values():
+            # 操作列を取得する
+            sequence = spec["semantic_ast"]["sequence"]
+            # この意味AST内で対象操作が現れる回数を数える
+            matches = sum(canonical_json(operation) == operation_key for operation in sequence)
+            # 対象操作を含まない意味ASTは集計しない
+            if matches == 0:
+                # 次の意味ASTへ進む
+                continue
+            # 対象操作を含む意味AST数を増やす
+            containing_ast_count += 1
+            # 対象操作を含む指示文数を加算する
+            containing_instruction_count += spec["final_instruction_count"]
+            # 対象操作を含む教師置換指示数を加算する
+            containing_teacher_replacement_count += spec["teacher_replacement_count"]
+            # 対象操作を含む元文維持指示数を加算する
+            containing_retained_rule_count += spec["retained_rule_count"]
+            # 指示数へ意味AST内の出現回数を掛けて総出現回数へ加算する
+            operation_occurrence_count += spec["final_instruction_count"] * matches
+            # 意味ASTの操作数を文字列キーにする
+            sequence_length_key = str(spec["operation_count"])
+            # 初出の操作数へ内訳枠を作る
+            if sequence_length_key not in by_sequence_length:
+                # 各件数をゼロで初期化する
+                by_sequence_length[sequence_length_key] = {
+                    "semantic_ast_count": 0,
+                    "instruction_count": 0,
+                    "teacher_replacement_count": 0,
+                    "retained_rule_count": 0,
+                    "operation_occurrence_count": 0,
+                }
+            # 対象操作数の内訳を取得する
+            length_summary = by_sequence_length[sequence_length_key]
+            # 含有意味AST数を増やす
+            length_summary["semantic_ast_count"] += 1
+            # 含有指示数を加算する
+            length_summary["instruction_count"] += spec["final_instruction_count"]
+            # 教師置換指示数を加算する
+            length_summary["teacher_replacement_count"] += spec[
+                "teacher_replacement_count"
+            ]
+            # 元文維持指示数を加算する
+            length_summary["retained_rule_count"] += spec["retained_rule_count"]
+            # 操作出現回数を加算する
+            length_summary["operation_occurrence_count"] += (
+                spec["final_instruction_count"] * matches
+            )
+        # 教師置換と元文維持の和が含有指示数になることを確認する
+        if (
+            containing_teacher_replacement_count + containing_retained_rule_count
+            != containing_instruction_count
+        ):
+            # 置換内訳の不整合を拒否する
+            raise ValueError(f"対象操作の置換内訳が一致しません: {target['spec_id']}")
+        # 対象操作の全体集計を追加する
+        coverage.append(
+            {
+                "atomic_spec_id": target["spec_id"],
+                "operation": json.loads(operation_key),
+                "atomic_only_instruction_count": target["final_instruction_count"],
+                "containing_semantic_ast_count": containing_ast_count,
+                "containing_instruction_count": containing_instruction_count,
+                "containing_instruction_share": (
+                    containing_instruction_count / total_final_instruction_count
+                ),
+                "containing_teacher_replacement_count": (
+                    containing_teacher_replacement_count
+                ),
+                "containing_retained_rule_count": containing_retained_rule_count,
+                "operation_occurrence_count": operation_occurrence_count,
+                "by_sequence_length": by_sequence_length,
+            }
+        )
+    # 対象6操作の集計を返す
+    return coverage
 
 
 # この工程を担当する関数を定義する
@@ -718,6 +835,43 @@ def render_markdown(summary: dict[str, Any]) -> str:
         # 最終指示数のヒストグラムを渡す
         summary["distribution"]["final_instructions_per_ast"]
     )
+    # 20件未満だった単一操作の全指示内包含表を作る
+    operation_coverage_rows: list[str] = []
+    # 各対象操作を意味AST ID順に処理する
+    for item in summary["under_twenty_operation_coverage"]:
+        # 操作を一行JSONへ変換する
+        operation = canonical_json(item["operation"])
+        # 対象操作の全体集計行を追加する
+        operation_coverage_rows.append(
+            # 単一操作数、含有AST数、含有指示数、内訳、出現回数、割合を表示する
+            f"| `{item['atomic_spec_id']}` | `{operation}` | "
+            f"{item['atomic_only_instruction_count']:,} | "
+            f"{item['containing_semantic_ast_count']:,} | "
+            f"{item['containing_instruction_count']:,} | "
+            f"{item['containing_teacher_replacement_count']:,} | "
+            f"{item['containing_retained_rule_count']:,} | "
+            f"{item['operation_occurrence_count']:,} | "
+            f"{item['containing_instruction_share']:.2%} |"
+        )
+    # 対象操作の操作数別内訳表を作る
+    operation_coverage_breakdown_rows: list[str] = []
+    # 各対象操作を処理する
+    for item in summary["under_twenty_operation_coverage"]:
+        # 操作を一行JSONへ変換する
+        operation = canonical_json(item["operation"])
+        # 1操作から3操作の順に処理する
+        for sequence_length in sorted(item["by_sequence_length"], key=int):
+            # 対象操作数の内訳を取得する
+            detail = item["by_sequence_length"][sequence_length]
+            # 操作数別の一行を追加する
+            operation_coverage_breakdown_rows.append(
+                # 操作、操作数、意味AST、指示、教師、元文、出現回数を表示する
+                f"| `{operation}` | {sequence_length} | "
+                f"{detail['semantic_ast_count']:,} | {detail['instruction_count']:,} | "
+                f"{detail['teacher_replacement_count']:,} | "
+                f"{detail['retained_rule_count']:,} | "
+                f"{detail['operation_occurrence_count']:,} |"
+            )
     # Markdown本文を行単位で組み立てる
     lines = [
         # レポート見出しを追加する
@@ -818,8 +972,36 @@ def render_markdown(summary: dict[str, Any]) -> str:
         *under_twenty_rows,
         # 段落間の空行を追加する
         "",
+        # 対象6操作の包含分布の節を追加する
+        "## 6. 20件未満だった単一操作が全訓練指示に含まれる量",
+        # 見出し後の空行を追加する
+        "",
+        # 集計範囲と数え方を説明する
+        "対象は置換後の訓練用192,900指示である。「含有指示」は対象操作を1回以上含む意味ASTに属する指示文を一文として数える。「操作出現」は同じ意味AST内に対象操作が複数回ある場合、その回数も数える。",
+        # 段落間の空行を追加する
+        "",
+        # 対象操作包含表のヘッダーを追加する
+        "| 単一操作spec_id | 操作 | 単一操作だけの指示 | 含有意味AST | 含有指示 | 教師置換 | 元文維持 | 操作出現 | 全訓練指示に占める含有率 |",
+        # 区切り行を追加する
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
+        # 対象操作の集計行を展開する
+        *operation_coverage_rows,
+        # 段落間の空行を追加する
+        "",
+        # 操作数別内訳の小見出しを追加する
+        "### 1・2・3操作別の内訳",
+        # 見出し後の空行を追加する
+        "",
+        # 操作数別内訳表のヘッダーを追加する
+        "| 操作 | 意味ASTの操作数 | 含有意味AST | 含有指示 | 教師置換 | 元文維持 | 操作出現 |",
+        # 区切り行を追加する
+        "|---|---:|---:|---:|---:|---:|---:|",
+        # 対象操作の操作数別集計行を展開する
+        *operation_coverage_breakdown_rows,
+        # 段落間の空行を追加する
+        "",
         # 教師置換分布の節を追加する
-        "## 6. 1意味AST当たりの教師置換成功数",
+        "## 7. 1意味AST当たりの教師置換成功数",
         # 見出し後の空行を追加する
         "",
         # 選抜方針を説明する
@@ -851,7 +1033,7 @@ def render_markdown(summary: dict[str, Any]) -> str:
         # 段落間の空行を追加する
         "",
         # 結論の節を追加する
-        "## 7. 結合方針への結論",
+        "## 8. 結合方針への結論",
         # 見出し後の空行を追加する
         "",
         # コード総数との差を説明する
