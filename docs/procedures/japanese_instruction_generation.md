@@ -549,7 +549,9 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 
 ## 7. 検証済みコードと結合する
 
-承認済み指示と検証済みコードを、`spec_id`と`semantic_hash`で対応付ける。
+教師言い換えはルール生成指示への追加データとして扱わない。承認済み教師言い換えの`source_instruction_id`が指すルール生成指示を一対一で置き換える。言い換え候補を取得できなかった元指示は、ルール生成指示のまま維持する。これにより訓練用日本語指示の総数と意味ASTごとの件数は置換前から変えない。
+
+置換後の指示と検証済みコードを、`spec_id`と正規化した意味ASTで対応付ける。結合前の実測分布は[`pre_join_distribution_report.md`](../results/pre_join_distribution_report.md)を参照する。
 
 結合するときは、次を確認する。
 
@@ -559,7 +561,7 @@ uv run --group instruction-generation --python 3.12.12 python scripts/instructio
 4. ルール生成指示の教師関係項目が`null`になっている。
 5. 教師言い換えではモデル名、revision、`prompt_hash`が記録されている。
 
-同じ意味ASTの全コードと全指示を無制限に組み合わせず、最終データの上限と均等選抜方針に従って必要な件数だけを選ぶ。
+同じ意味ASTの全コードと全指示の直積は作らない。意味AST内で置換後指示とコードを決定的に一対一対応させる。指示が20件未満の単一操作6意味ASTでは、追加の固有指示を作らない限り余剰コードを最終訓練レコードへ採用しない。
 
 最終レコードの形式は、[`data_record_policy.md`](../policies/data_record_policy.md)に従う。
 

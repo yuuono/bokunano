@@ -146,6 +146,22 @@ uv run --python 3.12.12 python scripts/instruction_generation/prepare_approved_t
 
 一括承認では`review_status=approved`へ更新し、元の`pending`は`candidate_review_status`へ保存する。さらに`approved_by`、`approved_at`、`approval_mode=blanket_all_candidates`を追加する。結果は[`instruction_paraphrase_approval_results.md`](../docs/results/instruction_paraphrase_approval_results.md)に記録する。
 
+教師言い換えを元のルール生成指示への一対一置換として扱い、検証済みコードとの結合前分布を確認する場合は次を実行する。
+
+```bash
+uv run --python 3.12.12 python scripts/instruction_generation/report_pre_join_distribution.py \
+  --rule-instructions data/instructions/rule_generated_instructions.jsonl \
+  --approved-paraphrases data/instructions/approved_teacher_paraphrases.jsonl \
+  --paraphrase-generation-stats data/instructions/teacher_paraphrase_generation_stats.json \
+  --single-operation-codes data/code_candidates/single_operation/python_code_candidates.jsonl \
+  --multi-operation-code-archive data/archives/multi_operation_python_code_candidates_2026-09-20.zip \
+  --output-json data/instructions/pre_join_distribution_stats.json \
+  --output-md docs/results/pre_join_distribution_report.md \
+  --report-date 2026-09-25
+```
+
+この検査では、承認済み言い換えの`source_instruction_id`、`spec_id`、意味ASTを元指示と照合し、教師生成に失敗した70件を元文維持として数える。さらに、単一・2・3操作の検証済みコードを照合し、意味ASTごとの置換後指示数とコード数を報告する。
+
 ## 検証
 
 ```bash
