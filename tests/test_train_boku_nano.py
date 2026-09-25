@@ -4,6 +4,8 @@
 from array import array
 # 実設定ファイルを参照する
 from pathlib import Path
+# 一時保存先を安全に作る
+import tempfile
 # 標準ライブラリでテストを実行する
 import unittest
 
@@ -17,6 +19,7 @@ from scripts.model.train_boku_nano import (
     IGNORE_INDEX,
     collate_training_batch,
     learning_rate_for_step,
+    save_final_weights,
     validate_configuration,
 )
 
@@ -100,6 +103,32 @@ class BokuNanoTrainingTest(unittest.TestCase):
         self.assertAlmostEqual(warmup_end, 3.0e-4)
         # 最終stepが最小値であることを確認する
         self.assertAlmostEqual(final, 3.0e-5)
+
+    # safetensorsの最終保存経路を実際に通す
+    def test_final_weights_can_be_saved(self) -> None:
+        """model-training依存だけでsafetensors保存を完了できる。"""
+
+        # 小型モデル設定を作る
+        config = BokuNanoConfig(
+            vocab_size=32,
+            d_model=16,
+            n_layers=1,
+            n_heads=2,
+            d_ff=32,
+            context_length=16,
+        )
+        # 小型モデルを初期化する
+        model = BokuNanoForCausalLM(config)
+        # 自動削除される一時ディレクトリを作る
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            # 最終重みパスを作る
+            output_path = Path(temporary_directory) / "model.safetensors"
+            # 本学習と同じ保存関数を実行する
+            sha256 = save_final_weights(output_path, model)
+            # 重みファイルが作られたことを確認する
+            self.assertTrue(output_path.is_file())
+            # SHA-256が64文字であることを確認する
+            self.assertEqual(len(sha256), 64)
 
     # Git管理済み設定とartifactの固定値を確認する
     def test_production_configuration_is_self_consistent(self) -> None:

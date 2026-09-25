@@ -1091,6 +1091,7 @@ def train(
         "max_steps_override": max_steps_override,
         "resume_from": display_path(resume_from) if resume_from is not None else None,
         "versions": {
+            "numpy": package_version("numpy"),
             "python": sys.version.split()[0],
             "torch": torch.__version__,
             "tokenizers": package_version("tokenizers"),

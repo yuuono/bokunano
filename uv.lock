@@ -205,6 +205,7 @@ instruction-generation = [
     { name = "transformers" },
 ]
 model-training = [
+    { name = "numpy" },
     { name = "pyyaml" },
     { name = "safetensors" },
     { name = "tokenizers" },
@@ -226,6 +227,7 @@ instruction-generation = [
     { name = "transformers", specifier = "==4.51.3" },
 ]
 model-training = [
+    { name = "numpy", specifier = "==2.5.3" },
     { name = "pyyaml", specifier = "==6.0.3" },
     { name = "safetensors", specifier = "==0.8.0" },
     { name = "tokenizers", specifier = "==0.21.4" },
