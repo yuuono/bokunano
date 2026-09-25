@@ -140,6 +140,8 @@ class BokuNanoTrainingTest(unittest.TestCase):
         )
         # parameter数を確認する
         self.assertEqual(summary["parameter_count"], 15_735_168)
+        # 標準設定が3 epochであることを確認する
+        self.assertEqual(summary["epochs"], 3)
         # 固定BPEのSHA-256を確認する
         self.assertEqual(
             summary["tokenizer_sha256"],
@@ -149,6 +151,24 @@ class BokuNanoTrainingTest(unittest.TestCase):
         self.assertEqual(
             summary["source_archive_sha256"],
             "799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807",
+        )
+
+    # CLI相当のepoch差し替えを確認する
+    def test_epoch_override_is_applied_without_editing_yaml(self) -> None:
+        """10 epoch指定が検証結果へ反映される。"""
+
+        # 実YAMLへ10 epochの実行時上書きを適用する
+        summary = validate_configuration(
+            Path("config/boku_nano_bpe_2048.yaml"),
+            output_override=Path("data/models/boku_nano_bpe_2048_10epoch"),
+            epochs_override=10,
+        )
+        # 実行時epoch数だけが10へ変わることを確認する
+        self.assertEqual(summary["epochs"], 10)
+        # 別出力先が使われることを確認する
+        self.assertEqual(
+            summary["output_directory"],
+            "data/models/boku_nano_bpe_2048_10epoch",
         )
 
 

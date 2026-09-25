@@ -213,6 +213,8 @@ uv run --group model-training --python 3.12.12 python \
 
 `--max-steps`は配線確認用であり、本学習結果には使用しない。指定時のmanifestは`stopped_at_max_steps`となり、3 epoch完了モデルと区別する。
 
+epoch数を変える追加実験では元YAMLを書き換えず、`--epochs`と別の`--output-dir`を指定する。例えば10 epoch実験は`--epochs 10 --output-dir data/models/boku_nano_bpe_2048_10epoch`とする。学習率scheduleも全10 epochを前提に最初から作るため、3 epoch checkpointへ継ぎ足さずランダム初期値から学習する。
+
 ## 12. 学習完了後の必須確認
 
 1. `training_manifest.json`が`status=completed`である。
