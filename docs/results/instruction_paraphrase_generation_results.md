@@ -118,4 +118,4 @@ uv run --group instruction-generation --python 3.12.12 python \
 
 承認済みJSONLには、元指示ID、意味AST、モデルrevision、sampling設定、seed、prompt hashなど候補JSONLの全項目をそのまま引き継いだ。そのうえで、承認前の`pending`を`candidate_review_status`へ退避し、`review_status=approved`、承認者、承認日時、承認方式を追加した。件数、検証内容、SHA-256は[`instruction_paraphrase_approval_results.md`](instruction_paraphrase_approval_results.md)に記録している。
 
-次工程は、承認済み言い換えを`spec_id`と意味ASTで検証済みコードへ対応付けることである。ただし、96,390件とコードの全直積を無制限に作らず、意味ASTごとの採用上限と均衡化規則を先に確定してから最終訓練レコードを作る。
+次工程では、承認済み言い換え96,390件を追加せず、各`source_instruction_id`が指すルール生成指示と一対一で置き換える。置換後も訓練用指示は192,900件である。その後、同じ`spec_id`と意味ASTを持つ検証済みコードへ一対一で対応付ける。結合前の件数分布は[`pre_join_distribution_report.md`](pre_join_distribution_report.md)に記録した。

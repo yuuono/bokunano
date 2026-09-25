@@ -1,0 +1,133 @@
+{
+  "by_operation_count": {
+    "1": {
+      "code_count": 480,
+      "final_instruction_count": 460,
+      "instruction_minus_code": -20,
+      "retained_rule_count": 221,
+      "rule_instruction_count": 460,
+      "semantic_ast_count": 24,
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 239
+    },
+    "2": {
+      "code_count": 8680,
+      "final_instruction_count": 8680,
+      "instruction_minus_code": 0,
+      "retained_rule_count": 4341,
+      "rule_instruction_count": 8680,
+      "semantic_ast_count": 434,
+      "teacher_failure_count": 1,
+      "teacher_replacement_count": 4339
+    },
+    "3": {
+      "code_count": 183760,
+      "final_instruction_count": 183760,
+      "instruction_minus_code": 0,
+      "retained_rule_count": 91948,
+      "rule_instruction_count": 183760,
+      "semantic_ast_count": 9188,
+      "teacher_failure_count": 68,
+      "teacher_replacement_count": 91812
+    }
+  },
+  "distribution": {
+    "codes_per_ast": {
+      "20": 9646
+    },
+    "final_instructions_per_ast": {
+      "11": 1,
+      "16": 1,
+      "17": 1,
+      "18": 1,
+      "19": 2,
+      "20": 9640
+    },
+    "teacher_failures_per_ast": {
+      "0": 9586,
+      "1": 52,
+      "2": 6,
+      "3": 2
+    },
+    "teacher_replacements_per_ast": {
+      "10": 9586,
+      "7": 2,
+      "8": 6,
+      "9": 52
+    }
+  },
+  "final_instruction_count_after_replacement": 192900,
+  "instruction_minus_code": -20,
+  "replacement_policy": "replace_source_instruction_one_to_one",
+  "report_date": "2026-09-25",
+  "retained_rule_instruction_count": 96510,
+  "rule_instruction_count_before_replacement": 192900,
+  "scope": "train",
+  "semantic_ast_count": 9646,
+  "teacher_failure_count": 70,
+  "teacher_replacement_count": 96390,
+  "teacher_selected_source_count": 96460,
+  "under_twenty_instruction_asts": [
+    {
+      "code_count": 20,
+      "final_instruction_count": 16,
+      "instruction_shortfall": 4,
+      "operation": "{\"filter\":[\"multiple_of_k\"]}",
+      "operation_count": 1,
+      "retained_rule_count": 6,
+      "spec_id": "combined-000007",
+      "teacher_replacement_count": 10
+    },
+    {
+      "code_count": 20,
+      "final_instruction_count": 19,
+      "instruction_shortfall": 1,
+      "operation": "{\"filter\":[\"positive\"]}",
+      "operation_count": 1,
+      "retained_rule_count": 9,
+      "spec_id": "combined-000008",
+      "teacher_replacement_count": 10
+    },
+    {
+      "code_count": 20,
+      "final_instruction_count": 18,
+      "instruction_shortfall": 2,
+      "operation": "{\"filter\":[\"negative\"]}",
+      "operation_count": 1,
+      "retained_rule_count": 8,
+      "spec_id": "combined-000009",
+      "teacher_replacement_count": 10
+    },
+    {
+      "code_count": 20,
+      "final_instruction_count": 11,
+      "instruction_shortfall": 9,
+      "operation": "{\"filter\":[\"zero\"]}",
+      "operation_count": 1,
+      "retained_rule_count": 1,
+      "spec_id": "combined-000010",
+      "teacher_replacement_count": 10
+    },
+    {
+      "code_count": 20,
+      "final_instruction_count": 19,
+      "instruction_shortfall": 1,
+      "operation": "{\"map\":[\"negate\"]}",
+      "operation_count": 1,
+      "retained_rule_count": 9,
+      "spec_id": "combined-000016",
+      "teacher_replacement_count": 10
+    },
+    {
+      "code_count": 20,
+      "final_instruction_count": 17,
+      "instruction_shortfall": 3,
+      "operation": "{\"order\":\"ascending\"}",
+      "operation_count": 1,
+      "retained_rule_count": 7,
+      "spec_id": "combined-000019",
+      "teacher_replacement_count": 10
+    }
+  ],
+  "verified_code_count": 192920
+}

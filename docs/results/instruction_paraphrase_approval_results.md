@@ -57,4 +57,4 @@ ZIPには`approved_teacher_paraphrases.jsonl`だけを格納している。ZIP�
 
 ## 5. 次工程
 
-承認済み言い換えを`spec_id`と意味ASTで検証済みコードへ対応付ける。その前に、意味ASTごとの採用上限と均衡化規則を決め、言い換え数とコード数の全直積による件数膨張を防ぐ。
+承認済み言い換え96,390件は追加せず、`source_instruction_id`が指すルール生成指示と一対一で置き換える。言い換えを取得できなかった70件は元文を維持するため、置換後の訓練用指示総数は192,900件から変わらない。置換後の分布とコードとの差は[`pre_join_distribution_report.md`](pre_join_distribution_report.md)に記録した。
