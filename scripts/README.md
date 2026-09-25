@@ -214,6 +214,28 @@ validation用build入力64件、normal・compositional・paraphrase・repetition
 
 2026年9月25日の実行件数、成果物SHA-256、filter全不合格へ到達不能な12 ASTは、[`evaluation_input_generation_results.md`](../docs/results/evaluation_input_generation_results.md)に記録する。
 
+### 評価用最終レコードの結合
+
+6種類の評価指示・検証済みコード・評価入力参照を結合し、Git管理用の決定的BZIP2 ZIPを作る。
+
+```bash
+uv run --python 3.12.12 python \
+  scripts/instruction_generation/build_final_evaluation_records.py \
+  --evaluation-instructions-archive data/archives/rule_generated_evaluation_instructions_2026-09-24.zip \
+  --paraphrase-instructions-archive data/archives/paraphrase_test_instructions_2026-09-24.zip \
+  --evaluation-code-archive data/archives/evaluation_python_code_candidates_2026-09-20.zip \
+  --multi-operation-code-archive data/archives/multi_operation_python_code_candidates_2026-09-20.zip \
+  --single-operation-codes data/code_candidates/single_operation/python_code_candidates.jsonl \
+  --evaluation-input-stats data/evaluation_inputs/evaluation_input_stats.json \
+  --output-dir data/final/evaluation \
+  --archive data/archives/final_evaluation_dataset_records_2026-09-25.zip \
+  --stats data/final/final_evaluation_dataset_stats.json \
+  --expected-record-count 108590 \
+  --pairing-seed 20260925
+```
+
+展開済み6 JSONLはローカル確認用であり、Gitへは追加しない。評価ZIPはvalidation、normal、compositional、paraphrase、repetition、boundaryの順で6メンバーを格納する。
+
 ## 検証
 
 ```bash

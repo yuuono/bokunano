@@ -602,7 +602,31 @@ uv run --python 3.12.12 python \
 
 最終JSONLは約700 MiBになるため、Git管理用ZIPは内容を削らずBZIP2方式で圧縮する。単一ファイルを100,000,000 bytes未満に保ち、一般的な`unzip`で展開検査できることを確認する。
 
-## 8. 実施順チェックリスト
+## 8. 評価指示・コード・入力参照を最終結合する
+
+評価用のルール生成指示、言い換え評価指示、検証済みコード、6種類の評価入力manifestを、次のコマンドで最終評価レコードへ結合する。
+
+```bash
+uv run --python 3.12.12 python \
+  scripts/instruction_generation/build_final_evaluation_records.py \
+  --evaluation-instructions-archive data/archives/rule_generated_evaluation_instructions_2026-09-24.zip \
+  --paraphrase-instructions-archive data/archives/paraphrase_test_instructions_2026-09-24.zip \
+  --evaluation-code-archive data/archives/evaluation_python_code_candidates_2026-09-20.zip \
+  --multi-operation-code-archive data/archives/multi_operation_python_code_candidates_2026-09-20.zip \
+  --single-operation-codes data/code_candidates/single_operation/python_code_candidates.jsonl \
+  --evaluation-input-stats data/evaluation_inputs/evaluation_input_stats.json \
+  --output-dir data/final/evaluation \
+  --archive data/archives/final_evaluation_dataset_records_2026-09-25.zip \
+  --stats data/final/final_evaluation_dataset_stats.json \
+  --expected-record-count 108590 \
+  --pairing-seed 20260925
+```
+
+validation 24,040件、normal 24,040件、compositional 13,400件、repetition 23,040件は、各意味AST内の指示20件とコード20件を元順序で一対一結合する。paraphrase 30件は`test_only`表現へ同じ単独操作の検証済み訓練コードを決定的に割り当てる。boundary 24,040件はnormalを派生元として指示とコードを維持し、境界入力集合の参照へ差し替える。
+
+処理は6集合108,590件の全`record_id`一意性、意味AST一致、コード検証結果、評価入力manifestのSHA-256、元入力不変、ZIPメンバー順とCRCを検査する。展開済み6 JSONLはローカル確認用とし、GitではBZIP2形式の評価用ZIPと集計JSONを管理する。
+
+## 9. 実施順チェックリスト
 
 ### 表現辞書
 
@@ -632,7 +656,7 @@ uv run --python 3.12.12 python \
 - [x] 承認済み言い換えがすべて`dictionary=train`であることを確認した
 - [x] 最終レコードの必須項目とハッシュを確認した
 
-## 9. 完了条件
+## 10. 完了条件
 
 次をすべて満たしたら、日本語指示生成を完了とする。
 

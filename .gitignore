@@ -41,3 +41,4 @@ data/instructions/approved_teacher_paraphrases.jsonl
 # 置換反映済み訓練指示は生JSONLではなく決定的ZIPをGitで管理する。
 data/instructions/replacement_resolved_train_instructions.jsonl
 data/final/final_dataset_records.jsonl
+data/final/evaluation/*.jsonl

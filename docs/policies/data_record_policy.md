@@ -409,8 +409,22 @@ input_set: build | hidden | boundary
 | `data/code_candidates/selected/verified_python_codes.jsonl` | 検証・重複除外・最大件数選抜を通過したコード |
 | 各コード候補ディレクトリの`rejected_python_codes.jsonl` | 不採用コードと理由 |
 | `data/final/final_dataset_records.jsonl` | 日本語指示とコードを結合した最終レコード |
+| `data/final/evaluation/*.jsonl` | 6評価集合ごとの展開済み最終レコード（ローカル確認用） |
+| `data/archives/final_evaluation_dataset_records_2026-09-25.zip` | 6評価集合の最終レコードを格納したGit管理用ZIP |
 
 hidden入力を別管理する場合は、公開またはモデル入力用のファイルへ実データを複製せず、テストケースIDだけを保存する。
+
+## 評価用最終レコードの結合
+
+評価用レコードは、指示・コード・評価入力の実体を変更せず、同じ意味ASTに属するものだけを結合する。`tests`には入力値そのものではなく、評価入力manifestの`test_set_id`を1件保存する。
+
+- `validation`、`normal`、`compositional`、`repetition`は、意味ASTごとに指示20件と検証済みコード20件を元順序で一対一対応させる。直積は作らない。
+- `paraphrase`は、`test_only`辞書の単独操作指示30件へ、同じ意味ASTの検証済み訓練コードを固定seedによる安定順位で重複なく割り当てる。評価対象は未学習の日本語表現であり、コードの意味は訓練済みでもよい。
+- `boundary`は、`normal`の指示・コード・`family_id`をそのまま使用し、`test_suite`、`input_set`、`tests`だけを境界評価用に変更する。派生元は`derived_from_record_id`で追跡する。
+- `record_id`は、`code_id`、日本語指示本文、`test_suite`、`tests`から再計算する。そのため、同じ指示とコードでもnormalとboundaryは別レコードになる。
+- 6集合を横断して`record_id`が一意であること、各入力ファイルの処理前後SHA-256が一致すること、ZIPのCRC検査が通ることを完了条件にする。
+
+展開済みJSONLは大きいためGitへ追加せず、固定日時・固定権限・固定メンバー順でBZIP2圧縮したZIPと集計JSONを管理する。
 
 ## 最終確認
 
