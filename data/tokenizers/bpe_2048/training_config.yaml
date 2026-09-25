@@ -1,0 +1,77 @@
+version: 1
+source:
+  archive: data/archives/final_train_dataset_records_2026-09-25.zip
+  member: final_dataset_records.jsonl
+  expected_archive_sha256: 799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807
+  expected_record_count: 192900
+  required_values:
+    split: train
+    test_suite: null
+    dictionary: train
+    input_set: build
+corpus:
+  fields:
+  - instruction_ja
+  - reference_code
+  deduplicate:
+    instruction_ja: true
+    reference_code: true
+normalizer:
+  type: identity
+pre_tokenizer:
+  type: byte_level
+  add_prefix_space: false
+  use_regex: false
+  initial_alphabet: byte_level_256
+model:
+  type: bpe
+  vocab_size: 2048
+  byte_fallback: true
+  unk_token: <|unk|>
+  min_frequency: 5
+  max_token_length: 24
+  dropout: 0.0
+special_tokens:
+- name: pad
+  token: <|pad|>
+  id: 0
+- name: bos
+  token: <|bos|>
+  id: 1
+- name: eos
+  token: <|eos|>
+  id: 2
+- name: unk
+  token: <|unk|>
+  id: 3
+- name: task
+  token: <|task|>
+  id: 4
+- name: code
+  token: <|code|>
+  id: 5
+- name: explanation
+  token: <|explanation|>
+  id: 6
+sequence:
+  template: '<|bos|><|task|>
+
+    {instruction_ja}
+
+    <|code|>
+
+    {reference_code}<|eos|>'
+  required_special_tokens:
+  - bos
+  - task
+  - code
+  - eos
+validation:
+  model_max_length: 256
+  batch_size: 256
+  require_exact_vocab_size: true
+  require_roundtrip: true
+  require_zero_unk: true
+  fail_on_overlength: false
+output:
+  directory: data/tokenizers/bpe_2048

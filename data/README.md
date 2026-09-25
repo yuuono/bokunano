@@ -58,6 +58,14 @@ data/
 
 各入力集合の方針は[`evaluation_input_policy.md`](../docs/policies/evaluation_input_policy.md)、実行結果は[`evaluation_input_generation_results.md`](../docs/results/evaluation_input_generation_results.md)を参照する。
 
+## `tokenizers`
+
+| ディレクトリ | 内容 | 状態 |
+|---|---|---|
+| `bpe_2048/` | 訓練データだけで学習したBPE 2,048語彙、設定、語彙一覧、集計 | Unigram比較前の候補 |
+
+BPE候補の学習・全件検証結果は[`bpe_tokenizer_training_results.md`](../docs/results/bpe_tokenizer_training_results.md)を参照する。BPEとUnigramの比較が完了するまで、`bpe_2048/`を最終採用トークナイザとは扱わない。
+
 ## 大容量生成物のZIP
 
 2・3操作の`python_code_candidates.jsonl`と展開済み全文指示JSONLは容量が大きいため、Gitでは直接管理しない。Gitでは次のZIPを管理する。

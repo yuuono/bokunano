@@ -1,0 +1,649 @@
+{
+  "actual_vocab_size": 2048,
+  "byte_fallback": true,
+  "config_path": "config/tokenizer_bpe_2048.yaml",
+  "config_sha256": "13972b30b97c956a0ffc3ad9958e191be126aedc72e0d1c0909b7d1548b43582",
+  "configured_vocab_size": 2048,
+  "corpus": {
+    "character_count_by_field": {
+      "instruction_ja": 12256762,
+      "reference_code": 47302604
+    },
+    "deduplicated_text_count_by_field": {
+      "instruction_ja": 1171
+    },
+    "utf8_byte_count_by_field": {
+      "instruction_ja": 33244471,
+      "reference_code": 52059684
+    },
+    "yielded_text_count": 384629,
+    "yielded_text_count_by_field": {
+      "instruction_ja": 191729,
+      "reference_code": 192900
+    }
+  },
+  "files": {
+    "special_tokens_map.json": {
+      "bytes": 199,
+      "sha256": "b2c2157d8b8e45ac214154bb1aeeeab40cf48184f7022d38d792578bd1643435"
+    },
+    "tokenizer.json": {
+      "bytes": 176013,
+      "sha256": "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293"
+    },
+    "tokenizer_config.json": {
+      "bytes": 344,
+      "sha256": "85045150d137194e7b93a2e486d057b374d6749f8460e49cb0860cf9ddc83e19"
+    },
+    "training_config.yaml": {
+      "bytes": 1424,
+      "sha256": "df16f104a07d27ad6da0f3a9c42eca9ebee1323296987766ae755df4a3bf1c0a"
+    },
+    "vocab.tsv": {
+      "bytes": 51017,
+      "sha256": "c4127ceeab2eb3b18e3f0b0fc12b9f7028359419a08655ec2d8f536a4e73d73d"
+    }
+  },
+  "generator_version": "1",
+  "model_parameters": {
+    "byte_fallback": true,
+    "dropout": 0.0,
+    "max_token_length": 24,
+    "min_frequency": 5,
+    "type": "bpe",
+    "unk_token": "<|unk|>",
+    "vocab_size": 2048
+  },
+  "model_type": "bpe",
+  "normalizer": {
+    "type": "identity"
+  },
+  "phase": "tokenizer_training",
+  "pre_tokenizer": {
+    "add_prefix_space": false,
+    "initial_alphabet": "byte_level_256",
+    "type": "byte_level",
+    "use_regex": false
+  },
+  "software": {
+    "python": "3.12.12",
+    "pyyaml": "6.0.3",
+    "tokenizers": "0.21.4"
+  },
+  "source_archive": "data/archives/final_train_dataset_records_2026-09-25.zip",
+  "source_member": "final_dataset_records.jsonl",
+  "source_record_count": 192900,
+  "source_sha256_after": "799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807",
+  "source_sha256_before": "799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807",
+  "source_unchanged": true,
+  "special_tokens": {
+    "bos": {
+      "id": 1,
+      "token": "<|bos|>"
+    },
+    "code": {
+      "id": 5,
+      "token": "<|code|>"
+    },
+    "eos": {
+      "id": 2,
+      "token": "<|eos|>"
+    },
+    "explanation": {
+      "id": 6,
+      "token": "<|explanation|>"
+    },
+    "pad": {
+      "id": 0,
+      "token": "<|pad|>"
+    },
+    "task": {
+      "id": 4,
+      "token": "<|task|>"
+    },
+    "unk": {
+      "id": 3,
+      "token": "<|unk|>"
+    }
+  },
+  "validation": {
+    "code_token_lengths": {
+      "count": 192900,
+      "max": 29,
+      "mean": 17.419735614307932,
+      "p50": 17,
+      "p95": 24,
+      "p99": 26
+    },
+    "explicit_byte_fallback_token_count": 0,
+    "instruction_token_lengths": {
+      "count": 192900,
+      "max": 75,
+      "mean": 11.554686365992742,
+      "p50": 11,
+      "p95": 15,
+      "p99": 19
+    },
+    "model_max_length": 256,
+    "overlength_count": 0,
+    "overlength_rate": 0.0,
+    "record_count": 192900,
+    "required_special_mismatch_count": 0,
+    "roundtrip_mismatch_count": 0,
+    "sequence_token_lengths": {
+      "count": 192900,
+      "max": 94,
+      "mean": 35.974421980300676,
+      "p50": 36,
+      "p95": 43,
+      "p99": 46
+    },
+    "top_100_tokens": [
+      {
+        "count": 579668,
+        "id": 205,
+        "token": "Ċ"
+      },
+      {
+        "count": 385800,
+        "id": 367,
+        "token": "defĠsolve"
+      },
+      {
+        "count": 385800,
+        "id": 366,
+        "token": "(xs:Ġlist[int],Ġk"
+      },
+      {
+        "count": 385800,
+        "id": 369,
+        "token": ":Ġint)Ġ"
+      },
+      {
+        "count": 317498,
+        "id": 382,
+        "token": "æķ´æķ°ãĥªãĤ¹ãĥĪxsãģ"
+      },
+      {
+        "count": 317112,
+        "id": 406,
+        "token": "¨æķ´æķ°kãĤĴåıĹãģĳ"
+      },
+      {
+        "count": 242834,
+        "id": 413,
+        "token": "ãģĦãģ¦ãģıãģłãģķãģĦãĢĤ"
+      },
+      {
+        "count": 193524,
+        "id": 368,
+        "token": "->Ġlist[int]:ĊĠĠĠĠ"
+      },
+      {
+        "count": 192900,
+        "id": 1,
+        "token": "<|bos|>"
+      },
+      {
+        "count": 192900,
+        "id": 4,
+        "token": "<|task|>"
+      },
+      {
+        "count": 192900,
+        "id": 5,
+        "token": "<|code|>"
+      },
+      {
+        "count": 192900,
+        "id": 2,
+        "token": "<|eos|>"
+      },
+      {
+        "count": 173312,
+        "id": 281,
+        "token": "result"
+      },
+      {
+        "count": 172424,
+        "id": 284,
+        "token": "output"
+      },
+      {
+        "count": 164418,
+        "id": 441,
+        "token": "Ġ=Ġ[]ĊĠĠĠĠforĠvalueĠinĠ"
+      },
+      {
+        "count": 164188,
+        "id": 416,
+        "token": "ãģłãģĳãĤĴæ®ĭãģĻĊĠĠĠĠ"
+      },
+      {
+        "count": 151844,
+        "id": 444,
+        "token": "->Ġlist[int]:ĊĠĠĠĠ#Ġ"
+      },
+      {
+        "count": 143136,
+        "id": 453,
+        "token": "Ġ=Ġ[valueĠforĠvalueĠinĠ"
+      },
+      {
+        "count": 136584,
+        "id": 460,
+        "token": "ħãģĹãģ¦ãģıãģłãģķãģĦãĢĤ"
+      },
+      {
+        "count": 136506,
+        "id": 435,
+        "token": "]ĊĠĠĠĠreturnĠresultĊ"
+      },
+      {
+        "count": 135508,
+        "id": 436,
+        "token": "]ĊĠĠĠĠreturnĠoutputĊ"
+      },
+      {
+        "count": 135266,
+        "id": 401,
+        "token": "åıĸãĤĬãĢģ"
+      },
+      {
+        "count": 133052,
+        "id": 438,
+        "token": "Ġ=Ġ[]ĊĠĠĠĠforĠxĠinĠ"
+      },
+      {
+        "count": 105696,
+        "id": 433,
+        "token": "result:Ġlist[int]"
+      },
+      {
+        "count": 104906,
+        "id": 434,
+        "token": "output:Ġlist[int]"
+      },
+      {
+        "count": 79784,
+        "id": 517,
+        "token": "ãģĻãĤĭsolveéĸ¢æķ°ãĤĴæĽ¸"
+      },
+      {
+        "count": 77284,
+        "id": 523,
+        "token": "ãĤĭsolveéĸ¢æķ°ãĤĴå®Łè£"
+      },
+      {
+        "count": 73592,
+        "id": 531,
+        "token": "åĢ¤ãģłãģĳãĤĴæ®ĭãģĻĊĠĠĠĠ"
+      },
+      {
+        "count": 62738,
+        "id": 448,
+        "token": "ãĤĭsolveéĸ¢æķ°ãĤĴæĽ¸"
+      },
+      {
+        "count": 62404,
+        "id": 573,
+        "token": "æķ´æķ°ãĥªãĤ¹ãĥĪxsãģĭãĤī"
+      },
+      {
+        "count": 57912,
+        "id": 451,
+        "token": "Ġ=Ġ[xĠforĠxĠinĠ"
+      },
+      {
+        "count": 48028,
+        "id": 491,
+        "token": "]ĊĠĠĠĠoutput"
+      },
+      {
+        "count": 46928,
+        "id": 490,
+        "token": "]ĊĠĠĠĠresult"
+      },
+      {
+        "count": 45816,
+        "id": 624,
+        "token": "resultĠ+=Ġ[value"
+      },
+      {
+        "count": 45680,
+        "id": 626,
+        "token": "outputĠ+=Ġ[value"
+      },
+      {
+        "count": 41564,
+        "id": 596,
+        "token": "output:ĊĠĠĠĠĠĠĠĠifĠ"
+      },
+      {
+        "count": 41520,
+        "id": 597,
+        "token": "result:ĊĠĠĠĠĠĠĠĠifĠ"
+      },
+      {
+        "count": 40432,
+        "id": 653,
+        "token": "->Ġlist[int]:ĊĠĠĠĠ#Ġk"
+      },
+      {
+        "count": 40236,
+        "id": 410,
+        "token": "]ĊĠĠĠĠ#Ġ"
+      },
+      {
+        "count": 38596,
+        "id": 657,
+        "token": "åĲĦè¦ģç´łãģ®çµ¶å¯¾åĢ¤"
+      },
+      {
+        "count": 38350,
+        "id": 595,
+        "token": "ãģĹãĢģãģĿãģ®å¾Į"
+      },
+      {
+        "count": 38096,
+        "id": 661,
+        "token": "åĲĦè¦ģç´łãģĭãĤīkãĤĴå¼"
+      },
+      {
+        "count": 37550,
+        "id": 569,
+        "token": "æŃ£ãģ®åĢ¤"
+      },
+      {
+        "count": 37506,
+        "id": 561,
+        "token": "å¥ĩæķ°"
+      },
+      {
+        "count": 37334,
+        "id": 664,
+        "token": "åħĪéłŃãģĭãĤīkåĢĭãĤĴåıĸ"
+      },
+      {
+        "count": 36384,
+        "id": 540,
+        "token": "ãĤ¼ãĥŃ"
+      },
+      {
+        "count": 35154,
+        "id": 622,
+        "token": "resultĠ+=Ġ[x"
+      },
+      {
+        "count": 35070,
+        "id": 407,
+        "token": "ãĤĭĊĠĠĠĠ"
+      },
+      {
+        "count": 35048,
+        "id": 623,
+        "token": "outputĠ+=Ġ[x"
+      },
+      {
+        "count": 34108,
+        "id": 680,
+        "token": "åĲĦè¦ģç´łãģ«kãĤĴåĬłãģĪ"
+      },
+      {
+        "count": 33570,
+        "id": 681,
+        "token": "æľ«å°¾ãģĭãĤīkåĢĭãĤĴåıĸ"
+      },
+      {
+        "count": 32454,
+        "id": 647,
+        "token": "]ĊĠĠĠĠ#ĠåĲĦè¦ģç´łãĤĴ"
+      },
+      {
+        "count": 32272,
+        "id": 557,
+        "token": "åģ¶æķ°"
+      },
+      {
+        "count": 32024,
+        "id": 690,
+        "token": "Ġ=Ġ[]ĊĠĠĠĠforĠxĠinĠxs"
+      },
+      {
+        "count": 31850,
+        "id": 415,
+        "token": "ãģĹãģ¦ãĢģ"
+      },
+      {
+        "count": 31464,
+        "id": 512,
+        "token": "åĲĦè¦ģç´łãģ®"
+      },
+      {
+        "count": 31214,
+        "id": 611,
+        "token": "ç¬¦åı·ãĤĴåıįè»¢"
+      },
+      {
+        "count": 30414,
+        "id": 481,
+        "token": "åħĪéłŃ"
+      },
+      {
+        "count": 29428,
+        "id": 715,
+        "token": "]ĊĠĠĠĠoutput:Ġlist[int]"
+      },
+      {
+        "count": 28970,
+        "id": 720,
+        "token": "]ĊĠĠĠĠresult:Ġlist[int]"
+      },
+      {
+        "count": 28252,
+        "id": 725,
+        "token": "ãģłãģĳãĤĴæ®ĭãģĹãĢģ"
+      },
+      {
+        "count": 28014,
+        "id": 518,
+        "token": "xs:ĊĠĠĠĠĠĠĠĠifĠ"
+      },
+      {
+        "count": 27706,
+        "id": 727,
+        "token": ":ĊĠĠĠĠĠĠĠĠoutputĠ+=Ġ[xĠ"
+      },
+      {
+        "count": 27550,
+        "id": 729,
+        "token": ":ĊĠĠĠĠĠĠĠĠresultĠ+=Ġ[xĠ"
+      },
+      {
+        "count": 27364,
+        "id": 721,
+        "token": "]ĊĠĠĠĠ#ĠkãĤĪãĤĬ"
+      },
+      {
+        "count": 26002,
+        "id": 745,
+        "token": "åĲĦè¦ģç´łãģ«kãĤĴæİĽãģĳ"
+      },
+      {
+        "count": 25954,
+        "id": 582,
+        "token": "ãģĻsolveéĸ¢æķ°ãĤĴæĽ¸"
+      },
+      {
+        "count": 25408,
+        "id": 650,
+        "token": "kä»¥ä¸ĭãģ®åĢ¤"
+      },
+      {
+        "count": 24976,
+        "id": 610,
+        "token": "kãģ®åĢįæķ°"
+      },
+      {
+        "count": 24882,
+        "id": 660,
+        "token": "result:Ġlist[int]Ġ=Ġ"
+      },
+      {
+        "count": 24716,
+        "id": 658,
+        "token": "output:Ġlist[int]Ġ=Ġ"
+      },
+      {
+        "count": 24708,
+        "id": 418,
+        "token": "Ġ=Ġ[valueĠ"
+      },
+      {
+        "count": 24294,
+        "id": 347,
+        "token": "ãģ¦ãĢģ"
+      },
+      {
+        "count": 24266,
+        "id": 769,
+        "token": "æĺĩéłĨãģ«ä¸¦ãģ¹ãĤĭĊĠĠĠĠ"
+      },
+      {
+        "count": 23648,
+        "id": 774,
+        "token": "åĩºãģĻsolveéĸ¢æķ°ãĤĴæĽ¸"
+      },
+      {
+        "count": 23346,
+        "id": 655,
+        "token": "Ġ=Ġ[xĠforĠxĠinĠxsĠifĠ"
+      },
+      {
+        "count": 23158,
+        "id": 778,
+        "token": "outputĠ=Ġ[xĠforĠxĠinĠ"
+      },
+      {
+        "count": 23092,
+        "id": 781,
+        "token": "resultĠ=Ġ[xĠforĠxĠinĠ"
+      },
+      {
+        "count": 23044,
+        "id": 793,
+        "token": "éłĨãģ«ä¸¦ãģ¹æĽ¿ãģĪ"
+      },
+      {
+        "count": 22990,
+        "id": 785,
+        "token": "éłĨãĤĴåıįè»¢ãģĻãĤĭĊĠĠĠĠ"
+      },
+      {
+        "count": 22474,
+        "id": 409,
+        "token": "ãģłãģĳãĤĴæ®ĭãģĻ"
+      },
+      {
+        "count": 22386,
+        "id": 470,
+        "token": "ãģĻãĤĭĊĠĠĠĠ"
+      },
+      {
+        "count": 22308,
+        "id": 800,
+        "token": "ãģĭãĤī1åĢĭãģĬãģįãģ«åıĸ"
+      },
+      {
+        "count": 22252,
+        "id": 532,
+        "token": ":ĊĠĠĠĠĠĠĠĠresultĠ+=Ġ["
+      },
+      {
+        "count": 22136,
+        "id": 533,
+        "token": ":ĊĠĠĠĠĠĠĠĠoutputĠ+=Ġ["
+      },
+      {
+        "count": 21944,
+        "id": 812,
+        "token": "éĻįéłĨãģ«ä¸¦ãģ¹ãĤĭĊĠĠĠĠ"
+      },
+      {
+        "count": 21354,
+        "id": 777,
+        "token": "åĲĦè¦ģç´łãĤĴäºĮä¹Ĺ"
+      },
+      {
+        "count": 19188,
+        "id": 607,
+        "token": "å°ıãģķãģĦ"
+      },
+      {
+        "count": 19072,
+        "id": 708,
+        "token": "kæľªæºĢãģ®åĢ¤"
+      },
+      {
+        "count": 18348,
+        "id": 739,
+        "token": "ãĢģãģĿãģ®å¾Į"
+      },
+      {
+        "count": 18212,
+        "id": 414,
+        "token": "solveéĸ¢æķ°ãĤĴæĽ¸"
+      },
+      {
+        "count": 17962,
+        "id": 473,
+        "token": "solveéĸ¢æķ°ãĤĴå®Łè£"
+      },
+      {
+        "count": 17958,
+        "id": 747,
+        "token": "è²łãģ®æķ°"
+      },
+      {
+        "count": 17782,
+        "id": 737,
+        "token": "==Ġ0:ĊĠĠĠĠĠĠĠĠĠĠĠĠ"
+      },
+      {
+        "count": 17730,
+        "id": 838,
+        "token": "ãĤĴæ®ĭãģĹãģ¦ãĢģ"
+      },
+      {
+        "count": 17554,
+        "id": 580,
+        "token": "å¤§ãģįãģĦ"
+      },
+      {
+        "count": 17512,
+        "id": 846,
+        "token": "ãĤĴæĬ½åĩºãģĹãģ¦ãĢģ"
+      },
+      {
+        "count": 17342,
+        "id": 847,
+        "token": "kãĤĪãĤĬå¤§ãģįãģĦåĢ¤"
+      },
+      {
+        "count": 17310,
+        "id": 424,
+        "token": "ãģĹãĢģ"
+      },
+      {
+        "count": 17232,
+        "id": 851,
+        "token": "ãģĻsolveéĸ¢æķ°ãĤĴå®Łè£"
+      }
+    ],
+    "total_encoded_token_count": 12528632,
+    "unk_token": "<|unk|>",
+    "unk_token_count": 0,
+    "unused_vocab_count": 380,
+    "used_vocab_count": 1668
+  }
+}

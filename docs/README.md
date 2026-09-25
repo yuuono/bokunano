@@ -44,3 +44,4 @@ docs/
 - [`results/final_train_dataset_results.md`](results/final_train_dataset_results.md): 置換反映済み日本語指示192,900件と検証済みコードの最終結合結果
 - [`results/evaluation_input_generation_results.md`](results/evaluation_input_generation_results.md): validation・hidden・boundary評価入力6集合の生成・検証結果
 - [`results/final_evaluation_dataset_results.md`](results/final_evaluation_dataset_results.md): 6評価集合108,590件の最終結合・ZIP作成結果
+- [`results/bpe_tokenizer_training_results.md`](results/bpe_tokenizer_training_results.md): 訓練データ限定BPE 2,048語彙候補の学習・全件検証結果
