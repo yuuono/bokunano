@@ -106,6 +106,22 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+# リポジトリ内のパスを移植可能な相対表記へ変換する
+def display_path(path: Path) -> str:
+    """現在の作業ディレクトリ内なら相対パス、それ以外なら絶対パスを返す。"""
+
+    # 正規化済みパスを作る
+    resolved = path.resolve()
+    # 現在の作業ディレクトリからの相対化を試す
+    try:
+        # clone先に依存しないPOSIX相対パスを返す
+        return resolved.relative_to(Path.cwd().resolve()).as_posix()
+    # リポジトリ外のテスト入力などは絶対パスを維持する
+    except ValueError:
+        # 正規化済み絶対パスを返す
+        return str(resolved)
+
+
 # object型設定項目を取得する
 def require_mapping(value: Any, label: str) -> dict[str, Any]:
     """値がobjectでなければ設定エラーにする。"""
@@ -1054,13 +1070,13 @@ def train_tokenizer(
                 name: {"token": by_name[name], "id": ids_by_name[name]}
                 for name in REQUIRED_SPECIAL_TOKEN_NAMES
             },
-            "source_archive": str(archive_path),
+            "source_archive": display_path(archive_path),
             "source_member": config["source"]["member"],
             "source_record_count": config["source"]["expected_record_count"],
             "source_sha256_before": source_sha256_before,
             "source_sha256_after": source_sha256_after,
             "source_unchanged": True,
-            "config_path": str(config_path.resolve()),
+            "config_path": display_path(config_path),
             "config_sha256": file_sha256(config_path),
             "corpus": corpus_stats,
             "validation": validation_stats,

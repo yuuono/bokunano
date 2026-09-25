@@ -17,12 +17,21 @@ import yaml
 from tokenizers import Tokenizer
 
 # トークナイザ訓練関数とハッシュ関数を読み込む
-from scripts.tokenizer.train_tokenizer import file_sha256, train_tokenizer
+from scripts.tokenizer.train_tokenizer import display_path, file_sha256, train_tokenizer
 
 
 # BPE・Unigram共通処理をまとめて検証する
 class TrainTokenizerTest(unittest.TestCase):
     """両model typeの固定ID、完全復元、入力不変を確認する。"""
+
+    # リポジトリ内パスがclone位置を含まないことを検証する
+    def test_display_path_uses_repository_relative_path(self) -> None:
+        """現在の作業ディレクトリ配下をPOSIX相対パスへ変換する。"""
+
+        # リポジトリ内を想定したパスを作る
+        path = Path.cwd() / "config" / "tokenizer_bpe_2048.yaml"
+        # clone先を含まない表記になることを確認する
+        self.assertEqual(display_path(path), "config/tokenizer_bpe_2048.yaml")
 
     # BPEとUnigramを同じ入力・設定構造から生成する
     def test_trains_bpe_and_unigram_from_train_records_only(self) -> None:
