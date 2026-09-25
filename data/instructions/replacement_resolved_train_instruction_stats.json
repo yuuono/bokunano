@@ -1,0 +1,48 @@
+{
+  "all_rule_instruction_count": 277420,
+  "approved_paraphrases": "/home/ono_yusuke/my_git/bokunano/data/instructions/approved_teacher_paraphrases.jsonl",
+  "approved_paraphrases_sha256_after": "b20b136627504d52168e977cd52ce2ebf3d55fb7406d36754ad678305313e4e1",
+  "approved_paraphrases_sha256_before": "b20b136627504d52168e977cd52ce2ebf3d55fb7406d36754ad678305313e4e1",
+  "archive": "/home/ono_yusuke/my_git/bokunano/data/archives/replacement_resolved_train_instructions_2026-09-25.zip",
+  "archive_bytes": 55133135,
+  "archive_member": "replacement_resolved_train_instructions.jsonl",
+  "archive_sha256": "7a90b24796e7ef2ad9d9510168e734df7556b18faa092a00f81466f96a9818c2",
+  "counts_by_operation_count": {
+    "1": 460,
+    "2": 8680,
+    "3": 183760
+  },
+  "failure_retained_count": 70,
+  "instructions_per_semantic_ast_distribution": {
+    "11": 1,
+    "16": 1,
+    "17": 1,
+    "18": 1,
+    "19": 2,
+    "20": 9640
+  },
+  "non_train_source_instruction_count": 84520,
+  "output_instruction_count": 192900,
+  "output_jsonl": "/home/ono_yusuke/my_git/bokunano/data/instructions/replacement_resolved_train_instructions.jsonl",
+  "output_jsonl_bytes": 346826926,
+  "output_jsonl_sha256": "a33ec7d4cf9a7e14581113dbbf85266ce8c55796db9e947ebf2f9f7959cef73b",
+  "paraphrase_generation_stats": "/home/ono_yusuke/my_git/bokunano/data/instructions/teacher_paraphrase_generation_stats.json",
+  "paraphrase_generation_stats_sha256_after": "6ea43dbeb2fb0fcd339348012e2acdc5b3ac76c7d9c34528f7c409f6b88d167a",
+  "paraphrase_generation_stats_sha256_before": "6ea43dbeb2fb0fcd339348012e2acdc5b3ac76c7d9c34528f7c409f6b88d167a",
+  "phase": "replacement_resolved_train_instructions",
+  "replacement_mode": "replace_source_instruction_one_to_one",
+  "replacement_status_counts": {
+    "rule_retained": 96510,
+    "teacher_replaced": 96390
+  },
+  "rule_instructions": "/home/ono_yusuke/my_git/bokunano/data/instructions/rule_generated_instructions.jsonl",
+  "rule_instructions_sha256_after": "419f26ed8797296975c801fab0adb2a944dcedd584470ed756f1c0bf1055a0a8",
+  "rule_instructions_sha256_before": "419f26ed8797296975c801fab0adb2a944dcedd584470ed756f1c0bf1055a0a8",
+  "rule_retained_count": 96510,
+  "semantic_ast_count": 9646,
+  "source_inputs_unchanged": true,
+  "teacher_replaced_count": 96390,
+  "teacher_selected_source_count": 96460,
+  "train_source_instruction_count": 192900,
+  "unselected_retained_count": 96440
+}
