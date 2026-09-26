@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">Boku Nanoの3エポックにおけるtrain lossとvalidation loss</title>
+  <desc id="desc">Train lossはエポック1から3まで0.4234、0.4016、0.3941。Validation lossは0.4181、0.3985、0.3939。両方ともエポックを追って低下している。</desc>
+  <rect width="960" height="520" fill="#ffffff"/>
+  <text x="480" y="34" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="600" fill="#111827">3エポックの loss 推移</text>
+  <text x="480" y="58" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#4b5563">train: 各エポック内の最終ログ区間平均 / validation: エポック終了時の全検証データ平均</text>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="110" y1="90" x2="880" y2="90"/>
+    <line x1="110" y1="136" x2="880" y2="136"/>
+    <line x1="110" y1="181" x2="880" y2="181"/>
+    <line x1="110" y1="227" x2="880" y2="227"/>
+    <line x1="110" y1="273" x2="880" y2="273"/>
+    <line x1="110" y1="319" x2="880" y2="319"/>
+    <line x1="110" y1="364" x2="880" y2="364"/>
+    <line x1="110" y1="410" x2="880" y2="410"/>
+  </g>
+  <g font-family="sans-serif" font-size="12" fill="#4b5563" text-anchor="end">
+    <text x="98" y="94">0.425</text>
+    <text x="98" y="140">0.420</text>
+    <text x="98" y="185">0.415</text>
+    <text x="98" y="231">0.410</text>
+    <text x="98" y="277">0.405</text>
+    <text x="98" y="323">0.400</text>
+    <text x="98" y="368">0.395</text>
+    <text x="98" y="414">0.390</text>
+  </g>
+  <line x1="110" y1="90" x2="110" y2="410" stroke="#6b7280" stroke-width="1.5"/>
+  <line x1="110" y1="410" x2="880" y2="410" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="24" y="250" transform="rotate(-90 24 250)" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#111827">Loss</text>
+  <g font-family="sans-serif" font-size="14" fill="#111827" text-anchor="middle">
+    <text x="230" y="438">Epoch 1</text>
+    <text x="495" y="438">Epoch 2</text>
+    <text x="760" y="438">Epoch 3</text>
+  </g>
+  <text x="495" y="472" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#111827">Epoch</text>
+  <polyline points="230,104 495,304 760,373" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+  <g fill="#2563eb" stroke="#ffffff" stroke-width="2">
+    <circle cx="230" cy="104" r="6"/>
+    <circle cx="495" cy="304" r="6"/>
+    <circle cx="760" cy="373" r="6"/>
+  </g>
+  <polyline points="230,153 495,332 760,375" fill="none" stroke="#d97706" stroke-width="3" stroke-dasharray="8 5" stroke-linejoin="round" stroke-linecap="round"/>
+  <g fill="#ffffff" stroke="#d97706" stroke-width="3">
+    <rect x="225" y="148" width="10" height="10"/>
+    <rect x="490" y="327" width="10" height="10"/>
+    <rect x="755" y="370" width="10" height="10"/>
+  </g>
+  <g font-family="sans-serif" font-size="12" font-weight="600">
+    <text x="230" y="91" text-anchor="middle" fill="#1d4ed8">0.4234</text>
+    <text x="495" y="291" text-anchor="middle" fill="#1d4ed8">0.4016</text>
+    <text x="748" y="357" text-anchor="end" fill="#1d4ed8">0.3941</text>
+    <text x="230" y="174" text-anchor="middle" fill="#b45309">0.4181</text>
+    <text x="495" y="353" text-anchor="middle" fill="#b45309">0.3985</text>
+    <text x="772" y="397" text-anchor="start" fill="#b45309">0.3939</text>
+  </g>
+  <g transform="translate(602 72)" font-family="sans-serif" font-size="13" fill="#111827">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#2563eb" stroke-width="3"/>
+    <circle cx="14" cy="0" r="5" fill="#2563eb"/>
+    <text x="38" y="5">Train loss</text>
+    <line x1="126" y1="0" x2="154" y2="0" stroke="#d97706" stroke-width="3" stroke-dasharray="8 5"/>
+    <rect x="136" y="-5" width="10" height="10" fill="#ffffff" stroke="#d97706" stroke-width="3"/>
+    <text x="164" y="5">Validation loss</text>
+  </g>
+</svg>
