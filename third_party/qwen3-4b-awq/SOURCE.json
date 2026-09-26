@@ -1,0 +1,11 @@
+{
+  "artifact": "Qwen3-4B-AWQ teacher model license",
+  "model_id": "Qwen/Qwen3-4B-AWQ",
+  "revision": "74d4bd2bd4bff9cafc9345221320bffb08b406a3",
+  "model_url": "https://huggingface.co/Qwen/Qwen3-4B-AWQ/tree/74d4bd2bd4bff9cafc9345221320bffb08b406a3",
+  "license": "Apache-2.0",
+  "license_source_url": "https://huggingface.co/Qwen/Qwen3-4B-AWQ/resolve/74d4bd2bd4bff9cafc9345221320bffb08b406a3/LICENSE",
+  "license_file": "third_party/qwen3-4b-awq/LICENSE",
+  "license_sha256": "5de36594c10839788a8c589443a8ef9d8b8d17c65a1b5807206ae037fc36c6bd",
+  "retrieved_at": "2026-09-26"
+}

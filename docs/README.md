@@ -2,11 +2,18 @@
 
 ```text
 docs/
+├── cards/           # Dataset CardとModel Card
 ├── policies/        # データ分割、コード生成、選抜、評価の方針
 ├── procedures/      # データ生成作業の具体的な手順
 ├── specifications/  # 意味ASTと参照インタプリタの仕様
 └── results/         # 実行済みの生成・検証結果
 ```
+
+## カード
+
+- [`cards/DATASET_CARD.md`](cards/DATASET_CARD.md): 訓練・評価データの生成方法、教師モデル、来歴、長い一致検査
+- [`cards/MODEL_CARD.md`](cards/MODEL_CARD.md): モデル構造、variant、用途、評価、制約、ライセンス来歴
+- [`../THIRD_PARTY.md`](../THIRD_PARTY.md): 教師モデル、ブラウザランタイム、主要依存関係のライセンスと来歴
 
 ## 方針
 
