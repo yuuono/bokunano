@@ -1,0 +1,281 @@
+{
+  "corpus": {
+    "file_count": 49,
+    "files": [
+      {
+        "path": "generated_code_verifier.py",
+        "sha256": "cdd09c188854aa531f8843e2ab8f004fcd119dbf7ed78bb941341740b620f30f",
+        "token_count": 1374
+      },
+      {
+        "path": "python_code_generator.py",
+        "sha256": "98fc8fb25118418de354fe15356df1aa2a6df85ba9c44c4223e9adb4f6a4742c",
+        "token_count": 4270
+      },
+      {
+        "path": "reference_interpreter.py",
+        "sha256": "0b6793d9e86b846911faa4bdb2d66c7385100f8d964bec1c6ca08fa8b5d0547e",
+        "token_count": 1215
+      },
+      {
+        "path": "scripts/code_generation/generate_python_code_candidates.py",
+        "sha256": "9444693e8afbcb5689decbcbdd53bbd7c1033bc0b91b43112e3b7b00fb50b8ad",
+        "token_count": 3941
+      },
+      {
+        "path": "scripts/code_generation/report_atomic_python_code_results.py",
+        "sha256": "41756a4d7002a61d9a1af69e1a394a5d3f12540c92316633bb27a8a3a24755a3",
+        "token_count": 1678
+      },
+      {
+        "path": "scripts/instruction_generation/build_approved_expression_dictionary.py",
+        "sha256": "2edd2f94540ca72c36b3212690efb5fc5f656b477e9667fdc7ffb7cd5101e601",
+        "token_count": 1850
+      },
+      {
+        "path": "scripts/instruction_generation/build_final_evaluation_records.py",
+        "sha256": "ef144250bef6a2a801da527ab6b7ac30d5b190db6b449541fa03d6e0c8e81e81",
+        "token_count": 5411
+      },
+      {
+        "path": "scripts/instruction_generation/build_final_train_records.py",
+        "sha256": "bc73aa558d5cce9b4efb050dbb57185aa3a6d32bdd99e374dad649fdd6a37390",
+        "token_count": 4627
+      },
+      {
+        "path": "scripts/instruction_generation/build_replacement_resolved_train_instructions.py",
+        "sha256": "b81f1be6b7879de68b2a138aea154384929bc78f5fa35764cf28657509752b09",
+        "token_count": 3001
+      },
+      {
+        "path": "scripts/instruction_generation/generate_atomic_expression_candidates.py",
+        "sha256": "3b8f7e584a0210b7c118876657c5e26b3a7761a2cb5c0d1712bf43c02a355f6d",
+        "token_count": 5686
+      },
+      {
+        "path": "scripts/instruction_generation/generate_instruction_paraphrase_candidates.py",
+        "sha256": "c2f79283746bfe544dd594e9135c7a53008d9ce33dd6a5abe76fe9fe848b6801",
+        "token_count": 3504
+      },
+      {
+        "path": "scripts/instruction_generation/generate_paraphrase_test_instructions.py",
+        "sha256": "3480487f97ff9a5115ea26568b9a89aae1253bfc80a04f6943e937d088a90464",
+        "token_count": 2887
+      },
+      {
+        "path": "scripts/instruction_generation/generate_rule_instructions.py",
+        "sha256": "2ca297876bbba0ff1e20e4eba31baa72fd56139e058a0786cd492ea6ad48f01f",
+        "token_count": 4459
+      },
+      {
+        "path": "scripts/instruction_generation/merge_approved_expression_review.py",
+        "sha256": "5a197907d389ca862761f366786fd99a154de3c80c50c937594e9131233acfa5",
+        "token_count": 1542
+      },
+      {
+        "path": "scripts/instruction_generation/prepare_approved_expression_release.py",
+        "sha256": "e5073568ab86eb5899000d8666c1a3387b93cb6504651c54e03e022e83a8dae9",
+        "token_count": 1617
+      },
+      {
+        "path": "scripts/instruction_generation/prepare_approved_teacher_paraphrases.py",
+        "sha256": "d2b44c59c23a65afcac800d7c96c3e468dcb84a2f641f0fed2957056dbdaadad",
+        "token_count": 1392
+      },
+      {
+        "path": "scripts/instruction_generation/qwen_teacher.py",
+        "sha256": "72ea97f006a4139c6389e187f57864ac1ec7c3dbe76dba8af2ed474460f992b6",
+        "token_count": 2507
+      },
+      {
+        "path": "scripts/instruction_generation/report_pre_join_distribution.py",
+        "sha256": "161e11136b75035141d05f159be5e264b6c50c32b20748d89eb31fce3ddb5b48",
+        "token_count": 4411
+      },
+      {
+        "path": "scripts/model/boku_nano.py",
+        "sha256": "f2db6d196d8420a295bc5124bc94e90edc992b3f1eda37f161d4410c19ca0109",
+        "token_count": 1911
+      },
+      {
+        "path": "scripts/model/evaluate_boku_nano.py",
+        "sha256": "cba021c12a7b75bded5e913e1a792add60c3a3e651915b1184369f422cad291e",
+        "token_count": 5143
+      },
+      {
+        "path": "scripts/model/evaluate_boku_nano_comparison.py",
+        "sha256": "47753847db2ab074cc36c90366b0320d8a81baf046be704b5bd8ba89b3d788bb",
+        "token_count": 4892
+      },
+      {
+        "path": "scripts/model/export_boku_nano_onnx.py",
+        "sha256": "e940eceb59eabb1254469a5f269ec506219b6f00b76f3737a55f83b8b54c6b6c",
+        "token_count": 1916
+      },
+      {
+        "path": "scripts/model/test_boku_nano_web.py",
+        "sha256": "2641c515ea09ecf737d5512c41086e1eaf2c9d99a4bbb276f91b207332a523ba",
+        "token_count": 673
+      },
+      {
+        "path": "scripts/model/train_boku_nano.py",
+        "sha256": "eb0512996490ea7a0586fc8e27290cf4a5e5c77b35c39fa3c71d10e3c601c332",
+        "token_count": 5423
+      },
+      {
+        "path": "scripts/semantic_asts/extract_compositional_semantic_asts.py",
+        "sha256": "607c40e5ac5b5003e84e78c309cc75bc00c235ca5da9e26857f5fe41b46cd841",
+        "token_count": 1221
+      },
+      {
+        "path": "scripts/semantic_asts/generate_combined_semantic_asts.py",
+        "sha256": "cca312b48936b161370e9ad9a9fea56b80f12fd55fc633daa7d8e7d735d73e40",
+        "token_count": 361
+      },
+      {
+        "path": "scripts/semantic_asts/generate_repetition_semantic_asts.py",
+        "sha256": "75d95c5147c99fe6451b2b3c386d4ae02400d8c8e7783cf97840ea3ea53347d3",
+        "token_count": 944
+      },
+      {
+        "path": "scripts/semantic_asts/split_semantic_asts.py",
+        "sha256": "b2b5e48df5381c49809cfd39f17f657c9200b8fddb8f5e61a6a44c1910c825db",
+        "token_count": 1846
+      },
+      {
+        "path": "scripts/tokenizer/train_tokenizer.py",
+        "sha256": "500a5545964454fe037d992cee5910a2ae4ddbce0b6468104c661e17fe01b40e",
+        "token_count": 5063
+      },
+      {
+        "path": "scripts/validation/check_long_code_matches.py",
+        "sha256": "2d31227a0c9052478ae6ca1420258b6b09d7886fdb191caf79f53cdfdf4beb44",
+        "token_count": 1478
+      },
+      {
+        "path": "scripts/validation/generate_evaluation_input_sets.py",
+        "sha256": "3750da68ac3a544757f9aaadddd6e8ccebce15c6a74c42685c986e5c4f24b706",
+        "token_count": 4021
+      },
+      {
+        "path": "scripts/validation/verify_multi_operation_code_candidates.py",
+        "sha256": "da04b4bcb281f34f7bc9466b64d09779aee34dbf60184d4cce05e98d417d6316",
+        "token_count": 1586
+      },
+      {
+        "path": "scripts/validation/verify_reference_interpreter.py",
+        "sha256": "e0589650da2bfa9f03c4082b08b284fe4cb1b7b44768785a2cbc48d7b2f5e1c9",
+        "token_count": 1639
+      },
+      {
+        "path": "structural_variant_generator.py",
+        "sha256": "06a62b90e8f69d852c716427cc09582178596e7dbc0b0deece151736f838d458",
+        "token_count": 1218
+      },
+      {
+        "path": "tests/test_build_approved_expression_dictionary.py",
+        "sha256": "6b0da01473034a98fec5118e0fa67660ffee3253b11ba22dc5869c73bf5d3d06",
+        "token_count": 233
+      },
+      {
+        "path": "tests/test_build_final_evaluation_records.py",
+        "sha256": "bfdfecdc89488d285824e4f64a3e6f04562db7e81e9b59f61e0e1e6b1a0bc720",
+        "token_count": 606
+      },
+      {
+        "path": "tests/test_build_final_train_records.py",
+        "sha256": "cfdb9254b44b7714b055cf181f4a2b48632ea9e1f0ea8814c2f411a54369a4d3",
+        "token_count": 1202
+      },
+      {
+        "path": "tests/test_build_replacement_resolved_train_instructions.py",
+        "sha256": "540768e22c2bbcd1db062bd223c3fa010776fcd95323c4e515e17c6d7cb833bc",
+        "token_count": 1094
+      },
+      {
+        "path": "tests/test_check_long_code_matches.py",
+        "sha256": "4240be9570e4d09b3300cc19d8fa86fc3211cc2ad1936af3b51f8e0b2d87dd47",
+        "token_count": 110
+      },
+      {
+        "path": "tests/test_evaluate_boku_nano.py",
+        "sha256": "08a9c3baac4c30be558780039b8580a14d1a8cc82748b27171bd57f6bf96c65c",
+        "token_count": 993
+      },
+      {
+        "path": "tests/test_generate_evaluation_input_sets.py",
+        "sha256": "ce48a366094d5319cfc947fca9a3f63334b72686c30930372c75bef155ea4051",
+        "token_count": 818
+      },
+      {
+        "path": "tests/test_generate_rule_instructions.py",
+        "sha256": "1a8a370782ae354114a70852ae12d3572dce9260514c6ab59016b2f748293369",
+        "token_count": 627
+      },
+      {
+        "path": "tests/test_paraphrase_test_policy.py",
+        "sha256": "c122e24c65cd798a3ba10566b53cc834426104bb00c5de5e4358629fb61d9f44",
+        "token_count": 915
+      },
+      {
+        "path": "tests/test_prepare_approved_expression_release.py",
+        "sha256": "e207343aba8ef9b67d5ddc29763e618d2e6bd3adafc57716bddb6c4005c96862",
+        "token_count": 868
+      },
+      {
+        "path": "tests/test_prepare_approved_teacher_paraphrases.py",
+        "sha256": "c2be4499d9d1682b1f708c9ff758a0ba087d729d1f25a5d69484edfa06066ef1",
+        "token_count": 526
+      },
+      {
+        "path": "tests/test_qwen_instruction_generation.py",
+        "sha256": "f2353da69691a17d40ab13d3c6ebefb53650774bb1827109477ff2c45e60122d",
+        "token_count": 1912
+      },
+      {
+        "path": "tests/test_report_pre_join_distribution.py",
+        "sha256": "a23f4a574211ec2262dedd3ce8566fa6afe1206f04a1cd0e56ccc5b4b979f6ea",
+        "token_count": 309
+      },
+      {
+        "path": "tests/test_train_boku_nano.py",
+        "sha256": "336a2401c64dacd7d2501068f50e1d1adbac44193c26a1b3b70736bf90f48920",
+        "token_count": 649
+      },
+      {
+        "path": "tests/test_train_tokenizer.py",
+        "sha256": "50d9cd0f027db9aeb8ed90dd82a193c8f326c94ae35fde94c7b866c9e1ecfc91",
+        "token_count": 915
+      }
+    ],
+    "ngram_count": 100261
+  },
+  "dataset": {
+    "archive": "data/archives/final_train_dataset_records_2026-09-25.zip",
+    "archive_sha256": "799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807",
+    "code_hash_error_count": 0,
+    "eligible_code_count": 192900,
+    "match_count": 0,
+    "matches": [],
+    "member": "final_dataset_records.jsonl",
+    "provenance_error_count": 0,
+    "record_count": 192900,
+    "reported_match_count": 0,
+    "unique_code_count": 192900
+  },
+  "method": "exact_python_lexical_token_ngram",
+  "minimum_match_tokens": 24,
+  "report_version": 1,
+  "scope": {
+    "corpus_origin": "first_party_repository_source",
+    "excluded_directories": [
+      ".git",
+      ".venv",
+      "__pycache__",
+      "data",
+      "third_party",
+      "web"
+    ],
+    "statement": "明示した比較コーパスに対する完全一致検査であり、インターネット上の全コードとの非一致を保証しない。"
+  }
+}
