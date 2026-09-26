@@ -1,0 +1,86 @@
+{
+  "format_version": 1,
+  "tokenizer": {
+    "path": "tokenizer.json",
+    "sha256": "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293"
+  },
+  "prompt_template": "<|bos|><|task|>\n{instruction_ja}\n<|code|>\n",
+  "special_token_ids": {
+    "pad": 0,
+    "bos": 1,
+    "eos": 2,
+    "unk": 3,
+    "task": 4,
+    "code": 5
+  },
+  "models": [
+    {
+      "id": "3epoch",
+      "label": "3エポックモデル",
+      "path": "models/boku-nano-3epoch.onnx",
+      "sha256": "1145db9ff1520e8fb3ad2eca7184b20f19390e90ee84f075a5105963d9a408b3",
+      "size_bytes": 63337554,
+      "source_sha256": "5623f066cc47ef58790e56d5a62fe9a258d502569995a7aff6c65558c622cf0e",
+      "parameter_count": 15735168,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 8.106231689453125e-06,
+            "mean_abs_diff": 1.3417402442428283e-06,
+            "generated_tokens": 8,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = [value for value in xs if value % 2 == 0]\n    return output\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 4.76837158203125e-06,
+            "mean_abs_diff": 8.158449418260716e-07,
+            "generated_tokens": 11,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = [abs(value) for value in xs]\n    result = sorted(result, reverse=True)\n    return result\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "10epoch",
+      "label": "10エポックモデル",
+      "path": "models/boku-nano-10epoch.onnx",
+      "sha256": "59df1f0dae8e4111f5b444d388c95f88273361ae293cc5154eda7150289eab11",
+      "size_bytes": 63337554,
+      "source_sha256": "6852e36364c4f87a44646ebf01262f661bbbadc112c5d6e8daed2d045461aa7b",
+      "parameter_count": 15735168,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 7.62939453125e-06,
+            "mean_abs_diff": 5.8826117310673e-07,
+            "generated_tokens": 10,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 偶数だけを残す\n    output: list[int] = [x for x in xs if 0 == x % 2]\n    return output\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 4.5299530029296875e-06,
+            "mean_abs_diff": 1.0156663847737946e-06,
+            "generated_tokens": 10,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = [abs(value) for value in xs]\n    output = sorted(output)[::-1]\n    return output\n"
+          }
+        ]
+      }
+    }
+  ]
+}
