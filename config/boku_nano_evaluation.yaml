@@ -1,0 +1,69 @@
+version: 1
+
+model:
+  directory: data/models/boku_nano_bpe_2048
+  weights: model.safetensors
+  config: model_config.json
+  manifest: training_manifest.json
+  expected_parameter_count: 15735168
+
+tokenizer:
+  path: data/tokenizers/bpe_2048/tokenizer.json
+  expected_sha256: 6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293
+  special_token_ids:
+    pad: 0
+    bos: 1
+    eos: 2
+    unk: 3
+    task: 4
+    code: 5
+
+evaluation_data:
+  archive: data/archives/final_evaluation_dataset_records_2026-09-25.zip
+  expected_sha256: 5b05b76202920f532cb379481d1cfab4adad74e936bdff518cb8b1750b33f0a1
+  suites:
+    normal:
+      member: normal_test_dataset_records.jsonl
+      expected_record_count: 24040
+      inputs: data/evaluation_inputs/normal_hidden_inputs.json
+      expected_input_sha256: 303b4d412910bb663a0faa2320ef2bec4f28cbeb6a464d370ddd5370fc6cda73
+      test_set_id: normal-hidden-v1-seed-2026092602-cases-64
+    compositional:
+      member: compositional_test_dataset_records.jsonl
+      expected_record_count: 13400
+      inputs: data/evaluation_inputs/compositional_hidden_inputs.json
+      expected_input_sha256: b208f78d8d99011a5ce158e9ee4275fb763a2a68db28ec5f3eaef9cc0af9a951
+      test_set_id: compositional-hidden-v1-seed-2026092603-cases-64
+    paraphrase:
+      member: paraphrase_test_dataset_records.jsonl
+      expected_record_count: 30
+      inputs: data/evaluation_inputs/paraphrase_hidden_inputs.json
+      expected_input_sha256: 2880b2b834bc157261543b66c4f334acfeb8a3e96ca4aadbce40b265c1943c83
+      test_set_id: paraphrase-hidden-v1-seed-2026092604-cases-64
+    repetition:
+      member: repetition_test_dataset_records.jsonl
+      expected_record_count: 23040
+      inputs: data/evaluation_inputs/repetition_hidden_inputs.json
+      expected_input_sha256: 60510519431c68cbafa4ec591293e865a335db4dad7fc271f4a2cafb5d77ab33
+      test_set_id: repetition-hidden-v1-seed-2026092605-cases-64
+    boundary:
+      member: boundary_test_dataset_records.jsonl
+      expected_record_count: 24040
+      inputs: data/evaluation_inputs/boundary_inputs.json
+      expected_input_sha256: 8def08f589f58b03cf87c9eaea9d7fdcfec71d90d0de9508058a93bb89fa9a39
+      test_set_id: boundary-v1-shared-30-plus-filter-targeted
+
+generation:
+  decoding: greedy
+  batch_size: 64
+  buffer_size: 1024
+  max_new_tokens: 160
+  device: auto
+  dtype: bfloat16
+
+verification:
+  max_source_chars: 4096
+  timeout_seconds: 5.0
+
+output:
+  directory: data/evaluations/boku_nano_bpe_2048

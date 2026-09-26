@@ -1,0 +1,17 @@
+version: 1
+
+base_evaluation_config: config/boku_nano_evaluation.yaml
+training_config: config/boku_nano_bpe_2048.yaml
+full_trained_results: data/evaluations/boku_nano_bpe_2048
+
+comparison:
+  selection_seed: 2026092606
+  records_per_suite: 100
+  candidate_count: 5
+  sampling_seed: 2026092607
+  temperature: 0.8
+  top_p: 0.95
+  random_model_seed: 20260925
+
+output:
+  directory: data/evaluations/boku_nano_comparison

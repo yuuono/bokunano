@@ -27,6 +27,40 @@ scripts/
 └── validation/       # 参照インタプリタの検証
 ```
 
+## Boku Nanoモデル評価
+
+学習済みモデルを5種類の固定テスト集合で生成・実行評価する。推論を行わず設定、hash、ZIP memberだけを確認する場合は次を実行する。
+
+```bash
+uv run --group model-training --python 3.12.12 python \
+  scripts/model/evaluate_boku_nano.py \
+  --config config/boku_nano_evaluation.yaml \
+  --validate-config
+```
+
+最初は30件の日本語言い換えテストで一連の処理を確認する。コマンドでは内部識別子`paraphrase`を指定する。
+
+```bash
+uv run --group model-training --python 3.12.12 python \
+  scripts/model/evaluate_boku_nano.py \
+  --config config/boku_nano_evaluation.yaml \
+  --suite paraphrase
+```
+
+集合指定を省略すると、通常テスト、組合せ汎化テスト、日本語言い換えテスト、同一操作の反復テスト、境界値テストの順で実行する。コマンド内部ではそれぞれ`normal`、`compositional`、`paraphrase`、`repetition`、`boundary`を使う。詳細な判定条件、再開方法、10エポックモデルとの比較方法は[`boku_nano_model_evaluation_policy.md`](../docs/policies/boku_nano_model_evaluation_policy.md)に記録する。
+
+### 追加指標とランダム初期モデル比較
+
+固定430件でpass@5を測定し、同じ構造の学習前ランダムモデルと3エポックモデルを比較する。
+
+```bash
+uv run --group model-training --python 3.12.12 python \
+  scripts/model/evaluate_boku_nano_comparison.py \
+  --config config/boku_nano_comparison_evaluation.yaml
+```
+
+推論せず比較集合、hidden test件数、設定hashだけを確認する場合は`--validate-config`を追加する。正式結果は[`boku_nano_evaluation_metrics_and_random_baseline.md`](../docs/results/boku_nano_evaluation_metrics_and_random_baseline.md)に記録する。
+
 ## 意味AST
 
 1. `semantic_asts/generate_combined_semantic_asts.py`
@@ -238,7 +272,7 @@ uv run --python 3.12.12 python \
   --pairing-seed 20260925
 ```
 
-展開済み6 JSONLはローカル確認用であり、Gitへは追加しない。評価ZIPはvalidation、normal、compositional、paraphrase、repetition、boundaryの順で6メンバーを格納する。
+展開済み6 JSONLはローカル確認用であり、Gitへは追加しない。評価ZIPは検証集合、通常テスト、組合せ汎化テスト、日本語言い換えテスト、同一操作の反復テスト、境界値テストの順で6メンバーを格納する。ZIP内の識別子はそれぞれ`validation`、`normal`、`compositional`、`paraphrase`、`repetition`、`boundary`とする。
 
 ## トークナイザ訓練
 
@@ -313,7 +347,7 @@ scripts/model/run_boku_nano_10epoch_nohup.sh
 
 10 epoch結果は`data/models/boku_nano_bpe_2048_10epoch/`、console logは`data/models/boku_nano_bpe_2048_10epoch_console.log`へ分離する。
 
-各epoch終了後にvalidation 24,040件だけでlossを測る。normal、compositional、paraphrase、repetition、boundaryは学習中に使用しない。モデル構造、optimizer、保存物、再開方法は[`boku_nano_training_policy.md`](../docs/policies/boku_nano_training_policy.md)に従う。
+各epoch終了後に検証集合24,040件だけでlossを測る。通常テスト、組合せ汎化テスト、日本語言い換えテスト、同一操作の反復テスト、境界値テストは学習中に使用しない。モデル構造、optimizer、保存物、再開方法は[`boku_nano_training_policy.md`](../docs/policies/boku_nano_training_policy.md)に従う。
 
 ## 検証
 
