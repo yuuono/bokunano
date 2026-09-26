@@ -1,0 +1,105 @@
+version: 1
+model:
+  vocab_size: 2048
+  d_model: 384
+  n_layers: 8
+  n_heads: 6
+  d_ff: 1024
+  context_length: 256
+  dropout: 0.0
+  rope_base: 10000.0
+  rms_norm_eps: 1.0e-05
+  tie_word_embeddings: false
+model_validation:
+  expected_parameter_count: 15735168
+tokenizer:
+  path: data/tokenizers/bpe_2048/tokenizer.json
+  expected_sha256: 6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293
+  special_tokens:
+    pad:
+      token: <|pad|>
+      id: 0
+    bos:
+      token: <|bos|>
+      id: 1
+    eos:
+      token: <|eos|>
+      id: 2
+    unk:
+      token: <|unk|>
+      id: 3
+    task:
+      token: <|task|>
+      id: 4
+    code:
+      token: <|code|>
+      id: 5
+    explanation:
+      token: <|explanation|>
+      id: 6
+data:
+  archive: data/archives/final_train_dataset_records_2026-09-25.zip
+  member: final_dataset_records.jsonl
+  expected_sha256: 799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807
+  expected_record_count: 192900
+  required_values:
+    split: train
+    test_suite: null
+    dictionary: train
+    input_set: build
+  sequence_template: '<|bos|><|task|>
+
+    {instruction_ja}
+
+    <|code|>
+
+    {reference_code}<|eos|>'
+  loss_scope: code_and_eos_only
+validation_data:
+  archive: data/archives/final_evaluation_dataset_records_2026-09-25.zip
+  member: validation_dataset_records.jsonl
+  expected_sha256: 5b05b76202920f532cb379481d1cfab4adad74e936bdff518cb8b1750b33f0a1
+  expected_record_count: 24040
+  validate_all_members_crc: false
+  required_values:
+    split: val
+    test_suite: null
+    dictionary: train
+    input_set: build
+  sequence_template: '<|bos|><|task|>
+
+    {instruction_ja}
+
+    <|code|>
+
+    {reference_code}<|eos|>'
+  loss_scope: code_and_eos_only
+training:
+  epochs: 10
+  micro_batch_size: 512
+  gradient_accumulation_steps: 1
+  shuffle: true
+  seed: 20260925
+  validate_after_each_epoch: true
+  validation_batch_size: 512
+optimizer:
+  type: adamw
+  learning_rate: 0.0003
+  minimum_learning_rate: 3.0e-05
+  warmup_ratio: 0.05
+  betas:
+  - 0.9
+  - 0.95
+  eps: 1.0e-08
+  weight_decay: 0.1
+  gradient_clip_norm: 1.0
+  fused: true
+runtime:
+  device: auto
+  dtype: bfloat16
+  compile: false
+  num_workers: 0
+  pin_memory: true
+  log_every_steps: 20
+output:
+  directory: data/models/boku_nano_bpe_2048_10epoch
