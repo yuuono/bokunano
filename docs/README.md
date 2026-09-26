@@ -22,11 +22,13 @@ docs/
 - [`policies/evaluation_input_policy.md`](policies/evaluation_input_policy.md): validation・hidden・boundary評価入力の生成と分離
 - [`policies/tokenizer_training_policy.md`](policies/tokenizer_training_policy.md): 訓練データ限定のBPE・Unigram共通語彙作成と比較方針
 - [`policies/boku_nano_training_policy.md`](policies/boku_nano_training_policy.md): BPE 2,048語彙と約1,600万parameterモデルによる3 epoch本学習方針
+- [`policies/boku_nano_model_evaluation_policy.md`](policies/boku_nano_model_evaluation_policy.md): 学習済みBoku Nanoの5種類の生成・実行評価方針
 
 ## 手順
 
 - [`procedures/japanese_instruction_generation.md`](procedures/japanese_instruction_generation.md): 日本語指示の候補生成、人間承認、ルール結合、教師言い換え
 - [`procedures/publishing_japanese_expression_dictionary.md`](procedures/publishing_japanese_expression_dictionary.md): 最終表現CSVと生成来歴JSONLだけをGitHubへ公開する手順
+- [`procedures/boku_nano_end_to_end_reproduction.md`](procedures/boku_nano_end_to_end_reproduction.md): 人手承認を挟まず、固定成果物またはHugging Face教師モデルからデータ生成・学習・評価まで再実行する手順
 
 ## 仕様
 
@@ -46,3 +48,7 @@ docs/
 - [`results/evaluation_input_generation_results.md`](results/evaluation_input_generation_results.md): validation・hidden・boundary評価入力6集合の生成・検証結果
 - [`results/final_evaluation_dataset_results.md`](results/final_evaluation_dataset_results.md): 6評価集合108,590件の最終結合・ZIP作成結果
 - [`results/bpe_tokenizer_training_results.md`](results/bpe_tokenizer_training_results.md): 訓練データ限定BPE 2,048語彙候補の学習・全件検証結果
+- [`results/boku_nano_three_epoch_training_results.md`](results/boku_nano_three_epoch_training_results.md): Boku Nanoモデルの3エポックにおけるtrain loss・validation loss推移
+- [`results/boku_nano_3epoch_evaluation_results.md`](results/boku_nano_3epoch_evaluation_results.md): 3エポックモデルの5集合評価と不合格116件の分析
+- [`results/boku_nano_evaluation_metrics_and_random_baseline.md`](results/boku_nano_evaluation_metrics_and_random_baseline.md): 段階別評価指標、pass@5、GPU効率、学習前ランダムモデルとの比較
+- [`results/boku_nano_goal_completion_report.md`](results/boku_nano_goal_completion_report.md): 課題仕様の10完了条件に対する達成状況、漏洩検査、由来、残課題の総括
