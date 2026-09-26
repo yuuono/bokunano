@@ -2,13 +2,13 @@ import { BokuNanoTokenizer } from "./tokenizer.js";
 
 const elements = {
   model: document.querySelector("#model"),
+  example: document.querySelector("#example"),
   prompt: document.querySelector("#prompt"),
   generate: document.querySelector("#generate"),
   stop: document.querySelector("#stop"),
   output: document.querySelector("#output"),
   status: document.querySelector("#status"),
   metrics: document.querySelector("#metrics"),
-  examples: document.querySelectorAll("[data-example]"),
 };
 
 const state = {
@@ -26,6 +26,7 @@ function setStatus(message, kind = "normal") {
 function setBusy(busy) {
   elements.generate.disabled = busy;
   elements.model.disabled = busy;
+  elements.example.disabled = busy;
   elements.prompt.disabled = busy;
   elements.stop.hidden = !busy;
 }
@@ -176,12 +177,12 @@ elements.generate.addEventListener("click", generate);
 elements.stop.addEventListener("click", () => {
   state.cancelled = true;
 });
-for (const button of elements.examples) {
-  button.addEventListener("click", () => {
-    elements.prompt.value = button.dataset.example;
+elements.example.addEventListener("change", () => {
+  if (elements.example.value) {
+    elements.prompt.value = elements.example.value;
     elements.prompt.focus();
-  });
-}
+  }
+});
 
 initialize().catch((error) => {
   console.error(error);

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Boku1-nanoをブラウザ内のONNX Runtimeで動かすコード生成デモ" />
-    <title>Boku1-nano — ブラウザコード生成</title>
+    <title>Boku1-nano デモ</title>
     <link rel="stylesheet" href="./styles.css" />
     <script src="./vendor/ort.webgpu.min.js"></script>
     <script type="module" src="./app.js"></script>
@@ -12,10 +12,9 @@
   <body>
     <main>
       <header class="hero">
-        <p class="eyebrow">LOCAL ONNX INFERENCE</p>
-        <h1>Boku1-nano</h1>
-        <p class="lead">日本語の指示から、<code>solve(xs, k)</code>形式のPythonコードを生成します。</p>
-        <p class="privacy">モデルの読み込み後、推論はすべてブラウザ内で実行されます。入力内容はサーバーへ送信されません。</p>
+        <h1>Boku1-nano デモ</h1>
+        <p class="lead">日本語の指示から<code>solve(xs, k)</code>形式のPythonコードを生成します。</p>
+        <p class="privacy">推論はブラウザ内で実行され、入力内容は外部へ送信されません。</p>
       </header>
 
       <section class="panel" aria-labelledby="generator-title">
@@ -23,16 +22,49 @@
         <label for="model">使用するモデル</label>
         <select id="model" disabled></select>
 
+        <label for="example">学習対象の操作から入力例を選ぶ</label>
+        <select id="example">
+          <option value="">選択してください</option>
+          <optgroup label="抽出">
+            <option value="整数リストxsから偶数だけを残すsolve関数を書いてください。">偶数だけを残す</option>
+            <option value="整数リストxsから奇数だけを残すsolve関数を書いてください。">奇数だけを残す</option>
+            <option value="整数リストxsからkより大きい値だけを残すsolve関数を書いてください。">kより大きい値だけを残す</option>
+            <option value="整数リストxsからk以上の値だけを残すsolve関数を書いてください。">k以上の値だけを残す</option>
+            <option value="整数リストxsからkより小さい値だけを残すsolve関数を書いてください。">kより小さい値だけを残す</option>
+            <option value="整数リストxsからk以下の値だけを残すsolve関数を書いてください。">k以下の値だけを残す</option>
+            <option value="整数リストxsからkの倍数だけを残すsolve関数を書いてください。">kの倍数だけを残す</option>
+            <option value="整数リストxsから正の値だけを残すsolve関数を書いてください。">正の値だけを残す</option>
+            <option value="整数リストxsから負の値だけを残すsolve関数を書いてください。">負の値だけを残す</option>
+            <option value="整数リストxsからゼロだけを残すsolve関数を書いてください。">ゼロだけを残す</option>
+          </optgroup>
+          <optgroup label="変換">
+            <option value="整数リストxsの各要素にkを加えるsolve関数を書いてください。">各要素にkを加える</option>
+            <option value="整数リストxsの各要素からkを引くsolve関数を書いてください。">各要素からkを引く</option>
+            <option value="整数リストxsの各要素にkを掛けるsolve関数を書いてください。">各要素にkを掛ける</option>
+            <option value="整数リストxsの各要素を2倍するsolve関数を書いてください。">各要素を2倍する</option>
+            <option value="整数リストxsの各要素を3倍するsolve関数を書いてください。">各要素を3倍する</option>
+            <option value="整数リストxsの各要素の符号を反転するsolve関数を書いてください。">各要素の符号を反転する</option>
+            <option value="整数リストxsの各要素の絶対値を取るsolve関数を書いてください。">各要素の絶対値を取る</option>
+            <option value="整数リストxsの各要素を二乗するsolve関数を書いてください。">各要素を二乗する</option>
+          </optgroup>
+          <optgroup label="並べ替え">
+            <option value="整数リストxsを値の昇順に並べるsolve関数を書いてください。">値を昇順に並べる</option>
+            <option value="整数リストxsを値の降順に並べるsolve関数を書いてください。">値を降順に並べる</option>
+            <option value="整数リストxsの現在の要素順を反転するsolve関数を書いてください。">現在の要素順を反転する</option>
+          </optgroup>
+          <optgroup label="切り出し">
+            <option value="整数リストxsの先頭からk個を取るsolve関数を書いてください。">先頭からk個を取る</option>
+            <option value="整数リストxsの末尾からk個を取るsolve関数を書いてください。">末尾からk個を取る</option>
+            <option value="整数リストxsを先頭から1個おきに取るsolve関数を書いてください。">先頭から1個おきに取る</option>
+          </optgroup>
+        </select>
+
         <label for="prompt">日本語の指示</label>
         <textarea id="prompt" rows="5" maxlength="600">整数リストxsから偶数だけを残すsolve関数を書いてください。</textarea>
-        <div class="examples" aria-label="入力例">
-          <button type="button" data-example="整数リストxsから偶数だけを残すsolve関数を書いてください。">偶数を残す</button>
-          <button type="button" data-example="xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。">絶対値で降順</button>
-          <button type="button" data-example="xsからk以上の値だけを取り出し、先頭からk個を返してください。">条件抽出と先頭k個</button>
-        </div>
+        <p class="hint">複数の操作を組み合わせる場合は、入力欄へ直接記入してください。</p>
 
         <div class="actions">
-          <button id="generate" class="primary" type="button" disabled>モデルでコードを生成</button>
+          <button id="generate" class="primary" type="button" disabled>コードを生成</button>
           <button id="stop" type="button" hidden>中止</button>
         </div>
         <p id="status" class="status" role="status" aria-live="polite">初期化しています…</p>
@@ -48,8 +80,8 @@
 
       <section class="about" aria-labelledby="about-title">
         <h2 id="about-title">このデモについて</h2>
-        <p>入力例も自由入力も、同じBPEトークナイザとONNXモデルを通ります。固定回答の検索や、例文ごとの条件分岐は使用していません。</p>
-        <p>対象領域は整数リストを扱う小さな関数です。生成コードは実行前に必ず内容を確認してください。</p>
+        <p>入力例と自由入力は、どちらも同じBPEトークナイザとONNXモデルで処理します。入力例ごとの固定回答は使用していません。</p>
+        <p>対象領域は整数リストを扱う小さな関数です。生成コードは実行前に内容を確認してください。</p>
       </section>
     </main>
   </body>
