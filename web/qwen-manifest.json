@@ -1,0 +1,13 @@
+{
+  "format_version": 1,
+  "model_id": "onnx-community/Qwen3-0.6B-ONNX",
+  "upstream_model_id": "Qwen/Qwen3-0.6B",
+  "revision": "da1453100cf3ff33ef56d17983fc7a8648706db6",
+  "dtype": "q4f16",
+  "device": "webgpu",
+  "model_file": "onnx/model_q4f16.onnx",
+  "model_file_size_bytes": 569789750,
+  "model_file_sha256": "9e33a5911974174761d0dfdcc0bec975d9c45af0eae5e9eb647b8ba9442a8f91",
+  "transformers_js_version": "4.3.0",
+  "transformers_js_url": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0"
+}

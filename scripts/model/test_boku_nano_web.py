@@ -1,4 +1,4 @@
-"""静的WebデモをFirefoxで開き、両ONNXモデルの生成を確認する。"""
+"""静的WebデモをFirefoxで開き、CNL検査と両ONNXモデルの生成を確認する。"""
 
 from __future__ import annotations
 
@@ -19,10 +19,13 @@ from tokenizers import Tokenizer
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 WEB_ROOT = PROJECT_ROOT / "web"
 TOKENIZER_PATH = PROJECT_ROOT / "data/tokenizers/bpe_2048/tokenizer.json"
-INSTRUCTION = "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。"
-THREE_OPERATION_INSTRUCTION = (
-    "整数リストxsと整数kを受け取り、すべての数を三倍して、"
-    "数の正負を切り替えて、k未満の値を選ぶsolve関数を書いてください。"
+TWO_OPERATION_CNL = (
+    "整数リストxsから各要素の絶対値を取り、"
+    "値を降順に並べるsolve関数を書いてください。"
+)
+THREE_OPERATION_CNL = (
+    "整数リストxsと整数kを受け取り、各要素を3倍し、"
+    "各要素の符号を反転し、kより小さい値だけを残すsolve関数を書いてください。"
 )
 
 
@@ -40,6 +43,42 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def verify_cnl_validator(driver: webdriver.Firefox) -> None:
+    actual = driver.execute_async_script(
+        """
+        const done = arguments[arguments.length - 1];
+        import('./cnl.js').then(({CNL_OPERATIONS, validateCnl}) => {
+          done({
+            operationCount: CNL_OPERATIONS.length,
+            two: validateCnl(arguments[0]),
+            three: validateCnl(arguments[1]),
+            four: validateCnl(
+              '整数リストxsから偶数だけを残し、各要素を2倍し、' +
+              '各要素を3倍し、値を昇順に並べるsolve関数を書いてください。'
+            ),
+            unknown: validateCnl(
+              '整数リストxsから合計値を求めるsolve関数を書いてください。'
+            ),
+          });
+        }).catch(error => done({error: String(error)}));
+        """,
+        TWO_OPERATION_CNL,
+        THREE_OPERATION_CNL,
+    )
+    if actual.get("error"):
+        raise AssertionError(f"CNL検査モジュールの読込に失敗しました: {actual['error']}")
+    if actual["operationCount"] != 24:
+        raise AssertionError(f"許可操作数が24ではありません: {actual['operationCount']}")
+    if not actual["two"]["valid"] or len(actual["two"]["operations"]) != 2:
+        raise AssertionError(f"2操作CNLを受理できませんでした: {actual['two']}")
+    if not actual["three"]["valid"] or len(actual["three"]["operations"]) != 3:
+        raise AssertionError(f"3操作CNLを受理できませんでした: {actual['three']}")
+    if actual["four"]["valid"]:
+        raise AssertionError("4操作CNLを誤って受理しました。")
+    if actual["unknown"]["valid"]:
+        raise AssertionError("許可外操作を誤って受理しました。")
+
+
 def verify_tokenizer(driver: webdriver.Firefox) -> None:
     actual = driver.execute_async_script(
         """
@@ -49,28 +88,40 @@ def verify_tokenizer(driver: webdriver.Firefox) -> None:
           done(tokenizer.encodePrompt(arguments[0]));
         }).catch(error => done({error: String(error)}));
         """,
-        INSTRUCTION,
+        TWO_OPERATION_CNL,
     )
     tokenizer = Tokenizer.from_file(str(TOKENIZER_PATH))
     expected = tokenizer.encode(
-        f"<|bos|><|task|>\n{INSTRUCTION}\n<|code|>\n",
+        f"<|bos|><|task|>\n{TWO_OPERATION_CNL}\n<|code|>\n",
         add_special_tokens=False,
     ).ids
     if actual != expected:
         raise AssertionError(f"ブラウザとPythonのtoken IDが一致しません: {actual} != {expected}")
 
 
+def set_cnl(driver: webdriver.Firefox, cnl: str) -> None:
+    driver.execute_script(
+        """
+        const field = document.querySelector('#cnl');
+        field.value = arguments[0];
+        field.dispatchEvent(new Event('input', {bubbles: true}));
+        """,
+        cnl,
+    )
+    WebDriverWait(driver, 5).until(
+        lambda current: not current.find_element("id", "generate").get_attribute("disabled")
+    )
+
+
 def run_model(
     driver: webdriver.Firefox,
     model_id: str,
-    instruction: str,
+    cnl: str,
     operation_count: int,
     timeout: float,
 ) -> dict[str, str]:
     Select(driver.find_element("id", "model")).select_by_value(model_id)
-    prompt = driver.find_element("id", "prompt")
-    prompt.clear()
-    prompt.send_keys(instruction)
+    set_cnl(driver, cnl)
     driver.find_element("id", "generate").click()
     WebDriverWait(driver, timeout).until(
         lambda current: "完了しました" in current.find_element("id", "status").text
@@ -88,7 +139,9 @@ def run_model(
         )
     has_negation = "-x" in output or "-value" in output
     if operation_count == 3 and (
-        "* 3" not in output or not has_negation or "if k >" not in output
+        "* 3" not in output
+        or not has_negation
+        or ("if k >" not in output and "< k" not in output)
     ):
         raise AssertionError(
             f"{model_id}が指定した3操作を生成しませんでした: {output!r}"
@@ -116,15 +169,17 @@ def main() -> None:
         WebDriverWait(driver, 60).until(
             lambda current: current.execute_script("return window.__bokuNanoReady === true")
         )
+        verify_cnl_validator(driver)
+        print("CNL validator: 24操作・最大3操作・許可外拒否を確認")
         verify_tokenizer(driver)
         print("tokenizer: Python版と一致")
-        cases = ((2, INSTRUCTION), (3, THREE_OPERATION_INSTRUCTION))
+        cases = ((2, TWO_OPERATION_CNL), (3, THREE_OPERATION_CNL))
         for model_id in ("3epoch", "10epoch"):
-            for operation_count, instruction in cases:
+            for operation_count, cnl in cases:
                 result = run_model(
                     driver,
                     model_id,
-                    instruction,
+                    cnl,
                     operation_count,
                     args.timeout_seconds,
                 )

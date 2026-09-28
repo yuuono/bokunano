@@ -4,7 +4,7 @@
 
 [デモはこちらです](https://yuuono.github.io/bokunano/)
 
-日本語の指示から、`solve(xs, k)`形式のPythonコードを生成する小規模なDecoder-only Transformerです。トークナイザとモデルをランダム初期値から学習し、ブラウザ版では3エポックモデルと10エポックモデルをONNX Runtime Webで実行できます。
+Boku1-nanoは、CNLから`solve(xs, k)`形式のPythonコードを生成する小規模なDecoder-only Transformerです。トークナイザとモデルをランダム初期値から学習しています。ブラウザ版では、追加学習していないQwen3-0.6Bが自由な日本語をCNLへ翻訳し、検査済みCNLを3エポックまたは10エポックのBoku1-nanoへ渡します。
 
 - [課題仕様](boku1-nano.md)
 - [全ドキュメント](docs/README.md)

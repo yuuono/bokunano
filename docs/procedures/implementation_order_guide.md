@@ -19,7 +19,7 @@
 | 7 | Decoder-only Transformer | [`../policies/boku_nano_training_policy.md`](../policies/boku_nano_training_policy.md)の「固定モデル仕様」 | [`../cards/MODEL_CARD.md`](../cards/MODEL_CARD.md)の「モデル構成」、[`../../scripts/README.md`](../../scripts/README.md)の「Boku-nano本学習」 |
 | 8 | モデル学習 | [`../policies/boku_nano_training_policy.md`](../policies/boku_nano_training_policy.md) | [`../results/boku_nano_three_epoch_training_results.md`](../results/boku_nano_three_epoch_training_results.md) |
 | 9 | hidden test評価 | [`../policies/boku_nano_model_evaluation_policy.md`](../policies/boku_nano_model_evaluation_policy.md) | [`../results/boku_nano_3epoch_evaluation_results.md`](../results/boku_nano_3epoch_evaluation_results.md)、[`../results/boku_nano_evaluation_metrics_and_random_baseline.md`](../results/boku_nano_evaluation_metrics_and_random_baseline.md) |
-| 10 | ONNX変換とブラウザ推論 | [`boku_nano_onnx_web_demo.md`](boku_nano_onnx_web_demo.md) | 同文書の「ONNXの再生成」「実ブラウザ試験」「GitHub Pages公開」 |
+| 10 | ONNX変換、QwenによるCNL翻訳、ブラウザ推論 | [`boku_nano_onnx_web_demo.md`](boku_nano_onnx_web_demo.md) | 同文書の「ONNXの再生成」「自動ブラウザ試験」「Qwen翻訳の初回検証」「GitHub Pages公開」 |
 
 ## BPEトークナイザーの実装順
 
