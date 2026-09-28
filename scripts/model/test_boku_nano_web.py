@@ -19,7 +19,11 @@ from tokenizers import Tokenizer
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 WEB_ROOT = PROJECT_ROOT / "web"
 TOKENIZER_PATH = PROJECT_ROOT / "data/tokenizers/bpe_2048/tokenizer.json"
-INSTRUCTION = "整数リストxsから偶数だけを残すsolve関数を書いてください。"
+INSTRUCTION = "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。"
+THREE_OPERATION_INSTRUCTION = (
+    "整数リストxsと整数kを受け取り、すべての数を三倍して、"
+    "数の正負を切り替えて、k未満の値を選ぶsolve関数を書いてください。"
+)
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -56,8 +60,17 @@ def verify_tokenizer(driver: webdriver.Firefox) -> None:
         raise AssertionError(f"ブラウザとPythonのtoken IDが一致しません: {actual} != {expected}")
 
 
-def run_model(driver: webdriver.Firefox, model_id: str, timeout: float) -> dict[str, str]:
+def run_model(
+    driver: webdriver.Firefox,
+    model_id: str,
+    instruction: str,
+    operation_count: int,
+    timeout: float,
+) -> dict[str, str]:
     Select(driver.find_element("id", "model")).select_by_value(model_id)
+    prompt = driver.find_element("id", "prompt")
+    prompt.clear()
+    prompt.send_keys(instruction)
     driver.find_element("id", "generate").click()
     WebDriverWait(driver, timeout).until(
         lambda current: "完了しました" in current.find_element("id", "status").text
@@ -69,6 +82,17 @@ def run_model(driver: webdriver.Firefox, model_id: str, timeout: float) -> dict[
         raise AssertionError(f"{model_id}のブラウザ推論に失敗しました: {status.text}")
     if "def solve(" not in output:
         raise AssertionError(f"{model_id}がsolve関数を生成しませんでした: {output!r}")
+    if operation_count == 2 and ("abs(" not in output or "sorted(" not in output):
+        raise AssertionError(
+            f"{model_id}が指定した2操作を生成しませんでした: {output!r}"
+        )
+    has_negation = "-x" in output or "-value" in output
+    if operation_count == 3 and (
+        "* 3" not in output or not has_negation or "if k >" not in output
+    ):
+        raise AssertionError(
+            f"{model_id}が指定した3操作を生成しませんでした: {output!r}"
+        )
     return {
         "status": status.text,
         "metrics": driver.find_element("id", "metrics").text,
@@ -94,11 +118,20 @@ def main() -> None:
         )
         verify_tokenizer(driver)
         print("tokenizer: Python版と一致")
+        cases = ((2, INSTRUCTION), (3, THREE_OPERATION_INSTRUCTION))
         for model_id in ("3epoch", "10epoch"):
-            result = run_model(driver, model_id, args.timeout_seconds)
-            print(f"{model_id}: {result['status']}")
-            print(f"{model_id}: {result['metrics']}")
-            print(f"{model_id}: {result['output']}")
+            for operation_count, instruction in cases:
+                result = run_model(
+                    driver,
+                    model_id,
+                    instruction,
+                    operation_count,
+                    args.timeout_seconds,
+                )
+                label = f"{model_id}/{operation_count}操作"
+                print(f"{label}: {result['status']}")
+                print(f"{label}: {result['metrics']}")
+                print(f"{label}: {result['output']}")
     finally:
         driver.quit()
         server.shutdown()

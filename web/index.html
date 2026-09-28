@@ -22,9 +22,25 @@
         <label for="model">使用するモデル</label>
         <select id="model" disabled></select>
 
-        <label for="example">学習対象の操作から入力例を選ぶ</label>
+        <label for="example">入力例を選ぶ</label>
         <select id="example">
           <option value="">選択してください</option>
+          <optgroup label="2操作の組み合わせ">
+            <option value="xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。">絶対値にして、降順に並べる</option>
+            <option value="整数リストxsと整数kを受け取り、各要素からkを引いて、数を2倍にするsolve関数を書いてください。">kを引いて、2倍する</option>
+            <option value="整数リストxsと整数kを受け取り、正の値を選んで、前k個を切り出すsolve関数を書いてください。">正の値を選んで、先頭k個を取る</option>
+            <option value="整数リストxsと整数kを受け取り、終わりからk個を引き出して、負の数だけを残すことにするsolve関数を書いてください。">末尾k個を取って、負の数だけを残す</option>
+            <option value="整数リストxsから数の正負を切り替えて、数の絶対値を求めるsolve関数を書いてください。">符号を反転して、絶対値にする</option>
+            <option value="整数リストxsと整数kを受け取り、末尾からk個を切り出して、kを差し引くsolve関数を書いてください。">末尾k個を取って、kを引く</option>
+          </optgroup>
+          <optgroup label="3操作の組み合わせ">
+            <option value="整数リストxsと整数kを受け取り、すべての数を三倍して、数の正負を切り替えて、k未満の値を選ぶsolve関数を書いてください。">3倍して、符号を反転し、k未満を残す</option>
+            <option value="整数リストxsと整数kを受け取り、値を降順に配置して、前k個を取って、k以下のものだけを残すsolve関数を書いてください。">降順にして、先頭k個を取り、k以下を残す</option>
+            <option value="整数リストxsから偶数だけを切り出して、数列の各元を2倍にして、要素を三倍するsolve関数を書いてください。">偶数を残して、2倍し、3倍する</option>
+            <option value="整数リストxsと整数kを受け取り、隔番に収集して、各値にkを乗じて、各データをkで引くsolve関数を書いてください。">1個おきに取り、k倍して、kを引く</option>
+            <option value="整数リストxsと整数kを受け取り、k未満の値を抜き出して、全ての数の絶対値を求めて、正負を変えるsolve関数を書いてください。">k未満を残して、絶対値にし、符号を反転する</option>
+            <option value="整数リストxsと整数kを受け取り、k以上のものを残し、kより大きい値を取得して、値を高める順に並べるsolve関数を書いてください。">k以上を残して、kより大きを選び、昇順にする</option>
+          </optgroup>
           <optgroup label="抽出">
             <option value="整数リストxsから偶数だけを残すsolve関数を書いてください。">偶数だけを残す</option>
             <option value="整数リストxsから奇数だけを残すsolve関数を書いてください。">奇数だけを残す</option>
@@ -60,8 +76,8 @@
         </select>
 
         <label for="prompt">日本語の指示</label>
-        <textarea id="prompt" rows="5" maxlength="600">整数リストxsから偶数だけを残すsolve関数を書いてください。</textarea>
-        <p class="hint">複数の操作を組み合わせる場合は、入力欄へ直接記入してください。</p>
+        <textarea id="prompt" rows="5" maxlength="600">xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。</textarea>
+        <p class="hint">2操作・3操作の例も選択できます。処理は文章に書かれた順番で実行されます。</p>
 
         <div class="actions">
           <button id="generate" class="primary" type="button" disabled>コードを生成</button>
