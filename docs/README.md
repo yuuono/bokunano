@@ -33,9 +33,11 @@ docs/
 
 ## 手順
 
+- [`procedures/implementation_order_guide.md`](procedures/implementation_order_guide.md): 24種類の基本操作からONNXブラウザ推論までの実装順と各文書の対応
 - [`procedures/japanese_instruction_generation.md`](procedures/japanese_instruction_generation.md): 日本語指示の候補生成、人間承認、ルール結合、教師言い換え
 - [`procedures/publishing_japanese_expression_dictionary.md`](procedures/publishing_japanese_expression_dictionary.md): 最終表現CSVと生成来歴JSONLだけをGitHubへ公開する手順
 - [`procedures/boku_nano_end_to_end_reproduction.md`](procedures/boku_nano_end_to_end_reproduction.md): 人手承認を挟まず、固定成果物またはHugging Face教師モデルからデータ生成・学習・評価まで再実行する手順
+- [`procedures/boku_nano_onnx_web_demo.md`](procedures/boku_nano_onnx_web_demo.md): 3・10エポックモデルのONNX変換、実ブラウザ試験、GitHub Pages公開手順
 
 ## 仕様
 
