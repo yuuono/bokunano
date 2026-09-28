@@ -6,7 +6,7 @@
 
 1つの意味ASTから複数のコードと日本語指示を作るため、`spec_id`だけでは個々のレコードを識別できない。意味AST、コード候補、最終学習レコードを別の段階として管理し、それぞれに一意なIDを付ける。
 
-最終学習レコードでは、`boku1-nano.md`の「データレコード」に示した項目をすべて保存する。コード生成時点で存在しない日本語・教師モデル関係の項目は、最終レコードを組み立てる段階で追加する。
+最終学習レコードでは、[課題本文の「データレコード」](../../boku1-nano.md#データレコード)に示した項目をすべて保存する。コード生成時点で存在しない日本語・教師モデル関係の項目は、最終レコードを組み立てる段階で追加する。
 
 ## レコードの3段階
 
@@ -94,9 +94,9 @@ family-<semantic_hash>
 
 訓練、検証、通常テストへ分割した意味ASTレコードでは`split`も必須とする。組合せ汎化と反復汎化の抽出・生成ファイルでは、`test_suite`がそれぞれ`compositional`、`repetition`であるため、`split: "test"`を重複して保存しない。コード候補を作る段階で、`test_suite`が`null`でなく`split`が省略されている場合に限り、`split: "test"`を設定する。
 
-正式な訓練・検証コード候補は、分割が完了した意味ASTレコードから生成する。分割前の操作一覧である`data/semantic_asts/atomic_semantic_asts.jsonl`を、そのまま正式なコード候補生成の入力には使用しない。
+正式な訓練・検証コード候補は、分割が完了した意味ASTレコードから生成する。分割前の操作一覧である[単独操作の意味AST](../../data/semantic_asts/atomic_semantic_asts.jsonl)を、そのまま正式なコード候補生成の入力には使用しない。
 
-24種類の1操作ASTは、意味ASTの分割方針ですべて訓練へ割り当てられている。そのため、この24件から作る正式なコード候補は`data/semantic_asts/train_semantic_asts.jsonl`内の1操作レコードを入力とし、すべて`split: "train"`、`test_suite: null`とする。ここでの`test_suite: null`は項目の欠落ではなく、訓練用なので評価テスト集合に属さないことを表す。
+24種類の1操作ASTは、意味ASTの分割方針ですべて訓練へ割り当てられている。そのため、この24件から作る正式なコード候補は[訓練用の意味AST](../../data/semantic_asts/train_semantic_asts.jsonl)内の1操作レコードを入力とし、すべて`split: "train"`、`test_suite: null`とする。ここでの`test_suite: null`は項目の欠落ではなく、訓練用なので評価テスト集合に属さないことを表す。
 
 ## コード候補レコード
 
@@ -394,7 +394,7 @@ input_set: build | hidden | boundary
 
 | ファイル | 内容 |
 |---|---|
-| `data/code_candidates/single_operation/python_code_candidates.jsonl` | 訓練用1操作の未選抜コード候補 |
+| [`data/code_candidates/single_operation/python_code_candidates.jsonl`](../../data/code_candidates/single_operation/python_code_candidates.jsonl) | 訓練用1操作の未選抜コード候補 |
 | `data/code_candidates/train/two_operation/python_code_candidates.jsonl` | 訓練用2操作の未選抜コード候補 |
 | `data/code_candidates/train/three_operation/python_code_candidates.jsonl` | 訓練用3操作の未選抜コード候補 |
 | `data/code_candidates/compositional/two_operation/python_code_candidates.jsonl` | 組合せ汎化用2操作のコード候補 |
@@ -406,7 +406,7 @@ input_set: build | hidden | boundary
 | 各コード候補ディレクトリの`rejected_python_codes.jsonl` | 不採用コードと理由 |
 | `data/final/final_dataset_records.jsonl` | 日本語指示とコードを結合した最終レコード |
 | `data/final/evaluation/*.jsonl` | 6評価集合ごとの展開済み最終レコード（ローカル確認用） |
-| `data/archives/final_evaluation_dataset_records_2026-09-25.zip` | 6評価集合の最終レコードを格納したGit管理用ZIP |
+| [`data/archives/final_evaluation_dataset_records_2026-09-25.zip`](../../data/archives/final_evaluation_dataset_records_2026-09-25.zip) | 6評価集合の最終レコードを格納したGit管理用ZIP |
 
 hidden入力を別管理する場合は、公開またはモデル入力用のファイルへ実データを複製せず、テストケースIDだけを保存する。
 

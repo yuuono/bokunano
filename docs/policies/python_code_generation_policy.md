@@ -369,22 +369,49 @@ list(reversed(values))
 
 1つの意味ASTから採用する最終レコード数の上限はコード生成器では決めない。コードと日本語指示を結合した後の選抜処理で、設定された上限を適用する。
 
-`style_spec`の例を次に示す。
+`style_spec`は、コードが何をするかではなく、同じ処理をどのような書き方で生成したかを記録するデータである。たとえば「`k`以下の値を残す」という同じ処理でも、内包表記か通常の`for`ループか、コメントや型注釈を付けるか、比較式を`x <= k`と`k >= x`のどちらで書くかによって、生成されるコードは異なる。`style_spec`を残すことで、それらの書き方の違いを後から集計・再現できる。
 
-```json
+次は、[実際のコード候補レコード](../../data/code_candidates/atomic_preview/atomic_python_code_candidates.jsonl#L2)に保存されている`style_spec`へ、説明用の日本語コメントを加えた例である。`//`から始まるコメントは説明のためだけに記載しており、実際のJSONには保存しない。
+
+```jsonc
 {
-  "collection_form": "for_loop",
-  "temporary_form": "fresh_names",
-  "name_set": "descriptive",
-  "layout": "multi_statement",
-  "comments": "present",
-  "local_annotations": true,
-  "descending_form": "reverse_keyword",
-  "reverse_form": "slice_notation"
+  "code_style": "staged_loop",          // 一時変数を使う通常のforループ形式
+  "collection_form": "for_loop",        // リストの作成に通常のforループを使う
+  "temporary_form": "fresh_names",      // 各処理結果に別々の一時変数名を使う
+  "name_set": "configured",             // 設定ファイルで許可した変数名候補を使う
+  "layout": "multi_statement",          // 代入・ループ・returnを複数の文に分ける
+  "comments": "present",                // 各操作を説明するコメントを付ける
+  "local_annotations": false,            // 一時変数には型注釈を付けない
+  "square_form": null,                    // 二乗操作はないため指定なし
+  "ascending_form": null,                 // 昇順操作はないため指定なし
+  "descending_form": null,                // 降順操作はないため指定なし
+  "reverse_form": null,                   // 逆順操作はないため指定なし
+  "slice_form": null,                     // 切り出し操作はないため指定なし
+  "operation_styles": [                   // 意味ASTの各操作に対応する書き方
+    {
+      "collection_form": "for_loop",     // この抽出操作はforループで書く
+      "condition_direction": "swapped",  // x <= kではなく、左右を入れ替えたk >= xで書く
+      "element_name": "x",               // ループ中の要素変数名
+      "expression_form": "default",      // この操作の標準的な式を使う
+      "result_name": "output"            // 処理結果を保存する変数名
+    }
+  ]
 }
 ```
 
-この正規化JSONから`style_id`を計算する。`style_id`自身を`style_spec`へ含めない。単一の`code_style`文字列だけに全情報を詰め込まず、集計可能な個別フィールドとして保持する。
+この例から生成されるコードは次のとおりである。上の各設定値が、コメント、`for`ループ、比較式、一時変数名などに対応している。
+
+```python
+def solve(xs: list[int], k: int) -> list[int]:
+    # k以下の値だけを残す
+    output = []
+    for x in xs:
+        if k >= x:
+            output += [x]
+    return output
+```
+
+実際に保存する際は、説明コメントを除いたJSONを辞書キー順に正規化し、その正規化JSONから`style_id`を計算する。`style_id`自身を`style_spec`へ含めない。単一の`code_style`文字列だけに全情報を詰め込まず、集計可能な個別フィールドとして保持する。
 
 ## 構文と安全性の制限
 
@@ -459,7 +486,7 @@ list(reversed(values))
 
 検証、通常テスト、反復汎化についても、2操作と3操作を別の設定JSONに固定し、同日に1意味AST当たり20件を生成した。結果は[検証・通常テスト・反復汎化のPythonコード候補生成結果](../results/evaluation_python_code_generation_results.md)に記録する。
 
-設定の項目、Pythonバージョン、ロックファイル、入力ファイルを検査する場合は、次を実行する。このコマンドはコード候補を生成しない。
+設定の項目、Pythonバージョン、ロックファイル、入力ファイルを検査する場合は、[コード候補生成スクリプト](../../scripts/code_generation/generate_python_code_candidates.py)を次のように実行する。このコマンドはコード候補を生成しない。
 
 ```bash
 uv run --python 3.12.12 python scripts/code_generation/generate_python_code_candidates.py \
@@ -474,7 +501,7 @@ uv run --python 3.12.12 python scripts/code_generation/generate_python_code_cand
   --config config/python_code_generation.json
 ```
 
-24操作を1件ずつ生成した予備確認は、設定JSONの接続前に必要な生成条件をコマンド引数で個別に渡して実行した。目標数は正式生成の20件ではなく1件であり、実際に使った値は`data/code_candidates/atomic_preview/atomic_python_code_generation_stats.json`に保存してある。そのため、24件の検証結果は「各24操作から1件の正しいコードを生成できた」ことの予備確認として有効である。
+24操作を1件ずつ生成した予備確認は、設定JSONの接続前に必要な生成条件をコマンド引数で個別に渡して実行した。目標数は正式生成の20件ではなく1件であり、実際に使った値は[予備確認の集計JSON](../../data/code_candidates/atomic_preview/atomic_python_code_generation_stats.json)に保存してある。そのため、24件の検証結果は「各24操作から1件の正しいコードを生成できた」ことの予備確認として有効である。
 
 ## 実装の進め方
 
