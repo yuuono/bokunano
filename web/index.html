@@ -30,6 +30,19 @@
           <button type="button" data-example-prompt="偶数を残して2倍し、それから並び順を逆にしてください。">3操作</button>
         </div>
         <p class="hint">初回のみQwen3-0.6B q4f16（約543 MiB）を取得します。WebGPU対応のデスクトップ版ChromeまたはEdgeを使用してください。</p>
+        <details class="prompt-details">
+          <summary>Qwenに渡すプロンプトを見る</summary>
+          <div class="prompt-details-body">
+            <p>次のsystem messageに24操作の許可表と4件の変換例を含め、自由な日本語をCNLへ翻訳させています。</p>
+            <h3>System message</h3>
+            <pre><code id="normalizer-system-prompt">読み込んでいます…</code></pre>
+            <h3>初回のUser message</h3>
+            <pre><code id="normalizer-initial-prompt">読み込んでいます…</code></pre>
+            <h3>検査に失敗した場合の再生成message</h3>
+            <pre><code id="normalizer-retry-prompt">読み込んでいます…</code></pre>
+            <p class="prompt-note">生成条件: thinking無効、greedy decoding、最大96 token、再生成は1回まで。</p>
+          </div>
+        </details>
         <div class="actions">
           <button id="translate" class="primary" type="button" disabled>QwenでCNLに翻訳</button>
           <button id="cancel-translation" type="button" hidden>中止</button>

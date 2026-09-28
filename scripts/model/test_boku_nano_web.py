@@ -43,6 +43,31 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def verify_prompt_disclosure(driver: webdriver.Firefox) -> None:
+    details = driver.find_element("css selector", ".prompt-details")
+    details.find_element("css selector", "summary").click()
+    WebDriverWait(driver, 5).until(
+        lambda current: current.find_element(
+            "css selector", ".prompt-details"
+        ).get_attribute("open")
+        is not None
+    )
+    system_prompt = driver.find_element("id", "normalizer-system-prompt").text
+    initial_prompt = driver.find_element("id", "normalizer-initial-prompt").text
+    retry_prompt = driver.find_element("id", "normalizer-retry-prompt").text
+    if "自由な日本語をBoku1-nano用Controlled Natural Languageへ翻訳" not in system_prompt:
+        raise AssertionError("system messageがデモに表示されていません。")
+    if (
+        "次の24操作から1～3操作" not in system_prompt
+        or "入力: 数字の中から偶数" not in system_prompt
+    ):
+        raise AssertionError("24操作の規則またはfew-shot例が表示されていません。")
+    if initial_prompt != "入力: {ユーザー入力}\n出力:":
+        raise AssertionError(f"初回user messageの表示が異なります: {initial_prompt!r}")
+    if "前回の出力: {検査に失敗したQwen出力}" not in retry_prompt:
+        raise AssertionError("再生成messageがデモに表示されていません。")
+
+
 def verify_cnl_validator(driver: webdriver.Firefox) -> None:
     actual = driver.execute_async_script(
         """
@@ -169,6 +194,8 @@ def main() -> None:
         WebDriverWait(driver, 60).until(
             lambda current: current.execute_script("return window.__bokuNanoReady === true")
         )
+        verify_prompt_disclosure(driver)
+        print("prompt disclosure: system・初回・再生成messageの表示を確認")
         verify_cnl_validator(driver)
         print("CNL validator: 24操作・最大3操作・許可外拒否を確認")
         verify_tokenizer(driver)

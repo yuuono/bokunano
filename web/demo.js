@@ -1,5 +1,9 @@
 import { BokuNanoTokenizer } from "./tokenizer.js";
-import { validateCnl } from "./cnl.js";
+import {
+  buildNormalizerSystemPrompt,
+  buildNormalizerUserPrompt,
+  validateCnl,
+} from "./cnl.js";
 
 const elements = {
   model: document.querySelector("#model"),
@@ -18,7 +22,18 @@ const elements = {
   status: document.querySelector("#status"),
   metrics: document.querySelector("#metrics"),
   exampleButtons: document.querySelectorAll("[data-example-prompt]"),
+  normalizerSystemPrompt: document.querySelector("#normalizer-system-prompt"),
+  normalizerInitialPrompt: document.querySelector("#normalizer-initial-prompt"),
+  normalizerRetryPrompt: document.querySelector("#normalizer-retry-prompt"),
 };
+
+elements.normalizerSystemPrompt.textContent = buildNormalizerSystemPrompt();
+elements.normalizerInitialPrompt.textContent = buildNormalizerUserPrompt("{ユーザー入力}");
+elements.normalizerRetryPrompt.textContent = buildNormalizerUserPrompt(
+  "{元のユーザー入力}",
+  "{検査に失敗したQwen出力}",
+  "{JavaScript検査器が返した理由}",
+);
 
 const state = {
   manifest: null,

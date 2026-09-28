@@ -84,6 +84,25 @@ pre {
   background: #f6f8fa;
 }
 pre code { font-family: ui-monospace, "SFMono-Regular", Consolas, monospace; font-size: 0.88rem; line-height: 1.65; white-space: pre-wrap; }
+.prompt-details {
+  margin-top: 14px;
+  border: 1px solid #d8dee4;
+  border-radius: 4px;
+  background: #ffffff;
+}
+.prompt-details summary {
+  padding: 11px 13px;
+  color: #3f4650;
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+.prompt-details[open] summary { border-bottom: 1px solid #d8dee4; }
+.prompt-details-body { padding: 4px 14px 16px; }
+.prompt-details-body p { color: #66707b; font-size: 0.82rem; line-height: 1.6; }
+.prompt-details-body h3 { margin: 18px 0 7px; font-size: 0.86rem; font-weight: 500; }
+.prompt-details-body pre { max-height: 320px; min-height: 0; padding: 13px; }
+.prompt-details-body pre code { font-size: 0.76rem; line-height: 1.55; }
+.prompt-details-body .prompt-note { margin-bottom: 0; }
 .about { padding: 24px 4px; color: #57606a; font-size: 0.88rem; line-height: 1.75; }
 .about h2 { color: #24292f; }
 
