@@ -18,13 +18,32 @@ Qwen3は日本語表現の候補作成だけに使用した。Qwen3へコード�
 
 教師プロンプトは`prompts/japanese_instruction_generation/`、モデルrevisionと生成条件は`config/qwen_*.json`、採用表現ごとのmodel、revision、seed、sampling、prompt hashは`data/instruction_dictionaries/release/japanese_atomic_expression_provenance.jsonl`へ保存している。
 
+## ブラウザCNL翻訳モデル
+
+| 項目 | 内容 |
+| --- | --- |
+| 配布モデル | `onnx-community/Qwen3-0.6B-ONNX` |
+| upstream | `Qwen/Qwen3-0.6B` |
+| 用途 | 自由な日本語から許可済みCNLへのブラウザ内翻訳 |
+| 配布revision | `da1453100cf3ff33ef56d17983fc7a8648706db6` |
+| upstream revision | `c1899de289a04d12100db370d81485cdf75e47ca` |
+| 量子化成果物 | `onnx/model_q4f16.onnx`、569,789,750 bytes |
+| 成果物SHA-256 | `9e33a5911974174761d0dfdcc0bec975d9c45af0eae5e9eb647b8ba9442a8f91` |
+| upstreamライセンス | Apache License 2.0 |
+| 固定配布ページ | https://huggingface.co/onnx-community/Qwen3-0.6B-ONNX/tree/da1453100cf3ff33ef56d17983fc7a8648706db6 |
+| 保存したLICENSE | [`third_party/qwen3-0.6b-onnx/LICENSE`](third_party/qwen3-0.6b-onnx/LICENSE) |
+| 取得記録 | [`third_party/qwen3-0.6b-onnx/SOURCE.json`](third_party/qwen3-0.6b-onnx/SOURCE.json) |
+
+このQwenはデモ実行時にだけ使い、Boku1-nanoの再学習や重み更新には使わない。CNLを生成するのはQwenであり、JavaScriptは24操作・最大3操作の許可リストと文法を検査するだけである。ONNX成果物はリポジトリへ再配布せず、ブラウザが固定revisionから取得してキャッシュする。
+
 ## ブラウザ推論ランタイム
 
 | 成果物 | Version | 用途 | ライセンス |
 | --- | ---: | --- | --- |
-| Microsoft ONNX Runtime Web | 1.30.0 | GitHub Pages上のONNX推論 | MIT |
+| Microsoft ONNX Runtime Web | 1.30.0 | Boku1-nanoのGitHub Pages上のONNX推論 | MIT |
+| Hugging Face Transformers.js | 4.3.0 | Qwen3-0.6B ONNXのブラウザ内推論 | Apache-2.0 |
 
-配布用JavaScript・WASMは`web/vendor/`へ保存し、ライセンス本文は[`web/vendor/onnxruntime-web.LICENSE`](web/vendor/onnxruntime-web.LICENSE)へ同梱している。
+ONNX Runtime Webの配布用JavaScript・WASMは`web/vendor/`へ保存し、ライセンス本文は[`web/vendor/onnxruntime-web.LICENSE`](web/vendor/onnxruntime-web.LICENSE)へ同梱している。Transformers.jsはversionを固定してjsDelivrから実行時に読み込み、ライセンス本文と取得元は[`third_party/transformers-js/`](third_party/transformers-js/)へ保存している。
 
 ## 主要なビルド・学習依存関係
 

@@ -30,6 +30,7 @@ docs/
 - [`policies/tokenizer_training_policy.md`](policies/tokenizer_training_policy.md): 訓練データ限定のBPE・Unigram共通語彙作成と比較方針
 - [`policies/boku_nano_training_policy.md`](policies/boku_nano_training_policy.md): BPE 2,048語彙と約1,600万parameterモデルによる3 epoch本学習方針
 - [`policies/boku_nano_model_evaluation_policy.md`](policies/boku_nano_model_evaluation_policy.md): 学習済みBoku Nanoの5種類の生成・実行評価方針
+- [`policies/browser_cnl_normalization_policy.md`](policies/browser_cnl_normalization_policy.md): ブラウザ内Qwenによる自由文からCNLへの翻訳とJavaScript検査の方針
 
 ## 手順
 

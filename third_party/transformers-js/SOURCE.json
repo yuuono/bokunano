@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-09-28",
+  "package": "@huggingface/transformers",
+  "version": "4.3.0",
+  "source_url": "https://github.com/huggingface/transformers.js/tree/4.3.0",
+  "distribution_url": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0",
+  "license": "Apache-2.0",
+  "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+  "purpose": "ブラウザ内Qwen3-0.6B ONNXの読込と生成"
+}
