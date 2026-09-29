@@ -347,6 +347,14 @@ scripts/model/run_boku_nano_10epoch_nohup.sh
 
 10 epoch結果は`data/models/boku_nano_bpe_2048_10epoch/`、console logは`data/models/boku_nano_bpe_2048_10epoch_console.log`へ分離する。
 
+現行と同じ旧BPE 2,048語彙を使い、5,065,472 parameterの5M級モデルをランダム初期値から1 epoch学習する比較実験は[専用script](model/run_boku_nano_5m_1epoch_nohup.sh)で起動する。起動前にtokenizer、入力ZIP、parameter数を自動検査する。
+
+```bash
+scripts/model/run_boku_nano_5m_1epoch_nohup.sh
+```
+
+出力は`data/models/boku_nano_5m_bpe_2048_1epoch/`、console logは`data/models/boku_nano_5m_bpe_2048_1epoch_console.log`へ分離する。[5M級設定](../config/boku_nano_5m_bpe_2048_1epoch.yaml)は`d_model=256`、5層、4 heads、`d_ff=704`である。
+
 最小頻度2・最大piece長8のBPEを使い、同じ15,735,168 parameterモデルをランダム初期値から1 epoch学習する比較実験は専用scriptで起動する。
 
 ```bash
