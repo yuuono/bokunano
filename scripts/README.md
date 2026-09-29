@@ -339,29 +339,41 @@ uv run --group model-training --python 3.12.12 python \
   --config config/boku_nano_bpe_2048.yaml
 ```
 
-3 epoch checkpointへ継ぎ足さず、学習率scheduleを10 epoch用に最初から組む追加実験は専用scriptでbackground実行する。
+1M・5M・15Mの追加実験は[共通ランナー](model/run_boku_nano_experiment_nohup.sh)を使い、各専用scriptからbackground実行する。すべての専用scriptで`--tokenizer`を必須とし、次の省略しない名前を指定する。`old`や`short`のような省略名は受け付けない。
+
+| `--tokenizer`の値 | 使用するtokenizer |
+| --- | --- |
+| `bpe_2048` | 既存のBPE 2,048語彙 |
+| `bpe_2048_minfreq2_maxlen8` | 最小頻度2・最大piece長8のBPE 2,048語彙 |
+
+| 専用script | モデル規模 | epoch数 |
+| --- | ---: | ---: |
+| [`run_boku_nano_1m_1epoch_nohup.sh`](model/run_boku_nano_1m_1epoch_nohup.sh) | 1,016,704 parameter | 1 |
+| [`run_boku_nano_5m_1epoch_nohup.sh`](model/run_boku_nano_5m_1epoch_nohup.sh) | 5,065,472 parameter | 1 |
+| [`run_boku_nano_15m_1epoch_nohup.sh`](model/run_boku_nano_15m_1epoch_nohup.sh) | 15,735,168 parameter | 1 |
+| [`run_boku_nano_10epoch_nohup.sh`](model/run_boku_nano_10epoch_nohup.sh) | 15,735,168 parameter | 10 |
 
 ```bash
-scripts/model/run_boku_nano_10epoch_nohup.sh
+# 1M級・1 epoch
+scripts/model/run_boku_nano_1m_1epoch_nohup.sh --tokenizer bpe_2048
+scripts/model/run_boku_nano_1m_1epoch_nohup.sh --tokenizer bpe_2048_minfreq2_maxlen8
+
+# 5M級・1 epoch
+scripts/model/run_boku_nano_5m_1epoch_nohup.sh --tokenizer bpe_2048
+scripts/model/run_boku_nano_5m_1epoch_nohup.sh --tokenizer bpe_2048_minfreq2_maxlen8
+
+# 15M級・1 epoch
+scripts/model/run_boku_nano_15m_1epoch_nohup.sh --tokenizer bpe_2048
+scripts/model/run_boku_nano_15m_1epoch_nohup.sh --tokenizer bpe_2048_minfreq2_maxlen8
+
+# 15M級・10 epoch
+scripts/model/run_boku_nano_10epoch_nohup.sh --tokenizer bpe_2048
+scripts/model/run_boku_nano_10epoch_nohup.sh --tokenizer bpe_2048_minfreq2_maxlen8
 ```
 
-10 epoch結果は`data/models/boku_nano_bpe_2048_10epoch/`、console logは`data/models/boku_nano_bpe_2048_10epoch_console.log`へ分離する。
+1M級は[旧BPE用設定](../config/boku_nano_1m_bpe_2048_1epoch.yaml)と[短いpiece版BPE用設定](../config/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch.yaml)、5M級は[旧BPE用設定](../config/boku_nano_5m_bpe_2048_1epoch.yaml)と[短いpiece版BPE用設定](../config/boku_nano_5m_bpe_2048_minfreq2_maxlen8_1epoch.yaml)を使う。15M級は[旧BPE用設定](../config/boku_nano_bpe_2048.yaml)と[短いpiece版BPE用設定](../config/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch.yaml)を使う。
 
-現行と同じ旧BPE 2,048語彙を使い、5,065,472 parameterの5M級モデルをランダム初期値から1 epoch学習する比較実験は[専用script](model/run_boku_nano_5m_1epoch_nohup.sh)で起動する。起動前にtokenizer、入力ZIP、parameter数を自動検査する。
-
-```bash
-scripts/model/run_boku_nano_5m_1epoch_nohup.sh
-```
-
-出力は`data/models/boku_nano_5m_bpe_2048_1epoch/`、console logは`data/models/boku_nano_5m_bpe_2048_1epoch_console.log`へ分離する。[5M級設定](../config/boku_nano_5m_bpe_2048_1epoch.yaml)は`d_model=256`、5層、4 heads、`d_ff=704`である。
-
-最小頻度2・最大piece長8のBPEを使い、同じ15,735,168 parameterモデルをランダム初期値から1 epoch学習する比較実験は専用scriptで起動する。
-
-```bash
-scripts/model/run_boku_nano_minfreq2_maxlen8_1epoch_nohup.sh
-```
-
-出力は`data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch/`、console logは`data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_console.log`へ分離する。新しいトークナイザーでは1エポック当たり17,281,995系列tokenとなる。
+成果物、console log、PIDはモデル規模・tokenizer・epoch数を含む別名で保存し、互いに上書きしない。短いpiece版BPEでは1エポック当たり17,281,995系列token、旧BPEでは6,939,466系列tokenになる。
 
 各epoch終了後に検証集合24,040件だけでlossを測る。通常テスト、組合せ汎化テスト、日本語言い換えテスト、同一操作の反復テスト、境界値テストは学習中に使用しない。モデル構造、optimizer、保存物、再開方法は[`boku_nano_training_policy.md`](../docs/policies/boku_nano_training_policy.md)に従う。
 

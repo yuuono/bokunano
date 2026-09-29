@@ -14,8 +14,8 @@ if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   exit 0
 fi
 
-# 現行15M級・10 epochを固定し、tokenizerオプションを共通ランナーへ渡す。
+# 1M級・1 epochを固定し、tokenizerオプションを共通ランナーへ渡す。
 exec "${script_dir}/run_boku_nano_experiment_nohup.sh" \
   "$@" \
-  --model-size 15m \
-  --epochs 10
+  --model-size 1m \
+  --epochs 1

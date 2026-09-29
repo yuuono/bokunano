@@ -82,7 +82,7 @@
 | 項目 | 値 |
 | --- | --- |
 | model config | [`config/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch.yaml`](../../config/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch.yaml) |
-| 起動script | [`run_boku_nano_minfreq2_maxlen8_1epoch_nohup.sh`](../../scripts/model/run_boku_nano_minfreq2_maxlen8_1epoch_nohup.sh) |
+| 起動script | [`run_boku_nano_15m_1epoch_nohup.sh`](../../scripts/model/run_boku_nano_15m_1epoch_nohup.sh) |
 | parameter数 | 15,735,168 |
 | epoch数 | 1 |
 | 1 epochの系列token | 17,281,995 |
@@ -92,7 +92,8 @@
 学習前検証では、語彙数2,048、トークナイザーSHA-256、特殊token ID、モデルparameter数、訓練・validation ZIPのSHA-256がすべて一致した。学習は次でbackground起動できる。
 
 ```bash
-scripts/model/run_boku_nano_minfreq2_maxlen8_1epoch_nohup.sh
+scripts/model/run_boku_nano_15m_1epoch_nohup.sh \
+  --tokenizer bpe_2048_minfreq2_maxlen8
 ```
 
 scriptは実行中PIDによる二重起動と、既存出力ディレクトリの暗黙上書きを拒否する。
