@@ -158,22 +158,40 @@ Boku1-nanoは一般的なPythonコーディングモデルではない。24操�
 
 `style_spec`は処理内容ではなく、同じ意味のコードをどう書くかを指定する情報である。たとえば、forループか内包表記か、一時変数を使うか、型注釈やコメントを付けるか、変数名、比較の向き、スライスを`[:k]`と書くか`[0:k]`と書くかを表す。
 
+`code_style`は詳細設定を次の4種類へまとめた集計用ラベルである。
+
+| `code_style` | 意味 |
+| --- | --- |
+| `expression_comprehension` | 一時変数を使わず、式を直接`return`する |
+| `staged_comprehension` | 内包表記・組み込み関数・スライスの結果を一時変数へ代入する |
+| `staged_loop` | 結果用一時変数と通常の`for`ループを使う |
+| `mixed` | 複数操作の中で内包表記と`for`ループを混在させる |
+
+`style_spec`に現れる主な項目と候補は次のとおりである。
+
+| 項目 | 候補 |
+| --- | --- |
+| `layout` | `single_return` / `multi_statement` |
+| `collection_form` | `list_comprehension` / `for_loop` / `mixed` / `null` |
+| `temporary_form` | `direct_return` / `fresh_names` / `reused_names` |
+| `name_set` | `configured` |
+| `comments` | `none` / `present` |
+| `local_annotations` | `false` / `true` |
+| `condition_direction` | `normal` / `swapped` / `null` |
+| `element_name` | `x` / `value` / `null` |
+| `result_name` | `result` / `output` / `null` |
+| `square_form` | `multiply` / `power` / `null` |
+| `ascending_form` | `default` / `reverse_false` / `null` |
+| `descending_form` | `reverse_keyword` / `sort_then_slice` / `null` |
+| `reverse_form` | `slice_notation` / `reversed_call` / `null` |
+| `slice_form` | `implicit_start` / `explicit_zero` / `implicit_step` / `explicit_empty_step` / `null` |
+| `operation_styles` | 操作ごとの設定リスト |
+
+これらは自由な直積ではない。`single_return`なら`temporary_form=direct_return`かつローカル型注釈なし、通常の`for_loop`なら複数文形式、というように、意味ASTと両立する組合せだけを生成する。
+
 各レコードには、意味、文章、コードのSHA-256、生成seed、生成器version、教師モデル由来の有無、実行検証結果が残る。実入力41件を全レコードへ複製せず、`tests`から共有テスト集合を参照する。
 
-### 5.3 訓練データの分布
-
-| 操作数 | レコード数 |
-| ---: | ---: |
-| 1 | 460 |
-| 2 | 8,680 |
-| 3 | 183,760 |
-| 合計 | 192,900 |
-
-操作数1、2、3は均等化していない。訓練splitの意味AST数を保ち、各意味ASTから原則20件ずつ採用した結果である。少数区分の複製や、3操作を減らす再抽出は行っていない。
-
-日本語指示は、ルール生成を維持した96,510件と、教師モデルによる承認済み言い換えへ置き換えた96,390件で構成する。コード形式は、式・内包表記4,458件、混合95,043件、段階的内包表記66,058件、段階的ループ27,341件である。
-
-### 5.4 正解コードはどのように作ったか
+### 5.3 正解コードはどのように作ったか
 
 正解コードはQwenやインターネットから取得していない。自作テンプレートが意味ASTと`style_spec`からコード候補を生成し、各候補を次の順で検証した。
 
@@ -262,7 +280,20 @@ $source_instruction
 
 言い換え時の主な生成条件は、`max_new_tokens=256`、`temperature=0.9`、`top_p=0.8`、`top_k=20`、`repetition_penalty=1.05`である。96,460件を対象に生成し、候補96,390件を採用、生成失敗は70件だった。
 
-### 6.4 WebデモのCNL翻訳プロンプト
+### 6.4 訓練データの分布
+
+| 操作数 | レコード数 |
+| ---: | ---: |
+| 1 | 460 |
+| 2 | 8,680 |
+| 3 | 183,760 |
+| 合計 | 192,900 |
+
+操作数1、2、3は均等化していない。訓練splitの意味AST数を保ち、各意味ASTから原則20件ずつ採用した結果である。少数区分の複製や、3操作を減らす再抽出は行っていない。
+
+日本語指示は、ルール生成を維持した96,510件と、教師モデルによる承認済み言い換えへ置き換えた96,390件で構成する。コード形式は、式・内包表記4,458件、混合95,043件、段階的内包表記66,058件、段階的ループ27,341件である。
+
+### 6.5 WebデモのCNL翻訳プロンプト
 
 デモのQwen3-0.6Bには追加学習を行わない。system messageへ24操作の意味、接続形、終止形、CNL文法と4件のfew-shot例を入れる。冒頭と主要規則は次のとおりである。
 
@@ -399,6 +430,20 @@ Attentionは通常のMulti-Head Attentionであり、Grouped Query Attentionで�
 | 10エポック正式評価84,550件 | 959.304秒、約15分59.3秒 | greedy、5テスト |
 | 学習前ランダムモデル比較430件 | 168.553秒、約2分48.6秒 | pass@1・pass@5を含む比較全体 |
 
+### 9.1 訓練時のGPU使用状況
+
+元の訓練ログとmanifestにはGPU使用率・訓練時VRAMを記録していなかった。そのため、過去の実行について厳密な最大値は復元できない。2026年9月28日に元モデルを上書きせず、同じ3エポック設定で再実行し、`nvidia-smi`を0.1秒間隔で792回サンプリングした。
+
+| 指標 | 再計測値 |
+| --- | ---: |
+| 最大GPU演算使用率 | 92% |
+| GPU使用中424サンプルの平均 | 81.08% |
+| GPU使用中サンプルの95パーセンタイル | 89% |
+| 最大device VRAM | 16,274 MiB / 32,607 MiB、約49.9% |
+| 監視込み再実行時間 | 100.533秒 |
+
+これは同じ設定による再計測値であり、元の79.564秒の実行から得た値ではない。VRAMは`nvidia-smi`が示すdevice全体の使用量で、PyTorchの`max_memory_allocated`ではない。監視負荷を含むため、再実行時間も元ログの学習時間と直接比較しない。正式評価表の865.9 MiBは評価時のPyTorch最大割当量であり、訓練時の値ではない。
+
 3エポックの「79.564秒」は純粋なGPU kernel時間ではなく、学習プロセスが開始してから最終optimizer stepへ到達するまでのログ値である。最初のstep 20が34.375秒なので、データ準備などの初期処理も含む。
 
 次の工程は、件数・生成日時・結果は保存しているが、一工程としての経過秒数を保存していない。
@@ -451,6 +496,8 @@ step 20のtrain lossは6.150181、step 200は0.483744、最終step 1,131は0.394
 | 同一操作の反復テスト | 22,937 / 23,040 | 99.5530% |
 | 境界値テスト | 24,038 / 24,040 | 99.9917% |
 | 合計・参考値 | 84,434 / 84,550 | 99.8628% |
+
+使用した30件の全文指示、各行の3エポックpass@1・pass@5、10エポックpass@1、失敗理由は[言い換えテスト全件結果](../results/paraphrase_test_instruction_results.md)に掲載している。
 
 段階別では、Syntax-valid、Safe-AST、Signature-valid、Executableがすべて84,546 / 84,550、99.9953%である。Executableだがpass@1不合格の112件は、例外なく実行できても少なくとも一つのhidden testで結果が違った。残り4件はPython構文エラーである。timeoutとEOS未生成は0件だった。
 

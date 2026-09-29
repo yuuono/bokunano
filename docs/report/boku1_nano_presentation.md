@@ -266,7 +266,7 @@ Boku1-nanoは一般的なPythonコーディングモデルではありません�
 
 ### 画面に出す内容
 
-同じ意味でも書き方を変える。
+`semantic_ast`は「何をするか」、`style_spec`は「どう書くか」を表す。
 
 ```python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -278,81 +278,56 @@ def solve(xs: list[int], k: int) -> list[int]:
     result: list[int] = []
     for value in xs:
         if value % 2 == 0:
-            result.append(value * 2)
+            result += [value * 2]
     return result
 ```
 
+#### `code_style`の4分類
+
+| `code_style` | 意味 |
+| --- | --- |
+| `expression_comprehension` | 一時変数を使わず、式を直接`return`する |
+| `staged_comprehension` | 内包表記・組み込み関数・スライスの結果を一時変数へ代入する |
+| `staged_loop` | 結果用一時変数と通常の`for`ループを使う |
+| `mixed` | 複数操作の中で内包表記と`for`ループを混在させる |
+
+#### `style_spec`の主な候補
+
+| 項目 | 候補 | 何が変わるか |
+| --- | --- | --- |
+| `layout` | `single_return` / `multi_statement` | 直接returnするか、複数文へ分けるか |
+| `collection_form` | `list_comprehension` / `for_loop` / `mixed` / `null` | 抽出・変換を内包表記、ループ、混合のどれで書くか |
+| `temporary_form` | `direct_return` / `fresh_names` / `reused_names` | 一時変数なし、操作ごとに別名、変数名再利用 |
+| `name_set` | `configured` | 変数名を生成器の設定済み候補から選んだことを示す |
+| `comments` | `none` / `present` | 操作説明コメントを付けるか |
+| `local_annotations` | `false` / `true` | ローカル変数へ`list[int]`を付けるか |
+| `condition_direction` | `normal` / `swapped` / `null` | `x <= k`か、同値な`k >= x`か |
+| `element_name` | `x` / `value` / `null` | 要素変数名 |
+| `result_name` | `result` / `output` / `null` | 結果変数名 |
+| `square_form` | `multiply` / `power` / `null` | `x * x`か`x ** 2`か |
+| `ascending_form` | `default` / `reverse_false` / `null` | `sorted(xs)`か`sorted(xs, reverse=False)`か |
+| `descending_form` | `reverse_keyword` / `sort_then_slice` / `null` | `sorted(..., reverse=True)`か`sorted(...)[::-1]`か |
+| `reverse_form` | `slice_notation` / `reversed_call` / `null` | `[::-1]`か`list(reversed(...))`か |
+| `slice_form` | `implicit_start` / `explicit_zero` / `implicit_step` / `explicit_empty_step` / `null` | `[:k]`と`[0:k]`などの表記差 |
+| `operation_styles` | 操作ごとの設定リスト | 各操作の表記、変数名、比較方向を操作順に保存する |
+
+候補は自由に直積するのではなく、操作と両立するものだけを使う。たとえば`single_return`では`temporary_form=direct_return`かつローカル型注釈なし、`for_loop`は複数文形式だけで使用する。`operation_styles`には、上表のうち各操作固有の`collection_form`、変数名、比較方向、式形式を操作順に保存する。
+
 ### 話す内容
 
-`style_spec`は処理内容ではなく、同じ処理をどのようなPythonの書き方で表現するかを指定する情報です。
+`style_spec`は処理内容ではなく、同じ処理をどのようなPythonの書き方で表現するかを指定する情報です。一方、`code_style`は詳細設定を4種類へ大きくまとめた集計用ラベルです。
 
 たとえば、内包表記かforループか、一時変数を使うか、型注釈やコメントを付けるか、変数名をどうするか、比較式の左右を入れ替えるか、スライスを`[:k]`と書くか`[0:k]`と書くかを表します。
 
 二つの例はどちらも「偶数だけを残して2倍する」コードです。意味は同じですが、表面的なコードは違います。モデルが特定の一つのテンプレートだけを暗記しないよう、複数の構造的変種を作りました。
 
-最終訓練データでは、式・内包表記4,458件、混合95,043件、段階的内包表記66,058件、段階的ループ27,341件になりました。
+候補には、1行returnと複数文、内包表記とforループ、一時変数名の再利用、コメント、ローカル型注釈、比較式の左右、二乗・並べ替え・スライスの表記差があります。候補同士には両立条件があり、意味ASTと互換性のある組合せだけを決定的に列挙します。
+
+`code_style`は、直接returnする`expression_comprehension`、一時変数を使う`staged_comprehension`、通常ループを使う`staged_loop`、内包表記とループが混ざる`mixed`の4種類です。名称に`comprehension`を含む形式でも、操作によっては`sorted`、`reversed`、スライスを使用します。
 
 ---
 
-## 10. データセットの保存形式
-
-### 画面に出す内容
-
-- JSON Lines: 1行 = 1学習レコード
-- 訓練: 192,900件
-- 展開後: 742,098,087 bytes
-- ZIP: 79,184,641 bytes
-
-```json
-{
-  "instruction_ja": "先頭k個を切り取るsolve関数を書いてください。",
-  "semantic_ast": {"sequence": [{"slice": ["take_first_k"]}]},
-  "reference_code": "def solve(...): ...",
-  "code_style": "staged_comprehension",
-  "style_spec": {"layout": "multi_statement"},
-  "verification": {"syntax_ok": true, "tests_passed": true}
-}
-```
-
-### 話す内容
-
-最終データはJSON Linesで保存しています。1行が、日本語指示、意味AST、正解コード、コード形式、検証結果、生成来歴を持つ一つのレコードです。
-
-実際のレコードには、`record_id`、`spec_id`、意味・文章・コードのSHA-256、生成seed、生成器version、教師モデルのrevisionなども入っています。
-
-`spec_id`は意味仕様を識別するIDで、コードの書き方を表すIDではありません。コードの書き方は`code_style`と`style_spec`で表します。
-
-訓練JSONLは192,900件、展開後約742 MBです。Gitでは約79 MBのZIPを正本として管理しています。
-
----
-
-## 11. 訓練データの分布
-
-### 画面に出す内容
-
-| 操作数 | レコード数 |
-| ---: | ---: |
-| 1 | 460 |
-| 2 | 8,680 |
-| 3 | 183,760 |
-| 合計 | 192,900 |
-
-| 日本語指示の由来 | 件数 |
-| --- | ---: |
-| ルール生成を維持 | 96,510 |
-| 教師Qwenによる言い換え | 96,390 |
-
-### 話す内容
-
-訓練データは192,900件です。操作数1、2、3を均等にはしていません。訓練splitに含まれる意味ASTごとに原則20件を作った結果、1操作460件、2操作8,680件、3操作183,760件になりました。
-
-1操作は24種類なので、本来は24掛ける20で480件を目標にしていました。ただし、6意味ASTで日本語指示を20件まで用意できず、最終的に460件です。余ったコード候補20件は、理由付きで不採用記録へ分けています。
-
-日本語指示は、最初に全件をルールで生成しました。そのうち、各訓練意味ASTから固定seedで10件ずつ選んだ96,460件をQwenの言い換え対象にし、成功した96,390件を置き換えました。残る96,510件はルール生成文を維持しています。
-
----
-
-## 12. 日本語指示の生成
+## 10. 日本語指示の生成
 
 ### 画面に出す内容
 
@@ -383,7 +358,7 @@ Qwenは日本語表現の候補と言い換えにだけ使っています。正�
 
 ---
 
-## 13. 教師Qwenへ渡したプロンプト
+## 11. 教師Qwenへ渡したプロンプト
 
 ### 画面に出す内容
 
@@ -414,6 +389,73 @@ system messageでは、操作の追加、削除、統合、並べ替えを禁止
 生成条件は、`temperature=0.9`、`top_p=0.8`、`top_k=20`、最大256 tokenです。96,460件を対象にし、96,390件が採用可能な候補になり、70件は生成失敗でした。この工程がデータ作成で最も時間がかかり、約2時間32分でした。
 
 完全なプロンプトは[`prompts/japanese_instruction_generation/`](../../prompts/japanese_instruction_generation/)に保存しています。
+
+---
+
+## 12. 訓練データの分布
+
+### 画面に出す内容
+
+| 操作数 | レコード数 |
+| ---: | ---: |
+| 1 | 460 |
+| 2 | 8,680 |
+| 3 | 183,760 |
+| 合計 | 192,900 |
+
+| 日本語指示の由来 | 件数 |
+| --- | ---: |
+| ルール生成を維持 | 96,510 |
+| 教師Qwenによる言い換え | 96,390 |
+
+| `code_style` | 件数 |
+| --- | ---: |
+| `expression_comprehension` | 4,458 |
+| `staged_comprehension` | 66,058 |
+| `staged_loop` | 27,341 |
+| `mixed` | 95,043 |
+
+### 話す内容
+
+日本語指示を作成した後の最終訓練データは192,900件です。操作数1、2、3を均等にはしていません。訓練splitに含まれる意味ASTごとに原則20件を作った結果、1操作460件、2操作8,680件、3操作183,760件になりました。
+
+1操作は24種類なので、本来は24掛ける20で480件を目標にしていました。ただし、6意味ASTで日本語指示を20件まで用意できず、最終的に460件です。余ったコード候補20件は、理由付きで不採用記録へ分けています。
+
+日本語指示は、各訓練意味ASTから固定seedで10件ずつ選んだ96,460件をQwenの言い換え対象にし、成功した96,390件を置き換えました。残る96,510件はルール生成文を維持しています。
+
+コード形式も均等化していません。構造変種生成器が意味ASTと両立する`style_spec`を列挙した結果、`mixed`が95,043件で最も多く、次いで`staged_comprehension`が66,058件、`staged_loop`が27,341件、`expression_comprehension`が4,458件です。
+
+---
+
+## 13. データセットの保存形式
+
+### 画面に出す内容
+
+- JSON Lines: 1行 = 1学習レコード
+- 訓練: 192,900件
+- 展開後: 742,098,087 bytes
+- ZIP: 79,184,641 bytes
+
+```json
+{
+  "instruction_ja": "先頭k個を切り取るsolve関数を書いてください。",
+  "semantic_ast": {"sequence": [{"slice": ["take_first_k"]}]},
+  "reference_code": "def solve(...): ...",
+  "code_style": "staged_comprehension",
+  "style_spec": {"layout": "multi_statement"},
+  "verification": {"syntax_ok": true, "tests_passed": true}
+}
+```
+
+### 話す内容
+
+日本語指示と検証済みコードを結合し、最終データをJSON Linesで保存します。1行が、日本語指示、意味AST、正解コード、コード形式、検証結果、生成来歴を持つ一つのレコードです。
+
+実際のレコードには、`record_id`、`spec_id`、意味・文章・コードのSHA-256、生成seed、生成器version、教師モデルのrevisionなども入っています。
+
+`spec_id`は意味仕様を識別するIDで、コードの書き方を表すIDではありません。コードの書き方は`code_style`と`style_spec`で表します。
+
+訓練JSONLは192,900件、展開後約742 MBです。Gitでは約79 MBのZIPを正本として管理しています。
 
 ---
 
@@ -496,6 +538,8 @@ loss対象:                    コード + EOS
 | dtype | bfloat16 |
 | GPU | RTX 5090 |
 | ログ | 20 optimizer stepごと |
+| 最大GPU演算使用率 | 92%（同条件の再計測） |
+| 最大device VRAM | 16,274 MiB / 32,607 MiB、約49.9%（同条件の再計測） |
 
 | 実行 | 時間 |
 | --- | ---: |
@@ -512,6 +556,10 @@ optimizerはAdamWです。学習率は最初の5%をlinear warmupし、その後
 10エポックはランダム初期値から独立して学習し、約190.7秒でした。モデル学習よりも、教師Qwenによる96,460件の言い換えの方が長く、約2時間32分かかっています。
 
 意味AST生成、コード候補生成、BPE学習などは経過秒数を保存していないため、データ生成全体の正確な合計時間は未計測です。
+
+元の訓練ログには最大GPU使用率と訓練時VRAMが保存されていませんでした。そこで2026年9月28日に、元モデルを上書きせず、同じ3エポック設定を一時領域で再実行し、`nvidia-smi`を0.1秒間隔で792回サンプリングしました。最大GPU演算使用率は92%、GPU使用中424サンプルの平均は81.08%、95パーセンタイルは89%でした。最大device VRAMは16,274 MiBで、総量32,607 MiBの約49.9%です。
+
+このVRAM値は`nvidia-smi`が示すdevice全体の使用量であり、PyTorchの`max_memory_allocated`ではありません。再計測の実行時間は監視負荷を含め100.533秒だったため、元ログの学習時間79.564秒とは分けて扱います。
 
 ---
 
@@ -615,6 +663,8 @@ BLEU・文字列一致より、**実行結果**を重視する。
 Syntax-valid、Safe-AST、Signature-valid、Executableはすべて84,546件、99.9953%です。構文エラーは4件でした。残る112件はコードを例外なく実行できたものの、少なくとも一つのhidden testで結果が違いました。timeoutとEOS未生成は0件です。
 
 通常、組合せ汎化、境界値は99.97%以上ですが、日本語言い換えは30件中24件、80%です。また、不合格116件中103件は同一操作の反復テストに集中しました。
+
+言い換えテストで使用した30件の全文指示と、3エポック・10エポックの各合否は[付録D](#付録d-日本語言い換えテスト全30件)にすべて掲載しています。
 
 ---
 
@@ -847,6 +897,48 @@ Qwenは日本語表現候補と言い換え、Webデモの自由文正規化に�
 | BPE | [`bpe_tokenizer_training_results.md`](../results/bpe_tokenizer_training_results.md) |
 | 3エポック学習 | [`boku_nano_three_epoch_training_results.md`](../results/boku_nano_three_epoch_training_results.md) |
 | 正式評価 | [`boku_nano_3epoch_evaluation_results.md`](../results/boku_nano_3epoch_evaluation_results.md) |
+| 言い換えテスト全30件 | [`paraphrase_test_instruction_results.md`](../results/paraphrase_test_instruction_results.md) |
 | ランダム比較 | [`boku_nano_evaluation_metrics_and_random_baseline.md`](../results/boku_nano_evaluation_metrics_and_random_baseline.md) |
 | Webデモ | [`boku_nano_onnx_web_demo.md`](../procedures/boku_nano_onnx_web_demo.md) |
 | 再実行 | [`boku_nano_end_to_end_reproduction.md`](../procedures/boku_nano_end_to_end_reproduction.md) |
+
+---
+
+# 付録D: 日本語言い換えテスト全30件
+
+正式評価に使った全文指示とモデル別合否をすべて示す。合格条件は64件のhidden入力すべてへの合格である。主評価はgreedyのpass@1で、3エポックpass@5は比較実験として併記する。
+
+| No. | 期待する処理 | 使用した全文指示 | 3ep pass@1 | 3ep pass@5 | 10ep pass@1 |
+| ---: | --- | --- | --- | --- | --- |
+| 1 | 偶数だけを残す | 整数リストxsから偶数を分離するsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 2 | 偶数だけを残す | 整数リストxsから2で割り切れる値を残すsolve関数を書いてください。 | 不合格 | 不合格 | 不合格 |
+| 3 | 偶数だけを残す | 整数リストxsから奇数を除くsolve関数を書いてください。 | 不合格 | 不合格 | 不合格 |
+| 4 | 奇数だけを残す | 整数リストxsから奇数を分類して残すsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 5 | 奇数だけを残す | 整数リストxsから2で割り切れない値を残すsolve関数を書いてください。 | 不合格 | 不合格 | 不合格 |
+| 6 | 奇数だけを残す | 整数リストxsから偶数を除くsolve関数を書いてください。 | 不合格 | 不合格 | 不合格 |
+| 7 | `k`より大きい値だけを残す | 整数リストxsと整数kを受け取り、kを超過する値を残すsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 8 | `k`より大きい値だけを残す | 整数リストxsと整数kを受け取り、kを超過する値を切り出すsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 9 | `k`以上の値だけを残す | 整数リストxsと整数kを受け取り、k以上の要素を維持するsolve関数を書いてください。 | 合格 | 合格 | 不合格 |
+| 10 | `k`より小さい値だけを残す | 整数リストxsと整数kを受け取り、k以上じゃない値だけを残すsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 11 | `k`以下の値だけを残す | 整数リストxsと整数kを受け取り、k以下のものを保持するsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 12 | `k`の倍数だけを残す | 整数リストxsと整数kを受け取り、kの倍数を特定して残すsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 13 | 正の値だけを残す | 整数リストxsから正の値に限定するsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 14 | 負の値だけを残す | 整数リストxsから負の数を抜き出すsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 15 | ゼロだけを残す | 整数リストxsから零を残すsolve関数を書いてください。 | 合格 | 合格 | 不合格 |
+| 16 | 各要素に`k`を加える | 整数リストxsと整数kを受け取り、各要素にkをプラスするsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 17 | 各要素から`k`を引く | 整数リストxsと整数kを受け取り、各数値からkを減らすsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 18 | 各要素に`k`を掛ける | 整数リストxsと整数kを受け取り、各要素にkを掛けるsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 19 | 各要素に`k`を掛ける | 整数リストxsと整数kを受け取り、kを掛けるsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 20 | 各要素を2倍する | 整数リストxsから各要素を二倍にするsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 21 | 各要素を3倍する | 整数リストxsから全部を3倍するsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 22 | 各要素の符号を反転する | 整数リストxsから数の正負を入れ替えるsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 23 | 各要素の絶対値を取る | 整数リストxsから絶対値を算出するsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 24 | 各要素を二乗する | 整数リストxsからその数と自らをかけるsolve関数を書いてください。 | 不合格 | 不合格 | 不合格 |
+| 25 | 値を昇順に並べる | 整数リストxsから値を最小から最大へ並べるsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 26 | 値を降順に並べる | 整数リストxsから大きい値が先になるように並べるsolve関数を書いてください。 | 合格 | 合格 | 不合格 |
+| 27 | 現在の要素順を反転する | 整数リストxsから順序をさかさにするsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 28 | 先頭から`k`個を取る | 整数リストxsと整数kを受け取り、最初のk個を取り出すsolve関数を書いてください。 | 不合格 | 合格 | 不合格 |
+| 29 | 末尾から`k`個を取る | 整数リストxsと整数kを受け取り、後ろからk個を拾うsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+| 30 | 先頭から1個おきに取る | 整数リストxsから先頭から1個おきに取るsolve関数を書いてください。 | 合格 | 合格 | 合格 |
+
+3エポック版のpass@1不合格はNo.2、3、5、6、24、28の6件である。10エポック版はこの6件にNo.9、15、26を加えた9件が不合格だった。各失敗の生成コードと原因は[言い換えテスト全件結果](../results/paraphrase_test_instruction_results.md)に記録している。
