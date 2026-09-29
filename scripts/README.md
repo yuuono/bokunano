@@ -341,10 +341,10 @@ uv run --group model-training --python 3.12.12 python \
 
 1M・5M・15Mの追加実験は[共通ランナー](model/run_boku_nano_experiment_nohup.sh)を使い、各専用scriptからbackground実行する。すべての専用scriptで`--tokenizer`を必須とし、次の省略しない名前を指定する。`old`や`short`のような省略名は受け付けない。
 
-| `--tokenizer`の値 | 使用するtokenizer |
-| --- | --- |
-| `bpe_2048` | 既存のBPE 2,048語彙 |
-| `bpe_2048_minfreq2_maxlen8` | 最小頻度2・最大piece長8のBPE 2,048語彙 |
+| `--tokenizer`の値 | 語彙数 | minimum frequency | max token length |
+| --- | ---: | ---: | ---: |
+| `bpe_2048_minfreq5_maxlen24` | 2,048 | 5 | 24 |
+| `bpe_2048_minfreq2_maxlen8` | 2,048 | 2 | 8 |
 
 | 専用script | モデル規模 | epoch数 |
 | --- | ---: | ---: |
@@ -355,19 +355,19 @@ uv run --group model-training --python 3.12.12 python \
 
 ```bash
 # 1M級・1 epoch
-scripts/model/run_boku_nano_1m_1epoch_nohup.sh --tokenizer bpe_2048
+scripts/model/run_boku_nano_1m_1epoch_nohup.sh --tokenizer bpe_2048_minfreq5_maxlen24
 scripts/model/run_boku_nano_1m_1epoch_nohup.sh --tokenizer bpe_2048_minfreq2_maxlen8
 
 # 5M級・1 epoch
-scripts/model/run_boku_nano_5m_1epoch_nohup.sh --tokenizer bpe_2048
+scripts/model/run_boku_nano_5m_1epoch_nohup.sh --tokenizer bpe_2048_minfreq5_maxlen24
 scripts/model/run_boku_nano_5m_1epoch_nohup.sh --tokenizer bpe_2048_minfreq2_maxlen8
 
 # 15M級・1 epoch
-scripts/model/run_boku_nano_15m_1epoch_nohup.sh --tokenizer bpe_2048
+scripts/model/run_boku_nano_15m_1epoch_nohup.sh --tokenizer bpe_2048_minfreq5_maxlen24
 scripts/model/run_boku_nano_15m_1epoch_nohup.sh --tokenizer bpe_2048_minfreq2_maxlen8
 
 # 15M級・10 epoch
-scripts/model/run_boku_nano_10epoch_nohup.sh --tokenizer bpe_2048
+scripts/model/run_boku_nano_10epoch_nohup.sh --tokenizer bpe_2048_minfreq5_maxlen24
 scripts/model/run_boku_nano_10epoch_nohup.sh --tokenizer bpe_2048_minfreq2_maxlen8
 ```
 

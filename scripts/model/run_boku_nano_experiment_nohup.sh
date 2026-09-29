@@ -15,7 +15,7 @@ show_usage() {
   # 必須オプションの並びを表示する。
   printf '%s\n' "使い方: $0 --model-size <1m|5m|15m> --epochs <正の整数> --tokenizer <名前>"
   # 旧BPEの省略しない識別子を表示する。
-  printf '%s\n' "  --tokenizer bpe_2048"
+  printf '%s\n' "  --tokenizer bpe_2048_minfreq5_maxlen24"
   # 短いpiece版BPEの省略しない識別子を表示する。
   printf '%s\n' "  --tokenizer bpe_2048_minfreq2_maxlen8"
 }
@@ -155,18 +155,26 @@ esac
 # tokenizer名から固定設定と説明表示を選ぶ。
 case "${tokenizer_name}" in
   # 既存のBPE 2,048語彙を選ぶ。
-  bpe_2048)
+  bpe_2048_minfreq5_maxlen24)
     # 旧BPE用の固定設定を使う。
     config_path="${old_config}"
+    # 既存成果物との互換性を保つ保存名を設定する。
+    artifact_tokenizer_name="bpe_2048"
     # 実行時の確認表示を設定する。
     tokenizer_label="既存のBPE 2,048語彙"
+    # tokenizer訓練時の主要parameterを表示用に設定する。
+    tokenizer_parameter_summary="vocab_size=2,048, min_frequency=5, max_token_length=24"
     ;;
   # 最小頻度2・最大piece長8のBPEを選ぶ。
   bpe_2048_minfreq2_maxlen8)
     # 短いpiece版BPE用の固定設定を使う。
     config_path="${short_config}"
+    # tokenizer設定を含む保存名を設定する。
+    artifact_tokenizer_name="bpe_2048_minfreq2_maxlen8"
     # 実行時の確認表示を設定する。
     tokenizer_label="最小頻度2・最大piece長8のBPE 2,048語彙"
+    # tokenizer訓練時の主要parameterを表示用に設定する。
+    tokenizer_parameter_summary="vocab_size=2,048, min_frequency=2, max_token_length=8"
     ;;
   # 省略名を含む未対応tokenizerを拒否する。
   *)
@@ -180,7 +188,7 @@ case "${tokenizer_name}" in
 esac
 
 # モデル規模、tokenizer、epoch数を含む一意な実験名を作る。
-experiment_name="${experiment_prefix}_${tokenizer_name}_${epochs}epoch"
+experiment_name="${experiment_prefix}_${artifact_tokenizer_name}_${epochs}epoch"
 # 実験名から出力先を作る。
 output_dir="data/models/${experiment_name}"
 # 実験名からconsole logの保存先を作る。
@@ -234,6 +242,7 @@ printf '%s\n' "${training_pid}" >"${pid_path}"
 echo "${model_size}級・${epochs} epoch学習を開始しました: PID ${training_pid}"
 echo "parameter数: ${parameter_count}"
 echo "tokenizer: ${tokenizer_label}"
+echo "tokenizer parameter: ${tokenizer_parameter_summary}"
 echo "出力: ${output_dir}"
 echo "ログ: ${log_path}"
 echo "確認: tail -f ${log_path}"

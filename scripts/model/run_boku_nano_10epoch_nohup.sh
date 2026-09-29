@@ -9,7 +9,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # help指定ではこのscriptに必要なtokenizerオプションを表示する。
 if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
   # 省略しないtokenizer名を使った実行形式を表示する。
-  echo "使い方: $0 --tokenizer <bpe_2048|bpe_2048_minfreq2_maxlen8>"
+  echo "使い方: $0 --tokenizer <bpe_2048_minfreq5_maxlen24|bpe_2048_minfreq2_maxlen8>"
   # 学習を開始せず正常終了する。
   exit 0
 fi
