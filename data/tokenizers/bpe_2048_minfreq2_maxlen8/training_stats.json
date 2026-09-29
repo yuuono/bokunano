@@ -1,0 +1,649 @@
+{
+  "actual_vocab_size": 2048,
+  "byte_fallback": true,
+  "config_path": "config/tokenizer_bpe_2048_minfreq2_maxlen8.yaml",
+  "config_sha256": "95bbd6c2822bed03051ee02e389b006b1fd6d311f9105f80ebd4da7c0f0a11bb",
+  "configured_vocab_size": 2048,
+  "corpus": {
+    "character_count_by_field": {
+      "instruction_ja": 12256762,
+      "reference_code": 47302604
+    },
+    "deduplicated_text_count_by_field": {
+      "instruction_ja": 1171
+    },
+    "utf8_byte_count_by_field": {
+      "instruction_ja": 33244471,
+      "reference_code": 52059684
+    },
+    "yielded_text_count": 384629,
+    "yielded_text_count_by_field": {
+      "instruction_ja": 191729,
+      "reference_code": 192900
+    }
+  },
+  "files": {
+    "special_tokens_map.json": {
+      "bytes": 199,
+      "sha256": "b2c2157d8b8e45ac214154bb1aeeeab40cf48184f7022d38d792578bd1643435"
+    },
+    "tokenizer.json": {
+      "bytes": 136619,
+      "sha256": "f09f3d7eccbca2ab1224c662064b71e572d64147147b8b559ebdb428eb035dbf"
+    },
+    "tokenizer_config.json": {
+      "bytes": 344,
+      "sha256": "85045150d137194e7b93a2e486d057b374d6749f8460e49cb0860cf9ddc83e19"
+    },
+    "training_config.yaml": {
+      "bytes": 1440,
+      "sha256": "edb3620e0f9994831a52dbb87189295710e1ea176b1dbd9c7af032962daf8984"
+    },
+    "vocab.tsv": {
+      "bytes": 31320,
+      "sha256": "7e57301b11d40392872b126c58d4d0b216a06ccdc40a58649a84f6a47e707e2f"
+    }
+  },
+  "generator_version": "1",
+  "model_parameters": {
+    "byte_fallback": true,
+    "dropout": 0.0,
+    "max_token_length": 8,
+    "min_frequency": 2,
+    "type": "bpe",
+    "unk_token": "<|unk|>",
+    "vocab_size": 2048
+  },
+  "model_type": "bpe",
+  "normalizer": {
+    "type": "identity"
+  },
+  "phase": "tokenizer_training",
+  "pre_tokenizer": {
+    "add_prefix_space": false,
+    "initial_alphabet": "byte_level_256",
+    "type": "byte_level",
+    "use_regex": false
+  },
+  "software": {
+    "python": "3.12.12",
+    "pyyaml": "6.0.3",
+    "tokenizers": "0.21.4"
+  },
+  "source_archive": "data/archives/final_train_dataset_records_2026-09-25.zip",
+  "source_member": "final_dataset_records.jsonl",
+  "source_record_count": 192900,
+  "source_sha256_after": "799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807",
+  "source_sha256_before": "799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807",
+  "source_unchanged": true,
+  "special_tokens": {
+    "bos": {
+      "id": 1,
+      "token": "<|bos|>"
+    },
+    "code": {
+      "id": 5,
+      "token": "<|code|>"
+    },
+    "eos": {
+      "id": 2,
+      "token": "<|eos|>"
+    },
+    "explanation": {
+      "id": 6,
+      "token": "<|explanation|>"
+    },
+    "pad": {
+      "id": 0,
+      "token": "<|pad|>"
+    },
+    "task": {
+      "id": 4,
+      "token": "<|task|>"
+    },
+    "unk": {
+      "id": 3,
+      "token": "<|unk|>"
+    }
+  },
+  "validation": {
+    "code_token_lengths": {
+      "count": 192900,
+      "max": 93,
+      "mean": 51.0525453602903,
+      "p50": 51,
+      "p95": 72,
+      "p99": 78
+    },
+    "explicit_byte_fallback_token_count": 0,
+    "instruction_token_lengths": {
+      "count": 192900,
+      "max": 75,
+      "mean": 31.53789009849663,
+      "p50": 32,
+      "p95": 37,
+      "p99": 40
+    },
+    "model_max_length": 256,
+    "overlength_count": 0,
+    "overlength_rate": 0.0,
+    "record_count": 192900,
+    "required_special_mismatch_count": 0,
+    "roundtrip_mismatch_count": 0,
+    "sequence_token_lengths": {
+      "count": 192900,
+      "max": 137,
+      "mean": 89.59043545878694,
+      "p50": 90,
+      "p95": 111,
+      "p99": 118
+    },
+    "top_100_tokens": [
+      {
+        "count": 1119556,
+        "id": 295,
+        "token": "[int]"
+      },
+      {
+        "count": 971362,
+        "id": 277,
+        "token": "]ĊĠĠĠĠ"
+      },
+      {
+        "count": 793246,
+        "id": 305,
+        "token": ":ĊĠĠĠĠ"
+      },
+      {
+        "count": 741156,
+        "id": 306,
+        "token": "valueĠ"
+      },
+      {
+        "count": 733756,
+        "id": 320,
+        "token": ":Ġlist"
+      },
+      {
+        "count": 724352,
+        "id": 281,
+        "token": "result"
+      },
+      {
+        "count": 723706,
+        "id": 284,
+        "token": "output"
+      },
+      {
+        "count": 585576,
+        "id": 312,
+        "token": "Ġ=Ġ["
+      },
+      {
+        "count": 578700,
+        "id": 205,
+        "token": "Ċ"
+      },
+      {
+        "count": 564406,
+        "id": 267,
+        "token": "ĊĠĠĠĠ"
+      },
+      {
+        "count": 561390,
+        "id": 310,
+        "token": "inĠ"
+      },
+      {
+        "count": 512852,
+        "id": 266,
+        "token": "ĠĠĠĠ"
+      },
+      {
+        "count": 442718,
+        "id": 335,
+        "token": "ãĤĴæ®ĭ"
+      },
+      {
+        "count": 438132,
+        "id": 334,
+        "token": "ãģ¦ãģ"
+      },
+      {
+        "count": 430882,
+        "id": 336,
+        "token": "forĠxĠ"
+      },
+      {
+        "count": 416896,
+        "id": 337,
+        "token": "(xs"
+      },
+      {
+        "count": 401202,
+        "id": 340,
+        "token": "ãģłãģĳ"
+      },
+      {
+        "count": 394510,
+        "id": 344,
+        "token": "ãĥªãĤ¹"
+      },
+      {
+        "count": 385830,
+        "id": 322,
+        "token": "æķ´æķ°"
+      },
+      {
+        "count": 385804,
+        "id": 349,
+        "token": "de"
+      },
+      {
+        "count": 385800,
+        "id": 357,
+        "token": "fĠsolve"
+      },
+      {
+        "count": 385800,
+        "id": 358,
+        "token": ",Ġk:Ġ"
+      },
+      {
+        "count": 385800,
+        "id": 356,
+        "token": "int)Ġ"
+      },
+      {
+        "count": 385800,
+        "id": 359,
+        "token": "->Ġlist"
+      },
+      {
+        "count": 385514,
+        "id": 360,
+        "token": "returnĠ"
+      },
+      {
+        "count": 384778,
+        "id": 363,
+        "token": "ķãģĦãĢĤ"
+      },
+      {
+        "count": 384644,
+        "id": 364,
+        "token": "ıãģłãģ"
+      },
+      {
+        "count": 382132,
+        "id": 367,
+        "token": "éĸ¢æķ°"
+      },
+      {
+        "count": 379902,
+        "id": 369,
+        "token": "ãĥĪxsãģ"
+      },
+      {
+        "count": 378584,
+        "id": 318,
+        "token": "solve"
+      },
+      {
+        "count": 365008,
+        "id": 375,
+        "token": "resultĠ"
+      },
+      {
+        "count": 364788,
+        "id": 376,
+        "token": "outputĠ"
+      },
+      {
+        "count": 348796,
+        "id": 309,
+        "token": "forĠ"
+      },
+      {
+        "count": 327218,
+        "id": 324,
+        "token": "ãģĻ"
+      },
+      {
+        "count": 325328,
+        "id": 383,
+        "token": "åıĸãĤĬ"
+      },
+      {
+        "count": 317112,
+        "id": 385,
+        "token": "¨æķ´æķ°"
+      },
+      {
+        "count": 317112,
+        "id": 384,
+        "token": "kãĤĴåı"
+      },
+      {
+        "count": 317112,
+        "id": 386,
+        "token": "Ĺãģĳ"
+      },
+      {
+        "count": 308082,
+        "id": 342,
+        "token": "ãģ¦ãĢģ"
+      },
+      {
+        "count": 266864,
+        "id": 314,
+        "token": "ãģĦ"
+      },
+      {
+        "count": 260008,
+        "id": 388,
+        "token": "ãģĻãĤĭ"
+      },
+      {
+        "count": 255458,
+        "id": 382,
+        "token": "+=Ġ["
+      },
+      {
+        "count": 243334,
+        "id": 390,
+        "token": "ãĤĴæĽ¸"
+      },
+      {
+        "count": 227332,
+        "id": 392,
+        "token": "ãģ®åĢ¤"
+      },
+      {
+        "count": 213664,
+        "id": 373,
+        "token": "è¦ģç´"
+      },
+      {
+        "count": 209058,
+        "id": 387,
+        "token": "inĠxs"
+      },
+      {
+        "count": 192900,
+        "id": 1,
+        "token": "<|bos|>"
+      },
+      {
+        "count": 192900,
+        "id": 4,
+        "token": "<|task|>"
+      },
+      {
+        "count": 192900,
+        "id": 5,
+        "token": "<|code|>"
+      },
+      {
+        "count": 192900,
+        "id": 2,
+        "token": "<|eos|>"
+      },
+      {
+        "count": 189902,
+        "id": 397,
+        "token": "#ĠåĲĦ"
+      },
+      {
+        "count": 188848,
+        "id": 398,
+        "token": "resultĊ"
+      },
+      {
+        "count": 188036,
+        "id": 399,
+        "token": "outputĊ"
+      },
+      {
+        "count": 183358,
+        "id": 403,
+        "token": "ĠĠĠĠifĠ"
+      },
+      {
+        "count": 182598,
+        "id": 298,
+        "token": "ãĢģ"
+      },
+      {
+        "count": 182496,
+        "id": 333,
+        "token": "#Ġ"
+      },
+      {
+        "count": 180774,
+        "id": 327,
+        "token": "ãĤĭ"
+      },
+      {
+        "count": 171792,
+        "id": 391,
+        "token": "Ġ=Ġ[xĠ"
+      },
+      {
+        "count": 164732,
+        "id": 396,
+        "token": "ãģĹãĢģ"
+      },
+      {
+        "count": 163570,
+        "id": 407,
+        "token": "è¦ģç´ł"
+      },
+      {
+        "count": 156456,
+        "id": 410,
+        "token": "x]ĊĠĠĠĠ"
+      },
+      {
+        "count": 151376,
+        "id": 394,
+        "token": "ãģĭãĤī"
+      },
+      {
+        "count": 149776,
+        "id": 273,
+        "token": "=Ġ"
+      },
+      {
+        "count": 145604,
+        "id": 297,
+        "token": "value"
+      },
+      {
+        "count": 145134,
+        "id": 326,
+        "token": "åĢ¤"
+      },
+      {
+        "count": 137158,
+        "id": 421,
+        "token": "ãĤĴå®Ł"
+      },
+      {
+        "count": 136584,
+        "id": 423,
+        "token": "è£ħãģĹ"
+      },
+      {
+        "count": 125736,
+        "id": 427,
+        "token": "ãĤĴåıĸ"
+      },
+      {
+        "count": 122808,
+        "id": 325,
+        "token": "ãģĹ"
+      },
+      {
+        "count": 121310,
+        "id": 418,
+        "token": "kåĢĭ"
+      },
+      {
+        "count": 120854,
+        "id": 429,
+        "token": "#Ġk"
+      },
+      {
+        "count": 118110,
+        "id": 428,
+        "token": "ä¸¦ãģ¹"
+      },
+      {
+        "count": 109664,
+        "id": 441,
+        "token": "åħĪéłŃ"
+      },
+      {
+        "count": 108082,
+        "id": 442,
+        "token": "ãģĿãģ®"
+      },
+      {
+        "count": 105060,
+        "id": 276,
+        "token": "æķ°"
+      },
+      {
+        "count": 103506,
+        "id": 443,
+        "token": "ãĤĪãĤĬ"
+      },
+      {
+        "count": 102802,
+        "id": 444,
+        "token": "ãĢģk"
+      },
+      {
+        "count": 101000,
+        "id": 380,
+        "token": "ãģ«"
+      },
+      {
+        "count": 96244,
+        "id": 448,
+        "token": "valueĠ*"
+      },
+      {
+        "count": 94422,
+        "id": 450,
+        "token": "ãĤĴåıį"
+      },
+      {
+        "count": 91508,
+        "id": 446,
+        "token": "è»¢"
+      },
+      {
+        "count": 85678,
+        "id": 460,
+        "token": "0]ĊĠĠĠĠ"
+      },
+      {
+        "count": 85572,
+        "id": 461,
+        "token": "ãģ¦ãĢģk"
+      },
+      {
+        "count": 82970,
+        "id": 467,
+        "token": "łãģ®ç"
+      },
+      {
+        "count": 82526,
+        "id": 466,
+        "token": "inĠxsĠ"
+      },
+      {
+        "count": 82132,
+        "id": 459,
+        "token": "ãĤĴæĬ"
+      },
+      {
+        "count": 80002,
+        "id": 468,
+        "token": "ãĢģåĲĦ"
+      },
+      {
+        "count": 78536,
+        "id": 430,
+        "token": "éłĨãģ«"
+      },
+      {
+        "count": 77234,
+        "id": 471,
+        "token": "k]ĊĠĠĠĠ"
+      },
+      {
+        "count": 74956,
+        "id": 474,
+        "token": "ä»¥ä¸ĭ"
+      },
+      {
+        "count": 72682,
+        "id": 484,
+        "token": "ãĤ¼ãĥŃ"
+      },
+      {
+        "count": 72658,
+        "id": 480,
+        "token": "å¤§ãģį"
+      },
+      {
+        "count": 72036,
+        "id": 485,
+        "token": "ãģ®åĢį"
+      },
+      {
+        "count": 71928,
+        "id": 458,
+        "token": "ifĠ0Ġ"
+      },
+      {
+        "count": 71830,
+        "id": 330,
+        "token": "ifĠ"
+      },
+      {
+        "count": 71340,
+        "id": 486,
+        "token": "è²łãģ®"
+      },
+      {
+        "count": 69148,
+        "id": 491,
+        "token": "ä»¥ä¸Ĭ"
+      },
+      {
+        "count": 69124,
+        "id": 492,
+        "token": "ãģ¦ãģ®"
+      },
+      {
+        "count": 68570,
+        "id": 473,
+        "token": "ãĤĴåĪ"
+      },
+      {
+        "count": 68568,
+        "id": 455,
+        "token": ")ĊĠĠĠĠ"
+      }
+    ],
+    "total_encoded_token_count": 33213690,
+    "unk_token": "<|unk|>",
+    "unk_token_count": 0,
+    "unused_vocab_count": 401,
+    "used_vocab_count": 1647
+  }
+}

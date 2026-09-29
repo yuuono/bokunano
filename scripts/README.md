@@ -347,6 +347,14 @@ scripts/model/run_boku_nano_10epoch_nohup.sh
 
 10 epoch結果は`data/models/boku_nano_bpe_2048_10epoch/`、console logは`data/models/boku_nano_bpe_2048_10epoch_console.log`へ分離する。
 
+最小頻度2・最大piece長8のBPEを使い、同じ15,735,168 parameterモデルをランダム初期値から1 epoch学習する比較実験は専用scriptで起動する。
+
+```bash
+scripts/model/run_boku_nano_minfreq2_maxlen8_1epoch_nohup.sh
+```
+
+出力は`data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch/`、console logは`data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_console.log`へ分離する。新しいトークナイザーでは1エポック当たり17,281,995系列tokenとなる。
+
 各epoch終了後に検証集合24,040件だけでlossを測る。通常テスト、組合せ汎化テスト、日本語言い換えテスト、同一操作の反復テスト、境界値テストは学習中に使用しない。モデル構造、optimizer、保存物、再開方法は[`boku_nano_training_policy.md`](../docs/policies/boku_nano_training_policy.md)に従う。
 
 ## 検証
