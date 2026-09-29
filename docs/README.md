@@ -5,6 +5,7 @@ docs/
 ├── cards/           # Dataset CardとModel Card
 ├── policies/        # データ分割、コード生成、選抜、評価の方針
 ├── procedures/      # データ生成作業の具体的な手順
+├── report/          # 発表資料と説明用ファクト集
 ├── specifications/  # 意味ASTと参照インタプリタの仕様
 └── results/         # 実行済みの生成・検証結果
 ```
@@ -29,6 +30,7 @@ docs/
 - [`policies/evaluation_input_policy.md`](policies/evaluation_input_policy.md): validation・hidden・boundary評価入力の生成と分離
 - [`policies/tokenizer_training_policy.md`](policies/tokenizer_training_policy.md): 訓練データ限定のBPE・Unigram共通語彙作成と比較方針
 - [`policies/boku_nano_training_policy.md`](policies/boku_nano_training_policy.md): BPE 2,048語彙と約1,600万parameterモデルによる3 epoch本学習方針
+- [`policies/boku_nano_chinchilla_scaling.md`](policies/boku_nano_chinchilla_scaling.md): Chinchilla則に基づく5M・15M・35Mモデル構成と訓練token量の概算
 - [`policies/boku_nano_model_evaluation_policy.md`](policies/boku_nano_model_evaluation_policy.md): 学習済みBoku Nanoの5種類の生成・実行評価方針
 - [`policies/browser_cnl_normalization_policy.md`](policies/browser_cnl_normalization_policy.md): ブラウザ内Qwenによる自由文からCNLへの翻訳とJavaScript検査の方針
 
@@ -45,6 +47,11 @@ docs/
 - [`specifications/atomic_semantic_asts.md`](specifications/atomic_semantic_asts.md): 24種類の単独操作
 - [`specifications/reference_interpreter.md`](specifications/reference_interpreter.md): 参照インタプリタ
 
+## 発表資料
+
+- [`report/boku1_nano_presentation.md`](report/boku1_nano_presentation.md): Boku1-nanoの発表用ドキュメント
+- [`report/boku1_nano_presentation_facts.md`](report/boku1_nano_presentation_facts.md): 発表内容の根拠と説明用ファクト集
+
 ## 結果
 
 - [`results/atomic_python_code_generation_results.md`](results/atomic_python_code_generation_results.md): 各操作1件の予備確認
@@ -58,7 +65,9 @@ docs/
 - [`results/evaluation_input_generation_results.md`](results/evaluation_input_generation_results.md): validation・hidden・boundary評価入力6集合の生成・検証結果
 - [`results/final_evaluation_dataset_results.md`](results/final_evaluation_dataset_results.md): 6評価集合108,590件の最終結合・ZIP作成結果
 - [`results/bpe_tokenizer_training_results.md`](results/bpe_tokenizer_training_results.md): 訓練データ限定BPE 2,048語彙候補の学習・全件検証結果
+- [`results/bpe_tokenizer_minfreq2_maxlen8_results.md`](results/bpe_tokenizer_minfreq2_maxlen8_results.md): 最小頻度2・最大piece長8のBPE 2,048語彙と既存版の系列長比較
 - [`results/boku_nano_three_epoch_training_results.md`](results/boku_nano_three_epoch_training_results.md): Boku Nanoモデルの3エポックにおけるtrain loss・validation loss推移
 - [`results/boku_nano_3epoch_evaluation_results.md`](results/boku_nano_3epoch_evaluation_results.md): 3エポックモデルの5集合評価と不合格116件の分析
+- [`results/paraphrase_test_instruction_results.md`](results/paraphrase_test_instruction_results.md): 日本語言い換えテスト全30件の指示、3・10エポック合否、pass@5、失敗理由
 - [`results/boku_nano_evaluation_metrics_and_random_baseline.md`](results/boku_nano_evaluation_metrics_and_random_baseline.md): 段階別評価指標、pass@5、GPU効率、学習前ランダムモデルとの比較
 - [`results/boku_nano_goal_completion_report.md`](results/boku_nano_goal_completion_report.md): 課題仕様の10完了条件に対する達成状況、漏洩検査、由来、残課題の総括
