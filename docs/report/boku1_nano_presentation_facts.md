@@ -379,7 +379,23 @@ BPEトークナイザは、最終訓練データ192,900件の`instruction_ja`と
 
 Attentionは通常のMulti-Head Attentionであり、Grouped Query Attentionではない。入力embeddingと出力headは共有しない。
 
-### 8.2 学習系列とloss
+### 8.2 K/V内部状態とKVキャッシュ
+
+各層のQ、K、Vは`[batch, 6 heads, sequence, 64 dimensions]`である。現行のPyTorch・ONNX・ブラウザ実装には、生成stepをまたいでK/Vを保持する永続KVキャッシュはなく、生成ごとに現在のprefix全体を再計算する。
+
+3エポックモデルの実K/V状態を、16 tokenのpromptと11 tokenの生成コード、合計27 tokenで取得した。Key RMSは0.374〜0.989、平均0.590、Value RMSは0.256〜0.502、平均0.358だった。このRMSは内部ベクトルの大きさであり、attentionの重要度そのものではない。
+
+KVキャッシュを追加した場合、8層掛けるKey/Value掛ける6 KV head掛ける64次元なので、1 token当たり6,144要素になる。BF16・FP16なら12 KiB/token、最大256 tokenで3.0 MiB、FP32なら24 KiB/token、最大6.0 MiBである。
+
+生成stepごとに全8層・6 headの最後のQuery（各64次元）を保存し、`softmax(QK^T / sqrt(64))`でattentionを復元した。復元した`attention @ V`とfused attention本体の`out_proj`直前出力を11 step × 8層の88組で比較した結果、最大絶対誤差4.77 × 10^-7、平均絶対誤差1.43 × 10^-8、最小コサイン類似度0.99999982だった。行和だけでなく、出力も数値的に一致した。
+
+11 step平均では、prompt制御token35.15%、日本語指示37.58%、生成済みコード27.27%だった。ただしprompt制御tokenは6個、日本語指示は10個である。1 token当たりでは制御token5.86%、日本語指示3.76%、生成済みコード5.92%となる。一様分布に対する倍率も制御token1.20倍、日本語指示0.76倍、生成済みコード1.25倍であり、日本語は全体平均では相対的に弱い。一方、Layer 3 Head 2は日本語指示へ平均73.05%、Layer 3 Head 4は61.36%、Layer 3 Head 5は55.70%を向けている。`abs(`生成stepでは「絶対値」が48 head平均の参照上位2位であり、意味tokenを必要なstepで選択的に見る挙動もある。
+
+最終stepでは生成済みコードが46.26%まで増えた。`<|bos|>`は全48 layer-headから参照され、個別layer-headのtop 5入り率は66.67%だった。Valueの最大非対角コサイン類似度は、2つの改行token間の0.9951だった。attentionは因果的寄与を証明する値ではなく、この結果は1 promptに限る。
+
+今回の例では、現行の全prefix再計算がQKV projectionへ累計258 token位置を通すのに対し、仮想KVキャッシュ方式は27 token位置で済む。ただし、これはprojection対象数であり、実測速度比ではない。詳細と図は[KVキャッシュ可視化結果](../results/boku_nano_kv_cache_visualization.md)にある。
+
+### 8.3 学習系列とloss
 
 1レコードは次の系列にする。
 
@@ -398,7 +414,7 @@ Attentionは通常のMulti-Head Attentionであり、Grouped Query Attentionで�
 | loss計算対象 | 3,746,067 | 11,238,201 | 37,460,670 |
 | optimizer step | 377 | 1,131 | 3,770 |
 
-### 8.3 最適化条件
+### 8.4 最適化条件
 
 | 項目 | 値 |
 | --- | ---: |

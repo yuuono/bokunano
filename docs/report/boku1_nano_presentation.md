@@ -89,36 +89,7 @@ Boku1-nano ONNX: Pythonコード生成
 
 ---
 
-## 3. 作成したモデル
-
-### 画面に出す内容
-
-| 項目 | 値 |
-| --- | ---: |
-| アーキテクチャ | Decoder-only Transformer |
-| 語彙数 | 2,048 |
-| 層数 | 8 |
-| hidden size | 384 |
-| Attention head数 | 6 |
-| KV head数 | 6 |
-| FFN size | 1,024 |
-| 最大系列長 | 256 |
-| 位置表現 | RoPE |
-| 正規化 | RMSNorm |
-| 活性化 | SwiGLU |
-| 総パラメータ数 | 15,735,168 |
-
-### 話す内容
-
-Boku1-nanoは、8層のDecoder-only Transformerです。hidden sizeは384、Attention head数は6、FFN sizeは1,024、最大系列長は256です。総パラメータ数は15,735,168、約15.7Mです。
-
-Attentionは通常のMulti-Head Attentionで、Grouped Query Attentionではありません。入力embeddingと出力headは共有していません。位置表現にはRoPE、正規化にはRMSNorm、活性化にはSwiGLUを使っています。
-
-既存のモデル重み、embedding、tokenizer、logitは引き継いでいません。全パラメータをseed `20260925`からランダム初期化しました。
-
----
-
-## 4. Boku1-nanoが解く問題
+## 3. Boku1-nanoが解く問題
 
 ### 画面に出す内容
 
@@ -144,7 +115,7 @@ Boku1-nanoは一般的なPythonコーディングモデルではありません�
 
 ---
 
-## 5. 意味ASTを先に作る
+## 4. 意味ASTを先に作る
 
 ### 画面に出す内容
 
@@ -176,7 +147,7 @@ Boku1-nanoは一般的なPythonコーディングモデルではありません�
 
 ---
 
-## 6. 意味ASTの分割とデータ漏洩対策
+## 5. 意味ASTの分割とデータ漏洩対策
 
 ### 画面に出す内容
 
@@ -203,7 +174,7 @@ Boku1-nanoは一般的なPythonコーディングモデルではありません�
 
 ---
 
-## 7. 参照インタプリタ
+## 6. 参照インタプリタ
 
 ### 画面に出す内容
 
@@ -236,7 +207,7 @@ Boku1-nanoは一般的なPythonコーディングモデルではありません�
 
 ---
 
-## 8. 正解コードの生成と検証
+## 7. 正解コードの生成と検証
 
 ### 画面に出す内容
 
@@ -262,7 +233,7 @@ Boku1-nanoは一般的なPythonコーディングモデルではありません�
 
 ---
 
-## 9. `style_spec`とは何か
+## 8. `style_spec`と`code_style`
 
 ### 画面に出す内容
 
@@ -327,7 +298,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ---
 
-## 10. 日本語指示の生成
+## 9. 日本語指示の生成
 
 ### 画面に出す内容
 
@@ -358,7 +329,7 @@ Qwenは日本語表現の候補と言い換えにだけ使っています。正�
 
 ---
 
-## 11. 教師Qwenへ渡したプロンプト
+## 10. 教師Qwenへ渡したプロンプト
 
 ### 画面に出す内容
 
@@ -392,7 +363,7 @@ system messageでは、操作の追加、削除、統合、並べ替えを禁止
 
 ---
 
-## 12. 訓練データの分布
+## 11. 訓練データの分布
 
 ### 画面に出す内容
 
@@ -427,7 +398,7 @@ system messageでは、操作の追加、削除、統合、並べ替えを禁止
 
 ---
 
-## 13. データセットの保存形式
+## 12. データセットの保存形式
 
 ### 画面に出す内容
 
@@ -459,7 +430,7 @@ system messageでは、操作の追加、削除、統合、並べ替えを禁止
 
 ---
 
-## 14. BPEトークナイザ
+## 13. BPEトークナイザ
 
 ### 画面に出す内容
 
@@ -490,6 +461,55 @@ byte単位から開始
 学習へ入れたのは、訓練レコードの`instruction_ja`と`reference_code`だけです。日本語指示は完全重複1,171件を除いて191,729件、Pythonコードは192,900件、合計384,629件、約85.3 MBです。評価データ、test-only表現、意味AST、ID、ハッシュは入れていません。
 
 語彙数は特殊token込みで2,048、minimum frequencyは5、最大token長は24です。完成系列の最大長は94 tokenで、256 tokenを超えた例は0件、unknown tokenとencode/decodeの不一致も0件でした。
+
+---
+
+## 14. 作成したモデル
+
+### 画面に出す内容
+
+| 項目 | 値 |
+| --- | ---: |
+| アーキテクチャ | Decoder-only Transformer |
+| 語彙数 | 2,048 |
+| 層数 | 8 |
+| hidden size | 384 |
+| Attention head数 | 6 |
+| KV head数 | 6 |
+| FFN size | 1,024 |
+| 最大系列長 | 256 |
+| 位置表現 | RoPE |
+| 正規化 | RMSNorm |
+| 活性化 | SwiGLU |
+| 総パラメータ数 | 15,735,168 |
+
+### 話す内容
+
+BPEトークナイザを固定した後に、Boku1-nano本体を作ります。Boku1-nanoは、8層のDecoder-only Transformerです。hidden sizeは384、Attention head数は6、FFN sizeは1,024、最大系列長は256です。総パラメータ数は15,735,168、約15.7Mです。
+
+Attentionは通常のMulti-Head Attentionで、Grouped Query Attentionではありません。入力embeddingと出力headは共有していません。位置表現にはRoPE、正規化にはRMSNorm、活性化にはSwiGLUを使っています。
+
+既存のモデル重み、embedding、tokenizer、logitは引き継いでいません。全パラメータをseed `20260925`からランダム初期化しました。
+
+### K/V内部状態とKVキャッシュ
+
+![3エポックモデルの一時K/V状態](../results/figures/boku_nano_kv_state_heatmap.svg)
+
+Boku1-nanoは最大256 token、8層、6 headという狭い構成です。各層では、tokenごとに6 head掛ける64次元のKeyとValueを作ります。
+
+ただし、現在の実装には生成stepをまたいでK/Vを保持するKVキャッシュはありません。ブラウザ版は、新しいtokenを1個生成するたびに、それまでの入力系列全体を再計算します。図は3エポックモデルのforward中に一時的に作られたK/VのRMSであり、永続キャッシュの内容ではありません。
+
+将来BF16またはFP16のKVキャッシュを追加した場合、1 token当たり12 KiB、256 token上限でも約3.0 MiBです。今回の27 token例では、現行方式がQKV projectionへ累計258 token位置を通すのに対し、キャッシュを使う仮想実装では27 token位置で済みます。これは計算量の比較であり、実測速度が9.56倍になるという意味ではありません。
+
+さらに、11生成stepすべてについて各層・各headの最後のQueryを保存し、`softmax(QK^T / sqrt(64))`でattentionを復元しました。行和の確認だけでなく、復元した`attention @ V`とfused attention本体の出力を88組で比較し、最大絶対誤差は4.77 × 10^-7、最小コサイン類似度は0.99999982でした。
+
+日本語指示はattention総量では11 step平均37.58%ですが、10 tokenあるため1 token当たり3.76%です。一様分布の期待値に対して0.76倍であり、制御tokenの1.20倍、生成済みコードの1.25倍より弱くなっています。ただしLayer 3 Head 2は平均73.05%を日本語指示へ向け、`abs(`を出すstepでは「絶対値」が全head平均でも参照上位2位でした。一部headが日本語条件を担当し、他のheadが構文や生成済みコードを担当していると読めます。attentionは参照の観測であり、出力の因果関係を証明する値ではありません。
+
+![生成step・層・head別のattention](../results/figures/boku_nano_attention_by_layer_head.svg)
+
+図中の赤い縦線より左がprompt、右が生成済みコードです。
+
+詳細は[「Boku1-nanoのK/V内部状態とKVキャッシュ可視化」](../results/boku_nano_kv_cache_visualization.md)に、全48 layer-headの図、生成token別上位5参照、領域比率、Key／Value類似度、参照の多い・少ないtokenをまとめています。
 
 ---
 
@@ -896,6 +916,7 @@ Qwenは日本語表現候補と言い換え、Webデモの自由文正規化に�
 | コード生成 | [`python_code_generation_policy.md`](../policies/python_code_generation_policy.md) |
 | BPE | [`bpe_tokenizer_training_results.md`](../results/bpe_tokenizer_training_results.md) |
 | 3エポック学習 | [`boku_nano_three_epoch_training_results.md`](../results/boku_nano_three_epoch_training_results.md) |
+| K/V内部状態 | [`boku_nano_kv_cache_visualization.md`](../results/boku_nano_kv_cache_visualization.md) |
 | 正式評価 | [`boku_nano_3epoch_evaluation_results.md`](../results/boku_nano_3epoch_evaluation_results.md) |
 | 言い換えテスト全30件 | [`paraphrase_test_instruction_results.md`](../results/paraphrase_test_instruction_results.md) |
 | ランダム比較 | [`boku_nano_evaluation_metrics_and_random_baseline.md`](../results/boku_nano_evaluation_metrics_and_random_baseline.md) |

@@ -66,7 +66,10 @@ docs/
 - [`results/final_evaluation_dataset_results.md`](results/final_evaluation_dataset_results.md): 6評価集合108,590件の最終結合・ZIP作成結果
 - [`results/bpe_tokenizer_training_results.md`](results/bpe_tokenizer_training_results.md): 訓練データ限定BPE 2,048語彙候補の学習・全件検証結果
 - [`results/bpe_tokenizer_minfreq2_maxlen8_results.md`](results/bpe_tokenizer_minfreq2_maxlen8_results.md): 最小頻度2・最大piece長8のBPE 2,048語彙と既存版の系列長比較
+- [`results/bpe_tokenizer_implementation_examples.md`](results/bpe_tokenizer_implementation_examples.md): 長いpiece版と短いpiece版の設定、系列長、GPU使用量の比較
+- [`results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md`](results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md): 短いpiece版15Mモデルの1エポック学習・固定5テスト評価結果
 - [`results/boku_nano_three_epoch_training_results.md`](results/boku_nano_three_epoch_training_results.md): Boku Nanoモデルの3エポックにおけるtrain loss・validation loss推移
+- [`results/boku_nano_kv_cache_visualization.md`](results/boku_nano_kv_cache_visualization.md): 制限自然言語SLMの一時K/V状態、headの役割候補、attention sink、Valueノルム、rollout、因果的ablation、KVキャッシュ非実装と導入時容量
 - [`results/boku_nano_3epoch_evaluation_results.md`](results/boku_nano_3epoch_evaluation_results.md): 3エポックモデルの5集合評価と不合格116件の分析
 - [`results/paraphrase_test_instruction_results.md`](results/paraphrase_test_instruction_results.md): 日本語言い換えテスト全30件の指示、3・10エポック合否、pass@5、失敗理由
 - [`results/boku_nano_evaluation_metrics_and_random_baseline.md`](results/boku_nano_evaluation_metrics_and_random_baseline.md): 段階別評価指標、pass@5、GPU効率、学習前ランダムモデルとの比較
