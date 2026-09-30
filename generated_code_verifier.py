@@ -102,6 +102,8 @@ class GeneratedCodeVerifierSession:
         source: str,
         # 次の値または処理を現在の構造へ組み込む
         semantic_ast: Mapping[str, Any],
+        # requestごとに固定caseを差し替える場合だけ指定する
+        cases: Sequence[tuple[list[int], int]] | None = None,
     # 次の値または処理を現在の構造へ組み込む
     ) -> VerificationResult:
         """静的検査後、隔離プロセスで1件を参照結果と照合する。"""
@@ -125,8 +127,16 @@ class GeneratedCodeVerifierSession:
         self.request_id += 1
         # current_requestへこの工程で使用する値を設定する
         current_request = self.request_id
-        # 次の値または処理を現在の構造へ組み込む
-        self.task_queue.put((current_request, source, dict(semantic_ast)))
+        # request固有caseを安全な可変listへ複製する
+        request_cases = (
+            self.cases
+            if cases is None
+            else [(list(xs), int(k)) for xs, k in cases]
+        )
+        # コード、意味AST、実行caseを隔離processへ渡す
+        self.task_queue.put(
+            (current_request, source, dict(semantic_ast), request_cases)
+        )
         # 失敗する可能性がある処理を開始する
         try:
             # 処理結果を呼び出し元へ返す
@@ -326,9 +336,9 @@ def _verification_session_worker(
             # 処理結果を呼び出し元へ返す
             return
         # 次の値または処理を現在の構造へ組み込む
-        request_id, source, semantic_ast = task
+        request_id, source, semantic_ast, request_cases = task
         # payloadへこの工程で使用する値を設定する
-        payload = _run_verification(source, semantic_ast, cases)
+        payload = _run_verification(source, semantic_ast, request_cases)
         # 次の値または処理を現在の構造へ組み込む
         result_queue.put((request_id, payload))
 

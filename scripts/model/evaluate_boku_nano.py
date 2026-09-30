@@ -600,14 +600,14 @@ class SuiteVerifier:
     ) -> dict[str, Any]:
         """静的検査と隔離実行の結果を辞書で返す。"""
 
-        # boundaryだけspecごと、他集合は全体で同じkeyを使う
-        key = spec_id if self.suite_name == "boundary" else self.suite_name
+        # 集合内で隔離processを再利用し、boundaryのcaseはrequestごとに渡す
+        key = self.suite_name
+        # 対象recordのcase組を作る
+        cases = cases_for_record(self.input_manifest, self.suite_name, spec_id)
         # case組が変わるときだけprocessを作り直す
         if key != self.current_key:
             # 古いsessionを安全に閉じる
             self.close()
-            # 対象recordのcase組を作る
-            cases = cases_for_record(self.input_manifest, self.suite_name, spec_id)
             # 新しい隔離検証sessionを作る
             self.session = GeneratedCodeVerifierSession(
                 cases,
@@ -621,7 +621,11 @@ class SuiteVerifier:
         # session存在を型checkerへ伝える
         assert self.session is not None
         # 検証結果をJSON互換辞書へ変換する
-        return self.session.verify(source, semantic_ast).to_record()
+        return self.session.verify(
+            source,
+            semantic_ast,
+            cases=cases if self.suite_name == "boundary" else None,
+        ).to_record()
 
     # 子processを閉じる
     def close(self) -> None:
