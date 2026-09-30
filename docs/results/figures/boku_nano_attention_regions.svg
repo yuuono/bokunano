@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="520" viewBox="0 0 940 520" role="img">
+<title>生成中にどの領域を参照したか</title>
+<desc>上は排他的な領域内訳。下は冒頭4 tokenと直近4 tokenへのattentionで、上の領域とは重複する。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#17212b;font-size:12px}.small{font-size:10px;fill:#52606d}.title{font-size:20px;font-weight:500}.label{font-size:13px;font-weight:500}</style>
+<text x="24" y="30" class="title">生成中にどの領域を参照したか</text>
+<text x="24" y="52" class="small">上は排他的な領域内訳。下は冒頭4 tokenと直近4 tokenへのattentionで、上の領域とは重複する。</text>
+<rect x="86.44" y="156.78" width="53.67" height="80.22" fill="#9fb8c9"/>
+<rect x="86.44" y="82.00" width="53.67" height="74.78" fill="#3d7591"/>
+<rect x="86.44" y="82.00" width="53.67" height="0.00" fill="#d08a55"/>
+<text x="113.27" y="255" text-anchor="middle" class="small">1</text>
+<rect x="160.98" y="174.71" width="53.67" height="62.29" fill="#9fb8c9"/>
+<rect x="160.98" y="92.90" width="53.67" height="81.82" fill="#3d7591"/>
+<rect x="160.98" y="82.00" width="53.67" height="10.90" fill="#d08a55"/>
+<text x="187.82" y="255" text-anchor="middle" class="small">2</text>
+<rect x="235.53" y="174.13" width="53.67" height="62.87" fill="#9fb8c9"/>
+<rect x="235.53" y="103.89" width="53.67" height="70.23" fill="#3d7591"/>
+<rect x="235.53" y="82.00" width="53.67" height="21.89" fill="#d08a55"/>
+<text x="262.36" y="255" text-anchor="middle" class="small">3</text>
+<rect x="310.07" y="180.43" width="53.67" height="56.57" fill="#9fb8c9"/>
+<rect x="310.07" y="113.56" width="53.67" height="66.87" fill="#3d7591"/>
+<rect x="310.07" y="82.00" width="53.67" height="31.56" fill="#d08a55"/>
+<text x="336.91" y="255" text-anchor="middle" class="small">4</text>
+<rect x="384.62" y="182.12" width="53.67" height="54.88" fill="#9fb8c9"/>
+<rect x="384.62" y="125.18" width="53.67" height="56.94" fill="#3d7591"/>
+<rect x="384.62" y="82.00" width="53.67" height="43.18" fill="#d08a55"/>
+<text x="411.45" y="255" text-anchor="middle" class="small">5</text>
+<rect x="459.16" y="184.73" width="53.67" height="52.27" fill="#9fb8c9"/>
+<rect x="459.16" y="125.41" width="53.67" height="59.32" fill="#3d7591"/>
+<rect x="459.16" y="82.00" width="53.67" height="43.41" fill="#d08a55"/>
+<text x="486.00" y="255" text-anchor="middle" class="small">6</text>
+<rect x="533.71" y="185.02" width="53.67" height="51.98" fill="#9fb8c9"/>
+<rect x="533.71" y="136.02" width="53.67" height="49.00" fill="#3d7591"/>
+<rect x="533.71" y="82.00" width="53.67" height="54.02" fill="#d08a55"/>
+<text x="560.55" y="255" text-anchor="middle" class="small">7</text>
+<rect x="608.25" y="190.36" width="53.67" height="46.64" fill="#9fb8c9"/>
+<rect x="608.25" y="141.38" width="53.67" height="48.98" fill="#3d7591"/>
+<rect x="608.25" y="82.00" width="53.67" height="59.38" fill="#d08a55"/>
+<text x="635.09" y="255" text-anchor="middle" class="small">8</text>
+<rect x="682.80" y="190.60" width="53.67" height="46.40" fill="#9fb8c9"/>
+<rect x="682.80" y="147.18" width="53.67" height="43.42" fill="#3d7591"/>
+<rect x="682.80" y="82.00" width="53.67" height="65.18" fill="#d08a55"/>
+<text x="709.64" y="255" text-anchor="middle" class="small">9</text>
+<rect x="757.35" y="191.22" width="53.67" height="45.78" fill="#9fb8c9"/>
+<rect x="757.35" y="145.75" width="53.67" height="45.47" fill="#3d7591"/>
+<rect x="757.35" y="82.00" width="53.67" height="63.75" fill="#d08a55"/>
+<text x="784.18" y="255" text-anchor="middle" class="small">10</text>
+<rect x="831.89" y="197.67" width="53.67" height="39.33" fill="#9fb8c9"/>
+<rect x="831.89" y="153.70" width="53.67" height="43.97" fill="#3d7591"/>
+<rect x="831.89" y="82.00" width="53.67" height="71.70" fill="#d08a55"/>
+<text x="858.73" y="255" text-anchor="middle" class="small">11</text>
+<rect x="76" y="271" width="12" height="12" fill="#9fb8c9"/>
+<text x="93" y="281" class="small">制御token</text>
+<rect x="216" y="271" width="12" height="12" fill="#3d7591"/>
+<text x="233" y="281" class="small">日本語指示</text>
+<rect x="356" y="271" width="12" height="12" fill="#d08a55"/>
+<text x="373" y="281" class="small">生成済みコード</text>
+<line x1="76" y1="485.00" x2="896" y2="485.00" stroke="#e5e8eb"/>
+<text x="67" y="489.00" text-anchor="end" class="small">0%</text>
+<line x1="76" y1="454.00" x2="896" y2="454.00" stroke="#e5e8eb"/>
+<text x="67" y="458.00" text-anchor="end" class="small">20%</text>
+<line x1="76" y1="423.00" x2="896" y2="423.00" stroke="#e5e8eb"/>
+<text x="67" y="427.00" text-anchor="end" class="small">40%</text>
+<line x1="76" y1="392.00" x2="896" y2="392.00" stroke="#e5e8eb"/>
+<text x="67" y="396.00" text-anchor="end" class="small">60%</text>
+<line x1="76" y1="361.00" x2="896" y2="361.00" stroke="#e5e8eb"/>
+<text x="67" y="365.00" text-anchor="end" class="small">80%</text>
+<line x1="76" y1="330.00" x2="896" y2="330.00" stroke="#e5e8eb"/>
+<text x="67" y="334.00" text-anchor="end" class="small">100%</text>
+<polyline points="113.27,442.13 187.82,444.78 262.36,442.48 336.91,442.55 411.45,450.72 486.00,450.02 560.55,450.35 635.09,455.42 709.64,454.49 784.18,455.73 858.73,458.33" fill="none" stroke="#704c7d" stroke-width="3"/>
+<text x="892" y="348" text-anchor="end" class="small">冒頭4 token</text>
+<polyline points="113.27,432.85 187.82,443.29 262.36,444.63 336.91,445.82 411.45,441.82 486.00,450.18 560.55,446.49 635.09,446.42 709.64,446.65 784.18,449.93 858.73,447.27" fill="none" stroke="#2f7d61" stroke-width="3"/>
+<text x="892" y="366" text-anchor="end" class="small">直近4 token</text>
+<text x="470.0" y="508" text-anchor="middle" class="small">生成step</text>
+</svg>

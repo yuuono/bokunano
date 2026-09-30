@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="560" viewBox="0 0 1080 560" role="img">
+<title>最終生成stepのtoken別参照量</title>
+<desc>生attention、Valueノルムを含む構成比、8層attention rolloutを同じtoken位置で比較。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#17212b;font-size:12px}.small{font-size:10px;fill:#52606d}.title{font-size:20px;font-weight:500}.label{font-size:13px;font-weight:500}</style>
+<text x="24" y="30" class="title">最終生成stepのtoken別参照量</text>
+<text x="24" y="52" class="small">生attention、Valueノルムを含む構成比、8層attention rolloutを同じtoken位置で比較。</text>
+<line x1="72" y1="442.00" x2="1022" y2="442.00" stroke="#e5e8eb"/>
+<text x="63" y="446.00" text-anchor="end" class="small">0%</text>
+<line x1="72" y1="372.00" x2="1022" y2="372.00" stroke="#e5e8eb"/>
+<text x="63" y="376.00" text-anchor="end" class="small">11%</text>
+<line x1="72" y1="302.00" x2="1022" y2="302.00" stroke="#e5e8eb"/>
+<text x="63" y="306.00" text-anchor="end" class="small">23%</text>
+<line x1="72" y1="232.00" x2="1022" y2="232.00" stroke="#e5e8eb"/>
+<text x="63" y="236.00" text-anchor="end" class="small">34%</text>
+<line x1="72" y1="162.00" x2="1022" y2="162.00" stroke="#e5e8eb"/>
+<text x="63" y="166.00" text-anchor="end" class="small">46%</text>
+<line x1="72" y1="92.00" x2="1022" y2="92.00" stroke="#e5e8eb"/>
+<text x="63" y="96.00" text-anchor="end" class="small">57%</text>
+<rect x="78.33" y="399.80" width="9.95" height="42.20" fill="#356f8a"/>
+<rect x="88.29" y="408.00" width="9.95" height="34.00" fill="#b06b45"/>
+<rect x="98.24" y="129.50" width="9.95" height="312.50" fill="#6c5b8e"/>
+<text x="94.62" y="455" transform="rotate(60 94.62 455)" class="small">&lt;|bos|</text>
+<rect x="123.57" y="410.15" width="9.95" height="31.85" fill="#356f8a"/>
+<rect x="133.52" y="412.85" width="9.95" height="29.15" fill="#b06b45"/>
+<rect x="143.48" y="358.13" width="9.95" height="83.87" fill="#6c5b8e"/>
+<text x="139.86" y="455" transform="rotate(60 139.86 455)" class="small">&lt;|task</text>
+<rect x="168.81" y="420.89" width="9.95" height="21.11" fill="#356f8a"/>
+<rect x="178.76" y="420.94" width="9.95" height="21.06" fill="#b06b45"/>
+<rect x="188.71" y="371.56" width="9.95" height="70.44" fill="#6c5b8e"/>
+<text x="185.10" y="455" transform="rotate(60 185.10 455)" class="small">↵</text>
+<rect x="214.05" y="415.50" width="9.95" height="26.50" fill="#356f8a"/>
+<rect x="224.00" y="419.26" width="9.95" height="22.74" fill="#b06b45"/>
+<rect x="233.95" y="415.87" width="9.95" height="26.13" fill="#6c5b8e"/>
+<text x="230.33" y="455" transform="rotate(60 230.33 455)" class="small">整数リストxs�</text>
+<rect x="259.29" y="425.11" width="9.95" height="16.89" fill="#356f8a"/>
+<rect x="269.24" y="426.40" width="9.95" height="15.60" fill="#b06b45"/>
+<rect x="279.19" y="421.54" width="9.95" height="20.46" fill="#6c5b8e"/>
+<text x="275.57" y="455" transform="rotate(60 275.57 455)" class="small">�</text>
+<rect x="304.52" y="422.63" width="9.95" height="19.37" fill="#356f8a"/>
+<rect x="314.48" y="423.65" width="9.95" height="18.35" fill="#b06b45"/>
+<rect x="324.43" y="426.96" width="9.95" height="15.04" fill="#6c5b8e"/>
+<text x="320.81" y="455" transform="rotate(60 320.81 455)" class="small">対</text>
+<rect x="349.76" y="421.44" width="9.95" height="20.56" fill="#356f8a"/>
+<rect x="359.71" y="424.21" width="9.95" height="17.79" fill="#b06b45"/>
+<rect x="369.67" y="429.99" width="9.95" height="12.01" fill="#6c5b8e"/>
+<text x="366.05" y="455" transform="rotate(60 366.05 455)" class="small">して、</text>
+<rect x="395.00" y="411.56" width="9.95" height="30.44" fill="#356f8a"/>
+<rect x="404.95" y="408.23" width="9.95" height="33.77" fill="#b06b45"/>
+<rect x="414.90" y="430.27" width="9.95" height="11.73" fill="#6c5b8e"/>
+<text x="411.29" y="455" transform="rotate(60 411.29 455)" class="small">各要素の絶対値</text>
+<rect x="440.24" y="423.30" width="9.95" height="18.70" fill="#356f8a"/>
+<rect x="450.19" y="425.47" width="9.95" height="16.53" fill="#b06b45"/>
+<rect x="460.14" y="433.68" width="9.95" height="8.32" fill="#6c5b8e"/>
+<text x="456.52" y="455" transform="rotate(60 456.52 455)" class="small">を取</text>
+<rect x="485.48" y="423.21" width="9.95" height="18.79" fill="#356f8a"/>
+<rect x="495.43" y="426.91" width="9.95" height="15.09" fill="#b06b45"/>
+<rect x="505.38" y="435.42" width="9.95" height="6.58" fill="#6c5b8e"/>
+<text x="501.76" y="455" transform="rotate(60 501.76 455)" class="small">るsolve関数を</text>
+<rect x="530.71" y="423.31" width="9.95" height="18.69" fill="#356f8a"/>
+<rect x="540.67" y="423.67" width="9.95" height="18.33" fill="#b06b45"/>
+<rect x="550.62" y="436.22" width="9.95" height="5.78" fill="#6c5b8e"/>
+<text x="547.00" y="455" transform="rotate(60 547.00 455)" class="small">いてください。</text>
+<rect x="575.95" y="405.05" width="9.95" height="36.95" fill="#356f8a"/>
+<rect x="585.90" y="404.42" width="9.95" height="37.58" fill="#b06b45"/>
+<rect x="595.86" y="434.71" width="9.95" height="7.29" fill="#6c5b8e"/>
+<text x="592.24" y="455" transform="rotate(60 592.24 455)" class="small">↵</text>
+<rect x="621.19" y="418.81" width="9.95" height="23.19" fill="#356f8a"/>
+<rect x="631.14" y="418.19" width="9.95" height="23.81" fill="#b06b45"/>
+<rect x="641.10" y="437.40" width="9.95" height="4.60" fill="#6c5b8e"/>
+<text x="637.48" y="455" transform="rotate(60 637.48 455)" class="small">&lt;|code</text>
+<rect x="666.43" y="402.16" width="9.95" height="39.84" fill="#356f8a"/>
+<rect x="676.38" y="401.91" width="9.95" height="40.09" fill="#b06b45"/>
+<rect x="686.33" y="437.08" width="9.95" height="4.92" fill="#6c5b8e"/>
+<text x="682.71" y="455" transform="rotate(60 682.71 455)" class="small">↵</text>
+<rect x="711.67" y="414.78" width="9.95" height="27.22" fill="#356f8a"/>
+<rect x="721.62" y="410.52" width="9.95" height="31.48" fill="#b06b45"/>
+<rect x="731.57" y="438.81" width="9.95" height="3.19" fill="#6c5b8e"/>
+<text x="727.95" y="455" transform="rotate(60 727.95 455)" class="small">def␠solve</text>
+<rect x="756.90" y="420.36" width="9.95" height="21.64" fill="#356f8a"/>
+<rect x="766.86" y="418.96" width="9.95" height="23.04" fill="#b06b45"/>
+<rect x="776.81" y="439.62" width="9.95" height="2.38" fill="#6c5b8e"/>
+<text x="773.19" y="455" transform="rotate(60 773.19 455)" class="small">(xs:␠list</text>
+<rect x="802.14" y="410.68" width="9.95" height="31.32" fill="#356f8a"/>
+<rect x="812.10" y="408.08" width="9.95" height="33.92" fill="#b06b45"/>
+<rect x="822.05" y="439.18" width="9.95" height="2.82" fill="#6c5b8e"/>
+<text x="818.43" y="455" transform="rotate(60 818.43 455)" class="small">:␠int)␠</text>
+<rect x="847.38" y="405.60" width="9.95" height="36.40" fill="#356f8a"/>
+<rect x="857.33" y="399.76" width="9.95" height="42.24" fill="#b06b45"/>
+<rect x="867.29" y="439.36" width="9.95" height="2.64" fill="#6c5b8e"/>
+<text x="863.67" y="455" transform="rotate(60 863.67 455)" class="small">-&gt;␠lis</text>
+<rect x="892.62" y="397.00" width="9.95" height="45.00" fill="#356f8a"/>
+<rect x="902.57" y="392.59" width="9.95" height="49.41" fill="#b06b45"/>
+<rect x="912.52" y="439.65" width="9.95" height="2.35" fill="#6c5b8e"/>
+<text x="908.90" y="455" transform="rotate(60 908.90 455)" class="small">result</text>
+<rect x="937.86" y="401.95" width="9.95" height="40.05" fill="#356f8a"/>
+<rect x="947.81" y="403.47" width="9.95" height="38.53" fill="#b06b45"/>
+<rect x="957.76" y="440.11" width="9.95" height="1.89" fill="#6c5b8e"/>
+<text x="954.14" y="455" transform="rotate(60 954.14 455)" class="small">␠=␠[abs(</text>
+<rect x="983.10" y="399.71" width="9.95" height="42.29" fill="#356f8a"/>
+<rect x="993.05" y="395.50" width="9.95" height="46.50" fill="#b06b45"/>
+<rect x="1003.00" y="437.94" width="9.95" height="4.06" fill="#6c5b8e"/>
+<text x="999.38" y="455" transform="rotate(60 999.38 455)" class="small">value)␠fo</text>
+<rect x="72" y="528" width="12" height="12" fill="#356f8a"/>
+<text x="89" y="538" class="small">生attention</text>
+<rect x="332" y="528" width="12" height="12" fill="#b06b45"/>
+<text x="349" y="538" class="small">attention×projected Value norm</text>
+<rect x="592" y="528" width="12" height="12" fill="#6c5b8e"/>
+<text x="609" y="538" class="small">attention rollout</text>
+</svg>
