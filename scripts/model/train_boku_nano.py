@@ -77,6 +77,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path)
     # 設定YAMLを変更せずepoch数だけを明示的に差し替える
     parser.add_argument("--epochs", type=int)
+    # 学習途中のvalidation lossを指定optimizer step間隔で測定する
+    parser.add_argument(
+        "--validate-every-steps",
+        type=int,
+        help="指定optimizer stepごとに全validation集合のlossを測定します。",
+    )
     # 構成と固定成果物だけを検査して終了する選択肢を用意する
     parser.add_argument("--validate-config", action="store_true")
     # 短いsmoke testだけに使う最大optimizer step数を受け取る
@@ -919,6 +925,7 @@ def train(
     resume_from: Path | None,
     max_steps_override: int | None,
     epochs_override: int | None,
+    validation_every_steps_override: int | None = None,
 ) -> dict[str, Any]:
     """データ全件を3 epoch学習し、checkpointとmanifestを保存する。"""
 
@@ -1000,6 +1007,23 @@ def train(
     optimizer = build_optimizer(model, config["optimizer"], device)
     # 訓練設定を取り出す
     training_config = config["training"]
+    # CLI指定を優先し、なければ任意のYAML設定を読む
+    validation_every_steps = (
+        validation_every_steps_override
+        if validation_every_steps_override is not None
+        else training_config.get("validate_every_steps")
+    )
+    # 指定値を整数へ統一する
+    if validation_every_steps is not None:
+        validation_every_steps = int(validation_every_steps)
+        # 非正値を拒否する
+        if validation_every_steps <= 0:
+            raise ValueError("validation_every_stepsは正の整数にしてください")
+        # train lossと同じ記録点で比較できるようlog間隔の倍数へ限定する
+        if validation_every_steps % int(config["runtime"]["log_every_steps"]) != 0:
+            raise ValueError(
+                "validation_every_stepsはlog_every_stepsの倍数にしてください"
+            )
     # micro batch sizeを読む
     micro_batch_size = int(training_config["micro_batch_size"])
     # gradient accumulation回数を読む
@@ -1108,6 +1132,7 @@ def train(
         "dtype": str(training_dtype).replace("torch.", ""),
         "max_steps_override": max_steps_override,
         "resume_from": display_path(resume_from) if resume_from is not None else None,
+        "validation_every_steps": validation_every_steps,
         "versions": {
             "numpy": package_version("numpy"),
             "python": sys.version.split()[0],
@@ -1267,6 +1292,39 @@ def train(
                 rolling_supervised_tokens = 0
                 # 次区間の開始時刻を更新する
                 rolling_started = now
+            # 指定stepごとに学習途中の全validation lossを測定する
+            should_validate_at_step = (
+                validation_every_steps is not None
+                and global_step % validation_every_steps == 0
+                and not (
+                    is_epoch_last_batch
+                    and bool(training_config["validate_after_each_epoch"])
+                )
+            )
+            # 定期validationを実行してtrain lossと同じstepへ記録する
+            if should_validate_at_step:
+                validation_metric = evaluate_validation_loss(
+                    training_model,
+                    validation_dataset,
+                    int(training_config["validation_batch_size"]),
+                    special_ids["pad"],
+                    device,
+                    training_dtype,
+                )
+                validation_metric.update(
+                    {
+                        "event": "validation",
+                        "epoch": epoch + 1,
+                        "global_step": global_step,
+                    }
+                )
+                append_metric(metrics_path, validation_metric)
+                print(
+                    json.dumps(validation_metric, ensure_ascii=False, sort_keys=True),
+                    flush=True,
+                )
+                # validation時間を次のtrain throughput区間から除外する
+                rolling_started = time.monotonic()
             # step上限へ達したら終了する
             if global_step >= total_steps:
                 # 完了フラグを立てる
@@ -1358,6 +1416,9 @@ def main() -> None:
     if args.epochs is not None and args.epochs <= 0:
         # CLI利用誤りを示す
         raise ValueError("--epochsは正の整数にしてください")
+    # 定期validation間隔の不正値を早期に拒否する
+    if args.validate_every_steps is not None and args.validate_every_steps <= 0:
+        raise ValueError("--validate-every-stepsは正の整数にしてください")
     # 設定検査だけならGPU学習と全件token化を行わない
     if args.validate_config:
         # 固定成果物とモデル構造を検証する
@@ -1372,6 +1433,7 @@ def main() -> None:
             resume_from=args.resume_from,
             max_steps_override=args.max_steps,
             epochs_override=args.epochs,
+            validation_every_steps_override=args.validate_every_steps,
         )
     # 最終結果を読みやすいJSONで表示する
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))

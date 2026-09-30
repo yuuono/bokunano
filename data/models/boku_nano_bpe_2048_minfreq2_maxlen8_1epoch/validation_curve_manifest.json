@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-09-29T10:58:04Z",
+  "curve_metrics_path": "data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch/training_metrics_with_validation_every_20_steps.jsonl",
+  "curve_metrics_sha256": "c968cde4a8c724851d498d44a8fe15ad6ae76de2ae258f4d3f89e9256bbfe46b",
+  "original_metrics_path": "data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch/training_metrics.jsonl",
+  "original_model_sha256": "c019688997247f4bc10198703364d88584ff63539d1e6a739764ab372bd1ed83",
+  "purpose": "Train lossと同じoptimizer stepで全validation集合のlossを記録する再現学習",
+  "replay_elapsed_seconds": 169.1659130603075,
+  "replay_model_sha256": "c019688997247f4bc10198703364d88584ff63539d1e6a739764ab372bd1ed83",
+  "source_config": "config/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch.yaml",
+  "train_metric_points": 19,
+  "train_metrics_match_original": true,
+  "validation_dataset_sha256": "5b05b76202920f532cb379481d1cfab4adad74e936bdff518cb8b1750b33f0a1",
+  "validation_every_steps": 20,
+  "validation_metric_points": 19,
+  "validation_record_count_per_point": 24040,
+  "validation_supervised_tokens_per_point": 1281557,
+  "weights_match_original": true
+}
