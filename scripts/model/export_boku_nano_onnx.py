@@ -27,8 +27,8 @@ from scripts.model.evaluate_boku_nano import PROMPT_TEMPLATE  # noqa: E402
 
 
 DEFAULT_MODELS = {
-    "3epoch": PROJECT_ROOT / "data/models/boku_nano_bpe_2048",
-    "10epoch": PROJECT_ROOT / "data/models/boku_nano_bpe_2048_10epoch",
+    "3epoch": PROJECT_ROOT / "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch",
+    "10epoch": PROJECT_ROOT / "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch",
 }
 DEFAULT_TOKENIZER = PROJECT_ROOT / "data/tokenizers/bpe_2048/tokenizer.json"
 DEFAULT_OUTPUT = PROJECT_ROOT / "web/models"
@@ -47,7 +47,7 @@ class LastTokenLogits(torch.nn.Module):
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="3/10エポックのBoku-nanoをONNXへ変換しPyTorch出力と比較します。"
+        description="Boku-nanoをONNXへ変換しPyTorch出力と比較します。"
     )
     parser.add_argument("--output-directory", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--tokenizer", type=Path, default=DEFAULT_TOKENIZER)
@@ -62,6 +62,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--atol", type=float, default=2.0e-4)
     parser.add_argument("--max-new-tokens", type=int, default=64)
     parser.add_argument("--skip-generation-check", action="store_true")
+    parser.add_argument(
+        "--in-place",
+        action="store_true",
+        help=(
+            "各モデルディレクトリへmodel.onnxとonnx_manifest.jsonを保存する。"
+            "トークナイザーはtraining_manifest.jsonから自動選択する。"
+        ),
+    )
     return parser.parse_args()
 
 
@@ -99,6 +107,32 @@ def load_model(directory: Path) -> tuple[BokuNanoForCausalLM, BokuNanoConfig, Pa
     model.load_state_dict(load_safetensors(str(weights_path), device="cpu"), strict=True)
     model.eval()
     return model, config, weights_path
+
+
+def tokenizer_from_training_manifest(directory: Path) -> tuple[Path, str]:
+    manifest_path = directory / "training_manifest.json"
+    if not manifest_path.is_file():
+        raise FileNotFoundError(f"学習manifestがありません: {manifest_path}")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    tokenizer_value = manifest.get("tokenizer_path")
+    expected_sha256 = manifest.get("tokenizer_sha256")
+    if not isinstance(tokenizer_value, str) or not tokenizer_value:
+        raise ValueError(f"tokenizer_pathが不正です: {manifest_path}")
+    if not isinstance(expected_sha256, str) or len(expected_sha256) != 64:
+        raise ValueError(f"tokenizer_sha256が不正です: {manifest_path}")
+    tokenizer_path = Path(tokenizer_value)
+    if not tokenizer_path.is_absolute():
+        tokenizer_path = PROJECT_ROOT / tokenizer_path
+    tokenizer_path = tokenizer_path.resolve()
+    if not tokenizer_path.is_file():
+        raise FileNotFoundError(f"トークナイザーがありません: {tokenizer_path}")
+    actual_sha256 = sha256(tokenizer_path)
+    if actual_sha256 != expected_sha256:
+        raise ValueError(
+            "トークナイザーSHA-256が学習manifestと一致しません: "
+            f"expected={expected_sha256}, actual={actual_sha256}"
+        )
+    return tokenizer_path, actual_sha256
 
 
 def export_model(
@@ -230,10 +264,73 @@ def verify_model(
     }
 
 
+def export_models_in_place(args: argparse.Namespace) -> None:
+    for name, directory in selected_models(args.model).items():
+        print(f"[{name}] 読み込み: {directory}", flush=True)
+        model, config, weights_path = load_model(directory)
+        tokenizer_path, tokenizer_sha256 = tokenizer_from_training_manifest(directory)
+        tokenizer = Tokenizer.from_file(str(tokenizer_path))
+        onnx_path = directory / "model.onnx"
+        print(f"[{name}] ONNX変換: {onnx_path}", flush=True)
+        export_model(model, onnx_path, args.sample_sequence_length, args.opset)
+        print(f"[{name}] PyTorchとの比較", flush=True)
+        verification = verify_model(
+            model,
+            onnx_path,
+            tokenizer,
+            args.atol,
+            args.max_new_tokens,
+            not args.skip_generation_check,
+        )
+        try:
+            model_directory = str(directory.relative_to(PROJECT_ROOT))
+            tokenizer_manifest_path = str(tokenizer_path.relative_to(PROJECT_ROOT))
+        except ValueError as error:
+            raise ValueError("--in-placeのモデルとtokenizerはリポジトリ内に必要です") from error
+        manifest = {
+            "format_version": 1,
+            "model_directory": model_directory,
+            "model": {
+                "path": "model.safetensors",
+                "sha256": sha256(weights_path),
+                "parameter_count": model.parameter_count(),
+                "context_length": config.context_length,
+                "vocab_size": config.vocab_size,
+            },
+            "tokenizer": {
+                "path": tokenizer_manifest_path,
+                "sha256": tokenizer_sha256,
+            },
+            "onnx": {
+                "path": "model.onnx",
+                "sha256": sha256(onnx_path),
+                "size_bytes": onnx_path.stat().st_size,
+                "opset": args.opset,
+                "input": "input_ids",
+                "output": "logits",
+                "dynamic_axes": ["batch", "sequence"],
+            },
+            "verification": verification,
+        }
+        manifest_path = directory / "onnx_manifest.json"
+        manifest_path.write_text(
+            json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        print(
+            f"[{name}] 完了: {onnx_path.stat().st_size / 1024 / 1024:.1f} MiB",
+            flush=True,
+        )
+        print(f"[{name}] manifest: {manifest_path}", flush=True)
+
+
 def main() -> None:
     args = parse_args()
     if args.sample_sequence_length <= 0:
         raise ValueError("--sample-sequence-lengthは正の整数にしてください")
+    if args.in_place:
+        export_models_in_place(args)
+        return
     tokenizer = Tokenizer.from_file(str(args.tokenizer))
     output_directory = args.output_directory.resolve()
     output_directory.mkdir(parents=True, exist_ok=True)
