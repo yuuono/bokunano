@@ -22,10 +22,10 @@ Boku1-nanoは、日本語指示から限定的なPython関数を生成する、�
 
 | Variant | epoch | 重みSHA-256 | 1 epochの系列token数 |
 | --- | ---: | --- | ---: |
-| `boku_nano_bpe_2048` | 3 | `5623f066cc47ef58790e56d5a62fe9a258d502569995a7aff6c65558c622cf0e` | 6,939,466 |
-| `boku_nano_bpe_2048_10epoch` | 10 | `6852e36364c4f87a44646ebf01262f661bbbadc112c5d6e8daed2d045461aa7b` | 6,939,466 |
+| [`boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch`](../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/training_manifest.json) | 3 | `5623f066cc47ef58790e56d5a62fe9a258d502569995a7aff6c65558c622cf0e` | 6,939,466 |
+| [`boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch`](../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch/training_manifest.json) | 10 | `6852e36364c4f87a44646ebf01262f661bbbadc112c5d6e8daed2d045461aa7b` | 6,939,466 |
 
-tokenizerは`data/tokenizers/bpe_2048/tokenizer.json`、SHA-256は`6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293`である。モデルごとの正確な学習条件、software version、データhashは各`training_manifest.json`に保存している。
+tokenizerは[`data/tokenizers/bpe_2048/tokenizer.json`](../../data/tokenizers/bpe_2048/tokenizer.json)、SHA-256は`6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293`である。モデルごとの正確な学習条件、software version、データhashは各`training_manifest.json`に保存している。
 
 ## 学習データと教師モデルとの関係
 

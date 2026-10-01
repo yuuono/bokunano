@@ -178,7 +178,7 @@ Syntax-valid率、Safe-AST率、Signature-valid率、Executable率、pass@5、GP
 | 項目 | 固定値 |
 |---|---|
 | 学習状態 | `training_manifest.json`の`status: completed`、3エポック |
-| モデル | `data/models/boku_nano_bpe_2048` |
+| モデル | `data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch` |
 | モデルSHA-256 | `5623f066cc47ef58790e56d5a62fe9a258d502569995a7aff6c65558c622cf0e` |
 | tokenizer SHA-256 | `6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293` |
 | 評価ZIP SHA-256 | `5b05b76202920f532cb379481d1cfab4adad74e936bdff518cb8b1750b33f0a1` |

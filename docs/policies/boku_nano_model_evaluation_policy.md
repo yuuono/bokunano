@@ -120,7 +120,7 @@ uv run --group model-training --python 3.12.12 python \
 uv run --group model-training --python 3.12.12 python \
   scripts/model/evaluate_boku_nano.py \
   --config config/boku_nano_evaluation.yaml \
-  --model-directory data/models/boku_nano_bpe_2048_10epoch \
+  --model-directory data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch \
   --output-directory data/evaluations/boku_nano_bpe_2048_10epoch
 ```
 

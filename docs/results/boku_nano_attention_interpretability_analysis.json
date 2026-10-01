@@ -1,5 +1,5 @@
 {
-  "model_directory": "data/models/boku_nano_bpe_2048",
+  "model_directory": "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch",
   "tokenizer": "data/tokenizers/bpe_2048/tokenizer.json",
   "diagnostic_design": {
     "prompt_count": 24,

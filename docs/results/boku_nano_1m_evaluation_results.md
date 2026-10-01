@@ -153,7 +153,7 @@
 | 内容 | 既存BPE | 短いpiece用BPE |
 |---|---|---|
 | 評価設定 | [設定](../../config/boku_nano_1m_bpe_2048_1epoch_evaluation.yaml) | [設定](../../config/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch_evaluation.yaml) |
-| モデル保存先 | data/models/boku_nano_1m_bpe_2048_1epoch/ | data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch/ |
+| モデル保存先 | data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_1epoch/ | data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch/ |
 | 評価保存先 | data/evaluations/boku_nano_1m_bpe_2048_1epoch/ | data/evaluations/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch/ |
 | モデルSHA-256 | c4774c30963d00fee31f52ffc2201f85713cc941832b0c412161ce46541c2b0a | 1e9bd1911fd405c2e5e839b38cf5744ea7a287d1e7595f747845eadcce302576 |
 | 評価設定SHA-256 | ac6fa1b9843e03019990c8a56a084c96b359c05e29cedfc920d222a9b0fa32e2 | fc07e748efd36ec3d9744fdd370d1eee0e56e085de20e4fc149d4c9495eeaa73 |

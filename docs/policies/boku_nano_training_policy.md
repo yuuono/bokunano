@@ -153,7 +153,7 @@ RTX 5090上では`bfloat16` autocastを使用する。parameterとoptimizer stat
 
 ## 10. 保存物
 
-標準出力先は`data/models/boku_nano_bpe_2048/`とし、次を保存する。
+標準出力先は`data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/`とし、次を保存する。
 
 | ファイル | 内容 |
 |---|---|
@@ -208,12 +208,12 @@ epoch 1終了checkpointからepoch 2を再開する例は次のとおりであ�
 uv run --group model-training --python 3.12.12 python \
   scripts/model/train_boku_nano.py \
   --config config/boku_nano_bpe_2048.yaml \
-  --resume-from data/models/boku_nano_bpe_2048/checkpoints/epoch_01.pt
+  --resume-from data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/checkpoints/epoch_01.pt
 ```
 
 `--max-steps`は配線確認用であり、本学習結果には使用しない。指定時のmanifestは`stopped_at_max_steps`となり、3 epoch完了モデルと区別する。
 
-epoch数を変える追加実験では元YAMLを書き換えず、`--epochs`と別の`--output-dir`を指定する。例えば10 epoch実験は`--epochs 10 --output-dir data/models/boku_nano_bpe_2048_10epoch`とする。学習率scheduleも全10 epochを前提に最初から作るため、3 epoch checkpointへ継ぎ足さずランダム初期値から学習する。
+epoch数を変える追加実験では元YAMLを書き換えず、`--epochs`と別の`--output-dir`を指定する。例えば10 epoch実験は`--epochs 10 --output-dir data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch`とする。学習率scheduleも全10 epochを前提に最初から作るため、3 epoch checkpointへ継ぎ足さずランダム初期値から学習する。
 
 ## 12. 学習完了後の必須確認
 

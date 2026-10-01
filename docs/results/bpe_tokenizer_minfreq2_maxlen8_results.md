@@ -86,8 +86,8 @@
 | parameter数 | 15,735,168 |
 | epoch数 | 1 |
 | 1 epochの系列token | 17,281,995 |
-| 出力先 | `data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch/` |
-| console log | `data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_console.log` |
+| 出力先 | `data/models/boku_nano_15m_bpe_2048_minfreq2_maxlen8_1epoch/` |
+| console log | `data/models/boku_nano_15m_bpe_2048_minfreq2_maxlen8_1epoch_console.log` |
 
 学習前検証では、語彙数2,048、トークナイザーSHA-256、特殊token ID、モデルparameter数、訓練・validation ZIPのSHA-256がすべて一致した。学習は次でbackground起動できる。
 

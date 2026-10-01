@@ -178,7 +178,7 @@ lossとperplexityはtoken単位の平均であり、分割単位が異なるト�
 | 正確なパラメータ数 | 5,065,472 | 5,065,472 |
 | 学習設定 | [設定](../../config/boku_nano_5m_bpe_2048_1epoch.yaml) | [設定](../../config/boku_nano_5m_bpe_2048_minfreq2_maxlen8_1epoch.yaml) |
 | 評価設定 | [設定](../../config/boku_nano_5m_bpe_2048_1epoch_evaluation.yaml) | [設定](../../config/boku_nano_5m_bpe_2048_minfreq2_maxlen8_1epoch_evaluation.yaml) |
-| 学習manifest | [manifest](../../data/models/boku_nano_5m_bpe_2048_1epoch/training_manifest.json) | [manifest](../../data/models/boku_nano_5m_bpe_2048_minfreq2_maxlen8_1epoch/training_manifest.json) |
+| 学習manifest | [manifest](../../data/models/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/training_manifest.json) | [manifest](../../data/models/boku_nano_5m_bpe_2048_minfreq2_maxlen8_1epoch/training_manifest.json) |
 | モデルSHA-256 | 027fe1b6…0c6 | 0c2ad06d…5f9 |
 | 評価設定SHA-256 | d34600f4…7b65 | a677bddf…8270 |
 

@@ -2,7 +2,7 @@
 
 ## 概要
 
-`data/models/boku_nano_bpe_2048`の学習ログを確認し、3エポックにわたるtrain lossとvalidation lossの推移を整理した。
+`data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch`の学習ログを確認し、3エポックにわたるtrain lossとvalidation lossの推移を整理した。
 
 - train lossは各エポック内の最終ログ区間で`0.4234`、`0.4016`、`0.3941`と低下した。
 - validation lossは`0.4181`、`0.3985`、`0.3939`と一貫して低下した。
@@ -16,11 +16,11 @@
 
 | 項目 | ファイル |
 |---|---|
-| モデル | `data/models/boku_nano_bpe_2048/model.safetensors` |
-| 学習メトリクス | `data/models/boku_nano_bpe_2048/training_metrics.jsonl` |
-| コンソールログ | `data/models/boku_nano_training_console.log` |
-| 学習設定 | `data/models/boku_nano_bpe_2048/training_config.yaml` |
-| 完了情報 | `data/models/boku_nano_bpe_2048/training_manifest.json` |
+| モデル | `data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/model.safetensors` |
+| 学習メトリクス | `data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/training_metrics.jsonl` |
+| コンソールログ | `data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/training_console.log` |
+| 学習設定 | `data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/training_config.yaml` |
+| 完了情報 | `data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/training_manifest.json` |
 
 ## モデル構成
 

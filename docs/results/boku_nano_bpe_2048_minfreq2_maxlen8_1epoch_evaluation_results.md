@@ -2,7 +2,7 @@
 
 ## 結論
 
-`boku_nano_bpe_2048_minfreq2_maxlen8_1epoch`をランダム初期値から1エポック学習し、固定済み5テスト84,550件で評価した。
+`boku_nano_15m_bpe_2048_minfreq2_maxlen8_1epoch`をランダム初期値から1エポック学習し、固定済み5テスト84,550件で評価した。
 
 | 項目 | 結果 |
 |---|---:|
@@ -227,10 +227,10 @@ Train lossは原則として直近20 optimizer stepの平均であり、step 377
 |---|---|
 | 学習設定 | `config/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch.yaml` |
 | 評価設定 | `config/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation.yaml` |
-| モデル | `data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch/model.safetensors` |
+| モデル | `data/models/boku_nano_15m_bpe_2048_minfreq2_maxlen8_1epoch/model.safetensors` |
 | モデルSHA-256 | `c019688997247f4bc10198703364d88584ff63539d1e6a739764ab372bd1ed83` |
-| 学習manifest | `data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch/training_manifest.json` |
-| 学習metrics | `data/models/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch/training_metrics.jsonl` |
+| 学習manifest | `data/models/boku_nano_15m_bpe_2048_minfreq2_maxlen8_1epoch/training_manifest.json` |
+| 学習metrics | `data/models/boku_nano_15m_bpe_2048_minfreq2_maxlen8_1epoch/training_metrics.jsonl` |
 | 評価manifest | `data/evaluations/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch/evaluation_manifest.json` |
 | 評価設定SHA-256 | `6a09025ac18033cb076c04b65a6d3e976ec45d6d515cf284059a41bbc1142841` |
 | 評価ZIP SHA-256 | `5b05b76202920f532cb379481d1cfab4adad74e936bdff518cb8b1750b33f0a1` |

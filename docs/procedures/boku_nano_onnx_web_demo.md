@@ -25,8 +25,8 @@ GitHub Pages上のブラウザだけで、自由な日本語からPythonコー�
 
 | 表示名 | 学習済み重み | ONNX |
 | --- | --- | --- |
-| 3エポックモデル | `data/models/boku_nano_bpe_2048/model.safetensors` | `web/models/boku-nano-3epoch.onnx` |
-| 10エポックモデル | `data/models/boku_nano_bpe_2048_10epoch/model.safetensors` | `web/models/boku-nano-10epoch.onnx` |
+| 3エポックモデル | [boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/model.safetensors](../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/model.safetensors) | [boku-nano-3epoch.onnx](../../web/models/boku-nano-3epoch.onnx) |
+| 10エポックモデル | [boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch/model.safetensors](../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch/model.safetensors) | [boku-nano-10epoch.onnx](../../web/models/boku-nano-10epoch.onnx) |
 
 Qwen3-0.6B q4f16は569,789,750 bytesである。Pages成果物へ複製せず、初回翻訳時に固定したHugging Face revisionから取得してブラウザキャッシュへ保存する。Boku1-nanoは各約60.4 MiBで、選択モデルを初回生成時にPagesから取得する。
 
@@ -38,6 +38,18 @@ uv run --group onnx-export python scripts/model/export_boku_nano_onnx.py
 ```
 
 変換時に、ONNX形式検査、2プロンプトのlogits比較、greedy生成token列の完全一致、単一ファイルサイズ、各成果物のSHA-256記録を自動実行する。
+
+## 学習済みモデルごとのONNX生成
+
+Web公開対象でないモデルは、[ONNX変換スクリプト](../../scripts/model/export_boku_nano_onnx.py)の`--in-place`を使う。トークナイザーは各`training_manifest.json`から自動選択されるため、既存BPEと短いpiece用BPEを取り違えない。
+
+```bash
+uv run --group onnx-export python scripts/model/export_boku_nano_onnx.py \
+  --in-place \
+  --model <識別名>=data/models/<モデルディレクトリ>
+```
+
+各モデルディレクトリへ`model.onnx`と`onnx_manifest.json`を保存する。manifestには元のsafetensors、トークナイザー、ONNXのSHA-256、ファイルサイズ、logits比較、greedy生成一致の結果を記録する。全8モデルの保存先は[学習済みモデル一覧](../results/trained_model_inventory.md)を参照する。3・10エポック版は既存のWeb用ONNXと[Webモデルmanifest](../../web/model-manifest.json)を使用する。
 
 ## ローカル表示
 
