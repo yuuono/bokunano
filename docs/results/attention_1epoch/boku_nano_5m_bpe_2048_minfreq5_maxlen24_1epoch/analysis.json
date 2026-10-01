@@ -1,0 +1,4434 @@
+{
+  "model_directory": "data/models/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch",
+  "tokenizer": "data/tokenizers/bpe_2048/tokenizer.json",
+  "model_config": {
+    "parameter_count": 5065472,
+    "layers": 5,
+    "heads": 4,
+    "head_dimension": 64,
+    "hidden_size": 256,
+    "ffn_size": 704
+  },
+  "diagnostic_design": {
+    "prompt_count": 24,
+    "coverage": "24 atomic operations, one canonical instruction per operation",
+    "hidden_tests_per_prompt": 33,
+    "generation": "greedy",
+    "ablation": "head output is zeroed before out_proj; token-position experiment zeros V but preserves K and attention weights"
+  },
+  "baseline": {
+    "passed": 1,
+    "total": 24,
+    "teacher_forced_nll": 0.52398496,
+    "generated_token_count": 252
+  },
+  "head_roles": [
+    {
+      "id": "L1H1",
+      "layer": 1,
+      "head": 1,
+      "bos_attention": 0.06289068,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.4112182,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.34076506,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.27412403,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.06485749,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.05499363,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.2381935,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.99058801,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.07177111,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.08310712,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 0.70680434,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 1.05345404,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L1H2",
+      "layer": 1,
+      "head": 2,
+      "bos_attention": 0.05402532,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.40700364,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.33058995,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.29002798,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.07180513,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.06280635,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.24891421,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.98246115,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.0568531,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.06592254,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.24695587,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.98914027,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L1H3",
+      "layer": 1,
+      "head": 3,
+      "bos_attention": 0.04964755,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.39622727,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.33889821,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.29275596,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.05957339,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.07071754,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.24302456,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.9872486,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.04816193,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.05376547,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 0.81224686,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 1.36252928,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L1H4",
+      "layer": 1,
+      "head": 4,
+      "bos_attention": 0.05432806,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.40203285,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.34702909,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.27735236,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.0591755,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.06069578,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.24602546,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.99050188,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.05113827,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.06109219,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.0807873,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 1.15344512,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L2H1",
+      "layer": 2,
+      "head": 1,
+      "bos_attention": 0.05065184,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.34848067,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.35975364,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.32247794,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.07763522,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.06687279,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.28753811,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.95956028,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.04250499,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.04664732,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 0.91232514,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.96145129,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L2H2",
+      "layer": 2,
+      "head": 2,
+      "bos_attention": 0.04750862,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.30064058,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.31516528,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.42463538,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.11352336,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.07529246,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.38296571,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.91743594,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.04732331,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.04741859,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.22496855,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.70422667,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L2H3",
+      "layer": 2,
+      "head": 3,
+      "bos_attention": 0.04311944,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.51153857,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.24891019,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.26476717,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.06042311,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.05480621,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.25153166,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.86217195,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.04334093,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.04551092,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.69400132,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.58608037,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L2H4",
+      "layer": 2,
+      "head": 4,
+      "bos_attention": 0.05607897,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.39152026,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.32485574,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.31347901,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.09437826,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.09346982,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.31501919,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.93741041,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.05590601,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.06129373,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 2.21253562,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.61836141,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L3H1",
+      "layer": 3,
+      "head": 1,
+      "bos_attention": 0.05231884,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.26323316,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.27368397,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.51182848,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.16985144,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.11775499,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.47942248,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.84389216,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.05064607,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.05500356,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 0.58068269,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 1.06868672,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L3H2",
+      "layer": 3,
+      "head": 2,
+      "bos_attention": 0.07377066,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.24397245,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.34025636,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.4595367,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.08692199,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.11010424,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.42079294,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.86363357,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.06949186,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.07105516,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 2.02679658,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.57653451,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L3H3",
+      "layer": 3,
+      "head": 3,
+      "bos_attention": 0.07033519,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.34492615,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.32235631,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.36774057,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.08175974,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.09247603,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.32284617,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.92176741,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.07340426,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.07788492,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.54953289,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.81441641,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L3H4",
+      "layer": 3,
+      "head": 4,
+      "bos_attention": 0.06680504,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.27661186,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.39576498,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.36210966,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.08422694,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.08786882,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.31198698,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.93822914,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.05429636,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.04480145,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 0.5880568,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 1.02911329,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L4H1",
+      "layer": 4,
+      "head": 1,
+      "bos_attention": 0.10429136,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.2840589,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.40893334,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.33932441,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.06425981,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.07304987,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.27172434,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.94994491,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.09951571,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.10411018,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.44103241,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.7987504,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L4H2",
+      "layer": 4,
+      "head": 2,
+      "bos_attention": 0.0665779,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.23296244,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.39331782,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.41305867,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.09328891,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.11108331,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.36499891,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.90610421,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.06146527,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.05808053,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 2.14848185,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.60074294,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L4H3",
+      "layer": 4,
+      "head": 3,
+      "bos_attention": 0.08979921,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.24274999,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.39486367,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.40053216,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.08725211,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.0797179,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.3449758,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.91659194,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.08664605,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.08666818,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.03509283,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.95734233,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L4H4",
+      "layer": 4,
+      "head": 4,
+      "bos_attention": 0.08271237,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.26339057,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.39480716,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.37778169,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.08293741,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.08698577,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.30623731,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.95622045,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.07873528,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.07848831,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 0.83710766,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 1.22776401,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L5H1",
+      "layer": 5,
+      "head": 1,
+      "bos_attention": 0.07626512,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.20452371,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.39479202,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.44286165,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.1039001,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.09108474,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.37143648,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.92319614,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.07797699,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.07374884,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 0.98208171,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 1.35409105,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L5H2",
+      "layer": 5,
+      "head": 2,
+      "bos_attention": 0.10683579,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.14510897,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.49339598,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.39954737,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.08804031,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.09841047,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.32945752,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.90151322,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.1079264,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.10539978,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.047521,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.84407592,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L5H3",
+      "layer": 5,
+      "head": 3,
+      "bos_attention": 0.07995231,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.24736556,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.44816571,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.33651781,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.0710537,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.07447477,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.28232989,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.95018101,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.0809411,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.07565705,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.27385843,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 1.00639796,
+      "induction_like_relative_observations": 24
+    },
+    {
+      "id": "L5H4",
+      "layer": 5,
+      "head": 4,
+      "bos_attention": 0.08586881,
+      "bos_attention_observations": 252,
+      "instruction_attention": 0.22771442,
+      "instruction_attention_observations": 252,
+      "control_attention": 0.42191529,
+      "control_attention_observations": 252,
+      "generated_code_attention": 0.3872515,
+      "generated_code_attention_observations": 228,
+      "previous_token_attention": 0.08223332,
+      "previous_token_attention_observations": 252,
+      "self_attention": 0.09148313,
+      "self_attention_observations": 252,
+      "recent4_attention": 0.3229599,
+      "recent4_attention_observations": 252,
+      "normalized_entropy": 0.94467306,
+      "normalized_entropy_observations": 252,
+      "bos_value_norm_share": 0.07577199,
+      "bos_value_norm_share_observations": 252,
+      "bos_projected_norm_share": 0.06794181,
+      "bos_projected_norm_share_observations": 252,
+      "copy_relative": 1.47861719,
+      "copy_relative_observations": 24,
+      "induction_like_relative": 0.74742764,
+      "induction_like_relative_observations": 24
+    }
+  ],
+  "role_rankings": {
+    "bos_attention": [
+      {
+        "id": "L5H2",
+        "value": 0.10683579
+      },
+      {
+        "id": "L4H1",
+        "value": 0.10429136
+      },
+      {
+        "id": "L4H3",
+        "value": 0.08979921
+      },
+      {
+        "id": "L5H4",
+        "value": 0.08586881
+      },
+      {
+        "id": "L4H4",
+        "value": 0.08271237
+      },
+      {
+        "id": "L5H3",
+        "value": 0.07995231
+      }
+    ],
+    "instruction_attention": [
+      {
+        "id": "L2H3",
+        "value": 0.51153857
+      },
+      {
+        "id": "L1H1",
+        "value": 0.4112182
+      },
+      {
+        "id": "L1H2",
+        "value": 0.40700364
+      },
+      {
+        "id": "L1H4",
+        "value": 0.40203285
+      },
+      {
+        "id": "L1H3",
+        "value": 0.39622727
+      },
+      {
+        "id": "L2H4",
+        "value": 0.39152026
+      }
+    ],
+    "control_attention": [
+      {
+        "id": "L5H2",
+        "value": 0.49339598
+      },
+      {
+        "id": "L5H3",
+        "value": 0.44816571
+      },
+      {
+        "id": "L5H4",
+        "value": 0.42191529
+      },
+      {
+        "id": "L4H1",
+        "value": 0.40893334
+      },
+      {
+        "id": "L3H4",
+        "value": 0.39576498
+      },
+      {
+        "id": "L4H3",
+        "value": 0.39486367
+      }
+    ],
+    "generated_code_attention": [
+      {
+        "id": "L3H1",
+        "value": 0.51182848
+      },
+      {
+        "id": "L3H2",
+        "value": 0.4595367
+      },
+      {
+        "id": "L5H1",
+        "value": 0.44286165
+      },
+      {
+        "id": "L2H2",
+        "value": 0.42463538
+      },
+      {
+        "id": "L4H2",
+        "value": 0.41305867
+      },
+      {
+        "id": "L4H3",
+        "value": 0.40053216
+      }
+    ],
+    "previous_token_attention": [
+      {
+        "id": "L3H1",
+        "value": 0.16985144
+      },
+      {
+        "id": "L2H2",
+        "value": 0.11352336
+      },
+      {
+        "id": "L5H1",
+        "value": 0.1039001
+      },
+      {
+        "id": "L2H4",
+        "value": 0.09437826
+      },
+      {
+        "id": "L4H2",
+        "value": 0.09328891
+      },
+      {
+        "id": "L5H2",
+        "value": 0.08804031
+      }
+    ],
+    "self_attention": [
+      {
+        "id": "L3H1",
+        "value": 0.11775499
+      },
+      {
+        "id": "L4H2",
+        "value": 0.11108331
+      },
+      {
+        "id": "L3H2",
+        "value": 0.11010424
+      },
+      {
+        "id": "L5H2",
+        "value": 0.09841047
+      },
+      {
+        "id": "L2H4",
+        "value": 0.09346982
+      },
+      {
+        "id": "L3H3",
+        "value": 0.09247603
+      }
+    ],
+    "recent4_attention": [
+      {
+        "id": "L3H1",
+        "value": 0.47942248
+      },
+      {
+        "id": "L3H2",
+        "value": 0.42079294
+      },
+      {
+        "id": "L2H2",
+        "value": 0.38296571
+      },
+      {
+        "id": "L5H1",
+        "value": 0.37143648
+      },
+      {
+        "id": "L4H2",
+        "value": 0.36499891
+      },
+      {
+        "id": "L4H3",
+        "value": 0.3449758
+      }
+    ],
+    "normalized_entropy": [
+      {
+        "id": "L1H1",
+        "value": 0.99058801
+      },
+      {
+        "id": "L1H4",
+        "value": 0.99050188
+      },
+      {
+        "id": "L1H3",
+        "value": 0.9872486
+      },
+      {
+        "id": "L1H2",
+        "value": 0.98246115
+      },
+      {
+        "id": "L2H1",
+        "value": 0.95956028
+      },
+      {
+        "id": "L4H4",
+        "value": 0.95622045
+      }
+    ],
+    "bos_value_norm_share": [
+      {
+        "id": "L5H2",
+        "value": 0.1079264
+      },
+      {
+        "id": "L4H1",
+        "value": 0.09951571
+      },
+      {
+        "id": "L4H3",
+        "value": 0.08664605
+      },
+      {
+        "id": "L5H3",
+        "value": 0.0809411
+      },
+      {
+        "id": "L4H4",
+        "value": 0.07873528
+      },
+      {
+        "id": "L5H1",
+        "value": 0.07797699
+      }
+    ],
+    "bos_projected_norm_share": [
+      {
+        "id": "L5H2",
+        "value": 0.10539978
+      },
+      {
+        "id": "L4H1",
+        "value": 0.10411018
+      },
+      {
+        "id": "L4H3",
+        "value": 0.08666818
+      },
+      {
+        "id": "L1H1",
+        "value": 0.08310712
+      },
+      {
+        "id": "L4H4",
+        "value": 0.07848831
+      },
+      {
+        "id": "L3H3",
+        "value": 0.07788492
+      }
+    ],
+    "copy_relative": [
+      {
+        "id": "L2H4",
+        "value": 2.21253562
+      },
+      {
+        "id": "L4H2",
+        "value": 2.14848185
+      },
+      {
+        "id": "L3H2",
+        "value": 2.02679658
+      },
+      {
+        "id": "L2H3",
+        "value": 1.69400132
+      },
+      {
+        "id": "L3H3",
+        "value": 1.54953289
+      },
+      {
+        "id": "L5H4",
+        "value": 1.47861719
+      }
+    ],
+    "induction_like_relative": [
+      {
+        "id": "L1H3",
+        "value": 1.36252928
+      },
+      {
+        "id": "L5H1",
+        "value": 1.35409105
+      },
+      {
+        "id": "L4H4",
+        "value": 1.22776401
+      },
+      {
+        "id": "L1H4",
+        "value": 1.15344512
+      },
+      {
+        "id": "L3H1",
+        "value": 1.06868672
+      },
+      {
+        "id": "L1H1",
+        "value": 1.05345404
+      }
+    ]
+  },
+  "head_ablation": [
+    {
+      "id": "L1H1",
+      "layer": 1,
+      "head": 1,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.70737509,
+      "delta_nll": 0.18339013,
+      "mean_kl_divergence": 0.11355832,
+      "argmax_changed_tokens": 37,
+      "argmax_changed_rate": 0.1468254
+    },
+    {
+      "id": "L1H2",
+      "layer": 1,
+      "head": 2,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.82393709,
+      "delta_nll": 0.29995213,
+      "mean_kl_divergence": 0.23911536,
+      "argmax_changed_tokens": 51,
+      "argmax_changed_rate": 0.20238095
+    },
+    {
+      "id": "L1H3",
+      "layer": 1,
+      "head": 3,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.60299477,
+      "delta_nll": 0.07900981,
+      "mean_kl_divergence": 0.07723451,
+      "argmax_changed_tokens": 48,
+      "argmax_changed_rate": 0.19047619
+    },
+    {
+      "id": "L1H4",
+      "layer": 1,
+      "head": 4,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.63372026,
+      "delta_nll": 0.1097353,
+      "mean_kl_divergence": 0.07704172,
+      "argmax_changed_tokens": 33,
+      "argmax_changed_rate": 0.13095238
+    },
+    {
+      "id": "L2H1",
+      "layer": 2,
+      "head": 1,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.56497288,
+      "delta_nll": 0.04098792,
+      "mean_kl_divergence": 0.03716881,
+      "argmax_changed_tokens": 26,
+      "argmax_changed_rate": 0.1031746
+    },
+    {
+      "id": "L2H2",
+      "layer": 2,
+      "head": 2,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.73217941,
+      "delta_nll": 0.20819445,
+      "mean_kl_divergence": 0.14046161,
+      "argmax_changed_tokens": 44,
+      "argmax_changed_rate": 0.17460317
+    },
+    {
+      "id": "L2H3",
+      "layer": 2,
+      "head": 3,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 1.05632921,
+      "delta_nll": 0.53234425,
+      "mean_kl_divergence": 0.41789805,
+      "argmax_changed_tokens": 47,
+      "argmax_changed_rate": 0.18650794
+    },
+    {
+      "id": "L2H4",
+      "layer": 2,
+      "head": 4,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.55051999,
+      "delta_nll": 0.02653503,
+      "mean_kl_divergence": 0.04761562,
+      "argmax_changed_tokens": 24,
+      "argmax_changed_rate": 0.0952381
+    },
+    {
+      "id": "L3H1",
+      "layer": 3,
+      "head": 1,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.54199995,
+      "delta_nll": 0.01801499,
+      "mean_kl_divergence": 0.01215859,
+      "argmax_changed_tokens": 14,
+      "argmax_changed_rate": 0.05555556
+    },
+    {
+      "id": "L3H2",
+      "layer": 3,
+      "head": 2,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.5655694,
+      "delta_nll": 0.04158444,
+      "mean_kl_divergence": 0.02522407,
+      "argmax_changed_tokens": 25,
+      "argmax_changed_rate": 0.09920635
+    },
+    {
+      "id": "L3H3",
+      "layer": 3,
+      "head": 3,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.5456672,
+      "delta_nll": 0.02168224,
+      "mean_kl_divergence": 0.01318732,
+      "argmax_changed_tokens": 16,
+      "argmax_changed_rate": 0.06349206
+    },
+    {
+      "id": "L3H4",
+      "layer": 3,
+      "head": 4,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.5548193,
+      "delta_nll": 0.03083434,
+      "mean_kl_divergence": 0.03508185,
+      "argmax_changed_tokens": 20,
+      "argmax_changed_rate": 0.07936508
+    },
+    {
+      "id": "L4H1",
+      "layer": 4,
+      "head": 1,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.53289093,
+      "delta_nll": 0.00890598,
+      "mean_kl_divergence": 0.00197464,
+      "argmax_changed_tokens": 7,
+      "argmax_changed_rate": 0.02777778
+    },
+    {
+      "id": "L4H2",
+      "layer": 4,
+      "head": 2,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.51925416,
+      "delta_nll": -0.0047308,
+      "mean_kl_divergence": 0.00835074,
+      "argmax_changed_tokens": 9,
+      "argmax_changed_rate": 0.03571429
+    },
+    {
+      "id": "L4H3",
+      "layer": 4,
+      "head": 3,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.54426228,
+      "delta_nll": 0.02027733,
+      "mean_kl_divergence": 0.00252328,
+      "argmax_changed_tokens": 6,
+      "argmax_changed_rate": 0.02380952
+    },
+    {
+      "id": "L4H4",
+      "layer": 4,
+      "head": 4,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.53911067,
+      "delta_nll": 0.01512571,
+      "mean_kl_divergence": 0.00190555,
+      "argmax_changed_tokens": 5,
+      "argmax_changed_rate": 0.01984127
+    },
+    {
+      "id": "L5H1",
+      "layer": 5,
+      "head": 1,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.52857949,
+      "delta_nll": 0.00459453,
+      "mean_kl_divergence": 0.00049431,
+      "argmax_changed_tokens": 2,
+      "argmax_changed_rate": 0.00793651
+    },
+    {
+      "id": "L5H2",
+      "layer": 5,
+      "head": 2,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.5296338,
+      "delta_nll": 0.00564884,
+      "mean_kl_divergence": 0.00116189,
+      "argmax_changed_tokens": 5,
+      "argmax_changed_rate": 0.01984127
+    },
+    {
+      "id": "L5H3",
+      "layer": 5,
+      "head": 3,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.5221511,
+      "delta_nll": -0.00183386,
+      "mean_kl_divergence": 0.00057969,
+      "argmax_changed_tokens": 4,
+      "argmax_changed_rate": 0.01587302
+    },
+    {
+      "id": "L5H4",
+      "layer": 5,
+      "head": 4,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.52903799,
+      "delta_nll": 0.00505303,
+      "mean_kl_divergence": 0.00031493,
+      "argmax_changed_tokens": 1,
+      "argmax_changed_rate": 0.00396825
+    }
+  ],
+  "most_causally_influential_heads": [
+    {
+      "id": "L2H3",
+      "layer": 2,
+      "head": 3,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 1.05632921,
+      "delta_nll": 0.53234425,
+      "mean_kl_divergence": 0.41789805,
+      "argmax_changed_tokens": 47,
+      "argmax_changed_rate": 0.18650794
+    },
+    {
+      "id": "L1H2",
+      "layer": 1,
+      "head": 2,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.82393709,
+      "delta_nll": 0.29995213,
+      "mean_kl_divergence": 0.23911536,
+      "argmax_changed_tokens": 51,
+      "argmax_changed_rate": 0.20238095
+    },
+    {
+      "id": "L2H2",
+      "layer": 2,
+      "head": 2,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.73217941,
+      "delta_nll": 0.20819445,
+      "mean_kl_divergence": 0.14046161,
+      "argmax_changed_tokens": 44,
+      "argmax_changed_rate": 0.17460317
+    }
+  ],
+  "least_causally_influential_heads": [
+    {
+      "id": "L5H3",
+      "layer": 5,
+      "head": 3,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.5221511,
+      "delta_nll": -0.00183386,
+      "mean_kl_divergence": 0.00057969,
+      "argmax_changed_tokens": 4,
+      "argmax_changed_rate": 0.01587302
+    },
+    {
+      "id": "L5H1",
+      "layer": 5,
+      "head": 1,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.52857949,
+      "delta_nll": 0.00459453,
+      "mean_kl_divergence": 0.00049431,
+      "argmax_changed_tokens": 2,
+      "argmax_changed_rate": 0.00793651
+    },
+    {
+      "id": "L4H2",
+      "layer": 4,
+      "head": 2,
+      "baseline_nll": 0.52398496,
+      "ablated_nll": 0.51925416,
+      "delta_nll": -0.0047308,
+      "mean_kl_divergence": 0.00835074,
+      "argmax_changed_tokens": 9,
+      "argmax_changed_rate": 0.03571429
+    }
+  ],
+  "attention_causal_correlations": {
+    "bos_attention": {
+      "pearson": -0.5606032,
+      "spearman": -0.7112782
+    },
+    "instruction_attention": {
+      "pearson": 0.74232837,
+      "spearman": 0.82406015
+    },
+    "previous_token_attention": {
+      "pearson": -0.28540054,
+      "spearman": -0.37293233
+    },
+    "recent4_attention": {
+      "pearson": -0.39184533,
+      "spearman": -0.42406015
+    },
+    "induction_like_relative": {
+      "pearson": -0.21255381,
+      "spearman": -0.04511278
+    }
+  },
+  "causal_generation_results": [
+    {
+      "name": "baseline",
+      "label": "baseline",
+      "kind": "baseline",
+      "passed": 1,
+      "total": 24,
+      "pass_rate": 0.04166667,
+      "same_code_count": 24,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x > k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[64, 84, 82, 28, 63, 72, 86, 61]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    result: list[int] = [x for x in output if k <= x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[86, 84, 82, 72, 64, 63, 61, 28]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x < k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[5, 1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x >= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[1, 5], actual=[5, 1]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x == 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-3, 1, 2, 3, 7], actual=[7, 3, 2, 1, -3]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-10, -2, 0, 2, 10], actual=[10, 2, 0, -2, -10]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[2], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-15, -3, 0, 3, 15], actual=[15, 3, 0, -3, -15]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [abs(x)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[5, 4, 3, 2, 1], actual=[1, 2, 3, 4, 5]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[25, 16, 9, 4, 1], actual=[1, 4, 9, 16, 25]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1, 5], actual=[5, 1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)[::-1]\n    result: list[int] = []\n    for x in output:\n        if x > k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x >= k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        }
+      ]
+    },
+    {
+      "name": "zero_bos_values",
+      "label": "BOS Value=0",
+      "kind": "values",
+      "positions": "bos",
+      "passed": 2,
+      "total": 24,
+      "pass_rate": 0.08333333,
+      "same_code_count": 0,
+      "syntax_valid": 23,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[::-1]\n    output: list[int] = []\n    for value in result:\n        output += [value ** 2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[::-1]\n    output: list[int] = []\n    for value in result:\n        output += [abs(value)]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k:]\n    output: list[int] = []\n    for x in result:\n        if k < x:\n            output += [x]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[72, 63, 28, 82, 84, 64]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[::-1]\n    output: list[int] = []\n    for value in result:\n        if value >= k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[64, 84, 82, 28, 63, 72, 86, 61]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k:]\n    output: list[int] = []\n    for value in result:\n        if k > value:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k::]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[1, 5]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を二乗する\n    result: list[int] = []\n    for value in output:\n        result += [value ** 2]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k:]\n    output: list[int] = []\n    for x in result:\n        if 0 < x:\n            output += [x]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[3, 61, 86, 72, 63, 28, 82, 84, 64, 7], actual=[72, 63, 28, 82, 84, 64, 7]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[::-1]\n    output: list[int] = []\n    for value in result:\n        if value < 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1], actual=[-1, -5]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k:]\n    output: list[int] = []\n    for value in result:\n        if 0 == value:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 末尾からk個を取る\n    result: list[int] = xs[-k:]\n    # 各要素を3倍する\n    output = [value * 3 for value in result]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k::]\n    output: list[int] = []\n    for value in result:\n        output += [value - k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-7, -3, -2, -1, 3], actual=[-1, 3]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を二乗する\n    output: list[int] = []\n    for value in xs:\n        output += [value ** 2]\n    # 降順に並べる\n    output = sorted(output, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-10], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k:]\n    output: list[int] = [value * 2 for value in result]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-10, -2, 0, 2, 10], actual=[2, 10]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を二乗する\n    output: list[int] = []\n    for value in xs:\n        output += [value ** 2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[3], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[::-1]\n    output: list[int] = []\n    for value in result:\n        output += [value * 2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を二乗する\n    output: list[int] = []\n    for value in xs:\n        output += [abs(value)]\n    # 末尾からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[5, 1, 0, 1, 5], actual=[1, 5]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を二乗する\n    output: list[int] = []\n    for value in xs:\n        output += [value ** 2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1, 5], actual=[1, 5]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[5, 1, 0, -1, -5], actual=[1, 5]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 末尾からk個を取る\n    result: list[int] = xs[-k:]\n    # 現在の要素順を反転する\n    output: list[int] = list(reversed(result))\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[5, 1, 0, -1, -5], actual=[5, 1]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1], actual=[1, 5]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 末尾からk個を取る\n    result: list[int] = xs[-k:]\n    # 各要素を3倍する\n    output = [value * 3 for value in result]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[0::2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "zero_instruction_values",
+      "label": "日本語 Value=0",
+      "kind": "values",
+      "positions": "instruction",
+      "passed": 0,
+      "total": 24,
+      "pass_rate": 0.0,
+      "same_code_count": 0,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in result if 0 == value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L2H3",
+      "label": "L2H3=0",
+      "kind": "head",
+      "layer": 1,
+      "head": 2,
+      "selection": "top_delta_nll",
+      "passed": 3,
+      "total": 24,
+      "pass_rate": 0.125,
+      "same_code_count": 0,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = [x for x in result if x % 2 == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[4, 2], actual=[-4, -2]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if 0 != value % 2]\n    result = result[::2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 1, 5], actual=[-5, 1]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 3]\n    result = [value for value in result if value > k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    result = [value for value in result if value >= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 3]\n    result = [x for x in result if x < k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[-3]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [abs(value)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    output: list[int] = [x for x in result if x % k == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 3]\n    result = [x for x in result if x > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = [x for x in result if x < 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value + k]\n    output: list[int] = result[:k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-3, 1, 2, 3, 7], actual=[-3, 1]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    result = result[::-1]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-7, -3, -2, -1, 3], actual=[3, -1, -2, -3, -7]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        result += [x * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[2], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        result += [x * 3]\n    output: list[int] = [x for x in result if x <= k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [abs(value)]\n    output: list[int] = [x for x in result if x > k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    result = sorted(result, reverse=False)\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 3]\n    result = sorted(result, reverse=True)\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    result = result[:k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 3]\n    result = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    result = result[0::2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[-1]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L1H2",
+      "label": "L1H2=0",
+      "kind": "head",
+      "layer": 0,
+      "head": 1,
+      "selection": "top_delta_nll",
+      "passed": 3,
+      "total": 24,
+      "pass_rate": 0.125,
+      "same_code_count": 0,
+      "syntax_valid": 21,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x % 2 == 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[4, 2], actual=[2, 4]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if 0 != x % 2]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x > k:\n            result += [x]\n    output = []\n    for x in result:\n        output += [x + k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[5], actual=[7]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x >= k:\n            result += [x]\n    output = []\n    for value in result:\n        output += [-value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = list(reversed(xs))\n    output: list[int] = [value for value in result if value < k]\n    result = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[-3]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = [x for x in result if x <= k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = [x for x in result if 0 == x % k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x > 0:\n            result += [x]\n    output = []\n    for x in result:\n        output += [x + k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x < 0:\n            result += [x]\n    output = []\n    for x in result]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = [x for x in result if 0 == x]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        result += [x + k]\n    output: list[int] = []\n    for value in result:\n        if value < 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x - k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-7, -3, -2, -1, 3], actual=[3, -1, -2, -3, -7]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = []\n    for x in result:\n        output += [x * k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        result += [x * 3]\n    output: list[int] = []\n    for value in result:\n        if 0 == value:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[2], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 3]\n    output: list[int] = []\n    for x in result:\n        output += [x * 3]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[3], actual=[9]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = list(reversed(xs))\n    output: list[int] = []\n    for x in resultoutput += [x]\n    result = []\n    for x in output:\n        result += [-x]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = []\n    for value in result:\n        output += [abs(value)]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = []\n    for value in result:\n        output += [value ** 2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)[::-1]\n    result: list[int] = []\n    for x in output:\n        if 0 > x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = list(reversed(xs))\n    output: list[int] = []\n    for x in result:\n        output += [x * 3]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[:k]\n    output: list[int] = []\n    for x in result:\n        output += [x * 3]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[::-1]\n    output: list[int] = []\n    for value in result:\n        output += [value * 3]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[1]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L2H2",
+      "label": "L2H2=0",
+      "kind": "head",
+      "layer": 1,
+      "head": 1,
+      "selection": "top_delta_nll",
+      "passed": 1,
+      "total": 24,
+      "pass_rate": 0.04166667,
+      "same_code_count": 1,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if x % 2 == 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[4, 2], actual=[2, 4]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if k < x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[64, 84, 82, 28, 63, 72, 86, 61]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = list(reversed(xs))\n    result = [x for x in result if k <= x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[64, 84, 82, 28, 63, 72, 86, 61]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if x < k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    output = [value for value in output if value <= k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = [value for value in output if k <= value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if 0 < x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[1, 5], actual=[5, 1]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if 0 > x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1], actual=[-1, -5]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if 0 == x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for value in output:\n        result += [value + k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-3, 1, 2, 3, 7], actual=[7, 3, 2, 1, -3]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for value in output:\n        result += [value - k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-7, -3, -2, -1, 3], actual=[3, -1, -2, -3, -7]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for value in output:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-10, -2, 0, 2, 10], actual=[10, 2, 0, -2, -10]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    output = [value * 2 for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-10, -2, 0, 2, 10], actual=[10, 2, 0, -2, -10]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-15, -3, 0, 3, 15], actual=[15, 3, 0, -3, -15]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        result += [abs(x)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[5, 4, 3, 2, 1], actual=[1, 2, 3, 4, 5]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for value in output:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[25, 16, 9, 4, 1], actual=[1, 4, 9, 16, 25]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)\n    output = [value for value in output if 0 > value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)[::-1]\n    result: list[int] = []\n    for value in output:\n        if value == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if k > x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if k > x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L5H3",
+      "label": "L5H3=0",
+      "kind": "head",
+      "layer": 4,
+      "head": 2,
+      "selection": "lowest_absolute_delta_nll",
+      "passed": 1,
+      "total": 24,
+      "pass_rate": 0.04166667,
+      "same_code_count": 20,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x > k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[64, 84, 82, 28, 63, 72, 86, 61]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    result: list[int] = [x for x in output if k <= x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[86, 84, 82, 72, 64, 63, 61, 28]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x < k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[5, 1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x >= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x > 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[1, 5], actual=[5, 1]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if 0 > x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1], actual=[-1, -5]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x == 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-3, 1, 2, 3, 7], actual=[7, 3, 2, 1, -3]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-10, -2, 0, 2, 10], actual=[10, 2, 0, -2, -10]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[2], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-15, -3, 0, 3, 15], actual=[15, 3, 0, -3, -15]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [abs(value)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[5, 4, 3, 2, 1], actual=[1, 2, 3, 4, 5]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[25, 16, 9, 4, 1], actual=[1, 4, 9, 16, 25]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1, 5], actual=[5, 1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)[::-1]\n    result: list[int] = []\n    for x in output:\n        if x > k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x >= k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L5H1",
+      "label": "L5H1=0",
+      "kind": "head",
+      "layer": 4,
+      "head": 0,
+      "selection": "lowest_absolute_delta_nll",
+      "passed": 1,
+      "total": 24,
+      "pass_rate": 0.04166667,
+      "same_code_count": 22,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x > k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[64, 84, 82, 28, 63, 72, 86, 61]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    result: list[int] = [x for x in output if k <= x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[86, 84, 82, 72, 64, 63, 61, 28]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x < k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[5, 1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x >= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[1, 5], actual=[5, 1]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if 0 > x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1], actual=[-1, -5]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x == 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-3, 1, 2, 3, 7], actual=[7, 3, 2, 1, -3]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-10, -2, 0, 2, 10], actual=[10, 2, 0, -2, -10]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[2], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-15, -3, 0, 3, 15], actual=[15, 3, 0, -3, -15]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [abs(x)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[5, 4, 3, 2, 1], actual=[1, 2, 3, 4, 5]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[25, 16, 9, 4, 1], actual=[1, 4, 9, 16, 25]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1, 5], actual=[5, 1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)[::-1]\n    result: list[int] = []\n    for x in output:\n        if x > k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x == 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L4H2",
+      "label": "L4H2=0",
+      "kind": "head",
+      "layer": 3,
+      "head": 1,
+      "selection": "lowest_absolute_delta_nll",
+      "passed": 1,
+      "total": 24,
+      "pass_rate": 0.04166667,
+      "same_code_count": 16,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if 0 != x % 2:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 1, 5], actual=[5, 1, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x > k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[64, 84, 82, 28, 63, 72, 86, 61]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x >= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[64, 84, 82, 28, 63, 72, 86, 61]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x < k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[5, 1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x >= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[1, 5], actual=[5, 1]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if 0 > x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1], actual=[-1, -5]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x == 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-3, 1, 2, 3, 7], actual=[7, 3, 2, 1, -3]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x - k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-7, -3, -2, -1, 3], actual=[3, -1, -2, -3, -7]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-10, -2, 0, 2, 10], actual=[10, 2, 0, -2, -10]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[2], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-15, -3, 0, 3, 15], actual=[15, 3, 0, -3, -15]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [abs(x)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[5, 4, 3, 2, 1], actual=[1, 2, 3, 4, 5]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[25, 16, 9, 4, 1], actual=[1, 4, 9, 16, 25]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1, 5], actual=[5, 1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)[::-1]\n    result: list[int] = []\n    for x in output:\n        if x > k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x - k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x == 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        }
+      ]
+    }
+  ],
+  "rollout_example": {
+    "operation_id": "atomic-000017",
+    "instruction": "整数リストxsに対して、各要素の絶対値を取るsolve関数を書いてください。",
+    "query_position": 24,
+    "tokens": [
+      "<|bos|>",
+      "<|task|>",
+      "↵",
+      "整数リストxs�",
+      "�",
+      "対",
+      "して、",
+      "各要素の絶対値",
+      "を取",
+      "るsolve関数を書",
+      "いてください。",
+      "↵",
+      "<|code|>",
+      "↵",
+      "def␠solve",
+      "(xs:␠list[int],␠k",
+      ":␠int)␠",
+      "->␠list[int]:↵␠␠␠␠",
+      "output:␠list[int]␠=␠",
+      "list(reversed(xs))↵␠␠␠␠",
+      "result:␠list[int]",
+      "␠=␠[]↵␠␠␠␠for␠x␠in␠",
+      "output",
+      ":↵␠␠␠␠␠␠␠␠result␠+=␠[",
+      "abs(x)"
+    ],
+    "raw_attention": [
+      0.05278726,
+      0.04269208,
+      0.02786068,
+      0.02121638,
+      0.01686579,
+      0.01762592,
+      0.01722061,
+      0.02632426,
+      0.01988021,
+      0.02349543,
+      0.02459713,
+      0.03120859,
+      0.03612746,
+      0.03711258,
+      0.02781646,
+      0.03104391,
+      0.03143214,
+      0.04429983,
+      0.06093571,
+      0.038614,
+      0.11245437,
+      0.05082203,
+      0.05684581,
+      0.07022015,
+      0.08050121
+    ],
+    "projected_value_norm_share": [
+      0.05109182,
+      0.04186433,
+      0.0308432,
+      0.01846025,
+      0.01444529,
+      0.01544624,
+      0.01360329,
+      0.02455771,
+      0.01553598,
+      0.02046614,
+      0.02264099,
+      0.03711905,
+      0.03677749,
+      0.04545299,
+      0.02704779,
+      0.03243978,
+      0.03198518,
+      0.05073799,
+      0.0659159,
+      0.0347767,
+      0.12227412,
+      0.04967749,
+      0.05404314,
+      0.06687639,
+      0.07592075
+    ],
+    "attention_rollout": [
+      0.26380378,
+      0.10512076,
+      0.07545667,
+      0.0466162,
+      0.03914732,
+      0.0358947,
+      0.03315056,
+      0.02983696,
+      0.02426616,
+      0.02315634,
+      0.02378329,
+      0.02496715,
+      0.02287707,
+      0.02241319,
+      0.01654113,
+      0.01653516,
+      0.0149108,
+      0.02007881,
+      0.02397573,
+      0.01956082,
+      0.02893051,
+      0.01636324,
+      0.01253822,
+      0.01419784,
+      0.04587764
+    ]
+  },
+  "samples": [
+    {
+      "operation_id": "atomic-000001",
+      "instruction": "整数リストxsに対して、偶数だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "even"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000002",
+      "instruction": "整数リストxsに対して、奇数だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "operation_id": "atomic-000003",
+      "instruction": "整数リストxsに対して、kより大きい値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "gt_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 14,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x > k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[64, 84, 82, 28, 63, 72, 86, 61]"
+      }
+    },
+    {
+      "operation_id": "atomic-000004",
+      "instruction": "整数リストxsに対して、k以上の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "ge_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 14,
+      "generated_token_count": 11,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    result: list[int] = [x for x in output if k <= x]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[3, 61, 86, -44, 72, -22, 63, 28, 82, 84, 64, 7, -95, -88], k=10, expected=[61, 86, 72, 63, 28, 82, 84, 64], actual=[86, 84, 82, 72, 64, 63, 61, 28]"
+      }
+    },
+    {
+      "operation_id": "atomic-000005",
+      "instruction": "整数リストxsに対して、kより小さい値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "lt_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 14,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x < k:\n            result += [x]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[1, 0, -1, -5]"
+      }
+    },
+    {
+      "operation_id": "atomic-000006",
+      "instruction": "整数リストxsに対して、k以下の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1], actual=[5, 1, 0, -1, -5]"
+      }
+    },
+    {
+      "operation_id": "atomic-000007",
+      "instruction": "整数リストxsに対して、kの倍数だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "multiple_of_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x >= k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000008",
+      "instruction": "整数リストxsに対して、正の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 14,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = [x for x in output if x > 0]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[1, 5], actual=[5, 1]"
+      }
+    },
+    {
+      "operation_id": "atomic-000009",
+      "instruction": "整数リストxsに対して、負の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "negative"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 14,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "operation_id": "atomic-000010",
+      "instruction": "整数リストxsに対して、ゼロだけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "zero"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x == 0:\n            result += [x]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000011",
+      "instruction": "整数リストxsに対して、各要素にkを加えるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "add_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 11,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-3, 1, 2, 3, 7], actual=[7, 3, 2, 1, -3]"
+      }
+    },
+    {
+      "operation_id": "atomic-000012",
+      "instruction": "整数リストxsに対して、各要素からkを引くsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "sub_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+      }
+    },
+    {
+      "operation_id": "atomic-000013",
+      "instruction": "整数リストxsに対して、各要素にkを掛けるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 11,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-10, -2, 0, 2, 10], actual=[10, 2, 0, -2, -10]"
+      }
+    },
+    {
+      "operation_id": "atomic-000014",
+      "instruction": "整数リストxsに対して、各要素を2倍するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_const",
+              2
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[2], actual=[1]"
+      }
+    },
+    {
+      "operation_id": "atomic-000015",
+      "instruction": "整数リストxsに対して、各要素を3倍するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_const",
+              3
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-15, -3, 0, 3, 15], actual=[15, 3, 0, -3, -15]"
+      }
+    },
+    {
+      "operation_id": "atomic-000016",
+      "instruction": "整数リストxsに対して、各要素の符号を反転するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "negate"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 14,
+      "generated_token_count": 11,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[-1], actual=[2]"
+      }
+    },
+    {
+      "operation_id": "atomic-000017",
+      "instruction": "整数リストxsに対して、各要素の絶対値を取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "abs"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 14,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [abs(x)]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[5, 4, 3, 2, 1], actual=[1, 2, 3, 4, 5]"
+      }
+    },
+    {
+      "operation_id": "atomic-000018",
+      "instruction": "整数リストxsに対して、各要素を二乗するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "square"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[25, 16, 9, 4, 1], actual=[1, 4, 9, 16, 25]"
+      }
+    },
+    {
+      "operation_id": "atomic-000019",
+      "instruction": "整数リストxsに対して、値を昇順に並べるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "ascending"
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1, 0, 1, 5], actual=[5, 1, 0, -1, -5]"
+      }
+    },
+    {
+      "operation_id": "atomic-000020",
+      "instruction": "整数リストxsに対して、値を降順に並べるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "descending"
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)[::-1]\n    result: list[int] = []\n    for x in output:\n        if x > k:\n            result += [x]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000021",
+      "instruction": "整数リストxsに対して、現在の要素順を反転するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "reverse"
+          }
+        ]
+      },
+      "prompt_token_count": 14,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if k <= x:\n            result += [x]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000022",
+      "instruction": "整数リストxsに対して、先頭からk個を取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "slice": [
+              "take_first_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 11,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[0], actual=[1]"
+      }
+    },
+    {
+      "operation_id": "atomic-000023",
+      "instruction": "整数リストxsに対して、末尾からk個を取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "slice": [
+              "take_last_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 11,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        result += [x * 2]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+      }
+    },
+    {
+      "operation_id": "atomic-000024",
+      "instruction": "整数リストxsに対して、先頭から1個おきに取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "slice": [
+              "every_other"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 14,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for x in output:\n        if x >= k:\n            result += [x]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+      }
+    }
+  ],
+  "figures": {
+    "head_roles": "docs/results/attention_1epoch/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/figures/attention_head_roles.svg",
+    "attention_sink": "docs/results/attention_1epoch/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/figures/attention_sink_contribution.svg",
+    "causal_ablation": "docs/results/attention_1epoch/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/figures/attention_causal_ablation.svg",
+    "rollout": "docs/results/attention_1epoch/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/figures/attention_rollout.svg"
+  }
+}
