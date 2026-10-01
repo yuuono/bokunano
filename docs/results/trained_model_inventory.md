@@ -145,6 +145,7 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 
 ## 関連資料
 
+- [全10モデルの個別学習・評価報告書](model_reports/README.md)
 - [全10モデルの20 stepごとのtrain・validation loss](training_loss_every_20_steps.md)
 - [1Mモデル2種の評価結果](boku_nano_1m_evaluation_results.md)
 - [5M・1エポックのトークナイザー比較](boku_nano_5m_1epoch_tokenizer_comparison.md)

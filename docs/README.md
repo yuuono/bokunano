@@ -73,6 +73,7 @@ docs/
 - [`results/boku_nano_5m_1epoch_tokenizer_comparison.md`](results/boku_nano_5m_1epoch_tokenizer_comparison.md): 正確に5,065,472パラメータの1エポックモデルを2種類のBPEで学習・評価し、日本語言い換え30件を詳細比較
 - [`results/boku_nano_15m_1epoch_tokenizer_comparison.md`](results/boku_nano_15m_1epoch_tokenizer_comparison.md): 正確に15,735,168パラメータの1エポックモデルを2種類のBPEで直接比較
 - [`results/trained_model_inventory.md`](results/trained_model_inventory.md): 実際に学習済みの全モデル、正確なパラメータ数、構造、epoch、評価、ハッシュ
+- [`results/model_reports/README.md`](results/model_reports/README.md): 学習済み全10モデルを同じ書式でまとめた個別の学習・評価報告書
 - [`results/training_loss_every_20_steps.md`](results/training_loss_every_20_steps.md): 保存済み全10モデルの20 optimizer stepごとのtrain lossとepoch別validation loss
 - [`results/boku_nano_1epoch_attention_comparison.md`](results/boku_nano_1epoch_attention_comparison.md): 1M・5M・15Mの各1epoch、2トークナイザーに対する学習時準拠文型のattention可視化、Value・head ablation、因果評価
 - [`results/attention_1epoch_by_result/README.md`](results/attention_1epoch_by_result/README.md): 1epochのattention解析図をトークナイザー別、さらにhead役割・sink・ablationなど8種類に分けた一覧
