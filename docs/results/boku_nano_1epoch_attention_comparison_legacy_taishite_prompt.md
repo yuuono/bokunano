@@ -1,6 +1,6 @@
 # 注意
 
-この文書は、24操作すべてを「整数リストxsに対して、{操作}solve関数を書いてください。」へ埋め込んだ旧診断の記録である。現在の[学習時準拠文型による再評価](boku_nano_1epoch_attention_comparison.md)とは分けて保存する。
+この文書は、24操作すべてを「整数リストxsに対して、{操作}solve関数を書いてください。」へ埋め込んだ旧診断の記録である。現在の[学習時準拠文型による再評価](boku_nano_1epoch_attention_comparison.md)とは分けて保存する。現在の6モデルの図は[結果種類別一覧](attention_1epoch_by_result/README.md)で本文へ直接表示している。
 
 # Boku Nano 1epochモデルのattention可視化・因果評価（旧「に対して」文型）
 

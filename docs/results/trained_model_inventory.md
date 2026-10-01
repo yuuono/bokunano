@@ -130,6 +130,8 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 - [1Mモデル2種の評価結果](boku_nano_1m_evaluation_results.md)
 - [5M・1エポックのトークナイザー比較](boku_nano_5m_1epoch_tokenizer_comparison.md)
 - [15M・1エポックのトークナイザー比較](boku_nano_15m_1epoch_tokenizer_comparison.md)
+- [1M・5M・15Mのattention解析総合比較](boku_nano_1epoch_attention_comparison.md)
+- [attention解析図の結果種類別一覧](attention_1epoch_by_result/README.md)
 - [15M・3エポックの学習結果](boku_nano_three_epoch_training_results.md)
 - [3エポック評価結果](boku_nano_3epoch_evaluation_results.md)
 - [短いpiece版15M・1エポック評価結果](boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md)

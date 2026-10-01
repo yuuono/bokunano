@@ -571,6 +571,8 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ## 再生成方法
 
+1M・5M・15Mの各1epochモデルについて同じ種類の図を横断比較する場合は、[attention解析図の結果種類別一覧](attention_1epoch_by_result/README.md)を参照する。各ページに6モデルの図を直接埋め込んでいる。
+
 ```bash
 .venv/bin/python scripts/model/visualize_boku_nano_kv.py
 .venv/bin/python scripts/model/analyze_boku_nano_attention.py

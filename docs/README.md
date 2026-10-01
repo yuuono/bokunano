@@ -72,6 +72,7 @@ docs/
 - [`results/boku_nano_15m_1epoch_tokenizer_comparison.md`](results/boku_nano_15m_1epoch_tokenizer_comparison.md): 正確に15,735,168パラメータの1エポックモデルを2種類のBPEで直接比較
 - [`results/trained_model_inventory.md`](results/trained_model_inventory.md): 実際に学習済みの全モデル、正確なパラメータ数、構造、epoch、評価、ハッシュ
 - [`results/boku_nano_1epoch_attention_comparison.md`](results/boku_nano_1epoch_attention_comparison.md): 1M・5M・15Mの各1epoch、2トークナイザーに対する学習時準拠文型のattention可視化、Value・head ablation、因果評価
+- [`results/attention_1epoch_by_result/README.md`](results/attention_1epoch_by_result/README.md): 6モデルのattention解析図を、head役割・sink・ablationなど8種類に分けて本文表示する一覧
 - [`results/boku_nano_1epoch_attention_comparison_legacy_taishite_prompt.md`](results/boku_nano_1epoch_attention_comparison_legacy_taishite_prompt.md): 旧「整数リストxsに対して、」文型による24単独操作診断の保存記録
 - [`results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md`](results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md): 短いpiece版15Mモデルの1エポック学習・固定5テスト評価結果
 - [`results/boku_nano_three_epoch_training_results.md`](results/boku_nano_three_epoch_training_results.md): Boku Nanoモデルの3エポックにおけるtrain loss・validation loss推移
