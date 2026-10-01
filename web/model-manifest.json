@@ -1,8 +1,17 @@
 {
-  "format_version": 1,
-  "tokenizer": {
-    "path": "tokenizer.json",
-    "sha256": "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293"
+  "format_version": 2,
+  "default_model_id": "3epoch",
+  "tokenizers": {
+    "bpe-2048-minfreq5-maxlen24": {
+      "label": "既存BPE（min 5 / max 24）",
+      "path": "tokenizers/bpe-2048-minfreq5-maxlen24.json",
+      "sha256": "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293"
+    },
+    "bpe-2048-minfreq2-maxlen8": {
+      "label": "短いpiece版BPE（min 2 / max 8）",
+      "path": "tokenizers/bpe-2048-minfreq2-maxlen8.json",
+      "sha256": "f09f3d7eccbca2ab1224c662064b71e572d64147147b8b559ebdb428eb035dbf"
+    }
   },
   "prompt_template": "<|bos|><|task|>\n{instruction_ja}\n<|code|>\n",
   "special_token_ids": {
@@ -16,7 +25,7 @@
   "models": [
     {
       "id": "3epoch",
-      "label": "3エポックモデル",
+      "label": "15M・3エポック・既存BPE",
       "path": "models/boku-nano-3epoch.onnx",
       "sha256": "1145db9ff1520e8fb3ad2eca7184b20f19390e90ee84f075a5105963d9a408b3",
       "size_bytes": 63337554,
@@ -46,11 +55,13 @@
             "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = [abs(value) for value in xs]\n    result = sorted(result, reverse=True)\n    return result\n"
           }
         ]
-      }
+      },
+      "group": "15M",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24"
     },
     {
       "id": "10epoch",
-      "label": "10エポックモデル",
+      "label": "15M・10エポック・既存BPE",
       "path": "models/boku-nano-10epoch.onnx",
       "sha256": "59df1f0dae8e4111f5b444d388c95f88273361ae293cc5154eda7150289eab11",
       "size_bytes": 63337554,
@@ -78,6 +89,224 @@
             "mean_abs_diff": 1.0156663847737946e-06,
             "generated_tokens": 10,
             "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = [abs(value) for value in xs]\n    output = sorted(output)[::-1]\n    return output\n"
+          }
+        ]
+      },
+      "group": "15M",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24"
+    },
+    {
+      "id": "15m-1epoch",
+      "label": "15M・1エポック・既存BPE",
+      "group": "15M",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24",
+      "path": "models/boku-nano-15m-1epoch.onnx",
+      "sha256": "7b49bea89c85aa03f688b4b7c3c1bc587972067c2798e1ea72775cb999e28c55",
+      "size_bytes": 63337554,
+      "source_sha256": "1a0002e1b50aeae59805d8087fbaa16be1b6e2716d78a085230f2cc35edbf68f",
+      "parameter_count": 15735168,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 4.76837158203125e-06,
+            "mean_abs_diff": 5.557794793276116e-07,
+            "generated_tokens": 8,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = [value for value in xs if 0 == value % 2]\n    return output\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 2.6226043701171875e-06,
+            "mean_abs_diff": 4.6081731852609664e-07,
+            "generated_tokens": 16,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    result: list[int] = []\n    for value in xs:\n        result += [abs(value)]\n    # 降順に並べる\n    output: list[int] = sorted(result, reverse=True)\n    return output\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "15m-short-1epoch",
+      "label": "15M・1エポック・短いpiece版BPE",
+      "group": "15M",
+      "tokenizer_id": "bpe-2048-minfreq2-maxlen8",
+      "path": "models/boku-nano-15m-short-1epoch.onnx",
+      "sha256": "7282ad214e9d56e8427ff0b785f1d5d5e80700dd9b3e88e3c87718901f00277c",
+      "size_bytes": 63337554,
+      "source_sha256": "c019688997247f4bc10198703364d88584ff63539d1e6a739764ab372bd1ed83",
+      "parameter_count": 15735168,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 21,
+            "max_abs_diff": 3.814697265625e-06,
+            "mean_abs_diff": 2.471224433975294e-07,
+            "generated_tokens": 35,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 偶数だけを残す\n    output: list[int] = []\n    for x in xs:\n        if 0 == x % 2:\n            output += [x]\n    return output\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 24,
+            "max_abs_diff": 1.9371509552001953e-06,
+            "mean_abs_diff": 9.82857272902038e-07,
+            "generated_tokens": 33,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        output += [value * 3result: list[int] = output[::-1]\n    return result\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "5m-1epoch",
+      "label": "5M・1エポック・既存BPE",
+      "group": "5M",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24",
+      "path": "models/boku-nano-5m-1epoch.onnx",
+      "sha256": "5e71bc0ef680408eab5fb5c0f3ff450e492d7edf0230bde7ef830fd92c54f1a7",
+      "size_bytes": 20560021,
+      "source_sha256": "027fe1b64c4495dd39322f0ade7824e085b7315543c840b031742e42f4a4c0c6",
+      "parameter_count": 5065472,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 2.86102294921875e-06,
+            "mean_abs_diff": 5.19115246788715e-07,
+            "generated_tokens": 11,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % 2 == 0:\n            result += [value]\n    return result\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 2.6226043701171875e-06,
+            "mean_abs_diff": 5.360360546546872e-07,
+            "generated_tokens": 14,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value + k]\n    output: list[int] = []\n    for value in result:\n        output += [abs(value)]\n    return output\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "5m-short-1epoch",
+      "label": "5M・1エポック・短いpiece版BPE",
+      "group": "5M",
+      "tokenizer_id": "bpe-2048-minfreq2-maxlen8",
+      "path": "models/boku-nano-5m-short-1epoch.onnx",
+      "sha256": "fb2684e13da0735488aa41f4e095956e9b66a1b72ceb955d279f475cbb10bfe0",
+      "size_bytes": 20560021,
+      "source_sha256": "0c2ad06d34004ffeae122409b6aa355d08e41b39e7303d3fd0cca8a4984eb5f9",
+      "parameter_count": 5065472,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 21,
+            "max_abs_diff": 4.76837158203125e-06,
+            "mean_abs_diff": 4.497223926591687e-07,
+            "generated_tokens": 35,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 偶数だけを残す\n    output: list[int] = []\n    for x in xs:\n        if 0 == x % 2:\n            output += [x]\n    return output\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 24,
+            "max_abs_diff": 6.67572021484375e-06,
+            "mean_abs_diff": 5.291891511660651e-07,
+            "generated_tokens": 31,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を二乗する\n    output = []\n    for value in xs:\n        output += [value ** 2]\n    return output\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "1m-1epoch",
+      "label": "1M・1エポック・既存BPE",
+      "group": "1M",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24",
+      "path": "models/boku-nano-1m-1epoch.onnx",
+      "sha256": "6e968399cb0515dd0b7dc0bfd76ac21875497e0ea26e2482a09a0faa6a18532f",
+      "size_bytes": 4233585,
+      "source_sha256": "c4774c30963d00fee31f52ffc2201f85713cc941832b0c412161ce46541c2b0a",
+      "parameter_count": 1016704,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 2.86102294921875e-06,
+            "mean_abs_diff": 4.009194185528031e-07,
+            "generated_tokens": 16,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 現在の要素順を反転する\n    output = list(reversed(result))\n    # 奇数だけを残す\n    result = [value for value in output if value % k == 0]\n    return result\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 2.1457672119140625e-06,
+            "mean_abs_diff": 4.7072325060071307e-07,
+            "generated_tokens": 13,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 現在の要素順を反転する\n    output = list(reversed(result))\n    # 昇順に並べる\n    result = sorted(result)[::-1]\n    return result\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "1m-short-1epoch",
+      "label": "1M・1エポック・短いpiece版BPE",
+      "group": "1M",
+      "tokenizer_id": "bpe-2048-minfreq2-maxlen8",
+      "path": "models/boku-nano-1m-short-1epoch.onnx",
+      "sha256": "e87fd4087b0d635f6721bdf8444e20491bda0d45f9f357fef70e12f2c759c6dc",
+      "size_bytes": 4233585,
+      "source_sha256": "1e9bd1911fd405c2e5e839b38cf5744ea7a287d1e7595f747845eadcce302576",
+      "parameter_count": 1016704,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 21,
+            "max_abs_diff": 1.430511474609375e-06,
+            "mean_abs_diff": 3.803669414992328e-07,
+            "generated_tokens": 36,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x % 2:\n            output += [x]\n    return result\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 24,
+            "max_abs_diff": 1.430511474609375e-06,
+            "mean_abs_diff": 2.879140765799093e-07,
+            "generated_tokens": 45,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を3倍する\n    output = []\n    for x in xs:\n        output += [abs(x)]\n    # 各要素を3倍する\n    result = []\n    for x in output:\n        output += [x * 2]\n    return output\n"
           }
         ]
       }

@@ -7,7 +7,7 @@ GitHub Pages上のブラウザだけで、自由な日本語からPythonコー�
 1. Qwen3-0.6Bが自由な日本語をControlled Natural Language（CNL）へ翻訳する。
 2. JavaScriptがCNLを24種類・最大3操作の規則に照らして検査する。
 3. ユーザーがCNLと操作順を確認する。
-4. 3エポックまたは10エポックのBoku1-nanoが、検査済みCNLからコードを生成する。
+4. 1M・5M・15Mの学習済み8モデルから選んだBoku1-nanoが、検査済みCNLからコードを生成する。
 
 内部の意味ASTはブラウザ経路に設けない。JavaScriptは自由文の意味解釈やCNL生成を行わず、Qwenの出力を検査するだけである。入力例は自由文欄へ文章を設定するだけで、CNLやコードを固定で返す分岐を持たない。
 
@@ -19,16 +19,22 @@ GitHub Pages上のブラウザだけで、自由な日本語からPythonコー�
 - `web/qwen-worker.js`: Qwenの読込、最大2回のCNL生成、モデル解放
 - `web/qwen-manifest.json`: Qwenモデル、revision、成果物hash、Transformers.js version
 - `web/demo.js`: UI状態管理、CNL検査、Boku1-nano ONNX推論
-- `scripts/model/export_boku_nano_onnx.py`: 学生モデル2種のONNX変換とPyTorch比較
+- `scripts/model/export_boku_nano_onnx.py`: 学習済み学生モデル8種のONNX変換、モデル別tokenizer配置、PyTorch比較
 - `scripts/model/test_boku_nano_web.py`: FirefoxによるCNL検査と学生モデルのスモークテスト
 - `.github/workflows/pages.yml`: `main`更新時のPages公開
 
-| 表示名 | 学習済み重み | ONNX |
+| 表示名 | tokenizer | Pages用ONNX |
 | --- | --- | --- |
-| 3エポックモデル | [boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/model.safetensors](../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch/model.safetensors) | [boku-nano-3epoch.onnx](../../web/models/boku-nano-3epoch.onnx) |
-| 10エポックモデル | [boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch/model.safetensors](../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch/model.safetensors) | [boku-nano-10epoch.onnx](../../web/models/boku-nano-10epoch.onnx) |
+| 15M・3エポック | 既存BPE | [boku-nano-3epoch.onnx](../../web/models/boku-nano-3epoch.onnx) |
+| 15M・10エポック | 既存BPE | [boku-nano-10epoch.onnx](../../web/models/boku-nano-10epoch.onnx) |
+| 15M・1エポック | 既存BPE | [boku-nano-15m-1epoch.onnx](../../web/models/boku-nano-15m-1epoch.onnx) |
+| 15M・1エポック | 短いpiece版BPE | [boku-nano-15m-short-1epoch.onnx](../../web/models/boku-nano-15m-short-1epoch.onnx) |
+| 5M・1エポック | 既存BPE | [boku-nano-5m-1epoch.onnx](../../web/models/boku-nano-5m-1epoch.onnx) |
+| 5M・1エポック | 短いpiece版BPE | [boku-nano-5m-short-1epoch.onnx](../../web/models/boku-nano-5m-short-1epoch.onnx) |
+| 1M・1エポック | 既存BPE | [boku-nano-1m-1epoch.onnx](../../web/models/boku-nano-1m-1epoch.onnx) |
+| 1M・1エポック | 短いpiece版BPE | [boku-nano-1m-short-1epoch.onnx](../../web/models/boku-nano-1m-short-1epoch.onnx) |
 
-Qwen3-0.6B q4f16は569,789,750 bytesである。Pages成果物へ複製せず、初回翻訳時に固定したHugging Face revisionから取得してブラウザキャッシュへ保存する。Boku1-nanoは各約60.4 MiBで、選択モデルを初回生成時にPagesから取得する。
+Qwen3-0.6B q4f16は569,789,750 bytesである。Pages成果物へ複製せず、初回翻訳時に固定したHugging Face revisionから取得してブラウザキャッシュへ保存する。Boku1-nanoのONNXは1M級約4.0 MiB、5M級約19.6 MiB、15M級約60.4 MiBで、選択モデルだけを初回生成時にPagesから取得する。モデル切替時は直前のONNXセッションを解放し、複数モデルのメモリ常駐を避ける。
 
 ## ONNXの再生成
 
@@ -41,7 +47,7 @@ uv run --group onnx-export python scripts/model/export_boku_nano_onnx.py
 
 ## 学習済みモデルごとのONNX生成
 
-Web公開対象でないモデルは、[ONNX変換スクリプト](../../scripts/model/export_boku_nano_onnx.py)の`--in-place`を使う。トークナイザーは各`training_manifest.json`から自動選択されるため、既存BPEと短いpiece用BPEを取り違えない。
+各モデルディレクトリにもONNXを保存する場合は、[ONNX変換スクリプト](../../scripts/model/export_boku_nano_onnx.py)の`--in-place`を使う。トークナイザーは各`training_manifest.json`から自動選択されるため、既存BPEと短いpiece用BPEを取り違えない。
 
 ```bash
 uv run --group onnx-export python scripts/model/export_boku_nano_onnx.py \
@@ -49,7 +55,7 @@ uv run --group onnx-export python scripts/model/export_boku_nano_onnx.py \
   --model <識別名>=data/models/<モデルディレクトリ>
 ```
 
-各モデルディレクトリへ`model.onnx`と`onnx_manifest.json`を保存する。manifestには元のsafetensors、トークナイザー、ONNXのSHA-256、ファイルサイズ、logits比較、greedy生成一致の結果を記録する。全8モデルの保存先は[学習済みモデル一覧](../results/trained_model_inventory.md)を参照する。3・10エポック版は既存のWeb用ONNXと[Webモデルmanifest](../../web/model-manifest.json)を使用する。
+各モデルディレクトリへ`model.onnx`と`onnx_manifest.json`を保存する。manifestには元のsafetensors、トークナイザー、ONNXのSHA-256、ファイルサイズ、logits比較、greedy生成一致の結果を記録する。Pagesでは全8モデルを`web/models/`へ配置し、[Webモデルmanifest](../../web/model-manifest.json)でモデルと2種類のtokenizerの対応を固定している。全保存先は[学習済みモデル一覧](../results/trained_model_inventory.md)を参照する。
 
 ## ローカル表示
 
@@ -65,7 +71,7 @@ uv run --group onnx-export python -m http.server 8000 --directory web
 2. 初回は約543 MiBのQwenを取得するため、進捗表示が完了するまで待つ。
 3. 表示されたCNLと操作順が意図どおりか確認する。
 4. 誤りがあれば自由文を変えて再翻訳するか、CNL欄を直接修正して`CNLを再検査`を押す。
-5. 検査合格後、3エポックまたは10エポックを選び、`このCNLでコードを生成`を押す。
+5. 検査合格後、1M・5M・15Mの8モデルから比較したいモデルを選び、`このCNLでコードを生成`を押す。
 
 Qwenが`対応できません。`を返した場合、または2回の生成がどちらも検査に失敗した場合、学生モデルの生成ボタンは有効にならない。
 
@@ -81,17 +87,25 @@ uv run --group onnx-export python scripts/model/test_boku_nano_web.py \
 - CNL定義が24操作である。
 - 正しい2操作・3操作CNLを受理する。
 - 4操作と許可外操作を拒否する。
-- ブラウザ版BPEとPython版BPEのtoken ID列が一致する。
-- 3エポック・10エポック両モデルが、検査済み2操作・3操作CNLから`solve`関数を生成する。
+- 旧BPE・短いpiece版BPEの両方で、ブラウザ版とPython版のtoken ID列が一致する。
+- 選択欄に学習済み8モデルが表示される。
+- 3エポック・10エポックモデルが、検査済み2操作・3操作CNLから期待する処理を生成する。
+- 追加した1M・5M・15Mの1エポック6モデルが、対応tokenizerでブラウザ推論を完了する。
 
-2026年9月28日のFirefox headless試験では、CNL検査とBPE一致が合格し、次の4ケースでコード生成を確認した。速度は実行機によって変わる。
+2026年10月1日のFirefox headless試験では、CNL検査、2種類のBPE一致、8モデルの選択肢、全モデルのWASM推論を確認した。3・10エポック版は2操作・3操作の期待処理まで検査し、追加6モデルは対応tokenizerによる生成完了と`solve`関数出力をsmoke testした。速度は実行機によって変わる。
 
-| モデル | 操作数 | backend | 入力token | 生成token | 速度 | 結果 |
-| --- | ---: | --- | ---: | ---: | ---: | --- |
-| 3エポック | 2 | WASM | 13 | 11 | 21.7 tokens/s | 絶対値化、降順ソートを生成 |
-| 3エポック | 3 | WASM | 17 | 19 | 52.6 tokens/s | 3倍、符号反転、k未満抽出を生成 |
-| 10エポック | 2 | WASM | 13 | 13 | 32.7 tokens/s | 絶対値化、降順ソートを生成 |
-| 10エポック | 3 | WASM | 17 | 24 | 49.1 tokens/s | 3倍、符号反転、k未満抽出を生成 |
+| モデル | 検査 | 入力token | 生成token | 速度 | 結果 |
+| --- | --- | ---: | ---: | ---: | --- |
+| 15M・3ep・既存BPE | 2操作 | 13 | 11 | 20.4 tokens/s | 絶対値化、降順ソートを生成 |
+| 15M・3ep・既存BPE | 3操作 | 17 | 19 | 49.2 tokens/s | 3倍、符号反転、k未満抽出を生成 |
+| 15M・10ep・既存BPE | 2操作 | 13 | 13 | 31.9 tokens/s | 絶対値化、降順ソートを生成 |
+| 15M・10ep・既存BPE | 3操作 | 17 | 24 | 47.3 tokens/s | 3倍、符号反転、k未満抽出を生成 |
+| 15M・1ep・既存BPE | smoke | 13 | 15 | 32.5 tokens/s | 推論完了、`solve`生成 |
+| 15M・1ep・短いpiece | smoke | 28 | 47 | 24.8 tokens/s | 推論完了、`solve`生成 |
+| 5M・1ep・既存BPE | smoke | 13 | 14 | 63.3 tokens/s | 推論完了、`solve`生成 |
+| 5M・1ep・短いpiece | smoke | 28 | 47 | 72.5 tokens/s | 推論完了、`solve`生成 |
+| 1M・1ep・既存BPE | smoke | 13 | 15 | 93.2 tokens/s | 推論完了、`solve`生成 |
+| 1M・1ep・短いpiece | smoke | 28 | 61 | 111.5 tokens/s | 推論完了、`solve`生成 |
 
 Firefox headlessではWebGPU Qwenを起動せず、CNLを直接入力して検査器からBoku1-nanoまでを確認した。この実行環境にはChrome系ブラウザがないため、Qwenの実推論は未確認であり、次のChrome手動試験で確認する。
 
@@ -118,7 +132,7 @@ Firefox headlessではWebGPU Qwenを起動せず、CNLを直接入力して検�
 4. NetworkでQwenが固定revision、Transformers.jsが4.3.0から取得されることを確認する。
 5. CNL、操作順、所要時間を記録する。
 6. 不正なCNLへ編集し、学生モデルへ渡らないことを確認する。
-7. 正しいCNLへ直し、3・10エポックの両方でコード生成する。
+7. 正しいCNLへ直し、必要な8モデルを切り替えてコード生成する。
 
 ## GitHub Pages公開
 

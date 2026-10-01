@@ -7,6 +7,7 @@ import {
 
 const elements = {
   model: document.querySelector("#model"),
+  modelSummary: document.querySelector("#model-summary"),
   prompt: document.querySelector("#prompt"),
   translate: document.querySelector("#translate"),
   cancelTranslation: document.querySelector("#cancel-translation"),
@@ -38,8 +39,8 @@ elements.normalizerRetryPrompt.textContent = buildNormalizerUserPrompt(
 const state = {
   manifest: null,
   qwenManifest: null,
-  tokenizer: null,
-  sessions: new Map(),
+  tokenizers: new Map(),
+  activeSession: null,
   qwenWorker: null,
   translationBusy: false,
   generationBusy: false,
@@ -57,7 +58,7 @@ function formatBytes(bytes) {
 }
 
 function updateControls() {
-  const ready = Boolean(state.manifest && state.tokenizer);
+  const ready = Boolean(state.manifest);
   elements.translate.disabled = !ready || !state.qwenManifest || state.translationBusy || state.generationBusy;
   elements.cancelTranslation.hidden = !state.translationBusy;
   elements.prompt.disabled = state.translationBusy || state.generationBusy;
@@ -228,23 +229,77 @@ async function fetchBytesWithProgress(path, expectedSize) {
   return result;
 }
 
+function selectedModel() {
+  return state.manifest.models.find((item) => item.id === elements.model.value);
+}
+
+async function tokenizerForModel(model) {
+  const tokenizerId = model.tokenizer_id;
+  if (state.tokenizers.has(tokenizerId)) return state.tokenizers.get(tokenizerId);
+  const definition = state.manifest.tokenizers[tokenizerId];
+  if (!definition) throw new Error(`tokenizer設定がありません: ${tokenizerId}`);
+  const tokenizer = await BokuNanoTokenizer.load(`./${definition.path}`);
+  state.tokenizers.set(tokenizerId, tokenizer);
+  return tokenizer;
+}
+
+function renderModelSummary() {
+  const model = selectedModel();
+  if (!model) {
+    elements.modelSummary.textContent = "";
+    return;
+  }
+  const tokenizer = state.manifest.tokenizers[model.tokenizer_id];
+  elements.modelSummary.textContent = [
+    `${model.parameter_count.toLocaleString("ja-JP")} parameters`,
+    tokenizer?.label || model.tokenizer_id,
+    `最大${model.context_length} tokens`,
+    formatBytes(model.size_bytes),
+  ].join(" / ");
+}
+
+function renderModelOptions() {
+  const groups = new Map();
+  for (const model of state.manifest.models) {
+    const groupName = `${model.group || "その他"}モデル`;
+    let group = groups.get(groupName);
+    if (!group) {
+      group = document.createElement("optgroup");
+      group.label = groupName;
+      groups.set(groupName, group);
+      elements.model.append(group);
+    }
+    const option = document.createElement("option");
+    option.value = model.id;
+    option.textContent = `${model.label} (${formatBytes(model.size_bytes)})`;
+    option.selected = model.id === state.manifest.default_model_id;
+    group.append(option);
+  }
+  renderModelSummary();
+}
+
+async function releaseActiveSession() {
+  if (!state.activeSession) return;
+  await state.activeSession.session.release();
+  state.activeSession = null;
+}
+
 async function createSession(model) {
-  if (state.sessions.has(model.id)) return state.sessions.get(model.id);
+  if (state.activeSession?.modelId === model.id) return state.activeSession;
+  await releaseActiveSession();
   const bytes = await fetchBytesWithProgress(model.path, model.size_bytes);
   if ("gpu" in navigator) {
     try {
       const session = await ort.InferenceSession.create(bytes, { executionProviders: ["webgpu"] });
-      const result = { session, backend: "WebGPU" };
-      state.sessions.set(model.id, result);
-      return result;
+      state.activeSession = { modelId: model.id, session, backend: "WebGPU" };
+      return state.activeSession;
     } catch (error) {
       console.warn("WebGPU初期化に失敗したためWASMへ切り替えます", error);
     }
   }
   const session = await ort.InferenceSession.create(bytes, { executionProviders: ["wasm"] });
-  const result = { session, backend: "WASM" };
-  state.sessions.set(model.id, result);
-  return result;
+  state.activeSession = { modelId: model.id, session, backend: "WASM" };
+  return state.activeSession;
 }
 
 function argmax(values) {
@@ -262,7 +317,7 @@ function argmax(values) {
 async function generateCode() {
   const validation = checkCnl();
   if (!validation.valid) return;
-  const model = state.manifest.models.find((item) => item.id === elements.model.value);
+  const model = selectedModel();
   state.cancelled = false;
   state.generationBusy = true;
   elements.output.textContent = "";
@@ -270,7 +325,8 @@ async function generateCode() {
   const startedAt = performance.now();
   updateControls();
   try {
-    const promptIds = state.tokenizer.encodePrompt(validation.cnl);
+    const tokenizer = await tokenizerForModel(model);
+    const promptIds = tokenizer.encodePrompt(validation.cnl);
     if (promptIds.includes(state.manifest.special_token_ids.unk)) {
       throw new Error("CNLにtokenizerで表現できない文字が含まれています。");
     }
@@ -293,7 +349,7 @@ async function generateCode() {
       if (tokenId === state.manifest.special_token_ids.eos) break;
       generatedIds.push(tokenId);
       currentIds.push(tokenId);
-      elements.output.textContent = state.tokenizer.decode(generatedIds);
+      elements.output.textContent = tokenizer.decode(generatedIds);
       if (step % 2 === 0) await new Promise(requestAnimationFrame);
     }
     const elapsedSeconds = (performance.now() - startedAt) / 1000;
@@ -330,14 +386,8 @@ async function initialize() {
   if (!qwenResponse.ok) throw new Error("Qwenの設定を取得できませんでした。");
   state.manifest = await modelResponse.json();
   state.qwenManifest = await qwenResponse.json();
-  state.tokenizer = await BokuNanoTokenizer.load(`./${state.manifest.tokenizer.path}`);
-  for (const model of state.manifest.models) {
-    const option = document.createElement("option");
-    option.value = model.id;
-    option.textContent = `${model.label} (${formatBytes(model.size_bytes)})`;
-    if (model.id === "10epoch") option.selected = true;
-    elements.model.append(option);
-  }
+  renderModelOptions();
+  await tokenizerForModel(selectedModel());
   setMessage(
     elements.translationStatus,
     "自由な日本語を入力し、QwenでCNLへ翻訳できます。初回は約543 MiBを取得します。",
@@ -350,6 +400,10 @@ async function initialize() {
 elements.translate.addEventListener("click", translateInstruction);
 elements.cancelTranslation.addEventListener("click", cancelTranslation);
 elements.validateCnl.addEventListener("click", checkCnl);
+elements.model.addEventListener("change", () => {
+  renderModelSummary();
+  setMessage(elements.status, "選択したモデルは初回生成時に読み込みます。");
+});
 elements.cnl.addEventListener("input", checkCnl);
 elements.generate.addEventListener("click", generateCode);
 elements.stop.addEventListener("click", () => {

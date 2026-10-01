@@ -29,9 +29,44 @@ from scripts.model.evaluate_boku_nano import PROMPT_TEMPLATE  # noqa: E402
 DEFAULT_MODELS = {
     "3epoch": PROJECT_ROOT / "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch",
     "10epoch": PROJECT_ROOT / "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch",
+    "15m-1epoch": PROJECT_ROOT
+    / "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch",
+    "15m-short-1epoch": PROJECT_ROOT
+    / "data/models/boku_nano_15m_bpe_2048_minfreq2_maxlen8_1epoch",
+    "5m-1epoch": PROJECT_ROOT
+    / "data/models/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch",
+    "5m-short-1epoch": PROJECT_ROOT
+    / "data/models/boku_nano_5m_bpe_2048_minfreq2_maxlen8_1epoch",
+    "1m-1epoch": PROJECT_ROOT
+    / "data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_1epoch",
+    "1m-short-1epoch": PROJECT_ROOT
+    / "data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch",
 }
-DEFAULT_TOKENIZER = PROJECT_ROOT / "data/tokenizers/bpe_2048/tokenizer.json"
 DEFAULT_OUTPUT = PROJECT_ROOT / "web/models"
+
+MODEL_PRESENTATION = {
+    "1m-1epoch": ("1M", "1M・1エポック・既存BPE"),
+    "1m-short-1epoch": ("1M", "1M・1エポック・短いpiece版BPE"),
+    "5m-1epoch": ("5M", "5M・1エポック・既存BPE"),
+    "5m-short-1epoch": ("5M", "5M・1エポック・短いpiece版BPE"),
+    "15m-1epoch": ("15M", "15M・1エポック・既存BPE"),
+    "15m-short-1epoch": ("15M", "15M・1エポック・短いpiece版BPE"),
+    "3epoch": ("15M", "15M・3エポック・既存BPE"),
+    "10epoch": ("15M", "15M・10エポック・既存BPE"),
+}
+
+WEB_TOKENIZERS = {
+    "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293": {
+        "id": "bpe-2048-minfreq5-maxlen24",
+        "label": "既存BPE（min 5 / max 24）",
+        "path": "tokenizers/bpe-2048-minfreq5-maxlen24.json",
+    },
+    "f09f3d7eccbca2ab1224c662064b71e572d64147147b8b559ebdb428eb035dbf": {
+        "id": "bpe-2048-minfreq2-maxlen8",
+        "label": "短いpiece版BPE（min 2 / max 8）",
+        "path": "tokenizers/bpe-2048-minfreq2-maxlen8.json",
+    },
+}
 
 
 class LastTokenLogits(torch.nn.Module):
@@ -50,12 +85,11 @@ def parse_args() -> argparse.Namespace:
         description="Boku-nanoをONNXへ変換しPyTorch出力と比較します。"
     )
     parser.add_argument("--output-directory", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--tokenizer", type=Path, default=DEFAULT_TOKENIZER)
     parser.add_argument(
         "--model",
         action="append",
         metavar="NAME=DIR",
-        help="変換対象。省略時は3epochと10epochの両方。",
+        help="変換対象。省略時は学習済み8モデルすべて。",
     )
     parser.add_argument("--opset", type=int, default=18)
     parser.add_argument("--sample-sequence-length", type=int, default=32)
@@ -331,19 +365,14 @@ def main() -> None:
     if args.in_place:
         export_models_in_place(args)
         return
-    tokenizer = Tokenizer.from_file(str(args.tokenizer))
     output_directory = args.output_directory.resolve()
     output_directory.mkdir(parents=True, exist_ok=True)
     web_root = output_directory.parent
-    tokenizer_output = web_root / "tokenizer.json"
-    shutil.copyfile(args.tokenizer.resolve(), tokenizer_output)
 
     manifest: dict[str, Any] = {
-        "format_version": 1,
-        "tokenizer": {
-            "path": "tokenizer.json",
-            "sha256": sha256(tokenizer_output),
-        },
+        "format_version": 2,
+        "default_model_id": "3epoch",
+        "tokenizers": {},
         "prompt_template": PROMPT_TEMPLATE,
         "special_token_ids": {"pad": 0, "bos": 1, "eos": 2, "unk": 3, "task": 4, "code": 5},
         "models": [],
@@ -351,6 +380,22 @@ def main() -> None:
     for name, directory in selected_models(args.model).items():
         print(f"[{name}] 読み込み: {directory}", flush=True)
         model, config, weights_path = load_model(directory)
+        tokenizer_path, tokenizer_sha256 = tokenizer_from_training_manifest(directory)
+        tokenizer_definition = WEB_TOKENIZERS.get(tokenizer_sha256)
+        if tokenizer_definition is None:
+            raise ValueError(
+                f"Web公開名が未定義のtokenizerです: {tokenizer_sha256}"
+            )
+        tokenizer_id = tokenizer_definition["id"]
+        tokenizer_output = web_root / tokenizer_definition["path"]
+        tokenizer_output.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(tokenizer_path, tokenizer_output)
+        manifest["tokenizers"][tokenizer_id] = {
+            "label": tokenizer_definition["label"],
+            "path": tokenizer_definition["path"],
+            "sha256": tokenizer_sha256,
+        }
+        tokenizer = Tokenizer.from_file(str(tokenizer_path))
         onnx_path = output_directory / f"boku-nano-{name}.onnx"
         print(f"[{name}] ONNX変換: {onnx_path}", flush=True)
         export_model(model, onnx_path, args.sample_sequence_length, args.opset)
@@ -363,10 +408,13 @@ def main() -> None:
             args.max_new_tokens,
             not args.skip_generation_check,
         )
+        group, label = MODEL_PRESENTATION.get(name, ("追加モデル", name))
         manifest["models"].append(
             {
                 "id": name,
-                "label": "3エポックモデル" if name == "3epoch" else "10エポックモデル",
+                "label": label,
+                "group": group,
+                "tokenizer_id": tokenizer_id,
                 "path": f"models/{onnx_path.name}",
                 "sha256": sha256(onnx_path),
                 "size_bytes": onnx_path.stat().st_size,

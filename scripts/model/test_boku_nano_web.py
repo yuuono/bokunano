@@ -1,4 +1,4 @@
-"""静的WebデモをFirefoxで開き、CNL検査と両ONNXモデルの生成を確認する。"""
+"""静的WebデモをFirefoxで開き、CNL検査と8個のONNXモデルを確認する。"""
 
 from __future__ import annotations
 
@@ -18,7 +18,22 @@ from tokenizers import Tokenizer
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 WEB_ROOT = PROJECT_ROOT / "web"
-TOKENIZER_PATH = PROJECT_ROOT / "data/tokenizers/bpe_2048/tokenizer.json"
+TOKENIZER_PATHS = {
+    "bpe-2048-minfreq5-maxlen24": PROJECT_ROOT
+    / "data/tokenizers/bpe_2048/tokenizer.json",
+    "bpe-2048-minfreq2-maxlen8": PROJECT_ROOT
+    / "data/tokenizers/bpe_2048_minfreq2_maxlen8/tokenizer.json",
+}
+EXPECTED_MODEL_IDS = {
+    "1m-1epoch",
+    "1m-short-1epoch",
+    "5m-1epoch",
+    "5m-short-1epoch",
+    "15m-1epoch",
+    "15m-short-1epoch",
+    "3epoch",
+    "10epoch",
+}
 TWO_OPERATION_CNL = (
     "整数リストxsから各要素の絶対値を取り、"
     "値を降順に並べるsolve関数を書いてください。"
@@ -104,24 +119,39 @@ def verify_cnl_validator(driver: webdriver.Firefox) -> None:
         raise AssertionError("許可外操作を誤って受理しました。")
 
 
-def verify_tokenizer(driver: webdriver.Firefox) -> None:
-    actual = driver.execute_async_script(
-        """
-        const done = arguments[arguments.length - 1];
-        import('./tokenizer.js').then(async ({BokuNanoTokenizer}) => {
-          const tokenizer = await BokuNanoTokenizer.load('./tokenizer.json');
-          done(tokenizer.encodePrompt(arguments[0]));
-        }).catch(error => done({error: String(error)}));
-        """,
-        TWO_OPERATION_CNL,
-    )
-    tokenizer = Tokenizer.from_file(str(TOKENIZER_PATH))
-    expected = tokenizer.encode(
-        f"<|bos|><|task|>\n{TWO_OPERATION_CNL}\n<|code|>\n",
-        add_special_tokens=False,
-    ).ids
-    if actual != expected:
-        raise AssertionError(f"ブラウザとPythonのtoken IDが一致しません: {actual} != {expected}")
+def verify_tokenizers(driver: webdriver.Firefox) -> None:
+    for tokenizer_id, tokenizer_path in TOKENIZER_PATHS.items():
+        browser_path = f"./tokenizers/{tokenizer_id}.json"
+        actual = driver.execute_async_script(
+            """
+            const done = arguments[arguments.length - 1];
+            import('./tokenizer.js').then(async ({BokuNanoTokenizer}) => {
+              const tokenizer = await BokuNanoTokenizer.load(arguments[0]);
+              done(tokenizer.encodePrompt(arguments[1]));
+            }).catch(error => done({error: String(error)}));
+            """,
+            browser_path,
+            TWO_OPERATION_CNL,
+        )
+        tokenizer = Tokenizer.from_file(str(tokenizer_path))
+        expected = tokenizer.encode(
+            f"<|bos|><|task|>\n{TWO_OPERATION_CNL}\n<|code|>\n",
+            add_special_tokens=False,
+        ).ids
+        if actual != expected:
+            raise AssertionError(
+                f"{tokenizer_id}のブラウザとPythonのtoken IDが一致しません: "
+                f"{actual} != {expected}"
+            )
+
+
+def verify_model_options(driver: webdriver.Firefox) -> None:
+    actual = {
+        option.get_attribute("value")
+        for option in Select(driver.find_element("id", "model")).options
+    }
+    if actual != EXPECTED_MODEL_IDS:
+        raise AssertionError(f"モデル選択肢が一致しません: {actual} != {EXPECTED_MODEL_IDS}")
 
 
 def set_cnl(driver: webdriver.Firefox, cnl: str) -> None:
@@ -198,8 +228,10 @@ def main() -> None:
         print("prompt disclosure: system・初回・再生成messageの表示を確認")
         verify_cnl_validator(driver)
         print("CNL validator: 24操作・最大3操作・許可外拒否を確認")
-        verify_tokenizer(driver)
-        print("tokenizer: Python版と一致")
+        verify_tokenizers(driver)
+        print("tokenizer: 旧BPE・短いpiece版ともPython版と一致")
+        verify_model_options(driver)
+        print("model selector: 学習済み8モデルを確認")
         cases = ((2, TWO_OPERATION_CNL), (3, THREE_OPERATION_CNL))
         for model_id in ("3epoch", "10epoch"):
             for operation_count, cnl in cases:
@@ -214,6 +246,16 @@ def main() -> None:
                 print(f"{label}: {result['status']}")
                 print(f"{label}: {result['metrics']}")
                 print(f"{label}: {result['output']}")
+        for model_id in sorted(EXPECTED_MODEL_IDS - {"3epoch", "10epoch"}):
+            result = run_model(
+                driver,
+                model_id,
+                TWO_OPERATION_CNL,
+                0,
+                args.timeout_seconds,
+            )
+            print(f"{model_id}/smoke: {result['status']}")
+            print(f"{model_id}/smoke: {result['metrics']}")
     finally:
         driver.quit()
         server.shutdown()

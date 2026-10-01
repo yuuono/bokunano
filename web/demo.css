@@ -72,6 +72,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .metrics { color: #66707b; font-size: 0.78rem; text-align: right; }
 .operation-list { margin: 12px 0 0; padding-left: 24px; color: #3f4650; font-size: 0.88rem; line-height: 1.75; }
 .operation-list:empty { display: none; }
+.model-summary { margin: 7px 0 0; color: #66707b; font-size: 0.8rem; line-height: 1.5; }
 
 pre {
   min-height: 160px;

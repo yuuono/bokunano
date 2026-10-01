@@ -109,7 +109,7 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 - [Web用ONNX](../../web/models/boku-nano-10epoch.onnx)
 - ONNX SHA-256: 59df1f0dae8e4111f5b444d388c95f88273361ae293cc5154eda7150289eab11
 
-3・10エポック版のONNX検証記録は[Webモデルmanifest](../../web/model-manifest.json)に保存している。今回追加した残り6モデルは各モデルディレクトリの`onnx_manifest.json`に、ONNX形式検査、2プロンプトのlogits誤差、PyTorch版と一致したgreedy生成token列、ONNX SHA-256、ファイルサイズを保存している。
+8モデルすべてをGitHub Pagesの選択対象として`web/models/`にも配置し、モデルと2種類のBPEの対応を[Webモデルmanifest](../../web/model-manifest.json)に固定している。各1エポックモデルの`onnx_manifest.json`には、ONNX形式検査、2プロンプトのlogits誤差、PyTorch版と一致したgreedy生成token列、ONNX SHA-256、ファイルサイズを保存している。
 
 ## 規模別の構造
 
