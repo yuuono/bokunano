@@ -26,7 +26,7 @@ from generated_code_verifier import build_verification_cases, verify_generated_c
 
 
 DEFAULT_INSTRUCTION = "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。"
-DEFAULT_MODEL = PROJECT_ROOT / "data/models/boku_nano_bpe_2048"
+DEFAULT_MODEL = PROJECT_ROOT / "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch"
 DEFAULT_TOKENIZER = PROJECT_ROOT / "data/tokenizers/bpe_2048/tokenizer.json"
 DEFAULT_FIGURE_DIRECTORY = PROJECT_ROOT / "docs/results/figures"
 DEFAULT_METRICS = PROJECT_ROOT / "docs/results/boku_nano_kv_visualization_metrics.json"

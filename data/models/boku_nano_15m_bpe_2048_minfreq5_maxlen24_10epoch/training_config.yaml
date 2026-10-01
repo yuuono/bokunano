@@ -75,7 +75,7 @@ validation_data:
     {reference_code}<|eos|>'
   loss_scope: code_and_eos_only
 training:
-  epochs: 3
+  epochs: 10
   micro_batch_size: 512
   gradient_accumulation_steps: 1
   shuffle: true
@@ -102,4 +102,4 @@ runtime:
   pin_memory: true
   log_every_steps: 20
 output:
-  directory: data/models/boku_nano_bpe_2048
+  directory: data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch

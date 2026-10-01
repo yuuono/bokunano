@@ -13,8 +13,8 @@ model:
 model_validation:
   expected_parameter_count: 15735168
 tokenizer:
-  path: data/tokenizers/bpe_2048/tokenizer.json
-  expected_sha256: 6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293
+  path: data/tokenizers/bpe_2048_minfreq2_maxlen8/tokenizer.json
+  expected_sha256: f09f3d7eccbca2ab1224c662064b71e572d64147147b8b559ebdb428eb035dbf
   special_tokens:
     pad:
       token: <|pad|>
@@ -75,7 +75,7 @@ validation_data:
     {reference_code}<|eos|>'
   loss_scope: code_and_eos_only
 training:
-  epochs: 10
+  epochs: 1
   micro_batch_size: 512
   gradient_accumulation_steps: 1
   shuffle: true
@@ -102,4 +102,4 @@ runtime:
   pin_memory: true
   log_every_steps: 20
 output:
-  directory: data/models/boku_nano_bpe_2048_10epoch
+  directory: data/models/boku_nano_15m_bpe_2048_minfreq2_maxlen8_1epoch

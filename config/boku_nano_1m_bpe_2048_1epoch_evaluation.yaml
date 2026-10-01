@@ -1,7 +1,7 @@
 version: 1
 
 model:
-  directory: data/models/boku_nano_1m_bpe_2048_1epoch
+  directory: data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_1epoch
   weights: model.safetensors
   config: model_config.json
   manifest: training_manifest.json

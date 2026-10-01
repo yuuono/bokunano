@@ -99,4 +99,4 @@ runtime:
   log_every_steps: 20
 
 output:
-  directory: data/models/boku_nano_5m_bpe_2048_1epoch
+  directory: data/models/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch

@@ -1,17 +1,17 @@
 version: 1
 model:
   vocab_size: 2048
-  d_model: 128
-  n_layers: 3
-  n_heads: 4
-  d_ff: 256
+  d_model: 384
+  n_layers: 8
+  n_heads: 6
+  d_ff: 1024
   context_length: 256
   dropout: 0.0
   rope_base: 10000.0
   rms_norm_eps: 1.0e-05
   tie_word_embeddings: false
 model_validation:
-  expected_parameter_count: 1016704
+  expected_parameter_count: 15735168
 tokenizer:
   path: data/tokenizers/bpe_2048/tokenizer.json
   expected_sha256: 6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293
@@ -102,4 +102,4 @@ runtime:
   pin_memory: true
   log_every_steps: 20
 output:
-  directory: data/models/boku_nano_1m_bpe_2048_1epoch
+  directory: data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch

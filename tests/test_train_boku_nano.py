@@ -160,7 +160,7 @@ class BokuNanoTrainingTest(unittest.TestCase):
         # 実YAMLへ10 epochの実行時上書きを適用する
         summary = validate_configuration(
             Path("config/boku_nano_bpe_2048.yaml"),
-            output_override=Path("data/models/boku_nano_bpe_2048_10epoch"),
+            output_override=Path("data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch"),
             epochs_override=10,
         )
         # 実行時epoch数だけが10へ変わることを確認する
@@ -168,7 +168,7 @@ class BokuNanoTrainingTest(unittest.TestCase):
         # 別出力先が使われることを確認する
         self.assertEqual(
             summary["output_directory"],
-            "data/models/boku_nano_bpe_2048_10epoch",
+            "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch",
         )
 
 
