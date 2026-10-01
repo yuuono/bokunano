@@ -133,7 +133,7 @@ case "${model_size}" in
   # 現行の約15M parameterモデルを選ぶ。
   15m)
     # 旧BPE用設定を指定する。
-    old_config="config/boku_nano_bpe_2048.yaml"
+    old_config="config/boku_nano_bpe_2048_1epoch.yaml"
     # 短いpiece版BPE用設定を指定する。
     short_config="config/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch.yaml"
     # 既存成果物名との互換性を保つprefixを指定する。
