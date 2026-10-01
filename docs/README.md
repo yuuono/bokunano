@@ -67,6 +67,7 @@ docs/
 - [`results/bpe_tokenizer_training_results.md`](results/bpe_tokenizer_training_results.md): 訓練データ限定BPE 2,048語彙候補の学習・全件検証結果
 - [`results/bpe_tokenizer_minfreq2_maxlen8_results.md`](results/bpe_tokenizer_minfreq2_maxlen8_results.md): 最小頻度2・最大piece長8のBPE 2,048語彙と既存版の系列長比較
 - [`results/bpe_tokenizer_implementation_examples.md`](results/bpe_tokenizer_implementation_examples.md): 長いpiece版と短いpiece版の設定、系列長、GPU使用量の比較
+- [`results/boku_nano_1m_evaluation_results.md`](results/boku_nano_1m_evaluation_results.md): 2種類の1Mモデルの1エポック学習、固定5テスト、日本語言い換え30件の詳細比較
 - [`results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md`](results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md): 短いpiece版15Mモデルの1エポック学習・固定5テスト評価結果
 - [`results/boku_nano_three_epoch_training_results.md`](results/boku_nano_three_epoch_training_results.md): Boku Nanoモデルの3エポックにおけるtrain loss・validation loss推移
 - [`results/boku_nano_kv_cache_visualization.md`](results/boku_nano_kv_cache_visualization.md): 制限自然言語SLMの一時K/V状態、headの役割候補、attention sink、Valueノルム、rollout、因果的ablation、KVキャッシュ非実装と導入時容量
