@@ -68,6 +68,7 @@ docs/
 - [`results/bpe_tokenizer_minfreq2_maxlen8_results.md`](results/bpe_tokenizer_minfreq2_maxlen8_results.md): 最小頻度2・最大piece長8のBPE 2,048語彙と既存版の系列長比較
 - [`results/bpe_tokenizer_implementation_examples.md`](results/bpe_tokenizer_implementation_examples.md): 長いpiece版と短いpiece版の設定、系列長、GPU使用量の比較
 - [`results/boku_nano_1m_evaluation_results.md`](results/boku_nano_1m_evaluation_results.md): 2種類の1Mモデルの1エポック学習、固定5テスト、日本語言い換え30件の詳細比較
+- [`results/boku_nano_5m_1epoch_tokenizer_comparison.md`](results/boku_nano_5m_1epoch_tokenizer_comparison.md): 正確に5,065,472パラメータの1エポックモデルを2種類のBPEで学習・評価し、日本語言い換え30件を詳細比較
 - [`results/boku_nano_15m_1epoch_tokenizer_comparison.md`](results/boku_nano_15m_1epoch_tokenizer_comparison.md): 正確に15,735,168パラメータの1エポックモデルを2種類のBPEで直接比較
 - [`results/trained_model_inventory.md`](results/trained_model_inventory.md): 実際に学習済みの全モデル、正確なパラメータ数、構造、epoch、評価、ハッシュ
 - [`results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md`](results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md): 短いpiece版15Mモデルの1エポック学習・固定5テスト評価結果
