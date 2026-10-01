@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="650" viewBox="0 0 1040 650" role="img">
+<title>attention headとValue位置の因果的ablation</title>
+<desc>上段は各headを0にしたときの教師強制NLL変化。下段はgreedy生成をhidden testで再評価した合格率。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#17212b;font-size:12px}.small{font-size:10px;fill:#52606d}.title{font-size:20px;font-weight:500}.label{font-size:13px;font-weight:500}</style>
+<text x="24" y="30" class="title">attention headとValue位置の因果的ablation</text>
+<text x="24" y="52" class="small">上段は各headを0にしたときの教師強制NLL変化。下段はgreedy生成をhidden testで再評価した合格率。</text>
+<line x1="72" y1="309.34" x2="992" y2="309.34" stroke="#66717d"/>
+<rect x="74.68" y="221.43" width="13.80" height="87.91" fill="#4f7f96"/>
+<rect x="93.85" y="224.53" width="13.80" height="84.80" fill="#4f7f96"/>
+<rect x="113.02" y="141.05" width="13.80" height="168.28" fill="#b35438"/>
+<rect x="132.18" y="108.89" width="13.80" height="200.45" fill="#b35438"/>
+<text x="139.08" y="345" text-anchor="middle" class="small">L1</text>
+<rect x="151.35" y="104.55" width="13.80" height="204.78" fill="#b35438"/>
+<rect x="170.52" y="193.59" width="13.80" height="115.74" fill="#4f7f96"/>
+<rect x="189.68" y="225.57" width="13.80" height="83.77" fill="#4f7f96"/>
+<rect x="208.85" y="263.85" width="13.80" height="45.49" fill="#4f7f96"/>
+<rect x="228.02" y="291.51" width="13.80" height="17.82" fill="#4f7f96"/>
+<rect x="247.18" y="281.23" width="13.80" height="28.11" fill="#4f7f96"/>
+<text x="254.08" y="345" text-anchor="middle" class="small">L2</text>
+<rect x="266.35" y="281.91" width="13.80" height="27.43" fill="#4f7f96"/>
+<rect x="285.52" y="264.94" width="13.80" height="44.39" fill="#4f7f96"/>
+<rect x="304.68" y="306.77" width="13.80" height="2.57" fill="#4f7f96"/>
+<rect x="323.85" y="308.98" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="343.02" y="303.55" width="13.80" height="5.79" fill="#4f7f96"/>
+<rect x="362.18" y="303.69" width="13.80" height="5.64" fill="#4f7f96"/>
+<text x="369.08" y="345" text-anchor="middle" class="small">L3</text>
+<rect x="381.35" y="256.91" width="13.80" height="52.43" fill="#4f7f96"/>
+<rect x="400.52" y="305.75" width="13.80" height="3.59" fill="#4f7f96"/>
+<rect x="419.68" y="301.58" width="13.80" height="7.76" fill="#4f7f96"/>
+<rect x="438.85" y="307.95" width="13.80" height="1.38" fill="#4f7f96"/>
+<rect x="458.02" y="304.33" width="13.80" height="5.01" fill="#4f7f96"/>
+<rect x="477.18" y="290.55" width="13.80" height="18.78" fill="#4f7f96"/>
+<text x="484.08" y="345" text-anchor="middle" class="small">L4</text>
+<rect x="496.35" y="305.03" width="13.80" height="4.31" fill="#4f7f96"/>
+<rect x="515.52" y="304.95" width="13.80" height="4.39" fill="#4f7f96"/>
+<rect x="534.68" y="308.01" width="13.80" height="1.33" fill="#4f7f96"/>
+<rect x="553.85" y="308.61" width="13.80" height="0.73" fill="#4f7f96"/>
+<rect x="573.02" y="308.32" width="13.80" height="1.02" fill="#4f7f96"/>
+<rect x="592.18" y="309.13" width="13.80" height="0.70" fill="#4f7f96"/>
+<text x="599.08" y="345" text-anchor="middle" class="small">L5</text>
+<rect x="611.35" y="308.83" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="630.52" y="308.88" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="649.68" y="309.34" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="668.85" y="308.96" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="688.02" y="309.34" width="13.80" height="1.60" fill="#4f7f96"/>
+<rect x="707.18" y="301.15" width="13.80" height="8.19" fill="#4f7f96"/>
+<text x="714.08" y="345" text-anchor="middle" class="small">L6</text>
+<rect x="726.35" y="309.34" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="745.52" y="308.90" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="764.68" y="309.34" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="783.85" y="309.19" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="803.02" y="307.52" width="13.80" height="1.82" fill="#4f7f96"/>
+<rect x="822.18" y="309.30" width="13.80" height="0.70" fill="#4f7f96"/>
+<text x="829.08" y="345" text-anchor="middle" class="small">L7</text>
+<rect x="841.35" y="309.34" width="13.80" height="2.11" fill="#4f7f96"/>
+<rect x="860.52" y="309.34" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="879.68" y="309.34" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="898.85" y="309.21" width="13.80" height="0.70" fill="#4f7f96"/>
+<rect x="918.02" y="309.34" width="13.80" height="0.79" fill="#4f7f96"/>
+<rect x="937.18" y="309.34" width="13.80" height="0.70" fill="#4f7f96"/>
+<text x="944.08" y="345" text-anchor="middle" class="small">L8</text>
+<rect x="956.35" y="308.50" width="13.80" height="0.83" fill="#4f7f96"/>
+<rect x="975.52" y="308.31" width="13.80" height="1.02" fill="#4f7f96"/>
+<text x="20" y="208.0" text-anchor="middle" transform="rotate(-90 20 208.0)">NLL差（無効化後−基準、nat/token）</text>
+<line x1="72" y1="570.00" x2="992" y2="570.00" stroke="#e5e8eb"/>
+<text x="63" y="574.00" text-anchor="end" class="small">0%</text>
+<line x1="72" y1="538.00" x2="992" y2="538.00" stroke="#e5e8eb"/>
+<text x="63" y="542.00" text-anchor="end" class="small">20%</text>
+<line x1="72" y1="506.00" x2="992" y2="506.00" stroke="#e5e8eb"/>
+<text x="63" y="510.00" text-anchor="end" class="small">40%</text>
+<line x1="72" y1="474.00" x2="992" y2="474.00" stroke="#e5e8eb"/>
+<text x="63" y="478.00" text-anchor="end" class="small">60%</text>
+<line x1="72" y1="442.00" x2="992" y2="442.00" stroke="#e5e8eb"/>
+<text x="63" y="446.00" text-anchor="end" class="small">80%</text>
+<line x1="72" y1="410.00" x2="992" y2="410.00" stroke="#e5e8eb"/>
+<text x="63" y="414.00" text-anchor="end" class="small">100%</text>
+<rect x="93.47" y="430.00" width="59.29" height="140.00" fill="#356f8a"/>
+<text x="123.11" y="423.00" text-anchor="middle" class="small">87.5%</text>
+<text x="123.11" y="588" text-anchor="middle" class="small">baseline</text>
+<rect x="195.69" y="483.33" width="59.29" height="86.67" fill="#a76b49"/>
+<text x="225.33" y="476.33" text-anchor="middle" class="small">54.2%</text>
+<text x="225.33" y="588" text-anchor="middle" class="small">BOS Value=0</text>
+<rect x="297.91" y="570.00" width="59.29" height="0.00" fill="#a76b49"/>
+<text x="327.56" y="563.00" text-anchor="middle" class="small">0.0%</text>
+<text x="327.56" y="588" text-anchor="middle" class="small">日本語 Value=0</text>
+<rect x="400.13" y="490.00" width="59.29" height="80.00" fill="#a76b49"/>
+<text x="429.78" y="483.00" text-anchor="middle" class="small">50.0%</text>
+<text x="429.78" y="588" text-anchor="middle" class="small">L1H5=0</text>
+<rect x="502.36" y="490.00" width="59.29" height="80.00" fill="#a76b49"/>
+<text x="532.00" y="483.00" text-anchor="middle" class="small">50.0%</text>
+<text x="532.00" y="588" text-anchor="middle" class="small">L1H4=0</text>
+<rect x="604.58" y="476.67" width="59.29" height="93.33" fill="#a76b49"/>
+<text x="634.22" y="469.67" text-anchor="middle" class="small">58.3%</text>
+<text x="634.22" y="588" text-anchor="middle" class="small">L1H3=0</text>
+<rect x="706.80" y="423.33" width="59.29" height="146.67" fill="#a76b49"/>
+<text x="736.44" y="416.33" text-anchor="middle" class="small">91.7%</text>
+<text x="736.44" y="588" text-anchor="middle" class="small">L8H1=0</text>
+<rect x="809.02" y="423.33" width="59.29" height="146.67" fill="#a76b49"/>
+<text x="838.67" y="416.33" text-anchor="middle" class="small">91.7%</text>
+<text x="838.67" y="588" text-anchor="middle" class="small">L7H1=0</text>
+<rect x="911.24" y="423.33" width="59.29" height="146.67" fill="#a76b49"/>
+<text x="940.89" y="416.33" text-anchor="middle" class="small">91.7%</text>
+<text x="940.89" y="588" text-anchor="middle" class="small">L7H4=0</text>
+</svg>

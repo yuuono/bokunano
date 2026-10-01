@@ -14,121 +14,121 @@
 <line x1="72" y1="232.00" x2="1022" y2="232.00" stroke="#e5e8eb"/>
 <text x="63" y="236.00" text-anchor="end" class="small">26%</text>
 <line x1="72" y1="162.00" x2="1022" y2="162.00" stroke="#e5e8eb"/>
-<text x="63" y="166.00" text-anchor="end" class="small">34%</text>
+<text x="63" y="166.00" text-anchor="end" class="small">35%</text>
 <line x1="72" y1="92.00" x2="1022" y2="92.00" stroke="#e5e8eb"/>
 <text x="63" y="96.00" text-anchor="end" class="small">43%</text>
-<rect x="76.75" y="419.16" width="7.46" height="22.84" fill="#356f8a"/>
-<rect x="84.21" y="421.21" width="7.46" height="20.79" fill="#b06b45"/>
+<rect x="76.75" y="419.42" width="7.46" height="22.58" fill="#356f8a"/>
+<rect x="84.21" y="421.44" width="7.46" height="20.56" fill="#b06b45"/>
 <rect x="91.68" y="129.50" width="7.46" height="312.50" fill="#6c5b8e"/>
 <text x="88.96" y="455" transform="rotate(60 88.96 455)" class="small">&lt;|bos|</text>
-<rect x="110.68" y="419.66" width="7.46" height="22.34" fill="#356f8a"/>
-<rect x="118.14" y="421.92" width="7.46" height="20.08" fill="#b06b45"/>
-<rect x="125.61" y="347.72" width="7.46" height="94.28" fill="#6c5b8e"/>
+<rect x="110.68" y="420.20" width="7.46" height="21.80" fill="#356f8a"/>
+<rect x="118.14" y="422.19" width="7.46" height="19.81" fill="#b06b45"/>
+<rect x="125.61" y="349.03" width="7.46" height="92.97" fill="#6c5b8e"/>
 <text x="122.89" y="455" transform="rotate(60 122.89 455)" class="small">&lt;|task</text>
-<rect x="144.61" y="419.20" width="7.46" height="22.80" fill="#356f8a"/>
-<rect x="152.07" y="421.40" width="7.46" height="20.60" fill="#b06b45"/>
-<rect x="159.54" y="382.34" width="7.46" height="59.66" fill="#6c5b8e"/>
+<rect x="144.61" y="420.16" width="7.46" height="21.84" fill="#356f8a"/>
+<rect x="152.07" y="421.84" width="7.46" height="20.16" fill="#b06b45"/>
+<rect x="159.54" y="382.80" width="7.46" height="59.20" fill="#6c5b8e"/>
 <text x="156.82" y="455" transform="rotate(60 156.82 455)" class="small">↵</text>
-<rect x="178.54" y="423.71" width="7.46" height="18.29" fill="#356f8a"/>
-<rect x="186.00" y="425.23" width="7.46" height="16.77" fill="#b06b45"/>
-<rect x="193.46" y="403.78" width="7.46" height="38.22" fill="#6c5b8e"/>
+<rect x="178.54" y="425.06" width="7.46" height="16.94" fill="#356f8a"/>
+<rect x="186.00" y="426.37" width="7.46" height="15.63" fill="#b06b45"/>
+<rect x="193.46" y="404.26" width="7.46" height="37.74" fill="#6c5b8e"/>
 <text x="190.75" y="455" transform="rotate(60 190.75 455)" class="small">整数</text>
-<rect x="212.46" y="427.93" width="7.46" height="14.07" fill="#356f8a"/>
-<rect x="219.93" y="429.51" width="7.46" height="12.49" fill="#b06b45"/>
-<rect x="227.39" y="411.27" width="7.46" height="30.73" fill="#6c5b8e"/>
+<rect x="212.46" y="429.25" width="7.46" height="12.75" fill="#356f8a"/>
+<rect x="219.93" y="430.62" width="7.46" height="11.38" fill="#b06b45"/>
+<rect x="227.39" y="410.92" width="7.46" height="31.08" fill="#6c5b8e"/>
 <text x="224.68" y="455" transform="rotate(60 224.68 455)" class="small">リス</text>
-<rect x="246.39" y="430.55" width="7.46" height="11.45" fill="#356f8a"/>
-<rect x="253.86" y="431.73" width="7.46" height="10.27" fill="#b06b45"/>
-<rect x="261.32" y="417.39" width="7.46" height="24.61" fill="#6c5b8e"/>
+<rect x="246.39" y="431.06" width="7.46" height="10.94" fill="#356f8a"/>
+<rect x="253.86" y="432.17" width="7.46" height="9.83" fill="#b06b45"/>
+<rect x="261.32" y="417.57" width="7.46" height="24.43" fill="#6c5b8e"/>
 <text x="258.61" y="455" transform="rotate(60 258.61 455)" class="small">トxs�</text>
-<rect x="280.32" y="432.59" width="7.46" height="9.41" fill="#356f8a"/>
-<rect x="287.79" y="433.93" width="7.46" height="8.07" fill="#b06b45"/>
-<rect x="295.25" y="420.61" width="7.46" height="21.39" fill="#6c5b8e"/>
-<text x="292.54" y="455" transform="rotate(60 292.54 455)" class="small">�対し</text>
-<rect x="314.25" y="434.63" width="7.46" height="7.37" fill="#356f8a"/>
-<rect x="321.71" y="435.81" width="7.46" height="6.19" fill="#b06b45"/>
-<rect x="329.18" y="423.18" width="7.46" height="18.82" fill="#6c5b8e"/>
-<text x="326.46" y="455" transform="rotate(60 326.46 455)" class="small">て、</text>
-<rect x="348.18" y="434.56" width="7.46" height="7.44" fill="#356f8a"/>
-<rect x="355.64" y="435.71" width="7.46" height="6.29" fill="#b06b45"/>
-<rect x="363.11" y="425.54" width="7.46" height="16.46" fill="#6c5b8e"/>
-<text x="360.39" y="455" transform="rotate(60 360.39 455)" class="small">各</text>
-<rect x="382.11" y="433.89" width="7.46" height="8.11" fill="#356f8a"/>
-<rect x="389.57" y="435.17" width="7.46" height="6.83" fill="#b06b45"/>
-<rect x="397.04" y="427.03" width="7.46" height="14.97" fill="#6c5b8e"/>
-<text x="394.32" y="455" transform="rotate(60 394.32 455)" class="small">要�</text>
-<rect x="416.04" y="434.60" width="7.46" height="7.40" fill="#356f8a"/>
-<rect x="423.50" y="435.69" width="7.46" height="6.31" fill="#b06b45"/>
-<rect x="430.96" y="428.67" width="7.46" height="13.33" fill="#6c5b8e"/>
-<text x="428.25" y="455" transform="rotate(60 428.25 455)" class="small">�の�</text>
-<rect x="449.96" y="434.12" width="7.46" height="7.88" fill="#356f8a"/>
-<rect x="457.43" y="434.71" width="7.46" height="7.29" fill="#b06b45"/>
-<rect x="464.89" y="428.65" width="7.46" height="13.35" fill="#6c5b8e"/>
-<text x="462.18" y="455" transform="rotate(60 462.18 455)" class="small">��対</text>
-<rect x="483.89" y="433.69" width="7.46" height="8.31" fill="#356f8a"/>
-<rect x="491.36" y="434.93" width="7.46" height="7.07" fill="#b06b45"/>
-<rect x="498.82" y="430.57" width="7.46" height="11.43" fill="#6c5b8e"/>
-<text x="496.11" y="455" transform="rotate(60 496.11 455)" class="small">値</text>
-<rect x="517.82" y="434.18" width="7.46" height="7.82" fill="#356f8a"/>
-<rect x="525.29" y="435.23" width="7.46" height="6.77" fill="#b06b45"/>
-<rect x="532.75" y="431.67" width="7.46" height="10.33" fill="#6c5b8e"/>
-<text x="530.04" y="455" transform="rotate(60 530.04 455)" class="small">を取</text>
-<rect x="551.75" y="433.65" width="7.46" height="8.35" fill="#356f8a"/>
-<rect x="559.21" y="434.50" width="7.46" height="7.50" fill="#b06b45"/>
-<rect x="566.68" y="432.71" width="7.46" height="9.29" fill="#6c5b8e"/>
-<text x="563.96" y="455" transform="rotate(60 563.96 455)" class="small">る</text>
-<rect x="585.68" y="433.90" width="7.46" height="8.10" fill="#356f8a"/>
-<rect x="593.14" y="434.97" width="7.46" height="7.03" fill="#b06b45"/>
-<rect x="600.61" y="433.30" width="7.46" height="8.70" fill="#6c5b8e"/>
-<text x="597.89" y="455" transform="rotate(60 597.89 455)" class="small">solve</text>
-<rect x="619.61" y="432.17" width="7.46" height="9.83" fill="#356f8a"/>
-<rect x="627.07" y="433.44" width="7.46" height="8.56" fill="#b06b45"/>
-<rect x="634.54" y="434.18" width="7.46" height="7.82" fill="#6c5b8e"/>
-<text x="631.82" y="455" transform="rotate(60 631.82 455)" class="small">関数</text>
-<rect x="653.54" y="433.44" width="7.46" height="8.56" fill="#356f8a"/>
-<rect x="661.00" y="434.51" width="7.46" height="7.49" fill="#b06b45"/>
-<rect x="668.46" y="434.89" width="7.46" height="7.11" fill="#6c5b8e"/>
-<text x="665.75" y="455" transform="rotate(60 665.75 455)" class="small">を書</text>
-<rect x="687.46" y="433.36" width="7.46" height="8.64" fill="#356f8a"/>
-<rect x="694.93" y="434.23" width="7.46" height="7.77" fill="#b06b45"/>
-<rect x="702.39" y="435.37" width="7.46" height="6.63" fill="#6c5b8e"/>
-<text x="699.68" y="455" transform="rotate(60 699.68 455)" class="small">い</text>
-<rect x="721.39" y="432.84" width="7.46" height="9.16" fill="#356f8a"/>
-<rect x="728.86" y="433.85" width="7.46" height="8.15" fill="#b06b45"/>
-<rect x="736.32" y="435.71" width="7.46" height="6.29" fill="#6c5b8e"/>
-<text x="733.61" y="455" transform="rotate(60 733.61 455)" class="small">て�</text>
-<rect x="755.32" y="432.59" width="7.46" height="9.41" fill="#356f8a"/>
-<rect x="762.79" y="433.47" width="7.46" height="8.53" fill="#b06b45"/>
-<rect x="770.25" y="435.88" width="7.46" height="6.12" fill="#6c5b8e"/>
-<text x="767.54" y="455" transform="rotate(60 767.54 455)" class="small">�だ�</text>
-<rect x="789.25" y="431.16" width="7.46" height="10.84" fill="#356f8a"/>
-<rect x="796.71" y="431.85" width="7.46" height="10.15" fill="#b06b45"/>
-<rect x="804.18" y="436.67" width="7.46" height="5.33" fill="#6c5b8e"/>
-<text x="801.46" y="455" transform="rotate(60 801.46 455)" class="small">�い。</text>
-<rect x="823.18" y="424.43" width="7.46" height="17.57" fill="#356f8a"/>
-<rect x="830.64" y="423.46" width="7.46" height="18.54" fill="#b06b45"/>
-<rect x="838.11" y="436.33" width="7.46" height="5.67" fill="#6c5b8e"/>
+<rect x="280.32" y="432.80" width="7.46" height="9.20" fill="#356f8a"/>
+<rect x="287.79" y="434.04" width="7.46" height="7.96" fill="#b06b45"/>
+<rect x="295.25" y="420.09" width="7.46" height="21.91" fill="#6c5b8e"/>
+<text x="292.54" y="455" transform="rotate(60 292.54 455)" class="small">�ら各</text>
+<rect x="314.25" y="432.05" width="7.46" height="9.95" fill="#356f8a"/>
+<rect x="321.71" y="433.68" width="7.46" height="8.32" fill="#b06b45"/>
+<rect x="329.18" y="422.88" width="7.46" height="19.12" fill="#6c5b8e"/>
+<text x="326.46" y="455" transform="rotate(60 326.46 455)" class="small">要�</text>
+<rect x="348.18" y="433.51" width="7.46" height="8.49" fill="#356f8a"/>
+<rect x="355.64" y="434.79" width="7.46" height="7.21" fill="#b06b45"/>
+<rect x="363.11" y="425.39" width="7.46" height="16.61" fill="#6c5b8e"/>
+<text x="360.39" y="455" transform="rotate(60 360.39 455)" class="small">�の�</text>
+<rect x="382.11" y="433.92" width="7.46" height="8.08" fill="#356f8a"/>
+<rect x="389.57" y="434.74" width="7.46" height="7.26" fill="#b06b45"/>
+<rect x="397.04" y="425.70" width="7.46" height="16.30" fill="#6c5b8e"/>
+<text x="394.32" y="455" transform="rotate(60 394.32 455)" class="small">��対</text>
+<rect x="416.04" y="433.37" width="7.46" height="8.63" fill="#356f8a"/>
+<rect x="423.50" y="434.76" width="7.46" height="7.24" fill="#b06b45"/>
+<rect x="430.96" y="428.40" width="7.46" height="13.60" fill="#6c5b8e"/>
+<text x="428.25" y="455" transform="rotate(60 428.25 455)" class="small">値</text>
+<rect x="449.96" y="433.96" width="7.46" height="8.04" fill="#356f8a"/>
+<rect x="457.43" y="435.09" width="7.46" height="6.91" fill="#b06b45"/>
+<rect x="464.89" y="429.86" width="7.46" height="12.14" fill="#6c5b8e"/>
+<text x="462.18" y="455" transform="rotate(60 462.18 455)" class="small">を取</text>
+<rect x="483.89" y="433.58" width="7.46" height="8.42" fill="#356f8a"/>
+<rect x="491.36" y="434.57" width="7.46" height="7.43" fill="#b06b45"/>
+<rect x="498.82" y="431.20" width="7.46" height="10.80" fill="#6c5b8e"/>
+<text x="496.11" y="455" transform="rotate(60 496.11 455)" class="small">る</text>
+<rect x="517.82" y="433.77" width="7.46" height="8.23" fill="#356f8a"/>
+<rect x="525.29" y="434.84" width="7.46" height="7.16" fill="#b06b45"/>
+<rect x="532.75" y="431.99" width="7.46" height="10.01" fill="#6c5b8e"/>
+<text x="530.04" y="455" transform="rotate(60 530.04 455)" class="small">solve</text>
+<rect x="551.75" y="432.16" width="7.46" height="9.84" fill="#356f8a"/>
+<rect x="559.21" y="433.41" width="7.46" height="8.59" fill="#b06b45"/>
+<rect x="566.68" y="433.17" width="7.46" height="8.83" fill="#6c5b8e"/>
+<text x="563.96" y="455" transform="rotate(60 563.96 455)" class="small">関数</text>
+<rect x="585.68" y="433.27" width="7.46" height="8.73" fill="#356f8a"/>
+<rect x="593.14" y="434.39" width="7.46" height="7.61" fill="#b06b45"/>
+<rect x="600.61" y="434.01" width="7.46" height="7.99" fill="#6c5b8e"/>
+<text x="597.89" y="455" transform="rotate(60 597.89 455)" class="small">を書</text>
+<rect x="619.61" y="433.11" width="7.46" height="8.89" fill="#356f8a"/>
+<rect x="627.07" y="434.07" width="7.46" height="7.93" fill="#b06b45"/>
+<rect x="634.54" y="434.60" width="7.46" height="7.40" fill="#6c5b8e"/>
+<text x="631.82" y="455" transform="rotate(60 631.82 455)" class="small">い</text>
+<rect x="653.54" y="432.54" width="7.46" height="9.46" fill="#356f8a"/>
+<rect x="661.00" y="433.62" width="7.46" height="8.38" fill="#b06b45"/>
+<rect x="668.46" y="435.10" width="7.46" height="6.90" fill="#6c5b8e"/>
+<text x="665.75" y="455" transform="rotate(60 665.75 455)" class="small">て�</text>
+<rect x="687.46" y="432.27" width="7.46" height="9.73" fill="#356f8a"/>
+<rect x="694.93" y="433.17" width="7.46" height="8.83" fill="#b06b45"/>
+<rect x="702.39" y="435.35" width="7.46" height="6.65" fill="#6c5b8e"/>
+<text x="699.68" y="455" transform="rotate(60 699.68 455)" class="small">�だ�</text>
+<rect x="721.39" y="430.96" width="7.46" height="11.04" fill="#356f8a"/>
+<rect x="728.86" y="431.74" width="7.46" height="10.26" fill="#b06b45"/>
+<rect x="736.32" y="436.24" width="7.46" height="5.76" fill="#6c5b8e"/>
+<text x="733.61" y="455" transform="rotate(60 733.61 455)" class="small">�い。</text>
+<rect x="755.32" y="424.68" width="7.46" height="17.32" fill="#356f8a"/>
+<rect x="762.79" y="423.83" width="7.46" height="18.17" fill="#b06b45"/>
+<rect x="770.25" y="436.01" width="7.46" height="5.99" fill="#6c5b8e"/>
+<text x="767.54" y="455" transform="rotate(60 767.54 455)" class="small">↵</text>
+<rect x="789.25" y="427.71" width="7.46" height="14.29" fill="#356f8a"/>
+<rect x="796.71" y="428.73" width="7.46" height="13.27" fill="#b06b45"/>
+<rect x="804.18" y="436.75" width="7.46" height="5.25" fill="#6c5b8e"/>
+<text x="801.46" y="455" transform="rotate(60 801.46 455)" class="small">&lt;|code</text>
+<rect x="823.18" y="424.44" width="7.46" height="17.56" fill="#356f8a"/>
+<rect x="830.64" y="423.57" width="7.46" height="18.43" fill="#b06b45"/>
+<rect x="838.11" y="436.82" width="7.46" height="5.18" fill="#6c5b8e"/>
 <text x="835.39" y="455" transform="rotate(60 835.39 455)" class="small">↵</text>
-<rect x="857.11" y="428.00" width="7.46" height="14.00" fill="#356f8a"/>
-<rect x="864.57" y="429.02" width="7.46" height="12.98" fill="#b06b45"/>
-<rect x="872.04" y="437.08" width="7.46" height="4.92" fill="#6c5b8e"/>
-<text x="869.32" y="455" transform="rotate(60 869.32 455)" class="small">&lt;|code</text>
-<rect x="891.04" y="424.22" width="7.46" height="17.78" fill="#356f8a"/>
-<rect x="898.50" y="423.23" width="7.46" height="18.77" fill="#b06b45"/>
-<rect x="905.96" y="437.05" width="7.46" height="4.95" fill="#6c5b8e"/>
-<text x="903.25" y="455" transform="rotate(60 903.25 455)" class="small">↵</text>
-<rect x="924.96" y="423.60" width="7.46" height="18.40" fill="#356f8a"/>
-<rect x="932.43" y="423.52" width="7.46" height="18.48" fill="#b06b45"/>
-<rect x="939.89" y="437.68" width="7.46" height="4.32" fill="#6c5b8e"/>
-<text x="937.18" y="455" transform="rotate(60 937.18 455)" class="small">de</text>
-<rect x="958.89" y="428.30" width="7.46" height="13.70" fill="#356f8a"/>
-<rect x="966.36" y="429.19" width="7.46" height="12.81" fill="#b06b45"/>
-<rect x="973.82" y="438.27" width="7.46" height="3.73" fill="#6c5b8e"/>
-<text x="971.11" y="455" transform="rotate(60 971.11 455)" class="small">f␠solve</text>
-<rect x="992.82" y="430.43" width="7.46" height="11.57" fill="#356f8a"/>
-<rect x="1000.29" y="429.37" width="7.46" height="12.63" fill="#b06b45"/>
-<rect x="1007.75" y="438.57" width="7.46" height="3.43" fill="#6c5b8e"/>
-<text x="1005.04" y="455" transform="rotate(60 1005.04 455)" class="small">(xs</text>
+<rect x="857.11" y="423.57" width="7.46" height="18.43" fill="#356f8a"/>
+<rect x="864.57" y="423.60" width="7.46" height="18.40" fill="#b06b45"/>
+<rect x="872.04" y="437.44" width="7.46" height="4.56" fill="#6c5b8e"/>
+<text x="869.32" y="455" transform="rotate(60 869.32 455)" class="small">de</text>
+<rect x="891.04" y="428.10" width="7.46" height="13.90" fill="#356f8a"/>
+<rect x="898.50" y="429.02" width="7.46" height="12.98" fill="#b06b45"/>
+<rect x="905.96" y="438.06" width="7.46" height="3.94" fill="#6c5b8e"/>
+<text x="903.25" y="455" transform="rotate(60 903.25 455)" class="small">f␠solve</text>
+<rect x="924.96" y="430.13" width="7.46" height="11.87" fill="#356f8a"/>
+<rect x="932.43" y="429.04" width="7.46" height="12.96" fill="#b06b45"/>
+<rect x="939.89" y="438.37" width="7.46" height="3.63" fill="#6c5b8e"/>
+<text x="937.18" y="455" transform="rotate(60 937.18 455)" class="small">(xs</text>
+<rect x="958.89" y="429.69" width="7.46" height="12.31" fill="#356f8a"/>
+<rect x="966.36" y="430.09" width="7.46" height="11.91" fill="#b06b45"/>
+<rect x="973.82" y="438.40" width="7.46" height="3.60" fill="#6c5b8e"/>
+<text x="971.11" y="455" transform="rotate(60 971.11 455)" class="small">:␠list</text>
+<rect x="992.82" y="425.14" width="7.46" height="16.86" fill="#356f8a"/>
+<rect x="1000.29" y="425.02" width="7.46" height="16.98" fill="#b06b45"/>
+<rect x="1007.75" y="438.54" width="7.46" height="3.46" fill="#6c5b8e"/>
+<text x="1005.04" y="455" transform="rotate(60 1005.04 455)" class="small">[int]</text>
 <rect x="72" y="528" width="12" height="12" fill="#356f8a"/>
 <text x="89" y="538" class="small">生attention</text>
 <rect x="332" y="528" width="12" height="12" fill="#b06b45"/>

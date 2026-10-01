@@ -10,113 +10,89 @@
 <line x1="72" y1="372.00" x2="1022" y2="372.00" stroke="#e5e8eb"/>
 <text x="63" y="376.00" text-anchor="end" class="small">6%</text>
 <line x1="72" y1="302.00" x2="1022" y2="302.00" stroke="#e5e8eb"/>
-<text x="63" y="306.00" text-anchor="end" class="small">12%</text>
+<text x="63" y="306.00" text-anchor="end" class="small">13%</text>
 <line x1="72" y1="232.00" x2="1022" y2="232.00" stroke="#e5e8eb"/>
-<text x="63" y="236.00" text-anchor="end" class="small">18%</text>
+<text x="63" y="236.00" text-anchor="end" class="small">19%</text>
 <line x1="72" y1="162.00" x2="1022" y2="162.00" stroke="#e5e8eb"/>
-<text x="63" y="166.00" text-anchor="end" class="small">24%</text>
+<text x="63" y="166.00" text-anchor="end" class="small">25%</text>
 <line x1="72" y1="92.00" x2="1022" y2="92.00" stroke="#e5e8eb"/>
-<text x="63" y="96.00" text-anchor="end" class="small">30%</text>
-<rect x="77.32" y="379.47" width="8.36" height="62.53" fill="#356f8a"/>
-<rect x="85.68" y="381.48" width="8.36" height="60.52" fill="#b06b45"/>
-<rect x="94.04" y="129.50" width="8.36" height="312.50" fill="#6c5b8e"/>
-<text x="91.00" y="455" transform="rotate(60 91.00 455)" class="small">&lt;|bos|</text>
-<rect x="115.32" y="391.43" width="8.36" height="50.57" fill="#356f8a"/>
-<rect x="123.68" y="392.41" width="8.36" height="49.59" fill="#b06b45"/>
-<rect x="132.04" y="317.47" width="8.36" height="124.53" fill="#6c5b8e"/>
-<text x="129.00" y="455" transform="rotate(60 129.00 455)" class="small">&lt;|task</text>
-<rect x="153.32" y="409.00" width="8.36" height="33.00" fill="#356f8a"/>
-<rect x="161.68" y="405.46" width="8.36" height="36.54" fill="#b06b45"/>
-<rect x="170.04" y="352.61" width="8.36" height="89.39" fill="#6c5b8e"/>
-<text x="167.00" y="455" transform="rotate(60 167.00 455)" class="small">↵</text>
-<rect x="191.32" y="416.87" width="8.36" height="25.13" fill="#356f8a"/>
-<rect x="199.68" y="420.13" width="8.36" height="21.87" fill="#b06b45"/>
-<rect x="208.04" y="386.78" width="8.36" height="55.22" fill="#6c5b8e"/>
-<text x="205.00" y="455" transform="rotate(60 205.00 455)" class="small">整数リストxs�</text>
-<rect x="229.32" y="422.02" width="8.36" height="19.98" fill="#356f8a"/>
-<rect x="237.68" y="424.89" width="8.36" height="17.11" fill="#b06b45"/>
-<rect x="246.04" y="395.63" width="8.36" height="46.37" fill="#6c5b8e"/>
-<text x="243.00" y="455" transform="rotate(60 243.00 455)" class="small">�</text>
-<rect x="267.32" y="421.12" width="8.36" height="20.88" fill="#356f8a"/>
-<rect x="275.68" y="423.70" width="8.36" height="18.30" fill="#b06b45"/>
-<rect x="284.04" y="399.48" width="8.36" height="42.52" fill="#6c5b8e"/>
-<text x="281.00" y="455" transform="rotate(60 281.00 455)" class="small">対</text>
-<rect x="305.32" y="421.60" width="8.36" height="20.40" fill="#356f8a"/>
-<rect x="313.68" y="425.89" width="8.36" height="16.11" fill="#b06b45"/>
-<rect x="322.04" y="402.73" width="8.36" height="39.27" fill="#6c5b8e"/>
-<text x="319.00" y="455" transform="rotate(60 319.00 455)" class="small">して、</text>
-<rect x="343.32" y="410.82" width="8.36" height="31.18" fill="#356f8a"/>
-<rect x="351.68" y="412.91" width="8.36" height="29.09" fill="#b06b45"/>
-<rect x="360.04" y="406.66" width="8.36" height="35.34" fill="#6c5b8e"/>
-<text x="357.00" y="455" transform="rotate(60 357.00 455)" class="small">各要素の絶対値</text>
-<rect x="381.32" y="418.45" width="8.36" height="23.55" fill="#356f8a"/>
-<rect x="389.68" y="423.60" width="8.36" height="18.40" fill="#b06b45"/>
-<rect x="398.04" y="413.25" width="8.36" height="28.75" fill="#6c5b8e"/>
-<text x="395.00" y="455" transform="rotate(60 395.00 455)" class="small">を取</text>
-<rect x="419.32" y="414.17" width="8.36" height="27.83" fill="#356f8a"/>
-<rect x="427.68" y="417.76" width="8.36" height="24.24" fill="#b06b45"/>
-<rect x="436.04" y="414.57" width="8.36" height="27.43" fill="#6c5b8e"/>
-<text x="433.00" y="455" transform="rotate(60 433.00 455)" class="small">るsolve関数を</text>
-<rect x="457.32" y="412.86" width="8.36" height="29.14" fill="#356f8a"/>
-<rect x="465.68" y="415.18" width="8.36" height="26.82" fill="#b06b45"/>
-<rect x="474.04" y="413.83" width="8.36" height="28.17" fill="#6c5b8e"/>
-<text x="471.00" y="455" transform="rotate(60 471.00 455)" class="small">いてください。</text>
-<rect x="495.32" y="405.03" width="8.36" height="36.97" fill="#356f8a"/>
-<rect x="503.68" y="398.03" width="8.36" height="43.97" fill="#b06b45"/>
-<rect x="512.04" y="412.42" width="8.36" height="29.58" fill="#6c5b8e"/>
-<text x="509.00" y="455" transform="rotate(60 509.00 455)" class="small">↵</text>
-<rect x="533.32" y="399.20" width="8.36" height="42.80" fill="#356f8a"/>
-<rect x="541.68" y="398.43" width="8.36" height="43.57" fill="#b06b45"/>
-<rect x="550.04" y="414.90" width="8.36" height="27.10" fill="#6c5b8e"/>
+<text x="63" y="96.00" text-anchor="end" class="small">31%</text>
+<rect x="79.00" y="373.18" width="11.00" height="68.82" fill="#356f8a"/>
+<rect x="90.00" y="375.22" width="11.00" height="66.78" fill="#b06b45"/>
+<rect x="101.00" y="129.50" width="11.00" height="312.50" fill="#6c5b8e"/>
+<text x="97.00" y="455" transform="rotate(60 97.00 455)" class="small">&lt;|bos|</text>
+<rect x="129.00" y="387.04" width="11.00" height="54.96" fill="#356f8a"/>
+<rect x="140.00" y="388.37" width="11.00" height="53.63" fill="#b06b45"/>
+<rect x="151.00" y="317.05" width="11.00" height="124.95" fill="#6c5b8e"/>
+<text x="147.00" y="455" transform="rotate(60 147.00 455)" class="small">&lt;|task</text>
+<rect x="179.00" y="405.61" width="11.00" height="36.39" fill="#356f8a"/>
+<rect x="190.00" y="401.36" width="11.00" height="40.64" fill="#b06b45"/>
+<rect x="201.00" y="353.47" width="11.00" height="88.53" fill="#6c5b8e"/>
+<text x="197.00" y="455" transform="rotate(60 197.00 455)" class="small">↵</text>
+<rect x="229.00" y="416.31" width="11.00" height="25.69" fill="#356f8a"/>
+<rect x="240.00" y="418.03" width="11.00" height="23.97" fill="#b06b45"/>
+<rect x="251.00" y="386.36" width="11.00" height="55.64" fill="#6c5b8e"/>
+<text x="247.00" y="455" transform="rotate(60 247.00 455)" class="small">整数リストxsから</text>
+<rect x="279.00" y="410.03" width="11.00" height="31.97" fill="#356f8a"/>
+<rect x="290.00" y="414.50" width="11.00" height="27.50" fill="#b06b45"/>
+<rect x="301.00" y="391.60" width="11.00" height="50.40" fill="#6c5b8e"/>
+<text x="297.00" y="455" transform="rotate(60 297.00 455)" class="small">各要素の絶対値</text>
+<rect x="329.00" y="420.20" width="11.00" height="21.80" fill="#356f8a"/>
+<rect x="340.00" y="425.58" width="11.00" height="16.42" fill="#b06b45"/>
+<rect x="351.00" y="401.51" width="11.00" height="40.49" fill="#6c5b8e"/>
+<text x="347.00" y="455" transform="rotate(60 347.00 455)" class="small">を取</text>
+<rect x="379.00" y="419.91" width="11.00" height="22.09" fill="#356f8a"/>
+<rect x="390.00" y="423.08" width="11.00" height="18.92" fill="#b06b45"/>
+<rect x="401.00" y="405.69" width="11.00" height="36.31" fill="#6c5b8e"/>
+<text x="397.00" y="455" transform="rotate(60 397.00 455)" class="small">るsolve関数を</text>
+<rect x="429.00" y="417.94" width="11.00" height="24.06" fill="#356f8a"/>
+<rect x="440.00" y="421.36" width="11.00" height="20.64" fill="#b06b45"/>
+<rect x="451.00" y="403.77" width="11.00" height="38.23" fill="#6c5b8e"/>
+<text x="447.00" y="455" transform="rotate(60 447.00 455)" class="small">いてください。</text>
+<rect x="479.00" y="394.38" width="11.00" height="47.62" fill="#356f8a"/>
+<rect x="490.00" y="385.20" width="11.00" height="56.80" fill="#b06b45"/>
+<rect x="501.00" y="399.77" width="11.00" height="42.23" fill="#6c5b8e"/>
+<text x="497.00" y="455" transform="rotate(60 497.00 455)" class="small">↵</text>
+<rect x="529.00" y="399.18" width="11.00" height="42.82" fill="#356f8a"/>
+<rect x="540.00" y="398.61" width="11.00" height="43.39" fill="#b06b45"/>
+<rect x="551.00" y="406.81" width="11.00" height="35.19" fill="#6c5b8e"/>
 <text x="547.00" y="455" transform="rotate(60 547.00 455)" class="small">&lt;|code</text>
-<rect x="571.32" y="398.04" width="8.36" height="43.96" fill="#356f8a"/>
-<rect x="579.68" y="388.16" width="8.36" height="53.84" fill="#b06b45"/>
-<rect x="588.04" y="415.45" width="8.36" height="26.55" fill="#6c5b8e"/>
-<text x="585.00" y="455" transform="rotate(60 585.00 455)" class="small">↵</text>
-<rect x="609.32" y="409.05" width="8.36" height="32.95" fill="#356f8a"/>
-<rect x="617.68" y="409.96" width="8.36" height="32.04" fill="#b06b45"/>
-<rect x="626.04" y="422.41" width="8.36" height="19.59" fill="#6c5b8e"/>
-<text x="623.00" y="455" transform="rotate(60 623.00 455)" class="small">def␠solve</text>
-<rect x="647.32" y="405.23" width="8.36" height="36.77" fill="#356f8a"/>
-<rect x="655.68" y="403.57" width="8.36" height="38.43" fill="#b06b45"/>
-<rect x="664.04" y="422.41" width="8.36" height="19.59" fill="#6c5b8e"/>
-<text x="661.00" y="455" transform="rotate(60 661.00 455)" class="small">(xs:␠list</text>
-<rect x="685.32" y="404.77" width="8.36" height="37.23" fill="#356f8a"/>
-<rect x="693.68" y="404.11" width="8.36" height="37.89" fill="#b06b45"/>
-<rect x="702.04" y="424.34" width="8.36" height="17.66" fill="#6c5b8e"/>
-<text x="699.00" y="455" transform="rotate(60 699.00 455)" class="small">:␠int)␠</text>
-<rect x="723.32" y="389.52" width="8.36" height="52.48" fill="#356f8a"/>
-<rect x="731.68" y="381.90" width="8.36" height="60.10" fill="#b06b45"/>
-<rect x="740.04" y="418.21" width="8.36" height="23.79" fill="#6c5b8e"/>
-<text x="737.00" y="455" transform="rotate(60 737.00 455)" class="small">-&gt;␠lis</text>
-<rect x="761.32" y="369.82" width="8.36" height="72.18" fill="#356f8a"/>
-<rect x="769.68" y="363.92" width="8.36" height="78.08" fill="#b06b45"/>
-<rect x="778.04" y="413.60" width="8.36" height="28.40" fill="#6c5b8e"/>
-<text x="775.00" y="455" transform="rotate(60 775.00 455)" class="small">output:␠l</text>
-<rect x="799.32" y="396.26" width="8.36" height="45.74" fill="#356f8a"/>
-<rect x="807.68" y="400.80" width="8.36" height="41.20" fill="#b06b45"/>
-<rect x="816.04" y="418.83" width="8.36" height="23.17" fill="#6c5b8e"/>
-<text x="813.00" y="455" transform="rotate(60 813.00 455)" class="small">list(reve</text>
-<rect x="837.32" y="308.79" width="8.36" height="133.21" fill="#356f8a"/>
-<rect x="845.68" y="297.15" width="8.36" height="144.85" fill="#b06b45"/>
-<rect x="854.04" y="407.73" width="8.36" height="34.27" fill="#6c5b8e"/>
-<text x="851.00" y="455" transform="rotate(60 851.00 455)" class="small">result:␠l</text>
-<rect x="875.32" y="381.80" width="8.36" height="60.20" fill="#356f8a"/>
-<rect x="883.68" y="383.15" width="8.36" height="58.85" fill="#b06b45"/>
-<rect x="892.04" y="422.62" width="8.36" height="19.38" fill="#6c5b8e"/>
-<text x="889.00" y="455" transform="rotate(60 889.00 455)" class="small">␠=␠[]↵␠␠␠</text>
-<rect x="913.32" y="374.66" width="8.36" height="67.34" fill="#356f8a"/>
-<rect x="921.68" y="377.98" width="8.36" height="64.02" fill="#b06b45"/>
-<rect x="930.04" y="427.15" width="8.36" height="14.85" fill="#6c5b8e"/>
-<text x="927.00" y="455" transform="rotate(60 927.00 455)" class="small">output</text>
-<rect x="951.32" y="358.82" width="8.36" height="83.18" fill="#356f8a"/>
-<rect x="959.68" y="362.78" width="8.36" height="79.22" fill="#b06b45"/>
-<rect x="968.04" y="425.18" width="8.36" height="16.82" fill="#6c5b8e"/>
-<text x="965.00" y="455" transform="rotate(60 965.00 455)" class="small">:↵␠␠␠␠␠␠␠</text>
-<rect x="989.32" y="346.64" width="8.36" height="95.36" fill="#356f8a"/>
-<rect x="997.68" y="352.06" width="8.36" height="89.94" fill="#b06b45"/>
-<rect x="1006.04" y="387.65" width="8.36" height="54.35" fill="#6c5b8e"/>
-<text x="1003.00" y="455" transform="rotate(60 1003.00 455)" class="small">abs(x)</text>
+<rect x="579.00" y="382.48" width="11.00" height="59.52" fill="#356f8a"/>
+<rect x="590.00" y="372.56" width="11.00" height="69.44" fill="#b06b45"/>
+<rect x="601.00" y="406.84" width="11.00" height="35.16" fill="#6c5b8e"/>
+<text x="597.00" y="455" transform="rotate(60 597.00 455)" class="small">↵</text>
+<rect x="629.00" y="401.90" width="11.00" height="40.10" fill="#356f8a"/>
+<rect x="640.00" y="403.74" width="11.00" height="38.26" fill="#b06b45"/>
+<rect x="651.00" y="416.08" width="11.00" height="25.92" fill="#6c5b8e"/>
+<text x="647.00" y="455" transform="rotate(60 647.00 455)" class="small">def␠solve</text>
+<rect x="679.00" y="387.77" width="11.00" height="54.23" fill="#356f8a"/>
+<rect x="690.00" y="385.40" width="11.00" height="56.60" fill="#b06b45"/>
+<rect x="701.00" y="414.37" width="11.00" height="27.63" fill="#6c5b8e"/>
+<text x="697.00" y="455" transform="rotate(60 697.00 455)" class="small">(xs:␠list</text>
+<rect x="729.00" y="390.76" width="11.00" height="51.24" fill="#356f8a"/>
+<rect x="740.00" y="389.94" width="11.00" height="52.06" fill="#b06b45"/>
+<rect x="751.00" y="417.99" width="11.00" height="24.01" fill="#6c5b8e"/>
+<text x="747.00" y="455" transform="rotate(60 747.00 455)" class="small">:␠int)␠</text>
+<rect x="779.00" y="354.57" width="11.00" height="87.43" fill="#356f8a"/>
+<rect x="790.00" y="344.94" width="11.00" height="97.06" fill="#b06b45"/>
+<rect x="801.00" y="407.19" width="11.00" height="34.81" fill="#6c5b8e"/>
+<text x="797.00" y="455" transform="rotate(60 797.00 455)" class="small">-&gt;␠lis</text>
+<rect x="829.00" y="314.69" width="11.00" height="127.31" fill="#356f8a"/>
+<rect x="840.00" y="306.68" width="11.00" height="135.32" fill="#b06b45"/>
+<rect x="851.00" y="404.40" width="11.00" height="37.60" fill="#6c5b8e"/>
+<text x="847.00" y="455" transform="rotate(60 847.00 455)" class="small">result:␠l</text>
+<rect x="879.00" y="347.63" width="11.00" height="94.37" fill="#356f8a"/>
+<rect x="890.00" y="358.18" width="11.00" height="83.82" fill="#b06b45"/>
+<rect x="901.00" y="417.84" width="11.00" height="24.16" fill="#6c5b8e"/>
+<text x="897.00" y="455" transform="rotate(60 897.00 455)" class="small">␠=␠[]↵␠␠␠</text>
+<rect x="929.00" y="336.40" width="11.00" height="105.60" fill="#356f8a"/>
+<rect x="940.00" y="338.17" width="11.00" height="103.83" fill="#b06b45"/>
+<rect x="951.00" y="418.37" width="11.00" height="23.63" fill="#6c5b8e"/>
+<text x="947.00" y="455" transform="rotate(60 947.00 455)" class="small">:↵␠␠␠␠␠␠␠</text>
+<rect x="979.00" y="322.83" width="11.00" height="119.17" fill="#356f8a"/>
+<rect x="990.00" y="331.96" width="11.00" height="110.04" fill="#b06b45"/>
+<rect x="1001.00" y="384.26" width="11.00" height="57.74" fill="#6c5b8e"/>
+<text x="997.00" y="455" transform="rotate(60 997.00 455)" class="small">abs(x)</text>
 <rect x="72" y="528" width="12" height="12" fill="#356f8a"/>
 <text x="89" y="538" class="small">生attention</text>
 <rect x="332" y="528" width="12" height="12" fill="#b06b45"/>

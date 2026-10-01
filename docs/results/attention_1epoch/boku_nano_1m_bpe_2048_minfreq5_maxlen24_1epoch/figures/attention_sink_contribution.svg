@@ -11,43 +11,43 @@
 <text x="78" y="522.00" text-anchor="end" class="small">0%</text>
 <line x1="220.00" y1="88" x2="220.00" y2="518" stroke="#e5e8eb"/>
 <line x1="88" y1="432.00" x2="748" y2="432.00" stroke="#e5e8eb"/>
-<text x="220.00" y="538" text-anchor="middle" class="small">1%</text>
-<text x="78" y="436.00" text-anchor="end" class="small">1%</text>
+<text x="220.00" y="538" text-anchor="middle" class="small">2%</text>
+<text x="78" y="436.00" text-anchor="end" class="small">2%</text>
 <line x1="352.00" y1="88" x2="352.00" y2="518" stroke="#e5e8eb"/>
 <line x1="88" y1="346.00" x2="748" y2="346.00" stroke="#e5e8eb"/>
 <text x="352.00" y="538" text-anchor="middle" class="small">3%</text>
 <text x="78" y="350.00" text-anchor="end" class="small">3%</text>
 <line x1="484.00" y1="88" x2="484.00" y2="518" stroke="#e5e8eb"/>
 <line x1="88" y1="260.00" x2="748" y2="260.00" stroke="#e5e8eb"/>
-<text x="484.00" y="538" text-anchor="middle" class="small">4%</text>
-<text x="78" y="264.00" text-anchor="end" class="small">4%</text>
+<text x="484.00" y="538" text-anchor="middle" class="small">5%</text>
+<text x="78" y="264.00" text-anchor="end" class="small">5%</text>
 <line x1="616.00" y1="88" x2="616.00" y2="518" stroke="#e5e8eb"/>
 <line x1="88" y1="174.00" x2="748" y2="174.00" stroke="#e5e8eb"/>
 <text x="616.00" y="538" text-anchor="middle" class="small">6%</text>
 <text x="78" y="178.00" text-anchor="end" class="small">6%</text>
 <line x1="748.00" y1="88" x2="748.00" y2="518" stroke="#e5e8eb"/>
 <line x1="88" y1="88.00" x2="748" y2="88.00" stroke="#e5e8eb"/>
-<text x="748.00" y="538" text-anchor="middle" class="small">7%</text>
-<text x="78" y="92.00" text-anchor="end" class="small">7%</text>
+<text x="748.00" y="538" text-anchor="middle" class="small">8%</text>
+<text x="78" y="92.00" text-anchor="end" class="small">8%</text>
 <line x1="88" y1="518" x2="748" y2="88" stroke="#8b949d" stroke-dasharray="5 5"/>
-<circle cx="525.76" cy="179.03" r="3" fill="#356f8a"/>
-<circle cx="596.28" cy="139.60" r="5" fill="#b35438"/>
-<text x="603.28" y="133.60" class="small">L1H2</text>
-<circle cx="599.71" cy="202.50" r="5" fill="#b35438"/>
-<text x="606.71" y="196.50" class="small">L1H3</text>
-<circle cx="528.31" cy="119.85" r="5" fill="#b35438"/>
-<text x="535.31" y="113.85" class="small">L1H4</text>
-<circle cx="532.19" cy="246.03" r="5" fill="#b35438"/>
-<text x="539.19" y="240.03" class="small">L2H1</text>
-<circle cx="549.08" cy="238.28" r="5" fill="#b35438"/>
-<text x="556.08" y="232.28" class="small">L2H2</text>
-<circle cx="529.00" cy="212.87" r="5" fill="#b35438"/>
-<text x="536.00" y="206.87" class="small">L2H3</text>
-<circle cx="464.38" cy="273.09" r="3" fill="#356f8a"/>
-<circle cx="484.63" cy="223.66" r="3" fill="#356f8a"/>
-<circle cx="473.09" cy="194.04" r="3" fill="#356f8a"/>
-<circle cx="514.96" cy="154.71" r="3" fill="#356f8a"/>
-<circle cx="504.95" cy="247.27" r="3" fill="#356f8a"/>
+<circle cx="543.84" cy="181.21" r="3" fill="#356f8a"/>
+<circle cx="619.60" cy="151.09" r="5" fill="#b35438"/>
+<text x="626.60" y="145.09" class="small">L1H2</text>
+<circle cx="590.53" cy="215.60" r="5" fill="#b35438"/>
+<text x="597.53" y="209.60" class="small">L1H3</text>
+<circle cx="555.49" cy="119.85" r="5" fill="#b35438"/>
+<text x="562.49" y="113.85" class="small">L1H4</text>
+<circle cx="553.41" cy="235.79" r="5" fill="#b35438"/>
+<text x="560.41" y="229.79" class="small">L2H1</text>
+<circle cx="558.91" cy="240.11" r="5" fill="#b35438"/>
+<text x="565.91" y="234.11" class="small">L2H2</text>
+<circle cx="559.55" cy="199.34" r="5" fill="#b35438"/>
+<text x="566.55" y="193.34" class="small">L2H3</text>
+<circle cx="484.91" cy="265.43" r="3" fill="#356f8a"/>
+<circle cx="493.82" cy="221.90" r="3" fill="#356f8a"/>
+<circle cx="493.06" cy="193.00" r="3" fill="#356f8a"/>
+<circle cx="538.30" cy="145.70" r="3" fill="#356f8a"/>
+<circle cx="543.83" cy="233.05" r="3" fill="#356f8a"/>
 <text x="418.0" y="572" text-anchor="middle">BOSへの生attention</text>
 <text x="22" y="303.0" text-anchor="middle" transform="rotate(-90 22 303.0)">BOSのprojected Valueノルム構成比</text>
 </svg>

@@ -45,6 +45,26 @@ METRICS_PATH = (
 )
 EOS_ID = 2
 
+# 正式な単独操作指示と同じく、kを引数として明示する操作を固定する。
+K_OPERATION_IDS = {
+    "atomic-000003",
+    "atomic-000004",
+    "atomic-000005",
+    "atomic-000006",
+    "atomic-000007",
+    "atomic-000011",
+    "atomic-000012",
+    "atomic-000013",
+    "atomic-000022",
+    "atomic-000023",
+}
+DIAGNOSTIC_TEMPLATE_ID = "single-operation-training-aligned-v1"
+WITHOUT_K_TEMPLATE = "整数リストxsから{canonical_meaning}solve関数を書いてください。"
+WITH_K_TEMPLATE = (
+    "整数リストxsと整数kを受け取り、"
+    "{canonical_meaning}solve関数を書いてください。"
+)
+
 
 def parse_args() -> argparse.Namespace:
     """解析対象と成果物の保存先を受け取る。"""
@@ -59,10 +79,11 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def canonical_instruction(canonical_meaning: str) -> str:
-    """24操作を同じ外形の日本語指示へ変換する。"""
+def canonical_instruction(operation_id: str, canonical_meaning: str) -> str:
+    """24操作を学習時の単独操作と同じ外形の日本語指示へ変換する。"""
 
-    return f"整数リストxsに対して、{canonical_meaning}solve関数を書いてください。"
+    template = WITH_K_TEMPLATE if operation_id in K_OPERATION_IDS else WITHOUT_K_TEMPLATE
+    return template.format(canonical_meaning=canonical_meaning)
 
 
 def load_diagnostics() -> list[dict[str, Any]]:
@@ -74,7 +95,9 @@ def load_diagnostics() -> list[dict[str, Any]]:
         diagnostics.append(
             {
                 "operation_id": operation["operation_id"],
-                "instruction": canonical_instruction(operation["canonical_meaning_ja"]),
+                "instruction": canonical_instruction(
+                    operation["operation_id"], operation["canonical_meaning_ja"]
+                ),
                 "semantic_ast": {"sequence": [operation["semantic_ast"]]},
             }
         )
@@ -839,8 +862,12 @@ def main() -> None:
             "ffn_size": config.d_ff,
         },
         "diagnostic_design": {
+            "template_id": DIAGNOSTIC_TEMPLATE_ID,
+            "without_k_template": WITHOUT_K_TEMPLATE,
+            "with_k_template": WITH_K_TEMPLATE,
+            "k_operation_ids": sorted(K_OPERATION_IDS),
             "prompt_count": len(samples),
-            "coverage": "24 atomic operations, one canonical instruction per operation",
+            "coverage": "24 atomic operations, one training-aligned canonical instruction per operation",
             "hidden_tests_per_prompt": len(cases),
             "generation": "greedy",
             "ablation": "head output is zeroed before out_proj; token-position experiment zeros V but preserves K and attention weights",

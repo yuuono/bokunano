@@ -1,0 +1,4248 @@
+{
+  "model_directory": "data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch",
+  "tokenizer": "data/tokenizers/bpe_2048_minfreq2_maxlen8/tokenizer.json",
+  "model_config": {
+    "parameter_count": 1016704,
+    "layers": 3,
+    "heads": 4,
+    "head_dimension": 32,
+    "hidden_size": 128,
+    "ffn_size": 256
+  },
+  "diagnostic_design": {
+    "template_id": "legacy-single-operation-taishite-v1",
+    "instruction_template": "整数リストxsに対して、{canonical_meaning}solve関数を書いてください。",
+    "prompt_count": 24,
+    "coverage": "24 atomic operations, one canonical instruction per operation",
+    "hidden_tests_per_prompt": 33,
+    "generation": "greedy",
+    "ablation": "head output is zeroed before out_proj; token-position experiment zeros V but preserves K and attention weights"
+  },
+  "baseline": {
+    "passed": 0,
+    "total": 24,
+    "teacher_forced_nll": 0.43072091,
+    "generated_token_count": 894
+  },
+  "head_roles": [
+    {
+      "id": "L1H1",
+      "layer": 1,
+      "head": 1,
+      "bos_attention": 0.02516877,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.4284237,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.14722931,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.43605316,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.03100139,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.03240366,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.12643421,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.98407078,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02394003,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02384868,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.51196027,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 2.30975938,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L1H2",
+      "layer": 1,
+      "head": 2,
+      "bos_attention": 0.02446001,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.43348461,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.15780585,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.41998452,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.02790396,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.03208486,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.11455904,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.99240714,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02486274,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02873168,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.55922902,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.37356079,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L1H3",
+      "layer": 1,
+      "head": 3,
+      "bos_attention": 0.02563273,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.42610201,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.14987101,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.43572456,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.04096466,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.0268268,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.13227406,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.98326772,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02467594,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02347658,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.07075965,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.6889286,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L1H4",
+      "layer": 1,
+      "head": 4,
+      "bos_attention": 0.02493826,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.4201934,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.14764771,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.4440805,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.04754259,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.03234646,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.13394737,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.98018301,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02591066,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02635821,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.2970314,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.13399136,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L2H1",
+      "layer": 2,
+      "head": 1,
+      "bos_attention": 0.02808167,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.40864202,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.15667959,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.44666952,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.03136804,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.02765742,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.12655595,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.97748268,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02467615,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02301813,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.02648568,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.21149337,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L2H2",
+      "layer": 2,
+      "head": 2,
+      "bos_attention": 0.021876,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.39388517,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.13952027,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.4794659,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.04528569,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.02968982,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.1672558,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.94384849,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02274132,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02344695,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.0829525,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.18965101,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L2H3",
+      "layer": 2,
+      "head": 3,
+      "bos_attention": 0.02756604,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.4067916,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.14580944,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.45974097,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.06079154,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.03482358,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.16167799,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.95922196,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.0381173,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.04042606,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 0.97303504,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 0.98815918,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L2H4",
+      "layer": 2,
+      "head": 4,
+      "bos_attention": 0.02470857,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.38158897,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.13399674,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.49777755,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.0376935,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.03340522,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.160014,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.95965677,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02993617,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02814182,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.17662323,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.34949768,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L3H1",
+      "layer": 3,
+      "head": 1,
+      "bos_attention": 0.02183897,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.39009735,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.15133376,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.471219,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.03008794,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.02980031,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.12337258,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.98949593,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02367156,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02798304,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.23855948,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.17966259,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L3H2",
+      "layer": 3,
+      "head": 2,
+      "bos_attention": 0.02069148,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.38478163,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.1455123,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.4826633,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.03142976,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.03222272,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.13127165,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.98541242,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02349856,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02453684,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.17948353,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.20192826,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L3H3",
+      "layer": 3,
+      "head": 3,
+      "bos_attention": 0.02275288,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.37890437,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.13701074,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.49743852,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.0317013,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.03569673,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.13993463,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.97476673,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02430465,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.02521651,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.1774087,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.21506393,
+      "induction_like_relative_observations": 286
+    },
+    {
+      "id": "L3H4",
+      "layer": 3,
+      "head": 4,
+      "bos_attention": 0.02109378,
+      "bos_attention_observations": 894,
+      "instruction_attention": 0.3696754,
+      "instruction_attention_observations": 894,
+      "control_attention": 0.15832907,
+      "control_attention_observations": 894,
+      "generated_code_attention": 0.48501593,
+      "generated_code_attention_observations": 870,
+      "previous_token_attention": 0.06687472,
+      "previous_token_attention_observations": 894,
+      "self_attention": 0.03222132,
+      "self_attention_observations": 894,
+      "recent4_attention": 0.16682625,
+      "recent4_attention_observations": 894,
+      "normalized_entropy": 0.95669281,
+      "normalized_entropy_observations": 894,
+      "bos_value_norm_share": 0.02226603,
+      "bos_value_norm_share_observations": 894,
+      "bos_projected_norm_share": 0.01903819,
+      "bos_projected_norm_share_observations": 894,
+      "copy_relative": 1.24343467,
+      "copy_relative_observations": 286,
+      "induction_like_relative": 1.1979562,
+      "induction_like_relative_observations": 286
+    }
+  ],
+  "role_rankings": {
+    "bos_attention": [
+      {
+        "id": "L2H1",
+        "value": 0.02808167
+      },
+      {
+        "id": "L2H3",
+        "value": 0.02756604
+      },
+      {
+        "id": "L1H3",
+        "value": 0.02563273
+      },
+      {
+        "id": "L1H1",
+        "value": 0.02516877
+      },
+      {
+        "id": "L1H4",
+        "value": 0.02493826
+      },
+      {
+        "id": "L2H4",
+        "value": 0.02470857
+      }
+    ],
+    "instruction_attention": [
+      {
+        "id": "L1H2",
+        "value": 0.43348461
+      },
+      {
+        "id": "L1H1",
+        "value": 0.4284237
+      },
+      {
+        "id": "L1H3",
+        "value": 0.42610201
+      },
+      {
+        "id": "L1H4",
+        "value": 0.4201934
+      },
+      {
+        "id": "L2H1",
+        "value": 0.40864202
+      },
+      {
+        "id": "L2H3",
+        "value": 0.4067916
+      }
+    ],
+    "control_attention": [
+      {
+        "id": "L3H4",
+        "value": 0.15832907
+      },
+      {
+        "id": "L1H2",
+        "value": 0.15780585
+      },
+      {
+        "id": "L2H1",
+        "value": 0.15667959
+      },
+      {
+        "id": "L3H1",
+        "value": 0.15133376
+      },
+      {
+        "id": "L1H3",
+        "value": 0.14987101
+      },
+      {
+        "id": "L1H4",
+        "value": 0.14764771
+      }
+    ],
+    "generated_code_attention": [
+      {
+        "id": "L2H4",
+        "value": 0.49777755
+      },
+      {
+        "id": "L3H3",
+        "value": 0.49743852
+      },
+      {
+        "id": "L3H4",
+        "value": 0.48501593
+      },
+      {
+        "id": "L3H2",
+        "value": 0.4826633
+      },
+      {
+        "id": "L2H2",
+        "value": 0.4794659
+      },
+      {
+        "id": "L3H1",
+        "value": 0.471219
+      }
+    ],
+    "previous_token_attention": [
+      {
+        "id": "L3H4",
+        "value": 0.06687472
+      },
+      {
+        "id": "L2H3",
+        "value": 0.06079154
+      },
+      {
+        "id": "L1H4",
+        "value": 0.04754259
+      },
+      {
+        "id": "L2H2",
+        "value": 0.04528569
+      },
+      {
+        "id": "L1H3",
+        "value": 0.04096466
+      },
+      {
+        "id": "L2H4",
+        "value": 0.0376935
+      }
+    ],
+    "self_attention": [
+      {
+        "id": "L3H3",
+        "value": 0.03569673
+      },
+      {
+        "id": "L2H3",
+        "value": 0.03482358
+      },
+      {
+        "id": "L2H4",
+        "value": 0.03340522
+      },
+      {
+        "id": "L1H1",
+        "value": 0.03240366
+      },
+      {
+        "id": "L1H4",
+        "value": 0.03234646
+      },
+      {
+        "id": "L3H2",
+        "value": 0.03222272
+      }
+    ],
+    "recent4_attention": [
+      {
+        "id": "L2H2",
+        "value": 0.1672558
+      },
+      {
+        "id": "L3H4",
+        "value": 0.16682625
+      },
+      {
+        "id": "L2H3",
+        "value": 0.16167799
+      },
+      {
+        "id": "L2H4",
+        "value": 0.160014
+      },
+      {
+        "id": "L3H3",
+        "value": 0.13993463
+      },
+      {
+        "id": "L1H4",
+        "value": 0.13394737
+      }
+    ],
+    "normalized_entropy": [
+      {
+        "id": "L1H2",
+        "value": 0.99240714
+      },
+      {
+        "id": "L3H1",
+        "value": 0.98949593
+      },
+      {
+        "id": "L3H2",
+        "value": 0.98541242
+      },
+      {
+        "id": "L1H1",
+        "value": 0.98407078
+      },
+      {
+        "id": "L1H3",
+        "value": 0.98326772
+      },
+      {
+        "id": "L1H4",
+        "value": 0.98018301
+      }
+    ],
+    "bos_value_norm_share": [
+      {
+        "id": "L2H3",
+        "value": 0.0381173
+      },
+      {
+        "id": "L2H4",
+        "value": 0.02993617
+      },
+      {
+        "id": "L1H4",
+        "value": 0.02591066
+      },
+      {
+        "id": "L1H2",
+        "value": 0.02486274
+      },
+      {
+        "id": "L2H1",
+        "value": 0.02467615
+      },
+      {
+        "id": "L1H3",
+        "value": 0.02467594
+      }
+    ],
+    "bos_projected_norm_share": [
+      {
+        "id": "L2H3",
+        "value": 0.04042606
+      },
+      {
+        "id": "L1H2",
+        "value": 0.02873168
+      },
+      {
+        "id": "L2H4",
+        "value": 0.02814182
+      },
+      {
+        "id": "L3H1",
+        "value": 0.02798304
+      },
+      {
+        "id": "L1H4",
+        "value": 0.02635821
+      },
+      {
+        "id": "L3H3",
+        "value": 0.02521651
+      }
+    ],
+    "copy_relative": [
+      {
+        "id": "L1H2",
+        "value": 1.55922902
+      },
+      {
+        "id": "L1H1",
+        "value": 1.51196027
+      },
+      {
+        "id": "L1H4",
+        "value": 1.2970314
+      },
+      {
+        "id": "L3H4",
+        "value": 1.24343467
+      },
+      {
+        "id": "L3H1",
+        "value": 1.23855948
+      },
+      {
+        "id": "L3H2",
+        "value": 1.17948353
+      }
+    ],
+    "induction_like_relative": [
+      {
+        "id": "L1H1",
+        "value": 2.30975938
+      },
+      {
+        "id": "L1H3",
+        "value": 1.6889286
+      },
+      {
+        "id": "L1H2",
+        "value": 1.37356079
+      },
+      {
+        "id": "L2H4",
+        "value": 1.34949768
+      },
+      {
+        "id": "L3H3",
+        "value": 1.21506393
+      },
+      {
+        "id": "L2H1",
+        "value": 1.21149337
+      }
+    ]
+  },
+  "head_ablation": [
+    {
+      "id": "L1H1",
+      "layer": 1,
+      "head": 1,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.64751418,
+      "delta_nll": 0.21679326,
+      "mean_kl_divergence": 0.13896953,
+      "argmax_changed_tokens": 118,
+      "argmax_changed_rate": 0.13199105
+    },
+    {
+      "id": "L1H2",
+      "layer": 1,
+      "head": 2,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.68138421,
+      "delta_nll": 0.25066329,
+      "mean_kl_divergence": 0.17665358,
+      "argmax_changed_tokens": 136,
+      "argmax_changed_rate": 0.15212528
+    },
+    {
+      "id": "L1H3",
+      "layer": 1,
+      "head": 3,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.48677564,
+      "delta_nll": 0.05605473,
+      "mean_kl_divergence": 0.03852546,
+      "argmax_changed_tokens": 86,
+      "argmax_changed_rate": 0.09619687
+    },
+    {
+      "id": "L1H4",
+      "layer": 1,
+      "head": 4,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.5816401,
+      "delta_nll": 0.15091919,
+      "mean_kl_divergence": 0.1030831,
+      "argmax_changed_tokens": 110,
+      "argmax_changed_rate": 0.12304251
+    },
+    {
+      "id": "L2H1",
+      "layer": 2,
+      "head": 1,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.46610209,
+      "delta_nll": 0.03538118,
+      "mean_kl_divergence": 0.02064163,
+      "argmax_changed_tokens": 65,
+      "argmax_changed_rate": 0.07270694
+    },
+    {
+      "id": "L2H2",
+      "layer": 2,
+      "head": 2,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.48413279,
+      "delta_nll": 0.05341188,
+      "mean_kl_divergence": 0.03151758,
+      "argmax_changed_tokens": 61,
+      "argmax_changed_rate": 0.06823266
+    },
+    {
+      "id": "L2H3",
+      "layer": 2,
+      "head": 3,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.49753074,
+      "delta_nll": 0.06680983,
+      "mean_kl_divergence": 0.03884773,
+      "argmax_changed_tokens": 64,
+      "argmax_changed_rate": 0.07158837
+    },
+    {
+      "id": "L2H4",
+      "layer": 2,
+      "head": 4,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.47742814,
+      "delta_nll": 0.04670722,
+      "mean_kl_divergence": 0.02866739,
+      "argmax_changed_tokens": 77,
+      "argmax_changed_rate": 0.08612975
+    },
+    {
+      "id": "L3H1",
+      "layer": 3,
+      "head": 1,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.4504758,
+      "delta_nll": 0.01975489,
+      "mean_kl_divergence": 0.00461039,
+      "argmax_changed_tokens": 40,
+      "argmax_changed_rate": 0.04474273
+    },
+    {
+      "id": "L3H2",
+      "layer": 3,
+      "head": 2,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.45425075,
+      "delta_nll": 0.02352983,
+      "mean_kl_divergence": 0.00712622,
+      "argmax_changed_tokens": 34,
+      "argmax_changed_rate": 0.03803132
+    },
+    {
+      "id": "L3H3",
+      "layer": 3,
+      "head": 3,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.45259662,
+      "delta_nll": 0.0218757,
+      "mean_kl_divergence": 0.00522051,
+      "argmax_changed_tokens": 40,
+      "argmax_changed_rate": 0.04474273
+    },
+    {
+      "id": "L3H4",
+      "layer": 3,
+      "head": 4,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.46444894,
+      "delta_nll": 0.03372802,
+      "mean_kl_divergence": 0.01514044,
+      "argmax_changed_tokens": 29,
+      "argmax_changed_rate": 0.03243848
+    }
+  ],
+  "most_causally_influential_heads": [
+    {
+      "id": "L1H2",
+      "layer": 1,
+      "head": 2,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.68138421,
+      "delta_nll": 0.25066329,
+      "mean_kl_divergence": 0.17665358,
+      "argmax_changed_tokens": 136,
+      "argmax_changed_rate": 0.15212528
+    },
+    {
+      "id": "L1H1",
+      "layer": 1,
+      "head": 1,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.64751418,
+      "delta_nll": 0.21679326,
+      "mean_kl_divergence": 0.13896953,
+      "argmax_changed_tokens": 118,
+      "argmax_changed_rate": 0.13199105
+    },
+    {
+      "id": "L1H4",
+      "layer": 1,
+      "head": 4,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.5816401,
+      "delta_nll": 0.15091919,
+      "mean_kl_divergence": 0.1030831,
+      "argmax_changed_tokens": 110,
+      "argmax_changed_rate": 0.12304251
+    }
+  ],
+  "least_causally_influential_heads": [
+    {
+      "id": "L3H1",
+      "layer": 3,
+      "head": 1,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.4504758,
+      "delta_nll": 0.01975489,
+      "mean_kl_divergence": 0.00461039,
+      "argmax_changed_tokens": 40,
+      "argmax_changed_rate": 0.04474273
+    },
+    {
+      "id": "L3H3",
+      "layer": 3,
+      "head": 3,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.45259662,
+      "delta_nll": 0.0218757,
+      "mean_kl_divergence": 0.00522051,
+      "argmax_changed_tokens": 40,
+      "argmax_changed_rate": 0.04474273
+    },
+    {
+      "id": "L3H2",
+      "layer": 3,
+      "head": 2,
+      "baseline_nll": 0.43072091,
+      "ablated_nll": 0.45425075,
+      "delta_nll": 0.02352983,
+      "mean_kl_divergence": 0.00712622,
+      "argmax_changed_tokens": 34,
+      "argmax_changed_rate": 0.03803132
+    }
+  ],
+  "attention_causal_correlations": {
+    "bos_attention": {
+      "pearson": 0.27811922,
+      "spearman": 0.53846154
+    },
+    "instruction_attention": {
+      "pearson": 0.77785961,
+      "spearman": 0.81118881
+    },
+    "previous_token_attention": {
+      "pearson": -0.21673992,
+      "spearman": 0.02097902
+    },
+    "recent4_attention": {
+      "pearson": -0.44684505,
+      "spearman": -0.13286713
+    },
+    "induction_like_relative": {
+      "pearson": 0.52428125,
+      "spearman": 0.25174825
+    }
+  },
+  "causal_generation_results": [
+    {
+      "name": "baseline",
+      "label": "baseline",
+      "kind": "baseline",
+      "passed": 0,
+      "total": 24,
+      "pass_rate": 0.0,
+      "same_code_count": 24,
+      "syntax_valid": 19,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    output = []\n    for value in result:\n        if value % 2 == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "timeout"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        if value <= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = []\n    for value in result:\n        if value <= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = []\n    for value in result:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = []\n    for value in result:\n        if value <= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = []\n    for value in result:\n        if value % k == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        result += [value * k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        if x % 2 == 0:\n            result += [x]\n    output = []\n    for x in result:\n        result += [x * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "timeout"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    result = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for x in xs:\n        result += [x * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    result = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[2], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 3]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[3], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [abs(x)]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    output = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        if x % 2 == 0:\n            result += [x]\n    result = sorted(result, reverse=False)\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = sorted(output, reverse=False)\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        }
+      ]
+    },
+    {
+      "name": "zero_bos_values",
+      "label": "BOS Value=0",
+      "kind": "values",
+      "positions": "bos",
+      "passed": 1,
+      "total": 24,
+      "pass_rate": 0.04166667,
+      "same_code_count": 0,
+      "syntax_valid": 23,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # kより大きい値だけを残す\n    result = [value for value in output if value % k == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # kより大きい値だけを残す\n    result = [value for value in output if value % k == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # kより大きい値だけを残す\n    result = [value for value in output if value % k == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # kより大きい値だけを残す\n    result = [value for value in output if value <= k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[-10]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # kより大きい値だけを残す\n    result = [value for value in output if value % k == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[], actual=[-10]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # kより大きい値だけを残す\n    result = [value for value in output if value % k == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # 各要素の絶対値を取る\n    output = [value * k for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in output:\n        output += [value * k]\n    # 各要素の絶対値を取る\n    output = [value * k for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # kより大きい値だけを残す\n    output = [value for value in output if value % k == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を3倍する\n    output = [value * 2 for value in xs]\n    # 各要素を3倍する\n    output = [value * 2 for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[2], actual=[4]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を3倍する\n    output = [value * 2 for value in xs]\n    # 各要素を3倍する\n    output = [value * 2 for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[3], actual=[4]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * 3]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = [value * k for value in xs]\n    # 各要素の絶対値を取る\n    output = [abs(value) for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[1], actual=[10]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素を二乗する\n    output = [value * 2 for value in xs]\n    # 各要素を3倍する\n    output = [value * 2 for value in result]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    result = []\n    for value in xs:\n        output += [value * k]\n    # kより大きい値だけを残す\n    result = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    result = []\n    for value in xs:\n        output += [value * k]\n    # kより大きい値だけを残す\n    result = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        output += [value * 3]\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[-10]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * 3]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for value in xs:\n        output += [value * k]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[-10]"
+        }
+      ]
+    },
+    {
+      "name": "zero_instruction_values",
+      "label": "日本語 Value=0",
+      "kind": "values",
+      "positions": "instruction",
+      "passed": 0,
+      "total": 24,
+      "pass_rate": 0.0,
+      "same_code_count": 0,
+      "syntax_valid": 0,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n        result += [abs(x)]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L1H2",
+      "label": "L1H2=0",
+      "kind": "head",
+      "layer": 0,
+      "head": 1,
+      "selection": "top_delta_nll",
+      "passed": 0,
+      "total": 24,
+      "pass_rate": 0.0,
+      "same_code_count": 0,
+      "syntax_valid": 22,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n            output += [value * 3]\n    result = []\n    for value in output:\n        if value % 2:\n                output += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n            output += [value * 3]\n    result = []\n    for value in output:\n        if value % 2:\n                output += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n            output += [value * 3]\n    result = []\n    for value in output:\n        if value % 2:\n                output += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n            output += [value * 3]\n    result = []\n    for value in output:\n        if value % 2:\n                output += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": false,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n            output += [value * k]\n    output: list[int] = result: list[int] = result: list[int], k: int) -> list[int]:\n        output += [value * k]\n    result: list[int] = output: list[int] = output: list[int] = output: list[int] = ",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        output += [value * 3]\n    result: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        output += [value * 3]\n    result = []\n    for value in output:\n        output += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        output += [value * k]\n    result: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": false,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    result = []\n    for value in output: list[int] = output: list[int] = output: list[int] = output: list[int] = output: list[int], k: int) -> list[int]:\n        ",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    output: list[int] = []\n    for value in output:\n        output += [value * k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n            output += [value * 3]\n    output: list[int] = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = sorted(xs, reverse=False)\n    result = []\n    for value in result:\n        output += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = sorted(xs, reverse=False)\n    output: list[int] = []\n    for value in output:\n        output += [value * 3]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = result[-k:]\n    output: list[int] = []\n    for value in result:\n        output += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = result[-k:]\n    output: list[int] = []\n    for value in result:\n        output += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = result[-k:]\n    output: list[int] = []\n    for value in result:\n        output += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = result[-k:]\n    result = []\n    for value in result:\n        output += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L1H1",
+      "label": "L1H1=0",
+      "kind": "head",
+      "layer": 0,
+      "head": 0,
+      "selection": "top_delta_nll",
+      "passed": 0,
+      "total": 24,
+      "pass_rate": 0.0,
+      "same_code_count": 0,
+      "syntax_valid": 22,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2:\n            result += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2:\n            result += [value]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        if value % 2 != 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in output:\n        result += [value * k]\n    result: list[int] = []\n    for value in output:\n        result += [value * k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in result:\n        result += [x * k]\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in result:\n        result += [x * 2]\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in result:\n        result += [x * 2]\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    output = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in result:\n        result += [x * 2]\n    result: list[int] = []\n    for value in result:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = sorted(xs, reverse=False)\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = result[-k:]\n    result: list[int] = []\n    for x in result:\n        result += [x * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    result: list[int] = []\n    for value in result:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L1H4",
+      "label": "L1H4=0",
+      "kind": "head",
+      "layer": 0,
+      "head": 3,
+      "selection": "top_delta_nll",
+      "passed": 0,
+      "total": 24,
+      "pass_rate": 0.0,
+      "same_code_count": 0,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        if 0 == x % 2:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    result = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for x in result:\n        result += [x]\n    # kより大きい値だけを残す\n    result = []\n    for value in result:\n        if 0 == x % k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for x in result:\n        result += [x]\n    # 先頭からk個を取る\n    result = []\n    for x in result:\n        if 0 == x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for x in result:\n        result += [x]\n    # 先頭からk個を取る\n    result = []\n    for x in result:\n        result += [x * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for x in result:\n        result += [x]\n    # kより大きい値だけを残す\n    result = []\n    for x in result:\n        if 0 == x:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for x in result:\n        result += [x]\n    # kより大きい値だけを残す\n    result = []\n    for value in result:\n        if 0 == x % 2:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        if 0 == x:\n            result += [x]\n    # 各要素の符号を反転する\n    result = []\n    for value in result:\n        result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    result = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    result = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        output += [x * k]\n    # 先頭からk個を取る\n    output = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for x in output:\n        output += [x]\n    # 各要素の絶対値を取る\n    output = [value * k for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        output += [x * k]\n    # 先頭からk個を取る\n    output = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        result += [x * 2]\n    # 先頭からk個を取る\n    output = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        result += [x * 3]\n    # 先頭からk個を取る\n    output = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        output += [x * k]\n    # 先頭からk個を取る\n    output = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output = []\n    for x in output:\n        output += [x]\n    # 各要素の絶対値を取る\n    output = [value * k for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        result += [x * 2]\n    # 先頭からk個を取る\n    output = output[0::2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    result = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    result = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in result:\n        result += [x * k]\n    # 先頭からk個を取る\n    result = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        result += [x * k]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    result = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = []\n    for x in output:\n        result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L3H1",
+      "label": "L3H1=0",
+      "kind": "head",
+      "layer": 2,
+      "head": 0,
+      "selection": "lowest_absolute_delta_nll",
+      "passed": 3,
+      "total": 24,
+      "pass_rate": 0.125,
+      "same_code_count": 6,
+      "syntax_valid": 18,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    output = []\n    for value in output:\n        if value % k == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    output = []\n    for value in output:\n        if value % k == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        if value > k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        if value <= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        if value <= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    output = []\n    for value in result:\n        if value % k == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "timeout"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        result += [value * 3]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    output = []\n    for value in output:\n        if value % k == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    output = []\n    for value in output:\n        if value == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        output += [value * 3]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 3]\n    output = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    output = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for x in xs:\n        result += [x * 3]\n    result = [value for value in result if value % k == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * 3]\n    result = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        output += [value * k]\n    output = []\n    for value in output:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    output = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = sorted(output, reverse=False)\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = sorted(output, reverse=False)\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L3H3",
+      "label": "L3H3=0",
+      "kind": "head",
+      "layer": 2,
+      "head": 2,
+      "selection": "lowest_absolute_delta_nll",
+      "passed": 3,
+      "total": 24,
+      "pass_rate": 0.125,
+      "same_code_count": 6,
+      "syntax_valid": 20,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x % 2:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        if value > k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output: list[int] = []\n    for value in output:\n        if value <= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        if x % k == 0:\n            result += [x]\n    output = []\n    for value in result:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "timeout"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output: list[int] = []\n    for value in output:\n        if value <= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    output = []\n    for value in result:\n        if value % k == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "timeout"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        result += [value * 3]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        if x % 2 == 0:\n            result += [x]\n    output = []\n    for value in result:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "timeout"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for x in xs:\n        result += [x * k]\n    result: list[int] = []\n    for value in output:\n        if value % k == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [abs(x)]\n    result = [value for value in result if 0 == value % 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * k]\n    output = [value for value in result if 0 == value % 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    output = [value for value in result if 0 == value % 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 3]\n    result = [value for value in result if 0 == value % 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[3], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 3]\n    output = [value for value in result if 0 == value % 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [abs(x)]\n    result = [value for value in result if 0 == value % 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    output = [value for value in result if 0 == value % 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        if x % 2 == 0:\n            result += [x]\n    result = sorted(result, reverse=False)\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        if x % 2 == 0:\n            result += [x]\n    result = sorted(result, reverse=False)\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L3H2",
+      "label": "L3H2=0",
+      "kind": "head",
+      "layer": 2,
+      "head": 1,
+      "selection": "lowest_absolute_delta_nll",
+      "passed": 1,
+      "total": 24,
+      "pass_rate": 0.04166667,
+      "same_code_count": 6,
+      "syntax_valid": 17,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x % 2:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * 3]\n    result = [value for value in result if value == 0]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * 3]\n    result = [value for value in result if value == 0]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # kより大きい値だけを残す\n    result: list[int] = []\n    for value in xs:\n        if value > k:\n            result += [value]\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * 3]\n    result = [value for value in result if value == 0]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # kより大きい値だけを残す\n    output: list[int] = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    # 先頭からk個を取る\n    result: list[int] = output[-k:]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        output += [value * k]\n    result = [value for value in result if value == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * k]\n    output = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    output = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    output = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[3], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * 3]\n    result = [value for value in result if value == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        output += [value * k]\n    output = []\n    for value in output:\n        if value % k == 0:\n            result += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    output = [value for value in result if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * k]\n    result = sorted(result)\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[-10]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * k]\n    result = sorted(result, reverse=False)\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[-10]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: result"
+        }
+      ]
+    }
+  ],
+  "rollout_example": {
+    "operation_id": "atomic-000017",
+    "instruction": "整数リストxsに対して、各要素の絶対値を取るsolve関数を書いてください。",
+    "query_position": 57,
+    "tokens": [
+      "<|bos|>",
+      "<|task|>",
+      "↵",
+      "整数",
+      "リス",
+      "トxs�",
+      "�対し",
+      "て、",
+      "各",
+      "要�",
+      "�の�",
+      "��対",
+      "値",
+      "を取",
+      "る",
+      "solve",
+      "関数",
+      "を書",
+      "い",
+      "て�",
+      "�だ�",
+      "�い。",
+      "↵",
+      "<|code|>",
+      "↵",
+      "de",
+      "f␠solve",
+      "(xs",
+      ":␠list",
+      "[int]",
+      ",␠k:␠",
+      "int)␠",
+      "->␠list",
+      "[int]",
+      ":↵␠␠␠␠",
+      "result",
+      "␠=␠[",
+      "]↵␠␠␠␠",
+      "for␠x␠",
+      "in␠xs",
+      ":↵␠␠␠␠",
+      "␠␠␠␠",
+      "result␠",
+      "+=␠[",
+      "abs(x",
+      ")]↵␠␠␠␠",
+      "result",
+      "␠=␠[",
+      "value␠",
+      "for␠",
+      "value␠",
+      "in␠",
+      "result␠",
+      "if␠",
+      "value␠",
+      "==␠",
+      "0]↵␠␠␠␠",
+      "return␠"
+    ],
+    "raw_attention": [
+      0.01430504,
+      0.01478756,
+      0.01503654,
+      0.01483357,
+      0.0139682,
+      0.01451431,
+      0.01444465,
+      0.01478954,
+      0.01474456,
+      0.01578156,
+      0.01559255,
+      0.01611319,
+      0.01583098,
+      0.01625453,
+      0.01671526,
+      0.01655424,
+      0.01621903,
+      0.01591807,
+      0.01623788,
+      0.01544823,
+      0.01781934,
+      0.01663071,
+      0.01677272,
+      0.01774118,
+      0.01657863,
+      0.01781985,
+      0.01767163,
+      0.01913889,
+      0.0153716,
+      0.01689444,
+      0.01745208,
+      0.01929287,
+      0.0163253,
+      0.01699808,
+      0.01738915,
+      0.01991995,
+      0.01753878,
+      0.01898441,
+      0.01876571,
+      0.01765302,
+      0.01815677,
+      0.01748829,
+      0.01953839,
+      0.01627725,
+      0.01760321,
+      0.01798976,
+      0.01863481,
+      0.01713522,
+      0.0191917,
+      0.01969005,
+      0.01909647,
+      0.01826021,
+      0.02040558,
+      0.02281056,
+      0.02015523,
+      0.01865029,
+      0.01944257,
+      0.01862584
+    ],
+    "projected_value_norm_share": [
+      0.01464974,
+      0.01409479,
+      0.01448125,
+      0.01404823,
+      0.01283201,
+      0.01216464,
+      0.01290649,
+      0.01256399,
+      0.01303907,
+      0.01317275,
+      0.01518539,
+      0.01347329,
+      0.01338089,
+      0.01431187,
+      0.01395724,
+      0.01486094,
+      0.0144094,
+      0.01395102,
+      0.01201793,
+      0.01392883,
+      0.01852438,
+      0.01608563,
+      0.01693693,
+      0.01547153,
+      0.01677386,
+      0.01528484,
+      0.01672198,
+      0.01746776,
+      0.01519555,
+      0.01592623,
+      0.01712727,
+      0.02109547,
+      0.01380425,
+      0.01581536,
+      0.02066597,
+      0.02154499,
+      0.02164437,
+      0.01998615,
+      0.02013573,
+      0.02010243,
+      0.01981162,
+      0.02249891,
+      0.02037401,
+      0.01590406,
+      0.01647767,
+      0.02295216,
+      0.0207094,
+      0.01975049,
+      0.02085718,
+      0.02231214,
+      0.02271844,
+      0.018532,
+      0.02054834,
+      0.0262285,
+      0.02326108,
+      0.01660919,
+      0.02233313,
+      0.01838126
+    ],
+    "attention_rollout": [
+      0.04996241,
+      0.0388154,
+      0.03270771,
+      0.02951755,
+      0.02658426,
+      0.02505811,
+      0.02376566,
+      0.02255796,
+      0.02139076,
+      0.02071683,
+      0.020215,
+      0.01943891,
+      0.01859538,
+      0.01817782,
+      0.01743656,
+      0.01717388,
+      0.01658219,
+      0.015647,
+      0.01517707,
+      0.01506904,
+      0.01538135,
+      0.01451528,
+      0.01410067,
+      0.01386865,
+      0.0132166,
+      0.01317745,
+      0.01329101,
+      0.0132993,
+      0.01153033,
+      0.01160174,
+      0.01252254,
+      0.0128596,
+      0.01055761,
+      0.01063436,
+      0.0114841,
+      0.01195839,
+      0.01193637,
+      0.01331929,
+      0.01049474,
+      0.00993105,
+      0.01030483,
+      0.00993541,
+      0.01014805,
+      0.00837553,
+      0.00888284,
+      0.00944461,
+      0.00905699,
+      0.00904254,
+      0.00955261,
+      0.00977434,
+      0.0085026,
+      0.00902987,
+      0.00867736,
+      0.00975176,
+      0.00815797,
+      0.0073829,
+      0.00759461,
+      0.13211532
+    ]
+  },
+  "samples": [
+    {
+      "operation_id": "atomic-000001",
+      "instruction": "整数リストxsに対して、偶数だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "even"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 22,
+      "generated_token_count": 47,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    output = []\n    for value in result:\n        if value % 2 == 0:\n            result += [value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "timeout"
+      }
+    },
+    {
+      "operation_id": "atomic-000002",
+      "instruction": "整数リストxsに対して、奇数だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 22,
+      "generated_token_count": 47,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    output = output[-k:]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+      }
+    },
+    {
+      "operation_id": "atomic-000003",
+      "instruction": "整数リストxsに対して、kより大きい値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "gt_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 24,
+      "generated_token_count": 47,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        if value <= k:\n            result += [value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "operation_id": "atomic-000004",
+      "instruction": "整数リストxsに対して、k以上の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "ge_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 47,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = []\n    for value in result:\n        if value <= k:\n            result += [value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000005",
+      "instruction": "整数リストxsに対して、kより小さい値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "lt_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 25,
+      "generated_token_count": 43,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = []\n    for value in result:\n        result += [value * 3]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000006",
+      "instruction": "整数リストxsに対して、k以下の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 47,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = []\n    for value in result:\n        if value <= k:\n            result += [value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000007",
+      "instruction": "整数リストxsに対して、kの倍数だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "multiple_of_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 47,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = []\n    for value in result:\n        if value % k == 0:\n            result += [value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000008",
+      "instruction": "整数リストxsに対して、正の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 43,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    output = []\n    for value in output:\n        result += [value * k]\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000009",
+      "instruction": "整数リストxsに対して、負の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "negative"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 39,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        if x % 2 == 0:\n            result += [x]\n    output = []\n    for x in result:\n        result += [x * k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "timeout"
+      }
+    },
+    {
+      "operation_id": "atomic-000010",
+      "instruction": "整数リストxsに対して、ゼロだけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "zero"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 22,
+      "generated_token_count": 47,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output: list[int] = []\n    for x in xs:\n        if 0 == x:\n            result += [x]\n    # 先頭からk個を取る\n    result = output[-k:]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+      }
+    },
+    {
+      "operation_id": "atomic-000011",
+      "instruction": "整数リストxsに対して、各要素にkを加えるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "add_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 34,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for x in xs:\n        result += [x * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "UnboundLocalError: cannot access local variable 'result' where it is not associated with a value"
+      }
+    },
+    {
+      "operation_id": "atomic-000012",
+      "instruction": "整数リストxsに対して、各要素からkを引くsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "sub_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 34,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+      }
+    },
+    {
+      "operation_id": "atomic-000013",
+      "instruction": "整数リストxsに対して、各要素にkを掛けるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 34,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000014",
+      "instruction": "整数リストxsに対して、各要素を2倍するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_const",
+              2
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 22,
+      "generated_token_count": 34,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    result = [value for value in result if value <= k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[2], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000015",
+      "instruction": "整数リストxsに対して、各要素を3倍するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_const",
+              3
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 22,
+      "generated_token_count": 34,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 3]\n    result = [value for value in result if value == 0]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[3], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000016",
+      "instruction": "整数リストxsに対して、各要素の符号を反転するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "negate"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 25,
+      "generated_token_count": 34,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * k]\n    result = [value for value in result if value == 0]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[-1], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000017",
+      "instruction": "整数リストxsに対して、各要素の絶対値を取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "abs"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 25,
+      "generated_token_count": 34,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [abs(x)]\n    result = [value for value in result if value == 0]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000018",
+      "instruction": "整数リストxsに対して、各要素を二乗するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "square"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 34,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [x * 2]\n    output = [value for value in result if value <= k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+      }
+    },
+    {
+      "operation_id": "atomic-000019",
+      "instruction": "整数リストxsに対して、値を昇順に並べるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "ascending"
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 35,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        if x % 2 == 0:\n            result += [x]\n    result = sorted(result, reverse=False)\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+      }
+    },
+    {
+      "operation_id": "atomic-000020",
+      "instruction": "整数リストxsに対して、値を降順に並べるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "descending"
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 37,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    result = sorted(output, reverse=False)\n    return result\n",
+        "syntax_ok": false,
+        "ast_safe": false,
+        "signature_ok": false,
+        "tests_passed": false,
+        "error": "未定義または許可されていない名前です: output"
+      }
+    },
+    {
+      "operation_id": "atomic-000021",
+      "instruction": "整数リストxsに対して、現在の要素順を反転するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "reverse"
+          }
+        ]
+      },
+      "prompt_token_count": 25,
+      "generated_token_count": 24,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+        "syntax_ok": false,
+        "ast_safe": false,
+        "signature_ok": false,
+        "tests_passed": false,
+        "error": "未定義または許可されていない名前です: result"
+      }
+    },
+    {
+      "operation_id": "atomic-000022",
+      "instruction": "整数リストxsに対して、先頭からk個を取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "slice": [
+              "take_first_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 24,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+        "syntax_ok": false,
+        "ast_safe": false,
+        "signature_ok": false,
+        "tests_passed": false,
+        "error": "未定義または許可されていない名前です: result"
+      }
+    },
+    {
+      "operation_id": "atomic-000023",
+      "instruction": "整数リストxsに対して、末尾からk個を取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "slice": [
+              "take_last_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 23,
+      "generated_token_count": 24,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+        "syntax_ok": false,
+        "ast_safe": false,
+        "signature_ok": false,
+        "tests_passed": false,
+        "error": "未定義または許可されていない名前です: result"
+      }
+    },
+    {
+      "operation_id": "atomic-000024",
+      "instruction": "整数リストxsに対して、先頭から1個おきに取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "slice": [
+              "every_other"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 24,
+      "generated_token_count": 24,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 先頭からk個を取る\n    output = result[-k:]\n    return result\n",
+        "syntax_ok": false,
+        "ast_safe": false,
+        "signature_ok": false,
+        "tests_passed": false,
+        "error": "未定義または許可されていない名前です: result"
+      }
+    }
+  ],
+  "figures": {
+    "head_roles": "docs/results/attention_1epoch/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch/legacy_taishite_prompt/figures/attention_head_roles.svg",
+    "attention_sink": "docs/results/attention_1epoch/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch/legacy_taishite_prompt/figures/attention_sink_contribution.svg",
+    "causal_ablation": "docs/results/attention_1epoch/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch/legacy_taishite_prompt/figures/attention_causal_ablation.svg",
+    "rollout": "docs/results/attention_1epoch/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch/legacy_taishite_prompt/figures/attention_rollout.svg"
+  }
+}
