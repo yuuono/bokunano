@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import math
 from pathlib import Path
@@ -28,6 +29,21 @@ from scripts.model.visualize_boku_nano_kv import (  # noqa: E402
 
 FIGURE_DIR = PROJECT_ROOT / "docs/results/figures"
 METRICS_PATH = PROJECT_ROOT / "docs/results/boku_nano_attention_analysis.json"
+
+
+def parse_args() -> argparse.Namespace:
+    """解析対象と成果物の保存先を受け取る。"""
+
+    parser = argparse.ArgumentParser(
+        description="生成stepごとのQuery、attention、K/V類似度を解析します。"
+    )
+    parser.add_argument("--model-directory", type=Path, default=DEFAULT_MODEL)
+    parser.add_argument("--tokenizer", type=Path, default=DEFAULT_TOKENIZER)
+    parser.add_argument("--instruction", default=DEFAULT_INSTRUCTION)
+    parser.add_argument("--max-new-tokens", type=int, default=64)
+    parser.add_argument("--figure-directory", type=Path, default=FIGURE_DIR)
+    parser.add_argument("--metrics", type=Path, default=METRICS_PATH)
+    return parser.parse_args()
 
 
 def label(tokenizer: Tokenizer, token_id: int) -> str:
@@ -197,7 +213,7 @@ def attention_grid(
         width,
         height,
         "生成step × 参照token位置のattention",
-        "8層 × 6 head。各行は生成step、各列は過去token位置。赤線より右が生成済みコード。",
+        f"{layers}層 × {heads} head。各行は生成step、各列は過去token位置。赤線より右が生成済みコード。",
     )
     for layer in range(layers):
         for head in range(heads):
@@ -395,10 +411,16 @@ def region_chart(rows: list[dict[str, float]], destination: Path) -> None:
     destination.write_text("\n".join(parts), encoding="utf-8")
 
 
-def cosine_chart(key_matrix: torch.Tensor, value_matrix: torch.Tensor, destination: Path) -> None:
+def cosine_chart(
+    key_matrix: torch.Tensor,
+    value_matrix: torch.Tensor,
+    destination: Path,
+    layer_count: int,
+    head_count: int,
+) -> None:
     count = key_matrix.size(0)
     width, height, top, size, gap, left = 980, 510, 88, 390, 76, 68
-    parts = svg_header(width, height, "Key／Valueのtoken間コサイン類似度", "最終token列を8層・6 headで平均。対角は同じtokenなので1.0。青は負、赤は正の類似。")
+    parts = svg_header(width, height, "Key／Valueのtoken間コサイン類似度", f"最終token列を{layer_count}層・{head_count} headで平均。対角は同じtokenなので1.0。青は負、赤は正の類似。")
     for title, matrix, x0 in (("Key（RoPE後）", key_matrix, left), ("Value", value_matrix, left + size + gap)):
         parts.append(f'<text x="{x0}" y="{top - 12}" class="label">{title}</text>')
         cell = size / count
@@ -463,12 +485,15 @@ def rounded(value: Any) -> Any:
 
 
 def main() -> None:
-    model, config = load_model(DEFAULT_MODEL)
-    tokenizer = Tokenizer.from_file(str(DEFAULT_TOKENIZER))
-    instruction = DEFAULT_INSTRUCTION
+    args = parse_args()
+    model, config = load_model(args.model_directory)
+    tokenizer = Tokenizer.from_file(str(args.tokenizer))
+    instruction = args.instruction
     prompt = PROMPT_TEMPLATE.format(instruction_ja=instruction)
     encoding = tokenizer.encode(prompt, add_special_tokens=False)
-    generated, records, reached_eos = generate(model, encoding.ids)
+    generated, records, reached_eos = generate(
+        model, encoding.ids, max_new_tokens=args.max_new_tokens
+    )
     full_ids = encoding.ids + generated
     keys, values = full_states(model, full_ids)
     key_cosine, value_cosine = cosine_matrix(keys), cosine_matrix(values)
@@ -476,16 +501,26 @@ def main() -> None:
     top_rows, region_rows, repeated, barely = analyze(records, prompt_regions, full_ids, tokenizer)
     region_summary = summarize_region_attention(records, prompt_regions)
 
-    FIGURE_DIR.mkdir(parents=True, exist_ok=True)
+    args.figure_directory.mkdir(parents=True, exist_ok=True)
+    args.metrics.parent.mkdir(parents=True, exist_ok=True)
+    default_figure_names = args.figure_directory.resolve() == FIGURE_DIR.resolve()
+    prefix = "boku_nano_" if default_figure_names else ""
     figures = {
-        "attention_by_layer_head": FIGURE_DIR / "boku_nano_attention_by_layer_head.svg",
-        "attention_regions": FIGURE_DIR / "boku_nano_attention_regions.svg",
-        "kv_cosine": FIGURE_DIR / "boku_nano_kv_cosine_similarity.svg",
-        "token_utilization": FIGURE_DIR / "boku_nano_token_utilization.svg",
+        "attention_by_layer_head": args.figure_directory
+        / f"{prefix}attention_by_layer_head.svg",
+        "attention_regions": args.figure_directory / f"{prefix}attention_regions.svg",
+        "kv_cosine": args.figure_directory / f"{prefix}kv_cosine_similarity.svg",
+        "token_utilization": args.figure_directory / f"{prefix}token_utilization.svg",
     }
     attention_grid(records, len(encoding.ids), figures["attention_by_layer_head"])
     region_chart(region_rows, figures["attention_regions"])
-    cosine_chart(key_cosine, value_cosine, figures["kv_cosine"])
+    cosine_chart(
+        key_cosine,
+        value_cosine,
+        figures["kv_cosine"],
+        config.n_layers,
+        config.n_heads,
+    )
     utilization_chart(repeated, barely, figures["token_utilization"])
 
     row_sums = [float(row.sum()) for record in records for row in record["attention"].reshape(-1, record["attention"].size(-1))]
@@ -505,9 +540,11 @@ def main() -> None:
         ],
     }
     metrics = {
-        "model_directory": project_path(DEFAULT_MODEL),
+        "model_directory": project_path(args.model_directory),
+        "tokenizer": project_path(args.tokenizer),
         "instruction": instruction,
         "model_config": {
+            "parameter_count": sum(parameter.numel() for parameter in model.parameters()),
             "layers": config.n_layers,
             "heads": config.n_heads,
             "head_dimension": config.d_model // config.n_heads,
@@ -539,7 +576,7 @@ def main() -> None:
         },
         "figures": {name: project_path(path) for name, path in figures.items()},
     }
-    METRICS_PATH.write_text(json.dumps(rounded(metrics), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    args.metrics.write_text(json.dumps(rounded(metrics), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({
         "generated_code": metrics["generated_code"],
         "row_sum_range": [min(row_sums), max(row_sums)],
@@ -550,7 +587,7 @@ def main() -> None:
         "value": metrics["cosine_similarity"]["value"],
         "repeated": repeated,
         "barely": barely,
-        "metrics": str(METRICS_PATH),
+        "metrics": project_path(args.metrics),
     }, ensure_ascii=False, indent=2))
 
 

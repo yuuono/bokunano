@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 from contextlib import contextmanager
 import json
 import math
@@ -43,6 +44,19 @@ METRICS_PATH = (
     PROJECT_ROOT / "docs/results/boku_nano_attention_interpretability_analysis.json"
 )
 EOS_ID = 2
+
+
+def parse_args() -> argparse.Namespace:
+    """解析対象と成果物の保存先を受け取る。"""
+
+    parser = argparse.ArgumentParser(
+        description="複数promptとablationでBoku Nanoのattentionを解析します。"
+    )
+    parser.add_argument("--model-directory", type=Path, default=DEFAULT_MODEL)
+    parser.add_argument("--tokenizer", type=Path, default=DEFAULT_TOKENIZER)
+    parser.add_argument("--figure-directory", type=Path, default=FIGURE_DIR)
+    parser.add_argument("--metrics", type=Path, default=METRICS_PATH)
+    return parser.parse_args()
 
 
 def canonical_instruction(canonical_meaning: str) -> str:
@@ -267,6 +281,8 @@ def head_role_figure(rows: list[dict[str, Any]], destination: Path) -> None:
         ("induction_like_relative", "induction-like（一様比）", "ratio"),
         ("normalized_entropy", "attention entropy", "decimal"),
     ]
+    layer_count = max(int(item["layer"]) for item in rows)
+    head_count = max(int(item["head"]) for item in rows)
     width, height = 1080, 590
     parts = svg_header(
         width,
@@ -285,8 +301,8 @@ def head_role_figure(rows: list[dict[str, Any]], destination: Path) -> None:
             value = float(item[metric])
             ratio = 0.5 if maximum <= minimum else (value - minimum) / (maximum - minimum)
             ratio = min(1.0, max(0.0, ratio))
-            x = x0 + (item["head"] - 1) * panel_w / 6
-            y = y0 + (item["layer"] - 1) * panel_h / 8
+            x = x0 + (item["head"] - 1) * panel_w / head_count
+            y = y0 + (item["layer"] - 1) * panel_h / layer_count
             if display == "percent":
                 shown = f"{value * 100:.1f}%"
             elif display == "ratio":
@@ -295,23 +311,23 @@ def head_role_figure(rows: list[dict[str, Any]], destination: Path) -> None:
                 shown = f"{value:.3f}"
             text_color = "#ffffff" if ratio >= 0.53 else "#15202b"
             parts.append(
-                f'<rect x="{x:.2f}" y="{y:.2f}" width="{panel_w / 6 + .2:.2f}" '
-                f'height="{panel_h / 8 + .2:.2f}" fill="{color(value, minimum, maximum)}" '
+                f'<rect x="{x:.2f}" y="{y:.2f}" width="{panel_w / head_count + .2:.2f}" '
+                f'height="{panel_h / layer_count + .2:.2f}" fill="{color(value, minimum, maximum)}" '
                 f'stroke="#ffffff" stroke-width="0.7"/>'
             )
             parts.append(
-                f'<text x="{x + panel_w / 12:.2f}" y="{y + panel_h / 16 + 3.5:.2f}" '
+                f'<text x="{x + panel_w / head_count / 2:.2f}" y="{y + panel_h / layer_count / 2 + 3.5:.2f}" '
                 f'text-anchor="middle" fill="{text_color}" style="font-size:9px;font-weight:500">'
                 f'{shown}</text>'
             )
-        for head in range(6):
+        for head in range(head_count):
             parts.append(
-                f'<text x="{x0 + (head + .5) * panel_w / 6:.2f}" y="{y0 + panel_h + 15}" '
+                f'<text x="{x0 + (head + .5) * panel_w / head_count:.2f}" y="{y0 + panel_h + 15}" '
                 f'text-anchor="middle" class="small">H{head + 1}</text>'
             )
-        for layer in range(8):
+        for layer in range(layer_count):
             parts.append(
-                f'<text x="{x0 - 6}" y="{y0 + (layer + .7) * panel_h / 8:.2f}" '
+                f'<text x="{x0 - 6}" y="{y0 + (layer + .7) * panel_h / layer_count:.2f}" '
                 f'text-anchor="end" class="small">L{layer + 1}</text>'
             )
         parts.append(
@@ -320,6 +336,7 @@ def head_role_figure(rows: list[dict[str, Any]], destination: Path) -> None:
         )
     parts.append("</svg>")
     destination.write_text("\n".join(parts), encoding="utf-8")
+
 
 def sink_figure(rows: list[dict[str, Any]], destination: Path) -> None:
     width, height = 820, 600
@@ -389,13 +406,14 @@ def ablation_figure(
     parts.append(f'<line x1="{left}" y1="{zero_y:.2f}" x2="{left + plot_w}" y2="{zero_y:.2f}" stroke="#66717d"/>')
     bar_w = plot_w / len(head_rows) * .72
     top_heads = {row["id"] for row in sorted(head_rows, key=lambda row: -row["delta_nll"])[:3]}
+    head_count = max(int(row["head"]) for row in head_rows)
     for index, row in enumerate(head_rows):
         x = left + (index + .5) * plot_w / len(head_rows) - bar_w / 2
         value_y = top + (upper - float(row["delta_nll"])) / (upper - lower) * plot_h
         y, h = min(value_y, zero_y), abs(value_y - zero_y)
         fill = "#b35438" if row["id"] in top_heads else "#4f7f96"
         parts.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{bar_w:.2f}" height="{max(h, .7):.2f}" fill="{fill}"/>')
-        if index % 6 == 2:
+        if index % head_count == head_count // 2:
             parts.append(f'<text x="{x + bar_w / 2:.2f}" y="{top + plot_h + 17}" text-anchor="middle" class="small">L{row["layer"]}</text>')
     parts.append(f'<text x="20" y="{top + plot_h / 2}" text-anchor="middle" transform="rotate(-90 20 {top + plot_h / 2})">NLL差（無効化後−基準、nat/token）</text>')
 
@@ -462,10 +480,11 @@ def rollout_figure(
 
 
 def main() -> None:
+    args = parse_args()
     torch.manual_seed(20260930)
     torch.set_num_threads(1)
-    model, config = load_model(DEFAULT_MODEL)
-    tokenizer = Tokenizer.from_file(str(DEFAULT_TOKENIZER))
+    model, config = load_model(args.model_directory)
+    tokenizer = Tokenizer.from_file(str(args.tokenizer))
     cases = build_verification_cases(seed=20260930, random_case_count=24)
     diagnostics = load_diagnostics()
 
@@ -682,7 +701,6 @@ def main() -> None:
             )
 
     role_by_id = {row["id"]: row for row in head_roles}
-    ablation_by_id = {row["id"]: row for row in head_ablation}
     attention_causal_correlations = {}
     for metric in (
         "bos_attention",
@@ -788,12 +806,15 @@ def main() -> None:
     if example_rollout is None:
         raise AssertionError("rollout例を作成できませんでした")
 
-    FIGURE_DIR.mkdir(parents=True, exist_ok=True)
+    args.figure_directory.mkdir(parents=True, exist_ok=True)
+    args.metrics.parent.mkdir(parents=True, exist_ok=True)
+    default_figure_names = args.figure_directory.resolve() == FIGURE_DIR.resolve()
+    prefix = "boku_nano_" if default_figure_names else ""
     figures = {
-        "head_roles": FIGURE_DIR / "boku_nano_attention_head_roles.svg",
-        "attention_sink": FIGURE_DIR / "boku_nano_attention_sink_contribution.svg",
-        "causal_ablation": FIGURE_DIR / "boku_nano_attention_causal_ablation.svg",
-        "rollout": FIGURE_DIR / "boku_nano_attention_rollout.svg",
+        "head_roles": args.figure_directory / f"{prefix}attention_head_roles.svg",
+        "attention_sink": args.figure_directory / f"{prefix}attention_sink_contribution.svg",
+        "causal_ablation": args.figure_directory / f"{prefix}attention_causal_ablation.svg",
+        "rollout": args.figure_directory / f"{prefix}attention_rollout.svg",
     }
     head_role_figure(head_roles, figures["head_roles"])
     sink_figure(head_roles, figures["attention_sink"])
@@ -807,8 +828,16 @@ def main() -> None:
     )
 
     metrics = {
-        "model_directory": project_path(DEFAULT_MODEL),
-        "tokenizer": project_path(DEFAULT_TOKENIZER),
+        "model_directory": project_path(args.model_directory),
+        "tokenizer": project_path(args.tokenizer),
+        "model_config": {
+            "parameter_count": sum(parameter.numel() for parameter in model.parameters()),
+            "layers": config.n_layers,
+            "heads": config.n_heads,
+            "head_dimension": config.d_model // config.n_heads,
+            "hidden_size": config.d_model,
+            "ffn_size": config.d_ff,
+        },
         "diagnostic_design": {
             "prompt_count": len(samples),
             "coverage": "24 atomic operations, one canonical instruction per operation",
@@ -853,7 +882,7 @@ def main() -> None:
         ],
         "figures": {name: project_path(path) for name, path in figures.items()},
     }
-    METRICS_PATH.write_text(
+    args.metrics.write_text(
         json.dumps(rounded(metrics), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
@@ -877,7 +906,7 @@ def main() -> None:
                         }
                         for row in causal_results
                     ],
-                    "metrics": project_path(METRICS_PATH),
+                    "metrics": project_path(args.metrics),
                 }
             ),
             ensure_ascii=False,
