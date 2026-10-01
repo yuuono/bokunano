@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620">
+<title>15M・短いpiece版BPE・1エポック：20 stepごとのloss推移</title>
+<desc>train: 20 optimizer stepごとの区間平均（最終区間を含む） / validation: 各epoch終了時 / train 19点・validation 1点</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<style>
+text{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;fill:#172033}
+.title{font-size:22px;font-weight:650}.subtitle{font-size:13px;fill:#526079}
+.label{font-size:13px}.small{font-size:12px;fill:#526079}.grid{stroke:#dce3ec;stroke-width:1}
+.axis{stroke:#667085;stroke-width:1.4}.epoch{stroke:#98a2b3;stroke-width:1.2;stroke-dasharray:5 5}
+</style>
+<text x="560" y="35" text-anchor="middle" class="title">15M・短いpiece版BPE・1エポック</text>
+<text x="560" y="61" text-anchor="middle" class="subtitle">train: 20 optimizer stepごとの区間平均（最終区間を含む） / validation: 各epoch終了時 / train 19点・validation 1点</text>
+<line x1="92" y1="538.00" x2="1086" y2="538.00" class="grid"/>
+<text x="79" y="543.00" text-anchor="end" class="label">0.1</text>
+<line x1="92" y1="461.10" x2="1086" y2="461.10" class="grid"/>
+<text x="79" y="466.10" text-anchor="end" class="label">0.2</text>
+<line x1="92" y1="359.45" x2="1086" y2="359.45" class="grid"/>
+<text x="79" y="364.45" text-anchor="end" class="label">0.5</text>
+<line x1="92" y1="282.55" x2="1086" y2="282.55" class="grid"/>
+<text x="79" y="287.55" text-anchor="end" class="label">1</text>
+<line x1="92" y1="205.65" x2="1086" y2="205.65" class="grid"/>
+<text x="79" y="210.65" text-anchor="end" class="label">2</text>
+<line x1="92" y1="104.00" x2="1086" y2="104.00" class="grid"/>
+<text x="79" y="109.00" text-anchor="end" class="label">5</text>
+<line x1="92.00" y1="104" x2="92.00" y2="538" class="grid"/>
+<text x="92.00" y="565" text-anchor="middle" class="label">0</text>
+<line x1="223.83" y1="104" x2="223.83" y2="538" class="grid"/>
+<text x="223.83" y="565" text-anchor="middle" class="label">50</text>
+<line x1="355.66" y1="104" x2="355.66" y2="538" class="grid"/>
+<text x="355.66" y="565" text-anchor="middle" class="label">100</text>
+<line x1="487.49" y1="104" x2="487.49" y2="538" class="grid"/>
+<text x="487.49" y="565" text-anchor="middle" class="label">150</text>
+<line x1="619.32" y1="104" x2="619.32" y2="538" class="grid"/>
+<text x="619.32" y="565" text-anchor="middle" class="label">200</text>
+<line x1="751.15" y1="104" x2="751.15" y2="538" class="grid"/>
+<text x="751.15" y="565" text-anchor="middle" class="label">250</text>
+<line x1="882.98" y1="104" x2="882.98" y2="538" class="grid"/>
+<text x="882.98" y="565" text-anchor="middle" class="label">300</text>
+<line x1="1014.81" y1="104" x2="1014.81" y2="538" class="grid"/>
+<text x="1014.81" y="565" text-anchor="middle" class="label">350</text>
+<line x1="1086.00" y1="104" x2="1086.00" y2="538" class="grid"/>
+<text x="1086.00" y="565" text-anchor="middle" class="label">377</text>
+<line x1="92" y1="538" x2="1086" y2="538" class="axis"/>
+<line x1="92" y1="104" x2="92" y2="538" class="axis"/>
+<polyline points="144.73,104.03 197.46,221.99 250.20,302.63 302.93,352.92 355.66,390.01 408.39,417.69 461.12,444.58 513.86,465.58 566.59,474.78 619.32,481.22 672.05,485.74 724.79,486.77 777.52,488.36 830.25,489.08 882.98,490.22 935.71,490.08 988.45,491.68 1041.18,491.73 1086.00,492.15" fill="none" stroke="#1463d6" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="144.73" cy="104.03" r="3.0" fill="#1463d6"/>
+<circle cx="197.46" cy="221.99" r="3.0" fill="#1463d6"/>
+<circle cx="250.20" cy="302.63" r="3.0" fill="#1463d6"/>
+<circle cx="302.93" cy="352.92" r="3.0" fill="#1463d6"/>
+<circle cx="355.66" cy="390.01" r="3.0" fill="#1463d6"/>
+<circle cx="408.39" cy="417.69" r="3.0" fill="#1463d6"/>
+<circle cx="461.12" cy="444.58" r="3.0" fill="#1463d6"/>
+<circle cx="513.86" cy="465.58" r="3.0" fill="#1463d6"/>
+<circle cx="566.59" cy="474.78" r="3.0" fill="#1463d6"/>
+<circle cx="619.32" cy="481.22" r="3.0" fill="#1463d6"/>
+<circle cx="672.05" cy="485.74" r="3.0" fill="#1463d6"/>
+<circle cx="724.79" cy="486.77" r="3.0" fill="#1463d6"/>
+<circle cx="777.52" cy="488.36" r="3.0" fill="#1463d6"/>
+<circle cx="830.25" cy="489.08" r="3.0" fill="#1463d6"/>
+<circle cx="882.98" cy="490.22" r="3.0" fill="#1463d6"/>
+<circle cx="935.71" cy="490.08" r="3.0" fill="#1463d6"/>
+<circle cx="988.45" cy="491.68" r="3.0" fill="#1463d6"/>
+<circle cx="1041.18" cy="491.73" r="3.0" fill="#1463d6"/>
+<circle cx="1086.00" cy="492.15" r="3.0" fill="#1463d6"/>
+<rect x="1081.00" y="488.61" width="10" height="10" rx="1" fill="#d65a12" stroke="#ffffff" stroke-width="1.5"/>
+<text x="1078.00" y="483.61" text-anchor="end" class="small">E1: 0.1492</text>
+<line x1="92" y1="595" x2="123" y2="595" stroke="#1463d6" stroke-width="2.4"/>
+<circle cx="108" cy="595" r="3" fill="#1463d6"/>
+<text x="132" y="600" class="label">Train loss</text>
+<rect x="254" y="590" width="10" height="10" rx="1" fill="#d65a12"/>
+<text x="273" y="600" class="label">Validation loss</text>
+<text x="560" y="573" text-anchor="middle" class="label">Optimizer step</text>
+<text x="24" y="321" text-anchor="middle" class="label" transform="rotate(-90 24 321)">Loss（対数目盛）</text>
+</svg>

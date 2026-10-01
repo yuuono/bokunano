@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="520" viewBox="0 0 940 520" role="img">
+<title>生成中にどの領域を参照したか</title>
+<desc>上は排他的な領域内訳。下は冒頭4 tokenと直近4 tokenへのattentionで、上の領域とは重複する。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#17212b;font-size:12px}.small{font-size:10px;fill:#52606d}.title{font-size:20px;font-weight:500}.label{font-size:13px;font-weight:500}</style>
+<text x="24" y="30" class="title">生成中にどの領域を参照したか</text>
+<text x="24" y="52" class="small">上は排他的な領域内訳。下は冒頭4 tokenと直近4 tokenへのattentionで、上の領域とは重複する。</text>
+<rect x="78.94" y="196.12" width="15.14" height="40.88" fill="#9fb8c9"/>
+<rect x="78.94" y="82.00" width="15.14" height="114.12" fill="#3d7591"/>
+<rect x="78.94" y="82.00" width="15.14" height="0.00" fill="#d08a55"/>
+<text x="86.51" y="255" text-anchor="middle" class="small">1</text>
+<rect x="99.97" y="194.40" width="15.14" height="42.60" fill="#9fb8c9"/>
+<rect x="99.97" y="88.54" width="15.14" height="105.86" fill="#3d7591"/>
+<rect x="99.97" y="82.00" width="15.14" height="6.54" fill="#d08a55"/>
+<text x="107.54" y="255" text-anchor="middle" class="small">2</text>
+<rect x="120.99" y="197.92" width="15.14" height="39.08" fill="#9fb8c9"/>
+<rect x="120.99" y="95.10" width="15.14" height="102.83" fill="#3d7591"/>
+<rect x="120.99" y="82.00" width="15.14" height="13.10" fill="#d08a55"/>
+<text x="128.56" y="255" text-anchor="middle" class="small">3</text>
+<rect x="142.02" y="195.04" width="15.14" height="41.96" fill="#9fb8c9"/>
+<rect x="142.02" y="100.78" width="15.14" height="94.26" fill="#3d7591"/>
+<rect x="142.02" y="82.00" width="15.14" height="18.78" fill="#d08a55"/>
+<text x="149.59" y="255" text-anchor="middle" class="small">4</text>
+<rect x="163.05" y="200.79" width="15.14" height="36.21" fill="#9fb8c9"/>
+<rect x="163.05" y="103.88" width="15.14" height="96.91" fill="#3d7591"/>
+<rect x="163.05" y="82.00" width="15.14" height="21.88" fill="#d08a55"/>
+<text x="170.62" y="255" text-anchor="middle" class="small">5</text>
+<rect x="184.07" y="197.97" width="15.14" height="39.03" fill="#9fb8c9"/>
+<rect x="184.07" y="110.55" width="15.14" height="87.42" fill="#3d7591"/>
+<rect x="184.07" y="82.00" width="15.14" height="28.55" fill="#d08a55"/>
+<text x="191.64" y="255" text-anchor="middle" class="small">6</text>
+<rect x="205.10" y="204.59" width="15.14" height="32.41" fill="#9fb8c9"/>
+<rect x="205.10" y="114.29" width="15.14" height="90.30" fill="#3d7591"/>
+<rect x="205.10" y="82.00" width="15.14" height="32.29" fill="#d08a55"/>
+<text x="212.67" y="255" text-anchor="middle" class="small">7</text>
+<rect x="226.12" y="201.51" width="15.14" height="35.49" fill="#9fb8c9"/>
+<rect x="226.12" y="118.87" width="15.14" height="82.65" fill="#3d7591"/>
+<rect x="226.12" y="82.00" width="15.14" height="36.87" fill="#d08a55"/>
+<text x="233.69" y="255" text-anchor="middle" class="small">8</text>
+<rect x="247.15" y="204.25" width="15.14" height="32.75" fill="#9fb8c9"/>
+<rect x="247.15" y="120.63" width="15.14" height="83.61" fill="#3d7591"/>
+<rect x="247.15" y="82.00" width="15.14" height="38.63" fill="#d08a55"/>
+<text x="254.72" y="255" text-anchor="middle" class="small">9</text>
+<rect x="268.17" y="198.41" width="15.14" height="38.59" fill="#9fb8c9"/>
+<rect x="268.17" y="134.72" width="15.14" height="63.69" fill="#3d7591"/>
+<rect x="268.17" y="82.00" width="15.14" height="52.72" fill="#d08a55"/>
+<text x="275.74" y="255" text-anchor="middle" class="small">10</text>
+<rect x="289.20" y="194.14" width="15.14" height="42.86" fill="#9fb8c9"/>
+<rect x="289.20" y="129.01" width="15.14" height="65.14" fill="#3d7591"/>
+<rect x="289.20" y="82.00" width="15.14" height="47.01" fill="#d08a55"/>
+<text x="296.77" y="255" text-anchor="middle" class="small">11</text>
+<rect x="310.23" y="198.73" width="15.14" height="38.27" fill="#9fb8c9"/>
+<rect x="310.23" y="138.38" width="15.14" height="60.35" fill="#3d7591"/>
+<rect x="310.23" y="82.00" width="15.14" height="56.38" fill="#d08a55"/>
+<text x="317.79" y="255" text-anchor="middle" class="small">12</text>
+<rect x="331.25" y="207.35" width="15.14" height="29.65" fill="#9fb8c9"/>
+<rect x="331.25" y="131.12" width="15.14" height="76.23" fill="#3d7591"/>
+<rect x="331.25" y="82.00" width="15.14" height="49.12" fill="#d08a55"/>
+<text x="338.82" y="255" text-anchor="middle" class="small">13</text>
+<rect x="352.28" y="198.45" width="15.14" height="38.55" fill="#9fb8c9"/>
+<rect x="352.28" y="143.72" width="15.14" height="54.74" fill="#3d7591"/>
+<rect x="352.28" y="82.00" width="15.14" height="61.72" fill="#d08a55"/>
+<text x="359.85" y="255" text-anchor="middle" class="small">14</text>
+<rect x="373.30" y="199.58" width="15.14" height="37.42" fill="#9fb8c9"/>
+<rect x="373.30" y="146.62" width="15.14" height="52.96" fill="#3d7591"/>
+<rect x="373.30" y="82.00" width="15.14" height="64.62" fill="#d08a55"/>
+<text x="380.87" y="255" text-anchor="middle" class="small">15</text>
+<rect x="394.33" y="214.93" width="15.14" height="22.07" fill="#9fb8c9"/>
+<rect x="394.33" y="151.44" width="15.14" height="63.49" fill="#3d7591"/>
+<rect x="394.33" y="82.00" width="15.14" height="69.44" fill="#d08a55"/>
+<text x="401.90" y="255" text-anchor="middle" class="small">16</text>
+<rect x="415.35" y="205.77" width="15.14" height="31.23" fill="#9fb8c9"/>
+<rect x="415.35" y="154.40" width="15.14" height="51.37" fill="#3d7591"/>
+<rect x="415.35" y="82.00" width="15.14" height="72.40" fill="#d08a55"/>
+<text x="422.92" y="255" text-anchor="middle" class="small">17</text>
+<rect x="436.38" y="212.55" width="15.14" height="24.45" fill="#9fb8c9"/>
+<rect x="436.38" y="158.94" width="15.14" height="53.61" fill="#3d7591"/>
+<rect x="436.38" y="82.00" width="15.14" height="76.94" fill="#d08a55"/>
+<text x="443.95" y="255" text-anchor="middle" class="small">18</text>
+<rect x="457.41" y="212.34" width="15.14" height="24.66" fill="#9fb8c9"/>
+<rect x="457.41" y="161.77" width="15.14" height="50.57" fill="#3d7591"/>
+<rect x="457.41" y="82.00" width="15.14" height="79.77" fill="#d08a55"/>
+<text x="464.97" y="255" text-anchor="middle" class="small">19</text>
+<rect x="478.43" y="213.47" width="15.14" height="23.53" fill="#9fb8c9"/>
+<rect x="478.43" y="168.96" width="15.14" height="44.51" fill="#3d7591"/>
+<rect x="478.43" y="82.00" width="15.14" height="86.96" fill="#d08a55"/>
+<text x="486.00" y="255" text-anchor="middle" class="small">20</text>
+<rect x="499.46" y="218.28" width="15.14" height="18.72" fill="#9fb8c9"/>
+<rect x="499.46" y="178.02" width="15.14" height="40.26" fill="#3d7591"/>
+<rect x="499.46" y="82.00" width="15.14" height="96.02" fill="#d08a55"/>
+<text x="507.03" y="255" text-anchor="middle" class="small">21</text>
+<rect x="520.48" y="212.35" width="15.14" height="24.65" fill="#9fb8c9"/>
+<rect x="520.48" y="158.94" width="15.14" height="53.41" fill="#3d7591"/>
+<rect x="520.48" y="82.00" width="15.14" height="76.94" fill="#d08a55"/>
+<text x="528.05" y="255" text-anchor="middle" class="small">22</text>
+<rect x="541.51" y="216.99" width="15.14" height="20.01" fill="#9fb8c9"/>
+<rect x="541.51" y="160.39" width="15.14" height="56.60" fill="#3d7591"/>
+<rect x="541.51" y="82.00" width="15.14" height="78.39" fill="#d08a55"/>
+<text x="549.08" y="255" text-anchor="middle" class="small">23</text>
+<rect x="562.53" y="221.56" width="15.14" height="15.44" fill="#9fb8c9"/>
+<rect x="562.53" y="168.45" width="15.14" height="53.12" fill="#3d7591"/>
+<rect x="562.53" y="82.00" width="15.14" height="86.45" fill="#d08a55"/>
+<text x="570.10" y="255" text-anchor="middle" class="small">24</text>
+<rect x="583.56" y="221.57" width="15.14" height="15.43" fill="#9fb8c9"/>
+<rect x="583.56" y="177.66" width="15.14" height="43.91" fill="#3d7591"/>
+<rect x="583.56" y="82.00" width="15.14" height="95.66" fill="#d08a55"/>
+<text x="591.13" y="255" text-anchor="middle" class="small">25</text>
+<rect x="604.58" y="215.42" width="15.14" height="21.58" fill="#9fb8c9"/>
+<rect x="604.58" y="159.16" width="15.14" height="56.27" fill="#3d7591"/>
+<rect x="604.58" y="82.00" width="15.14" height="77.16" fill="#d08a55"/>
+<text x="612.15" y="255" text-anchor="middle" class="small">26</text>
+<rect x="625.61" y="223.34" width="15.14" height="13.66" fill="#9fb8c9"/>
+<rect x="625.61" y="184.96" width="15.14" height="38.38" fill="#3d7591"/>
+<rect x="625.61" y="82.00" width="15.14" height="102.96" fill="#d08a55"/>
+<text x="633.18" y="255" text-anchor="middle" class="small">27</text>
+<rect x="646.64" y="223.01" width="15.14" height="13.99" fill="#9fb8c9"/>
+<rect x="646.64" y="181.24" width="15.14" height="41.77" fill="#3d7591"/>
+<rect x="646.64" y="82.00" width="15.14" height="99.24" fill="#d08a55"/>
+<text x="654.21" y="255" text-anchor="middle" class="small">28</text>
+<rect x="667.66" y="220.73" width="15.14" height="16.27" fill="#9fb8c9"/>
+<rect x="667.66" y="172.24" width="15.14" height="48.49" fill="#3d7591"/>
+<rect x="667.66" y="82.00" width="15.14" height="90.24" fill="#d08a55"/>
+<text x="675.23" y="255" text-anchor="middle" class="small">29</text>
+<rect x="688.69" y="222.39" width="15.14" height="14.61" fill="#9fb8c9"/>
+<rect x="688.69" y="185.06" width="15.14" height="37.34" fill="#3d7591"/>
+<rect x="688.69" y="82.00" width="15.14" height="103.06" fill="#d08a55"/>
+<text x="696.26" y="255" text-anchor="middle" class="small">30</text>
+<rect x="709.71" y="223.68" width="15.14" height="13.32" fill="#9fb8c9"/>
+<rect x="709.71" y="189.18" width="15.14" height="34.50" fill="#3d7591"/>
+<rect x="709.71" y="82.00" width="15.14" height="107.18" fill="#d08a55"/>
+<text x="717.28" y="255" text-anchor="middle" class="small">31</text>
+<rect x="730.74" y="224.90" width="15.14" height="12.10" fill="#9fb8c9"/>
+<rect x="730.74" y="182.61" width="15.14" height="42.28" fill="#3d7591"/>
+<rect x="730.74" y="82.00" width="15.14" height="100.61" fill="#d08a55"/>
+<text x="738.31" y="255" text-anchor="middle" class="small">32</text>
+<rect x="751.76" y="226.00" width="15.14" height="11.00" fill="#9fb8c9"/>
+<rect x="751.76" y="188.09" width="15.14" height="37.91" fill="#3d7591"/>
+<rect x="751.76" y="82.00" width="15.14" height="106.09" fill="#d08a55"/>
+<text x="759.33" y="255" text-anchor="middle" class="small">33</text>
+<rect x="772.79" y="226.39" width="15.14" height="10.61" fill="#9fb8c9"/>
+<rect x="772.79" y="195.68" width="15.14" height="30.71" fill="#3d7591"/>
+<rect x="772.79" y="82.00" width="15.14" height="113.68" fill="#d08a55"/>
+<text x="780.36" y="255" text-anchor="middle" class="small">34</text>
+<rect x="793.82" y="228.15" width="15.14" height="8.85" fill="#9fb8c9"/>
+<rect x="793.82" y="196.66" width="15.14" height="31.49" fill="#3d7591"/>
+<rect x="793.82" y="82.00" width="15.14" height="114.66" fill="#d08a55"/>
+<text x="801.38" y="255" text-anchor="middle" class="small">35</text>
+<rect x="814.84" y="224.80" width="15.14" height="12.20" fill="#9fb8c9"/>
+<rect x="814.84" y="185.36" width="15.14" height="39.44" fill="#3d7591"/>
+<rect x="814.84" y="82.00" width="15.14" height="103.36" fill="#d08a55"/>
+<text x="822.41" y="255" text-anchor="middle" class="small">36</text>
+<rect x="835.87" y="223.13" width="15.14" height="13.87" fill="#9fb8c9"/>
+<rect x="835.87" y="176.86" width="15.14" height="46.27" fill="#3d7591"/>
+<rect x="835.87" y="82.00" width="15.14" height="94.86" fill="#d08a55"/>
+<text x="843.44" y="255" text-anchor="middle" class="small">37</text>
+<rect x="856.89" y="224.90" width="15.14" height="12.10" fill="#9fb8c9"/>
+<rect x="856.89" y="176.68" width="15.14" height="48.21" fill="#3d7591"/>
+<rect x="856.89" y="82.00" width="15.14" height="94.68" fill="#d08a55"/>
+<text x="864.46" y="255" text-anchor="middle" class="small">38</text>
+<rect x="877.92" y="228.07" width="15.14" height="8.93" fill="#9fb8c9"/>
+<rect x="877.92" y="197.73" width="15.14" height="30.34" fill="#3d7591"/>
+<rect x="877.92" y="82.00" width="15.14" height="115.73" fill="#d08a55"/>
+<text x="885.49" y="255" text-anchor="middle" class="small">39</text>
+<rect x="76" y="271" width="12" height="12" fill="#9fb8c9"/>
+<text x="93" y="281" class="small">制御token</text>
+<rect x="216" y="271" width="12" height="12" fill="#3d7591"/>
+<text x="233" y="281" class="small">日本語指示</text>
+<rect x="356" y="271" width="12" height="12" fill="#d08a55"/>
+<text x="373" y="281" class="small">生成済みコード</text>
+<line x1="76" y1="485.00" x2="896" y2="485.00" stroke="#e5e8eb"/>
+<text x="67" y="489.00" text-anchor="end" class="small">0%</text>
+<line x1="76" y1="454.00" x2="896" y2="454.00" stroke="#e5e8eb"/>
+<text x="67" y="458.00" text-anchor="end" class="small">20%</text>
+<line x1="76" y1="423.00" x2="896" y2="423.00" stroke="#e5e8eb"/>
+<text x="67" y="427.00" text-anchor="end" class="small">40%</text>
+<line x1="76" y1="392.00" x2="896" y2="392.00" stroke="#e5e8eb"/>
+<text x="67" y="396.00" text-anchor="end" class="small">60%</text>
+<line x1="76" y1="361.00" x2="896" y2="361.00" stroke="#e5e8eb"/>
+<text x="67" y="365.00" text-anchor="end" class="small">80%</text>
+<line x1="76" y1="330.00" x2="896" y2="330.00" stroke="#e5e8eb"/>
+<text x="67" y="334.00" text-anchor="end" class="small">100%</text>
+<polyline points="86.51,459.19 107.54,456.95 128.56,459.27 149.59,453.78 170.62,460.20 191.64,456.71 212.67,462.02 233.69,460.16 254.72,461.86 275.74,454.11 296.77,450.08 317.79,451.57 338.82,463.63 359.85,451.41 380.87,455.44 401.90,470.02 422.92,459.21 443.95,466.12 464.97,465.22 486.00,468.25 507.03,470.44 528.05,465.73 549.08,472.88 570.10,474.58 591.13,474.74 612.15,469.32 633.18,476.95 654.21,476.13 675.23,474.02 696.26,476.36 717.28,477.08 738.31,477.90 759.33,478.48 780.36,478.79 801.38,479.75 822.41,477.32 843.44,476.04 864.46,477.72 885.49,480.42" fill="none" stroke="#704c7d" stroke-width="3"/>
+<text x="892" y="348" text-anchor="end" class="small">冒頭4 token</text>
+<polyline points="86.51,456.63 107.54,457.71 128.56,459.18 149.59,460.70 170.62,463.12 191.64,460.92 212.67,463.20 233.69,464.51 254.72,466.03 275.74,453.17 296.77,464.24 317.79,456.38 338.82,468.50 359.85,459.07 380.87,456.69 401.90,459.29 422.92,456.17 443.95,449.53 464.97,458.63 486.00,459.40 507.03,451.90 528.05,467.68 549.08,468.82 570.10,463.93 591.13,460.74 612.15,472.19 633.18,458.96 654.21,466.31 675.23,465.60 696.26,462.99 717.28,460.57 738.31,453.71 759.33,466.31 780.36,457.05 801.38,452.21 822.41,467.35 843.44,473.16 864.46,473.69 885.49,467.38" fill="none" stroke="#2f7d61" stroke-width="3"/>
+<text x="892" y="366" text-anchor="end" class="small">直近4 token</text>
+<text x="470.0" y="508" text-anchor="middle" class="small">生成step</text>
+</svg>

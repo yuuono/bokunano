@@ -68,11 +68,14 @@ docs/
 - [`results/bpe_tokenizer_minfreq2_maxlen8_results.md`](results/bpe_tokenizer_minfreq2_maxlen8_results.md): 最小頻度2・最大piece長8のBPE 2,048語彙と既存版の系列長比較
 - [`results/bpe_tokenizer_implementation_examples.md`](results/bpe_tokenizer_implementation_examples.md): 長いpiece版と短いpiece版の設定、系列長、GPU使用量の比較
 - [`results/boku_nano_1m_evaluation_results.md`](results/boku_nano_1m_evaluation_results.md): 2種類の1Mモデルの1エポック学習、固定5テスト、日本語言い換え30件の詳細比較
+- [`results/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch_results.md`](results/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch_results.md): 1M・既存BPEの3エポック学習、固定5テスト、attention解析
+- [`results/boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch_results.md`](results/boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch_results.md): 1M・短いpiece版BPEの3エポック学習、固定5テスト、attention解析
 - [`results/boku_nano_5m_1epoch_tokenizer_comparison.md`](results/boku_nano_5m_1epoch_tokenizer_comparison.md): 正確に5,065,472パラメータの1エポックモデルを2種類のBPEで学習・評価し、日本語言い換え30件を詳細比較
 - [`results/boku_nano_15m_1epoch_tokenizer_comparison.md`](results/boku_nano_15m_1epoch_tokenizer_comparison.md): 正確に15,735,168パラメータの1エポックモデルを2種類のBPEで直接比較
 - [`results/trained_model_inventory.md`](results/trained_model_inventory.md): 実際に学習済みの全モデル、正確なパラメータ数、構造、epoch、評価、ハッシュ
+- [`results/training_loss_every_20_steps.md`](results/training_loss_every_20_steps.md): 保存済み全10モデルの20 optimizer stepごとのtrain lossとepoch別validation loss
 - [`results/boku_nano_1epoch_attention_comparison.md`](results/boku_nano_1epoch_attention_comparison.md): 1M・5M・15Mの各1epoch、2トークナイザーに対する学習時準拠文型のattention可視化、Value・head ablation、因果評価
-- [`results/attention_1epoch_by_result/README.md`](results/attention_1epoch_by_result/README.md): 6モデルのattention解析図を、head役割・sink・ablationなど8種類に分けて本文表示する一覧
+- [`results/attention_1epoch_by_result/README.md`](results/attention_1epoch_by_result/README.md): 1epochのattention解析図をトークナイザー別、さらにhead役割・sink・ablationなど8種類に分けた一覧
 - [`results/boku_nano_1epoch_attention_comparison_legacy_taishite_prompt.md`](results/boku_nano_1epoch_attention_comparison_legacy_taishite_prompt.md): 旧「整数リストxsに対して、」文型による24単独操作診断の保存記録
 - [`results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md`](results/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_evaluation_results.md): 短いpiece版15Mモデルの1エポック学習・固定5テスト評価結果
 - [`results/boku_nano_three_epoch_training_results.md`](results/boku_nano_three_epoch_training_results.md): Boku Nanoモデルの3エポックにおけるtrain loss・validation loss推移

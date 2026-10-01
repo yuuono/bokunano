@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480" role="img" aria-labelledby="title desc">
+  <title id="title">1M・短いpiece版BPE・3エポックのloss推移</title>
+  <desc id="desc">Train lossは0.3599、0.1648、0.1548、Validation lossは0.3228、0.1614、0.1539へ低下した。</desc>
+  <rect width="900" height="480" fill="#ffffff"/>
+  <text x="450" y="34" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#111827">1M・短いpiece版BPE・3エポックのloss推移</text>
+  <text x="450" y="58" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#4b5563">trainは各epoch最後のログ区間、validationは全24,040件</text>
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="100" y1="100" x2="840" y2="100"/><line x1="100" y1="147" x2="840" y2="147"/>
+    <line x1="100" y1="193" x2="840" y2="193"/><line x1="100" y1="240" x2="840" y2="240"/>
+    <line x1="100" y1="287" x2="840" y2="287"/><line x1="100" y1="333" x2="840" y2="333"/>
+    <line x1="100" y1="380" x2="840" y2="380"/>
+  </g>
+  <g font-family="sans-serif" font-size="12" fill="#4b5563" text-anchor="end">
+    <text x="90" y="104">0.38</text><text x="90" y="151">0.34</text><text x="90" y="197">0.30</text>
+    <text x="90" y="244">0.26</text><text x="90" y="291">0.22</text><text x="90" y="337">0.18</text><text x="90" y="384">0.14</text>
+  </g>
+  <line x1="100" y1="100" x2="100" y2="380" stroke="#6b7280"/><line x1="100" y1="380" x2="840" y2="380" stroke="#6b7280"/>
+  <g font-family="sans-serif" font-size="14" fill="#111827" text-anchor="middle">
+    <text x="220" y="410">Epoch 1</text><text x="470" y="410">Epoch 2</text><text x="720" y="410">Epoch 3</text>
+  </g>
+  <polyline points="220,123 470,351 720,363" fill="none" stroke="#2563eb" stroke-width="3"/>
+  <polyline points="220,167 470,355 720,364" fill="none" stroke="#d97706" stroke-width="3" stroke-dasharray="8 5"/>
+  <g fill="#2563eb"><circle cx="220" cy="123" r="6"/><circle cx="470" cy="351" r="6"/><circle cx="720" cy="363" r="6"/></g>
+  <g fill="#ffffff" stroke="#d97706" stroke-width="3"><rect x="215" y="162" width="10" height="10"/><rect x="465" y="350" width="10" height="10"/><rect x="715" y="359" width="10" height="10"/></g>
+  <g font-family="sans-serif" font-size="12" font-weight="600">
+    <text x="220" y="110" text-anchor="middle" fill="#1d4ed8">0.3599</text><text x="470" y="336" text-anchor="middle" fill="#1d4ed8">0.1648</text><text x="720" y="348" text-anchor="middle" fill="#1d4ed8">0.1548</text>
+    <text x="220" y="188" text-anchor="middle" fill="#b45309">0.3228</text><text x="470" y="376" text-anchor="middle" fill="#b45309">0.1614</text><text x="720" y="385" text-anchor="middle" fill="#b45309">0.1539</text>
+  </g>
+  <g transform="translate(545 82)" font-family="sans-serif" font-size="13" fill="#111827">
+    <line x1="0" y1="0" x2="30" y2="0" stroke="#2563eb" stroke-width="3"/><text x="40" y="5">Train loss</text>
+    <line x1="135" y1="0" x2="165" y2="0" stroke="#d97706" stroke-width="3" stroke-dasharray="8 5"/><text x="175" y="5">Validation loss</text>
+  </g>
+</svg>

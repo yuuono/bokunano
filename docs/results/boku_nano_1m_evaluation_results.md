@@ -42,6 +42,14 @@
 
 短いpiece用BPEは同じ192,900レコードを2.490倍の系列token、2.732倍のloss対象tokenへ分割した。token単位が異なるため、lossとperplexityの絶対値をトークナイザー間で直接比較してはいけない。
 
+### 20 stepごとのloss推移
+
+青線は直近20 optimizer stepのtrain loss平均、オレンジの四角はepoch終了時のvalidation lossである。縦軸は対数目盛を使う。
+
+![1M・既存BPE・1エポックの20 stepごとのloss](figures/training_loss_20step/boku_nano_1m_bpe_2048_minfreq5_maxlen24_1epoch.svg)
+
+![1M・短いpiece版BPE・1エポックの20 stepごとのloss](figures/training_loss_20step/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch.svg)
+
 関連ファイル:
 
 - [既存BPE学習設定](../../config/boku_nano_1m_bpe_2048_1epoch.yaml)

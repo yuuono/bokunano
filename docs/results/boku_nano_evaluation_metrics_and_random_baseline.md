@@ -137,6 +137,12 @@ Executableだがpass@1で不合格だった112件は、コードを例外なく�
 | Executable率 | 84,546 / 84,550（99.9953%） | 84,285 / 84,550（99.6866%） |
 | pass@1 | 84,434 / 84,550（99.8628%） | 83,058 / 84,550（98.2354%） |
 
+train lossは原則20 optimizer stepごとの区間平均、オレンジの四角は各epoch終了時のvalidation lossである。縦軸は対数目盛を使う。
+
+![3エポックモデルの20 stepごとのloss](figures/training_loss_20step/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch.svg)
+
+![10エポックモデルの20 stepごとのloss](figures/training_loss_20step/boku_nano_15m_bpe_2048_minfreq5_maxlen24_10epoch.svg)
+
 ### テスト別pass@1
 
 | テスト名 | 3エポック | 10エポック | 3エポックとの差 |

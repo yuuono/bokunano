@@ -91,7 +91,7 @@ validation lossもEpoch 1の`0.4181`からEpoch 2の`0.3985`へ大きく改善�
 
 学習ログには原則20 optimizer stepごとの区間平均lossが56点記録されている。これに学習終了時のstep 1,131を加えた全57点を示す。
 
-![20 stepごとのtrain loss](figures/boku_nano_train_loss_every_20_steps.svg)
+![20 stepごとのtrain lossと各epochのvalidation loss](figures/training_loss_20step/boku_nano_15m_bpe_2048_minfreq5_maxlen24_3epoch.svg)
 
 | Epoch 1 step | Loss | Epoch 2 step | Loss | Epoch 3 step | Loss |
 |---:|---:|---:|---:|---:|---:|

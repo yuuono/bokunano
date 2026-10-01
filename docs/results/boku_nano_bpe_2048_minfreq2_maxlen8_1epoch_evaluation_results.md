@@ -16,7 +16,9 @@
 
 通常テストと境界値テストは99.9626%だった。一方、組合せ汎化は99.5299%、同一操作の反復は99.3316%、日本語言い換えは66.6667%で、短いpieceへ分割しても未学習言い換えは改善しなかった。
 
-![Train lossとValidation loss](figures/boku_nano_bpe_2048_minfreq2_maxlen8_1epoch_loss.svg)
+青線は直近20 optimizer stepのtrain loss平均、オレンジの四角はepoch終了時のvalidation lossである。縦軸は対数目盛を使う。
+
+![Train lossとValidation lossの20 stepごとの推移](figures/training_loss_20step/boku_nano_15m_bpe_2048_minfreq2_maxlen8_1epoch.svg)
 
 ## 1. 最大GPU使用量27,392 MiBの比較
 

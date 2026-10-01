@@ -4,7 +4,7 @@
 
 model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモデルだけを「学習済み」として掲載する。設定や起動スクリプトだけのモデルは含めない。
 
-2026年10月1日時点で、学習済みモデルは8個である。パラメータ規模は正確に1,016,704、5,065,472、15,735,168の3種類である。
+2026年10月1日時点で、学習済みモデルは10個である。パラメータ規模は正確に1,016,704、5,065,472、15,735,168の3種類である。
 
 ## ディレクトリ命名規則
 
@@ -20,6 +20,8 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 |---|---:|---|---|---:|---:|---:|---|
 | 1M・既存BPE・1ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 5 / max 24 | 1 | 6,939,466 | 1,467 / 84,550（1.7351%） | 済 |
 | 1M・短いpiece・1ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 2 / max 8 | 1 | 17,281,995 | 4,572 / 84,550（5.4075%） | 済 |
+| 1M・既存BPE・3ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 5 / max 24 | 3 | 20,818,398 | 84,171 / 84,550（99.5517%） | 未変換 |
+| 1M・短いpiece・3ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 2 / max 8 | 3 | 51,845,985 | 83,890 / 84,550（99.2194%） | 未変換 |
 | 5M・既存BPE・1ep | 5,065,472 | d=256、5層、4 head、FFN 704 | min 5 / max 24 | 1 | 6,939,466 | 81,557 / 84,550（96.4601%） | 済 |
 | 5M・短いpiece・1ep | 5,065,472 | d=256、5層、4 head、FFN 704 | min 2 / max 8 | 1 | 17,281,995 | 82,353 / 84,550（97.4015%） | 済 |
 | 15M・既存BPE・1ep | 15,735,168 | d=384、8層、6 head、FFN 1,024 | min 5 / max 24 | 1 | 6,939,466 | 84,180 / 84,550（99.5624%） | 済 |
@@ -50,6 +52,22 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 - [ONNX](../../data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch/model.onnx)
 - [ONNX検証manifest](../../data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch/onnx_manifest.json)
 - ONNX SHA-256: e87fd4087b0d635f6721bdf8444e20491bda0d45f9f357fef70e12f2c759c6dc
+
+### 1M・既存BPE・3エポック
+
+- 正確なパラメータ数: 1,016,704
+- [保存済み学習設定](../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/training_config.yaml)
+- [training manifest](../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/training_manifest.json)
+- モデルSHA-256: e9eafad8c5195b501414c4456b04918258cc1a3a6ef799d5d77f3ea69cd17533
+- [学習・評価・attention報告書](boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch_results.md)
+
+### 1M・短いpiece・3エポック
+
+- 正確なパラメータ数: 1,016,704
+- [保存済み学習設定](../../data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch/training_config.yaml)
+- [training manifest](../../data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch/training_manifest.json)
+- モデルSHA-256: 216cc2ce080131455705af5a6589653d090f4d5ee42d031cf97cc15d796a4d7d
+- [学習・評価・attention報告書](boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch_results.md)
 
 ### 5M・既存BPE・1エポック
 
@@ -127,6 +145,7 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 
 ## 関連資料
 
+- [全10モデルの20 stepごとのtrain・validation loss](training_loss_every_20_steps.md)
 - [1Mモデル2種の評価結果](boku_nano_1m_evaluation_results.md)
 - [5M・1エポックのトークナイザー比較](boku_nano_5m_1epoch_tokenizer_comparison.md)
 - [15M・1エポックのトークナイザー比較](boku_nano_15m_1epoch_tokenizer_comparison.md)

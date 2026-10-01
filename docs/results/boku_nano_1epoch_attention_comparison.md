@@ -21,22 +21,16 @@
 - BOS Valueを消すと、5M既存BPEは22件から7件、5M短いpiece版は23件から2件、15M既存BPEは22件から18件、15M短いpiece版は24件から5件へ変化した。BOSへのattentionは単なる無意味なsinkとはいえず、影響の大きさはモデルとトークナイザーで異なる。
 - 全head内で「日本語指示へのattention」とhead無効化時のNLL増加を比べると、Spearman相関は6構成すべて正で、0.371〜0.874だった。ただし、attention値だけで個々の出力の因果的重要度を断定はできない。
 
-## 結果の種類ごとに6モデルの図を見る
+## トークナイザーごとに結果の図を見る
 
-次の各Markdownでは、SVGへの単独リンクではなく、6モデルの図を本文へ直接表示する。
+図はトークナイザーごとに分離した。各入口からhead役割、BOS sink、因果的ablation、rollout、生成step、領域比率、K/V類似度、token利用状況の8ページへ移動できる。各ページはSVGへの単独リンクではなく、1M・5M・15Mの3図を本文へ直接表示する。
 
-| 結果の種類 | 一覧ページ |
+| トークナイザー | 1M・5M・15Mの結果一覧 |
 |---|---|
-| head別の記述的役割 | [6モデルの図を表示](attention_1epoch_by_result/attention_head_roles.md) |
-| BOS sinkとValueノルム | [6モデルの図を表示](attention_1epoch_by_result/attention_sink_contribution.md) |
-| 因果的ablation | [6モデルの図を表示](attention_1epoch_by_result/attention_causal_ablation.md) |
-| attention rollout | [6モデルの図を表示](attention_1epoch_by_result/attention_rollout.md) |
-| 生成step×参照token位置 | [6モデルの図を表示](attention_1epoch_by_result/attention_by_layer_head.md) |
-| 領域別attention | [6モデルの図を表示](attention_1epoch_by_result/attention_regions.md) |
-| K/Vのコサイン類似度 | [6モデルの図を表示](attention_1epoch_by_result/kv_cosine_similarity.md) |
-| token利用状況 | [6モデルの図を表示](attention_1epoch_by_result/token_utilization.md) |
+| 既存BPE（min 5 / max 24） | [8種類の図を見る](attention_1epoch_by_result/bpe_2048_minfreq5_maxlen24/README.md) |
+| 短いpiece版BPE（min 2 / max 8） | [8種類の図を見る](attention_1epoch_by_result/bpe_2048_minfreq2_maxlen8/README.md) |
 
-説明を含む入口は[結果種類別一覧](attention_1epoch_by_result/README.md)にまとめた。
+全体の入口は[トークナイザー別attention一覧](attention_1epoch_by_result/README.md)にまとめた。
 
 ## 新旧文型の比較
 

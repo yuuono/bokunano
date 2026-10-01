@@ -53,6 +53,14 @@
 
 lossとperplexityはtoken単位の平均であり、分割単位が異なるトークナイザー間では直接比較できない。機能評価を主指標とする。
 
+### 20 stepごとのloss推移
+
+青線は直近20 optimizer stepのtrain loss平均、オレンジの四角はepoch終了時のvalidation lossである。縦軸は対数目盛を使う。
+
+![5M・既存BPE・1エポックの20 stepごとのloss](figures/training_loss_20step/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch.svg)
+
+![5M・短いpiece版BPE・1エポックの20 stepごとのloss](figures/training_loss_20step/boku_nano_5m_bpe_2048_minfreq2_maxlen8_1epoch.svg)
+
 - [既存BPE tokenizer.json](../../data/tokenizers/bpe_2048/tokenizer.json)
 - [短いpiece用BPE tokenizer.json](../../data/tokenizers/bpe_2048_minfreq2_maxlen8/tokenizer.json)
 - [既存BPE学習設定](../../config/boku_nano_5m_bpe_2048_1epoch.yaml)

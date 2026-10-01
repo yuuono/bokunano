@@ -158,8 +158,8 @@ case "${tokenizer_name}" in
   bpe_2048_minfreq5_maxlen24)
     # 旧BPE用の固定設定を使う。
     config_path="${old_config}"
-    # 既存成果物との互換性を保つ保存名を設定する。
-    artifact_tokenizer_name="bpe_2048"
+    # 省略せず最小頻度と最大piece長を含む保存名を設定する。
+    artifact_tokenizer_name="bpe_2048_minfreq5_maxlen24"
     # 実行時の確認表示を設定する。
     tokenizer_label="既存のBPE 2,048語彙"
     # tokenizer訓練時の主要parameterを表示用に設定する。
