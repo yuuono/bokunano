@@ -6,6 +6,9 @@ import { nearBottom, captureSelection } from "./chat-utils.js?v=15";
 import { highlightPython } from "./python-highlight.js?v=7";
 import { captureSemanticAst } from "./semantic-ast.js?v=11";
 
+import { PromptHistory, canRecallPrompt } from "./prompt-history.js?v=20";
+
+const promptHistory = new PromptHistory();
 const $ = (id) => document.getElementById(id);
 const state = {
   manifest: null,
@@ -236,6 +239,7 @@ async function translateInstruction(event) {
   state.confirmedReply = null;
   checkCnl();
   setMessage($("cnl-status"), "今回の指示を確認しています…");
+  promptHistory.add(instruction);
   addMessage("user", instruction);
   $("prompt").value = "";
   resizeComposer();
@@ -559,6 +563,7 @@ async function generateCode() {
 
 function newConversation() {
   if (state.job) return;
+  promptHistory.clear();
   state.candidate = null;
   state.confirmedReply = null;
   state.contextCnl = "";
@@ -630,6 +635,18 @@ async function initialize() {
 
 $("composer").addEventListener("submit", translateInstruction);
 $("prompt").addEventListener("keydown", event => {
+  const input = $("prompt");
+  if (state.ready && !state.job && canRecallPrompt(event, input)) {
+    const value = promptHistory.move(event.key === "ArrowUp" ? -1 : 1, input.value);
+    if (value !== null) {
+      event.preventDefault();
+      input.value = value;
+      const caret = event.key === "ArrowUp" ? 0 : value.length;
+      input.setSelectionRange(caret, caret);
+      updateDraft();
+      return;
+    }
+  }
   if (event.key === "Enter" && !event.shiftKey && !event.isComposing && event.keyCode !== 229) {
     event.preventDefault();
     translateInstruction();
@@ -654,7 +671,10 @@ function updateDraft() {
   resizeComposer();
   updateControls();
 }
-$("prompt").addEventListener("input", updateDraft);
+$("prompt").addEventListener("input", () => {
+  promptHistory.resetDraft($("prompt").value);
+  updateDraft();
+});
 $("conversation").addEventListener("scroll", updateScrollButton, { passive: true });
 $("latest-message").addEventListener("click", () => followScroll($("conversation"), () => {}));
 function setSettingsOpen(open) {
