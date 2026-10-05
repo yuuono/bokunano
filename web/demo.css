@@ -75,11 +75,7 @@ textarea::placeholder { color: #677870; opacity: 1; }
 .operation-list li::before { content: counter(operations, decimal-leading-zero); color: var(--accent); font-size: 12px; margin-right: 2px; }
 .operation-list li > span { flex: 1; min-width: 120px; }
 .operation-list button { padding: 4px 8px; font-size: 14px; }
-.parameter-control { margin-bottom: 16px; }
-.parameter-control label { display: block; font-size: 15px; margin-bottom: 6px; }
-.parameter-control input { width: 100%; background: #fff; border: 1px solid #aebcb6; padding: 10px; border-radius: 8px; font-size: 18px; }
-.parameter-control p, .experimental-note { font-size: 13px; line-height: 1.8; margin-top: 8px; }
-.experimental-note { color: #835513; background: #fff7e6; padding: 10px; border-radius: 7px; }
+.experimental-note { font-size: 13px; line-height: 1.8; margin-top: 8px; color: #835513; background: #fff7e6; padding: 10px; border-radius: 7px; }
 .generate-button { width: 100%; font-size: 17px; padding: 12px; }
 .stop-button { width: 100%; margin-top: 10px; }
 .model-options { display: grid; gap: 5px; }

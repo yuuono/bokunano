@@ -13,6 +13,7 @@ const state = {
   candidate: null,
   contextCnl: "",
   contextK: null,
+  parameterK: null,
 };
 const errorText = (error) => error instanceof Error ? error.message : String(error);
 const formatBytes = (bytes) => `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
@@ -25,7 +26,7 @@ function setMessage(element, message, kind = "normal") {
 
 function updateControls() {
   const busy = Boolean(state.job);
-  for (const id of ["model", "qwen-temperature", "boku-temperature", "prompt", "cnl", "validate-cnl", "new-chat", "new-chat-top", "parameter-k"]) {
+  for (const id of ["model", "qwen-temperature", "boku-temperature", "prompt", "cnl", "validate-cnl", "new-chat", "new-chat-top"]) {
     $(id).disabled = !state.ready || busy;
   }
   $("translate").disabled = !state.ready || busy;
@@ -85,19 +86,14 @@ function addMessage(role, text, kind = "normal") {
 function checkCnl() {
   const validation = validateCnl($("cnl").value);
   if (validation.valid && validation.usesK) {
-    try { validation.kValue = parseK($("parameter-k").value); }
+    try { validation.kValue = parseK(state.parameterK); }
     catch (error) { validation.valid = false; validation.error = errorText(error); }
   } else if (validation.valid) {
     validation.kValue = null;
-    $("parameter-k").value = "";
+    state.parameterK = null;
   }
   state.candidate = validation;
   $("operation-list").replaceChildren();
-  // Keep an invalid numeric field visible so it can be corrected.
-  $("parameter-control").hidden = !validation.usesK;
-  $("parameter-help").textContent = validation.error || (validation.kValue !== null && validation.kValue !== undefined
-    ? `k=${validation.kValue} を使います。生成コードの引数の初期値に反映します。`
-    : "未指定の場合は、関数を呼び出すときにkを渡します。");
   if (validation.valid) {
     state.contextCnl = validation.cnl;
     state.contextK = validation.kValue ?? null;
@@ -138,7 +134,7 @@ function setOperations(operations) {
   if (state.job) return;
   if (!operations.length) {
     $("cnl").value = "";
-    $("parameter-k").value = "";
+    state.parameterK = null;
     state.contextCnl = "";
     state.contextK = null;
     document.querySelector('[name="request-mode"][value="new"]').checked = true;
@@ -191,7 +187,7 @@ async function translateInstruction(event) {
   const contextCnl = revision ? previousCnl : "";
   const contextK = revision ? previousK : null;
   const editorCnl = $("cnl").value;
-  const editorK = $("parameter-k").value;
+  const editorK = state.parameterK;
   addMessage("user", instruction);
   $("prompt").value = "";
   $("translation-metrics").textContent = "";
@@ -203,7 +199,7 @@ async function translateInstruction(event) {
   const fail = (message) => {
     if (!current(job)) return;
     $("cnl").value = editorCnl;
-    $("parameter-k").value = editorK;
+    state.parameterK = editorK;
     checkCnl();
     state.contextCnl = previousCnl;
     state.contextK = previousK;
@@ -242,7 +238,7 @@ async function translateInstruction(event) {
           reply.message.append(details);
         }
         $("cnl").value = message.cnl || "";
-        $("parameter-k").value = message.kValue ?? "";
+        state.parameterK = message.kValue ?? null;
         const validation = checkCnl();
         if (!message.supported || !validation.valid) {
           state.contextCnl = previousCnl;
@@ -493,7 +489,7 @@ function newConversation() {
   state.contextCnl = "";
   state.contextK = null;
   document.querySelector('[name="request-mode"][value="new"]').checked = true;
-  $("parameter-k").value = "";
+  state.parameterK = null;
   $("conversation").querySelectorAll(".chat-turn").forEach(item => item.remove());
   $("welcome").hidden = false;
   $("cnl").value = "";
@@ -573,7 +569,6 @@ $("prompt").addEventListener("keydown", event => {
   }
 });
 $("cnl").addEventListener("input", checkCnl);
-$("parameter-k").addEventListener("input", checkCnl);
 $("validate-cnl").addEventListener("click", () => { checkCnl(); followScroll($("conversation"), () => {}, true); });
 $("generate").addEventListener("click", generateCode);
 $("cancel-translation").addEventListener("click", stopJob);

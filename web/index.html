@@ -7,12 +7,12 @@
     <meta name="color-scheme" content="light" />
     <meta name="description" content="日本語で指示して、Pythonコードを生成。QwenとBoku1-nanoがブラウザ内で動くチャットデモ。" />
     <title>Boku1-nano — コード生成チャット</title>
-    <link rel="stylesheet" href="./demo.css?v=5" />
+    <link rel="stylesheet" href="./demo.css?v=6" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=5"></script>
+    <script type="module" src="./demo.js?v=6"></script>
   </head>
   <body>
-    <main class="studio" data-release="chat-studio-v5">
+    <main class="studio" data-release="chat-studio-v6">
       <header class="topbar">
         <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
         <div class="topbar-actions"><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
@@ -40,7 +40,6 @@
               <textarea id="cnl" rows="3" maxlength="800" placeholder="送信すると変換結果が入ります。直接入力・編集もできます。"></textarea>
               <div class="cnl-actions"><button id="validate-cnl" type="button">指示を検査</button><p id="cnl-status" class="status" role="status">Qwenで変換するか、下の操作から選んでください。</p></div>
               <ol id="operation-list" class="operation-list"></ol>
-              <div id="parameter-control" class="parameter-control" hidden><label for="parameter-k">使う数値（k）</label><input id="parameter-k" type="number" step="1" placeholder="未指定：呼び出し時に指定" /><p id="parameter-help">指定した整数を、生成コードのkの初期値にします。</p></div>
               <p id="experimental-note" class="experimental-note" hidden>4操作は学習範囲（最大3操作）を超える実験です。生成結果を確認してください。</p>
               <button id="generate" class="generate-button" type="button" disabled>コードを生成 →</button>
               <button id="stop" class="stop-button" type="button" hidden>生成を停止 ■</button>
