@@ -7,7 +7,7 @@
 GitHub Pages上のブラウザだけで、自由な日本語からPythonコードまでを次の順で処理する。
 
 1. Qwen3-0.6Bが自由な日本語をControlled Natural Language（CNL）へ翻訳する。
-2. JavaScriptがCNLを24種類・最大3操作の規則に照らして検査する。
+2. JavaScriptがQwenの操作名を検査し、24種類・最大4操作のCNLへ整形して再検査する。
 3. ユーザーがCNLと操作順を確認する。
 4. 1M・5M・15Mの学習済み8モデルから選んだBoku1-nanoが、検査済みCNLからコードを生成する。
 
