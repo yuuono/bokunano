@@ -1,9 +1,11 @@
 import {
   UNSUPPORTED_CNL,
-  buildNormalizerSystemPrompt,
+  buildNormalizerMessages,
+  buildRevisionMessages,
   buildNormalizerUserPrompt,
-  validateCnl,
+  validateOperationPlan,
 } from "./cnl.js";
+import { qwenSamplingOptions } from "./sampling.js";
 
 let generator = null;
 
@@ -46,15 +48,15 @@ async function loadGenerator(manifest) {
   });
 }
 
-async function generateCnl(messages) {
+async function generatePlan(messages, temperature) {
   const prompt = generator.tokenizer.apply_chat_template(messages, {
     tokenize: false,
     add_generation_prompt: true,
     enable_thinking: false,
   });
   const result = await generator(prompt, {
-    max_new_tokens: 96,
-    do_sample: false,
+    max_new_tokens: 192,
+    ...qwenSamplingOptions(temperature),
     repetition_penalty: 1.05,
     return_full_text: false,
   });
@@ -70,19 +72,18 @@ async function disposeGenerator() {
 
 self.addEventListener("message", async (event) => {
   if (event.data?.type !== "translate") return;
-  const { instruction, manifest } = event.data;
+  const { instruction, manifest, contextCnl = "", temperature = 0 } = event.data;
   const startedAt = performance.now();
   let candidate = "";
   let validation = null;
   try {
     await loadGenerator(manifest);
-    const messages = [
-      { role: "system", content: buildNormalizerSystemPrompt() },
-      { role: "user", content: buildNormalizerUserPrompt(instruction) },
-    ];
+    const messages = contextCnl
+      ? buildRevisionMessages(instruction, contextCnl)
+      : buildNormalizerMessages(instruction);
     for (let attempt = 1; attempt <= 2; attempt += 1) {
-      send("phase", { message: `QwenがCNLへ翻訳しています… (${attempt}/2)` });
-      candidate = await generateCnl(messages);
+      send("phase", { message: `Qwenが${contextCnl ? "変更後の" : "指示の"}操作を整理しています… (${attempt}/2)` });
+      candidate = await generatePlan(messages, temperature);
       if (candidate === UNSUPPORTED_CNL) {
         send("result", {
           supported: false,
@@ -92,12 +93,13 @@ self.addEventListener("message", async (event) => {
         });
         return;
       }
-      validation = validateCnl(candidate);
+      validation = validateOperationPlan(candidate);
       if (validation.valid) {
         send("result", {
           supported: true,
           cnl: validation.cnl,
           operations: validation.operations,
+          plan: candidate,
           attempts: attempt,
           elapsed_seconds: (performance.now() - startedAt) / 1000,
         });
@@ -111,7 +113,8 @@ self.addEventListener("message", async (event) => {
     }
     send("result", {
       supported: false,
-      cnl: candidate,
+      cnl: "",
+      plan: candidate,
       error: validation?.error ?? "CNL検査に失敗しました。",
       attempts: 2,
       elapsed_seconds: (performance.now() - startedAt) / 1000,

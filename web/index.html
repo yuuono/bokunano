@@ -3,94 +3,95 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="QwenによるCNL翻訳とBoku1-nano ONNXによるコード生成をブラウザ内で行うデモ" />
-    <title>Boku1-nano デモ</title>
+    <meta name="theme-color" content="#0c1016" />
+    <meta name="description" content="Qwenと対話して、Boku1-nanoでコードを生成。2つのモデルがブラウザ内で動く、小さなAIワークスペース。" />
+    <title>Boku1-nano — Local AI Studio</title>
     <link rel="stylesheet" href="./demo.css" />
     <script src="./vendor/ort.webgpu.min.js"></script>
     <script type="module" src="./demo.js"></script>
   </head>
   <body>
-    <main>
-      <header class="hero">
-        <h1>Boku1-nano デモ</h1>
-        <p class="lead">自由な日本語をQwenがCNLへ翻訳し、Boku1-nanoがPythonコードを生成します。</p>
-        <p class="privacy">QwenとBoku1-nanoはどちらもブラウザ内で動作し、入力内容は外部APIへ送信されません。</p>
-      </header>
-
-      <section class="panel" aria-labelledby="translation-title">
-        <p class="step">Step 1</p>
-        <h2 id="translation-title">自由な日本語をCNLへ翻訳</h2>
-        <label for="prompt">やりたい処理</label>
-        <textarea id="prompt" rows="4" maxlength="400">数字を全部プラスの値に直して、大きい順に並べてください。</textarea>
-        <div class="examples" aria-label="入力例">
-          <span>入力例</span>
-          <button type="button" data-example-prompt="数字の中から偶数だけ選んでください。">偶数だけ選ぶ</button>
-          <button type="button" data-example-prompt="全部プラスの値に直してから、大きい順に並べてください。">絶対値から降順</button>
-          <button type="button" data-example-prompt="後ろからk個を取って、その中からマイナスだけ残してください。">末尾k個から負数</button>
-          <button type="button" data-example-prompt="偶数を残して2倍し、それから並び順を逆にしてください。">3操作</button>
+    <div class="studio" data-release="chat-studio-v1">
+      <aside class="rail" aria-label="ワークスペース">
+        <a class="brand-symbol" href="./" aria-label="Boku1-nano ホーム">b<span>.</span></a>
+        <button id="new-chat" class="rail-button" type="button" title="新しい会話" aria-label="新しい会話">＋</button>
+        <span class="rail-caption">LOCAL<br />AI LAB</span>
+        <a class="rail-link" href="https://github.com/yuuono/bokunano" target="_blank" rel="noreferrer" aria-label="GitHubでソースを見る">↗</a>
+      </aside>
+      <main>
+        <header class="topbar">
+          <div class="wordmark">Boku1-nano <span>STUDIO</span></div>
+          <div class="local-badge"><i></i> ブラウザ内で実行</div>
+        </header>
+        <section class="intro" aria-label="このデモについて">
+          <div><p class="eyebrow">SMALL MODELS. REAL POSSIBILITIES.</p><h1>ことばから、コードへ<span>。</span></h1><p class="intro-copy">Qwenと考えて、Boku1-nanoでつくる。ふたつのAIを、ひとつのワークスペースで。</p></div>
+          <div class="scope-note"><strong>24</strong><span>種類のリスト操作<br />最大4操作まで試せます</span></div>
+        </section>
+        <div class="workspace">
+          <section class="model-window qwen-window" aria-labelledby="qwen-title">
+            <header class="window-header">
+              <div class="model-identity"><span class="model-icon qwen-icon">Q</span><div><h2 id="qwen-title">Qwen <span>0.6B</span></h2><p>日本語を、実行できる指示に。</p></div></div>
+              <span id="qwen-state" class="state-pill">待機中</span>
+            </header>
+            <div class="model-settings">
+              <div class="temperature-control"><label for="qwen-temperature">温度 <output id="qwen-temperature-value" for="qwen-temperature">0.0</output></label><input id="qwen-temperature" type="range" min="0" max="2" step="0.1" value="0" /><span id="qwen-temperature-mode">Greedy</span></div>
+              <p class="setting-help">0は確率最大の候補を選択。上げるほど表現が変わります。</p>
+            </div>
+            <div id="conversation" class="conversation" role="log" aria-label="Qwenとの会話" aria-live="polite">
+              <div id="welcome" class="welcome">
+                <div class="welcome-mark">✳</div>
+                <h3>どんな処理をつくりますか？</h3>
+                <p>整数リストの抽出、変換、並べ替え。<br />やりたいことを、いつもの言葉で。</p>
+                <div class="examples" aria-label="入力例">
+                  <button type="button" data-example-prompt="数字の中から偶数だけ選んでください。"><span>偶数だけ取り出す</span><span>↗</span></button>
+                  <button type="button" data-example-prompt="全部プラスの値に直してから、大きい順に並べてください。"><span>絶対値にして、大きい順に</span><span>↗</span></button>
+                  <button type="button" data-example-prompt="1. 偶数だけを残す&#10;2. 各要素を2倍する&#10;3. 値を昇順に並べる&#10;4. 現在の要素順を反転する"><span>4つの操作を組み合わせる</span><span class="mini-tag">実験</span></button>
+                </div>
+              </div>
+              <div id="interpretation" class="interpretation" hidden>
+                <div class="message-label"><span class="tiny-dot"></span> QWEN / 解釈を確認</div>
+                <ol id="operation-list" class="operation-list"></ol>
+                <p id="experimental-note" class="experimental-note" hidden>4操作は学習範囲（最大3操作）を超える実験です。生成結果を確認してください。</p>
+                <button id="generate" class="generate-button" type="button" disabled>この内容でコードを生成 <span>→</span></button>
+                <p class="interpretation-hint">変更したいときは、下の入力欄から続けて伝えられます。</p>
+              </div>
+            </div>
+            <div class="qwen-footer">
+              <p id="translation-status" class="status" role="status">準備しています…</p>
+              <span id="translation-metrics" class="metrics"></span>
+              <details id="cnl-details" class="cnl-details">
+                <summary>指示を直接編集 / Qwenを使わず入力</summary>
+                <label class="sr-only" for="cnl">CNLの直接入力</label>
+                <textarea id="cnl" rows="3" maxlength="800" placeholder="整数リストxsから偶数だけを残すsolve関数を書いてください。"></textarea>
+                <div class="cnl-actions"><button id="validate-cnl" type="button">指示を検査</button><p id="cnl-status" class="status" role="status">1〜4操作のCNLを入力できます。</p></div>
+              </details>
+              <form id="composer" class="composer">
+                <label class="sr-only" for="prompt">やりたい処理・追加の指示</label>
+                <textarea id="prompt" rows="2" maxlength="600" placeholder="やりたい処理を入力。続けて「最後に逆順にして」も。"></textarea>
+                <div class="composer-bottom"><span id="context-label">新しい指示</span><button id="cancel-translation" type="button" hidden>停止 ■</button><button id="translate" class="send-button" type="submit" aria-label="Qwenへ送信" disabled>↑</button></div>
+              </form>
+              <p class="composer-hint">Enter で送信 / Shift + Enter で改行 <span>初回のみ約543 MiB取得</span></p>
+            </div>
+          </section>
+          <section class="model-window boku-window" aria-labelledby="boku-title">
+            <header class="window-header">
+              <div class="model-identity"><span class="model-icon boku-icon">b.</span><div><h2 id="boku-title">Boku1-nano</h2><p>小さな専門モデルが、コードにする。</p></div></div>
+              <span id="boku-state" class="state-pill">待機中</span>
+            </header>
+            <div class="boku-settings">
+              <div class="model-picker"><label for="model">MODEL</label><select id="model" disabled></select></div>
+              <p id="model-summary" class="model-summary"></p>
+              <div class="temperature-control"><label for="boku-temperature">温度 <output id="boku-temperature-value" for="boku-temperature">0.0</output></label><input id="boku-temperature" type="range" min="0" max="2" step="0.1" value="0" /><span id="boku-temperature-mode">Greedy</span></div>
+              <p class="setting-help">T &gt; 0: logits ÷ T → softmax → sampling</p>
+            </div>
+            <div id="code-conversation" class="code-conversation" aria-label="Boku1-nanoの生成履歴">
+              <div id="code-welcome" class="code-welcome"><div class="code-orbit"><span>&lt;/&gt;</span></div><p class="eyebrow">READY TO CREATE</p><h3>そのアイデアを、<br />動くコードへ。</h3><p>左のウィンドウで指示を確認すると、<br />ここにPythonコードが生成されます。</p><div class="capabilities"><span>Python</span><span>24 operations</span><span>On-device</span></div></div>
+            </div>
+            <footer class="code-footer"><div><p id="status" class="status" role="status">モデルは生成時に読み込みます。</p><span id="metrics" class="metrics"></span></div><button id="stop" type="button" hidden>生成を停止 ■</button></footer>
+          </section>
         </div>
-        <p class="hint">初回のみQwen3-0.6B q4f16（約543 MiB）を取得します。WebGPU対応のデスクトップ版ChromeまたはEdgeを使用してください。</p>
-        <details class="prompt-details">
-          <summary>Qwenに渡すプロンプトを見る</summary>
-          <div class="prompt-details-body">
-            <p>次のsystem messageに24操作の許可表と4件の変換例を含め、自由な日本語をCNLへ翻訳させています。</p>
-            <h3>System message</h3>
-            <pre><code id="normalizer-system-prompt">読み込んでいます…</code></pre>
-            <h3>初回のUser message</h3>
-            <pre><code id="normalizer-initial-prompt">読み込んでいます…</code></pre>
-            <h3>検査に失敗した場合の再生成message</h3>
-            <pre><code id="normalizer-retry-prompt">読み込んでいます…</code></pre>
-            <p class="prompt-note">生成条件: thinking無効、greedy decoding、最大96 token、再生成は1回まで。</p>
-          </div>
-        </details>
-        <div class="actions">
-          <button id="translate" class="primary" type="button" disabled>QwenでCNLに翻訳</button>
-          <button id="cancel-translation" type="button" hidden>中止</button>
-        </div>
-        <div class="status-line">
-          <p id="translation-status" class="status" role="status" aria-live="polite">初期化しています…</p>
-          <span id="translation-metrics" class="metrics"></span>
-        </div>
-      </section>
-
-      <section class="panel" aria-labelledby="cnl-title">
-        <p class="step">Step 2</p>
-        <h2 id="cnl-title">Qwenの解釈を確認</h2>
-        <label for="cnl">Controlled Natural Language</label>
-        <textarea id="cnl" rows="4" maxlength="500" placeholder="Qwenの翻訳結果がここに表示されます。直接入力・修正もできます。"></textarea>
-        <div class="actions compact-actions">
-          <button id="validate-cnl" type="button">CNLを再検査</button>
-        </div>
-        <p id="cnl-status" class="status" role="status" aria-live="polite">CNLを入力してください。</p>
-        <ol id="operation-list" class="operation-list" aria-label="解釈された操作"></ol>
-      </section>
-
-      <section class="panel" aria-labelledby="generator-title">
-        <p class="step">Step 3</p>
-        <h2 id="generator-title">Boku1-nanoでコード生成</h2>
-        <label for="model">使用する学生モデル</label>
-        <select id="model" disabled></select>
-        <p id="model-summary" class="model-summary" aria-live="polite"></p>
-        <div class="actions">
-          <button id="generate" class="primary" type="button" disabled>このCNLでコードを生成</button>
-          <button id="stop" type="button" hidden>中止</button>
-        </div>
-        <p id="status" class="status" role="status" aria-live="polite">初期化しています…</p>
-      </section>
-
-      <section class="panel output-panel" aria-labelledby="output-title">
-        <div class="output-heading">
-          <h2 id="output-title">生成結果</h2>
-          <span id="metrics" class="metrics"></span>
-        </div>
-        <pre><code id="output">ここにBoku1-nanoが生成したコードが表示されます。</code></pre>
-      </section>
-
-      <section class="about" aria-labelledby="about-title">
-        <h2 id="about-title">このデモについて</h2>
-        <p>Qwenは自由な日本語を、許可された24種類・最大3操作のCNLへ翻訳します。JavaScriptはCNLを生成せず、文法と操作数だけを検査します。</p>
-        <p>検査に合格したCNLだけをBoku1-nanoへ渡します。入力例にも固定コードは割り当てられておらず、自由入力と同じ推論経路を通ります。</p>
-      </section>
-    </main>
+        <footer class="studio-footer"><span>入力と生成は、このブラウザの中で。モデル取得時のみ通信します。</span><details class="prompt-details"><summary>しくみとプロンプト</summary><div class="prompt-details-body"><p>Qwenが24種類・最大4操作のCNLへ書き換え、検査・確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成コードは自動実行しません。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><h3>初回のUser message</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></footer>
+      </main>
+    </div>
   </body>
 </html>

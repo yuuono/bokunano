@@ -3,6 +3,7 @@ const WITH_K_PREFIX = "整数リストxsと整数kを受け取り、";
 const SUFFIX = "solve関数を書いてください。";
 
 export const UNSUPPORTED_CNL = "対応できません。";
+export const MAX_OPERATIONS = 4;
 
 export const CNL_OPERATIONS = Object.freeze([
   { id: "filter_even", label: "偶数だけを残す", connective: "偶数だけを残し", final: "偶数だけを残す", requiresK: false },
@@ -55,8 +56,8 @@ export function validateCnl(rawCnl) {
   }
 
   const phrases = body.split("、");
-  if (phrases.length < 1 || phrases.length > 3 || phrases.some((item) => !item)) {
-    return invalid("操作数は1～3個にしてください。", cnl);
+  if (phrases.length < 1 || phrases.length > MAX_OPERATIONS || phrases.some((item) => !item)) {
+    return invalid(`操作数は1～${MAX_OPERATIONS}個にしてください。`, cnl);
   }
 
   const operations = [];
@@ -84,6 +85,7 @@ export function validateCnl(rawCnl) {
     error: null,
     cnl,
     usesK,
+    experimental: operations.length > 3,
     operations: operations.map(({ id, label, requiresK: operationRequiresK }) => ({
       id,
       label,
@@ -93,36 +95,78 @@ export function validateCnl(rawCnl) {
 }
 
 export function buildNormalizerSystemPrompt() {
-  const grammar = CNL_OPERATIONS.map(
-    (item) => `- ${item.label}: 接続形「${item.connective}」／最終形「${item.final}」`,
-  ).join("\n");
-  return `あなたは自由な日本語をBoku1-nano用Controlled Natural Languageへ翻訳する正規化器です。
-追加説明、Markdown、JSON、Pythonコード、思考過程は出力せず、完成したCNLを必ず1行だけ出力してください。
-入力の処理順を変えず、次の24操作から1～3操作だけを選んでください。
+  const allowed = CNL_OPERATIONS.map(item => `- ${item.label}`).join("\n");
+  return `あなたは整数リスト処理の手順を選ぶアシスタントです。
+日本語の依頼を、次の24操作から1～4操作の番号付きリストにしてください。
+各行は「1. 操作名」の形式です。操作名は許可表と完全に同じ文字を使ってください。
+全ての手順を指示の順番で残してください。重複する操作も省略しないでください。
+コード、CNL、説明、Markdownのコードフェンスは出力しないでください。
+未対応操作、5操作以上、曖昧な依頼には「${UNSUPPORTED_CNL}」だけを出力してください。
 
-${grammar}
+許可表:
+${allowed}
 
-規則:
-- 最後以外の操作には接続形、最後の操作には最終形を使い、読点「、」で連結する。
-- kを使う操作が一つでもあれば「${WITH_K_PREFIX}{操作列}${SUFFIX}」とする。
-- kを使う操作がなければ「${WITHOUT_K_PREFIX}{操作列}${SUFFIX}」とする。
-- 対応できない操作、4操作以上、意味が曖昧な入力には「${UNSUPPORTED_CNL}」だけを出力する。
+変更依頼の場合:
+- 変更されていない操作はそのまま保つ。
+- 「AをBに変更」はAをBに置き換える。「最後にB」は末尾へ追加する。
+- 新しい処理を一から依頼された場合は以前の手順を引き継がない。
 
 例:
-入力: 数字の中から偶数だけ選んで
-出力: 整数リストxsから偶数だけを残すsolve関数を書いてください。
+入力: 偶数を残して2倍して
+出力:
+1. 偶数だけを残す
+2. 各要素を2倍する
 
-入力: 全部プラスの値に直してから、大きい順に並べて
-出力: 整数リストxsから各要素の絶対値を取り、値を降順に並べるsolve関数を書いてください。
-
-入力: 後ろからk個を取って、その中からマイナスだけ残して
-出力: 整数リストxsと整数kを受け取り、末尾からk個を取り、負の値だけを残すsolve関数を書いてください。
-
-入力: 偶数を残して2倍し、それから逆順にして
-出力: 整数リストxsから偶数だけを残し、各要素を2倍し、現在の要素順を反転するsolve関数を書いてください。`;
+入力: 絶対値にして大きい順に並べて
+出力:
+1. 各要素の絶対値を取る
+2. 値を降順に並べる`;
 }
 
 export function buildNormalizerUserPrompt(instruction, previousOutput = "", error = "") {
   if (!previousOutput) return `入力: ${instruction}\n出力:`;
-  return `入力: ${instruction}\n前回の出力: ${previousOutput}\n検査エラー: ${error}\n規則どおりのCNLを1行だけ再出力してください。\n出力:`;
+  return `入力: ${instruction}\n前回の出力: ${previousOutput}\n検査エラー: ${error}\n許可表の操作名だけを使い、全手順を番号付きリストで再出力してください。\n出力:`;
+}
+
+export function buildNormalizerMessages(instruction) {
+  return [
+    { role: "system", content: buildNormalizerSystemPrompt() },
+    { role: "user", content: buildNormalizerUserPrompt(instruction) },
+  ];
+}
+
+export function buildRevisionMessages(instruction, contextCnl) {
+  const previous = validateCnl(contextCnl);
+  if (!previous.valid) throw new Error("変更元の指示が不正です。");
+  const steps = previous.operations.map((operation, index) => `${index + 1}. ${operation.label}`).join("\n");
+  return [
+    { role: "system", content: buildNormalizerSystemPrompt() },
+    { role: "user", content: `現在の手順:\n${steps}\n\n変更依頼: ${instruction}\n\n変更後の全手順:` },
+  ];
+}
+
+export function numberedSteps(text) {
+  const lines = text.trim().split(/\r?\n/).filter(line => line.trim());
+  if (!lines.length) return [];
+  const steps = [];
+  for (const [index, line] of lines.entries()) {
+    const match = line.match(/^\s*(\d+)[.)．、]\s*(.+?)\s*$/);
+    if (!match || Number(match[1]) !== index + 1) return [];
+    steps.push(match[2]);
+  }
+  return steps;
+}
+
+// Strict serialization of Qwen-selected operations, never interpretation of user text.
+export function validateOperationPlan(text) {
+  const steps = numberedSteps(text);
+  if (!steps.length || steps.length > MAX_OPERATIONS) {
+    return invalid("1～4操作を、1から始まる番号付きリストで出力してください。");
+  }
+  const operations = steps.map(label => CNL_OPERATIONS.find(operation => operation.label === label));
+  const unknown = steps.filter((_, index) => !operations[index]);
+  if (unknown.length) return invalid(`許可表と一致しない操作名: ${unknown.join(" / ")}。許可表の操作名をそのまま使ってください。`);
+  const usesK = operations.some(operation => operation.requiresK);
+  const phrases = operations.map((operation, index) => index === operations.length - 1 ? operation.final : operation.connective);
+  return validateCnl(`${usesK ? WITH_K_PREFIX : WITHOUT_K_PREFIX}${phrases.join("、")}${SUFFIX}`);
 }

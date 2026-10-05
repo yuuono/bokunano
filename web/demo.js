@@ -1,214 +1,206 @@
 import { BokuNanoTokenizer } from "./tokenizer.js";
-import {
-  buildNormalizerSystemPrompt,
-  buildNormalizerUserPrompt,
-  validateCnl,
-} from "./cnl.js";
+import { buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl } from "./cnl.js";
+import { selectToken, validateTemperature } from "./sampling.js";
 
-const elements = {
-  model: document.querySelector("#model"),
-  modelSummary: document.querySelector("#model-summary"),
-  prompt: document.querySelector("#prompt"),
-  translate: document.querySelector("#translate"),
-  cancelTranslation: document.querySelector("#cancel-translation"),
-  translationStatus: document.querySelector("#translation-status"),
-  translationMetrics: document.querySelector("#translation-metrics"),
-  cnl: document.querySelector("#cnl"),
-  validateCnl: document.querySelector("#validate-cnl"),
-  cnlStatus: document.querySelector("#cnl-status"),
-  operationList: document.querySelector("#operation-list"),
-  generate: document.querySelector("#generate"),
-  stop: document.querySelector("#stop"),
-  output: document.querySelector("#output"),
-  status: document.querySelector("#status"),
-  metrics: document.querySelector("#metrics"),
-  exampleButtons: document.querySelectorAll("[data-example-prompt]"),
-  normalizerSystemPrompt: document.querySelector("#normalizer-system-prompt"),
-  normalizerInitialPrompt: document.querySelector("#normalizer-initial-prompt"),
-  normalizerRetryPrompt: document.querySelector("#normalizer-retry-prompt"),
-};
-
-elements.normalizerSystemPrompt.textContent = buildNormalizerSystemPrompt();
-elements.normalizerInitialPrompt.textContent = buildNormalizerUserPrompt("{ユーザー入力}");
-elements.normalizerRetryPrompt.textContent = buildNormalizerUserPrompt(
-  "{元のユーザー入力}",
-  "{検査に失敗したQwen出力}",
-  "{JavaScript検査器が返した理由}",
-);
-
+const $ = (id) => document.getElementById(id);
 const state = {
   manifest: null,
   qwenManifest: null,
   tokenizers: new Map(),
   activeSession: null,
-  qwenWorker: null,
-  translationBusy: false,
-  generationBusy: false,
-  cancelled: false,
-  cnlValidation: null,
+  job: null,
+  ready: false,
+  candidate: null,
+  contextCnl: "",
 };
+const errorText = (error) => error instanceof Error ? error.message : String(error);
+const formatBytes = (bytes) => `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
+const current = (job) => state.job === job && !job.cancelled;
 
 function setMessage(element, message, kind = "normal") {
   element.textContent = message;
   element.dataset.kind = kind;
 }
 
-function formatBytes(bytes) {
-  return `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
-}
-
 function updateControls() {
-  const ready = Boolean(state.manifest);
-  elements.translate.disabled = !ready || !state.qwenManifest || state.translationBusy || state.generationBusy;
-  elements.cancelTranslation.hidden = !state.translationBusy;
-  elements.prompt.disabled = state.translationBusy || state.generationBusy;
-  elements.cnl.disabled = state.translationBusy || state.generationBusy;
-  elements.validateCnl.disabled = state.translationBusy || state.generationBusy;
-  elements.model.disabled = !ready || state.translationBusy || state.generationBusy;
-  elements.generate.disabled =
-    !ready ||
-    state.translationBusy ||
-    state.generationBusy ||
-    !state.cnlValidation?.valid;
-  elements.stop.hidden = !state.generationBusy;
-  for (const button of elements.exampleButtons) {
-    button.disabled = state.translationBusy || state.generationBusy;
+  const busy = Boolean(state.job);
+  for (const id of ["model", "qwen-temperature", "boku-temperature", "prompt", "cnl", "validate-cnl", "new-chat"]) {
+    $(id).disabled = !state.ready || busy;
+  }
+  $("translate").disabled = !state.ready || busy;
+  $("generate").disabled = !state.ready || busy || !state.candidate?.valid;
+  $("cancel-translation").hidden = state.job?.kind !== "qwen";
+  $("stop").hidden = state.job?.kind !== "boku";
+  $("context-label").textContent = state.candidate?.valid || state.contextCnl ? "前の指示を引き継いで対話" : "新しい指示";
+  for (const button of document.querySelectorAll("[data-example-prompt]")) button.disabled = !state.ready || busy;
+  for (const kind of ["qwen", "boku"]) {
+    const running = state.job?.kind === kind;
+    $(`${kind}-state`).textContent = running ? (state.job.cancelled ? "停止中" : "処理中") : "待機中";
+    $(`${kind}-state`).dataset.busy = String(running);
   }
 }
 
-function renderOperations(operations) {
-  elements.operationList.replaceChildren();
-  for (const [index, operation] of operations.entries()) {
-    const item = document.createElement("li");
-    item.textContent = `${index + 1}. ${operation.label}`;
-    elements.operationList.append(item);
-  }
+function followScroll(element, change, force = false) {
+  const nearBottom = element.scrollHeight - element.clientHeight - element.scrollTop < 90;
+  change();
+  if (nearBottom || force) element.scrollTop = element.scrollHeight;
+}
+
+function addMessage(role, text, kind = "normal") {
+  const message = document.createElement("article");
+  message.className = `message ${role}`;
+  message.dataset.kind = kind;
+  const label = document.createElement("div");
+  label.className = "message-label";
+  label.textContent = role === "user" ? "YOU" : "QWEN";
+  const body = document.createElement("p");
+  body.textContent = text;
+  message.append(label, body);
+  $("welcome").hidden = true;
+  followScroll($("conversation"), () => $("conversation").insertBefore(message, $("interpretation")), true);
+  return { message, body };
 }
 
 function checkCnl() {
-  const validation = validateCnl(elements.cnl.value);
-  state.cnlValidation = validation;
+  const validation = validateCnl($("cnl").value);
+  state.candidate = validation;
+  $("operation-list").replaceChildren();
+  $("interpretation").hidden = !validation.valid;
   if (validation.valid) {
-    elements.cnl.value = validation.cnl;
-    renderOperations(validation.operations);
-    setMessage(
-      elements.cnlStatus,
-      `${validation.operations.length}操作のCNLとして検査に合格しました。`,
-      "success",
-    );
+    state.contextCnl = validation.cnl;
+    for (const operation of validation.operations) {
+      const item = document.createElement("li");
+      item.textContent = operation.label;
+      $("operation-list").append(item);
+    }
+    $("welcome").hidden = true;
+    $("experimental-note").hidden = !validation.experimental;
+    setMessage($("cnl-status"), `${validation.operations.length}操作 / 検査済み${validation.experimental ? "・実験" : ""}`, "success");
   } else {
-    renderOperations([]);
-    setMessage(elements.cnlStatus, validation.error, "error");
+    setMessage($("cnl-status"), validation.error, $("cnl").value ? "error" : "normal");
   }
   updateControls();
   return validation;
 }
 
-function formatQwenProgress(message) {
-  const parts = [message.file || "Qwenモデル"];
-  if (message.percentage !== null) parts.push(`${message.percentage}%`);
-  if (message.loaded && message.total) {
-    parts.push(`${formatBytes(message.loaded)} / ${formatBytes(message.total)}`);
-  }
-  return `${parts.join(" / ")} を読み込んでいます…`;
+function finish(job) {
+  if (state.job !== job) return;
+  state.job = null;
+  updateControls();
 }
 
-async function translateInstruction() {
-  const instruction = elements.prompt.value.trim();
-  if (!instruction) {
-    setMessage(elements.translationStatus, "自由な日本語を入力してください。", "error");
-    elements.prompt.focus();
-    return;
-  }
+async function releaseActiveSession() {
+  const active = state.activeSession;
+  state.activeSession = null;
+  if (active) await active.session.release();
+}
+
+async function translateInstruction(event) {
+  event?.preventDefault();
+  if (!state.ready || state.job) return;
+  const instruction = $("prompt").value.trim();
+  if (!instruction) { $("prompt").focus(); return; }
   if (!("gpu" in navigator)) {
-    setMessage(
-      elements.translationStatus,
-      "WebGPUを利用できません。デスクトップ版ChromeまたはEdgeを使うか、CNLを直接入力してください。",
-      "error",
-    );
+    setMessage($("translation-status"), "QwenにはWebGPU対応のChrome / Edgeが必要です。下の「指示を直接編集」からCNLを入力することもできます。", "error");
     return;
   }
-
-  if (state.qwenWorker) state.qwenWorker.terminate();
-  state.translationBusy = true;
-  state.cnlValidation = null;
-  elements.cnl.value = "";
-  elements.translationMetrics.textContent = "";
-  renderOperations([]);
-  setMessage(elements.cnlStatus, "Qwenの翻訳結果を待っています。");
-  setMessage(elements.translationStatus, "Qwenを準備しています…");
+  const temperature = validateTemperature($("qwen-temperature").value);
+  const contextCnl = state.candidate?.valid ? state.candidate.cnl : state.contextCnl;
+  addMessage("user", instruction);
+  $("prompt").value = "";
+  state.candidate = null;
+  $("cnl").value = "";
+  $("interpretation").hidden = true;
+  $("translation-metrics").textContent = "";
+  const reply = addMessage("assistant", "指示を読み取っています…");
+  const job = { kind: "qwen", cancelled: false, worker: null, reply };
+  state.job = job;
   updateControls();
-
-  const worker = new Worker(new URL("./qwen-worker.js", import.meta.url), { type: "module" });
-  state.qwenWorker = worker;
-  worker.addEventListener("message", (event) => {
-    const message = event.data;
-    if (message.type === "progress") {
-      setMessage(elements.translationStatus, formatQwenProgress(message));
-      return;
-    }
-    if (message.type === "phase") {
-      setMessage(elements.translationStatus, message.message);
-      return;
-    }
-    if (message.type === "result") {
-      elements.translationMetrics.textContent = [
-        "Qwen3-0.6B q4f16",
-        `${message.elapsed_seconds.toFixed(2)}秒`,
-        `${message.attempts}回生成`,
-      ].join(" / ");
-      elements.cnl.value = message.cnl || "";
-      if (!message.supported) {
-        checkCnl();
-        setMessage(
-          elements.translationStatus,
-          message.error || "対応可能なCNLへ変換できませんでした。CNLを直接編集するか、表現を変えて再試行してください。",
-          "error",
-        );
-        return;
+  setMessage($("translation-status"), "Qwenを準備しています…");
+  const fail = (message) => {
+    if (!current(job)) return;
+    reply.body.textContent = message;
+    reply.message.dataset.kind = "error";
+    setMessage($("translation-status"), message, "error");
+  };
+  try {
+    await releaseActiveSession();
+    if (!current(job)) return;
+    const worker = new Worker(new URL("./qwen-worker.js", import.meta.url), { type: "module" });
+    job.worker = worker;
+    worker.addEventListener("message", ({ data: message }) => {
+      if (!current(job)) return;
+      if (message.type === "phase") setMessage($("translation-status"), message.message);
+      if (message.type === "progress") {
+        const progress = message.percentage === null ? "" : ` ${message.percentage}%`;
+        const size = message.loaded ? ` (${formatBytes(message.loaded)})` : "";
+        setMessage($("translation-status"), `Qwenを読み込んでいます…${progress}${size}`);
       }
-      const validation = checkCnl();
-      setMessage(
-        elements.translationStatus,
-        validation.valid
-          ? "QwenによるCNL翻訳が完了しました。解釈を確認してください。"
-          : validation.error,
-        validation.valid ? "success" : "error",
-      );
-      return;
-    }
-    if (message.type === "error") {
-      setMessage(elements.translationStatus, message.message, "error");
-      return;
-    }
-    if (message.type === "released") {
-      state.translationBusy = false;
-      state.qwenWorker = null;
-      updateControls();
-    }
-  });
-  worker.addEventListener("error", (event) => {
-    state.translationBusy = false;
-    state.qwenWorker = null;
-    setMessage(elements.translationStatus, event.message || "Qwen Workerでエラーが発生しました。", "error");
+      if (message.type === "result") {
+        $("translation-metrics").textContent = `Qwen3-0.6B · T=${temperature.toFixed(1)} · ${message.elapsed_seconds.toFixed(1)}秒 · ${message.attempts}回生成`;
+        if (message.plan) {
+          const details = document.createElement("details");
+          details.className = "plan-details";
+          const summary = document.createElement("summary");
+          summary.textContent = "Qwenの出力を見る";
+          const content = document.createElement("pre");
+          content.textContent = message.plan;
+          details.append(summary, content);
+          reply.message.append(details);
+        }
+        $("cnl").value = message.cnl || "";
+        const validation = checkCnl();
+        if (!message.supported || !validation.valid) {
+          state.contextCnl = contextCnl;
+          state.candidate = null;
+          $("interpretation").hidden = true;
+          fail(message.error || "この指示を解釈できませんでした。操作を具体的に伝えるか、CNLを直接編集してください。対応は24種類・最大4操作です。");
+        } else {
+          reply.body.textContent = `次の${validation.operations.length}操作として解釈しました。\n${validation.operations.map((operation, index) => `${index + 1}. ${operation.label}`).join("\n")}\n内容を確認して、Boku1-nanoへ渡してください。`;
+          setMessage($("translation-status"), "解釈ができました。操作順を確認してください。", "success");
+          followScroll($("conversation"), () => {}, true);
+        }
+      }
+      if (message.type === "error") fail(message.message);
+      if (message.type === "released") { worker.terminate(); finish(job); }
+    });
+    worker.addEventListener("error", (event) => {
+      fail(event.message || "Qwenの実行に失敗しました。もう一度送信してください。");
+      worker.terminate();
+      finish(job);
+    });
+    worker.postMessage({ type: "translate", instruction, contextCnl, temperature, manifest: state.qwenManifest });
+  } catch (error) {
+    fail(errorText(error));
+    job.worker?.terminate();
+    finish(job);
+  }
+}
+
+function stopJob() {
+  const job = state.job;
+  if (!job) return;
+  job.cancelled = true;
+  if (job.kind === "qwen") {
+    job.worker?.terminate();
+    job.reply.body.textContent = "解釈を中止しました。入力し直すか、前の指示から続けてください。";
+    state.candidate = null;
+    $("cnl").value = "";
+    $("interpretation").hidden = true;
+    setMessage($("translation-status"), "Qwenの処理を中止しました。");
+    finish(job);
+  } else {
+    job.controller.abort();
+    setMessage($("status"), "生成を停止しています…");
     updateControls();
-  });
-  worker.postMessage({ type: "translate", instruction, manifest: state.qwenManifest });
+  }
 }
 
-function cancelTranslation() {
-  if (state.qwenWorker) state.qwenWorker.terminate();
-  state.qwenWorker = null;
-  state.translationBusy = false;
-  setMessage(elements.translationStatus, "CNL翻訳を中止しました。");
-  updateControls();
-}
-
-async function fetchBytesWithProgress(path, expectedSize) {
-  const response = await fetch(path);
+async function fetchBytesWithProgress(model, job) {
+  const response = await fetch(model.path, { signal: job.controller.signal });
   if (!response.ok) throw new Error(`モデルを取得できませんでした: ${response.status}`);
   if (!response.body) return new Uint8Array(await response.arrayBuffer());
-  const total = Number(response.headers.get("content-length")) || expectedSize;
+  const total = Number(response.headers.get("content-length")) || model.size_bytes;
   const reader = response.body.getReader();
   const chunks = [];
   let received = 0;
@@ -217,207 +209,239 @@ async function fetchBytesWithProgress(path, expectedSize) {
     if (done) break;
     chunks.push(value);
     received += value.length;
-    const percentage = total ? Math.min(100, Math.round((received / expectedSize) * 100)) : 0;
-    setMessage(elements.status, `Boku1-nanoを読み込んでいます… ${percentage}% (${formatBytes(received)})`);
+    if (current(job)) setMessage($("status"), `モデルを読み込んでいます… ${Math.min(100, Math.round(received / total * 100))}% (${formatBytes(received)})`);
   }
   const result = new Uint8Array(received);
   let offset = 0;
-  for (const chunk of chunks) {
-    result.set(chunk, offset);
-    offset += chunk.length;
-  }
+  for (const chunk of chunks) { result.set(chunk, offset); offset += chunk.length; }
   return result;
 }
 
-function selectedModel() {
-  return state.manifest.models.find((item) => item.id === elements.model.value);
-}
+function selectedModel() { return state.manifest.models.find(model => model.id === $("model").value); }
 
 async function tokenizerForModel(model) {
-  const tokenizerId = model.tokenizer_id;
-  if (state.tokenizers.has(tokenizerId)) return state.tokenizers.get(tokenizerId);
-  const definition = state.manifest.tokenizers[tokenizerId];
-  if (!definition) throw new Error(`tokenizer設定がありません: ${tokenizerId}`);
-  const tokenizer = await BokuNanoTokenizer.load(`./${definition.path}`);
-  state.tokenizers.set(tokenizerId, tokenizer);
-  return tokenizer;
+  const id = model.tokenizer_id;
+  if (!state.tokenizers.has(id)) {
+    const definition = state.manifest.tokenizers[id];
+    if (!definition) throw new Error(`tokenizer設定がありません: ${id}`);
+    state.tokenizers.set(id, await BokuNanoTokenizer.load(`./${definition.path}`));
+  }
+  return state.tokenizers.get(id);
 }
 
 function renderModelSummary() {
   const model = selectedModel();
-  if (!model) {
-    elements.modelSummary.textContent = "";
-    return;
-  }
-  const tokenizer = state.manifest.tokenizers[model.tokenizer_id];
-  elements.modelSummary.textContent = [
-    `${model.parameter_count.toLocaleString("ja-JP")} parameters`,
-    tokenizer?.label || model.tokenizer_id,
-    `最大${model.context_length} tokens`,
-    formatBytes(model.size_bytes),
-  ].join(" / ");
+  $("model-summary").textContent = `${(model.parameter_count / 1e6).toFixed(1)}M parameters · ${formatBytes(model.size_bytes)} · 最大${model.context_length} tokens`;
 }
 
-function renderModelOptions() {
-  const groups = new Map();
-  for (const model of state.manifest.models) {
-    const groupName = `${model.group || "その他"}モデル`;
-    let group = groups.get(groupName);
-    if (!group) {
-      group = document.createElement("optgroup");
-      group.label = groupName;
-      groups.set(groupName, group);
-      elements.model.append(group);
-    }
-    const option = document.createElement("option");
-    option.value = model.id;
-    option.textContent = `${model.label} (${formatBytes(model.size_bytes)})`;
-    option.selected = model.id === state.manifest.default_model_id;
-    group.append(option);
-  }
-  renderModelSummary();
-}
-
-async function releaseActiveSession() {
-  if (!state.activeSession) return;
-  await state.activeSession.session.release();
-  state.activeSession = null;
-}
-
-async function createSession(model) {
+async function createSession(model, job) {
   if (state.activeSession?.modelId === model.id) return state.activeSession;
   await releaseActiveSession();
-  const bytes = await fetchBytesWithProgress(model.path, model.size_bytes);
+  if (!current(job)) return null;
+  const bytes = await fetchBytesWithProgress(model, job);
+  if (!current(job)) return null;
+  let session;
+  let backend = "WebGPU";
   if ("gpu" in navigator) {
-    try {
-      const session = await ort.InferenceSession.create(bytes, { executionProviders: ["webgpu"] });
-      state.activeSession = { modelId: model.id, session, backend: "WebGPU" };
-      return state.activeSession;
-    } catch (error) {
-      console.warn("WebGPU初期化に失敗したためWASMへ切り替えます", error);
-    }
+    try { session = await ort.InferenceSession.create(bytes, { executionProviders: ["webgpu"] }); }
+    catch (error) { console.warn("WASMへ切り替えます", error); }
   }
-  const session = await ort.InferenceSession.create(bytes, { executionProviders: ["wasm"] });
-  state.activeSession = { modelId: model.id, session, backend: "WASM" };
+  if (!current(job)) { await session?.release(); return null; }
+  if (!session) {
+    backend = "WASM";
+    session = await ort.InferenceSession.create(bytes, { executionProviders: ["wasm"] });
+  }
+  if (!current(job)) { await session.release(); return null; }
+  state.activeSession = { modelId: model.id, session, backend };
   return state.activeSession;
 }
 
-function argmax(values) {
-  let selectedIndex = 0;
-  let selectedValue = values[0];
-  for (let index = 1; index < values.length; index += 1) {
-    if (values[index] > selectedValue) {
-      selectedValue = values[index];
-      selectedIndex = index;
-    }
-  }
-  return selectedIndex;
+function newCodeCard(model, validation, temperature) {
+  $("code-welcome").hidden = true;
+  // Keep stable IDs for the latest result, without duplicating IDs in history.
+  $("output")?.removeAttribute("id");
+  const card = document.createElement("article");
+  card.className = "code-card";
+  const header = document.createElement("div");
+  header.className = "code-card-header";
+  const label = document.createElement("span");
+  label.textContent = `Python · ${model.label} · T=${temperature.toFixed(1)}`;
+  const copy = document.createElement("button");
+  copy.type = "button";
+  copy.textContent = "コピー";
+  copy.disabled = true;
+  header.append(label, copy);
+  const instruction = document.createElement("p");
+  instruction.className = "code-instruction";
+  instruction.textContent = validation.operations.map(item => item.label).join(" → ") + (validation.experimental ? " / 4操作・実験" : "");
+  const pre = document.createElement("pre");
+  const code = document.createElement("code");
+  code.id = "output";
+  code.textContent = "モデルを準備しています…";
+  pre.append(code);
+  const meta = document.createElement("div");
+  meta.className = "code-card-meta";
+  meta.textContent = "準備中";
+  card.append(header, instruction, pre, meta);
+  followScroll($("code-conversation"), () => $("code-conversation").append(card), true);
+  copy.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(code.textContent); copy.textContent = "コピーしました"; }
+    catch { copy.textContent = "コピーできませんでした"; }
+    setTimeout(() => { copy.textContent = "コピー"; }, 1800);
+  });
+  return { card, code, meta, copy };
 }
 
 async function generateCode() {
+  if (!state.ready || state.job) return;
   const validation = checkCnl();
   if (!validation.valid) return;
   const model = selectedModel();
-  state.cancelled = false;
-  state.generationBusy = true;
-  elements.output.textContent = "";
-  elements.metrics.textContent = "";
-  const startedAt = performance.now();
+  const temperature = validateTemperature($("boku-temperature").value);
+  const job = { kind: "boku", cancelled: false, controller: new AbortController() };
+  state.job = job;
+  state.contextCnl = validation.cnl;
+  const view = newCodeCard(model, validation, temperature);
+  $("metrics").textContent = "";
+  setMessage($("status"), "Boku1-nanoを準備しています…");
   updateControls();
+  const startedAt = performance.now();
+  let generatedCount = 0;
   try {
     const tokenizer = await tokenizerForModel(model);
     const promptIds = tokenizer.encodePrompt(validation.cnl);
-    if (promptIds.includes(state.manifest.special_token_ids.unk)) {
-      throw new Error("CNLにtokenizerで表現できない文字が含まれています。");
-    }
-    if (promptIds.length >= model.context_length) {
-      throw new Error(`CNLが長すぎます（${promptIds.length}/${model.context_length}トークン）。`);
-    }
-    const runtime = await createSession(model);
+    if (promptIds.includes(state.manifest.special_token_ids.unk)) throw new Error("この指示にはモデルが扱えない文字が含まれています。CNLを修正してください。");
+    if (promptIds.length >= model.context_length) throw new Error(`指示が長すぎます (${promptIds.length}/${model.context_length} tokens)。短くしてください。`);
+    const runtime = await createSession(model, job);
+    if (!runtime || !current(job)) return;
     const currentIds = [...promptIds];
     const generatedIds = [];
-    const limit = Math.min(96, model.context_length - promptIds.length);
-    setMessage(elements.status, `${model.label}が${runtime.backend}で生成しています…`);
-    for (let step = 0; step < limit && !state.cancelled; step += 1) {
-      const input = new ort.Tensor(
-        "int64",
-        BigInt64Array.from(currentIds, (value) => BigInt(value)),
-        [1, currentIds.length],
-      );
-      const outputs = await runtime.session.run({ input_ids: input });
-      const tokenId = argmax(outputs.logits.data);
-      if (tokenId === state.manifest.special_token_ids.eos) break;
-      generatedIds.push(tokenId);
-      currentIds.push(tokenId);
-      elements.output.textContent = tokenizer.decode(generatedIds);
-      if (step % 2 === 0) await new Promise(requestAnimationFrame);
+    const limit = model.context_length - promptIds.length;
+    let ended = false;
+    const inferenceStarted = performance.now();
+    view.code.textContent = "";
+    setMessage($("status"), `${runtime.backend}でコードを生成しています…`);
+    for (let step = 0; step < limit && current(job); step += 1) {
+      const input = new ort.Tensor("int64", BigInt64Array.from(currentIds, BigInt), [1, currentIds.length]);
+      let outputs;
+      try {
+        outputs = await runtime.session.run({ input_ids: input });
+        if (!current(job)) break;
+        const tokenId = selectToken(outputs.logits.data, temperature);
+        if (tokenId === state.manifest.special_token_ids.eos) { ended = true; break; }
+        currentIds.push(tokenId);
+        generatedIds.push(tokenId);
+        generatedCount = generatedIds.length;
+        followScroll($("code-conversation"), () => { view.code.textContent = tokenizer.decode(generatedIds); });
+        view.copy.disabled = false;
+        if (step % 2 === 0) await new Promise(requestAnimationFrame);
+      } finally {
+        input.dispose();
+        for (const tensor of Object.values(outputs || {})) tensor.dispose();
+      }
     }
-    const elapsedSeconds = (performance.now() - startedAt) / 1000;
-    const rate = generatedIds.length / Math.max(elapsedSeconds, 0.001);
-    elements.metrics.textContent = [
-      runtime.backend,
-      `入力 ${promptIds.length} tokens`,
-      `生成 ${generatedIds.length} tokens`,
-      `${elapsedSeconds.toFixed(2)}秒`,
-      `${rate.toFixed(1)} tokens/s`,
-    ].join(" / ");
-    setMessage(
-      elements.status,
-      state.cancelled ? "生成を中止しました。" : `${model.label}による生成が完了しました。`,
-      state.cancelled ? "normal" : "success",
-    );
+    const seconds = (performance.now() - inferenceStarted) / 1000;
+    const totalSeconds = (performance.now() - startedAt) / 1000;
+    const result = job.cancelled ? "中止・未完了" : ended ? "生成完了" : "長さ上限・未完了";
+    view.card.dataset.termination = job.cancelled ? "cancelled" : ended ? "eos" : "max_context";
+    view.meta.textContent = `${result} · ${runtime.backend} · ${generatedIds.length} tokens · 生成 ${seconds.toFixed(1)}秒 · 合計 ${totalSeconds.toFixed(1)}秒`;
+    $("metrics").textContent = `入力 ${promptIds.length} / 生成 ${generatedIds.length} tokens · T=${temperature.toFixed(1)} · ${(generatedIds.length / Math.max(seconds, .001)).toFixed(1)} tokens/s`;
+    setMessage($("status"), job.cancelled ? "生成を中止しました。" : ended ? "コードの生成が完了しました。" : "系列長の上限に達しました。コードは未完了の可能性があります。", ended ? "success" : "normal");
+    if (!generatedCount) view.code.textContent = "コードは生成されませんでした。指示やモデルを変えて再試行してください。";
   } catch (error) {
-    console.error(error);
-    setMessage(elements.status, error instanceof Error ? error.message : String(error), "error");
+    if (!job.cancelled) {
+      setMessage($("status"), errorText(error), "error");
+      view.meta.textContent = `エラー: ${errorText(error)}`;
+      view.card.dataset.termination = "error";
+      if (!generatedCount) view.code.textContent = "生成できませんでした。下の状態表示を確認してください。";
+    }
   } finally {
-    state.generationBusy = false;
-    updateControls();
+    if (job.cancelled) {
+      view.meta.textContent = "中止・未完了";
+      view.card.dataset.termination = "cancelled";
+      if (!generatedCount) view.code.textContent = "生成を中止しました。";
+      setMessage($("status"), "生成を中止しました。");
+    }
+    finish(job);
   }
+}
+
+function newConversation() {
+  if (state.job) return;
+  state.candidate = null;
+  state.contextCnl = "";
+  $("conversation").querySelectorAll(".message").forEach(item => item.remove());
+  $("code-conversation").querySelectorAll(".code-card").forEach(item => item.remove());
+  $("welcome").hidden = false;
+  $("code-welcome").hidden = false;
+  $("cnl").value = "";
+  $("prompt").value = "";
+  $("translation-metrics").textContent = "";
+  $("metrics").textContent = "";
+  checkCnl();
+  setMessage($("translation-status"), "新しい指示を入力してください。");
+  setMessage($("status"), "指示を確認するとコードを生成できます。");
+  $("prompt").focus();
 }
 
 async function initialize() {
   ort.env.wasm.wasmPaths = new URL("./vendor/", window.location.href).href;
   ort.env.wasm.numThreads = 1;
-  const [modelResponse, qwenResponse] = await Promise.all([
-    fetch("./model-manifest.json"),
-    fetch("./qwen-manifest.json"),
-  ]);
-  if (!modelResponse.ok) throw new Error("Boku1-nanoのモデル一覧を取得できませんでした。");
-  if (!qwenResponse.ok) throw new Error("Qwenの設定を取得できませんでした。");
-  state.manifest = await modelResponse.json();
-  state.qwenManifest = await qwenResponse.json();
-  renderModelOptions();
+  const responses = await Promise.all([fetch("./model-manifest.json"), fetch("./qwen-manifest.json")]);
+  if (responses.some(response => !response.ok)) throw new Error("モデル設定を取得できませんでした。ページを再読み込みしてください。");
+  [state.manifest, state.qwenManifest] = await Promise.all(responses.map(response => response.json()));
+  const groups = new Map();
+  for (const model of state.manifest.models) {
+    const groupName = model.group || "その他";
+    if (!groups.has(groupName)) {
+      const group = document.createElement("optgroup");
+      group.label = `${groupName}モデル`;
+      $("model").append(group);
+      groups.set(groupName, group);
+    }
+    const option = document.createElement("option");
+    option.value = model.id;
+    option.textContent = model.label;
+    groups.get(groupName).append(option);
+  }
+  $("model").value = state.manifest.models.some(model => model.id === "15m-1epoch") ? "15m-1epoch" : state.manifest.default_model_id;
+  renderModelSummary();
   await tokenizerForModel(selectedModel());
-  setMessage(
-    elements.translationStatus,
-    "自由な日本語を入力し、QwenでCNLへ翻訳できます。初回は約543 MiBを取得します。",
-  );
-  setMessage(elements.status, "検査済みCNLからコードを生成できます。");
+  $("normalizer-system-prompt").textContent = buildNormalizerSystemPrompt();
+  $("normalizer-initial-prompt").textContent = buildNormalizerUserPrompt("{ユーザー入力}");
+  $("normalizer-retry-prompt").textContent = buildNormalizerUserPrompt("{元のユーザー入力}", "{検査に失敗したQwen出力}", "{検査エラー}");
+  state.ready = true;
+  setMessage($("translation-status"), "日本語で指示を送ってください。Qwenが内容を整理します。");
   checkCnl();
   window.__bokuNanoReady = true;
 }
 
-elements.translate.addEventListener("click", translateInstruction);
-elements.cancelTranslation.addEventListener("click", cancelTranslation);
-elements.validateCnl.addEventListener("click", checkCnl);
-elements.model.addEventListener("change", () => {
-  renderModelSummary();
-  setMessage(elements.status, "選択したモデルは初回生成時に読み込みます。");
+$("composer").addEventListener("submit", translateInstruction);
+$("prompt").addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey && !event.isComposing && event.keyCode !== 229) {
+    event.preventDefault();
+    translateInstruction();
+  }
 });
-elements.cnl.addEventListener("input", checkCnl);
-elements.generate.addEventListener("click", generateCode);
-elements.stop.addEventListener("click", () => {
-  state.cancelled = true;
-});
-for (const button of elements.exampleButtons) {
-  button.addEventListener("click", () => {
-    elements.prompt.value = button.dataset.examplePrompt;
-    elements.prompt.focus();
+$("cnl").addEventListener("input", checkCnl);
+$("validate-cnl").addEventListener("click", () => { checkCnl(); followScroll($("conversation"), () => {}, true); });
+$("generate").addEventListener("click", generateCode);
+$("cancel-translation").addEventListener("click", stopJob);
+$("stop").addEventListener("click", stopJob);
+$("new-chat").addEventListener("click", newConversation);
+$("model").addEventListener("change", renderModelSummary);
+for (const kind of ["qwen", "boku"]) {
+  $(`${kind}-temperature`).addEventListener("input", () => {
+    const value = validateTemperature($(`${kind}-temperature`).value);
+    $(`${kind}-temperature-value`).textContent = value.toFixed(1);
+    $(`${kind}-temperature-mode`).textContent = value === 0 ? "Greedy" : "Sampling";
   });
 }
-
-initialize().catch((error) => {
+for (const button of document.querySelectorAll("[data-example-prompt]")) {
+  button.addEventListener("click", () => { $("prompt").value = button.dataset.examplePrompt; $("prompt").focus(); });
+}
+initialize().catch(error => {
   console.error(error);
-  setMessage(elements.translationStatus, error instanceof Error ? error.message : String(error), "error");
-  setMessage(elements.status, error instanceof Error ? error.message : String(error), "error");
+  setMessage($("translation-status"), errorText(error), "error");
+  setMessage($("status"), errorText(error), "error");
 });

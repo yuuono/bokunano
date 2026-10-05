@@ -18,6 +18,9 @@ docs/
 
 ## 方針
 
+- [`policies/boku_nano_benchmark_100_plan.md`](policies/boku_nano_benchmark_100_plan.md): 100問ベンチマークの分類、70点を目安とした難易度設計、ブラウザ版Qwenとの比較・採点・検証計画
+- [`policies/boku_nano_chat_ui_plan.md`](policies/boku_nano_chat_ui_plan.md): チャット形式Web UIの画面、Qwenによる追加指示の処理、実装手順と完了条件
+- [`policies/boku_nano_autoregression_temperature_plan.md`](policies/boku_nano_autoregression_temperature_plan.md): 実コードに基づく自己回帰・温度の説明と、発表資料へ追加する2枚の作成計画
 - [`policies/terminology_policy.md`](policies/terminology_policy.md): 用語の統一
 - [`policies/ast_split_policy.md`](policies/ast_split_policy.md): 意味ASTの分割
 - [`policies/compositional_generalization_test_policy.md`](policies/compositional_generalization_test_policy.md): 組合せ汎化テスト

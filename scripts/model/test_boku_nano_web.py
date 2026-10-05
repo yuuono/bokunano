@@ -70,11 +70,11 @@ def verify_prompt_disclosure(driver: webdriver.Firefox) -> None:
     system_prompt = driver.find_element("id", "normalizer-system-prompt").text
     initial_prompt = driver.find_element("id", "normalizer-initial-prompt").text
     retry_prompt = driver.find_element("id", "normalizer-retry-prompt").text
-    if "自由な日本語をBoku1-nano用Controlled Natural Languageへ翻訳" not in system_prompt:
+    if "整数リスト処理の手順を選ぶ" not in system_prompt:
         raise AssertionError("system messageがデモに表示されていません。")
     if (
-        "次の24操作から1～3操作" not in system_prompt
-        or "入力: 数字の中から偶数" not in system_prompt
+        "次の24操作から1～4操作" not in system_prompt
+        or "入力: 偶数を残して" not in system_prompt
     ):
         raise AssertionError("24操作の規則またはfew-shot例が表示されていません。")
     if initial_prompt != "入力: {ユーザー入力}\n出力:":
@@ -96,6 +96,10 @@ def verify_cnl_validator(driver: webdriver.Firefox) -> None:
               '整数リストxsから偶数だけを残し、各要素を2倍し、' +
               '各要素を3倍し、値を昇順に並べるsolve関数を書いてください。'
             ),
+            five: validateCnl(
+              '整数リストxsから偶数だけを残し、各要素を2倍し、' +
+              '各要素を3倍し、値を昇順に並べ、現在の要素順を反転するsolve関数を書いてください。'
+            ),
             unknown: validateCnl(
               '整数リストxsから合計値を求めるsolve関数を書いてください。'
             ),
@@ -113,8 +117,10 @@ def verify_cnl_validator(driver: webdriver.Firefox) -> None:
         raise AssertionError(f"2操作CNLを受理できませんでした: {actual['two']}")
     if not actual["three"]["valid"] or len(actual["three"]["operations"]) != 3:
         raise AssertionError(f"3操作CNLを受理できませんでした: {actual['three']}")
-    if actual["four"]["valid"]:
-        raise AssertionError("4操作CNLを誤って受理しました。")
+    if not actual["four"]["valid"] or not actual["four"]["experimental"]:
+        raise AssertionError("4操作CNLを実験として受理できませんでした。")
+    if actual["five"]["valid"]:
+        raise AssertionError("5操作CNLを誤って受理しました。")
     if actual["unknown"]["valid"]:
         raise AssertionError("許可外操作を誤って受理しました。")
 
@@ -155,6 +161,9 @@ def verify_model_options(driver: webdriver.Firefox) -> None:
 
 
 def set_cnl(driver: webdriver.Firefox, cnl: str) -> None:
+    details = driver.find_element("id", "cnl-details")
+    if details.get_attribute("open") is None:
+        details.find_element("css selector", "summary").click()
     driver.execute_script(
         """
         const field = document.querySelector('#cnl');
@@ -227,7 +236,7 @@ def main() -> None:
         verify_prompt_disclosure(driver)
         print("prompt disclosure: system・初回・再生成messageの表示を確認")
         verify_cnl_validator(driver)
-        print("CNL validator: 24操作・最大3操作・許可外拒否を確認")
+        print("CNL validator: 24操作・最大4操作・5操作と許可外の拒否を確認")
         verify_tokenizers(driver)
         print("tokenizer: 旧BPE・短いpiece版ともPython版と一致")
         verify_model_options(driver)
