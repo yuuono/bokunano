@@ -3,22 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#f6f1e8" />
     <meta name="color-scheme" content="light" />
     <meta name="description" content="日本語で指示して、Pythonコードを生成。QwenとBoku1-nanoがブラウザ内で動くチャットデモ。" />
     <title>Boku1-nano — コード生成チャット</title>
-    <link rel="stylesheet" href="./demo.css?v=12" />
+    <link rel="stylesheet" href="./demo.css?v=13" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=12"></script>
+    <script type="module" src="./demo.js?v=13"></script>
   </head>
   <body>
-    <main class="studio" data-release="chat-studio-v12">
+    <main class="studio" data-release="chat-studio-v13">
       <header class="topbar">
         <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
         <div class="topbar-actions"><button id="toggle-settings" type="button" aria-controls="settings-panel" aria-expanded="false">設定</button><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
       </header>
       <div class="workspace">
-        <section class="input-panel" id="settings-panel" aria-labelledby="input-title">
+        <dialog class="input-panel" id="settings-panel" aria-labelledby="input-title">
           <header class="panel-heading"><div><span class="eyebrow">SETTINGS</span><h1 id="input-title">モデル・詳細</h1></div><button id="close-settings" type="button" aria-label="設定を閉じる">×</button></header>
           <div class="input-scroll">
             <section class="input-section" aria-labelledby="settings-title">
@@ -35,7 +35,7 @@
               <h2 id="interpretation-title">内容を確認して生成</h2>
               <label for="cnl">変換後の制限付き日本語（CNL）</label>
               <textarea id="cnl" rows="3" maxlength="800" placeholder="送信すると変換結果が入ります。直接入力・編集もできます。"></textarea>
-              <div class="cnl-actions"><button id="validate-cnl" type="button">指示を検査</button><p id="cnl-status" class="status" role="status">チャットで送信するか、「操作を追加」から選んでください。</p></div>
+              <div class="cnl-actions"><button id="validate-cnl" type="button">指示を検査</button><p id="cnl-status" class="status" role="status">チャットで指示を送信してください。</p></div>
               <ol id="operation-list" class="operation-list"></ol>
               <p id="experimental-note" class="experimental-note" hidden>4操作は学習範囲（最大3操作）を超える実験です。生成結果を確認してください。</p>
               <button id="generate" class="generate-button" type="button" disabled>コードを生成 →</button>
@@ -43,26 +43,27 @@
               <p id="generation-selection" class="setting-help"></p>
             </section>
 
-      <div class="studio-footer"><span>入力と生成は、このブラウザの中で。モデルと実行環境の取得時に通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>選択肢から作った日本語も自由入力もQwenが整理し、24種類・最大4操作のCNLへ整形して、確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成コードの下で入力リストとkを指定し、参照インタプリタと実行結果を比較できます。実行ボタンを押したときだけブラウザ内でPythonを実行します。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></div>
+      <div class="studio-footer"><span>入力と生成は、このブラウザの中で。モデルの取得時に通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>入力した日本語をQwenが整理し、24種類・最大4操作のCNLへ整形して、確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成したPythonコードを表示します。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></div>
           </div>
-        </section>
+        </dialog>
         <section class="result-panel" aria-labelledby="result-title">
           <header class="panel-heading"><div><span class="eyebrow">CHAT / OUTPUT</span><h2 id="result-title">チャット</h2></div><span class="history-order">最新の返信は下に追加されます</span></header>
           <div class="runtime-status"><span>Qwen <span id="qwen-state" class="state-pill">待機中</span></span><span>Boku <span id="boku-state" class="state-pill">待機中</span></span></div>
           <div id="conversation" class="conversation" role="log" aria-label="会話と生成結果（古い順）" aria-live="polite">
-            <div id="welcome" class="welcome"><span class="welcome-icon" aria-hidden="true">✳</span><h3>ここに回答が届きます</h3><p>下の入力欄から、やりたい処理を送ってください。<br />「操作を追加」から選んで組み合わせることもできます。</p><div class="welcome-flow"><span>あなたの指示</span><span>→</span><span>日本語を整理</span><span>→</span><span>Pythonコード</span></div></div>
+            <div id="welcome" class="welcome"><h3>どんな処理を作りますか？</h3><p>下の入力欄に、作りたい処理を日本語で入力してください。</p></div>
+            <section class="prompt-examples" aria-labelledby="examples-title">
+              <h3 id="examples-title">指示の例</h3>
+              <dl>
+                <div><dt>1操作</dt><dd data-example-instruction>各要素に3を足してください。</dd></div>
+                <div><dt>2操作</dt><dd data-example-instruction>各要素を絶対値にして、大きい順に並べてください。</dd></div>
+                <div><dt>3操作</dt><dd data-example-instruction>偶数だけを残して、各要素を2倍して、小さい順に並べてください。</dd></div>
+                <div><dt>4操作</dt><dd data-example-instruction>偶数だけを残して、各要素を2倍して、小さい順に並べて、要素の順番を逆にしてください。</dd></div>
+              </dl>
+            </section>
           </div>
           <div class="composer-dock">
             <button id="latest-message" type="button" hidden>最新の返信へ ↓</button>
             <div class="chat-status"><p id="translation-status" class="status" role="status">準備しています…</p><span id="translation-metrics" class="metrics"></span><p id="status" class="status" role="status"></p><span id="metrics" class="metrics"></span></div>
-            <div class="composer-tools"><details id="operation-picker"><summary>＋ 操作を追加</summary><div class="operation-menu"><div class="operation-menu-heading"><strong>続けて操作を選択</strong><button id="close-operation-picker" type="button">完了</button></div><label for="operation-search">操作を検索</label><input id="operation-search" type="search" placeholder="例：足す、偶数、並べる" autocomplete="off" /><p class="setting-help">選ぶと日本語の指示を作ります。送信するとQwenが読み取ります。自由に書き換えられます。</p><div id="operation-catalog" class="operation-grid"></div><p id="selection-status" class="status" role="status"></p></div></details>
-              <div class="examples" aria-label="操作数ごとの入力例">
-                <button type="button" data-example-prompt="各要素に3を足してください。" title="各要素に3を足す">1操作</button>
-                <button type="button" data-example-prompt="各要素を絶対値にして、大きい順に並べてください。" title="絶対値 → 降順">2操作</button>
-                <button type="button" data-example-prompt="偶数だけを残して、各要素を2倍して、小さい順に並べてください。" title="偶数 → 2倍 → 昇順">3操作</button>
-                <button type="button" data-example-prompt="偶数だけを残して、各要素を2倍して、小さい順に並べて、要素の順番を逆にしてください。" title="偶数 → 2倍 → 昇順 → 逆順">4操作</button>
-              </div>
-            </div>
               <form id="composer" class="composer">
                 <label class="sr-only" for="prompt">メッセージ</label>
                 <textarea id="prompt" rows="2" maxlength="600" placeholder="ここに入力してください。&#10;例：各要素に3を足して"></textarea>

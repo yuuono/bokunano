@@ -1,11 +1,10 @@
 import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
-import { CNL_OPERATIONS, MAX_OPERATIONS, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=12";
+import { validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=12";
 import { selectToken, validateTemperature } from "./sampling.js";
 
-import { appendOperationToDraft, nearBottom, captureSelection } from "./chat-utils.js?v=10";
+import { nearBottom, captureSelection } from "./chat-utils.js?v=10";
 import { highlightPython } from "./python-highlight.js?v=7";
 import { captureSemanticAst } from "./semantic-ast.js?v=11";
-import { appendCodeVerification, cancelVerification } from "./code-verification.js?v=11";
 
 const $ = (id) => document.getElementById(id);
 const state = {
@@ -20,7 +19,6 @@ const state = {
   contextK: null,
   parameterK: null,
   confirmedReply: null,
-  draftSelection: null,
 };
 const errorText = (error) => error instanceof Error ? error.message : String(error);
 const formatBytes = (bytes) => `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
@@ -43,17 +41,8 @@ function updateControls() {
   for (const input of document.querySelectorAll('[name="boku-model"]')) {
     input.disabled = !state.ready || busy;
   }
-  const draft = validateOperationPlan($("prompt").value);
-  const count = draft.valid ? draft.operations.length : 0;
-  for (const button of document.querySelectorAll('[data-operation-id]')) {
-    button.disabled = !state.ready || busy || count >= MAX_OPERATIONS;
-    const selected = draft.valid ? draft.operations.filter(op => op.id === button.dataset.operationId).length : 0;
-    button.dataset.selected = String(selected > 0);
-    button.querySelector('small').textContent = selected ? `${selected}回選択中` : "＋追加";
-  }
   for (const button of document.querySelectorAll('#operation-list button')) button.disabled = !state.ready || busy || button.dataset.unavailable === "true";
   for (const button of document.querySelectorAll("[data-generate-confirmation]")) button.disabled = !state.ready || busy;
-  for (const button of document.querySelectorAll("[data-example-prompt]")) button.disabled = !state.ready || busy;
   for (const kind of ["qwen", "boku"]) {
     const running = state.job?.kind === kind;
     $(`${kind}-state`).textContent = running ? (state.job.cancelled ? "停止中" : "処理中") : "待機中";
@@ -62,7 +51,7 @@ function updateControls() {
 }
 
 function updateScrollButton() {
-  $("latest-message").hidden = nearBottom($("conversation"));
+  $("latest-message").hidden = !$("conversation").querySelector(".chat-turn") || nearBottom($("conversation"));
 }
 
 function followScroll(element, change, force = false) {
@@ -74,7 +63,7 @@ function followScroll(element, change, force = false) {
 
 function resizeComposer() {
   const conversation = $("conversation");
-  const follow = nearBottom(conversation);
+  const follow = conversation.querySelector(".chat-turn") && nearBottom(conversation);
   $("prompt").style.height = "58px";
   $("prompt").style.height = `${Math.min(110, $("prompt").scrollHeight)}px`;
   if (follow) conversation.scrollTop = conversation.scrollHeight;
@@ -87,7 +76,7 @@ function confirmReply(reply, validation, selectionRecovered = false) {
     if (selectionRecovered) {
       const note = document.createElement("p");
       note.className = "selection-recovery";
-      note.textContent = "Qwenの出力を選択内容に合わせて補正しました。";
+      note.textContent = "Qwenの出力を入力した例に合わせて補正しました。";
       reply.message.append(note);
     }
     const result = document.createElement("div");
@@ -188,7 +177,6 @@ function checkCnl() {
     $("experimental-note").hidden = true;
     setMessage($("cnl-status"), validation.error, $("cnl").value ? "error" : "normal");
   }
-  setMessage($("selection-status"), `${validation.operations.length} / ${MAX_OPERATIONS}操作を選択中${validation.operations.length === MAX_OPERATIONS ? "。追加するには選択済みの操作を削除してください。" : ""}`);
   updateControls();
   return validation;
 }
@@ -202,7 +190,7 @@ function setOperations(operations) {
     state.contextK = null;
   } else {
     const result = validateOperationPlan(operations.map((op, i) => `${i + 1}. ${op.label}`).join("\n"));
-    if (!result.valid) { setMessage($("selection-status"), result.error, "error"); return; }
+    if (!result.valid) { setMessage($("cnl-status"), result.error, "error"); return; }
     $("cnl").value = result.cnl;
   }
   checkCnl();
@@ -249,9 +237,8 @@ async function translateInstruction(event) {
   const previousK = state.candidate?.valid ? state.candidate.kValue : state.contextK;
   const contextCnl = previousCnl;
   const contextK = previousK;
-  const selection = state.draftSelection;
-  $("operation-picker").open = false;
-  state.draftSelection = null;
+  const isExample = [...document.querySelectorAll("[data-example-instruction]")].some(node => node.textContent.trim() === instruction);
+  const selection = isExample ? captureSelection(instruction) : null;
   // An earlier answer remains in chat history, never as the current candidate.
   $("cnl").value = "";
   state.parameterK = null;
@@ -475,6 +462,8 @@ async function generateCode() {
   state.job = job;
   state.contextCnl = validation.cnl;
   const view = newCodeCard(model, validation, temperature);
+  // Preserve the confirmed meaning with this card, independently of later chat turns.
+  view.card.semanticAst = semanticAst;
   $("metrics").textContent = "";
   setMessage($("status"), "Boku1-nanoを準備しています…");
   updateControls();
@@ -550,24 +539,14 @@ async function generateCode() {
       if (!generatedCount) view.code.textContent = "生成を中止しました。";
       setMessage($("status"), "生成を中止しました。");
     }
-    if (generatedCount && view.code.textContent) {
-      followScroll($("conversation"), () => appendCodeVerification(view.card, {
-        code: view.code.textContent, semanticAst, kValue: validation.kValue,
-      }, {
-        incomplete: view.card.dataset.termination !== "eos",
-        onChange: change => followScroll($("conversation"), change),
-      }));
-    }
     finish(job);
   }
 }
 
 function newConversation() {
   if (state.job) return;
-  cancelVerification();
   state.candidate = null;
   state.confirmedReply = null;
-  state.draftSelection = null;
   state.contextCnl = "";
   state.contextK = null;
   state.parameterK = null;
@@ -582,14 +561,15 @@ function newConversation() {
   setMessage($("translation-status"), "新しい指示を入力してください。");
   setMessage($("status"), "指示を確認するとコードを生成できます。");
   resizeComposer();
-  $("operation-picker").open = false;
   $("prompt").focus();
+  $("conversation").scrollTop = 0;
+  updateScrollButton();
 }
 
 async function initialize() {
   ort.env.wasm.wasmPaths = new URL("./vendor/", window.location.href).href;
   ort.env.wasm.numThreads = 1;
-  const responses = await Promise.all([fetch("./model-manifest.json?v=4"), fetch("./qwen-manifest.json")]);
+  const responses = await Promise.all([fetch("./model-manifest.json?v=5"), fetch("./qwen-manifest.json")]);
   if (responses.some(response => !response.ok)) throw new Error("モデル設定を取得できませんでした。ページを再読み込みしてください。");
   [state.manifest, state.qwenManifest] = await Promise.all(responses.map(response => response.json()));
   const groups = new Map();
@@ -620,23 +600,6 @@ async function initialize() {
     input.addEventListener("change", () => { $("model").value = input.value; renderModelSummary(); });
     $("model-options").append(label);
   }
-  for (const operation of CNL_OPERATIONS) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.dataset.operationId = operation.id;
-    const name = document.createElement("span");
-    name.textContent = operation.label;
-    button.append(name, document.createElement("small"));
-    button.addEventListener("click", () => {
-      try {
-        $("prompt").value = appendOperationToDraft($("prompt").value, operation.id);
-        state.draftSelection = captureSelection($("prompt").value);
-        updateDraft();
-        // Keep the menu and keyboard focus in place for consecutive choices.
-      } catch (error) { setMessage($("selection-status"), errorText(error), "error"); }
-    });
-    $("operation-catalog").append(button);
-  }
   renderModelSummary();
   await tokenizerForModel(selectedModel());
   $("normalizer-system-prompt").textContent = buildNormalizerSystemPrompt();
@@ -646,6 +609,8 @@ async function initialize() {
   setMessage($("translation-status"), "日本語で指示を送ってください。Qwenが内容を整理します。");
   checkCnl();
   updateDraft();
+  $("conversation").scrollTop = 0;
+  updateScrollButton();
   window.__bokuNanoReady = true;
 }
 
@@ -671,63 +636,29 @@ for (const kind of ["qwen", "boku"]) {
     $(`${kind}-temperature-mode`).textContent = value === 0 ? "Greedy" : "Sampling";
   });
 }
-for (const button of document.querySelectorAll("[data-example-prompt]")) {
-  button.addEventListener("click", () => {
-    $("prompt").value = button.dataset.examplePrompt;
-    state.draftSelection = captureSelection($("prompt").value);
-    updateDraft();
-    $("prompt").focus({ preventScroll: true });
-  });
-}
 function updateDraft() {
-  if (state.draftSelection?.text !== $("prompt").value.trim()) state.draftSelection = null;
-  const plan = validateOperationPlan($("prompt").value);
-  setMessage($("selection-status"), plan.valid ? `${plan.operations.length} / 4操作を入力中。クリックで追加できます。` : "操作を選ぶと日本語の指示になります。自由に書き換えて送信できます。");
   resizeComposer();
   updateControls();
 }
 $("prompt").addEventListener("input", updateDraft);
 $("conversation").addEventListener("scroll", updateScrollButton, { passive: true });
 $("latest-message").addEventListener("click", () => followScroll($("conversation"), () => {}, true));
-const aliases = { map_add_k: "足す 加算", map_sub_k: "引く 減算", map_mul_k: "掛け算 かける", order_reverse: "逆順", order_ascending: "小さい順", order_descending: "大きい順", map_abs: "プラス 絶対値" };
-$("operation-search").addEventListener("input", () => {
-  const query = $("operation-search").value.normalize("NFKC").trim().toLowerCase();
-  let visible = 0;
-  for (const button of document.querySelectorAll('[data-operation-id]')) {
-    const text = `${button.textContent} ${aliases[button.dataset.operationId] || ""}`.normalize("NFKC").toLowerCase();
-    button.hidden = !text.includes(query);
-    if (!button.hidden) visible += 1;
-  }
-  setMessage($("selection-status"), visible ? `${visible}種類の操作` : "一致する操作がありません。別の言葉で検索してください。");
-});
-$("operation-search").addEventListener("keydown", event => {
-  if (event.key === "Enter" && !event.isComposing) {
-    event.preventDefault();
-    document.querySelector('[data-operation-id]:not([hidden]):not(:disabled)')?.click();
-  }
-});
-$("close-operation-picker").addEventListener("click", () => {
-  $("operation-picker").open = false;
-  $("prompt").focus({ preventScroll: true });
-});
-$("operation-picker").addEventListener("toggle", () => {
-  if ($("operation-picker").open) $("operation-search").focus({ preventScroll: true });
-});
-document.addEventListener("click", event => {
-  if (!$("operation-picker").contains(event.target)) $("operation-picker").open = false;
-});
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
-    if ($("operation-picker").open) { $("operation-picker").open = false; $("prompt").focus({ preventScroll: true }); }
-    setSettingsOpen(false);
-  }
-});
 function setSettingsOpen(open) {
-  $("settings-panel").dataset.open = String(open);
-  $("toggle-settings").setAttribute("aria-expanded", String(open));
+  const panel = $("settings-panel");
+  if (open && !panel.open) panel.showModal();
+  if (!open && panel.open) panel.close();
+  $("toggle-settings").setAttribute("aria-expanded", String(panel.open));
 }
-$("toggle-settings").addEventListener("click", () => setSettingsOpen($("settings-panel").dataset.open !== "true"));
-$("close-settings").addEventListener("click", () => { setSettingsOpen(false); $("toggle-settings").focus(); });
+$("toggle-settings").addEventListener("click", () => setSettingsOpen(!$("settings-panel").open));
+$("close-settings").addEventListener("click", () => setSettingsOpen(false));
+$("settings-panel").addEventListener("close", () => {
+  $("toggle-settings").setAttribute("aria-expanded", "false");
+  $("toggle-settings").focus();
+});
+$("settings-panel").addEventListener("click", event => {
+  const rect = $("settings-panel").getBoundingClientRect();
+  if (event.target === $("settings-panel") && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) setSettingsOpen(false);
+});
 window.addEventListener("resize", updateScrollButton);
 initialize().catch(error => {
   console.error(error);

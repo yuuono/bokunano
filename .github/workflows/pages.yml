@@ -35,10 +35,24 @@ jobs:
         run: node --test tests/web/*.test.mjs
       - name: Pagesを設定
         uses: actions/configure-pages@v5
+      - name: 公開用ファイルを準備（実行比較ツールを除外）
+        run: |
+          python3 - <<'PY'
+          import os
+          import shutil
+          from pathlib import Path
+          shutil.copytree(
+              "web", Path(os.environ["RUNNER_TEMP"]) / "bokunano-pages",
+              ignore=shutil.ignore_patterns(
+                  "code-verification.js", "verification-worker.js",
+                  "verification_runtime.py", "reference_interpreter.py", "__pycache__",
+              ),
+          )
+          PY
       - name: 静的サイトをアップロード
         uses: actions/upload-pages-artifact@v4
         with:
-          path: web
+          path: ${{ runner.temp }}/bokunano-pages
       - name: Pagesへ公開
         id: deployment
         uses: actions/deploy-pages@v4
