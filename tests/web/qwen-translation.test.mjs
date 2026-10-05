@@ -77,3 +77,34 @@ test('all displayed examples have independent expected operation sequences for v
   assert.equal(examples.length, 4);
   examples.forEach((match, i) => assert.equal(captureSelection(match[1]).ids.length, i + 1));
 });
+
+
+test('new requests exclude all previous operations and k even after a four-operation turn', async () => {
+  const { validateOperationPlan, buildConversationMessages, usesConversationContext } = await import('../../web/cnl.js');
+  const previous = validateOperationPlan('kの倍数だけを残す、各要素を二乗する、先頭から1個おきに取る、現在の要素順を反転する\nk=7');
+  for (const input of ['偶数のみ抽出', '各要素に3を足してください。', 'それぞれの数を2倍にしてください。', '整数リストの中央値を求めてください。']) {
+    assert.equal(usesConversationContext(input), false);
+    const messages = buildConversationMessages(input, previous.cnl, 7);
+    assert.equal(messages.length, 2);
+    assert.equal(messages[1].content, `入力: ${input}\n出力:`);
+    assert.equal(messages.some(m => m.role === 'assistant'), false);
+  }
+  const calls = [];
+  await translateWithRetry({ instruction: '偶数のみ抽出', contextCnl: previous.cnl, contextK: 7,
+    generate: async messages => { calls.push(structuredClone(messages)); return '偶数だけを残す'; },
+  });
+  assert.equal(calls[0].length, 2);
+  assert.doesNotMatch(calls[0][1].content, /二乗|k=7/);
+});
+
+test('explicit follow-ups retain the previous sequence and numeric argument', async () => {
+  const { validateOperationPlan, buildConversationMessages } = await import('../../web/cnl.js');
+  const previous = validateOperationPlan('各要素にkを加える');
+  for (const input of ['前の処理に逆順を追加して', 'その結果を昇順にして', 'kを5に変えて']) {
+    const messages = buildConversationMessages(input, previous.cnl, 3);
+    assert.equal(messages.length, 4);
+    assert.match(messages[2].content, /各要素にkを加える/);
+    assert.match(messages[2].content, /k=3/);
+    assert.match(messages[3].content, new RegExp(input));
+  }
+});

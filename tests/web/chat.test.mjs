@@ -9,8 +9,7 @@ test('unified chat retains context for free follow-ups but explicit choices star
   const followup = buildConversationMessages('kを5に変えて', previous.cnl, 3);
   assert.equal(followup.length, 4);
   assert.match(followup[2].content, /k=3/);
-  assert.match(followup[3].content, /今回の依頼: kを5に変えて/);
-  assert.match(followup[0].content, /新しい手順として置き換え/);
+  assert.match(followup[3].content, /変更依頼: kを5に変えて/);
   const selected = buildConversationMessages('偶数のみを抽出して', previous.cnl, 3, true);
   assert.equal(selected.length, 2);
   assert.doesNotMatch(selected[1].content, /k=3/);

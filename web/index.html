@@ -7,12 +7,12 @@
     <meta name="color-scheme" content="light" />
     <meta name="description" content="日本語で指示して、Pythonコードを生成。QwenとBoku1-nanoがブラウザ内で動くチャットデモ。" />
     <title>Boku1-nano — コード生成チャット</title>
-    <link rel="stylesheet" href="./demo.css?v=17" />
+    <link rel="stylesheet" href="./demo.css?v=18" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=17"></script>
+    <script type="module" src="./demo.js?v=18"></script>
   </head>
   <body>
-    <main class="studio" data-release="chat-studio-v17">
+    <main class="studio" data-release="chat-studio-v18">
       <header class="topbar">
         <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
         <div class="topbar-actions"><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
@@ -43,7 +43,7 @@
               <p id="generation-selection" class="setting-help"></p>
             </section>
 
-      <div class="studio-footer"><span>入力と生成は、このブラウザの中で。モデルの取得時に通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>入力した日本語をQwenが整理し、24種類・最大4操作のCNLへ整形して、確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成したPythonコードを表示します。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></div>
+      <div class="studio-footer"><span>入力と生成は、このブラウザの中で。モデルの取得時に通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>入力した日本語をQwenが整理し、24種類・最大4操作のCNLへ整形して、検査を通過したら自動でBoku1-nanoへ渡します。4操作は実験的な対応です。生成したPythonコードを表示します。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></div>
           </div>
         </dialog>
         <section class="result-panel" aria-labelledby="result-title">

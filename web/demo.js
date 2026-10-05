@@ -1,5 +1,5 @@
 import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
-import { validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=12";
+import { usesConversationContext, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=18";
 import { selectToken, validateTemperature } from "./sampling.js";
 
 import { nearBottom, captureSelection } from "./chat-utils.js?v=15";
@@ -42,7 +42,6 @@ function updateControls() {
     input.disabled = !state.ready || busy;
   }
   for (const button of document.querySelectorAll('#operation-list button')) button.disabled = !state.ready || busy || button.dataset.unavailable === "true";
-  for (const button of document.querySelectorAll("[data-generate-confirmation]")) button.disabled = !state.ready || busy;
   for (const kind of ["qwen", "boku"]) {
     const running = state.job?.kind === kind;
     $(`${kind}-state`).textContent = running ? (state.job.cancelled ? "停止中" : "処理中") : "待機中";
@@ -91,21 +90,12 @@ function confirmReply(reply, validation) {
       note.textContent = "4操作は実験です。学習範囲は最大3操作のため、生成コードの内容を確認してください。";
       reply.message.append(note);
     }
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "confirm-generate";
-    button.dataset.generateConfirmation = "true";
-    button.textContent = "この内容でコードを生成";
-    button.addEventListener("click", () => {
-      if (state.job) return;
-      $("cnl").value = validation.cnl;
-      state.parameterK = validation.kValue;
-      state.confirmedReply = { message: reply.message, cnl: validation.cnl, kValue: validation.kValue };
-      checkCnl();
-      generateCode();
-    });
-    reply.message.append(button);
-    state.confirmedReply = { message: reply.message, cnl: validation.cnl, kValue: validation.kValue };
+    const handoff = document.createElement("p");
+    handoff.className = "model-handoff";
+    handoff.setAttribute("role", "status");
+    handoff.textContent = "Qwen：整理完了 → Boku1-nano：準備中";
+    reply.message.append(handoff);
+    state.confirmedReply = { message: reply.message, cnl: validation.cnl, kValue: validation.kValue, handoff };
   });
   updateControls();
 }
@@ -231,8 +221,11 @@ async function translateInstruction(event) {
     return;
   }
   const temperature = validateTemperature($("qwen-temperature").value);
-  const previousCnl = state.candidate?.valid ? state.candidate.cnl : state.contextCnl;
-  const previousK = state.candidate?.valid ? state.candidate.kValue : state.contextK;
+  const usePrevious = usesConversationContext(instruction);
+  const previousCnl = usePrevious ? (state.candidate?.valid ? state.candidate.cnl : state.contextCnl) : "";
+  const previousK = usePrevious ? (state.candidate?.valid ? state.candidate.kValue : state.contextK) : null;
+  state.contextCnl = previousCnl;
+  state.contextK = previousK;
   const contextCnl = previousCnl;
   const contextK = previousK;
   const isExample = [...document.querySelectorAll("[data-example-instruction]")].some(node => node.textContent.trim() === instruction);
@@ -254,6 +247,7 @@ async function translateInstruction(event) {
   setMessage($("translation-status"), "Qwenを準備しています…");
   const fail = (message) => {
     if (!current(job)) return;
+    job.autoGenerate = false;
     $("cnl").value = "";
     state.parameterK = null;
     checkCnl();
@@ -269,7 +263,7 @@ async function translateInstruction(event) {
   try {
     await releaseActiveSession();
     if (!current(job)) return;
-    const worker = new Worker(new URL("./qwen-worker.js?v=15", import.meta.url), { type: "module" });
+    const worker = new Worker(new URL("./qwen-worker.js?v=18", import.meta.url), { type: "module" });
     job.worker = worker;
     worker.addEventListener("message", ({ data: message }) => {
       if (!current(job)) return;
@@ -311,11 +305,17 @@ async function translateInstruction(event) {
           reply.body.textContent = message.plan || "（出力なし）";
           reply.body.className = "model-output";
           confirmReply(reply, validation);
-          setMessage($("translation-status"), "解釈ができました。チャット内で確認して生成してください。", "success");
+          job.autoGenerate = true;
+          setMessage($("translation-status"), "Qwenの整理が完了しました。Boku1-nanoへ切り替えています…", "success");
         }
       }
       if (message.type === "error") fail(message.message);
-      if (message.type === "released") { worker.terminate(); finish(job); }
+      if (message.type === "released") {
+        worker.terminate();
+        finish(job);
+        // Release Qwen's GPU resources before automatically starting Boku.
+        if (job.autoGenerate) generateCode();
+      }
     });
     worker.addEventListener("error", (event) => {
       fail(event.message || "Qwenの実行に失敗しました。もう一度送信してください。");
@@ -336,6 +336,10 @@ function stopJob() {
   job.cancelled = true;
   if (job.kind === "qwen") {
     job.worker?.terminate();
+    if (state.confirmedReply?.message === job.reply.message && state.confirmedReply.handoff) {
+      state.confirmedReply.handoff.textContent = "処理を中止しました。Boku1-nanoは開始していません。";
+    }
+    job.autoGenerate = false;
     job.reply.message.querySelector(".message-label").textContent = "Qwenの処理を中止";
     job.reply.body.textContent = "解釈を中止しました。入力し直すか、前の指示から続けてください。";
     checkCnl();
@@ -450,7 +454,7 @@ function newCodeCard(model, validation, temperature) {
     catch { copy.textContent = "コピーできませんでした"; }
     setTimeout(() => { copy.textContent = "コピー"; }, 1800);
   });
-  return { card, code, meta, copy };
+  return { card, code, meta, copy, handoff: sameTurn ? confirmed.handoff : null };
 }
 
 async function generateCode() {
@@ -464,6 +468,11 @@ async function generateCode() {
   state.job = job;
   state.contextCnl = validation.cnl;
   const view = newCodeCard(model, validation, temperature);
+  const setHandoff = text => {
+    if (view.handoff) followScroll($("conversation"), () => { view.handoff.textContent = `Qwen：整理完了 → Boku1-nano：${text}`; });
+  };
+  setHandoff("コード生成中");
+  setMessage($("translation-status"), view.handoff ? "Qwenの整理が完了しました。" : "", "success");
   // Preserve the confirmed meaning with this card, independently of later chat turns.
   view.card.semanticAst = semanticAst;
   $("metrics").textContent = "";
@@ -522,6 +531,7 @@ async function generateCode() {
     }
     const totalSeconds = (performance.now() - startedAt) / 1000;
     const result = job.cancelled ? "中止・未完了" : ended ? "生成完了" : "長さ上限・未完了";
+    setHandoff(result);
     view.card.dataset.termination = job.cancelled ? "cancelled" : ended ? "eos" : "max_context";
     followScroll($("conversation"), () => { view.meta.textContent = `${result} · ${runtime.backend} · ${generatedIds.length} tokens · 生成 ${seconds.toFixed(1)}秒 · 合計 ${totalSeconds.toFixed(1)}秒`; });
     $("metrics").textContent = `入力 ${promptIds.length} / 生成 ${generatedIds.length} tokens · T=${temperature.toFixed(1)} · ${(generatedIds.length / Math.max(seconds, .001)).toFixed(1)} tokens/s`;
@@ -532,12 +542,14 @@ async function generateCode() {
       setMessage($("status"), errorText(error), "error");
       view.meta.textContent = `エラー: ${errorText(error)}`;
       view.card.dataset.termination = "error";
+      setHandoff("生成エラー");
       if (!generatedCount) view.code.textContent = "生成できませんでした。下の状態表示を確認してください。";
     }
   } finally {
     if (job.cancelled) {
       view.meta.textContent = "中止・未完了";
       view.card.dataset.termination = "cancelled";
+      setHandoff("生成を中止");
       if (!generatedCount) view.code.textContent = "生成を中止しました。";
       setMessage($("status"), "生成を中止しました。");
     }
@@ -561,7 +573,7 @@ function newConversation() {
   $("metrics").textContent = "";
   checkCnl();
   setMessage($("translation-status"), "新しい指示を入力してください。");
-  setMessage($("status"), "指示を確認するとコードを生成できます。");
+  setMessage($("status"), "指示を送信するとコードを自動で生成します。");
   resizeComposer();
   $("prompt").focus();
   $("conversation").scrollTop = 0;

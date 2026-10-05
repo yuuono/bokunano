@@ -1,5 +1,5 @@
 import { resolveSelection, validateExpectedPlan } from "./chat-utils.js?v=15";
-import { buildConversationMessages, buildNormalizerUserPrompt, validateOperationPlan } from "./cnl.js?v=12";
+import { buildConversationMessages, buildNormalizerUserPrompt, validateOperationPlan } from "./cnl.js?v=18";
 
 // Both examples and free text use the same two-attempt loop.
 export async function translateWithRetry({ instruction, contextCnl = "", contextK = null, selection = null, generate, onAttempt = () => {} }) {

@@ -167,13 +167,16 @@ export function buildRevisionMessages(instruction, contextCnl, contextK = null) 
   ];
 }
 
-// One chat input: the model uses context only when the request refers back to it.
+// Only explicit follow-ups may carry earlier operations into a new model request.
+export function usesConversationContext(instruction) {
+  const text = instruction.normalize("NFKC").trim();
+  return /^(?:前の|前回の|さっきの|先ほどの|直前の|それ(?:に|を|の|は|も)|その結果|その処理|その操作|その手順|その後|これに|これを|続けて|続き)/.test(text)
+    || /^(?:k|数値)(?:の値)?(?:を|は|=).*?(?:変えて|変更して|変更する|にして)/i.test(text);
+}
+
 export function buildConversationMessages(instruction, contextCnl = "", contextK = null, selected = false) {
-  if (selected || !contextCnl) return buildNormalizerMessages(instruction);
-  const messages = buildRevisionMessages(instruction, contextCnl, contextK);
-  messages[0].content += "\n今回の依頼だけで処理が指定されている場合は、新しい手順として置き換えてください。前の手順の変更・追加を求める依頼の場合だけ、変更されていない手順を引き継いでください。";
-  messages[messages.length - 1].content = `今回の依頼: ${instruction}\n今回実行する全手順を出力してください。数値を使う処理だけ、その値も残してください。`;
-  return messages;
+  if (selected || !contextCnl || !usesConversationContext(instruction)) return buildNormalizerMessages(instruction);
+  return buildRevisionMessages(instruction, contextCnl, contextK);
 }
 
 export function numberedSteps(text) {
