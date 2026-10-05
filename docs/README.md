@@ -57,8 +57,10 @@ docs/
 
 ## 結果
 
+- [`results/browser_100/dev50_20261005_condition_a_failures.md`](results/browser_100/dev50_20261005_condition_a_failures.md): 条件Aで各モデルが不合格になった全40問、生成コード、実測反例、失敗原因
+
 - [`results/browser_100/dev50_20261005_results.md`](results/browser_100/dev50_20261005_results.md): Astra作成の10分類×5問によるブラウザ版QwenとBokuの実測比較、分類別得点、失敗例
-- [`results/browser_100/dev50_20261005_details.md`](results/browser_100/dev50_20261005_details.md): 全50問・全条件の実プロンプト、生成コード、Qwen変換の全試行、採点詳細
+- [`results/browser_100/dev50_20261005_details.md`](results/browser_100/dev50_20261005_details.md): 全50問・条件A・Bの実プロンプト、生成コード、採点詳細
 
 - [`results/atomic_python_code_generation_results.md`](results/atomic_python_code_generation_results.md): 各操作1件の予備確認
 - [`results/single_operation_python_code_generation_results.md`](results/single_operation_python_code_generation_results.md): 各操作20件の生成結果
