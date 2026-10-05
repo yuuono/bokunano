@@ -45,23 +45,22 @@ test('Python highlighting preserves exact code, indentation and HTML-like string
   }
 });
 
-test('button choices survive malformed Qwen output but edited text loses the snapshot', async () => {
-  const { captureSelection, resolveSelection, reconcileSelection } = await import('../../web/chat-utils.js');
-  const { CNL_OPERATIONS, operationRequest, validateOperationPlan } = await import('../../web/cnl.js');
+test('known input validates Qwen output without replacing malformed output', async () => {
+  const { captureSelection, resolveSelection, validateExpectedPlan } = await import('../../web/chat-utils.js');
+  const { CNL_OPERATIONS, operationRequest } = await import('../../web/cnl.js');
   for (const operation of CNL_OPERATIONS) {
     const text = operationRequest([operation]);
     const snapshot = captureSelection(text);
-    const selected = resolveSelection(text, snapshot);
-    assert.equal(selected.operations[0].id, operation.id);
+    const expected = resolveSelection(text, snapshot);
+    assert.equal(expected.operations[0].id, operation.id);
     for (const badOutput of ['k=整数', '対応できません。', '各要素を三倍する\n各要素の絶対値を取る\n各要素を2倍する']) {
-      const recovered = reconcileSelection(validateOperationPlan(badOutput), selected);
-      assert.equal(recovered.valid, true);
-      assert.deepEqual(recovered.operations.map(op => op.id), [operation.id]);
-      assert.equal(recovered.selectionRecovered, true);
+      const checked = validateExpectedPlan(validateOperationPlan(badOutput), expected);
+      assert.equal(checked.valid, false);
+      assert.equal(checked.cnl, '');
     }
     assert.equal(resolveSelection(text + '最後に逆順にして', snapshot), null);
     assert.equal(resolveSelection(text, null), null);
-    assert.equal(reconcileSelection(validateOperationPlan(text), selected).selectionRecovered, false);
+    const generated = validateOperationPlan(text);
+    assert.equal(validateExpectedPlan(generated, expected), generated);
   }
-  assert.equal(reconcileSelection(validateOperationPlan('不明な処理'), null).valid, false);
 });

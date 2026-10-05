@@ -33,8 +33,17 @@ export function resolveSelection(text, snapshot) {
   return plan;
 }
 
-export function reconcileSelection(generated, selected) {
-  if (!selected?.valid) return { ...generated, selectionRecovered: false };
-  const matches = generated.valid && generated.cnl === selected.cnl;
-  return { ...selected, selectionRecovered: !matches };
+// Known input meaning is a validator only; never substitute it for model output.
+export function validateExpectedPlan(generated, expected) {
+  if (!generated.valid || !expected?.valid) return generated;
+  const ids = plan => plan.operations.map(op => op.id);
+  let error = null;
+  if (JSON.stringify(ids(generated)) !== JSON.stringify(ids(expected))) {
+    error = `操作の欠落・追加、または順序の不一致があります。入力の全${expected.operations.length}操作をこの順番で出力してください: ${expected.operations.map(op => op.label).join(" → ")}`;
+  } else if (generated.kValue !== expected.kValue) {
+    error = expected.kValue === null
+      ? "入力にないkの数値を補わないでください。"
+      : `入力の数値が一致しません。k=${expected.kValue}を出力してください。`;
+  }
+  return error ? { valid: false, error, cnl: "", operations: [] } : generated;
 }

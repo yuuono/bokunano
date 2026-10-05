@@ -2,7 +2,7 @@ import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
 import { validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=12";
 import { selectToken, validateTemperature } from "./sampling.js";
 
-import { nearBottom, captureSelection } from "./chat-utils.js?v=10";
+import { nearBottom, captureSelection } from "./chat-utils.js?v=15";
 import { highlightPython } from "./python-highlight.js?v=7";
 import { captureSemanticAst } from "./semantic-ast.js?v=11";
 
@@ -70,15 +70,8 @@ function resizeComposer() {
   updateScrollButton();
 }
 
-function confirmReply(reply, validation, selectionRecovered = false) {
+function confirmReply(reply, validation) {
   followScroll($("conversation"), () => {
-    reply.message.dataset.selectionRecovered = String(selectionRecovered);
-    if (selectionRecovered) {
-      const note = document.createElement("p");
-      note.className = "selection-recovery";
-      note.textContent = "Qwenの出力を入力した例に合わせて補正しました。";
-      reply.message.append(note);
-    }
     const result = document.createElement("div");
     result.className = "cnl-result";
     const label = document.createElement("strong");
@@ -271,7 +264,7 @@ async function translateInstruction(event) {
   try {
     await releaseActiveSession();
     if (!current(job)) return;
-    const worker = new Worker(new URL("./qwen-worker.js?v=12", import.meta.url), { type: "module" });
+    const worker = new Worker(new URL("./qwen-worker.js?v=15", import.meta.url), { type: "module" });
     job.worker = worker;
     worker.addEventListener("message", ({ data: message }) => {
       if (!current(job)) return;
@@ -279,6 +272,10 @@ async function translateInstruction(event) {
       if (message.type === "prompt") {
         promptDetails(reply.message, `Qwenの実際のプロンプトを見る（${message.attempt}回目）`,
           `モデル: ${state.qwenManifest.model_id}\n\n生成条件:\n${JSON.stringify(message.options, null, 2)}\n\nメッセージ:\n${message.messages.map(item => `[${item.role}]\n${item.content}`).join("\n\n")}\n\nモデルに渡した文字列（チャットテンプレート適用後）:\n${message.prompt}`);
+      }
+      if (message.type === "attempt-result") {
+        promptDetails(reply.message, `Qwenの出力と検査結果（${message.attempt}回目・${message.valid ? "通過" : "不合格"}）`,
+          `${message.plan || "（出力なし）"}\n\n検査結果: ${message.valid ? "通過" : message.error}`);
       }
       if (message.type === "progress") {
         const progress = message.percentage === null ? "" : ` ${message.percentage}%`;
@@ -308,7 +305,7 @@ async function translateInstruction(event) {
           reply.message.querySelector(".message-label").textContent = "Qwen3-0.6B の出力";
           reply.body.textContent = message.plan || "（出力なし）";
           reply.body.className = "model-output";
-          confirmReply(reply, validation, message.selectionRecovered);
+          confirmReply(reply, validation);
           setMessage($("translation-status"), "解釈ができました。チャット内で確認して生成してください。", "success");
         }
       }
