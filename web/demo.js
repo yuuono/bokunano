@@ -4,6 +4,8 @@ import { selectToken, validateTemperature } from "./sampling.js";
 
 import { appendOperationToDraft, nearBottom, captureSelection } from "./chat-utils.js?v=10";
 import { highlightPython } from "./python-highlight.js?v=7";
+import { captureSemanticAst } from "./semantic-ast.js?v=11";
+import { appendCodeVerification, cancelVerification } from "./code-verification.js?v=11";
 
 const $ = (id) => document.getElementById(id);
 const state = {
@@ -465,6 +467,7 @@ async function generateCode() {
   if (!state.ready || state.job) return;
   const validation = checkCnl();
   if (!validation.valid) return;
+  const semanticAst = captureSemanticAst(validation);
   const model = selectedModel();
   const temperature = validateTemperature($("boku-temperature").value);
   const job = { kind: "boku", cancelled: false, controller: new AbortController() };
@@ -546,12 +549,21 @@ async function generateCode() {
       if (!generatedCount) view.code.textContent = "生成を中止しました。";
       setMessage($("status"), "生成を中止しました。");
     }
+    if (generatedCount && view.code.textContent) {
+      followScroll($("conversation"), () => appendCodeVerification(view.card, {
+        code: view.code.textContent, semanticAst, kValue: validation.kValue,
+      }, {
+        incomplete: view.card.dataset.termination !== "eos",
+        onChange: change => followScroll($("conversation"), change),
+      }));
+    }
     finish(job);
   }
 }
 
 function newConversation() {
   if (state.job) return;
+  cancelVerification();
   state.candidate = null;
   state.confirmedReply = null;
   state.draftSelection = null;

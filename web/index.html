@@ -7,12 +7,12 @@
     <meta name="color-scheme" content="light" />
     <meta name="description" content="日本語で指示して、Pythonコードを生成。QwenとBoku1-nanoがブラウザ内で動くチャットデモ。" />
     <title>Boku1-nano — コード生成チャット</title>
-    <link rel="stylesheet" href="./demo.css?v=10" />
+    <link rel="stylesheet" href="./demo.css?v=11" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=10"></script>
+    <script type="module" src="./demo.js?v=11"></script>
   </head>
   <body>
-    <main class="studio" data-release="chat-studio-v10">
+    <main class="studio" data-release="chat-studio-v11">
       <header class="topbar">
         <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
         <div class="topbar-actions"><button id="toggle-settings" type="button" aria-controls="settings-panel" aria-expanded="false">設定</button><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
@@ -43,7 +43,7 @@
               <p class="setting-help">0は確率最大の候補を選択。値を上げると出力が変化しやすくなります。</p><p class="setting-help">Qwen 0.6Bは日本語の変換に使用。初回のみ約543 MiBを取得します。</p>
             </section>
 
-      <div class="studio-footer"><span>入力と生成は、このブラウザの中で。モデル取得時のみ通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>選択肢から作った日本語も自由入力もQwenが整理し、24種類・最大4操作のCNLへ整形して、確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成コードは自動実行しません。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></div>
+      <div class="studio-footer"><span>入力と生成は、このブラウザの中で。モデルと実行環境の取得時に通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>選択肢から作った日本語も自由入力もQwenが整理し、24種類・最大4操作のCNLへ整形して、確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成コードの下で入力リストとkを指定し、参照インタプリタと実行結果を比較できます。実行ボタンを押したときだけブラウザ内でPythonを実行します。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></div>
           </div>
         </section>
         <section class="result-panel" aria-labelledby="result-title">

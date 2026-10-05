@@ -126,6 +126,27 @@ textarea::placeholder { color: #677870; opacity: 1; }
 .actual-prompt summary, .plan-details summary, .prompt-details summary { cursor: pointer; color: #286b58; }
 .actual-prompt pre, .plan-details pre { max-height: 360px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font: 13px/1.8 ui-monospace, monospace; padding: 14px; background: #f5f7f6; border-radius: 8px; }
 .code-card > .actual-prompt { padding: 12px 16px; margin: 0; border-top: 1px solid var(--line); }
+.code-verification { padding: 20px; border-top: 1px solid var(--line); background: #fff; }
+.code-verification h3 { font-size: 18px; margin: 0 0 8px; }
+.verification-help { font-size: 13px; line-height: 1.7; color: var(--muted); margin: 8px 0 14px; }
+.verification-form { display: grid; grid-template-columns: minmax(0, 1fr) 90px; gap: 12px; }
+.verification-form label { font-size: 14px; font-weight: 600; }
+.verification-form input { display: block; width: 100%; min-width: 0; margin-top: 6px; padding: 11px; font: 16px/1.5 ui-monospace, monospace; color: var(--text); border: 1px solid #a9bab1; border-radius: 8px; background: white; }
+.verification-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+.verification-actions button { font-size: 14px; }
+.verification-actions .verify-run { background: var(--accent); color: white; border-color: var(--accent); }
+.verification-actions .verify-run:hover:not(:disabled) { background: #066551; color: white; }
+.verification-status { font-size: 15px; line-height: 1.7; margin: 14px 0; }
+.code-verification[data-result="match"] .verification-status { color: #206443; font-weight: 650; }
+.code-verification:is([data-result="mismatch"], [data-result="code_error"], [data-result="reference_error"], [data-result="error"]) .verification-status { color: #a13923; font-weight: 650; }
+.verification-results { display: grid; gap: 10px; }
+.verification-results[hidden] { display: none; }
+.verification-result { min-width: 0; padding: 12px; background: #f4f7f5; border-radius: 8px; }
+.verification-result strong { font-size: 13px; color: var(--muted); }
+.verification-result pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 8px 0 0; background: transparent; font: 16px/1.7 ui-monospace, monospace; }
+.verification-ast { margin-top: 16px; font-size: 13px; color: var(--muted); }
+.verification-ast summary { color: #286b58; cursor: pointer; }
+.verification-ast pre { margin-top: 10px; font-size: 13px; max-height: 260px; }
 .studio-footer { display: flex; justify-content: space-between; gap: 24px; padding: 16px 28px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
 .prompt-details { max-width: 55%; }
 .prompt-details-body { border: 1px solid var(--line); padding: 18px; margin-top: 12px; border-radius: 9px; }
