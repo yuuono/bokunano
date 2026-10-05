@@ -1,5 +1,5 @@
 import { BokuNanoTokenizer } from "./tokenizer.js";
-import { buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl } from "./cnl.js";
+import { buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js";
 import { selectToken, validateTemperature } from "./sampling.js";
 
 const $ = (id) => document.getElementById(id);
@@ -12,6 +12,7 @@ const state = {
   ready: false,
   candidate: null,
   contextCnl: "",
+  contextK: null,
 };
 const errorText = (error) => error instanceof Error ? error.message : String(error);
 const formatBytes = (bytes) => `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
@@ -24,7 +25,7 @@ function setMessage(element, message, kind = "normal") {
 
 function updateControls() {
   const busy = Boolean(state.job);
-  for (const id of ["model", "qwen-temperature", "boku-temperature", "prompt", "cnl", "validate-cnl", "new-chat"]) {
+  for (const id of ["model", "qwen-temperature", "boku-temperature", "prompt", "cnl", "validate-cnl", "new-chat", "new-chat-top", "parameter-k"]) {
     $(id).disabled = !state.ready || busy;
   }
   $("translate").disabled = !state.ready || busy;
@@ -63,11 +64,24 @@ function addMessage(role, text, kind = "normal") {
 
 function checkCnl() {
   const validation = validateCnl($("cnl").value);
+  if (validation.valid && validation.usesK) {
+    try { validation.kValue = parseK($("parameter-k").value); }
+    catch (error) { validation.valid = false; validation.error = errorText(error); }
+  } else if (validation.valid) {
+    validation.kValue = null;
+    $("parameter-k").value = "";
+  }
   state.candidate = validation;
   $("operation-list").replaceChildren();
-  $("interpretation").hidden = !validation.valid;
+  // Keep an invalid numeric field visible so it can be corrected.
+  $("interpretation").hidden = !validation.valid && !validation.usesK;
+  $("parameter-control").hidden = !validation.usesK;
+  $("parameter-help").textContent = validation.error || (validation.kValue !== null && validation.kValue !== undefined
+    ? `k=${validation.kValue} を使います。生成コードの引数の初期値に反映します。`
+    : "未指定の場合は、関数を呼び出すときにkを渡します。");
   if (validation.valid) {
     state.contextCnl = validation.cnl;
+    state.contextK = validation.kValue ?? null;
     for (const operation of validation.operations) {
       const item = document.createElement("li");
       item.textContent = operation.label;
@@ -106,6 +120,7 @@ async function translateInstruction(event) {
   }
   const temperature = validateTemperature($("qwen-temperature").value);
   const contextCnl = state.candidate?.valid ? state.candidate.cnl : state.contextCnl;
+  const contextK = state.candidate?.valid ? state.candidate.kValue : state.contextK;
   addMessage("user", instruction);
   $("prompt").value = "";
   state.candidate = null;
@@ -149,14 +164,16 @@ async function translateInstruction(event) {
           reply.message.append(details);
         }
         $("cnl").value = message.cnl || "";
+        $("parameter-k").value = message.kValue ?? "";
         const validation = checkCnl();
         if (!message.supported || !validation.valid) {
           state.contextCnl = contextCnl;
+          state.contextK = contextK;
           state.candidate = null;
           $("interpretation").hidden = true;
           fail(message.error || "この指示を解釈できませんでした。操作を具体的に伝えるか、CNLを直接編集してください。対応は24種類・最大4操作です。");
         } else {
-          reply.body.textContent = `次の${validation.operations.length}操作として解釈しました。\n${validation.operations.map((operation, index) => `${index + 1}. ${operation.label}`).join("\n")}\n内容を確認して、Boku1-nanoへ渡してください。`;
+          reply.body.textContent = `次の${validation.operations.length}操作として解釈しました。\n${validation.operations.map((operation, index) => `${index + 1}. ${operation.label}`).join("\n")}${validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""}\n内容を確認して、Boku1-nanoへ渡してください。`;
           setMessage($("translation-status"), "解釈ができました。操作順を確認してください。", "success");
           followScroll($("conversation"), () => {}, true);
         }
@@ -169,7 +186,7 @@ async function translateInstruction(event) {
       worker.terminate();
       finish(job);
     });
-    worker.postMessage({ type: "translate", instruction, contextCnl, temperature, manifest: state.qwenManifest });
+    worker.postMessage({ type: "translate", instruction, contextCnl, contextK, temperature, manifest: state.qwenManifest });
   } catch (error) {
     fail(errorText(error));
     job.worker?.terminate();
@@ -273,7 +290,7 @@ function newCodeCard(model, validation, temperature) {
   header.append(label, copy);
   const instruction = document.createElement("p");
   instruction.className = "code-instruction";
-  instruction.textContent = validation.operations.map(item => item.label).join(" → ") + (validation.experimental ? " / 4操作・実験" : "");
+  instruction.textContent = validation.operations.map(item => item.label).join(" → ") + (validation.kValue !== null ? ` / k=${validation.kValue}` : "") + (validation.experimental ? " / 4操作・実験" : "");
   const pre = document.createElement("pre");
   const code = document.createElement("code");
   code.id = "output";
@@ -333,7 +350,7 @@ async function generateCode() {
         generatedIds.push(tokenId);
         generatedCount = generatedIds.length;
         followScroll($("code-conversation"), () => { view.code.textContent = tokenizer.decode(generatedIds); });
-        view.copy.disabled = false;
+        view.copy.disabled = validation.kValue !== null;
         if (step % 2 === 0) await new Promise(requestAnimationFrame);
       } finally {
         input.dispose();
@@ -341,6 +358,19 @@ async function generateCode() {
       }
     }
     const seconds = (performance.now() - inferenceStarted) / 1000;
+    if (ended && validation.kValue !== null) {
+      const rawCode = tokenizer.decode(generatedIds);
+      view.code.textContent = bindKDefault(rawCode, validation.kValue);
+      view.copy.disabled = false;
+      const details = document.createElement("details");
+      details.className = "plan-details code-instruction";
+      const summary = document.createElement("summary");
+      summary.textContent = `k=${validation.kValue} を初期値に設定済み · モデルの元の出力を見る`;
+      const pre = document.createElement("pre");
+      pre.textContent = rawCode;
+      details.append(summary, pre);
+      view.card.append(details);
+    }
     const totalSeconds = (performance.now() - startedAt) / 1000;
     const result = job.cancelled ? "中止・未完了" : ended ? "生成完了" : "長さ上限・未完了";
     view.card.dataset.termination = job.cancelled ? "cancelled" : ended ? "eos" : "max_context";
@@ -370,6 +400,8 @@ function newConversation() {
   if (state.job) return;
   state.candidate = null;
   state.contextCnl = "";
+  state.contextK = null;
+  $("parameter-k").value = "";
   $("conversation").querySelectorAll(".message").forEach(item => item.remove());
   $("code-conversation").querySelectorAll(".code-card").forEach(item => item.remove());
   $("welcome").hidden = false;
@@ -424,11 +456,13 @@ $("prompt").addEventListener("keydown", event => {
   }
 });
 $("cnl").addEventListener("input", checkCnl);
+$("parameter-k").addEventListener("input", checkCnl);
 $("validate-cnl").addEventListener("click", () => { checkCnl(); followScroll($("conversation"), () => {}, true); });
 $("generate").addEventListener("click", generateCode);
 $("cancel-translation").addEventListener("click", stopJob);
 $("stop").addEventListener("click", stopJob);
 $("new-chat").addEventListener("click", newConversation);
+$("new-chat-top").addEventListener("click", newConversation);
 $("model").addEventListener("change", renderModelSummary);
 for (const kind of ["qwen", "boku"]) {
   $(`${kind}-temperature`).addEventListener("input", () => {

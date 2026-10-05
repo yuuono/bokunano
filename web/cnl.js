@@ -101,6 +101,10 @@ export function buildNormalizerSystemPrompt() {
 各行は「1. 操作名」の形式です。操作名は許可表と完全に同じ文字を使ってください。
 全ての手順を指示の順番で残してください。重複する操作も省略しないでください。
 コード、CNL、説明、Markdownのコードフェンスは出力しないでください。
+具体的な整数はkを使う操作で表現できます。「3足す」「3を足して」は「各要素にkを加える」とし、最後の行に「k=3」を出力してください。
+数値を指定する場合、番号付きリストの後に「k=整数」を1行だけ付けてください。負の整数と0も使えます。kの値が未指定なら付けません。
+「3倍」は各要素を3倍する、「2倍」は各要素を2倍するを選びます。それ以外の倍率は各要素にkを掛けるを選びます。
+全てのk操作は同じ値を共有します。異なる定数を同時に必要とする依頼（3を足して5個取るなど）は対応できません。数値を黙って変更・省略しないでください。
 未対応操作、5操作以上、曖昧な依頼には「${UNSUPPORTED_CNL}」だけを出力してください。
 
 許可表:
@@ -108,10 +112,38 @@ ${allowed}
 
 変更依頼の場合:
 - 変更されていない操作はそのまま保つ。
+- kが指定済みで「5に変えて」「数値を5に」「3ではなく5」と言われたら、操作は同じままk=5へ更新する。これは対応可能な変更です。
 - 「AをBに変更」はAをBに置き換える。「最後にB」は末尾へ追加する。
 - 新しい処理を一から依頼された場合は以前の手順を引き継がない。
 
 例:
+入力: 3足す
+出力:
+1. 各要素にkを加える
+k=3
+
+入力: 各要素から5を引いて
+出力:
+1. 各要素からkを引く
+k=5
+
+現在の手順:
+1. 各要素にkを加える
+k=3
+変更依頼: 5に変えて
+出力:
+1. 各要素にkを加える
+k=5
+
+現在の手順:
+1. 各要素にkを加える
+k=3
+変更依頼: 最後に逆順にして
+出力:
+1. 各要素にkを加える
+2. 現在の要素順を反転する
+k=3
+
 入力: 偶数を残して2倍して
 出力:
 1. 偶数だけを残す
@@ -135,13 +167,15 @@ export function buildNormalizerMessages(instruction) {
   ];
 }
 
-export function buildRevisionMessages(instruction, contextCnl) {
+export function buildRevisionMessages(instruction, contextCnl, contextK = null) {
   const previous = validateCnl(contextCnl);
   if (!previous.valid) throw new Error("変更元の指示が不正です。");
   const steps = previous.operations.map((operation, index) => `${index + 1}. ${operation.label}`).join("\n");
   return [
     { role: "system", content: buildNormalizerSystemPrompt() },
-    { role: "user", content: `現在の手順:\n${steps}\n\n変更依頼: ${instruction}\n\n変更後の全手順:` },
+    { role: "user", content: "現在の手順を確認してください。" },
+    { role: "assistant", content: `${steps}${previous.usesK && contextK !== null ? `\nk=${parseK(contextK)}` : ""}` },
+    { role: "user", content: `変更依頼: ${instruction}\n変更後の全手順とkの値を出力してください。` },
   ];
 }
 
@@ -159,7 +193,14 @@ export function numberedSteps(text) {
 
 // Strict serialization of Qwen-selected operations, never interpretation of user text.
 export function validateOperationPlan(text) {
-  const steps = numberedSteps(text);
+  const lines = text.trim().split(/\r?\n/).filter(line => line.trim());
+  let kValue = null;
+  if (/^k\s*=/.test(lines.at(-1)?.trim() || "")) {
+    const parameter = lines.pop().trim().match(/^k\s*=\s*([+-]?\d+)$/);
+    if (!parameter) return invalid("kには整数を1つ指定してください。");
+    try { kValue = parseK(parameter[1]); } catch (error) { return invalid(error.message); }
+  }
+  const steps = numberedSteps(lines.join("\n"));
   if (!steps.length || steps.length > MAX_OPERATIONS) {
     return invalid("1～4操作を、1から始まる番号付きリストで出力してください。");
   }
@@ -167,6 +208,24 @@ export function validateOperationPlan(text) {
   const unknown = steps.filter((_, index) => !operations[index]);
   if (unknown.length) return invalid(`許可表と一致しない操作名: ${unknown.join(" / ")}。許可表の操作名をそのまま使ってください。`);
   const usesK = operations.some(operation => operation.requiresK);
+  if (kValue !== null && !usesK) return invalid("kの値には、kを使う操作が必要です。");
   const phrases = operations.map((operation, index) => index === operations.length - 1 ? operation.final : operation.connective);
-  return validateCnl(`${usesK ? WITH_K_PREFIX : WITHOUT_K_PREFIX}${phrases.join("、")}${SUFFIX}`);
+  return { ...validateCnl(`${usesK ? WITH_K_PREFIX : WITHOUT_K_PREFIX}${phrases.join("、")}${SUFFIX}`), kValue };
+}
+
+export function parseK(value) {
+  if (value === null || value === undefined || String(value).trim() === "") return null;
+  if (!/^[+-]?\d+$/.test(String(value).trim()) || !Number.isSafeInteger(Number(value))) {
+    throw new Error("kには安全に扱える範囲の整数を入力してください。");
+  }
+  return Number(value);
+}
+
+// Only bind the default argument. Never rewrite the model-generated function body.
+export function bindKDefault(code, value) {
+  const k = parseK(value);
+  if (k === null) return code;
+  const signature = /^(def solve\(xs: list\[int\], k: int)(\) -> list\[int\]:)\r?$/m;
+  if (!signature.test(code)) throw new Error("生成された関数にkの初期値を設定できませんでした。モデルを変えて再生成してください。");
+  return code.replace(signature, (_, start, end) => `${start} = ${k}${end}`);
 }

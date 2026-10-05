@@ -3,12 +3,12 @@
   --bg:#0c1016;
   --panel:#131922;
   --line:#27303c;
-  --muted:#8e9aaa;
+  --muted:#b3bfce;
   --text:#edf1f6;
   --mint:#a6f0d0;
   --violet:#b8a7f5;
   font-family:Inter,"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
-  font-size:14px
+  font-size:18px
 }
 * {
   box-sizing:border-box
@@ -100,7 +100,7 @@ textarea:focus,select:focus,input:focus-visible {
   color:var(--mint)
 }
 .rail-caption {
-  font:9px/1.8 ui-monospace,monospace;
+  font:13px/1.8 ui-monospace,monospace;
   color:#687584;
   letter-spacing:2px;
   text-align:center;
@@ -133,13 +133,13 @@ main {
   letter-spacing:-.5px
 }
 .wordmark span {
-  font:10px ui-monospace,monospace;
+  font:14px ui-monospace,monospace;
   letter-spacing:2px;
   margin-left:14px;
   color:var(--muted)
 }
 .local-badge {
-  font-size:11px;
+  font-size:15px;
   color:#b1c1bb;
   display:flex;
   align-items:center;
@@ -161,7 +161,7 @@ main {
   gap:20px
 }
 .eyebrow {
-  font:10px/1.6 ui-monospace,monospace;
+  font:14px/1.6 ui-monospace,monospace;
   letter-spacing:2px;
   color:var(--muted);
   margin:0 0 13px
@@ -176,7 +176,7 @@ h1 span {
   color:var(--mint)
 }
 .intro-copy {
-  font-size:12px;
+  font-size:16px;
   color:var(--muted);
   margin:0;
   line-height:1.8
@@ -193,7 +193,7 @@ h1 span {
   font-weight:300
 }
 .scope-note span {
-  font-size:10px;
+  font-size:14px;
   line-height:1.8;
   color:var(--muted)
 }
@@ -210,7 +210,7 @@ h1 span {
   overflow:hidden;
   display:flex;
   flex-direction:column;
-  height:clamp(630px,calc(100dvh - 280px),930px);
+  height:clamp(860px,calc(100dvh - 240px),1100px);
   box-shadow:0 12px 40px #00000018
 }
 .window-header {
@@ -248,17 +248,17 @@ h1 span {
   border:1px solid #a6f0d027
 }
 .model-identity h2 {
-  font-size:15px;
+  font-size:19px;
   margin:0 0 5px;
   font-weight:600
 }
 .model-identity h2 span {
-  font-size:11px;
+  font-size:15px;
   color:var(--muted);
   margin-left:5px
 }
 .model-identity p {
-  font-size:10px;
+  font-size:14px;
   margin:0;
   color:var(--muted)
 }
@@ -268,7 +268,7 @@ h1 span {
   border-radius:20px;
   padding:4px 9px;
   color:var(--muted);
-  font-size:10px
+  font-size:14px
 }
 .state-pill[data-busy="true"] {
   color:var(--mint);
@@ -286,12 +286,12 @@ h1 span {
 }
 .temperature-control label {
   white-space:nowrap;
-  font-size:11px;
+  font-size:15px;
   color:#bcc5d1
 }
 .temperature-control output {
   color:var(--text);
-  font:12px ui-monospace,monospace;
+  font:16px ui-monospace,monospace;
   margin-left:8px
 }
 .temperature-control input {
@@ -305,13 +305,13 @@ h1 span {
   accent-color:var(--mint)
 }
 .temperature-control>span {
-  font:10px ui-monospace,monospace;
+  font:14px ui-monospace,monospace;
   color:var(--muted);
-  width:53px;
+  width:80px;
   text-align:right
 }
 .setting-help {
-  font-size:9px;
+  font-size:13px;
   line-height:1.7;
   color:var(--muted);
   margin:9px 0 0
@@ -334,12 +334,12 @@ h1 span {
   margin:3px 0 20px
 }
 .welcome h3 {
-  font-size:17px;
+  font-size:22px;
   font-weight:500;
   margin:0 0 12px
 }
 .welcome p {
-  font-size:12px;
+  font-size:16px;
   line-height:1.9;
   color:var(--muted);
   margin:0 0 20px
@@ -356,14 +356,14 @@ h1 span {
   background:#19212c;
   border-color:#2a3340;
   color:#c2cbd7;
-  font-size:11px;
+  font-size:15px;
   padding:12px 14px
 }
 .examples button>span:last-child {
   color:var(--violet)
 }
 .mini-tag {
-  font-size:9px;
+  font-size:13px;
   border:1px solid #b8a7f52b;
   border-radius:4px;
   padding:1px 5px
@@ -371,11 +371,11 @@ h1 span {
 .message {
   margin-bottom:22px;
   line-height:1.85;
-  font-size:13px;
+  font-size:18px;
   overflow-wrap:anywhere
 }
 .message-label {
-  font:9px/1.6 ui-monospace,monospace;
+  font:13px/1.6 ui-monospace,monospace;
   letter-spacing:1px;
   color:var(--muted);
   margin-bottom:8px
@@ -421,11 +421,11 @@ h1 span {
   gap:10px;
   margin:9px 0;
   color:#d6dfe8;
-  font-size:12px
+  font-size:16px
 }
 .operation-list li:before {
   content:counter(operations,decimal-leading-zero);
-  font:10px ui-monospace,monospace;
+  font:14px ui-monospace,monospace;
   color:var(--mint);
   border:1px solid #a6f0d025;
   background:#a6f0d008;
@@ -440,7 +440,7 @@ h1 span {
   background:var(--mint);
   color:#10271f;
   border:0;
-  font-size:12px;
+  font-size:16px;
   font-weight:600;
   padding:12px 15px
 }
@@ -448,13 +448,13 @@ h1 span {
   background:#c2f9e3
 }
 .interpretation-hint {
-  font-size:9px;
+  font-size:13px;
   color:var(--muted);
   line-height:1.8;
   margin:10px 0 0
 }
 .experimental-note {
-  font-size:10px;
+  font-size:14px;
   color:#e2c995;
   line-height:1.8;
   border-left:2px solid #bfa263;
@@ -467,7 +467,7 @@ h1 span {
   background:#111720
 }
 .status {
-  font-size:10px;
+  font-size:14px;
   line-height:1.7;
   color:var(--muted);
   margin:10px 0 5px;
@@ -481,7 +481,7 @@ h1 span {
 }
 .metrics {
   display:block;
-  font:9px/1.8 ui-monospace,monospace;
+  font:13px/1.8 ui-monospace,monospace;
   color:var(--muted);
   overflow-wrap:anywhere
 }
@@ -489,7 +489,7 @@ h1 span {
   margin:8px 0 11px
 }
 .cnl-details summary {
-  font-size:10px;
+  font-size:14px;
   color:#a1acbd;
   cursor:pointer
 }
@@ -505,11 +505,11 @@ h1 span {
 }
 .cnl-actions button {
   flex:none;
-  font-size:10px;
+  font-size:14px;
   padding:6px 9px
 }
 .cnl-actions .status {
-  font-size:9px;
+  font-size:13px;
   margin:0
 }
 .composer {
@@ -531,7 +531,7 @@ textarea {
   color:var(--text);
   resize:vertical;
   line-height:1.7;
-  font-size:12px
+  font-size:16px
 }
 textarea::placeholder {
   color:#8692a4
@@ -544,7 +544,7 @@ textarea::placeholder {
   min-height:44px;
   max-height:100px;
   padding:0;
-  font-size:12px;
+  font-size:18px;
   outline:none
 }
 .composer-bottom {
@@ -554,14 +554,14 @@ textarea::placeholder {
   gap:10px
 }
 .composer-bottom>span {
-  font-size:9px;
+  font-size:13px;
   color:var(--muted)
 }
 .send-button {
   background:var(--violet);
   color:#1b1235;
-  width:30px;
-  height:30px;
+  width:44px;
+  height:44px;
   padding:0;
   font-size:22px;
   border:0;
@@ -575,7 +575,7 @@ textarea::placeholder {
   justify-content:space-between;
   flex-wrap:wrap;
   gap:4px;
-  font-size:8px;
+  font-size:13px;
   color:#8491a4;
   margin:8px 2px 0
 }
@@ -590,7 +590,7 @@ textarea::placeholder {
   gap:16px
 }
 .model-picker label {
-  font:9px ui-monospace,monospace;
+  font:13px ui-monospace,monospace;
   letter-spacing:1px;
   color:var(--muted)
 }
@@ -602,10 +602,10 @@ select {
   padding:8px;
   background:#19232e;
   color:#d6e1eb;
-  font-size:11px
+  font-size:15px
 }
 .model-summary {
-  font:9px/1.8 ui-monospace,monospace;
+  font:13px/1.8 ui-monospace,monospace;
   color:var(--muted);
   margin:8px 0 14px
 }
@@ -643,7 +643,7 @@ select {
   color:var(--mint)
 }
 .code-welcome .eyebrow {
-  font-size:8px;
+  font-size:13px;
   letter-spacing:2px;
   color:#7da591;
   margin-bottom:12px
@@ -657,7 +657,7 @@ select {
   color:#d5dfe7
 }
 .code-welcome>p:not(.eyebrow) {
-  font-size:11px;
+  font-size:15px;
   line-height:1.9;
   color:var(--muted);
   margin:0
@@ -668,7 +668,7 @@ select {
   margin-top:24px
 }
 .capabilities span {
-  font:8px ui-monospace,monospace;
+  font:13px ui-monospace,monospace;
   border:1px solid var(--line);
   padding:5px 8px;
   border-radius:5px;
@@ -684,7 +684,7 @@ select {
   gap:10px
 }
 .code-footer button {
-  font-size:10px;
+  font-size:14px;
   flex:none
 }
 .code-card {
@@ -703,16 +703,16 @@ select {
   gap:8px
 }
 .code-card-header span {
-  font:10px/1.7 ui-monospace,monospace;
+  font:14px/1.7 ui-monospace,monospace;
   color:#a0b5bf
 }
 .code-card-header button {
-  font-size:9px;
+  font-size:13px;
   padding:5px 8px;
   background:#24343d
 }
 .code-instruction {
-  font-size:11px;
+  font-size:15px;
   line-height:1.9;
   color:#a8b8c8;
   padding:13px 15px;
@@ -726,14 +726,14 @@ select {
   min-height:130px
 }
 .code-card code {
-  font:12px/1.9 ui-monospace,"SFMono-Regular",Consolas,monospace;
+  font:16px/1.9 ui-monospace,"SFMono-Regular",Consolas,monospace;
   color:#d4eddf;
   white-space:pre
 }
 .code-card-meta {
   border-top:1px solid #21303d;
   padding:10px 15px;
-  font:9px/1.8 ui-monospace,monospace;
+  font:13px/1.8 ui-monospace,monospace;
   color:#9cb0bb
 }
 .studio-footer {
@@ -742,7 +742,7 @@ select {
   gap:20px;
   padding:18px 0 24px;
   color:#8b98ab;
-  font-size:9px;
+  font-size:13px;
   line-height:1.8
 }
 .prompt-details {
@@ -762,17 +762,17 @@ select {
   margin-top:12px
 }
 .prompt-details-body h3 {
-  font-size:11px
+  font-size:15px
 }
 .prompt-details-body pre {
   max-height:230px;
   overflow:auto;
   white-space:pre-wrap;
   overflow-wrap:anywhere;
-  font-size:10px
+  font-size:14px
 }
 .prompt-details-body p {
-  font-size:11px;
+  font-size:15px;
   line-height:1.8
 }
 @keyframes pulse {
@@ -809,7 +809,7 @@ select {
     font-size:20px
   }
   .welcome p {
-    font-size:13px
+    font-size:18px
   }
 }
 @media(max-width:1050px) {
@@ -826,10 +826,10 @@ select {
     padding:17px
   }
   .model-identity p {
-    font-size:9px
+    font-size:13px
   }
   .window-header .state-pill {
-    font-size:9px;
+    font-size:13px;
     padding:4px 6px
   }
   .workspace {
@@ -871,29 +871,29 @@ select {
     height:65px
   }
   .wordmark {
-    font-size:15px
+    font-size:19px
   }
   .wordmark span {
-    font-size:8px;
+    font-size:13px;
     margin-left:6px;
     letter-spacing:1px
   }
   .local-badge {
-    font-size:9px;
+    font-size:13px;
     gap:5px
   }
   .intro {
     padding:27px 0 22px
   }
   .eyebrow {
-    font-size:8px;
+    font-size:13px;
     letter-spacing:1.4px
   }
   h1 {
     font-size:25px
   }
   .intro-copy {
-    font-size:10px;
+    font-size:14px;
     max-width:290px
   }
   .workspace {
@@ -901,17 +901,17 @@ select {
     gap:18px
   }
   .model-window {
-    height:680px
+    height:960px
   }
   .boku-window {
-    height:590px
+    height:760px
   }
   .model-identity p {
-    font-size:10px
+    font-size:14px
   }
   .studio-footer {
     display:block;
-    font-size:8px
+    font-size:13px
   }
   .prompt-details {
     max-width:100%;
@@ -919,10 +919,10 @@ select {
     margin-top:10px
   }
   .composer textarea {
-    font-size:16px
+    font-size:18px
   }
   .composer-hint {
-    font-size:8px
+    font-size:13px
   }
   .code-welcome h3 {
     font-size:23px
@@ -934,7 +934,24 @@ select {
 .plan-details {
   margin-top: 10px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 14px;
 }
 .plan-details summary { cursor: pointer; }
 .plan-details pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* Readable controls for the numeric argument selected in conversation. */
+.parameter-control { margin: 0 0 18px; }
+.parameter-control label { display: block; font-size: 16px; margin-bottom: 8px; }
+.parameter-control input { width: 100%; padding: 10px 12px; border: 1px solid #58677c; border-radius: 8px; background: #101720; color: var(--text); font-size: 18px; }
+.parameter-control p { font-size: 14px; line-height: 1.7; color: var(--muted); margin: 8px 0 0; }
+.message, .composer textarea, .operation-list li { font-size: 18px; }
+.model-window > header, .model-settings, .boku-settings, .qwen-footer, .code-footer { flex-shrink: 0; }
+@media (max-width: 1050px) { .workspace { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  .rail { display: none; }
+  .wordmark span { display: none; }
+  .topbar { gap: 10px; }
+  .new-chat-button { padding: 8px; font-size: 14px; }
+  .local-badge { display: none; }
+  .capabilities { flex-wrap: wrap; justify-content: center; }
+}

@@ -72,14 +72,14 @@ async function disposeGenerator() {
 
 self.addEventListener("message", async (event) => {
   if (event.data?.type !== "translate") return;
-  const { instruction, manifest, contextCnl = "", temperature = 0 } = event.data;
+  const { instruction, manifest, contextCnl = "", contextK = null, temperature = 0 } = event.data;
   const startedAt = performance.now();
   let candidate = "";
   let validation = null;
   try {
     await loadGenerator(manifest);
     const messages = contextCnl
-      ? buildRevisionMessages(instruction, contextCnl)
+      ? buildRevisionMessages(instruction, contextCnl, contextK)
       : buildNormalizerMessages(instruction);
     for (let attempt = 1; attempt <= 2; attempt += 1) {
       send("phase", { message: `Qwenが${contextCnl ? "変更後の" : "指示の"}操作を整理しています… (${attempt}/2)` });
@@ -94,11 +94,19 @@ self.addEventListener("message", async (event) => {
         return;
       }
       validation = validateOperationPlan(candidate);
+      if (validation.valid && contextCnl === validation.cnl && contextK === validation.kValue) {
+        validation = {
+          ...validation,
+          valid: false,
+          error: "変更前と同じ結果になりました。今回の変更依頼を反映して、全手順とkの値を再出力してください。",
+        };
+      }
       if (validation.valid) {
         send("result", {
           supported: true,
           cnl: validation.cnl,
           operations: validation.operations,
+          kValue: validation.kValue,
           plan: candidate,
           attempts: attempt,
           elapsed_seconds: (performance.now() - startedAt) / 1000,

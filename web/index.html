@@ -11,7 +11,7 @@
     <script type="module" src="./demo.js"></script>
   </head>
   <body>
-    <div class="studio" data-release="chat-studio-v1">
+    <div class="studio" data-release="chat-studio-v2">
       <aside class="rail" aria-label="ワークスペース">
         <a class="brand-symbol" href="./" aria-label="Boku1-nano ホーム">b<span>.</span></a>
         <button id="new-chat" class="rail-button" type="button" title="新しい会話" aria-label="新しい会話">＋</button>
@@ -21,6 +21,7 @@
       <main>
         <header class="topbar">
           <div class="wordmark">Boku1-nano <span>STUDIO</span></div>
+          <button id="new-chat-top" class="new-chat-button" type="button">＋ 新しい会話</button>
           <div class="local-badge"><i></i> ブラウザ内で実行</div>
         </header>
         <section class="intro" aria-label="このデモについて">
@@ -43,7 +44,7 @@
                 <h3>どんな処理をつくりますか？</h3>
                 <p>整数リストの抽出、変換、並べ替え。<br />やりたいことを、いつもの言葉で。</p>
                 <div class="examples" aria-label="入力例">
-                  <button type="button" data-example-prompt="数字の中から偶数だけ選んでください。"><span>偶数だけ取り出す</span><span>↗</span></button>
+                  <button type="button" data-example-prompt="各要素に3を足して"><span>各要素に3を足す</span><span>↗</span></button>
                   <button type="button" data-example-prompt="全部プラスの値に直してから、大きい順に並べてください。"><span>絶対値にして、大きい順に</span><span>↗</span></button>
                   <button type="button" data-example-prompt="1. 偶数だけを残す&#10;2. 各要素を2倍する&#10;3. 値を昇順に並べる&#10;4. 現在の要素順を反転する"><span>4つの操作を組み合わせる</span><span class="mini-tag">実験</span></button>
                 </div>
@@ -51,6 +52,7 @@
               <div id="interpretation" class="interpretation" hidden>
                 <div class="message-label"><span class="tiny-dot"></span> QWEN / 解釈を確認</div>
                 <ol id="operation-list" class="operation-list"></ol>
+                <div id="parameter-control" class="parameter-control" hidden><label for="parameter-k">使う数値（k）</label><input id="parameter-k" type="number" step="1" placeholder="未指定：関数の引数として渡す" /><p id="parameter-help">指定した整数を、生成コードのkの初期値にします。</p></div>
                 <p id="experimental-note" class="experimental-note" hidden>4操作は学習範囲（最大3操作）を超える実験です。生成結果を確認してください。</p>
                 <button id="generate" class="generate-button" type="button" disabled>この内容でコードを生成 <span>→</span></button>
                 <p class="interpretation-hint">変更したいときは、下の入力欄から続けて伝えられます。</p>
@@ -67,7 +69,7 @@
               </details>
               <form id="composer" class="composer">
                 <label class="sr-only" for="prompt">やりたい処理・追加の指示</label>
-                <textarea id="prompt" rows="2" maxlength="600" placeholder="やりたい処理を入力。続けて「最後に逆順にして」も。"></textarea>
+                <textarea id="prompt" rows="2" maxlength="600" placeholder="例：各要素に3を足して。続けて「5に変えて」も。"></textarea>
                 <div class="composer-bottom"><span id="context-label">新しい指示</span><button id="cancel-translation" type="button" hidden>停止 ■</button><button id="translate" class="send-button" type="submit" aria-label="Qwenへ送信" disabled>↑</button></div>
               </form>
               <p class="composer-hint">Enter で送信 / Shift + Enter で改行 <span>初回のみ約543 MiB取得</span></p>

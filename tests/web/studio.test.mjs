@@ -40,8 +40,8 @@ test('normalization supplies the current instruction after the system constraint
 });
 test('revision receives all previous operations in order and the new request', () => {
   const messages = buildRevisionMessages('2倍を3倍に変更してください',four);
-  assert.match(messages[1].content,/1\. 偶数だけを残す\n2\. 各要素を2倍する\n3\. 値を昇順に並べる\n4\. 現在の要素順を反転する/);
-  assert.match(messages[1].content,/変更依頼: 2倍を3倍に変更してください/);
+  assert.match(messages[2].content,/1\. 偶数だけを残す\n2\. 各要素を2倍する\n3\. 値を昇順に並べる\n4\. 現在の要素順を反転する/);
+  assert.match(messages[3].content,/変更依頼: 2倍を3倍に変更してください/);
   assert.throws(()=>buildRevisionMessages('逆順にして','不正なCNL'));
 });
 test('only a complete numbered list defines an operation count for omission checks', () => {
@@ -80,4 +80,38 @@ test('Qwen-selected labels serialize without losing order, k, or a fourth operat
   assert.equal(validateOperationPlan('1. 整数を自由に処理する').valid,false);
   assert.equal(validateOperationPlan('1. 各要素を2倍する\n2. 各要素を2倍する').operations.length,2);
   assert.equal(validateOperationPlan('1. 偶数だけを残す\n2. 各要素を2倍する\n3. 各要素を3倍する\n4. 値を昇順に並べる\n5. 現在の要素順を反転する').valid,false);
+});
+
+test('concrete integers are preserved separately from the trained CNL grammar', () => {
+  for (const value of [3, -5, 0, 17]) {
+    const plan = validateOperationPlan(`1. 各要素にkを加える\nk=${value}`);
+    assert.equal(plan.valid, true);
+    assert.equal(plan.kValue, value);
+    assert.equal(plan.cnl, '整数リストxsと整数kを受け取り、各要素にkを加えるsolve関数を書いてください。');
+  }
+  assert.equal(validateOperationPlan('1. 各要素にkを加える').kValue, null);
+  for (const suffix of ['k=1.5','k=NaN','k=9007199254740992','k=3\nk=5']) {
+    assert.equal(validateOperationPlan(`1. 各要素にkを加える\n${suffix}`).valid, false);
+  }
+  assert.equal(validateOperationPlan('1. 偶数だけを残す\nk=3').valid, false);
+});
+
+test('revision keeps the numeric argument available for later edits', () => {
+  const previous = validateOperationPlan('1. 各要素にkを加える\nk=3');
+  const messages = buildRevisionMessages('5に変えて',previous.cnl,previous.kValue);
+  assert.match(messages[2].content,/各要素にkを加える\nk=3/);
+  assert.match(messages[3].content,/変更依頼: 5に変えて/);
+});
+
+test('numeric binding changes only the solve default, preserving model-generated logic', async () => {
+  const { bindKDefault, parseK } = await import('../../web/cnl.js');
+  const raw = 'def solve(xs: list[int], k: int) -> list[int]:\n    return [value + k for value in xs]\n';
+  assert.equal(bindKDefault(raw,3), 'def solve(xs: list[int], k: int = 3) -> list[int]:\n    return [value + k for value in xs]\n');
+  assert.equal(bindKDefault(raw,null),raw);
+  assert.match(bindKDefault(raw,-5), /k: int = -5/);
+  assert.equal(parseK(''),null);
+  assert.equal(parseK('0'),0);
+  assert.throws(()=>parseK('3.5'));
+  assert.throws(()=>bindKDefault('def solve(xs):\n    return xs',3));
+  assert.throws(()=>bindKDefault(raw,'3): print(1)'));
 });
