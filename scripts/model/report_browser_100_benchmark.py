@@ -60,5 +60,7 @@ def main():
         for m,c in [('boku','A'),('qwen','A'),('boku','B'),('qwen','B')]:
             r=records[m,c,qid];s=scores[m,c,qid];details += [f'### {m} / 条件{c}', '', '実プロンプト:',block(r['prompt']), '生の生成出力:',block(r['raw_output']), '採点:',block(json.dumps({k:v for k,v in s.items() if k!='code'},ensure_ascii=False,indent=2),'json'),f'生成時間: {r.get("elapsed_seconds",0):.3f}秒。終了記録: `{r.get("termination")}`。','']
     (OUT/'dev50_20261005_details.md').write_text('\n'.join(details)+'\n')
+    from report_browser_additional_models import append_existing
+    append_existing()
     print('Wrote summary and full 50-question Markdown appendix.')
 if __name__=='__main__':main()

@@ -15,17 +15,22 @@ async function run(){
  const previous=await(await fetch('/api/state')).json();
  const done=new Map(previous.filter(r=>r.kind==='inference').map(r=>[`${r.model}/${r.condition}/${r.question_id}`,r]));
  let count=done.size;
- $('progress').max=questions.length*6;
+ const models=config.models??['boku','qwen'];
+ const qconditions=config.conditions.filter(c=>c!=='C');
+ if(config.conditions.includes('C'))qconditions.push('C-normalize');
+ const total=questions.length*((models.includes('qwen')?qconditions.length:0)+(models.includes('boku')?config.conditions.length:0));
+ $('progress').max=total;
  $('progress').value=count;
- const completed=record=>{count++;$('progress').value=count;$('log').textContent=`保存済み ${count}/${questions.length*6}\n${record.model} ${record.condition} ${record.question_id}\n${(record.raw_output||record.cnl||record.error||'').slice(0,1200)}`;};
+ const completed=record=>{count++;$('progress').value=count;$('log').textContent=`保存済み ${count}/${total}\n${record.model} ${record.condition} ${record.question_id}\n${(record.raw_output||record.cnl||record.error||'').slice(0,1200)}`;};
+ const translations=new Map(previous.filter(r=>r.kind==='inference'&&r.condition==='C-normalize').map(r=>[r.question_id,r]));
+ if(models.includes('qwen')){
  const worker=new Worker(new URL('./worker.js',import.meta.url),{type:'module'});
  status('Qwenを準備しています');
  await request(worker,'load',{manifest:qmanifest});
- const translations=new Map(previous.filter(r=>r.kind==='inference'&&r.condition==='C-normalize').map(r=>[r.question_id,r]));
- for(const condition of ['A','B','C-normalize']){
+ for(const condition of qconditions){
   for(const q of questions){
    if(done.has(`qwen/${condition}/${q.question_id}`))continue;
-   status(`Qwen ${condition} ${q.question_id} (${count+1}/${questions.length*6})`);
+   status(`Qwen ${condition} ${q.question_id} (${count+1}/${total})`);
    const instruction=condition==='B'?q.canonical_cnl:q.instruction_ja;
    const result=(await request(worker,condition==='C-normalize'?'translate':'direct',{instruction})).record;
    const record={kind:'inference',run_id:config.run_id,question_id:q.question_id,category_id:q.category_id,model:'qwen',condition,instruction,...result};
@@ -34,18 +39,20 @@ async function run(){
   }
  }
  await request(worker,'dispose');worker.terminate();
+ }
+ if(models.includes('boku')){
  const model=manifest.models.find(m=>m.id===config.boku_model);
  ort.env.wasm.wasmPaths=new URL('/web/vendor/',location.href).href;ort.env.wasm.numThreads=1;
  status('Boku1-nanoを準備しています');
  const session=await ort.InferenceSession.create(`/web/${model.path}`,{executionProviders:['webgpu']});
  const tokenizer=await BokuNanoTokenizer.load(`/web/${manifest.tokenizers[model.tokenizer_id].path}`);
- for(const condition of ['A','B','C']){
+ for(const condition of config.conditions){
   for(const q of questions){
    if(done.has(`boku/${condition}/${q.question_id}`))continue;
    const translation=translations.get(q.question_id);
    const instruction=condition==='A'?q.instruction_ja:condition==='B'?q.canonical_cnl:translation.cnl;
    const base={kind:'inference',run_id:config.run_id,question_id:q.question_id,category_id:q.category_id,model:'boku',model_id:model.id,condition,instruction,backend:'webgpu',temperature:0};
-   status(`Boku ${condition} ${q.question_id} (${count+1}/${questions.length*6})`);
+   status(`Boku ${condition} ${q.question_id} (${count+1}/${total})`);
    if(condition==='C'&&!translation.supported){const r={...base,error:'normalization_failed',raw_output:'',termination:'normalization_failed'};await save(r);completed(r);continue;}
    const start=performance.now();let record;
    try{
@@ -63,6 +70,8 @@ async function run(){
    await save(record);completed(record);
   }
  }
- await session.release();await save({kind:'complete',run_id:config.run_id,completed_at:new Date().toISOString(),records:count});status(`評価完了：${count}件を保存しました`);
+ await session.release();
+ }
+ await save({kind:'complete',run_id:config.run_id,completed_at:new Date().toISOString(),records:count});status(`評価完了：${count}件を保存しました`);
 }
 $('run').onclick=()=>run().catch(async e=>{status(`実行停止：${e.message}`);console.error(e);await save({kind:'infrastructure_error',error:e.stack||String(e)});});

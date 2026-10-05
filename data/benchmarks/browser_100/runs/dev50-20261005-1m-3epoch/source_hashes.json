@@ -1,0 +1,16 @@
+{
+  "scripts/model/run_browser_100_benchmark.py": "8589ecbe6981b1f07b218dc2fb6f0fadc44af6bf0baa716c9aa581ff630058b6",
+  "data/benchmarks/browser_100/dev50.jsonl": "ba24af53978a61f3002834f9bd4914f40516eaa181b18d67cfe8cac1f5d91954",
+  "scripts/model/browser_benchmark/index.html": "bf4c9bca7bc218bf3e94b1455a6d5ce9e7a0d53b2d4c381ff9b4316ee2df4d97",
+  "scripts/model/browser_benchmark/runner.js": "aca515e1f16ac6f7266343993eda1e761bb79a926c9d198e293520589d65e8e1",
+  "scripts/model/browser_benchmark/worker.js": "68371f9dd68c3d5465a1637f9d9eb92c312b84983d237454847f55d21eda2494",
+  "web/model-manifest.json": "38892442503144eeb28054e397b2f488e4b19be59071510f3f94f41b0a01c33d",
+  "web/qwen-manifest.json": "fde7c18dfc268ff2b47051a0bcc056d3885b840dc3942fa920ae0c51d4511b6e",
+  "web/tokenizer.js": "9f8f8e42fa60c6f1e7305861d1b60e79e58a6f90a2b20b6a3861d47b758aa4eb",
+  "web/qwen-translation.js": "a499f6feb9fe26b3cabefb9f2a44801a0dc177dece06b7ddbbef7a321ad4a8d1",
+  "web/cnl.js": "bc120dc4847058785cc794dc8cb31a0cc556660323f872081fe6332d5f8b4836",
+  "web/sampling.js": "35dd6a373ecd11d28c84d5cc056f32d102fd9bb47b89a5c33f0c787807058ee4",
+  "web/chat-utils.js": "13965f5132c9d2d869b30124ee54e9e7304b3729c4dee80ab513099ee1276bf0",
+  "web/semantic-ast.js": "7ab8c15ea43c17b101194d253b68d75441e0d6cc9fe0961cd07d17bfc0c6117c",
+  "scripts/model/score_browser_100_benchmark.py": "b001cf8c414310606b2a213b0f5ad0993dc9c83ef06dbe9319c645307c4fc559"
+}

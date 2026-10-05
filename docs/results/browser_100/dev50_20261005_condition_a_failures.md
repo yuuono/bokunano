@@ -4,6 +4,8 @@
 
 Boku1-nanoは15M・1 epoch（15,735,168 parameters）、Qwen3-0.6BはONNX q4f16。両者ともWebGPU・greedy・T=0・1問1候補・会話履歴なし。Webデモ既定の5Mモデルの成績ではない。
 
+以下の当初集計は15M・1epochとQwenの比較。末尾の追記に5M・1epochと1M・3epochの結果を追加した。全4モデルの詳細は[追加評価レポート](dev50_20261005_additional_models.md)を参照。
+
 ## 1. 結果の見取り図
 
 | 結果 | 問題数 |
@@ -2149,3 +2151,63 @@ def solve(xs, k):
 .venv/bin/python scripts/model/report_browser_condition_a_failures.py
 ````
 
+<!-- additional-condition-a-models -->
+
+## 追記：5M・1epochと1M・3epochの条件A評価
+
+| モデル | 合格 / 50問 | 正答率 | 不合格 |
+| --- | ---: | ---: | ---: |
+| Boku1-nano 15M・1epoch | 30/50 | 60% | 20 |
+| Boku1-nano 5M・1epoch | 28/50 | 56% | 22 |
+| Boku1-nano 1M・3epoch | 29/50 | 58% | 21 |
+| Qwen3-0.6B | 19/50 | 38% | 31 |
+
+15MとQwenは前回の条件Aの実測を再掲し、5M・1epochと1M・3epochだけを追加実行した。条件Bは追加評価していない。50問の固定集合・各1候補での結果であり、1Mのほうが5Mより一般に優れるとは結論しない。サイズに加えて学習epoch数も異なる。
+
+### 分類別の合格数（各5問）
+
+| 分類 | 15M・1epoch | 5M・1epoch | 1M・3epoch | Qwen3-0.6B |
+| --- | ---: | ---: | ---: | ---: |
+| C01 基本的な抽出 | 4 | 3 | 3 | 4 |
+| C02 kを使う条件 | 1 | 1 | 1 | 1 |
+| C03 値の変換 | 2 | 2 | 2 | 5 |
+| C04 順序の変更 | 5 | 3 | 3 | 0 |
+| C05 切り出し | 1 | 0 | 1 | 2 |
+| C06 2操作の合成 | 4 | 5 | 4 | 3 |
+| C07 3操作の合成 | 4 | 5 | 5 | 0 |
+| C08 同じ操作の反復 | 4 | 4 | 5 | 0 |
+| C09 順序を取り違えやすい合成 | 5 | 5 | 5 | 1 |
+| C10 未学習の言い回し | 0 | 0 | 0 | 3 |
+
+5M・1MともにC07（3操作）は5/5で、15Mが落としたC07-05も合格した。一方、C10（新しい言い回し）は両モデル0/5。5MはC05（切り出し）0/5、1Mは同分類1/5だった。
+
+### 追加モデルの不合格理由
+
+| 理由 | 5M・1epoch | 1M・3epoch |
+| --- | ---: | ---: |
+| 実行結果の不一致 | 20 | 18 |
+| 契約・許可構文の検査で拒否 | 2 | 1 |
+| Python構文エラー | 0 | 2 |
+| 実行時例外 | 0 | 0 |
+
+関数契約・許可構文の不合格は、5Mの2件が未定義変数、1Mの1件が空出力（C10-03、関数なし）を静的に検出したもの。全100生成はEOSで終了し、生成上限到達や基盤エラーはなかった。Qwenの契約・許可構文による不合格を意味誤りと区別する扱いは前回のまま維持する。
+
+### 追加モデルが失敗した問題
+
+**Boku1-nano 5M・1epoch：22問**
+
+[C01-03](dev50_20261005_additional_models.md#dev-c01-03)、[C01-05](dev50_20261005_additional_models.md#dev-c01-05)、[C02-02](dev50_20261005_additional_models.md#dev-c02-02)、[C02-03](dev50_20261005_additional_models.md#dev-c02-03)、[C02-04](dev50_20261005_additional_models.md#dev-c02-04)、[C02-05](dev50_20261005_additional_models.md#dev-c02-05)、[C03-01](dev50_20261005_additional_models.md#dev-c03-01)、[C03-02](dev50_20261005_additional_models.md#dev-c03-02)、[C03-04](dev50_20261005_additional_models.md#dev-c03-04)、[C04-02](dev50_20261005_additional_models.md#dev-c04-02)、[C04-03](dev50_20261005_additional_models.md#dev-c04-03)、[C05-01](dev50_20261005_additional_models.md#dev-c05-01)、[C05-02](dev50_20261005_additional_models.md#dev-c05-02)、[C05-03](dev50_20261005_additional_models.md#dev-c05-03)、[C05-04](dev50_20261005_additional_models.md#dev-c05-04)、[C05-05](dev50_20261005_additional_models.md#dev-c05-05)、[C08-05](dev50_20261005_additional_models.md#dev-c08-05)、[C10-01](dev50_20261005_additional_models.md#dev-c10-01)、[C10-02](dev50_20261005_additional_models.md#dev-c10-02)、[C10-03](dev50_20261005_additional_models.md#dev-c10-03)、[C10-04](dev50_20261005_additional_models.md#dev-c10-04)、[C10-05](dev50_20261005_additional_models.md#dev-c10-05)
+
+**Boku1-nano 1M・3epoch：21問**
+
+[C01-03](dev50_20261005_additional_models.md#dev-c01-03)、[C01-05](dev50_20261005_additional_models.md#dev-c01-05)、[C02-02](dev50_20261005_additional_models.md#dev-c02-02)、[C02-03](dev50_20261005_additional_models.md#dev-c02-03)、[C02-04](dev50_20261005_additional_models.md#dev-c02-04)、[C02-05](dev50_20261005_additional_models.md#dev-c02-05)、[C03-01](dev50_20261005_additional_models.md#dev-c03-01)、[C03-02](dev50_20261005_additional_models.md#dev-c03-02)、[C03-04](dev50_20261005_additional_models.md#dev-c03-04)、[C04-02](dev50_20261005_additional_models.md#dev-c04-02)、[C04-05](dev50_20261005_additional_models.md#dev-c04-05)、[C05-01](dev50_20261005_additional_models.md#dev-c05-01)、[C05-03](dev50_20261005_additional_models.md#dev-c05-03)、[C05-04](dev50_20261005_additional_models.md#dev-c05-04)、[C05-05](dev50_20261005_additional_models.md#dev-c05-05)、[C06-05](dev50_20261005_additional_models.md#dev-c06-05)、[C10-01](dev50_20261005_additional_models.md#dev-c10-01)、[C10-02](dev50_20261005_additional_models.md#dev-c10-02)、[C10-03](dev50_20261005_additional_models.md#dev-c10-03)、[C10-04](dev50_20261005_additional_models.md#dev-c10-04)、[C10-05](dev50_20261005_additional_models.md#dev-c10-05)
+
+### 具体的な違い
+
+- **C03-01「各要素にkを足す」:** 5Mは加算後に不要な3倍を追加。`xs=[0], k=1`で期待`[1]`に対し`[3]`。1Mは符号反転→偶数抽出へ取り違え、同じ入力で`[0]`。
+- **C05-03「先頭から1個おき」:** 5Mは取り出した値をさらに2倍し、`xs=[1], k=1`で期待`[1]`に対し`[2]`。1Mは閉じ角括弧不足で構文エラー。
+- **C07-05「1個おき→2倍→kより大きい値」:** 追加した両モデルは全179ケースで合格。15Mは未定義の`x`を参照し不合格だった。
+
+[全50問×追加2モデルの実プロンプト・生出力・採点・実測反例](dev50_20261005_additional_models.md)
+
+<!-- /additional-condition-a-models -->

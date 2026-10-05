@@ -57,6 +57,8 @@ docs/
 
 ## 結果
 
+- [`results/browser_100/dev50_20261005_additional_models.md`](results/browser_100/dev50_20261005_additional_models.md): 条件Aに5M・1epochと1M・3epochを追加した4モデル比較、全50問の実プロンプト・出力・反例
+
 - [`results/browser_100/dev50_20261005_condition_a_failures.md`](results/browser_100/dev50_20261005_condition_a_failures.md): 条件Aで各モデルが不合格になった全40問、生成コード、実測反例、失敗原因
 
 - [`results/browser_100/dev50_20261005_results.md`](results/browser_100/dev50_20261005_results.md): Astra作成の10分類×5問によるブラウザ版QwenとBokuの実測比較、分類別得点、失敗例

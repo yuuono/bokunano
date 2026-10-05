@@ -4,7 +4,7 @@
 
 更新内容: 承認済み日本語表現辞書の参照を維持し、利用者の指定により比較対象を条件A・Bに絞った。[条件Aの不合格例](../results/browser_100/dev50_20261005_condition_a_failures.md)を追加。
 
-状態: 開発用50問（10分類×5問）の作問・ブラウザ推論・採点を2026年10月5日に実施。[実測結果](../results/browser_100/dev50_20261005_results.md)と[全問のプロンプト・出力](../results/browser_100/dev50_20261005_details.md)を保存。本番100問は未作成・未評価。
+状態: 開発用50問（10分類×5問）の作問・ブラウザ推論・採点を2026年10月5日に実施。[実測結果](../results/browser_100/dev50_20261005_results.md)と[全問のプロンプト・出力](../results/browser_100/dev50_20261005_details.md)を保存。条件Aは[5M・1epochと1M・3epochも追加評価](../results/browser_100/dev50_20261005_additional_models.md)済み。本番100問は未作成・未評価。
 
 ## 1. 目的と発表資料での位置付け
 

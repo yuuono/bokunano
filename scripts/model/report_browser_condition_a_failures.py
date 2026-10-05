@@ -84,7 +84,7 @@ def main():
     lines = ['# 条件A：Boku1-nanoとQwen3-0.6Bが失敗した例', '',
         '2026年10月5日の保存済み実測を整理。条件Aは、同じ自然な日本語から両モデルがそれぞれ直接Pythonコードを生成する比較。CNL変換・補正は挟まない。本書は条件Aだけを扱う。モデルの再生成や採点条件の変更は行っていない。', '',
         'Boku1-nanoは15M・1 epoch（15,735,168 parameters）、Qwen3-0.6BはONNX q4f16。両者ともWebGPU・greedy・T=0・1問1候補・会話履歴なし。Webデモ既定の5Mモデルの成績ではない。', '',
-        '## 1. 結果の見取り図', '',
+        '以下の当初集計は15M・1epochとQwenの比較。末尾の追記に5M・1epochと1M・3epochの結果を追加した。全4モデルの詳細は[追加評価レポート](dev50_20261005_additional_models.md)を参照。', '', '## 1. 結果の見取り図', '',
         '| 結果 | 問題数 |', '| --- | ---: |',
         '| 両モデルとも合格 | 10 |', '| Boku1-nanoだけが不合格 | 9 |',
         '| Qwen3-0.6Bだけが不合格 | 20 |', '| 両モデルとも不合格 | 11 |', '',
@@ -162,6 +162,8 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     path = OUT / 'dev50_20261005_condition_a_failures.md'
     path.write_text('\n'.join(lines) + '\n')
+    from report_browser_additional_models import append_existing
+    append_existing()
     print(f'Wrote {path}: 40 questions, 20 Boku failures, 31 Qwen failures.')
 
 
