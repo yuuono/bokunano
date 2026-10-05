@@ -1,11 +1,10 @@
 import { resolveSelection, reconcileSelection } from "./chat-utils.js?v=10";
 import {
   UNSUPPORTED_CNL,
-  buildNormalizerMessages,
-  buildRevisionMessages,
+  buildConversationMessages,
   buildNormalizerUserPrompt,
   validateOperationPlan,
-} from "./cnl.js?v=10";
+} from "./cnl.js?v=12";
 import { qwenSamplingOptions } from "./sampling.js";
 
 let generator = null;
@@ -81,10 +80,8 @@ self.addEventListener("message", async (event) => {
   let validation = null;
   try {
     await loadGenerator(manifest);
-    const messages = contextCnl
-      ? buildRevisionMessages(instruction, contextCnl, contextK)
-      : buildNormalizerMessages(instruction);
-    const selected = contextCnl ? null : resolveSelection(instruction, selection);
+    const selected = resolveSelection(instruction, selection);
+    const messages = buildConversationMessages(instruction, contextCnl, contextK, Boolean(selected));
     if (selected) {
       messages[0].content = `利用者が選んだ操作を、日本語の操作名として確認してください。説明は不要です。
 次の${selected.operations.length}操作をこの順番で全て出力してください。他の操作は追加しません。
@@ -93,7 +90,7 @@ ${selected.usesK && selected.kValue !== null ? `数値: k=${selected.kValue}` : 
     }
     const maxAttempts = selected ? 1 : 2;
     for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-      send("phase", { message: `Qwenが${contextCnl ? "変更後の" : "指示の"}操作を整理しています… (${attempt}/${maxAttempts})` });
+      send("phase", { message: `Qwenが指示の操作を整理しています… (${attempt}/${maxAttempts})` });
       candidate = await generatePlan(messages, temperature, attempt);
       if (!selected && candidate === UNSUPPORTED_CNL) {
         send("result", {
@@ -107,13 +104,6 @@ ${selected.usesK && selected.kValue !== null ? `数値: k=${selected.kValue}` : 
       validation = validateOperationPlan(candidate);
       // Qwen always runs. Explicit UI choices remain authoritative if it drifts.
       validation = reconcileSelection(validation, selected);
-      if (validation.valid && contextCnl === validation.cnl && contextK === validation.kValue) {
-        validation = {
-          ...validation,
-          valid: false,
-          error: "変更前と同じ結果になりました。今回の変更依頼を反映して、全手順とkの値を再出力してください。",
-        };
-      }
       if (validation.valid) {
         send("result", {
           supported: true,

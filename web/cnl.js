@@ -167,6 +167,15 @@ export function buildRevisionMessages(instruction, contextCnl, contextK = null) 
   ];
 }
 
+// One chat input: the model uses context only when the request refers back to it.
+export function buildConversationMessages(instruction, contextCnl = "", contextK = null, selected = false) {
+  if (selected || !contextCnl) return buildNormalizerMessages(instruction);
+  const messages = buildRevisionMessages(instruction, contextCnl, contextK);
+  messages[0].content += "\n今回の依頼だけで処理が指定されている場合は、新しい手順として置き換えてください。前の手順の変更・追加を求める依頼の場合だけ、変更されていない手順を引き継いでください。";
+  messages[messages.length - 1].content = `今回の依頼: ${instruction}\n今回実行する全手順を出力してください。数値を使う処理だけ、その値も残してください。`;
+  return messages;
+}
+
 export function numberedSteps(text) {
   const lines = text.trim().split(/\r?\n/).filter(line => line.trim());
   if (!lines.length) return [];
