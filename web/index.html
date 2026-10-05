@@ -7,12 +7,12 @@
     <meta name="color-scheme" content="light" />
     <meta name="description" content="日本語で指示して、Pythonコードを生成。QwenとBoku1-nanoがブラウザ内で動くチャットデモ。" />
     <title>Boku1-nano — コード生成チャット</title>
-    <link rel="stylesheet" href="./demo.css?v=15" />
+    <link rel="stylesheet" href="./demo.css?v=16" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=15"></script>
+    <script type="module" src="./demo.js?v=16"></script>
   </head>
   <body>
-    <main class="studio" data-release="chat-studio-v15">
+    <main class="studio" data-release="chat-studio-v16">
       <header class="topbar">
         <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
         <div class="topbar-actions"><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
@@ -54,7 +54,7 @@
             <section class="prompt-examples" aria-labelledby="examples-title">
               <h3 id="examples-title" class="sr-only">指示の例</h3>
               <dl>
-                <div><dt>1操作</dt><dd data-example-instruction>各要素に3を足してください。</dd></div>
+                <div><dt>1操作</dt><dd data-example-instruction>各要素にkを足してください。</dd></div>
                 <div><dt>2操作</dt><dd data-example-instruction>各要素を絶対値にして、大きい順に並べてください。</dd></div>
                 <div><dt>3操作</dt><dd data-example-instruction>偶数だけを残して、各要素を2倍して、小さい順に並べてください。</dd></div>
                 <div><dt>4操作</dt><dd data-example-instruction>kの倍数だけを残し、各要素を二乗し、先頭から1個おきに取り、要素の順番を逆にしてください。</dd></div>
@@ -66,7 +66,7 @@
             <div class="chat-status"><p id="translation-status" class="status" role="status">準備しています…</p><span id="translation-metrics" class="metrics"></span><p id="status" class="status" role="status"></p><span id="metrics" class="metrics"></span></div>
               <form id="composer" class="composer">
                 <label class="sr-only" for="prompt">メッセージ</label>
-                <textarea id="prompt" rows="2" maxlength="600" placeholder="ここに入力してください。&#10;例：各要素に3を足して"></textarea>
+                <textarea id="prompt" rows="2" maxlength="600" placeholder="ここに入力してください。&#10;例：末尾から5個だけ取り出してください。"></textarea>
                 <div class="composer-bottom"><button id="stop" type="button" hidden>生成を停止 ■</button><button id="cancel-translation" type="button" hidden>停止 ■</button><button id="translate" class="send-button" type="submit" aria-label="メッセージを送信" disabled>送信 ↑</button></div>
               </form>
 
