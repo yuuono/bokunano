@@ -3,98 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0c1016" />
-    <meta name="description" content="Qwenと対話して、Boku1-nanoでコードを生成。2つのモデルがブラウザ内で動く、小さなAIワークスペース。" />
-    <title>Boku1-nano — Local AI Studio</title>
-    <link rel="stylesheet" href="./demo.css?v=4" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
+    <meta name="description" content="日本語で指示して、Pythonコードを生成。QwenとBoku1-nanoがブラウザ内で動くチャットデモ。" />
+    <title>Boku1-nano — コード生成チャット</title>
+    <link rel="stylesheet" href="./demo.css?v=5" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=4"></script>
+    <script type="module" src="./demo.js?v=5"></script>
   </head>
   <body>
-    <div class="studio" data-release="chat-studio-v4">
-      <aside class="rail" aria-label="ワークスペース">
-        <a class="brand-symbol" href="./" aria-label="Boku1-nano ホーム">b<span>.</span></a>
-        <button id="new-chat" class="rail-button" type="button" title="新しい会話" aria-label="新しい会話">＋</button>
-        <span class="rail-caption">LOCAL<br />AI LAB</span>
-        <a class="rail-link" href="https://github.com/yuuono/bokunano" target="_blank" rel="noreferrer" aria-label="GitHubでソースを見る">↗</a>
-      </aside>
-      <main>
-        <header class="topbar">
-          <div class="wordmark">Boku1-nano <span>STUDIO</span></div>
-          <button id="new-chat-top" class="new-chat-button" type="button">＋ 新しい会話</button>
-          <div class="local-badge"><i></i> ブラウザ内で実行</div>
-        </header>
-        <section class="intro" aria-label="このデモについて">
-          <div><p class="eyebrow">SMALL MODELS. REAL POSSIBILITIES.</p><h1>ことばから、コードへ<span>。</span></h1><p class="intro-copy">Qwenと考えて、Boku1-nanoでつくる。ふたつのAIを、ひとつのワークスペースで。</p></div>
-          <div class="scope-note"><strong>24</strong><span>種類のリスト操作<br />最大4操作まで試せます</span></div>
-        </section>
-        <div class="workspace">
-          <section class="model-window qwen-window" aria-labelledby="qwen-title">
-            <header class="window-header">
-              <div class="model-identity"><span class="model-icon qwen-icon">Q</span><div><h2 id="qwen-title">Qwen <span>0.6B</span></h2><p>日本語を、実行できる指示に。</p></div></div>
-              <span id="qwen-state" class="state-pill">待機中</span>
-            </header>
-            <div class="model-settings">
-              <div class="temperature-control"><label for="qwen-temperature">温度 <output id="qwen-temperature-value" for="qwen-temperature">0.0</output></label><input id="qwen-temperature" type="range" min="0" max="2" step="0.1" value="0" /><span id="qwen-temperature-mode">Greedy</span></div>
-              <p class="setting-help">0は確率最大の候補を選択。上げるほど表現が変わります。</p>
-            </div>
-            <div class="qwen-footer">
-              <p id="translation-status" class="status" role="status">準備しています…</p>
-              <span id="translation-metrics" class="metrics"></span>
+    <main class="studio" data-release="chat-studio-v5">
+      <header class="topbar">
+        <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
+        <div class="topbar-actions"><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
+      </header>
+      <div class="workspace">
+        <section class="input-panel" aria-labelledby="input-title">
+          <header class="panel-heading"><div><span class="eyebrow">INPUT</span><h1 id="input-title">指示を入力</h1></div><span class="flow-arrow" aria-hidden="true">→</span></header>
+          <div class="input-scroll">
+            <section class="input-section compose-section" aria-labelledby="compose-title">
+              <h2 id="compose-title">どんな処理をつくりますか？</h2>
+              <p class="section-help">日本語で送信 → 内容を確認 → コードを生成</p>
               <form id="composer" class="composer">
-                <fieldset id="request-mode" class="request-mode"><legend>STEP 1 / 指示の送り方</legend><label><input type="radio" name="request-mode" value="new" checked /> 新しい指示</label><label><input id="mode-revise" type="radio" name="request-mode" value="revise" disabled /> 前の指示を変更</label></fieldset>
-                <label class="sr-only" for="prompt">やりたい処理・追加の指示</label>
-                <textarea id="prompt" rows="2" maxlength="600" placeholder="例：各要素に3を足して。変更するときは「前の指示を変更」を選択。"></textarea>
-                <div class="composer-bottom"><span id="context-label">新しい指示</span><button id="cancel-translation" type="button" hidden>停止 ■</button><button id="translate" class="send-button" type="submit" aria-label="Qwenへ送信" disabled>↑</button></div>
+                <label for="prompt">メッセージ</label>
+                <textarea id="prompt" rows="4" maxlength="600" placeholder="ここに入力してください。&#10;例：各要素に3を足して"></textarea>
+                <fieldset id="request-mode" class="request-mode"><legend>指示の送り方</legend><label><input type="radio" name="request-mode" value="new" checked /> 新しい指示</label><label><input id="mode-revise" type="radio" name="request-mode" value="revise" disabled /> 前の指示を変更</label></fieldset>
+                <div class="composer-bottom"><span id="context-label">新しい指示</span><button id="cancel-translation" type="button" hidden>停止 ■</button><button id="translate" class="send-button" type="submit" aria-label="Qwenへ送信" disabled>送信 ↑</button></div>
               </form>
-              <p class="composer-hint">Enter で送信 / Shift + Enter で改行 <span>初回のみ約543 MiB取得</span></p>
-            </div>
-            <div id="conversation" class="conversation" role="log" aria-label="Qwenとの会話" aria-live="polite">
-              <div id="welcome" class="welcome">
-                <div class="welcome-mark">✳</div>
-                <h3>どんな処理をつくりますか？</h3>
-                <p>整数リストの抽出、変換、並べ替え。<br />やりたいことを、いつもの言葉で。</p>
-                <div class="examples" aria-label="入力例">
-                  <button type="button" data-example-prompt="各要素に3を足して"><span>各要素に3を足す</span><span>↗</span></button>
-                  <button type="button" data-example-prompt="全部プラスの値に直してから、大きい順に並べてください。"><span>絶対値にして、大きい順に</span><span>↗</span></button>
-                  <button type="button" data-example-prompt="1. 偶数だけを残す&#10;2. 各要素を2倍する&#10;3. 値を昇順に並べる&#10;4. 現在の要素順を反転する"><span>4つの操作を組み合わせる</span><span class="mini-tag">実験</span></button>
-                </div>
-              </div>
-            </div>
-              <div id="interpretation" class="interpretation">
-                <div class="message-label"><span class="tiny-dot"></span> STEP 2 / 制限付き日本語を確認</div>
-                <label for="cnl">Boku1-nanoに渡す制限付き日本語（CNL）</label>
-                <textarea id="cnl" rows="4" maxlength="800" placeholder="Qwenの変換結果が表示されます。直接入力・編集もできます。"></textarea>
-                <div class="cnl-actions"><button id="validate-cnl" type="button">指示を検査</button><p id="cnl-status" class="status" role="status">Qwenで変換するか、下の24操作から選んでください。</p></div>
-                <ol id="operation-list" class="operation-list"></ol>
-                <div id="parameter-control" class="parameter-control" hidden><label for="parameter-k">使う数値（k）</label><input id="parameter-k" type="number" step="1" placeholder="未指定：関数の引数として渡す" /><p id="parameter-help">指定した整数を、生成コードのkの初期値にします。</p></div>
-                <p id="experimental-note" class="experimental-note" hidden>4操作は学習範囲（最大3操作）を超える実験です。生成結果を確認してください。</p>
-                <button id="generate" class="generate-button" type="button" disabled>この内容でコードを生成 <span>→</span></button>
-                <p class="interpretation-hint">変更する場合は「前の指示を変更」を選んで送信するか、操作一覧・CNLを直接編集してください。</p>
-              </div>
-          </section>
-          <section class="model-window boku-window" aria-labelledby="boku-title">
-            <header class="window-header">
-              <div class="model-identity"><span class="model-icon boku-icon">b.</span><div><h2 id="boku-title">Boku1-nano</h2><p>小さな専門モデルが、コードにする。</p></div></div>
-              <span id="boku-state" class="state-pill">待機中</span>
-            </header>
-            <div class="boku-settings">
-              <div class="model-picker"><span>STEP 3 / 使用するモデル</span><select id="model" class="sr-only" tabindex="-1" aria-hidden="true" disabled></select></div>
+              <p class="composer-hint">Enterで送信 / Shift + Enterで改行</p>
+              <div class="examples" aria-label="入力例"><button type="button" data-example-prompt="各要素に3を足して">3を足す</button><button type="button" data-example-prompt="全部プラスの値に直してから、大きい順に並べてください。">絶対値 → 降順</button><button type="button" data-example-prompt="1. 偶数だけを残す&#10;2. 各要素を2倍する&#10;3. 値を昇順に並べる&#10;4. 現在の要素順を反転する">4操作を試す</button></div>
+              <p id="translation-status" class="status" role="status">準備しています…</p><span id="translation-metrics" class="metrics"></span>
+            </section>
+            <section id="interpretation" class="input-section interpretation" aria-labelledby="interpretation-title">
+              <h2 id="interpretation-title"><span class="step">2</span> 内容を確認して生成</h2>
+              <label for="cnl">変換後の制限付き日本語（CNL）</label>
+              <textarea id="cnl" rows="3" maxlength="800" placeholder="送信すると変換結果が入ります。直接入力・編集もできます。"></textarea>
+              <div class="cnl-actions"><button id="validate-cnl" type="button">指示を検査</button><p id="cnl-status" class="status" role="status">Qwenで変換するか、下の操作から選んでください。</p></div>
+              <ol id="operation-list" class="operation-list"></ol>
+              <div id="parameter-control" class="parameter-control" hidden><label for="parameter-k">使う数値（k）</label><input id="parameter-k" type="number" step="1" placeholder="未指定：呼び出し時に指定" /><p id="parameter-help">指定した整数を、生成コードのkの初期値にします。</p></div>
+              <p id="experimental-note" class="experimental-note" hidden>4操作は学習範囲（最大3操作）を超える実験です。生成結果を確認してください。</p>
+              <button id="generate" class="generate-button" type="button" disabled>コードを生成 →</button>
+              <button id="stop" class="stop-button" type="button" hidden>生成を停止 ■</button>
+              <p id="generation-selection" class="setting-help"></p>
+            </section>
+            <section class="input-section" aria-labelledby="settings-title">
+              <h2 id="settings-title">モデルと温度</h2>
+              <p class="section-help">コードを生成するBoku1-nanoを選択</p>
+              <select id="model" class="sr-only" tabindex="-1" aria-hidden="true" disabled></select>
               <div id="model-options" class="model-options" role="radiogroup" aria-label="使用するBoku1-nanoモデル"></div>
               <p id="model-summary" class="model-summary"></p>
-              <div class="temperature-control"><label for="boku-temperature">温度 <output id="boku-temperature-value" for="boku-temperature">0.0</output></label><input id="boku-temperature" type="range" min="0" max="2" step="0.1" value="0" /><span id="boku-temperature-mode">Greedy</span></div>
-              <p class="setting-help">T &gt; 0: logits ÷ T → softmax → sampling</p>
-            </div>
-            <p class="history-order">生成履歴 · 新しい順</p>
-            <div id="code-conversation" class="code-conversation" aria-label="Boku1-nanoの生成履歴（新しい順）">
-              <div id="code-welcome" class="code-welcome"><div class="code-orbit"><span>&lt;/&gt;</span></div><p class="eyebrow">READY TO CREATE</p><h3>そのアイデアを、<br />動くコードへ。</h3><p>左のウィンドウで指示を確認すると、<br />ここにPythonコードが生成されます。</p><div class="capabilities"><span>Python</span><span>24 operations</span><span>On-device</span></div></div>
-            </div>
-            <footer class="code-footer"><div><p id="status" class="status" role="status">モデルは生成時に読み込みます。</p><span id="metrics" class="metrics"></span></div><button id="stop" type="button" hidden>生成を停止 ■</button></footer>
-          </section>
-        </div>
-        <section class="operation-catalog" aria-labelledby="catalog-title"><h2 id="catalog-title">選べる24操作</h2><p>クリックした順番でCNLに追加します（最大4操作）。ここから選ぶ場合はQwenを使いません。同じ操作を繰り返し選べます。</p><div id="operation-catalog" class="operation-grid"></div><p id="selection-status" class="status" role="status"></p></section>
-        <footer class="studio-footer"><span>入力と生成は、このブラウザの中で。モデル取得時のみ通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>Qwenが24種類・最大4操作のCNLへ書き換え、検査・確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成コードは自動実行しません。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></footer>
-      </main>
-    </div>
+              <div class="temperature-control"><label for="boku-temperature">Bokuの温度 <output id="boku-temperature-value" for="boku-temperature">0.0</output></label><input id="boku-temperature" type="range" min="0" max="2" step="0.1" value="0" /><span id="boku-temperature-mode">Greedy</span></div>
+              <div class="temperature-control"><label for="qwen-temperature">Qwenの温度 <output id="qwen-temperature-value" for="qwen-temperature">0.0</output></label><input id="qwen-temperature" type="range" min="0" max="2" step="0.1" value="0" /><span id="qwen-temperature-mode">Greedy</span></div>
+              <p class="setting-help">0は確率最大の候補を選択。値を上げると出力が変化しやすくなります。</p><p class="setting-help">Qwen 0.6Bは日本語の変換に使用。初回のみ約543 MiBを取得します。</p>
+            </section>
+            <section class="input-section operation-catalog" aria-labelledby="catalog-title"><h2 id="catalog-title">選べる24操作</h2><p class="section-help">クリック順に追加（最大4操作）。ここから選ぶとQwenを使わずに生成できます。</p><div id="operation-catalog" class="operation-grid"></div><p id="selection-status" class="status" role="status"></p></section>
+          </div>
+        </section>
+        <section class="result-panel" aria-labelledby="result-title">
+          <header class="panel-heading"><div><span class="eyebrow">CHAT / OUTPUT</span><h2 id="result-title">会話と生成結果</h2></div><span class="history-order">新しい順</span></header>
+          <div class="runtime-status"><span>Qwen <span id="qwen-state" class="state-pill">待機中</span></span><span>Boku <span id="boku-state" class="state-pill">待機中</span></span></div>
+          <div id="conversation" class="conversation" role="log" aria-label="会話と生成結果（新しい順）" aria-live="polite">
+            <div id="welcome" class="welcome"><span class="welcome-icon" aria-hidden="true">✳</span><h3>ここに回答が届きます</h3><p>入力欄にやりたい処理を書いて、送信してください。<br />変換した日本語と生成コードが、会話として並びます。</p><div class="welcome-flow"><span>あなたの指示</span><span>→</span><span>日本語を整理</span><span>→</span><span>Pythonコード</span></div></div>
+          </div>
+          <footer class="code-footer"><p id="status" class="status" role="status">内容を確認して「コードを生成」を押すと、ここに結果が表示されます。</p><span id="metrics" class="metrics"></span></footer>
+        </section>
+      </div>
+      <footer class="studio-footer"><span>入力と生成は、このブラウザの中で。モデル取得時のみ通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>Qwenが24種類・最大4操作のCNLへ書き換え、検査・確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成コードは自動実行しません。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></footer>
+    </main>
   </body>
 </html>

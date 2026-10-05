@@ -54,9 +54,9 @@ function updateControls() {
 }
 
 function followScroll(element, change, force = false) {
-  const nearBottom = element.scrollHeight - element.clientHeight - element.scrollTop < 90;
+  const nearTop = element.scrollTop < 90;
   change();
-  if (nearBottom || force) element.scrollTop = element.scrollHeight;
+  if (nearTop || force) element.scrollTop = 0;
 }
 
 function addMessage(role, text, kind = "normal") {
@@ -65,12 +65,20 @@ function addMessage(role, text, kind = "normal") {
   message.dataset.kind = kind;
   const label = document.createElement("div");
   label.className = "message-label";
-  label.textContent = role === "user" ? "YOU" : "QWEN";
+  label.textContent = role === "user" ? "あなた" : "Qwen · 日本語の整理";
   const body = document.createElement("p");
   body.textContent = text;
   message.append(label, body);
   $("welcome").hidden = true;
-  followScroll($("conversation"), () => $("conversation").append(message), true);
+  followScroll($("conversation"), () => {
+    let turn = $("conversation").querySelector(".chat-turn");
+    if (role === "user" || !turn) {
+      turn = document.createElement("section");
+      turn.className = "chat-turn";
+      $("conversation").prepend(turn);
+    }
+    turn.append(message);
+  }, true);
   return { message, body };
 }
 
@@ -115,10 +123,10 @@ function checkCnl() {
       }
       $("operation-list").append(item);
     }
-    $("welcome").hidden = true;
     $("experimental-note").hidden = !validation.experimental;
     setMessage($("cnl-status"), `${validation.operations.length}操作 / 検査済み${validation.experimental ? "・実験" : ""}`, "success");
   } else {
+    $("experimental-note").hidden = true;
     setMessage($("cnl-status"), validation.error, $("cnl").value ? "error" : "normal");
   }
   setMessage($("selection-status"), `${validation.operations.length} / ${MAX_OPERATIONS}操作を選択中${validation.operations.length === MAX_OPERATIONS ? "。追加するには選択済みの操作を削除してください。" : ""}`);
@@ -173,7 +181,7 @@ async function translateInstruction(event) {
   const instruction = $("prompt").value.trim();
   if (!instruction) { $("prompt").focus(); return; }
   if (!("gpu" in navigator)) {
-    setMessage($("translation-status"), "QwenにはWebGPU対応のChrome / Edgeが必要です。下の「指示を直接編集」からCNLを入力することもできます。", "error");
+    setMessage($("translation-status"), "QwenにはWebGPU対応のChrome / Edgeが必要です。入力側のCNL欄へ直接入力することもできます。", "error");
     return;
   }
   const temperature = validateTemperature($("qwen-temperature").value);
@@ -323,6 +331,7 @@ async function tokenizerForModel(model) {
 function renderModelSummary() {
   const model = selectedModel();
   for (const input of document.querySelectorAll('[name="boku-model"]')) input.checked = input.value === model.id;
+  $("generation-selection").textContent = `使用モデル: ${model.label}`;
   $("model-summary").textContent = `${(model.parameter_count / 1e6).toFixed(1)}M parameters · ${formatBytes(model.size_bytes)} · 最大${model.context_length} tokens`;
 }
 
@@ -349,7 +358,7 @@ async function createSession(model, job) {
 }
 
 function newCodeCard(model, validation, temperature) {
-  $("code-welcome").hidden = true;
+  const request = addMessage("user", validation.cnl + (validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""));
   // Keep stable IDs for the latest result, without duplicating IDs in history.
   $("output")?.removeAttribute("id");
   const card = document.createElement("article");
@@ -357,7 +366,7 @@ function newCodeCard(model, validation, temperature) {
   const header = document.createElement("div");
   header.className = "code-card-header";
   const label = document.createElement("span");
-  label.textContent = `Python · ${model.label} · T=${temperature.toFixed(1)}`;
+  label.textContent = `Boku1-nano · ${model.label} · T=${temperature.toFixed(1)}`;
   const copy = document.createElement("button");
   copy.type = "button";
   copy.textContent = "コピー";
@@ -379,8 +388,8 @@ function newCodeCard(model, validation, temperature) {
   inputCnl.className = "code-instruction";
   inputCnl.textContent = `使用したCNL: ${validation.cnl}`;
   card.insertBefore(inputCnl, pre);
-  $("code-conversation").prepend(card);
-  $("code-conversation").scrollTop = 0;
+  request.message.parentElement.append(card);
+  $("conversation").scrollTop = 0;
   copy.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(code.textContent); copy.textContent = "コピーしました"; }
     catch { copy.textContent = "コピーできませんでした"; }
@@ -485,10 +494,8 @@ function newConversation() {
   state.contextK = null;
   document.querySelector('[name="request-mode"][value="new"]').checked = true;
   $("parameter-k").value = "";
-  $("conversation").querySelectorAll(".message").forEach(item => item.remove());
-  $("code-conversation").querySelectorAll(".code-card").forEach(item => item.remove());
+  $("conversation").querySelectorAll(".chat-turn").forEach(item => item.remove());
   $("welcome").hidden = false;
-  $("code-welcome").hidden = false;
   $("cnl").value = "";
   $("prompt").value = "";
   $("translation-metrics").textContent = "";
