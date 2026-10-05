@@ -1,4 +1,4 @@
-"""静的WebデモをFirefoxで開き、CNL検査と8個のONNXモデルを確認する。"""
+"""静的WebデモをFirefoxで開き、CNL検査と10個のONNXモデルを確認する。"""
 
 from __future__ import annotations
 
@@ -25,6 +25,8 @@ TOKENIZER_PATHS = {
     / "data/tokenizers/bpe_2048_minfreq2_maxlen8/tokenizer.json",
 }
 EXPECTED_MODEL_IDS = {
+    "1m-3epoch",
+    "1m-short-3epoch",
     "1m-1epoch",
     "1m-short-1epoch",
     "5m-1epoch",
@@ -237,7 +239,7 @@ def main() -> None:
         verify_tokenizers(driver)
         print("tokenizer: 旧BPE・短いpiece版ともPython版と一致")
         verify_model_options(driver)
-        print("model selector: 学習済み8モデルを確認")
+        print("model selector: 学習済み10モデルを確認")
         cases = ((2, TWO_OPERATION_CNL), (3, THREE_OPERATION_CNL))
         for model_id in ("3epoch", "10epoch"):
             for operation_count, cnl in cases:

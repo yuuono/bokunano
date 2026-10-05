@@ -379,7 +379,8 @@ function newCodeCard(model, validation, temperature) {
   inputCnl.className = "code-instruction";
   inputCnl.textContent = `使用したCNL: ${validation.cnl}`;
   card.insertBefore(inputCnl, pre);
-  followScroll($("code-conversation"), () => $("code-conversation").append(card), true);
+  $("code-conversation").prepend(card);
+  $("code-conversation").scrollTop = 0;
   copy.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(code.textContent); copy.textContent = "コピーしました"; }
     catch { copy.textContent = "コピーできませんでした"; }
@@ -430,7 +431,7 @@ async function generateCode() {
         currentIds.push(tokenId);
         generatedIds.push(tokenId);
         generatedCount = generatedIds.length;
-        followScroll($("code-conversation"), () => { view.code.textContent = tokenizer.decode(generatedIds); });
+        view.code.textContent = tokenizer.decode(generatedIds);
         view.copy.disabled = validation.kValue !== null;
         if (step % 2 === 0) await new Promise(requestAnimationFrame);
       } finally {
@@ -501,7 +502,7 @@ function newConversation() {
 async function initialize() {
   ort.env.wasm.wasmPaths = new URL("./vendor/", window.location.href).href;
   ort.env.wasm.numThreads = 1;
-  const responses = await Promise.all([fetch("./model-manifest.json"), fetch("./qwen-manifest.json")]);
+  const responses = await Promise.all([fetch("./model-manifest.json?v=4"), fetch("./qwen-manifest.json")]);
   if (responses.some(response => !response.ok)) throw new Error("モデル設定を取得できませんでした。ページを再読み込みしてください。");
   [state.manifest, state.qwenManifest] = await Promise.all(responses.map(response => response.json()));
   const groups = new Map();

@@ -1,0 +1,50 @@
+{
+  "format_version": 1,
+  "model_directory": "data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch",
+  "model": {
+    "path": "model.safetensors",
+    "sha256": "e9eafad8c5195b501414c4456b04918258cc1a3a6ef799d5d77f3ea69cd17533",
+    "parameter_count": 1016704,
+    "context_length": 256,
+    "vocab_size": 2048
+  },
+  "tokenizer": {
+    "path": "data/tokenizers/bpe_2048/tokenizer.json",
+    "sha256": "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293"
+  },
+  "onnx": {
+    "path": "model.onnx",
+    "sha256": "b882366c28977b2a88d5e71997db82bf3c8b28707d8c58a9772339a3a7b68bb3",
+    "size_bytes": 4233585,
+    "opset": 18,
+    "input": "input_ids",
+    "output": "logits",
+    "dynamic_axes": [
+      "batch",
+      "sequence"
+    ]
+  },
+  "verification": {
+    "providers": [
+      "CPUExecutionProvider"
+    ],
+    "comparisons": [
+      {
+        "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+        "prompt_tokens": 10,
+        "max_abs_diff": 2.6226043701171875e-06,
+        "mean_abs_diff": 6.526533979922533e-07,
+        "generated_tokens": 8,
+        "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if value % 2 == 0]\n    return result\n"
+      },
+      {
+        "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+        "prompt_tokens": 16,
+        "max_abs_diff": 2.6226043701171875e-06,
+        "mean_abs_diff": 6.3409299855266e-07,
+        "generated_tokens": 12,
+        "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = [abs(value) for value in output]\n    result: list[int] = sorted(output)[::-1]\n    return result\n"
+      }
+    ]
+  }
+}

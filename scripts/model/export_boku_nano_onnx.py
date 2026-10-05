@@ -41,10 +41,16 @@ DEFAULT_MODELS = {
     / "data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_1epoch",
     "1m-short-1epoch": PROJECT_ROOT
     / "data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_1epoch",
+    "1m-3epoch": PROJECT_ROOT
+    / "data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch",
+    "1m-short-3epoch": PROJECT_ROOT
+    / "data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch",
 }
 DEFAULT_OUTPUT = PROJECT_ROOT / "web/models"
 
 MODEL_PRESENTATION = {
+    "1m-3epoch": ("1M", "1M・3エポック・既存BPE"),
+    "1m-short-3epoch": ("1M", "1M・3エポック・短いpiece版BPE"),
     "1m-1epoch": ("1M", "1M・1エポック・既存BPE"),
     "1m-short-1epoch": ("1M", "1M・1エポック・短いpiece版BPE"),
     "5m-1epoch": ("5M", "5M・1エポック・既存BPE"),
@@ -89,7 +95,7 @@ def parse_args() -> argparse.Namespace:
         "--model",
         action="append",
         metavar="NAME=DIR",
-        help="変換対象。省略時は学習済み8モデルすべて。",
+        help="変換対象。省略時は学習済み10モデルすべて。",
     )
     parser.add_argument("--opset", type=int, default=18)
     parser.add_argument("--sample-sequence-length", type=int, default=32)

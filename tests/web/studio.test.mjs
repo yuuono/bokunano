@@ -132,3 +132,29 @@ test('visible Boku prompt and encoded input preserve special tokens for both tok
     assert.deepEqual(ids,[1,4,...tokenizer.encodeText(`\n${instruction}\n`),5,...tokenizer.encodeText('\n')]);
   }
 });
+
+test('both 1M three-epoch models point to verified ONNX files and their training tokenizers', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { createHash } = await import('node:crypto');
+  const manifest = JSON.parse(await readFile(new URL('../../web/model-manifest.json',import.meta.url)));
+  assert.equal(new Set(manifest.models.map(model=>model.id)).size,10);
+  for (const [id, directory, tokenizer] of [
+    ['1m-3epoch','boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch','bpe-2048-minfreq5-maxlen24'],
+    ['1m-short-3epoch','boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch','bpe-2048-minfreq2-maxlen8'],
+  ]) {
+    const model = manifest.models.find(model=>model.id===id);
+    const training = JSON.parse(await readFile(new URL(`../../data/models/${directory}/training_manifest.json`,import.meta.url)));
+    const verified = JSON.parse(await readFile(new URL(`../../data/models/${directory}/onnx_manifest.json`,import.meta.url)));
+    const bytes = await readFile(new URL(`../../web/${model.path}`,import.meta.url));
+    assert.equal(training.epochs,3);
+    assert.equal(model.source_sha256,training.model_sha256);
+    assert.equal(model.parameter_count,1016704);
+    assert.equal(model.tokenizer_id,tokenizer);
+    assert.equal(manifest.tokenizers[tokenizer].sha256,training.tokenizer_sha256);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'),model.sha256);
+    assert.equal(model.sha256,verified.onnx.sha256);
+    assert.equal(bytes.length,model.size_bytes);
+    assert.equal(model.verification.comparisons.length,2);
+    assert.ok(model.verification.comparisons.every(item=>item.generated_tokens>0 && item.max_abs_diff<2e-4));
+  }
+});

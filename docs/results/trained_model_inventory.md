@@ -20,8 +20,8 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 |---|---:|---|---|---:|---:|---:|---|
 | 1M・既存BPE・1ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 5 / max 24 | 1 | 6,939,466 | 1,467 / 84,550（1.7351%） | 済 |
 | 1M・短いpiece・1ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 2 / max 8 | 1 | 17,281,995 | 4,572 / 84,550（5.4075%） | 済 |
-| 1M・既存BPE・3ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 5 / max 24 | 3 | 20,818,398 | 84,171 / 84,550（99.5517%） | 未変換 |
-| 1M・短いpiece・3ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 2 / max 8 | 3 | 51,845,985 | 83,890 / 84,550（99.2194%） | 未変換 |
+| 1M・既存BPE・3ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 5 / max 24 | 3 | 20,818,398 | 84,171 / 84,550（99.5517%） | 済 |
+| 1M・短いpiece・3ep | 1,016,704 | d=128、3層、4 head、FFN 256 | min 2 / max 8 | 3 | 51,845,985 | 83,890 / 84,550（99.2194%） | 済 |
 | 5M・既存BPE・1ep | 5,065,472 | d=256、5層、4 head、FFN 704 | min 5 / max 24 | 1 | 6,939,466 | 81,557 / 84,550（96.4601%） | 済 |
 | 5M・短いpiece・1ep | 5,065,472 | d=256、5層、4 head、FFN 704 | min 2 / max 8 | 1 | 17,281,995 | 82,353 / 84,550（97.4015%） | 済 |
 | 15M・既存BPE・1ep | 15,735,168 | d=384、8層、6 head、FFN 1,024 | min 5 / max 24 | 1 | 6,939,466 | 84,180 / 84,550（99.5624%） | 済 |
@@ -58,6 +58,9 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 - 正確なパラメータ数: 1,016,704
 - [保存済み学習設定](../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/training_config.yaml)
 - [training manifest](../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/training_manifest.json)
+- [ONNX](../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/model.onnx)
+- [ONNX検証manifest](../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/onnx_manifest.json)
+- ONNX SHA-256: b882366c28977b2a88d5e71997db82bf3c8b28707d8c58a9772339a3a7b68bb3
 - モデルSHA-256: e9eafad8c5195b501414c4456b04918258cc1a3a6ef799d5d77f3ea69cd17533
 - [学習・評価・attention報告書](boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch_results.md)
 
@@ -66,6 +69,9 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 - 正確なパラメータ数: 1,016,704
 - [保存済み学習設定](../../data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch/training_config.yaml)
 - [training manifest](../../data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch/training_manifest.json)
+- [ONNX](../../data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch/model.onnx)
+- [ONNX検証manifest](../../data/models/boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch/onnx_manifest.json)
+- ONNX SHA-256: ef60038d77988574298d88d2a6768ba8d635436183ea460ed29278feee7e3697
 - モデルSHA-256: 216cc2ce080131455705af5a6589653d090f4d5ee42d031cf97cc15d796a4d7d
 - [学習・評価・attention報告書](boku_nano_1m_bpe_2048_minfreq2_maxlen8_3epoch_results.md)
 
@@ -127,7 +133,7 @@ model.safetensorsとstatus=completedのtraining_manifest.jsonが実在するモ�
 - [Web用ONNX](../../web/models/boku-nano-10epoch.onnx)
 - ONNX SHA-256: 59df1f0dae8e4111f5b444d388c95f88273361ae293cc5154eda7150289eab11
 
-8モデルすべてをGitHub Pagesの選択対象として`web/models/`にも配置し、モデルと2種類のBPEの対応を[Webモデルmanifest](../../web/model-manifest.json)に固定している。各1エポックモデルの`onnx_manifest.json`には、ONNX形式検査、2プロンプトのlogits誤差、PyTorch版と一致したgreedy生成token列、ONNX SHA-256、ファイルサイズを保存している。
+10モデルすべてをGitHub Pagesの選択対象として`web/models/`にも配置し、モデルと2種類のBPEの対応を[Webモデルmanifest](../../web/model-manifest.json)に固定している。各1エポックモデルと1M・3エポックモデルの`onnx_manifest.json`には、ONNX形式検査、2プロンプトのlogits誤差、PyTorch版と一致したgreedy生成token列、ONNX SHA-256、ファイルサイズを保存している。
 
 ## 規模別の構造
 

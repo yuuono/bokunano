@@ -9,7 +9,7 @@ GitHub Pages上のブラウザだけで、自由な日本語からPythonコー�
 1. Qwen3-0.6Bが自由な日本語をControlled Natural Language（CNL）へ翻訳する。
 2. JavaScriptがQwenの操作名を検査し、24種類・最大4操作のCNLへ整形して再検査する。
 3. ユーザーがCNLと操作順を確認する。
-4. 1M・5M・15Mの学習済み8モデルから選んだBoku1-nanoが、検査済みCNLからコードを生成する。
+4. 1M・5M・15Mの学習済み10モデルから選んだBoku1-nanoが、検査済みCNLからコードを生成する。
 
 内部の意味ASTはブラウザ経路に設けない。JavaScriptは自由文の意味解釈を行わず、Qwenが選んだ操作名を検査して同じ順序のCNLへ整形する。入力例は自由文欄へ文章を設定するだけで、CNLやコードを固定で返す分岐を持たない。
 
@@ -21,7 +21,7 @@ GitHub Pages上のブラウザだけで、自由な日本語からPythonコー�
 - `web/qwen-worker.js`: Qwenの読込、最大2回のCNL生成、モデル解放
 - `web/qwen-manifest.json`: Qwenモデル、revision、成果物hash、Transformers.js version
 - `web/demo.js`: UI状態管理、CNL検査、Boku1-nano ONNX推論
-- `scripts/model/export_boku_nano_onnx.py`: 学習済み学生モデル8種のONNX変換、モデル別tokenizer配置、PyTorch比較
+- `scripts/model/export_boku_nano_onnx.py`: 学習済み学生モデル10種のONNX変換、モデル別tokenizer配置、PyTorch比較
 - `scripts/model/test_boku_nano_web.py`: FirefoxによるCNL検査と学生モデルのスモークテスト
 - `.github/workflows/pages.yml`: `main`更新時のPages公開
 
@@ -35,6 +35,8 @@ GitHub Pages上のブラウザだけで、自由な日本語からPythonコー�
 | 5M・1エポック | 短いpiece版BPE | [boku-nano-5m-short-1epoch.onnx](../../web/models/boku-nano-5m-short-1epoch.onnx) |
 | 1M・1エポック | 既存BPE | [boku-nano-1m-1epoch.onnx](../../web/models/boku-nano-1m-1epoch.onnx) |
 | 1M・1エポック | 短いpiece版BPE | [boku-nano-1m-short-1epoch.onnx](../../web/models/boku-nano-1m-short-1epoch.onnx) |
+| 1M・3エポック | 既存BPE | [boku-nano-1m-3epoch.onnx](../../web/models/boku-nano-1m-3epoch.onnx) |
+| 1M・3エポック | 短いpiece版BPE | [boku-nano-1m-short-3epoch.onnx](../../web/models/boku-nano-1m-short-3epoch.onnx) |
 
 Qwen3-0.6B q4f16は569,789,750 bytesである。Pages成果物へ複製せず、初回翻訳時に固定したHugging Face revisionから取得してブラウザキャッシュへ保存する。Boku1-nanoのONNXは1M級約4.0 MiB、5M級約19.6 MiB、15M級約60.4 MiBで、選択モデルだけを初回生成時にPagesから取得する。モデル切替時は直前のONNXセッションを解放し、複数モデルのメモリ常駐を避ける。
 
@@ -57,7 +59,7 @@ uv run --group onnx-export python scripts/model/export_boku_nano_onnx.py \
   --model <識別名>=data/models/<モデルディレクトリ>
 ```
 
-各モデルディレクトリへ`model.onnx`と`onnx_manifest.json`を保存する。manifestには元のsafetensors、トークナイザー、ONNXのSHA-256、ファイルサイズ、logits比較、greedy生成一致の結果を記録する。Pagesでは全8モデルを`web/models/`へ配置し、[Webモデルmanifest](../../web/model-manifest.json)でモデルと2種類のtokenizerの対応を固定している。全保存先は[学習済みモデル一覧](../results/trained_model_inventory.md)を参照する。
+各モデルディレクトリへ`model.onnx`と`onnx_manifest.json`を保存する。manifestには元のsafetensors、トークナイザー、ONNXのSHA-256、ファイルサイズ、logits比較、greedy生成一致の結果を記録する。Pagesでは全10モデルを`web/models/`へ配置し、[Webモデルmanifest](../../web/model-manifest.json)でモデルと2種類のtokenizerの対応を固定している。全保存先は[学習済みモデル一覧](../results/trained_model_inventory.md)を参照する。
 
 ## ローカル表示
 
@@ -72,12 +74,12 @@ uv run --group onnx-export python -m http.server 8000 --directory web
 1. 左のQwenウィンドウに日本語を入力して送信する。初回は約543 MiBを取得する。
 2. 会話内の解釈と操作順を確認する。最大4操作まで受理し、4操作には実験の表示が付く。
 3. 右側でBokuのモデルと温度を選択する。初期モデルは15M・1 epoch・既存BPE、温度は0。
-4. 左側の「この内容でコードを生成」を押す。右側にコードと生成条件が表示される。
+4. 左側の「この内容でコードを生成」を押す。右側にコードと生成条件が表示される。新しい生成結果は履歴の先頭へ追加される。
 5. 「前の指示を変更」を選び、「最後に逆順にして」などの追加指示を左側から送信できる。Qwenが前の指示を含めた完全なCNLへ書き換える。
 6. CNL欄は常時表示される。直接入力・修正、または下部の24操作一覧から選択すると、Qwenを使わずBokuを動かせる。選択順は↑↓で変更、×で削除する。
 
 7. QwenとBokuの温度は独立して変更できる。T=0はgreedy、T>0はsampling。停止、コードのコピー、新しい会話に対応する。
-「新しい指示」は以前の処理を引き継がない。「前の指示を変更」を選んだ場合だけ、直前のCNLとkをQwenに渡す。8モデルは右側のラジオボタン一覧から選択できる。
+「新しい指示」は以前の処理を引き継がない。「前の指示を変更」を選んだ場合だけ、直前のCNLとkをQwenに渡す。10モデルは右側のラジオボタン一覧から選択できる。
 
 各回答の「実際のプロンプトを見る」をクリックすると、その実行で使った入力を確認できる。Qwenはsystem/user/assistantのメッセージとテンプレート適用後の文字列、Bokuは特殊トークン付きのプロンプトと入力トークンIDを表示する。Qwenの再生成は試行ごとに記録する。
 
@@ -96,7 +98,7 @@ uv run --group onnx-export python scripts/model/test_boku_nano_web.py \
 - 正しい2操作・3操作CNLを受理する。
 - 4操作を実験として受理し、5操作と許可外操作を拒否する。
 - 旧BPE・短いpiece版BPEの両方で、ブラウザ版とPython版のtoken ID列が一致する。
-- 選択欄に学習済み8モデルが表示される。
+- 選択欄に学習済み10モデルが表示される。
 - 3エポック・10エポックモデルが、検査済み2操作・3操作CNLから期待する処理を生成する。
 - 追加した1M・5M・15Mの1エポック6モデルが、対応tokenizerでブラウザ推論を完了する。
 

@@ -998,3 +998,5 @@ select {
   .operation-catalog { padding: 18px; }
   .qwen-window > .interpretation { margin: 13px; }
 }
+
+.history-order { margin: 0; padding: 16px 22px 0; font-size: 14px; color: var(--mint); }

@@ -6,12 +6,12 @@
     <meta name="theme-color" content="#0c1016" />
     <meta name="description" content="Qwenと対話して、Boku1-nanoでコードを生成。2つのモデルがブラウザ内で動く、小さなAIワークスペース。" />
     <title>Boku1-nano — Local AI Studio</title>
-    <link rel="stylesheet" href="./demo.css?v=3" />
+    <link rel="stylesheet" href="./demo.css?v=4" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=3"></script>
+    <script type="module" src="./demo.js?v=4"></script>
   </head>
   <body>
-    <div class="studio" data-release="chat-studio-v3">
+    <div class="studio" data-release="chat-studio-v4">
       <aside class="rail" aria-label="ワークスペース">
         <a class="brand-symbol" href="./" aria-label="Boku1-nano ホーム">b<span>.</span></a>
         <button id="new-chat" class="rail-button" type="button" title="新しい会話" aria-label="新しい会話">＋</button>
@@ -85,7 +85,8 @@
               <div class="temperature-control"><label for="boku-temperature">温度 <output id="boku-temperature-value" for="boku-temperature">0.0</output></label><input id="boku-temperature" type="range" min="0" max="2" step="0.1" value="0" /><span id="boku-temperature-mode">Greedy</span></div>
               <p class="setting-help">T &gt; 0: logits ÷ T → softmax → sampling</p>
             </div>
-            <div id="code-conversation" class="code-conversation" aria-label="Boku1-nanoの生成履歴">
+            <p class="history-order">生成履歴 · 新しい順</p>
+            <div id="code-conversation" class="code-conversation" aria-label="Boku1-nanoの生成履歴（新しい順）">
               <div id="code-welcome" class="code-welcome"><div class="code-orbit"><span>&lt;/&gt;</span></div><p class="eyebrow">READY TO CREATE</p><h3>そのアイデアを、<br />動くコードへ。</h3><p>左のウィンドウで指示を確認すると、<br />ここにPythonコードが生成されます。</p><div class="capabilities"><span>Python</span><span>24 operations</span><span>On-device</span></div></div>
             </div>
             <footer class="code-footer"><div><p id="status" class="status" role="status">モデルは生成時に読み込みます。</p><span id="metrics" class="metrics"></span></div><button id="stop" type="button" hidden>生成を停止 ■</button></footer>
