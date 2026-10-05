@@ -4,7 +4,7 @@ import {
   buildRevisionMessages,
   buildNormalizerUserPrompt,
   validateOperationPlan,
-} from "./cnl.js";
+} from "./cnl.js?v=3";
 import { qwenSamplingOptions } from "./sampling.js";
 
 let generator = null;
@@ -48,18 +48,20 @@ async function loadGenerator(manifest) {
   });
 }
 
-async function generatePlan(messages, temperature) {
+async function generatePlan(messages, temperature, attempt) {
   const prompt = generator.tokenizer.apply_chat_template(messages, {
     tokenize: false,
     add_generation_prompt: true,
     enable_thinking: false,
   });
-  const result = await generator(prompt, {
+  const options = {
     max_new_tokens: 192,
     ...qwenSamplingOptions(temperature),
     repetition_penalty: 1.05,
     return_full_text: false,
-  });
+  };
+  send("prompt", { attempt, messages, prompt, options });
+  const result = await generator(prompt, options);
   return extractGeneratedText(result);
 }
 
@@ -83,7 +85,7 @@ self.addEventListener("message", async (event) => {
       : buildNormalizerMessages(instruction);
     for (let attempt = 1; attempt <= 2; attempt += 1) {
       send("phase", { message: `Qwenが${contextCnl ? "変更後の" : "指示の"}操作を整理しています… (${attempt}/2)` });
-      candidate = await generatePlan(messages, temperature);
+      candidate = await generatePlan(messages, temperature, attempt);
       if (candidate === UNSUPPORTED_CNL) {
         send("result", {
           supported: false,

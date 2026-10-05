@@ -1,5 +1,5 @@
-import { BokuNanoTokenizer } from "./tokenizer.js";
-import { buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js";
+import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
+import { CNL_OPERATIONS, MAX_OPERATIONS, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=3";
 import { selectToken, validateTemperature } from "./sampling.js";
 
 const $ = (id) => document.getElementById(id);
@@ -32,7 +32,19 @@ function updateControls() {
   $("generate").disabled = !state.ready || busy || !state.candidate?.valid;
   $("cancel-translation").hidden = state.job?.kind !== "qwen";
   $("stop").hidden = state.job?.kind !== "boku";
-  $("context-label").textContent = state.candidate?.valid || state.contextCnl ? "前の指示を引き継いで対話" : "新しい指示";
+  const revision = document.querySelector('[name="request-mode"]:checked').value === "revise";
+  $("context-label").textContent = revision ? "表示中の指示を変更します" : "以前の指示を引き継がずに変換します";
+  for (const input of document.querySelectorAll('[name="request-mode"], [name="boku-model"]')) {
+    input.disabled = !state.ready || busy || (input.value === "revise" && !state.contextCnl);
+  }
+  const count = state.candidate?.operations.length || 0;
+  for (const button of document.querySelectorAll('[data-operation-id]')) {
+    button.disabled = !state.ready || busy || count >= MAX_OPERATIONS;
+    const selected = state.candidate?.operations.filter(op => op.id === button.dataset.operationId).length || 0;
+    button.dataset.selected = String(selected > 0);
+    button.querySelector('small').textContent = selected ? `${selected}回選択中` : "＋追加";
+  }
+  for (const button of document.querySelectorAll('#operation-list button')) button.disabled = !state.ready || busy || button.dataset.unavailable === "true";
   for (const button of document.querySelectorAll("[data-example-prompt]")) button.disabled = !state.ready || busy;
   for (const kind of ["qwen", "boku"]) {
     const running = state.job?.kind === kind;
@@ -58,7 +70,7 @@ function addMessage(role, text, kind = "normal") {
   body.textContent = text;
   message.append(label, body);
   $("welcome").hidden = true;
-  followScroll($("conversation"), () => $("conversation").insertBefore(message, $("interpretation")), true);
+  followScroll($("conversation"), () => $("conversation").append(message), true);
   return { message, body };
 }
 
@@ -74,7 +86,6 @@ function checkCnl() {
   state.candidate = validation;
   $("operation-list").replaceChildren();
   // Keep an invalid numeric field visible so it can be corrected.
-  $("interpretation").hidden = !validation.valid && !validation.usesK;
   $("parameter-control").hidden = !validation.usesK;
   $("parameter-help").textContent = validation.error || (validation.kValue !== null && validation.kValue !== undefined
     ? `k=${validation.kValue} を使います。生成コードの引数の初期値に反映します。`
@@ -82,9 +93,26 @@ function checkCnl() {
   if (validation.valid) {
     state.contextCnl = validation.cnl;
     state.contextK = validation.kValue ?? null;
-    for (const operation of validation.operations) {
+    for (const [index, operation] of validation.operations.entries()) {
       const item = document.createElement("li");
-      item.textContent = operation.label;
+      const label = document.createElement("span");
+      label.textContent = operation.label;
+      item.append(label);
+      for (const [symbol, title, offset] of [["↑", "前へ", -1], ["↓", "後ろへ", 1], ["×", "削除", 0]]) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = symbol;
+        button.setAttribute("aria-label", `${index + 1}番目の操作を${title}`);
+        button.disabled = offset !== 0 && (index + offset < 0 || index + offset >= validation.operations.length);
+        button.dataset.unavailable = String(button.disabled);
+        button.addEventListener("click", () => {
+          const operations = [...validation.operations];
+          if (!offset) operations.splice(index, 1);
+          else [operations[index], operations[index + offset]] = [operations[index + offset], operations[index]];
+          setOperations(operations);
+        });
+        item.append(button);
+      }
       $("operation-list").append(item);
     }
     $("welcome").hidden = true;
@@ -93,8 +121,38 @@ function checkCnl() {
   } else {
     setMessage($("cnl-status"), validation.error, $("cnl").value ? "error" : "normal");
   }
+  setMessage($("selection-status"), `${validation.operations.length} / ${MAX_OPERATIONS}操作を選択中${validation.operations.length === MAX_OPERATIONS ? "。追加するには選択済みの操作を削除してください。" : ""}`);
   updateControls();
   return validation;
+}
+
+function setOperations(operations) {
+  if (state.job) return;
+  if (!operations.length) {
+    $("cnl").value = "";
+    $("parameter-k").value = "";
+    state.contextCnl = "";
+    state.contextK = null;
+    document.querySelector('[name="request-mode"][value="new"]').checked = true;
+  } else {
+    const result = validateOperationPlan(operations.map((op, i) => `${i + 1}. ${op.label}`).join("\n"));
+    if (!result.valid) { setMessage($("selection-status"), result.error, "error"); return; }
+    $("cnl").value = result.cnl;
+  }
+  checkCnl();
+  setMessage($("translation-status"), "操作の選択からCNLを更新しました。内容を確認して生成してください。");
+}
+
+function promptDetails(parent, title, text) {
+  const details = document.createElement("details");
+  details.className = "actual-prompt";
+  const summary = document.createElement("summary");
+  summary.textContent = title;
+  const pre = document.createElement("pre");
+  pre.textContent = text;
+  details.append(summary, pre);
+  parent.append(details);
+  return details;
 }
 
 function finish(job) {
@@ -119,13 +177,15 @@ async function translateInstruction(event) {
     return;
   }
   const temperature = validateTemperature($("qwen-temperature").value);
-  const contextCnl = state.candidate?.valid ? state.candidate.cnl : state.contextCnl;
-  const contextK = state.candidate?.valid ? state.candidate.kValue : state.contextK;
+  const revision = document.querySelector('[name="request-mode"]:checked').value === "revise";
+  const previousCnl = state.candidate?.valid ? state.candidate.cnl : state.contextCnl;
+  const previousK = state.candidate?.valid ? state.candidate.kValue : state.contextK;
+  const contextCnl = revision ? previousCnl : "";
+  const contextK = revision ? previousK : null;
+  const editorCnl = $("cnl").value;
+  const editorK = $("parameter-k").value;
   addMessage("user", instruction);
   $("prompt").value = "";
-  state.candidate = null;
-  $("cnl").value = "";
-  $("interpretation").hidden = true;
   $("translation-metrics").textContent = "";
   const reply = addMessage("assistant", "指示を読み取っています…");
   const job = { kind: "qwen", cancelled: false, worker: null, reply };
@@ -134,18 +194,28 @@ async function translateInstruction(event) {
   setMessage($("translation-status"), "Qwenを準備しています…");
   const fail = (message) => {
     if (!current(job)) return;
-    reply.body.textContent = message;
+    $("cnl").value = editorCnl;
+    $("parameter-k").value = editorK;
+    checkCnl();
+    state.contextCnl = previousCnl;
+    state.contextK = previousK;
+    const explanation = editorCnl ? `${message}\nCNL欄は前回の内容を保持しています。` : message;
+    reply.body.textContent = explanation;
     reply.message.dataset.kind = "error";
-    setMessage($("translation-status"), message, "error");
+    setMessage($("translation-status"), explanation, "error");
   };
   try {
     await releaseActiveSession();
     if (!current(job)) return;
-    const worker = new Worker(new URL("./qwen-worker.js", import.meta.url), { type: "module" });
+    const worker = new Worker(new URL("./qwen-worker.js?v=3", import.meta.url), { type: "module" });
     job.worker = worker;
     worker.addEventListener("message", ({ data: message }) => {
       if (!current(job)) return;
       if (message.type === "phase") setMessage($("translation-status"), message.message);
+      if (message.type === "prompt") {
+        promptDetails(reply.message, `Qwenの実際のプロンプトを見る（${message.attempt}回目）`,
+          `モデル: ${state.qwenManifest.model_id}\n\n生成条件:\n${JSON.stringify(message.options, null, 2)}\n\nメッセージ:\n${message.messages.map(item => `[${item.role}]\n${item.content}`).join("\n\n")}\n\nモデルに渡した文字列（チャットテンプレート適用後）:\n${message.prompt}`);
+      }
       if (message.type === "progress") {
         const progress = message.percentage === null ? "" : ` ${message.percentage}%`;
         const size = message.loaded ? ` (${formatBytes(message.loaded)})` : "";
@@ -167,12 +237,18 @@ async function translateInstruction(event) {
         $("parameter-k").value = message.kValue ?? "";
         const validation = checkCnl();
         if (!message.supported || !validation.valid) {
-          state.contextCnl = contextCnl;
-          state.contextK = contextK;
-          state.candidate = null;
-          $("interpretation").hidden = true;
+          state.contextCnl = previousCnl;
+          state.contextK = previousK;
           fail(message.error || "この指示を解釈できませんでした。操作を具体的に伝えるか、CNLを直接編集してください。対応は24種類・最大4操作です。");
         } else {
+          const result = document.createElement("div");
+          result.className = "cnl-result";
+          const label = document.createElement("strong");
+          label.textContent = "変換後の制限付き日本語（CNL）";
+          const content = document.createElement("p");
+          content.textContent = validation.cnl;
+          result.append(label, content);
+          reply.message.append(result);
           reply.body.textContent = `次の${validation.operations.length}操作として解釈しました。\n${validation.operations.map((operation, index) => `${index + 1}. ${operation.label}`).join("\n")}${validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""}\n内容を確認して、Boku1-nanoへ渡してください。`;
           setMessage($("translation-status"), "解釈ができました。操作順を確認してください。", "success");
           followScroll($("conversation"), () => {}, true);
@@ -201,9 +277,7 @@ function stopJob() {
   if (job.kind === "qwen") {
     job.worker?.terminate();
     job.reply.body.textContent = "解釈を中止しました。入力し直すか、前の指示から続けてください。";
-    state.candidate = null;
-    $("cnl").value = "";
-    $("interpretation").hidden = true;
+    checkCnl();
     setMessage($("translation-status"), "Qwenの処理を中止しました。");
     finish(job);
   } else {
@@ -248,6 +322,7 @@ async function tokenizerForModel(model) {
 
 function renderModelSummary() {
   const model = selectedModel();
+  for (const input of document.querySelectorAll('[name="boku-model"]')) input.checked = input.value === model.id;
   $("model-summary").textContent = `${(model.parameter_count / 1e6).toFixed(1)}M parameters · ${formatBytes(model.size_bytes)} · 最大${model.context_length} tokens`;
 }
 
@@ -300,6 +375,10 @@ function newCodeCard(model, validation, temperature) {
   meta.className = "code-card-meta";
   meta.textContent = "準備中";
   card.append(header, instruction, pre, meta);
+  const inputCnl = document.createElement("p");
+  inputCnl.className = "code-instruction";
+  inputCnl.textContent = `使用したCNL: ${validation.cnl}`;
+  card.insertBefore(inputCnl, pre);
   followScroll($("code-conversation"), () => $("code-conversation").append(card), true);
   copy.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(code.textContent); copy.textContent = "コピーしました"; }
@@ -331,6 +410,8 @@ async function generateCode() {
     if (promptIds.length >= model.context_length) throw new Error(`指示が長すぎます (${promptIds.length}/${model.context_length} tokens)。短くしてください。`);
     const runtime = await createSession(model, job);
     if (!runtime || !current(job)) return;
+    promptDetails(view.card, "Boku1-nanoの実際のプロンプトを見る",
+      `モデル: ${model.id}\n温度: ${temperature}\n\n${formatBokuPrompt(validation.cnl)}\n入力トークンID:\n${JSON.stringify(promptIds)}${validation.kValue !== null ? `\n\nk=${validation.kValue} は生成後に関数の初期値として設定します。上記プロンプトには含めません。` : ""}`);
     const currentIds = [...promptIds];
     const generatedIds = [];
     const limit = model.context_length - promptIds.length;
@@ -401,6 +482,7 @@ function newConversation() {
   state.candidate = null;
   state.contextCnl = "";
   state.contextK = null;
+  document.querySelector('[name="request-mode"][value="new"]').checked = true;
   $("parameter-k").value = "";
   $("conversation").querySelectorAll(".message").forEach(item => item.remove());
   $("code-conversation").querySelectorAll(".code-card").forEach(item => item.remove());
@@ -437,6 +519,33 @@ async function initialize() {
     groups.get(groupName).append(option);
   }
   $("model").value = state.manifest.models.some(model => model.id === "15m-1epoch") ? "15m-1epoch" : state.manifest.default_model_id;
+  for (const model of state.manifest.models) {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "boku-model";
+    input.value = model.id;
+    input.checked = model.id === $("model").value;
+    const name = document.createElement("span");
+    name.textContent = model.label;
+    label.append(input, name);
+    input.addEventListener("change", () => { $("model").value = input.value; renderModelSummary(); });
+    $("model-options").append(label);
+  }
+  for (const operation of CNL_OPERATIONS) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.operationId = operation.id;
+    const name = document.createElement("span");
+    name.textContent = operation.label;
+    button.append(name, document.createElement("small"));
+    button.addEventListener("click", () => {
+      const previous = validateCnl($("cnl").value);
+      if ($("cnl").value.trim() && !previous.valid) { setMessage($("selection-status"), "CNLのエラーを修正するか、欄を空にしてから選んでください。", "error"); return; }
+      setOperations([...previous.operations, operation]);
+    });
+    $("operation-catalog").append(button);
+  }
   renderModelSummary();
   await tokenizerForModel(selectedModel());
   $("normalizer-system-prompt").textContent = buildNormalizerSystemPrompt();
@@ -464,6 +573,7 @@ $("stop").addEventListener("click", stopJob);
 $("new-chat").addEventListener("click", newConversation);
 $("new-chat-top").addEventListener("click", newConversation);
 $("model").addEventListener("change", renderModelSummary);
+for (const input of document.querySelectorAll('[name="request-mode"]')) input.addEventListener("change", updateControls);
 for (const kind of ["qwen", "boku"]) {
   $(`${kind}-temperature`).addEventListener("input", () => {
     const value = validateTemperature($(`${kind}-temperature`).value);

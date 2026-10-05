@@ -20,6 +20,13 @@ const UNICODE_TO_BYTE = new Map(
   byteValues.map((value, index) => [String.fromCodePoint(unicodeValues[index]), value]),
 );
 
+const PROMPT_SPECIAL_TOKENS = { 1: "<|bos|>", 4: "<|task|>", 5: "<|code|>" };
+function promptParts(instruction) { return [1, 4, `\n${instruction}\n`, 5, "\n"]; }
+
+export function formatBokuPrompt(instruction) {
+  return promptParts(instruction).map(part => typeof part === "number" ? PROMPT_SPECIAL_TOKENS[part] : part).join("");
+}
+
 export class BokuNanoTokenizer {
   constructor(configuration) {
     this.vocab = new Map(Object.entries(configuration.model.vocab));
@@ -47,7 +54,7 @@ export class BokuNanoTokenizer {
   }
 
   encodePrompt(instruction) {
-    return [1, 4, ...this.encodeText(`\n${instruction}\n`), 5, ...this.encodeText("\n")];
+    return promptParts(instruction).flatMap(part => typeof part === "number" ? [part] : this.encodeText(part));
   }
 
   applyBpe(initialSymbols) {

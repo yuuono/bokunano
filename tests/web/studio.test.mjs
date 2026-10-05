@@ -115,3 +115,20 @@ test('numeric binding changes only the solve default, preserving model-generated
   assert.throws(()=>bindKDefault('def solve(xs):\n    return xs',3));
   assert.throws(()=>bindKDefault(raw,'3): print(1)'));
 });
+
+test('visible Boku prompt and encoded input preserve special tokens for both tokenizers', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { BokuNanoTokenizer, formatBokuPrompt } = await import('../../web/tokenizer.js');
+  const instruction = '整数リストxsと整数kを受け取り、各要素にkを加えるsolve関数を書いてください。';
+  const expected = `<|bos|><|task|>\n${instruction}\n<|code|>\n`;
+  assert.equal(formatBokuPrompt(instruction), expected);
+  for (const name of ['bpe-2048-minfreq5-maxlen24','bpe-2048-minfreq2-maxlen8']) {
+    const data = JSON.parse(await readFile(new URL(`../../web/tokenizers/${name}.json`,import.meta.url)));
+    const tokenizer = new BokuNanoTokenizer(data);
+    const ids = tokenizer.encodePrompt(instruction);
+    assert.deepEqual(ids.slice(0,2),[1,4]);
+    assert.equal(ids.filter(id=>id===5).length,1);
+    assert.equal(tokenizer.decode(ids),`\n${instruction}\n\n`);
+    assert.deepEqual(ids,[1,4,...tokenizer.encodeText(`\n${instruction}\n`),5,...tokenizer.encodeText('\n')]);
+  }
+});

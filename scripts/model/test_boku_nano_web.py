@@ -161,9 +161,6 @@ def verify_model_options(driver: webdriver.Firefox) -> None:
 
 
 def set_cnl(driver: webdriver.Firefox, cnl: str) -> None:
-    details = driver.find_element("id", "cnl-details")
-    if details.get_attribute("open") is None:
-        details.find_element("css selector", "summary").click()
     driver.execute_script(
         """
         const field = document.querySelector('#cnl');
@@ -184,7 +181,7 @@ def run_model(
     operation_count: int,
     timeout: float,
 ) -> dict[str, str]:
-    Select(driver.find_element("id", "model")).select_by_value(model_id)
+    driver.find_element("css selector", f'input[name="boku-model"][value="{model_id}"]').click()
     set_cnl(driver, cnl)
     driver.find_element("id", "generate").click()
     WebDriverWait(driver, timeout).until(
