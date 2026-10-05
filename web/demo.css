@@ -293,9 +293,9 @@ html, body { height: 100%; overflow: hidden; }
 .workspace { grid-template-columns: minmax(0, 1fr); }
 .runtime-status { border: 0; max-width: 900px; width: 100%; margin: auto; padding: 4px 0; }
 #toggle-settings, #close-settings { display: inline-block; }
-.app-footer { display: flex; align-items: center; padding: 4px 20px; background: #f3eee6; border-top: 1px solid var(--line); }
-#toggle-settings { border: 1px solid transparent; background: transparent; padding: 4px 10px; font-size: 14px; }
-#toggle-settings:hover { background: #e7ded1; border-color: #d8cbbc; }
+.app-footer { display: flex; align-items: center; gap: 8px; padding: 4px 20px; background: #f3eee6; border-top: 1px solid var(--line); }
+#toggle-settings, .app-footer #new-chat-top { border: 1px solid transparent; background: transparent; padding: 4px 10px; font-size: 14px; }
+#toggle-settings:hover, .app-footer #new-chat-top:hover:not(:disabled) { background: #e7ded1; border-color: #d8cbbc; }
 .input-panel { position: fixed; z-index: 8; inset: 0 auto 0 0; margin: 0; padding: 0; width: min(430px, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; border: 0; border-right: 1px solid var(--line); background: #fffdfa; color: var(--text); box-shadow: 12px 0 40px #44342618; }
 .input-panel:not([open]) { display: none; }
 .input-panel[open] { display: flex; flex-direction: column; }

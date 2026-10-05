@@ -7,15 +7,15 @@
     <meta name="color-scheme" content="light" />
     <meta name="description" content="日本語で指示して、Pythonコードを生成。QwenとBoku1-nanoがブラウザ内で動くチャットデモ。" />
     <title>Boku1-nano — コード生成チャット</title>
-    <link rel="stylesheet" href="./demo.css?v=18" />
+    <link rel="stylesheet" href="./demo.css?v=19" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=18"></script>
+    <script type="module" src="./demo.js?v=19"></script>
   </head>
   <body>
-    <main class="studio" data-release="chat-studio-v18">
+    <main class="studio" data-release="chat-studio-v19">
       <header class="topbar">
         <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
-        <div class="topbar-actions"><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
+        <div class="topbar-actions"><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat" type="button" hidden>新しい会話</button></div>
       </header>
       <div class="workspace">
         <dialog class="input-panel" id="settings-panel" aria-labelledby="input-title">
@@ -74,7 +74,7 @@
         </section>
       </div>
 
-      <footer class="app-footer"><button id="toggle-settings" type="button" aria-controls="settings-panel" aria-expanded="false">設定</button></footer>
+      <footer class="app-footer"><button id="toggle-settings" type="button" aria-controls="settings-panel" aria-expanded="false">設定</button><button id="new-chat-top" type="button">＋ 新しい会話</button></footer>
     </main>
   </body>
 </html>
