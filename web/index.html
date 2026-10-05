@@ -3,19 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f6f1e8" />
+    <meta name="theme-color" content="#fffdfa" />
     <meta name="color-scheme" content="light" />
     <meta name="description" content="日本語で指示して、Pythonコードを生成。QwenとBoku1-nanoがブラウザ内で動くチャットデモ。" />
     <title>Boku1-nano — コード生成チャット</title>
-    <link rel="stylesheet" href="./demo.css?v=13" />
+    <link rel="stylesheet" href="./demo.css?v=14" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=13"></script>
+    <script type="module" src="./demo.js?v=14"></script>
   </head>
   <body>
-    <main class="studio" data-release="chat-studio-v13">
+    <main class="studio" data-release="chat-studio-v14">
       <header class="topbar">
         <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
-        <div class="topbar-actions"><button id="toggle-settings" type="button" aria-controls="settings-panel" aria-expanded="false">設定</button><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
+        <div class="topbar-actions"><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
       </header>
       <div class="workspace">
         <dialog class="input-panel" id="settings-panel" aria-labelledby="input-title">
@@ -47,17 +47,17 @@
           </div>
         </dialog>
         <section class="result-panel" aria-labelledby="result-title">
-          <header class="panel-heading"><div><span class="eyebrow">CHAT / OUTPUT</span><h2 id="result-title">チャット</h2></div><span class="history-order">最新の返信は下に追加されます</span></header>
+          <h2 id="result-title" class="sr-only">チャット</h2>
           <div class="runtime-status"><span>Qwen <span id="qwen-state" class="state-pill">待機中</span></span><span>Boku <span id="boku-state" class="state-pill">待機中</span></span></div>
           <div id="conversation" class="conversation" role="log" aria-label="会話と生成結果（古い順）" aria-live="polite">
-            <div id="welcome" class="welcome"><h3>どんな処理を作りますか？</h3><p>下の入力欄に、作りたい処理を日本語で入力してください。</p></div>
+            <div id="welcome" class="welcome"><h3>どんな処理を作りますか？</h3></div>
             <section class="prompt-examples" aria-labelledby="examples-title">
-              <h3 id="examples-title">指示の例</h3>
+              <h3 id="examples-title" class="sr-only">指示の例</h3>
               <dl>
                 <div><dt>1操作</dt><dd data-example-instruction>各要素に3を足してください。</dd></div>
                 <div><dt>2操作</dt><dd data-example-instruction>各要素を絶対値にして、大きい順に並べてください。</dd></div>
                 <div><dt>3操作</dt><dd data-example-instruction>偶数だけを残して、各要素を2倍して、小さい順に並べてください。</dd></div>
-                <div><dt>4操作</dt><dd data-example-instruction>偶数だけを残して、各要素を2倍して、小さい順に並べて、要素の順番を逆にしてください。</dd></div>
+                <div><dt>4操作</dt><dd data-example-instruction>kの倍数だけを残し、各要素を二乗し、先頭から1個おきに取り、要素の順番を逆にしてください。</dd></div>
               </dl>
             </section>
           </div>
@@ -74,6 +74,7 @@
         </section>
       </div>
 
+      <footer class="app-footer"><button id="toggle-settings" type="button" aria-controls="settings-panel" aria-expanded="false">設定</button></footer>
     </main>
   </body>
 </html>
