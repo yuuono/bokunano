@@ -1,0 +1,48 @@
+{
+  "status": "candidate",
+  "author_model": "gpt-6-astra",
+  "routing_confirmation": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "high",
+    "fork_turns": "none",
+    "evidence": "Parent agent confirmed actual spawn arguments in follow-up message."
+  },
+  "checks": {
+    "questions": 50,
+    "category_counts": {
+      "C01": 5,
+      "C02": 5,
+      "C03": 5,
+      "C04": 5,
+      "C05": 5,
+      "C06": 5,
+      "C07": 5,
+      "C08": 5,
+      "C09": 5,
+      "C10": 5
+    },
+    "cnl_parser": "web/cnl.js validateCnl: all 50 passed",
+    "reference_code": "python_code_generator generated all 50; 6 cases each versus reference_interpreter passed",
+    "order_sensitive_questions": "All five C09 questions have concrete reverse-order counterexample witnesses",
+    "duplicate_full_text_within_dev": 0,
+    "unique_semantic_asts": 42
+  },
+  "review_points": [
+    "C05-03, C06-05, C07-05, C08-05 explicitly add the starting position to the dictionary every-other wording; recorded as adapted.",
+    "All five C10 items propose new operation wording, not only a new opening. No exact operation wording or full instruction matched actual training instructions; this is not a claim about absence of semantic paraphrases.",
+    "Independently review C10-02: distance from zero means absolute value; C10-03: reading from the end means reversal of current order; C10-04: kth item counts the first as 1.",
+    "All five C08 items have observable repetition effects; operations are explicitly repeated in the text and applied to previous results.",
+    "Initially 12 instructions matched training text. Only their outer sentence templates were revised at parent request before scores were observed; 41 ASTs remain known. Operation meanings and expressions were preserved.",
+    "No normalized substring match to held-out final/connective wording occurs in natural-language instructions. Fixed canonical CNL wording is required by its grammar and checked separately.",
+    "Reading the CNL implementation also exposed UI aliases, some overlapping held-out wording. They were not adopted as examples, but strict blind authoring cannot be claimed.",
+    "Author checks do not replace the final hidden test suite, which is the parent agent responsibility."
+  ],
+  "score_based_selection": false,
+  "reviewer": "author self-check only; independent reviewer pending",
+  "created_at": "2026-10-05T09:40:08.381042+00:00",
+  "parent_ai_semantic_review": {
+    "status": "passed_before_outer_template_revision",
+    "reviewed_count": 50,
+    "human_approval": "pending"
+  }
+}

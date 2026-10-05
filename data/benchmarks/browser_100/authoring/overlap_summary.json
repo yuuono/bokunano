@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-05T09:41:47.324619+00:00",
+  "dictionary_consistency": {
+    "csv_count": 545,
+    "provenance_count": 545,
+    "final_fields_match": true,
+    "train_count": 522
+  },
+  "held_out_natural_language_overlaps": 0,
+  "train_archive": {
+    "path": "data/archives/final_train_dataset_records_2026-09-25.zip",
+    "sha256": "799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807",
+    "record_count": 192900,
+    "sources": {
+      "rule": 96510,
+      "teacher": 96390
+    }
+  },
+  "full_text_known_question_count": 0,
+  "ast_known_question_count": 41,
+  "operation_occurrences_with_known_wording": 67,
+  "operation_occurrences_total": 77,
+  "C10_exact_full_text_matches": 0,
+  "C10_exact_operation_wording_matches": 0,
+  "dev50_sha256": "ba24af53978a61f3002834f9bd4914f40516eaa181b18d67cfe8cac1f5d91954",
+  "question_review_status": "candidate; independent meaning review pending",
+  "post_generation_only_references": [
+    {
+      "path": "docs/policies/japanese_paraphrase_test_policy.md",
+      "sha256": "2355cee82b3b0a5278f269aa4389391cd1fcfa8ea44bfbffbc4dae5217a7b45c"
+    },
+    {
+      "path": "data/instruction_dictionaries/release/paraphrase_test_external_expressions.jsonl",
+      "sha256": "e9b302c375b3549fa48b4fc61d880b86a476e9908c0ebd91279580d4c3d539fd"
+    }
+  ]
+}

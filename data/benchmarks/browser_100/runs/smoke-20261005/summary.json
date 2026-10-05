@@ -1,0 +1,37 @@
+{
+  "boku/A": {
+    "passed": 1,
+    "total": 1,
+    "categories": {
+      "smoke": 1
+    }
+  },
+  "boku/B": {
+    "passed": 1,
+    "total": 1,
+    "categories": {
+      "smoke": 1
+    }
+  },
+  "boku/C": {
+    "passed": 0,
+    "total": 1,
+    "categories": {
+      "smoke": 0
+    }
+  },
+  "qwen/A": {
+    "passed": 1,
+    "total": 1,
+    "categories": {
+      "smoke": 1
+    }
+  },
+  "qwen/B": {
+    "passed": 1,
+    "total": 1,
+    "categories": {
+      "smoke": 1
+    }
+  }
+}

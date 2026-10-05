@@ -1,0 +1,14 @@
+{
+  "/tmp/bokunano-smoke.jsonl": "5688e0d104d4525787dcb186c76f8f1b072a36b5f693ce4a001f898873621c54",
+  "scripts/model/browser_benchmark/index.html": "bf4c9bca7bc218bf3e94b1455a6d5ce9e7a0d53b2d4c381ff9b4316ee2df4d97",
+  "scripts/model/browser_benchmark/runner.js": "cf23f343c71e438869decf184c21131611c1830ff7fcb48e89d0920466183ea6",
+  "scripts/model/browser_benchmark/worker.js": "b37d33eea22a3f990ac4712f38e18e19d5357f7d3b5c6c2fe5a9d81fc1f1bb8f",
+  "web/model-manifest.json": "38892442503144eeb28054e397b2f488e4b19be59071510f3f94f41b0a01c33d",
+  "web/qwen-manifest.json": "fde7c18dfc268ff2b47051a0bcc056d3885b840dc3942fa920ae0c51d4511b6e",
+  "web/tokenizer.js": "9f8f8e42fa60c6f1e7305861d1b60e79e58a6f90a2b20b6a3861d47b758aa4eb",
+  "web/qwen-translation.js": "a499f6feb9fe26b3cabefb9f2a44801a0dc177dece06b7ddbbef7a321ad4a8d1",
+  "web/cnl.js": "bc120dc4847058785cc794dc8cb31a0cc556660323f872081fe6332d5f8b4836",
+  "web/sampling.js": "35dd6a373ecd11d28c84d5cc056f32d102fd9bb47b89a5c33f0c787807058ee4",
+  "web/chat-utils.js": "13965f5132c9d2d869b30124ee54e9e7304b3729c4dee80ab513099ee1276bf0",
+  "scripts/model/score_browser_100_benchmark.py": "a49c40cadba6d18fa9599ee41f3bd97e68e85b537e0bf4df22b4799b2942d58d"
+}

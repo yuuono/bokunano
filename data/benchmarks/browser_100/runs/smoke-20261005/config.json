@@ -1,0 +1,17 @@
+{
+  "run_id": "smoke-20261005",
+  "boku_model": "15m-1epoch",
+  "question_count": 1,
+  "questions_sha256": "5688e0d104d4525787dcb186c76f8f1b072a36b5f693ce4a001f898873621c54",
+  "conditions": [
+    "A",
+    "B",
+    "C"
+  ],
+  "qwen_max_new_tokens": 512,
+  "qwen_normalizer_max_new_tokens": 192,
+  "qwen_direct_repetition_penalty": 1,
+  "temperature": 0,
+  "normalizer_max_attempts": 2,
+  "history": false
+}

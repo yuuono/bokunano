@@ -1,0 +1,110 @@
+[
+  {
+    "question_id": "dev-C01-03",
+    "at": "2026-10-05T09:41:33.896723+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsから正の値を選び出すsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsが与えられます。正の値を選び出す処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C01-05",
+    "at": "2026-10-05T09:41:33.896825+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsからゼロを選び出すsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsが与えられます。ゼロを選び出す処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C02-02",
+    "at": "2026-10-05T09:41:33.896829+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsと整数kを受け取り、k以上の項目を残すsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsと整数kが与えられます。k以上の項目を残す処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C02-03",
+    "at": "2026-10-05T09:41:33.896832+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsと整数kを受け取り、k未満の値のみを残すsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsと整数kが与えられます。k未満の値のみを残す処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C02-04",
+    "at": "2026-10-05T09:41:33.896835+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsと整数kを受け取り、k以下の値のみを残すsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsと整数kが与えられます。k以下の値のみを残す処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C02-05",
+    "at": "2026-10-05T09:41:33.896837+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsと整数kを受け取り、kの倍数だけを選び出すsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsと整数kが与えられます。kの倍数だけを選び出す処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C03-01",
+    "at": "2026-10-05T09:41:33.896840+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsと整数kを受け取り、各要素にkを足すsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsと整数kが与えられます。各要素にkを足す処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C03-02",
+    "at": "2026-10-05T09:41:33.896842+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsと整数kを受け取り、各項目からkを引くsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsと整数kが与えられます。各項目からkを引く処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C03-04",
+    "at": "2026-10-05T09:41:33.896846+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsから値の符号を逆転するsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsが与えられます。値の符号を逆転する処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C05-01",
+    "at": "2026-10-05T09:41:33.896850+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsと整数kを受け取り、先頭k個を選ぶsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsと整数kが与えられます。先頭k個を選ぶ処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C05-04",
+    "at": "2026-10-05T09:41:33.896854+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsと整数kを受け取り、頭k個を抜き出すsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsと整数kが与えられます。頭k個を抜き出す処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  },
+  {
+    "question_id": "dev-C05-05",
+    "at": "2026-10-05T09:41:33.896856+00:00",
+    "change": "Parent requested removal of exact training full-text duplicates before inference results; only outer sentence template changed. Operation wording, category, CNL, AST and reference code unchanged.",
+    "before_instruction_ja": "整数リストxsと整数kを受け取り、最後k個を切り取るsolve関数を書いてください。",
+    "after_instruction_ja": "整数リストxsと整数kが与えられます。最後k個を切り取る処理をするsolve(xs, k)を作成し、結果をリストで返してください。",
+    "reason": "full_text_training_overlap",
+    "score_informed": false
+  }
+]

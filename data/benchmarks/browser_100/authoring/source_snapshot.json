@@ -1,0 +1,85 @@
+{
+  "created_at": "2026-10-05T09:37:12.747211+00:00",
+  "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57",
+  "references": [
+    {
+      "path": "docs/policies/boku_nano_benchmark_100_plan.md",
+      "sha256": "94ad14a8dc0711bb99a8e1f3bd7120d84eaeacc08cd473f478389f70c94e1f65",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "docs/specifications/atomic_semantic_asts.md",
+      "sha256": "9b3d103fd4fdd2cb333f1129fa84eff8b78ca235321abb719e5a24fb4584cbe5",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "reference_interpreter.py",
+      "sha256": "0b6793d9e86b846911faa4bdb2d66c7385100f8d964bec1c6ca08fa8b5d0547e",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "python_code_generator.py",
+      "sha256": "98fc8fb25118418de354fe15356df1aa2a6df85ba9c44c4223e9adb4f6a4742c",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "structural_variant_generator.py",
+      "sha256": "06a62b90e8f69d852c716427cc09582178596e7dbc0b0deece151736f838d458",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "web/cnl.js",
+      "sha256": "bc120dc4847058785cc794dc8cb31a0cc556660323f872081fe6332d5f8b4836",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "data/instruction_dictionaries/release/japanese_atomic_expressions.csv",
+      "sha256": "44a02a523464c488dafc2715b8227f60666b4e5eb6632030472635b7f5bf9914",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "data/instruction_dictionaries/release/japanese_atomic_expression_provenance.jsonl",
+      "sha256": "49e87f00c60e4dde319456b3f28c5ab855a195dbfa9d108cd1d3d539a1da0d97",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "config/build_approved_expression_dictionary.json",
+      "sha256": "32b3c5a9d1b8835979c28d4c806c6dbe645bb6f0a5cb665e848db1faf48e270d",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "data/benchmarks/browser_100/authoring/train_reference.jsonl",
+      "sha256": "0f53e2008624707d897c3abb057b7966c12c2f8d52d1d78655d25d6f73cae053",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "data/benchmarks/browser_100/authoring/request_ja.txt",
+      "sha256": "f9663989eeacffa2c309d393d05d322638ba2eddf634594d88b1cbbdfc979136",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch/training_manifest.json",
+      "sha256": "6b2a2bb3fe242415ef2206acabf9374bc84790061f2e27b6637841df5b598510",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "data/final/final_train_dataset_stats.json",
+      "sha256": "d9ce2786d1471278dacf1a339c9841f648f035761feef10c6155b57c4425ba9c",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    },
+    {
+      "path": "data/instructions/replacement_resolved_train_instruction_stats.json",
+      "sha256": "cefc780ca605913dc26aaa5e945258b6a722e898effb863ec0d5a61774aa2c93",
+      "git_commit": "2399fd301b3c80421c93b9e8aab3e9fcbe532e57"
+    }
+  ],
+  "reference_roles": {
+    "authoring_examples": "Only train_reference.jsonl; final approved fields only.",
+    "source_dictionary": "CSV read programmatically for extraction; first four rows also visible in initial inspection and confirmed train. Split configuration IDs were inspected for filtering but were not included in the author request.",
+    "split_config": "Read to exclude held-out IDs, never included in author prompt.",
+    "provenance": "Final approved fields checked; generation_record not used.",
+    "training_data": "Post-generation checks only; manifest and aggregate stats inspected before generation.",
+    "cnl_implementation": "web/cnl.js was inspected for the canonical grammar. The inspected section also displayed UI aliases and OPERATION_REQUESTS, some of which overlap held-out wording. They were not used as question examples; authoring expression selections came from train_reference.jsonl. This is an information-isolation limitation; this is not represented as blind authoring."
+  },
+  "revision_note": "Parent follow-up requested removal of the 12 full-text training duplicates, with no inference scores observed; saved verbatim in request_ja.txt and in per-question revision history."
+}

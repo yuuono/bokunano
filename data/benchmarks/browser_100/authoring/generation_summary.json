@@ -1,0 +1,51 @@
+{
+  "created_at": "2026-10-05T09:37:12.747211+00:00",
+  "question_count": 50,
+  "categories": {
+    "C01": 5,
+    "C02": 5,
+    "C03": 5,
+    "C04": 5,
+    "C05": 5,
+    "C06": 5,
+    "C07": 5,
+    "C08": 5,
+    "C09": 5,
+    "C10": 5
+  },
+  "operations_covered": [
+    "atomic-000001",
+    "atomic-000002",
+    "atomic-000003",
+    "atomic-000004",
+    "atomic-000005",
+    "atomic-000006",
+    "atomic-000007",
+    "atomic-000008",
+    "atomic-000009",
+    "atomic-000010",
+    "atomic-000011",
+    "atomic-000012",
+    "atomic-000013",
+    "atomic-000014",
+    "atomic-000015",
+    "atomic-000016",
+    "atomic-000017",
+    "atomic-000018",
+    "atomic-000019",
+    "atomic-000020",
+    "atomic-000021",
+    "atomic-000022",
+    "atomic-000023",
+    "atomic-000024"
+  ],
+  "usage": {
+    "verbatim": 67,
+    "adapted": 5,
+    "new": 5
+  },
+  "semantic_ast_unique": 42,
+  "reference_code_verified": 50,
+  "status": "candidate",
+  "dev50_initial_sha256": "b6ee8ce9dc2996616b1a8703270611f18a3fdec1d451b0ad4c21a123acbeb4be"
+}

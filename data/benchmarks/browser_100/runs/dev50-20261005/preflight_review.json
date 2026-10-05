@@ -1,0 +1,18 @@
+{
+  "questions_sha256": "ba24af53978a61f3002834f9bd4914f40516eaa181b18d67cfe8cac1f5d91954",
+  "frozen_at": "2026-10-05T09:42:54.112584+00:00",
+  "question_count": 50,
+  "tests_per_question": 179,
+  "reference_tests_passed": 8950,
+  "reviewer": "parent coding agent (AI)",
+  "human_approval": false,
+  "meaning_review": "all 50 Japanese instructions read against ordered semantic AST; no changes to meanings",
+  "reference_comparison": "all reference implementations pass shared boundary/random/order-witness tests",
+  "local_model_and_tokenizer_hashes": "verified",
+  "score_seen_before_freeze": false,
+  "scoring_timeout_seconds": 3,
+  "cpu_limit_seconds": 2,
+  "source_chars_limit": 12000,
+  "case_seed": 2026100501,
+  "random_cases": 128
+}

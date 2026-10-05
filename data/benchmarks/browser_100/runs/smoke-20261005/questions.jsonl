@@ -1,0 +1,1 @@
+{"question_id":"smoke-01","category_id":"smoke","instruction_ja":"整数リストxsの偶数だけを残すsolve関数を書いてください。","canonical_cnl":"整数リストxsから偶数だけを残すsolve関数を書いてください。","semantic_ast":{"filter":["even"]}}
