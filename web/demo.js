@@ -1,8 +1,8 @@
 import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
-import { CNL_OPERATIONS, MAX_OPERATIONS, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=8";
+import { CNL_OPERATIONS, MAX_OPERATIONS, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=9";
 import { selectToken, validateTemperature } from "./sampling.js";
 
-import { appendOperationToDraft, nearBottom } from "./chat-utils.js?v=8";
+import { appendOperationToDraft, nearBottom } from "./chat-utils.js?v=9";
 import { highlightPython } from "./python-highlight.js?v=7";
 
 const $ = (id) => document.getElementById(id);
@@ -262,7 +262,7 @@ async function translateInstruction(event) {
     checkCnl();
     state.contextCnl = previousCnl;
     state.contextK = previousK;
-    const explanation = editorCnl ? `${message}\nCNL欄は前回の内容を保持しています。` : message;
+    const explanation = editorCnl ? `${message}\n前の結果はそのまま残っています。` : message;
     followScroll($("conversation"), () => { reply.body.textContent = explanation; });
     reply.message.dataset.kind = "error";
     setMessage($("translation-status"), explanation, "error");
@@ -270,7 +270,7 @@ async function translateInstruction(event) {
   try {
     await releaseActiveSession();
     if (!current(job)) return;
-    const worker = new Worker(new URL("./qwen-worker.js?v=8", import.meta.url), { type: "module" });
+    const worker = new Worker(new URL("./qwen-worker.js?v=9", import.meta.url), { type: "module" });
     job.worker = worker;
     worker.addEventListener("message", ({ data: message }) => {
       if (!current(job)) return;

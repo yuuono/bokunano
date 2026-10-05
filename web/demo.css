@@ -179,6 +179,11 @@ html, body { height: 100%; overflow: hidden; }
 .composer-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; max-width: 900px; margin: 0 auto 8px; }
 .composer-tools .examples { gap: 5px; }
 .composer-tools summary { font-size: 13px; cursor: pointer; color: #09684e; list-style: none; border: 1px solid #a9c9bd; border-radius: 18px; padding: 5px 10px; background: #f1f8f5; }
+#operation-picker > summary { transition: background-color .15s, border-color .15s, box-shadow .15s; }
+#operation-picker > summary:hover,
+#operation-picker > summary:focus-visible,
+#operation-picker[open] > summary { background: #d7efe3; border-color: #287b60; color: #07543e; box-shadow: 0 0 0 3px #287b6020; }
+#operation-picker > summary:focus-visible { outline: 2px solid #287b60; outline-offset: 3px; }
 .operation-menu { position: absolute; z-index: 5; bottom: calc(100% - 5px); left: 20px; right: 20px; max-height: min(440px, 60dvh); overflow-y: auto; overscroll-behavior: contain; background: #fff; padding: 18px; border: 1px solid #b9cec4; border-radius: 14px; box-shadow: 0 12px 40px #163b2520; }
 .operation-menu > label { font-size: 14px; font-weight: 600; display: block; margin-bottom: 6px; }
 .operation-menu input { width: 100%; font-size: 16px; padding: 10px; border: 1px solid #9db9ac; border-radius: 8px; background: #fff; color: var(--text); }

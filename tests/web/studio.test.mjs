@@ -91,9 +91,11 @@ test('concrete integers are preserved separately from the trained CNL grammar', 
   }
   assert.equal(validateOperationPlan('1. 各要素にkを加える').kValue, null);
   for (const suffix of ['k=1.5','k=NaN','k=9007199254740992','k=3\nk=5']) {
-    assert.equal(validateOperationPlan(`1. 各要素にkを加える\n${suffix}`).valid, false);
+    const result = validateOperationPlan(`1. 各要素にkを加える\n${suffix}`);
+    assert.equal(result.valid, true);
+    assert.equal(result.kValue, null);
   }
-  assert.equal(validateOperationPlan('1. 偶数だけを残す\nk=3').valid, false);
+  assert.equal(validateOperationPlan('1. 偶数だけを残す\nk=3').kValue, null);
 });
 
 test('revision keeps the numeric argument available for later edits', () => {
@@ -188,7 +190,6 @@ test('format tolerance never drops unknown operations, negations, conflicting nu
     '偶数だけを残す\n合計する',
     '各要素の絶対値を取らない\n値を降順に並べる',
     '説明には各要素の絶対値を取るとありますが、実行しない',
-    '- 各要素にkを加える\nk=3\nk=5',
     '偶数だけを残す\n'.repeat(5),
   ]) assert.equal(validateOperationPlan(text).valid, false, text);
   const repeated = validateOperationPlan('偶数だけを残して、偶数だけを残してください。');
@@ -214,7 +215,33 @@ test('concrete Qwen phrases preserve integers and reject conflicting constants',
   }
   assert.equal(validateOperationPlan('各要素に3を足す\nk=3').valid, true);
   assert.equal(validateOperationPlan('各要素に3を足す\n先頭から5個を取る').valid, false);
-  assert.equal(validateOperationPlan('各要素に3を足す\nk=5').valid, false);
+  assert.equal(validateOperationPlan('各要素に3を足す\nk=5').kValue, 3);
   assert.equal(validateOperationPlan('各要素に3.5を足す').valid, false);
   assert.equal(validateOperationPlan('各要素を3倍する').kValue, null);
+});
+
+
+test('unrelated or malformed k metadata never blocks nonnumeric operations', () => {
+  for (const phrase of ['偶数のみ抽出', '偶数だけを残す', '整数リストxsから偶数だけを残すsolve関数を書いてください。']) {
+    for (const suffix of ['k=3', 'k=整数', 'k=なし', 'k: null', 'k=1.5', 'k=3\nk=5', 'k=9007199254740992', 'kは不要です。']) {
+      const plan = validateOperationPlan(`${phrase}\n${suffix}`);
+      assert.equal(plan.valid, true, phrase + suffix);
+      assert.equal(plan.kValue, null);
+      assert.equal(plan.usesK, false);
+      assert.deepEqual(plan.operations.map(op => op.id), ['filter_even']);
+    }
+  }
+});
+
+test('optional numeric metadata does not require a default value or discard operations', () => {
+  for (const suffix of ['k=整数', 'k=なし', 'k=3\nk=5']) {
+    const plan = validateOperationPlan(`各要素にkを加える\n${suffix}`);
+    assert.equal(plan.valid, true);
+    assert.equal(plan.kValue, null);
+    assert.equal(plan.usesK, true);
+  }
+  assert.equal(validateOperationPlan('各要素にkを加える\nk=3\nk=3').kValue, 3);
+  assert.equal(validateOperationPlan('各要素に3を足す\nk=なし').kValue, 3);
+  assert.equal(validateOperationPlan('k=なし').valid, false);
+  assert.equal(validateOperationPlan('合計値を求める\nk=なし').valid, false);
 });

@@ -4,7 +4,7 @@ import {
   buildRevisionMessages,
   buildNormalizerUserPrompt,
   validateOperationPlan,
-} from "./cnl.js?v=8";
+} from "./cnl.js?v=9";
 import { qwenSamplingOptions } from "./sampling.js";
 
 let generator = null;
@@ -97,11 +97,16 @@ self.addEventListener("message", async (event) => {
         return;
       }
       validation = validateOperationPlan(candidate);
+      if (validation.valid && selected?.valid && validation.cnl === selected.cnl) {
+        // The user's concrete number (or an unspecified argument) wins over
+        // optional k metadata invented by Qwen. The operations still come from Qwen.
+        validation.kValue = selected.kValue;
+      }
       if (validation.valid && selected?.valid && (
-        validation.cnl !== selected.cnl || validation.kValue !== selected.kValue
+        validation.cnl !== selected.cnl
       )) {
         validation = { ...validation, valid: false,
-          error: "選択された操作の順序・個数・数値が変わっています。入力の全操作をそのまま残してください。" };
+          error: "選択された操作の順序・個数が変わっています。入力の全操作をそのまま残してください。" };
       }
       if (validation.valid && contextCnl === validation.cnl && contextK === validation.kValue) {
         validation = {

@@ -34,18 +34,18 @@ export const CNL_OPERATIONS = Object.freeze([
 
 // Friendly input phrases also cover common Qwen wording without guessing unknown operations.
 export const OPERATION_REQUESTS = Object.freeze({
-  filter_even: "偶数だけを残して", filter_odd: "奇数だけを残して",
-  filter_gt_k: "kより大きい値だけを残して", filter_ge_k: "k以上の値だけを残して",
-  filter_lt_k: "kより小さい値だけを残して", filter_le_k: "k以下の値だけを残して",
-  filter_multiple_k: "kの倍数だけを残して", filter_positive: "正の値だけを残して",
-  filter_negative: "負の値だけを残して", filter_zero: "ゼロだけを残して",
-  map_add_k: "各要素にkを足して", map_sub_k: "各要素からkを引いて",
-  map_mul_k: "各要素にkを掛けて", map_mul_2: "各要素を2倍して",
-  map_mul_3: "各要素を3倍して", map_negate: "各要素の符号を反転して",
-  map_abs: "各要素を絶対値にして", map_square: "各要素を二乗して",
-  order_ascending: "小さい順に並べて", order_descending: "大きい順に並べて",
-  order_reverse: "要素の順番を逆にして", slice_first_k: "先頭からk個を取って",
-  slice_last_k: "末尾からk個を取って", slice_every_other: "先頭から1個おきに取って",
+  filter_even: "偶数のみを抽出して", filter_odd: "奇数のみを抽出して",
+  filter_gt_k: "kより大きい数だけを選んで", filter_ge_k: "k以上の数だけを選んで",
+  filter_lt_k: "kより小さい数だけを選んで", filter_le_k: "k以下の数だけを選んで",
+  filter_multiple_k: "kで割り切れる数だけを選んで", filter_positive: "プラスの数だけを選んで",
+  filter_negative: "マイナスの数だけを選んで", filter_zero: "0だけを取り出して",
+  map_add_k: "それぞれの数にkを足して", map_sub_k: "それぞれの数からkを引いて",
+  map_mul_k: "それぞれの数をk倍して", map_mul_2: "それぞれの数を2倍にして",
+  map_mul_3: "それぞれの数を3倍にして", map_negate: "それぞれの数のプラスとマイナスを入れ替えて",
+  map_abs: "それぞれの数を絶対値にして", map_square: "それぞれの数を2乗して",
+  order_ascending: "小さいものから順番に並べて", order_descending: "大きいものから順番に並べて",
+  order_reverse: "今の並びを後ろから逆順にして", slice_first_k: "最初のk個だけを取り出して",
+  slice_last_k: "最後のk個だけを取り出して", slice_every_other: "先頭の数から1つ飛ばしで取り出して",
 });
 
 export function operationRequest(operations, kValue = null) {
@@ -54,15 +54,17 @@ export function operationRequest(operations, kValue = null) {
 }
 
 const OPERATION_ALIASES = {
-  filter_even: ["偶数を残す", "偶数のみを残す"],
-  filter_odd: ["奇数を残す", "奇数のみを残す"],
-  map_add_k: ["各要素にkを足す", "各要素にkを加算する"],
+  filter_even: ["偶数を残す", "偶数のみを残す", "偶数のみ抽出", "偶数のみを抽出", "偶数のみを抽出する", "偶数だけを抽出する", "偶数を抽出する", "偶数だけを残して"],
+  filter_odd: ["奇数を残す", "奇数のみを残す", "奇数のみ抽出", "奇数のみを抽出", "奇数のみを抽出する", "奇数だけを抽出する", "奇数を抽出する", "奇数だけを残して"],
+  map_add_k: ["各要素にkを足して", "各要素にkを足す", "各要素にkを加算する"],
   map_mul_k: ["各要素をk倍する", "各要素にkをかける"],
-  map_abs: ["絶対値を取る", "各要素を絶対値にする", "絶対値にする"],
+  map_mul_2: ["各要素を2倍して", "各要素を二倍する", "各要素を2倍にする"],
+  map_mul_3: ["各要素を3倍して", "各要素を三倍する", "各要素を3倍にする"],
+  map_abs: ["各要素を絶対値にして", "絶対値を取る", "各要素を絶対値にする", "絶対値にする"],
   map_square: ["各要素を2乗する"],
-  order_ascending: ["昇順に並べる", "昇順にソートする", "小さい順に並べる"],
-  order_descending: ["降順に並べる", "降順にソートする", "大きい順に並べる"],
-  order_reverse: ["要素の順番を逆にする", "要素順を逆にする", "順番を逆にする", "逆順にする", "要素の順序を反転する"],
+  order_ascending: ["小さい順に並べて", "昇順に並べる", "昇順にソートする", "小さい順に並べる"],
+  order_descending: ["大きい順に並べて", "降順に並べる", "降順にソートする", "大きい順に並べる"],
+  order_reverse: ["要素の順番を逆にして", "要素の順番を逆にする", "要素順を逆にする", "順番を逆にする", "逆順にする", "要素の順序を反転する"],
 };
 
 function invalid(error, cnl = "") {
@@ -161,7 +163,7 @@ export function buildRevisionMessages(instruction, contextCnl, contextK = null) 
     { role: "system", content: buildNormalizerSystemPrompt() },
     { role: "user", content: "現在の手順を確認してください。" },
     { role: "assistant", content: `${steps}${previous.usesK && contextK !== null ? `\nk=${parseK(contextK)}` : ""}` },
-    { role: "user", content: `変更依頼: ${instruction}\n変更後の全手順とkの値を出力してください。` },
+    { role: "user", content: `変更依頼: ${instruction}\n変更後の全手順を出力してください。数値を使う処理だけ、その値も残してください。` },
   ];
 }
 
@@ -185,25 +187,30 @@ export function validateOperationPlan(text) {
   const lines = normalized.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
   const body = [];
   let kValue = null;
-  let hasK = false;
+  const parameterValues = [];
+  let inlineK = null;
   for (let line of lines) {
     if (/^```(?:text|plaintext|markdown|md|japanese)?$/i.test(line)) continue;
     line = line.replace(/\*\*([^*]+)\*\*/g, "$1").replace(/`([^`]+)`/g, "$1");
     if (/^(?:出力|手順|操作|処理手順|操作一覧|以下の操作|以下の手順)[:：]?$/.test(line)) continue;
     line = line.replace(/^(?:出力|手順|操作一覧)[:：]\s*/, "");
     line = line.replace(/^(?:[-*•・]\s*|(?:\(\d+\)|\d+[.)、:])\s*)/, "");
-    if (/^k\s*[=:]/i.test(line)) {
+    if (/^k(?:\s*[=:]|は|の値(?:は|[=:]))/i.test(line)) {
+      // Qwen sometimes adds k=none, explanations, or stale numeric metadata.
+      // Parameters are optional metadata, not a reason to reject the operations.
       const parameter = line.match(/^k\s*[=:]\s*([+-]?\d+)[。.]?$/i);
-      if (hasK || !parameter) return invalid("kには整数を1つ指定してください。");
-      try { kValue = parseK(parameter[1]); } catch (error) { return invalid(error.message); }
-      hasK = true;
+      if (parameter) {
+        try { parameterValues.push(parseK(parameter[1])); } catch { /* Leave k symbolic. */ }
+      }
     } else body.push(line);
   }
+  const uniqueParameters = [...new Set(parameterValues)];
+  kValue = uniqueParameters.length === 1 ? uniqueParameters[0] : null;
+
   // A complete trained CNL is another valid representation of the same plan.
   const completeCnl = validateCnl(body.join(""));
   if (completeCnl.valid) {
-    if (hasK && !completeCnl.usesK) return invalid("kの値には、kを使う操作が必要です。");
-    return { ...completeCnl, kValue };
+    return { ...completeCnl, kValue: completeCnl.usesK ? kValue : null };
   }
   const phrases = body.join("\n").split(/\n|、|。|\s*(?:→|->|;)\s*/).map(part => part.trim()).filter(Boolean);
   const operations = [];
@@ -223,9 +230,9 @@ export function validateOperationPlan(text) {
         if (candidate?.requiresK) {
           let value;
           try { value = parseK(number[0]); } catch (error) { return invalid(error.message); }
-          if (hasK && kValue !== value) return invalid("異なる数値を同時に使う操作には対応していません。kの値を1つにしてください。");
+          if (inlineK !== null && inlineK !== value) return invalid("このモデルでは、異なる数値を使う処理は別々に生成してください。");
+          inlineK = value;
           kValue = value;
-          hasK = true;
           operation = candidate;
         }
       }
@@ -235,7 +242,7 @@ export function validateOperationPlan(text) {
   }
   if (!operations.length || operations.length > MAX_OPERATIONS) return invalid("一度に扱える操作は1～4個です。");
   const usesK = operations.some(operation => operation.requiresK);
-  if (hasK && !usesK) return invalid("kの値には、kを使う操作が必要です。");
+  if (!usesK) kValue = null;
   const forms = operations.map((operation, index) => index === operations.length - 1 ? operation.final : operation.connective);
   return { ...validateCnl(`${usesK ? WITH_K_PREFIX : WITHOUT_K_PREFIX}${forms.join("、")}${SUFFIX}`), kValue };
 }

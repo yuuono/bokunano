@@ -1,4 +1,4 @@
-import { CNL_OPERATIONS, MAX_OPERATIONS, operationRequest, OPERATION_REQUESTS, validateOperationPlan } from './cnl.js?v=8';
+import { CNL_OPERATIONS, MAX_OPERATIONS, operationRequest, OPERATION_REQUESTS, validateOperationPlan } from './cnl.js?v=9';
 
 export function appendOperationToDraft(text, id) {
   const operation = CNL_OPERATIONS.find(op => op.id === id);
