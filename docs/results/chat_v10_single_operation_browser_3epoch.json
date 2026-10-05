@@ -1,0 +1,563 @@
+{
+  "release": "chat-studio-v10",
+  "date": "2026-10-05",
+  "model": "3epoch",
+  "qwenTemperature": 0,
+  "bokuTemperature": 0,
+  "results": [
+    {
+      "id": "map_negate",
+      "label": "各要素の符号を反転する",
+      "instruction": "それぞれの数のプラスとマイナスを入れ替えてください。",
+      "cnl": "整数リストxsから各要素の符号を反転するsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る- それぞれの数のプラスとマイナスを入れ替えてください。"
+      ],
+      "recovered": 0,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        output += [-value]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "map_abs",
+      "label": "各要素の絶対値を取る",
+      "instruction": "それぞれの数を絶対値にしてください。",
+      "cnl": "整数リストxsから各要素の絶対値を取るsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る- それぞれの数を絶対値にしてください。"
+      ],
+      "recovered": 0,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = [abs(value) for value in xs]\n    return result\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_even",
+      "label": "偶数だけを残す",
+      "instruction": "偶数のみを抽出してください。",
+      "cnl": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る偶数数"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = [value for value in xs if value % 2 == 0]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_odd",
+      "label": "奇数だけを残す",
+      "instruction": "奇数のみを抽出してください。",
+      "cnl": "整数リストxsから奇数だけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る奇数だけ"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = [value for value in xs if 0 != value % 2]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_gt_k",
+      "label": "kより大きい値だけを残す",
+      "instruction": "kより大きい数だけを選んでください。",
+      "cnl": "整数リストxsと整数kを受け取り、kより大きい値だけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見るkより大きい数"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for x in xs:\n        if k < x:\n            output += [x]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_ge_k",
+      "label": "k以上の値だけを残す",
+      "instruction": "k以上の数だけを選んでください。",
+      "cnl": "整数リストxsと整数kを受け取り、k以上の値だけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見るk以上の数"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for x in xs:\n        if k <= x:\n            output += [x]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_lt_k",
+      "label": "kより小さい値だけを残す",
+      "instruction": "kより小さい数だけを選んでください。",
+      "cnl": "整数リストxsと整数kを受け取り、kより小さい値だけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見るkより小さい数"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        if k > value:\n            output += [value]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_le_k",
+      "label": "k以下の値だけを残す",
+      "instruction": "k以下の数だけを選んでください。",
+      "cnl": "整数リストxsと整数kを受け取り、k以下の値だけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る1"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for x in xs:\n        if k >= x:\n            output += [x]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_multiple_k",
+      "label": "kの倍数だけを残す",
+      "instruction": "kで割り切れる数だけを選んでください。",
+      "cnl": "整数リストxsと整数kを受け取り、kの倍数だけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見るkの倍数だけを残す"
+      ],
+      "recovered": 0,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for x in xs:\n        if x % k == 0:\n            output += [x]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_positive",
+      "label": "正の値だけを残す",
+      "instruction": "プラスの数だけを選んでください。",
+      "cnl": "整数リストxsから正の値だけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見るプラス"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for x in xs:\n        if 0 < x:\n            output += [x]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_negative",
+      "label": "負の値だけを残す",
+      "instruction": "マイナスの数だけを選んでください。",
+      "cnl": "整数リストxsから負の値だけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見るマイナス"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for x in xs:\n        if 0 > x:\n            output += [x]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "filter_zero",
+      "label": "ゼロだけを残す",
+      "instruction": "0だけを取り出してください。",
+      "cnl": "整数リストxsからゼロだけを残すsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見るゼロ"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        if 0 == value:\n            output += [value]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "map_add_k",
+      "label": "各要素にkを加える",
+      "instruction": "それぞれの数にkを足してください。",
+      "cnl": "整数リストxsと整数kを受け取り、各要素にkを加えるsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見るk + 1"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        output += [value + k]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "map_sub_k",
+      "label": "各要素からkを引く",
+      "instruction": "それぞれの数からkを引いてください。",
+      "cnl": "整数リストxsと整数kを受け取り、各要素からkを引くsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る入力: それぞれの数からkを引いてください。\n\n出力: 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        output += [value - k]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "map_mul_k",
+      "label": "各要素にkを掛ける",
+      "instruction": "それぞれの数をk倍してください。",
+      "cnl": "整数リストxsと整数kを受け取り、各要素にkを掛けるsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見るk"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = [value * k for value in xs]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "map_mul_2",
+      "label": "各要素を2倍する",
+      "instruction": "それぞれの数を2倍にしてください。",
+      "cnl": "整数リストxsから各要素を2倍するsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る2倍した数"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        output += [value * 2]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "map_mul_3",
+      "label": "各要素を3倍する",
+      "instruction": "それぞれの数を3倍にしてください。",
+      "cnl": "整数リストxsから各要素を3倍するsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る3倍する"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        output += [value * 3]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "map_square",
+      "label": "各要素を二乗する",
+      "instruction": "それぞれの数を2乗してください。",
+      "cnl": "整数リストxsから各要素を二乗するsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る2つの数の二乗した結果。"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        output += [value ** 2]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "order_ascending",
+      "label": "値を昇順に並べる",
+      "instruction": "小さいものから順番に並べてください。",
+      "cnl": "整数リストxsから値を昇順に並べるsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る値を昇順に並べる"
+      ],
+      "recovered": 0,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    return sorted(xs, reverse=False)\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "order_descending",
+      "label": "値を降順に並べる",
+      "instruction": "大きいものから順番に並べてください。",
+      "cnl": "整数リストxsから値を降順に並べるsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る大きいものから順番に並べる"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    return sorted(xs, reverse=True)\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "order_reverse",
+      "label": "現在の要素順を反転する",
+      "instruction": "今の並びを後ろから逆順にしてください。",
+      "cnl": "整数リストxsから現在の要素順を反転するsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る後の順"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = xs[::-1]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "slice_first_k",
+      "label": "先頭からk個を取る",
+      "instruction": "最初のk個だけを取り出してください。",
+      "cnl": "整数リストxsと整数kを受け取り、先頭からk個を取るsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る1"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = xs[0:k]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "slice_last_k",
+      "label": "末尾からk個を取る",
+      "instruction": "最後のk個だけを取り出してください。",
+      "cnl": "整数リストxsと整数kを受け取り、末尾からk個を取るsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る入力: 最後のk個だけを取り出してください。"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = xs[-k:]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    },
+    {
+      "id": "slice_every_other",
+      "label": "先頭から1個おきに取る",
+      "instruction": "先頭の数から1つ飛ばしで取り出してください。",
+      "cnl": "整数リストxsから先頭から1個おきに取るsolve関数を書いてください。",
+      "translation": "解釈ができました。チャット内で確認して生成してください。",
+      "qwenPrompts": 1,
+      "qwenOutput": [
+        "Qwenの出力を見る1"
+      ],
+      "recovered": 1,
+      "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = xs[::2]\n    return output\n",
+      "generation": "コードの生成が完了しました。",
+      "termination": "eos",
+      "cnl_matches_choice": true,
+      "functional_validation": {
+        "cases": 32,
+        "passed": 32,
+        "failures": []
+      }
+    }
+  ],
+  "validation_domain": {
+    "xs": [
+      [],
+      [
+        0
+      ],
+      [
+        1
+      ],
+      [
+        -1
+      ],
+      [
+        -5,
+        -2,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      [
+        3,
+        1,
+        3,
+        0,
+        -3,
+        2
+      ],
+      [
+        8,
+        6,
+        4,
+        2
+      ],
+      [
+        -2,
+        -4,
+        -6
+      ]
+    ],
+    "k": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "note": "Generated code checked with restricted builtins after AST inspection. UI itself never executes Python. Positive k used for slicing and nonzero divisor cases."
+  }
+}

@@ -254,3 +254,5 @@ html, body { height: 100%; overflow: hidden; }
   .send-button { padding: 7px 10px; }
   .composer-hint { font-size: 10px; }
 }
+
+.selection-recovery { color: #46665a; font-size: 13px; line-height: 1.7; }

@@ -1,8 +1,8 @@
 import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
-import { CNL_OPERATIONS, MAX_OPERATIONS, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=9";
+import { CNL_OPERATIONS, MAX_OPERATIONS, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=10";
 import { selectToken, validateTemperature } from "./sampling.js";
 
-import { appendOperationToDraft, nearBottom } from "./chat-utils.js?v=9";
+import { appendOperationToDraft, nearBottom, captureSelection } from "./chat-utils.js?v=10";
 import { highlightPython } from "./python-highlight.js?v=7";
 
 const $ = (id) => document.getElementById(id);
@@ -18,6 +18,7 @@ const state = {
   contextK: null,
   parameterK: null,
   confirmedReply: null,
+  draftSelection: null,
 };
 const errorText = (error) => error instanceof Error ? error.message : String(error);
 const formatBytes = (bytes) => `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
@@ -80,9 +81,16 @@ function resizeComposer() {
   updateScrollButton();
 }
 
-function confirmReply(reply, validation) {
+function confirmReply(reply, validation, selectionRecovered = false) {
   followScroll($("conversation"), () => {
     reply.body.textContent = `次の${validation.operations.length}操作で生成できます。\n${validation.operations.map((op, i) => `${i + 1}. ${op.label}`).join("\n")}${validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""}`;
+    reply.message.dataset.selectionRecovered = String(selectionRecovered);
+    if (selectionRecovered) {
+      const note = document.createElement("p");
+      note.className = "selection-recovery";
+      note.textContent = "Qwenの出力を選択内容に合わせて補正しました。";
+      reply.message.append(note);
+    }
     const result = document.createElement("div");
     result.className = "cnl-result";
     const label = document.createElement("strong");
@@ -244,8 +252,14 @@ async function translateInstruction(event) {
   const previousK = state.candidate?.valid ? state.candidate.kValue : state.contextK;
   const contextCnl = revision ? previousCnl : "";
   const contextK = revision ? previousK : null;
-  const editorCnl = $("cnl").value;
-  const editorK = state.parameterK;
+  const selection = revision ? null : state.draftSelection;
+  state.draftSelection = null;
+  // An earlier answer remains in chat history, never as the current candidate.
+  $("cnl").value = "";
+  state.parameterK = null;
+  state.confirmedReply = null;
+  checkCnl();
+  setMessage($("cnl-status"), "今回の指示を確認しています…");
   addMessage("user", instruction);
   $("prompt").value = "";
   resizeComposer();
@@ -257,12 +271,13 @@ async function translateInstruction(event) {
   setMessage($("translation-status"), "Qwenを準備しています…");
   const fail = (message) => {
     if (!current(job)) return;
-    $("cnl").value = editorCnl;
-    state.parameterK = editorK;
+    $("cnl").value = "";
+    state.parameterK = null;
     checkCnl();
     state.contextCnl = previousCnl;
     state.contextK = previousK;
-    const explanation = editorCnl ? `${message}\n前の結果はそのまま残っています。` : message;
+    const explanation = message;
+    setMessage($("cnl-status"), "今回の指示は未確定です。再送信してください。");
     followScroll($("conversation"), () => { reply.body.textContent = explanation; });
     reply.message.dataset.kind = "error";
     setMessage($("translation-status"), explanation, "error");
@@ -270,7 +285,7 @@ async function translateInstruction(event) {
   try {
     await releaseActiveSession();
     if (!current(job)) return;
-    const worker = new Worker(new URL("./qwen-worker.js?v=9", import.meta.url), { type: "module" });
+    const worker = new Worker(new URL("./qwen-worker.js?v=10", import.meta.url), { type: "module" });
     job.worker = worker;
     worker.addEventListener("message", ({ data: message }) => {
       if (!current(job)) return;
@@ -304,7 +319,7 @@ async function translateInstruction(event) {
           state.contextK = previousK;
           fail(message.error || "この指示を解釈できませんでした。操作を具体的に伝えるか、CNLを直接編集してください。対応は24種類・最大4操作です。");
         } else {
-          confirmReply(reply, validation);
+          confirmReply(reply, validation, message.selectionRecovered);
           setMessage($("translation-status"), "解釈ができました。チャット内で確認して生成してください。", "success");
         }
       }
@@ -316,7 +331,7 @@ async function translateInstruction(event) {
       worker.terminate();
       finish(job);
     });
-    worker.postMessage({ type: "translate", instruction, contextCnl, contextK, temperature, manifest: state.qwenManifest });
+    worker.postMessage({ type: "translate", instruction, contextCnl, contextK, temperature, selection, manifest: state.qwenManifest });
   } catch (error) {
     fail(errorText(error));
     job.worker?.terminate();
@@ -539,6 +554,7 @@ function newConversation() {
   if (state.job) return;
   state.candidate = null;
   state.confirmedReply = null;
+  state.draftSelection = null;
   state.contextCnl = "";
   state.contextK = null;
   document.querySelector('[name="request-mode"][value="new"]').checked = true;
@@ -578,7 +594,7 @@ async function initialize() {
     option.textContent = model.label;
     groups.get(groupName).append(option);
   }
-  $("model").value = state.manifest.models.some(model => model.id === "15m-1epoch") ? "15m-1epoch" : state.manifest.default_model_id;
+  $("model").value = state.manifest.default_model_id;
   for (const model of state.manifest.models) {
     const label = document.createElement("label");
     const input = document.createElement("input");
@@ -602,6 +618,7 @@ async function initialize() {
     button.addEventListener("click", () => {
       try {
         $("prompt").value = appendOperationToDraft($("prompt").value, operation.id);
+        state.draftSelection = captureSelection($("prompt").value);
         if (validateOperationPlan($("prompt").value).valid) document.querySelector('[name="request-mode"][value="new"]').checked = true;
         updateDraft();
         $("operation-picker").open = false;
@@ -648,12 +665,14 @@ for (const kind of ["qwen", "boku"]) {
 for (const button of document.querySelectorAll("[data-example-prompt]")) {
   button.addEventListener("click", () => {
     $("prompt").value = button.dataset.examplePrompt;
+    state.draftSelection = captureSelection($("prompt").value);
     document.querySelector('[name="request-mode"][value="new"]').checked = true;
     updateDraft();
     $("prompt").focus({ preventScroll: true });
   });
 }
 function updateDraft() {
+  if (state.draftSelection?.text !== $("prompt").value.trim()) state.draftSelection = null;
   const plan = validateOperationPlan($("prompt").value);
   setMessage($("selection-status"), plan.valid ? `${plan.operations.length} / 4操作を入力中。クリックで追加できます。` : "操作を選ぶと日本語の指示になります。自由に書き換えて送信できます。");
   resizeComposer();

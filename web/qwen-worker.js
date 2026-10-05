@@ -1,10 +1,11 @@
+import { resolveSelection, reconcileSelection } from "./chat-utils.js?v=10";
 import {
   UNSUPPORTED_CNL,
   buildNormalizerMessages,
   buildRevisionMessages,
   buildNormalizerUserPrompt,
   validateOperationPlan,
-} from "./cnl.js?v=9";
+} from "./cnl.js?v=10";
 import { qwenSamplingOptions } from "./sampling.js";
 
 let generator = null;
@@ -74,7 +75,7 @@ async function disposeGenerator() {
 
 self.addEventListener("message", async (event) => {
   if (event.data?.type !== "translate") return;
-  const { instruction, manifest, contextCnl = "", contextK = null, temperature = 0 } = event.data;
+  const { instruction, manifest, contextCnl = "", contextK = null, temperature = 0, selection = null } = event.data;
   const startedAt = performance.now();
   let candidate = "";
   let validation = null;
@@ -83,11 +84,18 @@ self.addEventListener("message", async (event) => {
     const messages = contextCnl
       ? buildRevisionMessages(instruction, contextCnl, contextK)
       : buildNormalizerMessages(instruction);
-    const selected = contextCnl ? null : validateOperationPlan(instruction);
-    for (let attempt = 1; attempt <= 2; attempt += 1) {
-      send("phase", { message: `Qwenが${contextCnl ? "変更後の" : "指示の"}操作を整理しています… (${attempt}/2)` });
+    const selected = contextCnl ? null : resolveSelection(instruction, selection);
+    if (selected) {
+      messages[0].content = `利用者が選んだ操作を、日本語の操作名として確認してください。説明は不要です。
+次の${selected.operations.length}操作をこの順番で全て出力してください。他の操作は追加しません。
+${selected.operations.map(op => op.label).join("\n")}
+${selected.usesK && selected.kValue !== null ? `数値: k=${selected.kValue}` : "数値の補足は不要です。"}`;
+    }
+    const maxAttempts = selected ? 1 : 2;
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      send("phase", { message: `Qwenが${contextCnl ? "変更後の" : "指示の"}操作を整理しています… (${attempt}/${maxAttempts})` });
       candidate = await generatePlan(messages, temperature, attempt);
-      if (candidate === UNSUPPORTED_CNL) {
+      if (!selected && candidate === UNSUPPORTED_CNL) {
         send("result", {
           supported: false,
           cnl: candidate,
@@ -97,17 +105,8 @@ self.addEventListener("message", async (event) => {
         return;
       }
       validation = validateOperationPlan(candidate);
-      if (validation.valid && selected?.valid && validation.cnl === selected.cnl) {
-        // The user's concrete number (or an unspecified argument) wins over
-        // optional k metadata invented by Qwen. The operations still come from Qwen.
-        validation.kValue = selected.kValue;
-      }
-      if (validation.valid && selected?.valid && (
-        validation.cnl !== selected.cnl
-      )) {
-        validation = { ...validation, valid: false,
-          error: "選択された操作の順序・個数が変わっています。入力の全操作をそのまま残してください。" };
-      }
+      // Qwen always runs. Explicit UI choices remain authoritative if it drifts.
+      validation = reconcileSelection(validation, selected);
       if (validation.valid && contextCnl === validation.cnl && contextK === validation.kValue) {
         validation = {
           ...validation,
@@ -122,6 +121,7 @@ self.addEventListener("message", async (event) => {
           operations: validation.operations,
           kValue: validation.kValue,
           plan: candidate,
+          selectionRecovered: validation.selectionRecovered,
           attempts: attempt,
           elapsed_seconds: (performance.now() - startedAt) / 1000,
         });
@@ -137,7 +137,8 @@ self.addEventListener("message", async (event) => {
       supported: false,
       cnl: "",
       plan: candidate,
-      error: validation?.error ?? "CNL検査に失敗しました。",
+      error: "Qwenが指示を整理できませんでした。表現を変えるか、操作を選んで再送信してください。",
+      diagnostic: validation?.error,
       attempts: 2,
       elapsed_seconds: (performance.now() - startedAt) / 1000,
     });

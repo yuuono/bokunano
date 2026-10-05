@@ -240,7 +240,8 @@ export function validateOperationPlan(text) {
     if (!operation) return invalid(`操作内容を読み取れませんでした: ${phrase}。やりたい処理を具体的に伝えてください。`);
     operations.push(operation);
   }
-  if (!operations.length || operations.length > MAX_OPERATIONS) return invalid("一度に扱える操作は1～4個です。");
+  if (!operations.length) return invalid("Qwenの出力に操作が含まれていませんでした。");
+  if (operations.length > MAX_OPERATIONS) return invalid("一度に扱える操作は1～4個です。");
   const usesK = operations.some(operation => operation.requiresK);
   if (!usesK) kValue = null;
   const forms = operations.map((operation, index) => index === operations.length - 1 ? operation.final : operation.connective);

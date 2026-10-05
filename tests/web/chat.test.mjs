@@ -31,3 +31,24 @@ test('Python highlighting preserves exact code, indentation and HTML-like string
     assert.equal(pythonTokens(partial).map(t => t.text).join(''), partial);
   }
 });
+
+test('button choices survive malformed Qwen output but edited text loses the snapshot', async () => {
+  const { captureSelection, resolveSelection, reconcileSelection } = await import('../../web/chat-utils.js');
+  const { CNL_OPERATIONS, operationRequest, validateOperationPlan } = await import('../../web/cnl.js');
+  for (const operation of CNL_OPERATIONS) {
+    const text = operationRequest([operation]);
+    const snapshot = captureSelection(text);
+    const selected = resolveSelection(text, snapshot);
+    assert.equal(selected.operations[0].id, operation.id);
+    for (const badOutput of ['k=整数', '対応できません。', '各要素を三倍する\n各要素の絶対値を取る\n各要素を2倍する']) {
+      const recovered = reconcileSelection(validateOperationPlan(badOutput), selected);
+      assert.equal(recovered.valid, true);
+      assert.deepEqual(recovered.operations.map(op => op.id), [operation.id]);
+      assert.equal(recovered.selectionRecovered, true);
+    }
+    assert.equal(resolveSelection(text + '最後に逆順にして', snapshot), null);
+    assert.equal(resolveSelection(text, null), null);
+    assert.equal(reconcileSelection(validateOperationPlan(text), selected).selectionRecovered, false);
+  }
+  assert.equal(reconcileSelection(validateOperationPlan('不明な処理'), null).valid, false);
+});
