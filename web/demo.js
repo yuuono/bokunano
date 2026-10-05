@@ -30,6 +30,12 @@ const current = (job) => state.job === job && !job.cancelled;
 function setMessage(element, message, kind = "normal") {
   element.textContent = message;
   element.dataset.kind = kind;
+  if (["translation-status", "status"].includes(element.id)) {
+    if (state.job?.reply && message) state.job.reply.phase.textContent = message;
+    const alert = $("chat-alert");
+    alert.hidden = kind !== "error" || Boolean(state.job);
+    alert.textContent = alert.hidden ? "" : message;
+  }
 }
 
 function updateControls() {
@@ -45,11 +51,6 @@ function updateControls() {
     input.disabled = !state.ready || busy;
   }
   for (const button of document.querySelectorAll('#operation-list button')) button.disabled = !state.ready || busy || button.dataset.unavailable === "true";
-  for (const kind of ["qwen", "boku"]) {
-    const running = state.job?.kind === kind;
-    $(`${kind}-state`).textContent = running ? (state.job.cancelled ? "停止中" : "処理中") : "待機中";
-    $(`${kind}-state`).dataset.busy = String(running);
-  }
 }
 
 function updateScrollButton() {
@@ -86,19 +87,19 @@ function confirmReply(reply, validation) {
     const content = document.createElement("p");
     content.textContent = validation.cnl + (validation.kValue != null ? `\nk=${validation.kValue}` : "");
     result.append(label, content);
-    reply.message.append(result);
+    reply.detailsBody.append(result);
     if (validation.experimental) {
       const note = document.createElement("p");
       note.className = "experimental-note";
       note.textContent = "4操作は実験です。学習範囲は最大3操作のため、生成コードの内容を確認してください。";
-      reply.message.append(note);
+      reply.detailsBody.append(note);
     }
     const handoff = document.createElement("p");
     handoff.className = "model-handoff";
     handoff.setAttribute("role", "status");
     handoff.textContent = "Qwen：整理完了 → Boku1-nano：準備中";
-    reply.message.append(handoff);
-    state.confirmedReply = { message: reply.message, cnl: validation.cnl, kValue: validation.kValue, handoff };
+    reply.detailsBody.append(handoff);
+    state.confirmedReply = { message: reply.message, reply, cnl: validation.cnl, kValue: validation.kValue, handoff };
   });
   updateControls();
 }
@@ -109,7 +110,7 @@ function addMessage(role, text, kind = "normal") {
   message.dataset.kind = kind;
   const label = document.createElement("div");
   label.className = "message-label";
-  label.textContent = role === "user" ? "あなた" : "Qwen3-0.6B · 処理中";
+  label.textContent = role === "user" ? "あなた" : "AI";
   const body = document.createElement("p");
   body.textContent = text;
   message.append(label, body);
@@ -123,7 +124,31 @@ function addMessage(role, text, kind = "normal") {
     }
     turn.append(message);
   });
-  return { message, body };
+  if (role === "user") return { message, body };
+  const details = document.createElement("details");
+  details.className = "thinking-details";
+  details.dataset.busy = "true";
+  const summary = document.createElement("summary");
+  summary.textContent = "思考中";
+  const detailsBody = document.createElement("div");
+  detailsBody.className = "thinking-body";
+  const phase = document.createElement("p");
+  phase.className = "thinking-phase";
+  phase.setAttribute("role", "status");
+  phase.textContent = text;
+  detailsBody.append(phase);
+  details.append(summary, detailsBody);
+  body.textContent = "";
+  body.hidden = true;
+  message.insertBefore(details, body);
+  return { message, body, details, summary, detailsBody, phase };
+}
+
+function finishThinking(reply, notice = "") {
+  reply.details.dataset.busy = "false";
+  reply.summary.textContent = "処理の詳細";
+  reply.body.hidden = !notice;
+  reply.body.textContent = notice;
 }
 
 function checkCnl() {
@@ -258,9 +283,9 @@ async function translateInstruction(event) {
     state.contextCnl = previousCnl;
     state.contextK = previousK;
     const explanation = message;
-    reply.message.querySelector(".message-label").textContent = "指示の処理結果（エラー）";
+    finishThinking(reply, "生成できませんでした。指示を見直して、もう一度送信してください。");
     setMessage($("cnl-status"), "今回の指示は未確定です。再送信してください。");
-    followScroll($("conversation"), () => { reply.body.textContent = explanation; });
+    followScroll($("conversation"), () => { reply.phase.textContent = explanation; });
     reply.message.dataset.kind = "error";
     setMessage($("translation-status"), explanation, "error");
   };
@@ -273,11 +298,11 @@ async function translateInstruction(event) {
       if (!current(job)) return;
       if (message.type === "phase") setMessage($("translation-status"), message.message);
       if (message.type === "prompt") {
-        promptDetails(reply.message, `Qwenの実際のプロンプトを見る（${message.attempt}回目）`,
+        promptDetails(reply.detailsBody, `Qwenの実際のプロンプトを見る（${message.attempt}回目）`,
           `モデル: ${state.qwenManifest.model_id}\n\n生成条件:\n${JSON.stringify(message.options, null, 2)}\n\nメッセージ:\n${message.messages.map(item => `[${item.role}]\n${item.content}`).join("\n\n")}\n\nモデルに渡した文字列（チャットテンプレート適用後）:\n${message.prompt}`);
       }
       if (message.type === "attempt-result") {
-        promptDetails(reply.message, `Qwenの出力と検査結果（${message.attempt}回目・${message.valid ? "通過" : "不合格"}）`,
+        promptDetails(reply.detailsBody, `Qwenの出力と検査結果（${message.attempt}回目・${message.valid ? "通過" : "不合格"}）`,
           `${message.plan || "（出力なし）"}\n\n検査結果: ${message.valid ? "通過" : message.error}`);
       }
       if (message.type === "progress") {
@@ -295,7 +320,7 @@ async function translateInstruction(event) {
           const content = document.createElement("pre");
           content.textContent = message.plan;
           details.append(summary, content);
-          followScroll($("conversation"), () => reply.message.append(details));
+          followScroll($("conversation"), () => reply.detailsBody.append(details));
         }
         $("cnl").value = message.cnl || "";
         state.parameterK = message.kValue ?? null;
@@ -305,9 +330,11 @@ async function translateInstruction(event) {
           state.contextK = previousK;
           fail(message.error || "この指示を解釈できませんでした。操作を具体的に伝えるか、CNLを直接編集してください。対応は24種類・最大4操作です。");
         } else {
-          reply.message.querySelector(".message-label").textContent = "Qwen3-0.6B の出力";
-          reply.body.textContent = message.plan || "（出力なし）";
-          reply.body.className = "model-output";
+          promptDetails(reply.detailsBody, "Qwen3-0.6B の出力", message.plan || "（出力なし）");
+          const metrics = document.createElement("p");
+          metrics.className = "metrics";
+          metrics.textContent = $("translation-metrics").textContent;
+          reply.detailsBody.append(metrics);
           confirmReply(reply, validation);
           job.autoGenerate = true;
           setMessage($("translation-status"), "Qwenの整理が完了しました。Boku1-nanoへ切り替えています…", "success");
@@ -344,8 +371,7 @@ function stopJob() {
       state.confirmedReply.handoff.textContent = "処理を中止しました。Boku1-nanoは開始していません。";
     }
     job.autoGenerate = false;
-    job.reply.message.querySelector(".message-label").textContent = "Qwenの処理を中止";
-    job.reply.body.textContent = "解釈を中止しました。入力し直すか、前の指示から続けてください。";
+    finishThinking(job.reply, "生成を停止しました。");
     checkCnl();
     setMessage($("translation-status"), "Qwenの処理を中止しました。");
     finish(job);
@@ -422,7 +448,11 @@ function newCodeCard(model, validation, temperature) {
   const confirmed = state.confirmedReply;
   const lastTurn = $("conversation").querySelector(".chat-turn:last-child");
   const sameTurn = confirmed?.message.parentElement === lastTurn && confirmed.cnl === validation.cnl && confirmed.kValue === validation.kValue;
-  const turn = sameTurn ? lastTurn : addMessage("user", validation.cnl + (validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : "")).message.parentElement;
+  if (!sameTurn) addMessage("user", validation.cnl + (validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""));
+  const reply = sameTurn ? confirmed.reply : addMessage("assistant", "Boku1-nanoを準備しています…");
+  reply.details.dataset.busy = "true";
+  reply.summary.textContent = "思考中";
+  reply.body.hidden = true;
   // Keep stable IDs for the latest result, without duplicating IDs in history.
   $("output")?.removeAttribute("id");
   const card = document.createElement("article");
@@ -430,7 +460,7 @@ function newCodeCard(model, validation, temperature) {
   const header = document.createElement("div");
   header.className = "code-card-header";
   const label = document.createElement("span");
-  label.textContent = `Boku1-nano の出力（Python） · ${model.label} · T=${temperature.toFixed(1)}`;
+  label.textContent = "Python";
   const copy = document.createElement("button");
   copy.type = "button";
   copy.textContent = "コピー";
@@ -442,23 +472,28 @@ function newCodeCard(model, validation, temperature) {
   const pre = document.createElement("pre");
   const code = document.createElement("code");
   code.id = "output";
-  code.textContent = "モデルを準備しています…";
+  code.textContent = "";
+  card.hidden = true;
   pre.append(code);
   const meta = document.createElement("div");
   meta.className = "code-card-meta";
   meta.textContent = "準備中";
-  card.append(header, instruction, pre, meta);
+  card.append(header, pre);
+  const modelInfo = document.createElement("p");
+  modelInfo.className = "metrics";
+  modelInfo.textContent = `Boku1-nano · ${model.label} · T=${temperature.toFixed(1)}`;
+  reply.detailsBody.append(modelInfo, instruction, meta);
   const inputCnl = document.createElement("p");
   inputCnl.className = "code-instruction";
   inputCnl.textContent = `使用したCNL: ${validation.cnl}`;
-  card.insertBefore(inputCnl, pre);
-  followScroll($("conversation"), () => turn.append(card));
+  if (!sameTurn) reply.detailsBody.append(inputCnl);
+  followScroll($("conversation"), () => reply.message.append(card));
   copy.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(code.textContent); copy.textContent = "コピーしました"; }
     catch { copy.textContent = "コピーできませんでした"; }
     setTimeout(() => { copy.textContent = "コピー"; }, 1800);
   });
-  return { card, code, meta, copy, handoff: sameTurn ? confirmed.handoff : null };
+  return { card, code, meta, copy, reply, handoff: sameTurn ? confirmed.handoff : null };
 }
 
 async function generateCode() {
@@ -472,6 +507,7 @@ async function generateCode() {
   state.job = job;
   state.contextCnl = validation.cnl;
   const view = newCodeCard(model, validation, temperature);
+  job.reply = view.reply;
   const setHandoff = text => {
     if (view.handoff) followScroll($("conversation"), () => { view.handoff.textContent = `Qwen：整理完了 → Boku1-nano：${text}`; });
   };
@@ -491,7 +527,7 @@ async function generateCode() {
     if (promptIds.length >= model.context_length) throw new Error(`指示が長すぎます (${promptIds.length}/${model.context_length} tokens)。短くしてください。`);
     const runtime = await createSession(model, job);
     if (!runtime || !current(job)) return;
-    promptDetails(view.card, "Boku1-nanoの実際のプロンプトを見る",
+    promptDetails(view.reply.detailsBody, "Boku1-nanoの実際のプロンプトを見る",
       `モデル: ${model.id}\n温度: ${temperature}\n\n${formatBokuPrompt(validation.cnl)}\n入力トークンID:\n${JSON.stringify(promptIds)}${validation.kValue !== null ? `\n\nk=${validation.kValue} は生成後に関数の初期値として設定します。上記プロンプトには含めません。` : ""}`);
     const currentIds = [...promptIds];
     const generatedIds = [];
@@ -511,7 +547,7 @@ async function generateCode() {
         currentIds.push(tokenId);
         generatedIds.push(tokenId);
         generatedCount = generatedIds.length;
-        followScroll($("conversation"), () => highlightPython(view.code, tokenizer.decode(generatedIds)));
+        followScroll($("conversation"), () => { view.card.hidden = false; highlightPython(view.code, tokenizer.decode(generatedIds)); });
         view.copy.disabled = validation.kValue !== null;
         if (step % 2 === 0) await new Promise(requestAnimationFrame);
       } finally {
@@ -531,7 +567,7 @@ async function generateCode() {
       const pre = document.createElement("pre");
       pre.textContent = rawCode;
       details.append(summary, pre);
-      followScroll($("conversation"), () => view.card.append(details));
+      followScroll($("conversation"), () => view.reply.detailsBody.append(details));
     }
     const totalSeconds = (performance.now() - startedAt) / 1000;
     const result = job.cancelled ? "中止・未完了" : ended ? "生成完了" : "長さ上限・未完了";
@@ -540,21 +576,21 @@ async function generateCode() {
     followScroll($("conversation"), () => { view.meta.textContent = `${result} · ${runtime.backend} · ${generatedIds.length} tokens · 生成 ${seconds.toFixed(1)}秒 · 合計 ${totalSeconds.toFixed(1)}秒`; });
     $("metrics").textContent = `入力 ${promptIds.length} / 生成 ${generatedIds.length} tokens · T=${temperature.toFixed(1)} · ${(generatedIds.length / Math.max(seconds, .001)).toFixed(1)} tokens/s`;
     setMessage($("status"), job.cancelled ? "生成を中止しました。" : ended ? "コードの生成が完了しました。" : "系列長の上限に達しました。コードは未完了の可能性があります。", ended ? "success" : "normal");
-    if (!generatedCount) view.code.textContent = "コードは生成されませんでした。指示やモデルを変えて再試行してください。";
+    finishThinking(view.reply, job.cancelled ? "生成を停止しました。" : !generatedCount ? "コードが生成されませんでした。もう一度お試しください。" : !ended ? "長さの上限に達したため、コードは未完成です。" : "");
   } catch (error) {
     if (!job.cancelled) {
       setMessage($("status"), errorText(error), "error");
       view.meta.textContent = `エラー: ${errorText(error)}`;
       view.card.dataset.termination = "error";
       setHandoff("生成エラー");
-      if (!generatedCount) view.code.textContent = "生成できませんでした。下の状態表示を確認してください。";
+      finishThinking(view.reply, "生成できませんでした。処理の詳細を確認して、もう一度お試しください。");
     }
   } finally {
     if (job.cancelled) {
       view.meta.textContent = "中止・未完了";
       view.card.dataset.termination = "cancelled";
       setHandoff("生成を中止");
-      if (!generatedCount) view.code.textContent = "生成を中止しました。";
+      finishThinking(view.reply, "生成を停止しました。");
       setMessage($("status"), "生成を中止しました。");
     }
     finish(job);

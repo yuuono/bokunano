@@ -329,3 +329,21 @@ html, body { height: 100%; overflow: hidden; }
 }
 
 .model-handoff { margin: 18px 0 0 !important; padding: 12px 16px; border: 1px solid var(--line); border-radius: 8px; color: var(--accent); background: var(--soft); font-size: 14px; font-weight: 600; }
+
+/* One AI reply: progress and intermediate outputs are available on demand. */
+.thinking-details { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+.thinking-details > summary { cursor: pointer; width: fit-content; padding: 4px 0; border-radius: 4px; }
+.thinking-details > summary:hover { color: var(--text); }
+.thinking-details > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.thinking-details[data-busy="true"] > summary { animation: thinking-pulse 1.8s ease-in-out infinite; }
+.thinking-body { margin-top: 12px; padding: 16px 20px; border-left: 2px solid var(--line); background: #f8f5ef; border-radius: 0 8px 8px 0; }
+.thinking-body .thinking-phase { font-size: 14px; }
+.thinking-body .cnl-result { background: transparent; border: 0; padding: 0; margin: 16px 0; }
+.thinking-body .code-instruction, .thinking-body .code-card-meta { padding: 10px 0; border: 0; }
+.thinking-body .model-handoff { border: 0; background: transparent; padding: 0; font-weight: 400; }
+.message.assistant > .message-label { color: var(--text); font-size: 13px; }
+.message.assistant > .code-card { margin-top: 8px; }
+.chat-status[hidden], .code-card[hidden] { display: none; }
+#chat-alert { max-width: 900px; margin: 0 auto 8px; }
+@keyframes thinking-pulse { 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) { .thinking-details[data-busy="true"] > summary { animation: none; } }
