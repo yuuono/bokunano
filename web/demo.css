@@ -347,3 +347,15 @@ html, body { height: 100%; overflow: hidden; }
 #chat-alert { max-width: 900px; margin: 0 auto 8px; }
 @keyframes thinking-pulse { 50% { opacity: .45; } }
 @media (prefers-reduced-motion: reduce) { .thinking-details[data-busy="true"] > summary { animation: none; } }
+
+/* Model stages remain grouped even while new progress and prompts arrive. */
+.thinking-body { padding: 0; border: 0; background: transparent; }
+.processing-stage { padding: 18px 20px; border: 1px solid var(--line); border-radius: 10px; background: #fffdfa; }
+.processing-stage + .processing-stage { margin-top: 20px; }
+.processing-stage h4 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 0 0 12px; color: var(--text); font-size: 14px; }
+.processing-stage h4 strong { font-size: 16px; }
+.processing-stage h4 > span:last-child { color: var(--muted); font-weight: 400; }
+.stage-number { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 7px; background: #eee6da; color: #66513b; font-size: 12px; }
+.processing-stage-boku { border-color: #cbd2d8; }
+.processing-stage-boku .stage-number { background: #e9edf1; color: #506070; }
+@media (max-width: 480px) { .processing-stage { padding: 14px; } }

@@ -31,7 +31,8 @@ function setMessage(element, message, kind = "normal") {
   element.textContent = message;
   element.dataset.kind = kind;
   if (["translation-status", "status"].includes(element.id)) {
-    if (state.job?.reply && message) state.job.reply.phase.textContent = message;
+    const stage = state.job?.reply?.stages[element.id === "translation-status" ? "qwen" : "boku"];
+    if (stage && message) stage.phase.textContent = message;
     const alert = $("chat-alert");
     alert.hidden = kind !== "error" || Boolean(state.job);
     alert.textContent = alert.hidden ? "" : message;
@@ -87,24 +88,16 @@ function confirmReply(reply, validation) {
     const content = document.createElement("p");
     content.textContent = validation.cnl + (validation.kValue != null ? `\nk=${validation.kValue}` : "");
     result.append(label, content);
-    reply.detailsBody.append(result);
-    if (validation.experimental) {
-      const note = document.createElement("p");
-      note.className = "experimental-note";
-      note.textContent = "4操作は実験です。学習範囲は最大3操作のため、生成コードの内容を確認してください。";
-      reply.detailsBody.append(note);
-    }
-    const handoff = document.createElement("p");
-    handoff.className = "model-handoff";
-    handoff.setAttribute("role", "status");
-    handoff.textContent = "Qwen：整理完了 → Boku1-nano：準備中";
-    reply.detailsBody.append(handoff);
+    const boku = addProcessingStage(reply, "boku");
+    boku.body.append(result);
+    const handoff = boku.phase;
+    handoff.textContent = "整理された指示を受け取りました。準備中…";
     state.confirmedReply = { message: reply.message, reply, cnl: validation.cnl, kValue: validation.kValue, handoff };
   });
   updateControls();
 }
 
-function addMessage(role, text, kind = "normal") {
+function addMessage(role, text, kind = "normal", stageKind = "qwen") {
   const message = document.createElement("article");
   message.className = `message ${role}`;
   message.dataset.kind = kind;
@@ -132,16 +125,37 @@ function addMessage(role, text, kind = "normal") {
   summary.textContent = "思考中";
   const detailsBody = document.createElement("div");
   detailsBody.className = "thinking-body";
-  const phase = document.createElement("p");
-  phase.className = "thinking-phase";
-  phase.setAttribute("role", "status");
-  phase.textContent = text;
-  detailsBody.append(phase);
   details.append(summary, detailsBody);
   body.textContent = "";
   body.hidden = true;
   message.insertBefore(details, body);
-  return { message, body, details, summary, detailsBody, phase };
+  const reply = { message, body, details, summary, detailsBody, stages: {} };
+  const stage = addProcessingStage(reply, stageKind);
+  stage.phase.textContent = text;
+  reply.phase = stage.phase;
+  return reply;
+}
+
+function addProcessingStage(reply, kind) {
+  if (reply.stages[kind]) return reply.stages[kind];
+  const section = document.createElement("section");
+  section.className = `processing-stage processing-stage-${kind}`;
+  const heading = document.createElement("h4");
+  const number = document.createElement("span");
+  number.className = "stage-number";
+  number.textContent = String(Object.keys(reply.stages).length + 1).padStart(2, "0");
+  const name = document.createElement("strong");
+  name.textContent = kind === "qwen" ? "Qwen3-0.6B" : "Boku1-nano";
+  const purpose = document.createElement("span");
+  purpose.textContent = kind === "qwen" ? "指示の整理" : "コード生成";
+  heading.append(number, name, purpose);
+  const phase = document.createElement("p");
+  phase.className = "thinking-phase";
+  phase.setAttribute("role", "status");
+  const body = document.createElement("div");
+  section.append(heading, phase, body);
+  reply.detailsBody.append(section);
+  return reply.stages[kind] = { section, phase, body };
 }
 
 function finishThinking(reply, notice = "") {
@@ -298,11 +312,11 @@ async function translateInstruction(event) {
       if (!current(job)) return;
       if (message.type === "phase") setMessage($("translation-status"), message.message);
       if (message.type === "prompt") {
-        promptDetails(reply.detailsBody, `Qwenの実際のプロンプトを見る（${message.attempt}回目）`,
+        promptDetails(reply.stages.qwen.body, `Qwenの実際のプロンプトを見る（${message.attempt}回目）`,
           `モデル: ${state.qwenManifest.model_id}\n\n生成条件:\n${JSON.stringify(message.options, null, 2)}\n\nメッセージ:\n${message.messages.map(item => `[${item.role}]\n${item.content}`).join("\n\n")}\n\nモデルに渡した文字列（チャットテンプレート適用後）:\n${message.prompt}`);
       }
       if (message.type === "attempt-result") {
-        promptDetails(reply.detailsBody, `Qwenの出力と検査結果（${message.attempt}回目・${message.valid ? "通過" : "不合格"}）`,
+        promptDetails(reply.stages.qwen.body, `Qwenの出力と検査結果（${message.attempt}回目・${message.valid ? "通過" : "不合格"}）`,
           `${message.plan || "（出力なし）"}\n\n検査結果: ${message.valid ? "通過" : message.error}`);
       }
       if (message.type === "progress") {
@@ -320,7 +334,7 @@ async function translateInstruction(event) {
           const content = document.createElement("pre");
           content.textContent = message.plan;
           details.append(summary, content);
-          followScroll($("conversation"), () => reply.detailsBody.append(details));
+          followScroll($("conversation"), () => reply.stages.qwen.body.append(details));
         }
         $("cnl").value = message.cnl || "";
         state.parameterK = message.kValue ?? null;
@@ -330,11 +344,11 @@ async function translateInstruction(event) {
           state.contextK = previousK;
           fail(message.error || "この指示を解釈できませんでした。操作を具体的に伝えるか、CNLを直接編集してください。対応は24種類・最大4操作です。");
         } else {
-          promptDetails(reply.detailsBody, "Qwen3-0.6B の出力", message.plan || "（出力なし）");
+          promptDetails(reply.stages.qwen.body, "Qwen3-0.6B の出力", message.plan || "（出力なし）");
           const metrics = document.createElement("p");
           metrics.className = "metrics";
           metrics.textContent = $("translation-metrics").textContent;
-          reply.detailsBody.append(metrics);
+          reply.stages.qwen.body.append(metrics);
           confirmReply(reply, validation);
           job.autoGenerate = true;
           setMessage($("translation-status"), "Qwenの整理が完了しました。Boku1-nanoへ切り替えています…", "success");
@@ -449,7 +463,8 @@ function newCodeCard(model, validation, temperature) {
   const lastTurn = $("conversation").querySelector(".chat-turn:last-child");
   const sameTurn = confirmed?.message.parentElement === lastTurn && confirmed.cnl === validation.cnl && confirmed.kValue === validation.kValue;
   if (!sameTurn) addMessage("user", validation.cnl + (validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""));
-  const reply = sameTurn ? confirmed.reply : addMessage("assistant", "Boku1-nanoを準備しています…");
+  const reply = sameTurn ? confirmed.reply : addMessage("assistant", "Boku1-nanoを準備しています…", "normal", "boku");
+  const boku = addProcessingStage(reply, "boku");
   reply.details.dataset.busy = "true";
   reply.summary.textContent = "思考中";
   reply.body.hidden = true;
@@ -468,7 +483,7 @@ function newCodeCard(model, validation, temperature) {
   header.append(label, copy);
   const instruction = document.createElement("p");
   instruction.className = "code-instruction";
-  instruction.textContent = validation.operations.map(item => item.label).join(" → ") + (validation.kValue !== null ? ` / k=${validation.kValue}` : "") + (validation.experimental ? " / 4操作・実験" : "");
+  instruction.textContent = validation.operations.map(item => item.label).join(" → ") + (validation.kValue !== null ? ` / k=${validation.kValue}` : "");
   const pre = document.createElement("pre");
   const code = document.createElement("code");
   code.id = "output";
@@ -482,11 +497,11 @@ function newCodeCard(model, validation, temperature) {
   const modelInfo = document.createElement("p");
   modelInfo.className = "metrics";
   modelInfo.textContent = `Boku1-nano · ${model.label} · T=${temperature.toFixed(1)}`;
-  reply.detailsBody.append(modelInfo, instruction, meta);
+  boku.body.append(modelInfo, instruction, meta);
   const inputCnl = document.createElement("p");
   inputCnl.className = "code-instruction";
   inputCnl.textContent = `使用したCNL: ${validation.cnl}`;
-  if (!sameTurn) reply.detailsBody.append(inputCnl);
+  if (!sameTurn) boku.body.append(inputCnl);
   followScroll($("conversation"), () => reply.message.append(card));
   copy.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(code.textContent); copy.textContent = "コピーしました"; }
@@ -509,7 +524,7 @@ async function generateCode() {
   const view = newCodeCard(model, validation, temperature);
   job.reply = view.reply;
   const setHandoff = text => {
-    if (view.handoff) followScroll($("conversation"), () => { view.handoff.textContent = `Qwen：整理完了 → Boku1-nano：${text}`; });
+    if (view.handoff) followScroll($("conversation"), () => { view.handoff.textContent = text; });
   };
   setHandoff("コード生成中");
   setMessage($("translation-status"), view.handoff ? "Qwenの整理が完了しました。" : "", "success");
@@ -527,7 +542,7 @@ async function generateCode() {
     if (promptIds.length >= model.context_length) throw new Error(`指示が長すぎます (${promptIds.length}/${model.context_length} tokens)。短くしてください。`);
     const runtime = await createSession(model, job);
     if (!runtime || !current(job)) return;
-    promptDetails(view.reply.detailsBody, "Boku1-nanoの実際のプロンプトを見る",
+    promptDetails(view.reply.stages.boku.body, "Boku1-nanoの実際のプロンプトを見る",
       `モデル: ${model.id}\n温度: ${temperature}\n\n${formatBokuPrompt(validation.cnl)}\n入力トークンID:\n${JSON.stringify(promptIds)}${validation.kValue !== null ? `\n\nk=${validation.kValue} は生成後に関数の初期値として設定します。上記プロンプトには含めません。` : ""}`);
     const currentIds = [...promptIds];
     const generatedIds = [];
@@ -567,7 +582,7 @@ async function generateCode() {
       const pre = document.createElement("pre");
       pre.textContent = rawCode;
       details.append(summary, pre);
-      followScroll($("conversation"), () => view.reply.detailsBody.append(details));
+      followScroll($("conversation"), () => view.reply.stages.boku.body.append(details));
     }
     const totalSeconds = (performance.now() - startedAt) / 1000;
     const result = job.cancelled ? "中止・未完了" : ended ? "生成完了" : "長さ上限・未完了";
