@@ -54,11 +54,16 @@ function updateScrollButton() {
   $("latest-message").hidden = !$("conversation").querySelector(".chat-turn") || nearBottom($("conversation"));
 }
 
-function followScroll(element, change, force = false) {
-  const follow = force || nearBottom(element);
+function followScroll(element, change) {
   change();
-  if (follow) element.scrollTop = element.scrollHeight;
-  updateScrollButton();
+  const scrollToEnd = () => {
+    if (!element.querySelector(".chat-turn")) return;
+    element.scrollTop = element.scrollHeight;
+    updateScrollButton();
+  };
+  scrollToEnd();
+  // Status and composer updates can resize the viewport later in the same event.
+  requestAnimationFrame(scrollToEnd);
 }
 
 function resizeComposer() {
@@ -124,7 +129,7 @@ function addMessage(role, text, kind = "normal") {
       $("conversation").append(turn);
     }
     turn.append(message);
-  }, role === "user");
+  });
   return { message, body };
 }
 
@@ -439,7 +444,7 @@ function newCodeCard(model, validation, temperature) {
   inputCnl.className = "code-instruction";
   inputCnl.textContent = `使用したCNL: ${validation.cnl}`;
   card.insertBefore(inputCnl, pre);
-  followScroll($("conversation"), () => turn.append(card), true);
+  followScroll($("conversation"), () => turn.append(card));
   copy.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(code.textContent); copy.textContent = "コピーしました"; }
     catch { copy.textContent = "コピーできませんでした"; }
@@ -639,7 +644,7 @@ function updateDraft() {
 }
 $("prompt").addEventListener("input", updateDraft);
 $("conversation").addEventListener("scroll", updateScrollButton, { passive: true });
-$("latest-message").addEventListener("click", () => followScroll($("conversation"), () => {}, true));
+$("latest-message").addEventListener("click", () => followScroll($("conversation"), () => {}));
 function setSettingsOpen(open) {
   const panel = $("settings-panel");
   if (open && !panel.open) panel.showModal();

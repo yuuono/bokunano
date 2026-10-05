@@ -26,7 +26,7 @@ test('operation selection drafts editable Japanese, retaining duplicates and num
   assert.throws(() => appendOperationToDraft(four, 'order_reverse'), /4つまで/);
   assert.throws(() => appendOperationToDraft('', 'not_an_operation'));
 });
-test('auto-scroll follows the end without pulling a reader away from older messages', () => {
+test('nearBottom detects whether the latest-message button is needed', () => {
   assert.equal(nearBottom({scrollHeight:1200,clientHeight:500,scrollTop:700}), true);
   assert.equal(nearBottom({scrollHeight:1200,clientHeight:500,scrollTop:650}), true);
   assert.equal(nearBottom({scrollHeight:1200,clientHeight:500,scrollTop:200}), false);
