@@ -4,7 +4,7 @@ import {
   buildRevisionMessages,
   buildNormalizerUserPrompt,
   validateOperationPlan,
-} from "./cnl.js?v=3";
+} from "./cnl.js?v=8";
 import { qwenSamplingOptions } from "./sampling.js";
 
 let generator = null;
@@ -83,6 +83,7 @@ self.addEventListener("message", async (event) => {
     const messages = contextCnl
       ? buildRevisionMessages(instruction, contextCnl, contextK)
       : buildNormalizerMessages(instruction);
+    const selected = contextCnl ? null : validateOperationPlan(instruction);
     for (let attempt = 1; attempt <= 2; attempt += 1) {
       send("phase", { message: `Qwenが${contextCnl ? "変更後の" : "指示の"}操作を整理しています… (${attempt}/2)` });
       candidate = await generatePlan(messages, temperature, attempt);
@@ -96,6 +97,12 @@ self.addEventListener("message", async (event) => {
         return;
       }
       validation = validateOperationPlan(candidate);
+      if (validation.valid && selected?.valid && (
+        validation.cnl !== selected.cnl || validation.kValue !== selected.kValue
+      )) {
+        validation = { ...validation, valid: false,
+          error: "選択された操作の順序・個数・数値が変わっています。入力の全操作をそのまま残してください。" };
+      }
       if (validation.valid && contextCnl === validation.cnl && contextK === validation.kValue) {
         validation = {
           ...validation,

@@ -158,3 +158,63 @@ test('both 1M three-epoch models point to verified ONNX files and their training
     assert.ok(model.verification.comparisons.every(item=>item.generated_tokens>0 && item.max_abs_diff<2e-4));
   }
 });
+
+
+test('Qwen formatting variants preserve operation order without requiring numbering', () => {
+  const expected = ['map_abs', 'order_descending'];
+  for (const text of [
+    '各要素の絶対値を取る\n値を降順に並べる',
+    '- 各要素の絶対値を取る\n- 値を降順に並べる',
+    '３．各要素の絶対値を取る\n５）値を降順に並べる',
+    '手順：\n```text\n1. **各要素の絶対値を取る**\n3. `値を降順に並べる`\n```',
+    '各要素を絶対値にして、大きい順に並べてください。',
+    '各要素を絶対値にする\n降順にソートする',
+    '各要素の絶対値を取る → 値を降順に並べる',
+    '整数リストxsから各要素の絶対値を取り、値を降順に並べるsolve関数を書いてください。',
+  ]) {
+    const result = validateOperationPlan(text);
+    assert.equal(result.valid, true, text + ': ' + result.error);
+    assert.deepEqual(result.operations.map(op => op.id), expected);
+  }
+  const k = validateOperationPlan('出力：\n・各要素にkを加える\nｋ＝－３');
+  assert.equal(k.valid, true);
+  assert.equal(k.kValue, -3);
+  const four = validateOperationPlan('- 偶数だけを残す\n- 各要素を2倍する\n- 値を昇順に並べる\n- 元素の順番を逆にする');
+  assert.deepEqual(four.operations.map(op => op.id), ['filter_even', 'map_mul_2', 'order_ascending', 'order_reverse']);
+});
+
+test('format tolerance never drops unknown operations, negations, conflicting numbers or extra steps', () => {
+  for (const text of [
+    '偶数だけを残す\n合計する',
+    '各要素の絶対値を取らない\n値を降順に並べる',
+    '説明には各要素の絶対値を取るとありますが、実行しない',
+    '- 各要素にkを加える\nk=3\nk=5',
+    '偶数だけを残す\n'.repeat(5),
+  ]) assert.equal(validateOperationPlan(text).valid, false, text);
+  const repeated = validateOperationPlan('偶数だけを残して、偶数だけを残してください。');
+  assert.equal(repeated.operations.length, 2);
+});
+
+test('every operation button produces a parsable natural-language draft', async () => {
+  const { operationRequest } = await import('../../web/cnl.js');
+  for (const operation of CNL_OPERATIONS) {
+    const result = validateOperationPlan(operationRequest([operation], operation.requiresK ? 0 : null));
+    assert.equal(result.valid, true, operation.id);
+    assert.equal(result.operations[0].id, operation.id);
+    assert.equal(result.kValue, operation.requiresK ? 0 : null);
+  }
+});
+
+test('concrete Qwen phrases preserve integers and reject conflicting constants', () => {
+  for (const value of [3, -5, 0]) {
+    const result = validateOperationPlan(`各要素に${value}を足す`);
+    assert.equal(result.valid, true);
+    assert.equal(result.kValue, value);
+    assert.equal(result.operations[0].id, 'map_add_k');
+  }
+  assert.equal(validateOperationPlan('各要素に3を足す\nk=3').valid, true);
+  assert.equal(validateOperationPlan('各要素に3を足す\n先頭から5個を取る').valid, false);
+  assert.equal(validateOperationPlan('各要素に3を足す\nk=5').valid, false);
+  assert.equal(validateOperationPlan('各要素に3.5を足す').valid, false);
+  assert.equal(validateOperationPlan('各要素を3倍する').kValue, null);
+});

@@ -1,25 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { explicitOperationPlan, appendOperationToDraft, nearBottom } from '../../web/chat-utils.js';
+import { appendOperationToDraft, nearBottom } from '../../web/chat-utils.js';
 import { pythonTokens } from '../../web/python-highlight.js';
 
 const four = '1. 偶数だけを残す\n2. 各要素を2倍する\n3. 値を昇順に並べる\n4. 現在の要素順を反転する';
-test('explicit four-operation input preserves every step without a Qwen round trip', () => {
-  const result = explicitOperationPlan(four);
-  assert.equal(result.valid, true);
-  assert.equal(result.experimental, true);
-  assert.deepEqual(result.operations.map(op => op.id), ['filter_even','map_mul_2','order_ascending','order_reverse']);
-  assert.equal(explicitOperationPlan(four + '\n5. 偶数だけを残す').valid, false);
-  assert.equal(explicitOperationPlan('1. 自由に処理する'), null);
-  assert.equal(explicitOperationPlan('各要素に3を足して'), null);
-  assert.equal(explicitOperationPlan(four, true), null);
-  assert.equal(explicitOperationPlan('1. 各要素にkを加える\nk=-3').kValue, -3);
-});
-test('operation insertion retains duplicates, numbers and free text, with a four-step limit', () => {
-  assert.equal(appendOperationToDraft('', 'filter_even'), '1. 偶数だけを残す');
-  assert.equal(appendOperationToDraft('1. 偶数だけを残す', 'filter_even'), '1. 偶数だけを残す\n2. 偶数だけを残す');
-  assert.equal(appendOperationToDraft('1. 各要素にkを加える\nk=3', 'order_reverse'), '1. 各要素にkを加える\n2. 現在の要素順を反転する\nk=3');
-  assert.equal(appendOperationToDraft('3を足して', 'order_reverse'), '3を足して\n現在の要素順を反転する');
+test('operation selection drafts editable Japanese, retaining duplicates and numbers', () => {
+  assert.equal(appendOperationToDraft('', 'map_abs'), '各要素を絶対値にしてください。');
+  assert.equal(appendOperationToDraft('各要素を絶対値にしてください。', 'order_descending'), '各要素を絶対値にして、大きい順に並べてください。');
+  assert.equal(appendOperationToDraft('偶数だけを残してください。', 'filter_even'), '偶数だけを残して、偶数だけを残してください。');
+  assert.equal(appendOperationToDraft('1. 各要素にkを加える\nk=3', 'order_reverse'), '各要素にkを足して、要素の順番を逆にしてください。\nk=3');
+  assert.equal(appendOperationToDraft('3を足して', 'order_reverse'), '3を足して\nその後、要素の順番を逆にしてください。');
   assert.throws(() => appendOperationToDraft(four, 'order_reverse'), /4つまで/);
   assert.throws(() => appendOperationToDraft('', 'not_an_operation'));
 });

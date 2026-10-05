@@ -32,6 +32,39 @@ export const CNL_OPERATIONS = Object.freeze([
   { id: "slice_every_other", label: "先頭から1個おきに取る", connective: "先頭から1個おきに取り", final: "先頭から1個おきに取る", requiresK: false },
 ]);
 
+// Friendly input phrases also cover common Qwen wording without guessing unknown operations.
+export const OPERATION_REQUESTS = Object.freeze({
+  filter_even: "偶数だけを残して", filter_odd: "奇数だけを残して",
+  filter_gt_k: "kより大きい値だけを残して", filter_ge_k: "k以上の値だけを残して",
+  filter_lt_k: "kより小さい値だけを残して", filter_le_k: "k以下の値だけを残して",
+  filter_multiple_k: "kの倍数だけを残して", filter_positive: "正の値だけを残して",
+  filter_negative: "負の値だけを残して", filter_zero: "ゼロだけを残して",
+  map_add_k: "各要素にkを足して", map_sub_k: "各要素からkを引いて",
+  map_mul_k: "各要素にkを掛けて", map_mul_2: "各要素を2倍して",
+  map_mul_3: "各要素を3倍して", map_negate: "各要素の符号を反転して",
+  map_abs: "各要素を絶対値にして", map_square: "各要素を二乗して",
+  order_ascending: "小さい順に並べて", order_descending: "大きい順に並べて",
+  order_reverse: "要素の順番を逆にして", slice_first_k: "先頭からk個を取って",
+  slice_last_k: "末尾からk個を取って", slice_every_other: "先頭から1個おきに取って",
+});
+
+export function operationRequest(operations, kValue = null) {
+  return operations.map(op => OPERATION_REQUESTS[op.id]).join("、") + "ください。"
+    + (kValue != null ? `\nk=${kValue}` : "");
+}
+
+const OPERATION_ALIASES = {
+  filter_even: ["偶数を残す", "偶数のみを残す"],
+  filter_odd: ["奇数を残す", "奇数のみを残す"],
+  map_add_k: ["各要素にkを足す", "各要素にkを加算する"],
+  map_mul_k: ["各要素をk倍する", "各要素にkをかける"],
+  map_abs: ["絶対値を取る", "各要素を絶対値にする", "絶対値にする"],
+  map_square: ["各要素を2乗する"],
+  order_ascending: ["昇順に並べる", "昇順にソートする", "小さい順に並べる"],
+  order_descending: ["降順に並べる", "降順にソートする", "大きい順に並べる"],
+  order_reverse: ["要素の順番を逆にする", "要素順を逆にする", "順番を逆にする", "逆順にする", "要素の順序を反転する"],
+};
+
 function invalid(error, cnl = "") {
   return { valid: false, error, cnl, operations: [] };
 }
@@ -96,68 +129,21 @@ export function validateCnl(rawCnl) {
 
 export function buildNormalizerSystemPrompt() {
   const allowed = CNL_OPERATIONS.map(item => `- ${item.label}`).join("\n");
-  return `あなたは整数リスト処理の手順を選ぶアシスタントです。
-日本語の依頼を、次の24操作から1～4操作の番号付きリストにしてください。
-各行は「1. 操作名」の形式です。操作名は許可表と完全に同じ文字を使ってください。
-全ての手順を指示の順番で残してください。重複する操作も省略しないでください。
-コード、CNL、説明、Markdownのコードフェンスは出力しないでください。
-具体的な整数はkを使う操作で表現できます。「3足す」「3を足して」は「各要素にkを加える」とし、最後の行に「k=3」を出力してください。
-数値を指定する場合、番号付きリストの後に「k=整数」を1行だけ付けてください。負の整数と0も使えます。kの値が未指定なら付けません。
-「3倍」は各要素を3倍する、「2倍」は各要素を2倍するを選びます。それ以外の倍率は各要素にkを掛けるを選びます。
-全てのk操作は同じ値を共有します。異なる定数を同時に必要とする依頼（3を足して5個取るなど）は対応できません。数値を黙って変更・省略しないでください。
-未対応操作、5操作以上、曖昧な依頼には「${UNSUPPORTED_CNL}」だけを出力してください。
+  return `日本語の依頼を、許可表の1～4操作に変換してください。
+出力は操作名を1行ずつ。番号と説明は不要です。順序・重複を保ち、全操作を残してください。
+5操作以上、許可表にない処理、異なるkの値を同時に必要とする処理には「${UNSUPPORTED_CNL}」と答えてください。
+kを含む操作で具体的な整数が指定された場合だけ、末尾にk=整数を付けてください。未指定のkを補わないでください。
+2倍・3倍は専用の操作なのでkは不要です。それ以外の倍率はkを掛ける操作を使います。
+変更依頼では、前の手順の変更されていない部分とkを保持してください。数値だけの変更も可能です。
 
 許可表:
-${allowed}
+${allowed}`;
 
-変更依頼の場合:
-- 変更されていない操作はそのまま保つ。
-- kが指定済みで「5に変えて」「数値を5に」「3ではなく5」と言われたら、操作は同じままk=5へ更新する。これは対応可能な変更です。
-- 「AをBに変更」はAをBに置き換える。「最後にB」は末尾へ追加する。
-- 新しい処理を一から依頼された場合は以前の手順を引き継がない。
-
-例:
-入力: 3足す
-出力:
-1. 各要素にkを加える
-k=3
-
-入力: 各要素から5を引いて
-出力:
-1. 各要素からkを引く
-k=5
-
-現在の手順:
-1. 各要素にkを加える
-k=3
-変更依頼: 5に変えて
-出力:
-1. 各要素にkを加える
-k=5
-
-現在の手順:
-1. 各要素にkを加える
-k=3
-変更依頼: 最後に逆順にして
-出力:
-1. 各要素にkを加える
-2. 現在の要素順を反転する
-k=3
-
-入力: 偶数を残して2倍して
-出力:
-1. 偶数だけを残す
-2. 各要素を2倍する
-
-入力: 絶対値にして大きい順に並べて
-出力:
-1. 各要素の絶対値を取る
-2. 値を降順に並べる`;
 }
 
 export function buildNormalizerUserPrompt(instruction, previousOutput = "", error = "") {
   if (!previousOutput) return `入力: ${instruction}\n出力:`;
-  return `入力: ${instruction}\n前回の出力: ${previousOutput}\n検査エラー: ${error}\n許可表の操作名だけを使い、全手順を番号付きリストで再出力してください。\n出力:`;
+  return `入力: ${instruction}\n前回の出力: ${previousOutput}\n検査エラー: ${error}\n許可表の操作名だけを使い、全手順を1行に1つずつ再出力してください。番号は不要です。\n出力:`;
 }
 
 export function buildNormalizerMessages(instruction) {
@@ -191,26 +177,67 @@ export function numberedSteps(text) {
   return steps;
 }
 
-// Strict serialization of Qwen-selected operations, never interpretation of user text.
+// Tolerate presentation differences, but never discard an unknown step or negation.
 export function validateOperationPlan(text) {
-  const lines = text.trim().split(/\r?\n/).filter(line => line.trim());
+  if (typeof text !== "string" || !text.trim()) return invalid("やりたい処理を入力してください。");
+  const normalized = text.normalize("NFKC").trim();
+  if (normalized === UNSUPPORTED_CNL) return invalid("この指示は24種類の操作では表現できません。");
+  const lines = normalized.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  const body = [];
   let kValue = null;
-  if (/^k\s*=/.test(lines.at(-1)?.trim() || "")) {
-    const parameter = lines.pop().trim().match(/^k\s*=\s*([+-]?\d+)$/);
-    if (!parameter) return invalid("kには整数を1つ指定してください。");
-    try { kValue = parseK(parameter[1]); } catch (error) { return invalid(error.message); }
+  let hasK = false;
+  for (let line of lines) {
+    if (/^```(?:text|plaintext|markdown|md|japanese)?$/i.test(line)) continue;
+    line = line.replace(/\*\*([^*]+)\*\*/g, "$1").replace(/`([^`]+)`/g, "$1");
+    if (/^(?:出力|手順|操作|処理手順|操作一覧|以下の操作|以下の手順)[:：]?$/.test(line)) continue;
+    line = line.replace(/^(?:出力|手順|操作一覧)[:：]\s*/, "");
+    line = line.replace(/^(?:[-*•・]\s*|(?:\(\d+\)|\d+[.)、:])\s*)/, "");
+    if (/^k\s*[=:]/i.test(line)) {
+      const parameter = line.match(/^k\s*[=:]\s*([+-]?\d+)[。.]?$/i);
+      if (hasK || !parameter) return invalid("kには整数を1つ指定してください。");
+      try { kValue = parseK(parameter[1]); } catch (error) { return invalid(error.message); }
+      hasK = true;
+    } else body.push(line);
   }
-  const steps = numberedSteps(lines.join("\n"));
-  if (!steps.length || steps.length > MAX_OPERATIONS) {
-    return invalid("1～4操作を、1から始まる番号付きリストで出力してください。");
+  // A complete trained CNL is another valid representation of the same plan.
+  const completeCnl = validateCnl(body.join(""));
+  if (completeCnl.valid) {
+    if (hasK && !completeCnl.usesK) return invalid("kの値には、kを使う操作が必要です。");
+    return { ...completeCnl, kValue };
   }
-  const operations = steps.map(label => CNL_OPERATIONS.find(operation => operation.label === label));
-  const unknown = steps.filter((_, index) => !operations[index]);
-  if (unknown.length) return invalid(`許可表と一致しない操作名: ${unknown.join(" / ")}。許可表の操作名をそのまま使ってください。`);
+  const phrases = body.join("\n").split(/\n|、|。|\s*(?:→|->|;)\s*/).map(part => part.trim()).filter(Boolean);
+  const operations = [];
+  const findOperation = phrase => CNL_OPERATIONS.find(op =>
+    [op.label, op.connective, op.final, OPERATION_REQUESTS[op.id], ...(OPERATION_ALIASES[op.id] || [])].includes(phrase));
+  for (let phrase of phrases) {
+    phrase = phrase.replace(/^(?:その後|次に|最後に)\s*/, "").replace(/[.]$/, "").replace(/ください$/, "").replace(/元素/g, "要素").trim();
+    if (!phrase) continue;
+    let operation = findOperation(phrase);
+    if (!operation) {
+      // Concrete numbers are fine too: "各要素に3を足す" means add_k with k=3.
+      const numbers = [...phrase.matchAll(/[+-]?\d+/g)];
+      if (numbers.length === 1) {
+        const number = numbers[0];
+        const parameterized = phrase.slice(0, number.index) + "k" + phrase.slice(number.index + number[0].length);
+        const candidate = findOperation(parameterized);
+        if (candidate?.requiresK) {
+          let value;
+          try { value = parseK(number[0]); } catch (error) { return invalid(error.message); }
+          if (hasK && kValue !== value) return invalid("異なる数値を同時に使う操作には対応していません。kの値を1つにしてください。");
+          kValue = value;
+          hasK = true;
+          operation = candidate;
+        }
+      }
+    }
+    if (!operation) return invalid(`操作内容を読み取れませんでした: ${phrase}。やりたい処理を具体的に伝えてください。`);
+    operations.push(operation);
+  }
+  if (!operations.length || operations.length > MAX_OPERATIONS) return invalid("一度に扱える操作は1～4個です。");
   const usesK = operations.some(operation => operation.requiresK);
-  if (kValue !== null && !usesK) return invalid("kの値には、kを使う操作が必要です。");
-  const phrases = operations.map((operation, index) => index === operations.length - 1 ? operation.final : operation.connective);
-  return { ...validateCnl(`${usesK ? WITH_K_PREFIX : WITHOUT_K_PREFIX}${phrases.join("、")}${SUFFIX}`), kValue };
+  if (hasK && !usesK) return invalid("kの値には、kを使う操作が必要です。");
+  const forms = operations.map((operation, index) => index === operations.length - 1 ? operation.final : operation.connective);
+  return { ...validateCnl(`${usesK ? WITH_K_PREFIX : WITHOUT_K_PREFIX}${forms.join("、")}${SUFFIX}`), kValue };
 }
 
 export function parseK(value) {

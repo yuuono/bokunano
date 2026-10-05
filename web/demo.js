@@ -1,8 +1,8 @@
 import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
-import { CNL_OPERATIONS, MAX_OPERATIONS, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=3";
+import { CNL_OPERATIONS, MAX_OPERATIONS, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=8";
 import { selectToken, validateTemperature } from "./sampling.js";
 
-import { explicitOperationPlan, appendOperationToDraft, nearBottom } from "./chat-utils.js?v=7";
+import { appendOperationToDraft, nearBottom } from "./chat-utils.js?v=8";
 import { highlightPython } from "./python-highlight.js?v=7";
 
 const $ = (id) => document.getElementById(id);
@@ -80,9 +80,8 @@ function resizeComposer() {
   updateScrollButton();
 }
 
-function confirmReply(reply, validation, direct = false) {
+function confirmReply(reply, validation) {
   followScroll($("conversation"), () => {
-    if (direct) reply.message.querySelector(".message-label").textContent = "操作の確認 · Qwen変換なし";
     reply.body.textContent = `次の${validation.operations.length}操作で生成できます。\n${validation.operations.map((op, i) => `${i + 1}. ${op.label}`).join("\n")}${validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""}`;
     const result = document.createElement("div");
     result.className = "cnl-result";
@@ -236,27 +235,6 @@ async function translateInstruction(event) {
   setMessage($("status"), "");
   $("metrics").textContent = "";
   const revision = document.querySelector('[name="request-mode"]:checked').value === "revise";
-  const direct = explicitOperationPlan(instruction, revision);
-  if (direct) {
-    addMessage("user", instruction);
-    $("prompt").value = "";
-    resizeComposer();
-    const reply = addMessage("assistant", "");
-    reply.message.querySelector(".message-label").textContent = "操作の確認 · Qwen変換なし";
-    if (!direct.valid) {
-      reply.body.textContent = direct.error;
-      reply.message.dataset.kind = "error";
-      updateControls();
-      return;
-    }
-    $("cnl").value = direct.cnl;
-    state.parameterK = direct.kValue;
-    const validation = checkCnl();
-    confirmReply(reply, validation, true);
-    $("translation-metrics").textContent = "";
-    setMessage($("translation-status"), "選択した操作を確認しました。チャット内からコードを生成できます。", "success");
-    return;
-  }
   if (!("gpu" in navigator)) {
     setMessage($("translation-status"), "QwenにはWebGPU対応のChrome / Edgeが必要です。入力側のCNL欄へ直接入力することもできます。", "error");
     return;
@@ -292,7 +270,7 @@ async function translateInstruction(event) {
   try {
     await releaseActiveSession();
     if (!current(job)) return;
-    const worker = new Worker(new URL("./qwen-worker.js?v=3", import.meta.url), { type: "module" });
+    const worker = new Worker(new URL("./qwen-worker.js?v=8", import.meta.url), { type: "module" });
     job.worker = worker;
     worker.addEventListener("message", ({ data: message }) => {
       if (!current(job)) return;
@@ -677,7 +655,7 @@ for (const button of document.querySelectorAll("[data-example-prompt]")) {
 }
 function updateDraft() {
   const plan = validateOperationPlan($("prompt").value);
-  setMessage($("selection-status"), plan.valid ? `${plan.operations.length} / 4操作を入力中。クリックで追加できます。` : "操作を選ぶとチャットの入力欄に入ります。");
+  setMessage($("selection-status"), plan.valid ? `${plan.operations.length} / 4操作を入力中。クリックで追加できます。` : "操作を選ぶと日本語の指示になります。自由に書き換えて送信できます。");
   resizeComposer();
   updateControls();
 }

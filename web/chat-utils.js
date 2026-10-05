@@ -1,13 +1,4 @@
-import { CNL_OPERATIONS, MAX_OPERATIONS, numberedSteps, validateOperationPlan } from './cnl.js?v=3';
-
-// Exact operation lists already express the user's choice. Do not re-interpret them.
-export function explicitOperationPlan(text, revision = false) {
-  if (revision) return null;
-  const plan = validateOperationPlan(text);
-  if (plan.valid) return plan;
-  const steps = numberedSteps(text.replace(/\n\s*k\s*=.*$/, ''));
-  return steps.length && steps.every(label => CNL_OPERATIONS.some(op => op.label === label)) ? plan : null;
-}
+import { CNL_OPERATIONS, MAX_OPERATIONS, operationRequest, OPERATION_REQUESTS, validateOperationPlan } from './cnl.js?v=8';
 
 export function appendOperationToDraft(text, id) {
   const operation = CNL_OPERATIONS.find(op => op.id === id);
@@ -17,11 +8,10 @@ export function appendOperationToDraft(text, id) {
   if (previous?.valid || !draft) {
     const operations = [...(previous?.operations || []), operation];
     if (operations.length > MAX_OPERATIONS) throw new Error('一度に選べる操作は4つまでです。入力欄で操作を減らしてください。');
-    return operations.map((op, index) => `${index + 1}. ${op.label}`).join('\n')
-      + (previous?.kValue != null ? `\nk=${previous.kValue}` : '');
+    return operationRequest(operations, previous?.kValue);
   }
   // Preserve free text and concrete values; Qwen will interpret the combined request.
-  return `${draft}\n${operation.label}`;
+  return `${draft}\nその後、${OPERATION_REQUESTS[operation.id]}ください。`;
 }
 
 export function nearBottom({ scrollHeight, clientHeight, scrollTop }, threshold = 80) {

@@ -9,10 +9,10 @@
     <title>Boku1-nano — コード生成チャット</title>
     <link rel="stylesheet" href="./demo.css?v=7" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=7"></script>
+    <script type="module" src="./demo.js?v=8"></script>
   </head>
   <body>
-    <main class="studio" data-release="chat-studio-v7">
+    <main class="studio" data-release="chat-studio-v8">
       <header class="topbar">
         <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
         <div class="topbar-actions"><button id="toggle-settings" type="button" aria-controls="settings-panel" aria-expanded="false">設定</button><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat-top" type="button">＋ 新しい会話</button><button id="new-chat" type="button" hidden>新しい会話</button></div>
@@ -43,7 +43,7 @@
               <p class="setting-help">0は確率最大の候補を選択。値を上げると出力が変化しやすくなります。</p><p class="setting-help">Qwen 0.6Bは日本語の変換に使用。初回のみ約543 MiBを取得します。</p>
             </section>
 
-      <div class="studio-footer"><span>入力と生成は、このブラウザの中で。モデル取得時のみ通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>自由文はQwenが変換し、選択済みの操作一覧はそのまま24種類・最大4操作のCNLへ整形して、検査・確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成コードは自動実行しません。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></div>
+      <div class="studio-footer"><span>入力と生成は、このブラウザの中で。モデル取得時のみ通信します。</span><details class="prompt-details"><summary>しくみ・プロンプトの共通ルール</summary><div class="prompt-details-body"><p>選択肢から作った日本語も自由入力もQwenが整理し、24種類・最大4操作のCNLへ整形して、確認後にBoku1-nanoへ渡します。4操作は実験的な対応です。生成コードは自動実行しません。</p><h3>System message</h3><pre><code id="normalizer-system-prompt"></code></pre><p>以下は説明用のひな形です。実際に使ったプロンプトは各回答の「実際のプロンプトを見る」から確認できます。</p><h3>初回のUser message（ひな形）</h3><pre><code id="normalizer-initial-prompt"></code></pre><h3>検査失敗時の再生成message</h3><pre><code id="normalizer-retry-prompt"></code></pre><p>Qwen: thinking無効、最大192 token、再試行1回。Qwenが選んだ操作名を検査し、同じ順序のCNLに整形。温度は両モデルで独立、T=0はgreedy、T&gt;0はsampling。履歴はこのページ内で保持されます。</p></div></details></div>
           </div>
         </section>
         <section class="result-panel" aria-labelledby="result-title">
@@ -55,8 +55,8 @@
           <div class="composer-dock">
             <button id="latest-message" type="button" hidden>最新の返信へ ↓</button>
             <div class="chat-status"><p id="translation-status" class="status" role="status">準備しています…</p><span id="translation-metrics" class="metrics"></span><p id="status" class="status" role="status"></p><span id="metrics" class="metrics"></span></div>
-            <div class="composer-tools"><details id="operation-picker"><summary>＋ 操作を追加</summary><div class="operation-menu"><label for="operation-search">操作を検索</label><input id="operation-search" type="search" placeholder="例：足す、偶数、並べる" autocomplete="off" /><p class="setting-help">クリックで入力欄に追加。Enterで検索結果の先頭を追加します。</p><div id="operation-catalog" class="operation-grid"></div><p id="selection-status" class="status" role="status"></p></div></details>
-              <div class="examples" aria-label="入力例"><button type="button" data-example-prompt="1. 各要素にkを加える&#10;k=3">3を足す</button><button type="button" data-example-prompt="1. 各要素の絶対値を取る&#10;2. 値を降順に並べる">絶対値 → 降順</button><button type="button" data-example-prompt="1. 偶数だけを残す&#10;2. 各要素を2倍する&#10;3. 値を昇順に並べる&#10;4. 現在の要素順を反転する">4操作を試す</button></div>
+            <div class="composer-tools"><details id="operation-picker"><summary>＋ 操作を追加</summary><div class="operation-menu"><label for="operation-search">操作を検索</label><input id="operation-search" type="search" placeholder="例：足す、偶数、並べる" autocomplete="off" /><p class="setting-help">選ぶと日本語の指示を作ります。自由に書き換えて送信できます。</p><div id="operation-catalog" class="operation-grid"></div><p id="selection-status" class="status" role="status"></p></div></details>
+              <div class="examples" aria-label="入力例"><button type="button" data-example-prompt="各要素に3を足してください。">3を足す</button><button type="button" data-example-prompt="各要素を絶対値にして、大きい順に並べてください。">絶対値 → 降順</button><button type="button" data-example-prompt="偶数だけを残して、各要素を2倍して、小さい順に並べて、要素の順番を逆にしてください。">4操作を試す</button></div>
             </div>
               <form id="composer" class="composer">
                 <label class="sr-only" for="prompt">メッセージ</label>
