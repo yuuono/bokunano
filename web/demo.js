@@ -2,6 +2,9 @@ import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
 import { CNL_OPERATIONS, MAX_OPERATIONS, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=3";
 import { selectToken, validateTemperature } from "./sampling.js";
 
+import { explicitOperationPlan, appendOperationToDraft, nearBottom } from "./chat-utils.js?v=7";
+import { highlightPython } from "./python-highlight.js?v=7";
+
 const $ = (id) => document.getElementById(id);
 const state = {
   manifest: null,
@@ -14,6 +17,7 @@ const state = {
   contextCnl: "",
   contextK: null,
   parameterK: null,
+  confirmedReply: null,
 };
 const errorText = (error) => error instanceof Error ? error.message : String(error);
 const formatBytes = (bytes) => `${(bytes / 1024 / 1024).toFixed(1)} MiB`;
@@ -34,18 +38,20 @@ function updateControls() {
   $("cancel-translation").hidden = state.job?.kind !== "qwen";
   $("stop").hidden = state.job?.kind !== "boku";
   const revision = document.querySelector('[name="request-mode"]:checked').value === "revise";
-  $("context-label").textContent = revision ? "表示中の指示を変更します" : "以前の指示を引き継がずに変換します";
+  $("context-label").textContent = revision ? "前の指示を変更" : "新しい指示";
   for (const input of document.querySelectorAll('[name="request-mode"], [name="boku-model"]')) {
     input.disabled = !state.ready || busy || (input.value === "revise" && !state.contextCnl);
   }
-  const count = state.candidate?.operations.length || 0;
+  const draft = validateOperationPlan($("prompt").value);
+  const count = draft.valid ? draft.operations.length : 0;
   for (const button of document.querySelectorAll('[data-operation-id]')) {
     button.disabled = !state.ready || busy || count >= MAX_OPERATIONS;
-    const selected = state.candidate?.operations.filter(op => op.id === button.dataset.operationId).length || 0;
+    const selected = draft.valid ? draft.operations.filter(op => op.id === button.dataset.operationId).length : 0;
     button.dataset.selected = String(selected > 0);
     button.querySelector('small').textContent = selected ? `${selected}回選択中` : "＋追加";
   }
   for (const button of document.querySelectorAll('#operation-list button')) button.disabled = !state.ready || busy || button.dataset.unavailable === "true";
+  for (const button of document.querySelectorAll("[data-generate-confirmation]")) button.disabled = !state.ready || busy;
   for (const button of document.querySelectorAll("[data-example-prompt]")) button.disabled = !state.ready || busy;
   for (const kind of ["qwen", "boku"]) {
     const running = state.job?.kind === kind;
@@ -54,10 +60,61 @@ function updateControls() {
   }
 }
 
+function updateScrollButton() {
+  $("latest-message").hidden = nearBottom($("conversation"));
+}
+
 function followScroll(element, change, force = false) {
-  const nearTop = element.scrollTop < 90;
+  const follow = force || nearBottom(element);
   change();
-  if (nearTop || force) element.scrollTop = 0;
+  if (follow) element.scrollTop = element.scrollHeight;
+  updateScrollButton();
+}
+
+function resizeComposer() {
+  const conversation = $("conversation");
+  const follow = nearBottom(conversation);
+  $("prompt").style.height = "58px";
+  $("prompt").style.height = `${Math.min(110, $("prompt").scrollHeight)}px`;
+  if (follow) conversation.scrollTop = conversation.scrollHeight;
+  updateScrollButton();
+}
+
+function confirmReply(reply, validation, direct = false) {
+  followScroll($("conversation"), () => {
+    if (direct) reply.message.querySelector(".message-label").textContent = "操作の確認 · Qwen変換なし";
+    reply.body.textContent = `次の${validation.operations.length}操作で生成できます。\n${validation.operations.map((op, i) => `${i + 1}. ${op.label}`).join("\n")}${validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""}`;
+    const result = document.createElement("div");
+    result.className = "cnl-result";
+    const label = document.createElement("strong");
+    label.textContent = "制限付き日本語（CNL）";
+    const content = document.createElement("p");
+    content.textContent = validation.cnl;
+    result.append(label, content);
+    reply.message.append(result);
+    if (validation.experimental) {
+      const note = document.createElement("p");
+      note.className = "experimental-note";
+      note.textContent = "4操作は実験です。学習範囲は最大3操作のため、生成コードの内容を確認してください。";
+      reply.message.append(note);
+    }
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "confirm-generate";
+    button.dataset.generateConfirmation = "true";
+    button.textContent = "この内容でコードを生成";
+    button.addEventListener("click", () => {
+      if (state.job) return;
+      $("cnl").value = validation.cnl;
+      state.parameterK = validation.kValue;
+      state.confirmedReply = { message: reply.message, cnl: validation.cnl, kValue: validation.kValue };
+      checkCnl();
+      generateCode();
+    });
+    reply.message.append(button);
+    state.confirmedReply = { message: reply.message, cnl: validation.cnl, kValue: validation.kValue };
+  });
+  updateControls();
 }
 
 function addMessage(role, text, kind = "normal") {
@@ -72,14 +129,14 @@ function addMessage(role, text, kind = "normal") {
   message.append(label, body);
   $("welcome").hidden = true;
   followScroll($("conversation"), () => {
-    let turn = $("conversation").querySelector(".chat-turn");
+    let turn = $("conversation").querySelector(".chat-turn:last-child");
     if (role === "user" || !turn) {
       turn = document.createElement("section");
       turn.className = "chat-turn";
-      $("conversation").prepend(turn);
+      $("conversation").append(turn);
     }
     turn.append(message);
-  }, true);
+  }, role === "user");
   return { message, body };
 }
 
@@ -155,7 +212,7 @@ function promptDetails(parent, title, text) {
   const pre = document.createElement("pre");
   pre.textContent = text;
   details.append(summary, pre);
-  parent.append(details);
+  followScroll($("conversation"), () => parent.append(details));
   return details;
 }
 
@@ -176,12 +233,35 @@ async function translateInstruction(event) {
   if (!state.ready || state.job) return;
   const instruction = $("prompt").value.trim();
   if (!instruction) { $("prompt").focus(); return; }
+  setMessage($("status"), "");
+  $("metrics").textContent = "";
+  const revision = document.querySelector('[name="request-mode"]:checked').value === "revise";
+  const direct = explicitOperationPlan(instruction, revision);
+  if (direct) {
+    addMessage("user", instruction);
+    $("prompt").value = "";
+    resizeComposer();
+    const reply = addMessage("assistant", "");
+    reply.message.querySelector(".message-label").textContent = "操作の確認 · Qwen変換なし";
+    if (!direct.valid) {
+      reply.body.textContent = direct.error;
+      reply.message.dataset.kind = "error";
+      updateControls();
+      return;
+    }
+    $("cnl").value = direct.cnl;
+    state.parameterK = direct.kValue;
+    const validation = checkCnl();
+    confirmReply(reply, validation, true);
+    $("translation-metrics").textContent = "";
+    setMessage($("translation-status"), "選択した操作を確認しました。チャット内からコードを生成できます。", "success");
+    return;
+  }
   if (!("gpu" in navigator)) {
     setMessage($("translation-status"), "QwenにはWebGPU対応のChrome / Edgeが必要です。入力側のCNL欄へ直接入力することもできます。", "error");
     return;
   }
   const temperature = validateTemperature($("qwen-temperature").value);
-  const revision = document.querySelector('[name="request-mode"]:checked').value === "revise";
   const previousCnl = state.candidate?.valid ? state.candidate.cnl : state.contextCnl;
   const previousK = state.candidate?.valid ? state.candidate.kValue : state.contextK;
   const contextCnl = revision ? previousCnl : "";
@@ -190,6 +270,7 @@ async function translateInstruction(event) {
   const editorK = state.parameterK;
   addMessage("user", instruction);
   $("prompt").value = "";
+  resizeComposer();
   $("translation-metrics").textContent = "";
   const reply = addMessage("assistant", "指示を読み取っています…");
   const job = { kind: "qwen", cancelled: false, worker: null, reply };
@@ -204,7 +285,7 @@ async function translateInstruction(event) {
     state.contextCnl = previousCnl;
     state.contextK = previousK;
     const explanation = editorCnl ? `${message}\nCNL欄は前回の内容を保持しています。` : message;
-    reply.body.textContent = explanation;
+    followScroll($("conversation"), () => { reply.body.textContent = explanation; });
     reply.message.dataset.kind = "error";
     setMessage($("translation-status"), explanation, "error");
   };
@@ -235,7 +316,7 @@ async function translateInstruction(event) {
           const content = document.createElement("pre");
           content.textContent = message.plan;
           details.append(summary, content);
-          reply.message.append(details);
+          followScroll($("conversation"), () => reply.message.append(details));
         }
         $("cnl").value = message.cnl || "";
         state.parameterK = message.kValue ?? null;
@@ -245,17 +326,8 @@ async function translateInstruction(event) {
           state.contextK = previousK;
           fail(message.error || "この指示を解釈できませんでした。操作を具体的に伝えるか、CNLを直接編集してください。対応は24種類・最大4操作です。");
         } else {
-          const result = document.createElement("div");
-          result.className = "cnl-result";
-          const label = document.createElement("strong");
-          label.textContent = "変換後の制限付き日本語（CNL）";
-          const content = document.createElement("p");
-          content.textContent = validation.cnl;
-          result.append(label, content);
-          reply.message.append(result);
-          reply.body.textContent = `次の${validation.operations.length}操作として解釈しました。\n${validation.operations.map((operation, index) => `${index + 1}. ${operation.label}`).join("\n")}${validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""}\n内容を確認して、Boku1-nanoへ渡してください。`;
-          setMessage($("translation-status"), "解釈ができました。操作順を確認してください。", "success");
-          followScroll($("conversation"), () => {}, true);
+          confirmReply(reply, validation);
+          setMessage($("translation-status"), "解釈ができました。チャット内で確認して生成してください。", "success");
         }
       }
       if (message.type === "error") fail(message.message);
@@ -354,7 +426,10 @@ async function createSession(model, job) {
 }
 
 function newCodeCard(model, validation, temperature) {
-  const request = addMessage("user", validation.cnl + (validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""));
+  const confirmed = state.confirmedReply;
+  const lastTurn = $("conversation").querySelector(".chat-turn:last-child");
+  const sameTurn = confirmed?.message.parentElement === lastTurn && confirmed.cnl === validation.cnl && confirmed.kValue === validation.kValue;
+  const turn = sameTurn ? lastTurn : addMessage("user", validation.cnl + (validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : "")).message.parentElement;
   // Keep stable IDs for the latest result, without duplicating IDs in history.
   $("output")?.removeAttribute("id");
   const card = document.createElement("article");
@@ -384,8 +459,7 @@ function newCodeCard(model, validation, temperature) {
   inputCnl.className = "code-instruction";
   inputCnl.textContent = `使用したCNL: ${validation.cnl}`;
   card.insertBefore(inputCnl, pre);
-  request.message.parentElement.append(card);
-  $("conversation").scrollTop = 0;
+  followScroll($("conversation"), () => turn.append(card), true);
   copy.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(code.textContent); copy.textContent = "コピーしました"; }
     catch { copy.textContent = "コピーできませんでした"; }
@@ -436,7 +510,7 @@ async function generateCode() {
         currentIds.push(tokenId);
         generatedIds.push(tokenId);
         generatedCount = generatedIds.length;
-        view.code.textContent = tokenizer.decode(generatedIds);
+        followScroll($("conversation"), () => highlightPython(view.code, tokenizer.decode(generatedIds)));
         view.copy.disabled = validation.kValue !== null;
         if (step % 2 === 0) await new Promise(requestAnimationFrame);
       } finally {
@@ -447,7 +521,7 @@ async function generateCode() {
     const seconds = (performance.now() - inferenceStarted) / 1000;
     if (ended && validation.kValue !== null) {
       const rawCode = tokenizer.decode(generatedIds);
-      view.code.textContent = bindKDefault(rawCode, validation.kValue);
+      followScroll($("conversation"), () => highlightPython(view.code, bindKDefault(rawCode, validation.kValue)));
       view.copy.disabled = false;
       const details = document.createElement("details");
       details.className = "plan-details code-instruction";
@@ -456,12 +530,12 @@ async function generateCode() {
       const pre = document.createElement("pre");
       pre.textContent = rawCode;
       details.append(summary, pre);
-      view.card.append(details);
+      followScroll($("conversation"), () => view.card.append(details));
     }
     const totalSeconds = (performance.now() - startedAt) / 1000;
     const result = job.cancelled ? "中止・未完了" : ended ? "生成完了" : "長さ上限・未完了";
     view.card.dataset.termination = job.cancelled ? "cancelled" : ended ? "eos" : "max_context";
-    view.meta.textContent = `${result} · ${runtime.backend} · ${generatedIds.length} tokens · 生成 ${seconds.toFixed(1)}秒 · 合計 ${totalSeconds.toFixed(1)}秒`;
+    followScroll($("conversation"), () => { view.meta.textContent = `${result} · ${runtime.backend} · ${generatedIds.length} tokens · 生成 ${seconds.toFixed(1)}秒 · 合計 ${totalSeconds.toFixed(1)}秒`; });
     $("metrics").textContent = `入力 ${promptIds.length} / 生成 ${generatedIds.length} tokens · T=${temperature.toFixed(1)} · ${(generatedIds.length / Math.max(seconds, .001)).toFixed(1)} tokens/s`;
     setMessage($("status"), job.cancelled ? "生成を中止しました。" : ended ? "コードの生成が完了しました。" : "系列長の上限に達しました。コードは未完了の可能性があります。", ended ? "success" : "normal");
     if (!generatedCount) view.code.textContent = "コードは生成されませんでした。指示やモデルを変えて再試行してください。";
@@ -486,6 +560,7 @@ async function generateCode() {
 function newConversation() {
   if (state.job) return;
   state.candidate = null;
+  state.confirmedReply = null;
   state.contextCnl = "";
   state.contextK = null;
   document.querySelector('[name="request-mode"][value="new"]').checked = true;
@@ -494,11 +569,14 @@ function newConversation() {
   $("welcome").hidden = false;
   $("cnl").value = "";
   $("prompt").value = "";
+  resizeComposer();
   $("translation-metrics").textContent = "";
   $("metrics").textContent = "";
   checkCnl();
   setMessage($("translation-status"), "新しい指示を入力してください。");
   setMessage($("status"), "指示を確認するとコードを生成できます。");
+  resizeComposer();
+  $("operation-picker").open = false;
   $("prompt").focus();
 }
 
@@ -544,9 +622,13 @@ async function initialize() {
     name.textContent = operation.label;
     button.append(name, document.createElement("small"));
     button.addEventListener("click", () => {
-      const previous = validateCnl($("cnl").value);
-      if ($("cnl").value.trim() && !previous.valid) { setMessage($("selection-status"), "CNLのエラーを修正するか、欄を空にしてから選んでください。", "error"); return; }
-      setOperations([...previous.operations, operation]);
+      try {
+        $("prompt").value = appendOperationToDraft($("prompt").value, operation.id);
+        if (validateOperationPlan($("prompt").value).valid) document.querySelector('[name="request-mode"][value="new"]').checked = true;
+        updateDraft();
+        $("operation-picker").open = false;
+        $("prompt").focus({ preventScroll: true });
+      } catch (error) { setMessage($("selection-status"), errorText(error), "error"); }
     });
     $("operation-catalog").append(button);
   }
@@ -558,6 +640,7 @@ async function initialize() {
   state.ready = true;
   setMessage($("translation-status"), "日本語で指示を送ってください。Qwenが内容を整理します。");
   checkCnl();
+  updateDraft();
   window.__bokuNanoReady = true;
 }
 
@@ -569,7 +652,7 @@ $("prompt").addEventListener("keydown", event => {
   }
 });
 $("cnl").addEventListener("input", checkCnl);
-$("validate-cnl").addEventListener("click", () => { checkCnl(); followScroll($("conversation"), () => {}, true); });
+$("validate-cnl").addEventListener("click", checkCnl);
 $("generate").addEventListener("click", generateCode);
 $("cancel-translation").addEventListener("click", stopJob);
 $("stop").addEventListener("click", stopJob);
@@ -585,8 +668,58 @@ for (const kind of ["qwen", "boku"]) {
   });
 }
 for (const button of document.querySelectorAll("[data-example-prompt]")) {
-  button.addEventListener("click", () => { $("prompt").value = button.dataset.examplePrompt; $("prompt").focus(); });
+  button.addEventListener("click", () => {
+    $("prompt").value = button.dataset.examplePrompt;
+    document.querySelector('[name="request-mode"][value="new"]').checked = true;
+    updateDraft();
+    $("prompt").focus({ preventScroll: true });
+  });
 }
+function updateDraft() {
+  const plan = validateOperationPlan($("prompt").value);
+  setMessage($("selection-status"), plan.valid ? `${plan.operations.length} / 4操作を入力中。クリックで追加できます。` : "操作を選ぶとチャットの入力欄に入ります。");
+  resizeComposer();
+  updateControls();
+}
+$("prompt").addEventListener("input", updateDraft);
+$("conversation").addEventListener("scroll", updateScrollButton, { passive: true });
+$("latest-message").addEventListener("click", () => followScroll($("conversation"), () => {}, true));
+const aliases = { map_add_k: "足す 加算", map_sub_k: "引く 減算", map_mul_k: "掛け算 かける", order_reverse: "逆順", order_ascending: "小さい順", order_descending: "大きい順", map_abs: "プラス 絶対値" };
+$("operation-search").addEventListener("input", () => {
+  const query = $("operation-search").value.normalize("NFKC").trim().toLowerCase();
+  let visible = 0;
+  for (const button of document.querySelectorAll('[data-operation-id]')) {
+    const text = `${button.textContent} ${aliases[button.dataset.operationId] || ""}`.normalize("NFKC").toLowerCase();
+    button.hidden = !text.includes(query);
+    if (!button.hidden) visible += 1;
+  }
+  setMessage($("selection-status"), visible ? `${visible}種類の操作` : "一致する操作がありません。別の言葉で検索してください。");
+});
+$("operation-search").addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.isComposing) {
+    event.preventDefault();
+    document.querySelector('[data-operation-id]:not([hidden]):not(:disabled)')?.click();
+  }
+});
+$("operation-picker").addEventListener("toggle", () => {
+  if ($("operation-picker").open) $("operation-search").focus({ preventScroll: true });
+});
+document.addEventListener("click", event => {
+  if (!$("operation-picker").contains(event.target)) $("operation-picker").open = false;
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    if ($("operation-picker").open) { $("operation-picker").open = false; $("prompt").focus({ preventScroll: true }); }
+    setSettingsOpen(false);
+  }
+});
+function setSettingsOpen(open) {
+  $("settings-panel").dataset.open = String(open);
+  $("toggle-settings").setAttribute("aria-expanded", String(open));
+}
+$("toggle-settings").addEventListener("click", () => setSettingsOpen($("settings-panel").dataset.open !== "true"));
+$("close-settings").addEventListener("click", () => { setSettingsOpen(false); $("toggle-settings").focus(); });
+window.addEventListener("resize", updateScrollButton);
 initialize().catch(error => {
   console.error(error);
   setMessage($("translation-status"), errorText(error), "error");
