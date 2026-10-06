@@ -1,0 +1,18 @@
+{
+  "run_id": "dev50-20261006-ablation-heads4",
+  "boku_model": "ablation-heads4",
+  "models": [
+    "boku"
+  ],
+  "question_count": 50,
+  "questions_sha256": "ba24af53978a61f3002834f9bd4914f40516eaa181b18d67cfe8cac1f5d91954",
+  "conditions": [
+    "A"
+  ],
+  "qwen_max_new_tokens": 512,
+  "qwen_normalizer_max_new_tokens": 192,
+  "qwen_direct_repetition_penalty": 1,
+  "temperature": 0,
+  "normalizer_max_attempts": 2,
+  "history": false
+}

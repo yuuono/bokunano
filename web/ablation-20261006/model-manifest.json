@@ -1,0 +1,202 @@
+{
+  "format_version": 2,
+  "default_model_id": "ablation-existing",
+  "tokenizers": {
+    "bpe-2048-minfreq5-maxlen24": {
+      "label": "既存BPE（min 5 / max 24）",
+      "path": "ablation-20261006/tokenizers/bpe-2048-minfreq5-maxlen24.json",
+      "sha256": "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293"
+    }
+  },
+  "prompt_template": "<|bos|><|task|>\n{instruction_ja}\n<|code|>\n",
+  "special_token_ids": {
+    "pad": 0,
+    "bos": 1,
+    "eos": 2,
+    "unk": 3,
+    "task": 4,
+    "code": 5
+  },
+  "models": [
+    {
+      "id": "ablation-existing",
+      "label": "ablation-existing",
+      "group": "追加モデル",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24",
+      "path": "ablation-20261006/models/boku-nano-ablation-existing.onnx",
+      "sha256": "b02dc1c74db1dc87a3b1148049b1d5942b681843a8f5a85432a26fd4b2140c7f",
+      "size_bytes": 63337554,
+      "source_sha256": "1a0002e1b50aeae59805d8087fbaa16be1b6e2716d78a085230f2cc35edbf68f",
+      "parameter_count": 15735168,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 4.0531158447265625e-06,
+            "mean_abs_diff": 7.083872333168983e-07,
+            "generated_tokens": 8,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = [value for value in xs if 0 == value % 2]\n    return output\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 3.5762786865234375e-06,
+            "mean_abs_diff": 7.455731747540995e-07,
+            "generated_tokens": 16,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    result: list[int] = []\n    for value in xs:\n        result += [abs(value)]\n    # 降順に並べる\n    output: list[int] = sorted(result, reverse=True)\n    return output\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ablation-heads4",
+      "label": "ablation-heads4",
+      "group": "追加モデル",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24",
+      "path": "ablation-20261006/models/boku-nano-ablation-heads4.onnx",
+      "sha256": "be21cf40da26089bb6e34c437e6a095cfbed0b97fc023276b55283ad5fd448be",
+      "size_bytes": 38163026,
+      "source_sha256": "c02213422216b1bf6bb9cc6ca61f9afa153d6309e4402a1f6402e4f802a752ee",
+      "parameter_count": 9441536,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 3.814697265625e-06,
+            "mean_abs_diff": 4.562035655908403e-07,
+            "generated_tokens": 10,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if 0 == value % 2:\n            result += [value]\n    return result\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 2.86102294921875e-06,
+            "mean_abs_diff": 5.072437261333107e-07,
+            "generated_tokens": 11,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = [abs(value) for value in xs]\n    output = sorted(result, reverse=True)\n    return output\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ablation-layers2",
+      "label": "ablation-layers2",
+      "group": "追加モデル",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24",
+      "path": "ablation-20261006/models/boku-nano-ablation-layers2.onnx",
+      "sha256": "e42ec07b2cced93ff3fd444798e05d373c596d6b8b53af21bfc667ed003004e6",
+      "size_bytes": 20654348,
+      "source_sha256": "82731d22985b5f8ce0b3c02e1cc1705b3ad12b765c11b75400cf7b13a5c1c3da",
+      "parameter_count": 5113728,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 3.814697265625e-06,
+            "mean_abs_diff": 7.483170065825107e-07,
+            "generated_tokens": 11,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value % 2 == 0:\n            result += [value]\n    return result\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 4.0531158447265625e-06,
+            "mean_abs_diff": 8.479626103508053e-07,
+            "generated_tokens": 14,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [abs(value)]\n    output: list[int] = []\n    for x in result:\n        output += [abs(x)]\n    return output\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ablation-layers4",
+      "label": "ablation-layers4",
+      "group": "追加モデル",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24",
+      "path": "ablation-20261006/models/boku-nano-ablation-layers4.onnx",
+      "sha256": "0d5e986cd76a4943a77e987c67e743cbce64e31df82fd4f5cb1ed8bbe404f88a",
+      "size_bytes": 34882017,
+      "source_sha256": "2d734ce0fdde2e8e4091791261f752c2b52c90a48f602fd133b4ea0a610cb29a",
+      "parameter_count": 8654208,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 3.5762786865234375e-06,
+            "mean_abs_diff": 7.481164630007697e-07,
+            "generated_tokens": 10,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        if 0 == x % 2:\n            result += [x]\n    return result\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 8.58306884765625e-06,
+            "mean_abs_diff": 9.950078947440488e-07,
+            "generated_tokens": 22,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素にkを掛ける\n    output: list[int] = []\n    for x in xs:\n        output += [x * k]\n    # 各要素の絶対値を取る\n    result: list[int] = []\n    for x in output:\n        result += [abs(x)]\n    # 降順に並べる\n    result = sorted(result, reverse=True)\n    return result\n"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ablation-layers6",
+      "label": "ablation-layers6",
+      "group": "追加モデル",
+      "tokenizer_id": "bpe-2048-minfreq5-maxlen24",
+      "path": "ablation-20261006/models/boku-nano-ablation-layers6.onnx",
+      "sha256": "363c8a377f9e7d7ae16b73f96dac64f466f4450bfd9593e05497c2ffae275bca",
+      "size_bytes": 49109801,
+      "source_sha256": "e155006401527bc911b876381b8c23169b594b9837f00422cd196ec782bc2ccf",
+      "parameter_count": 12194688,
+      "context_length": 256,
+      "vocab_size": 2048,
+      "verification": {
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "comparisons": [
+          {
+            "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+            "prompt_tokens": 10,
+            "max_abs_diff": 9.5367431640625e-06,
+            "mean_abs_diff": 1.1977333542745328e-06,
+            "generated_tokens": 8,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if 0 == value % 2]\n    return result\n"
+          },
+          {
+            "instruction": "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。",
+            "prompt_tokens": 16,
+            "max_abs_diff": 3.814697265625e-06,
+            "mean_abs_diff": 6.913651304785162e-07,
+            "generated_tokens": 22,
+            "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    result: list[int] = []\n    for value in xs:\n        result += [abs(value)]\n    # 各要素の絶対値を取る\n    output: list[int] = []\n    for x in result:\n        output += [abs(x)]\n    # 現在の要素順を反転する\n    output = output[::-1]\n    return output\n"
+          }
+        ]
+      }
+    }
+  ]
+}

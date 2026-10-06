@@ -17,10 +17,11 @@ def main():
     parser.add_argument('--run-id', required=True)
     parser.add_argument('--port', type=int, default=8765)
     parser.add_argument('--boku-model', default='15m-1epoch')
+    parser.add_argument('--model-manifest', type=Path, default=ROOT/'web/model-manifest.json')
     parser.add_argument('--models', nargs='+', choices=['boku', 'qwen'], default=['boku', 'qwen'])
     parser.add_argument('--conditions', nargs='+', choices=['A', 'B', 'C'], default=['A', 'B'])
     args = parser.parse_args()
-    manifest = json.loads((ROOT/'web/model-manifest.json').read_text())
+    manifest = json.loads(args.model_manifest.read_text())
     if args.boku_model not in {m['id'] for m in manifest['models']}:
         parser.error('Unknown Boku model')
     if 'C' in args.conditions and set(args.models) != {'boku', 'qwen'}:
@@ -33,7 +34,7 @@ def main():
         raise ValueError('Existing run has different configuration')
     config_path.write_text(json.dumps(config, ensure_ascii=False, indent=2)+'\n')
     sources={}
-    for p in [Path(__file__).resolve(), args.questions, *sorted((ROOT/'scripts/model/browser_benchmark').glob('*')), ROOT/'web/model-manifest.json', ROOT/'web/qwen-manifest.json', ROOT/'web/tokenizer.js', ROOT/'web/qwen-translation.js', ROOT/'web/cnl.js', ROOT/'web/sampling.js', ROOT/'web/chat-utils.js', ROOT/'web/semantic-ast.js', ROOT/'scripts/model/score_browser_100_benchmark.py']:
+    for p in [Path(__file__).resolve(), args.questions, *sorted((ROOT/'scripts/model/browser_benchmark').glob('*')), args.model_manifest.resolve(), ROOT/'web/qwen-manifest.json', ROOT/'web/tokenizer.js', ROOT/'web/qwen-translation.js', ROOT/'web/cnl.js', ROOT/'web/sampling.js', ROOT/'web/chat-utils.js', ROOT/'web/semantic-ast.js', ROOT/'scripts/model/score_browser_100_benchmark.py']:
         sources[str(p.relative_to(ROOT) if p.is_relative_to(ROOT) else p)] = hashlib.sha256(p.read_bytes()).hexdigest()
     (args.output/'source_hashes.json').write_text(json.dumps(sources, indent=2)+'\n')
     lock=threading.Lock()
@@ -45,6 +46,7 @@ def main():
             path=urlparse(self.path).path
             if path=='/api/questions': return self.json_response([{k:q[k] for k in ['question_id','category_id','instruction_ja','canonical_cnl']} for q in questions])
             if path=='/api/config': return self.json_response(config)
+            if path=='/web/model-manifest.json': return self.json_response(manifest)
             if path=='/api/state':
                 p=args.output/'raw_inference.jsonl'
                 return self.json_response([json.loads(x) for x in p.read_text().splitlines() if x.strip()] if p.exists() else [])
