@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="600" viewBox="0 0 820 600" role="img">
+<title>BOSへのattentionと出力ベクトル寄与</title>
+<desc>横は生attention、縦はattention×out_proj後Valueノルムの構成比。破線上なら両者が同率。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#17212b;font-size:12px}.small{font-size:10px;fill:#52606d}.title{font-size:20px;font-weight:500}.label{font-size:13px;font-weight:500}</style>
+<text x="24" y="30" class="title">BOSへのattentionと出力ベクトル寄与</text>
+<text x="24" y="52" class="small">横は生attention、縦はattention×out_proj後Valueノルムの構成比。破線上なら両者が同率。</text>
+<line x1="88.00" y1="88" x2="88.00" y2="518" stroke="#e5e8eb"/>
+<line x1="88" y1="518.00" x2="748" y2="518.00" stroke="#e5e8eb"/>
+<text x="88.00" y="538" text-anchor="middle" class="small">0%</text>
+<text x="78" y="522.00" text-anchor="end" class="small">0%</text>
+<line x1="220.00" y1="88" x2="220.00" y2="518" stroke="#e5e8eb"/>
+<line x1="88" y1="432.00" x2="748" y2="432.00" stroke="#e5e8eb"/>
+<text x="220.00" y="538" text-anchor="middle" class="small">3%</text>
+<text x="78" y="436.00" text-anchor="end" class="small">3%</text>
+<line x1="352.00" y1="88" x2="352.00" y2="518" stroke="#e5e8eb"/>
+<line x1="88" y1="346.00" x2="748" y2="346.00" stroke="#e5e8eb"/>
+<text x="352.00" y="538" text-anchor="middle" class="small">5%</text>
+<text x="78" y="350.00" text-anchor="end" class="small">5%</text>
+<line x1="484.00" y1="88" x2="484.00" y2="518" stroke="#e5e8eb"/>
+<line x1="88" y1="260.00" x2="748" y2="260.00" stroke="#e5e8eb"/>
+<text x="484.00" y="538" text-anchor="middle" class="small">8%</text>
+<text x="78" y="264.00" text-anchor="end" class="small">8%</text>
+<line x1="616.00" y1="88" x2="616.00" y2="518" stroke="#e5e8eb"/>
+<line x1="88" y1="174.00" x2="748" y2="174.00" stroke="#e5e8eb"/>
+<text x="616.00" y="538" text-anchor="middle" class="small">11%</text>
+<text x="78" y="178.00" text-anchor="end" class="small">11%</text>
+<line x1="748.00" y1="88" x2="748.00" y2="518" stroke="#e5e8eb"/>
+<line x1="88" y1="88.00" x2="748" y2="88.00" stroke="#e5e8eb"/>
+<text x="748.00" y="538" text-anchor="middle" class="small">13%</text>
+<text x="78" y="92.00" text-anchor="end" class="small">13%</text>
+<line x1="88" y1="518" x2="748" y2="88" stroke="#8b949d" stroke-dasharray="5 5"/>
+<circle cx="448.11" cy="217.65" r="3" fill="#356f8a"/>
+<circle cx="440.69" cy="241.22" r="3" fill="#356f8a"/>
+<circle cx="437.31" cy="267.11" r="3" fill="#356f8a"/>
+<circle cx="484.09" cy="225.52" r="3" fill="#356f8a"/>
+<circle cx="427.74" cy="252.60" r="3" fill="#356f8a"/>
+<circle cx="432.86" cy="245.30" r="3" fill="#356f8a"/>
+<circle cx="280.85" cy="395.26" r="3" fill="#356f8a"/>
+<circle cx="335.74" cy="323.43" r="3" fill="#356f8a"/>
+<circle cx="274.15" cy="383.14" r="3" fill="#356f8a"/>
+<circle cx="344.79" cy="337.86" r="3" fill="#356f8a"/>
+<circle cx="496.18" cy="256.44" r="3" fill="#356f8a"/>
+<circle cx="310.60" cy="379.59" r="3" fill="#356f8a"/>
+<circle cx="441.01" cy="265.98" r="3" fill="#356f8a"/>
+<circle cx="519.55" cy="305.95" r="3" fill="#356f8a"/>
+<circle cx="483.76" cy="262.46" r="3" fill="#356f8a"/>
+<circle cx="367.66" cy="367.89" r="3" fill="#356f8a"/>
+<circle cx="428.64" cy="348.35" r="3" fill="#356f8a"/>
+<circle cx="552.38" cy="237.09" r="3" fill="#356f8a"/>
+<circle cx="532.95" cy="328.94" r="3" fill="#356f8a"/>
+<circle cx="550.15" cy="241.73" r="3" fill="#356f8a"/>
+<circle cx="526.34" cy="262.06" r="3" fill="#356f8a"/>
+<circle cx="493.87" cy="288.47" r="3" fill="#356f8a"/>
+<circle cx="529.74" cy="256.13" r="3" fill="#356f8a"/>
+<circle cx="594.18" cy="210.03" r="5" fill="#b35438"/>
+<text x="601.18" y="204.03" class="small">L4H6</text>
+<circle cx="555.88" cy="228.60" r="3" fill="#356f8a"/>
+<circle cx="587.07" cy="214.70" r="5" fill="#b35438"/>
+<text x="594.07" y="208.70" class="small">L5H2</text>
+<circle cx="554.65" cy="239.35" r="3" fill="#356f8a"/>
+<circle cx="621.26" cy="203.91" r="5" fill="#b35438"/>
+<text x="628.26" y="197.91" class="small">L5H4</text>
+<circle cx="542.88" cy="236.79" r="3" fill="#356f8a"/>
+<circle cx="568.85" cy="266.80" r="3" fill="#356f8a"/>
+<circle cx="541.79" cy="256.55" r="3" fill="#356f8a"/>
+<circle cx="572.37" cy="215.20" r="5" fill="#b35438"/>
+<text x="579.37" y="209.20" class="small">L6H2</text>
+<circle cx="553.72" cy="172.42" r="3" fill="#356f8a"/>
+<circle cx="640.12" cy="119.85" r="5" fill="#b35438"/>
+<text x="647.12" y="113.85" class="small">L6H4</text>
+<circle cx="624.53" cy="180.94" r="5" fill="#b35438"/>
+<text x="631.53" y="174.94" class="small">L6H5</text>
+<circle cx="547.47" cy="234.00" r="3" fill="#356f8a"/>
+<text x="418.0" y="572" text-anchor="middle">BOSへの生attention</text>
+<text x="22" y="303.0" text-anchor="middle" transform="rotate(-90 22 303.0)">BOSのprojected Valueノルム構成比</text>
+</svg>

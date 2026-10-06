@@ -1,0 +1,48 @@
+{
+  "model": "layers_4",
+  "model_sha256": "2d734ce0fdde2e8e4091791261f752c2b52c90a48f602fd133b4ea0a610cb29a",
+  "tokenizer_sha256": "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293",
+  "source_sha256": {
+    "scripts/model/analyze_boku_nano_attention.py": "68abe839d5121fa2c047c9c18326a5d517305dbfcfd507896e513eb34089dd17",
+    "scripts/model/analyze_boku_nano_attention_interpretability.py": "bc172030f1440744e9436b4eb2069aaa8585d89d0ddbdf212118e96a5217e613",
+    "scripts/model/boku_nano.py": "f2db6d196d8420a295bc5124bc94e90edc992b3f1eda37f161d4410c19ca0109",
+    "scripts/model/visualize_boku_nano_kv.py": "c69ca897a17a87289dbfe816aab2535965643a81f906ce862a32f02265d1b2ed",
+    "generated_code_verifier.py": "3ec6c53baab408ba265e5e1e2f2d4edf7b1e4c0db3c87038593aa063d7644c29",
+    "config/japanese_atomic_operations.json": "5d5e7dad2a10b6551fa3ad8ca5f499deb53e858f40fcea5fd781abdbb9909f73",
+    "/Users/s33207/git_project/bokunano/scripts/model/run_ablation_attention.py": "66a2b67335f8165f27766c9891da9506f799e1cd54e6bfb1d9de7bf1057bd77c"
+  },
+  "commands": [
+    [
+      "/Users/s33207/git_project/bokunano/.venv/bin/python",
+      "scripts/model/analyze_boku_nano_attention.py",
+      "--model-directory",
+      "data/models/architecture_ablation_run_20261006/15m_layers_4_seed20260925/model",
+      "--tokenizer",
+      "data/tokenizers/bpe_2048/tokenizer.json",
+      "--figure-directory",
+      "docs/results/attention_ablation_20261006/layers_4/figures",
+      "--metrics",
+      "docs/results/attention_ablation_20261006/layers_4/attention.json",
+      "--instruction",
+      "xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。"
+    ],
+    [
+      "/Users/s33207/git_project/bokunano/.venv/bin/python",
+      "scripts/model/analyze_boku_nano_attention_interpretability.py",
+      "--model-directory",
+      "data/models/architecture_ablation_run_20261006/15m_layers_4_seed20260925/model",
+      "--tokenizer",
+      "data/tokenizers/bpe_2048/tokenizer.json",
+      "--figure-directory",
+      "docs/results/attention_ablation_20261006/layers_4/figures",
+      "--metrics",
+      "docs/results/attention_ablation_20261006/layers_4/interpretability.json"
+    ]
+  ],
+  "device": "cpu",
+  "dtype": "float32",
+  "threads_per_process": 1,
+  "started_at": "2026-10-06T08:41:50.515898+00:00",
+  "status": "completed",
+  "completed_at": "2026-10-06T08:44:55.320020+00:00"
+}

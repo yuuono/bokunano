@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="560" viewBox="0 0 1080 560" role="img">
+<title>最終生成stepのtoken別参照量</title>
+<desc>生attention、Valueノルムを含む構成比、8層attention rolloutを同じtoken位置で比較。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#17212b;font-size:12px}.small{font-size:10px;fill:#52606d}.title{font-size:20px;font-weight:500}.label{font-size:13px;font-weight:500}</style>
+<text x="24" y="30" class="title">最終生成stepのtoken別参照量</text>
+<text x="24" y="52" class="small">生attention、Valueノルムを含む構成比、8層attention rolloutを同じtoken位置で比較。</text>
+<line x1="72" y1="442.00" x2="1022" y2="442.00" stroke="#e5e8eb"/>
+<text x="63" y="446.00" text-anchor="end" class="small">0%</text>
+<line x1="72" y1="372.00" x2="1022" y2="372.00" stroke="#e5e8eb"/>
+<text x="63" y="376.00" text-anchor="end" class="small">11%</text>
+<line x1="72" y1="302.00" x2="1022" y2="302.00" stroke="#e5e8eb"/>
+<text x="63" y="306.00" text-anchor="end" class="small">23%</text>
+<line x1="72" y1="232.00" x2="1022" y2="232.00" stroke="#e5e8eb"/>
+<text x="63" y="236.00" text-anchor="end" class="small">34%</text>
+<line x1="72" y1="162.00" x2="1022" y2="162.00" stroke="#e5e8eb"/>
+<text x="63" y="166.00" text-anchor="end" class="small">46%</text>
+<line x1="72" y1="92.00" x2="1022" y2="92.00" stroke="#e5e8eb"/>
+<text x="63" y="96.00" text-anchor="end" class="small">57%</text>
+<rect x="76.93" y="402.65" width="7.74" height="39.35" fill="#356f8a"/>
+<rect x="84.67" y="406.16" width="7.74" height="35.84" fill="#b06b45"/>
+<rect x="92.41" y="129.50" width="7.74" height="312.50" fill="#6c5b8e"/>
+<text x="89.59" y="455" transform="rotate(60 89.59 455)" class="small">&lt;|bos|</text>
+<rect x="112.11" y="408.22" width="7.74" height="33.78" fill="#356f8a"/>
+<rect x="119.85" y="409.58" width="7.74" height="32.42" fill="#b06b45"/>
+<rect x="127.59" y="363.96" width="7.74" height="78.04" fill="#6c5b8e"/>
+<text x="124.78" y="455" transform="rotate(60 124.78 455)" class="small">&lt;|task</text>
+<rect x="147.30" y="423.75" width="7.74" height="18.25" fill="#356f8a"/>
+<rect x="155.04" y="420.84" width="7.74" height="21.16" fill="#b06b45"/>
+<rect x="162.78" y="380.48" width="7.74" height="61.52" fill="#6c5b8e"/>
+<text x="159.96" y="455" transform="rotate(60 159.96 455)" class="small">↵</text>
+<rect x="182.48" y="424.23" width="7.74" height="17.77" fill="#356f8a"/>
+<rect x="190.22" y="424.99" width="7.74" height="17.01" fill="#b06b45"/>
+<rect x="197.96" y="419.41" width="7.74" height="22.59" fill="#6c5b8e"/>
+<text x="195.15" y="455" transform="rotate(60 195.15 455)" class="small">整数リストxsから</text>
+<rect x="217.67" y="428.44" width="7.74" height="13.56" fill="#356f8a"/>
+<rect x="225.41" y="430.72" width="7.74" height="11.28" fill="#b06b45"/>
+<rect x="233.15" y="421.08" width="7.74" height="20.92" fill="#6c5b8e"/>
+<text x="230.33" y="455" transform="rotate(60 230.33 455)" class="small">各要素の絶対値</text>
+<rect x="252.85" y="427.13" width="7.74" height="14.87" fill="#356f8a"/>
+<rect x="260.59" y="430.20" width="7.74" height="11.80" fill="#b06b45"/>
+<rect x="268.33" y="427.24" width="7.74" height="14.76" fill="#6c5b8e"/>
+<text x="265.52" y="455" transform="rotate(60 265.52 455)" class="small">を取</text>
+<rect x="288.04" y="426.45" width="7.74" height="15.55" fill="#356f8a"/>
+<rect x="295.78" y="430.10" width="7.74" height="11.90" fill="#b06b45"/>
+<rect x="303.52" y="430.08" width="7.74" height="11.92" fill="#6c5b8e"/>
+<text x="300.70" y="455" transform="rotate(60 300.70 455)" class="small">るsolve関数を</text>
+<rect x="323.22" y="425.54" width="7.74" height="16.46" fill="#356f8a"/>
+<rect x="330.96" y="427.17" width="7.74" height="14.83" fill="#b06b45"/>
+<rect x="338.70" y="431.13" width="7.74" height="10.87" fill="#6c5b8e"/>
+<text x="335.89" y="455" transform="rotate(60 335.89 455)" class="small">いてください。</text>
+<rect x="358.41" y="422.97" width="7.74" height="19.03" fill="#356f8a"/>
+<rect x="366.15" y="420.03" width="7.74" height="21.97" fill="#b06b45"/>
+<rect x="373.89" y="430.49" width="7.74" height="11.51" fill="#6c5b8e"/>
+<text x="371.07" y="455" transform="rotate(60 371.07 455)" class="small">↵</text>
+<rect x="393.59" y="424.87" width="7.74" height="17.13" fill="#356f8a"/>
+<rect x="401.33" y="425.62" width="7.74" height="16.38" fill="#b06b45"/>
+<rect x="409.07" y="433.70" width="7.74" height="8.30" fill="#6c5b8e"/>
+<text x="406.26" y="455" transform="rotate(60 406.26 455)" class="small">&lt;|code</text>
+<rect x="428.78" y="421.38" width="7.74" height="20.62" fill="#356f8a"/>
+<rect x="436.52" y="418.83" width="7.74" height="23.17" fill="#b06b45"/>
+<rect x="444.26" y="434.04" width="7.74" height="7.96" fill="#6c5b8e"/>
+<text x="441.44" y="455" transform="rotate(60 441.44 455)" class="small">↵</text>
+<rect x="463.96" y="424.76" width="7.74" height="17.24" fill="#356f8a"/>
+<rect x="471.70" y="422.92" width="7.74" height="19.08" fill="#b06b45"/>
+<rect x="479.44" y="435.77" width="7.74" height="6.23" fill="#6c5b8e"/>
+<text x="476.63" y="455" transform="rotate(60 476.63 455)" class="small">def␠solve</text>
+<rect x="499.15" y="421.89" width="7.74" height="20.11" fill="#356f8a"/>
+<rect x="506.89" y="421.03" width="7.74" height="20.97" fill="#b06b45"/>
+<rect x="514.63" y="436.85" width="7.74" height="5.15" fill="#6c5b8e"/>
+<text x="511.81" y="455" transform="rotate(60 511.81 455)" class="small">(xs:␠list</text>
+<rect x="534.33" y="421.98" width="7.74" height="20.02" fill="#356f8a"/>
+<rect x="542.07" y="421.07" width="7.74" height="20.93" fill="#b06b45"/>
+<rect x="549.81" y="437.53" width="7.74" height="4.47" fill="#6c5b8e"/>
+<text x="547.00" y="455" transform="rotate(60 547.00 455)" class="small">:␠int)␠</text>
+<rect x="569.52" y="422.44" width="7.74" height="19.56" fill="#356f8a"/>
+<rect x="577.26" y="421.89" width="7.74" height="20.11" fill="#b06b45"/>
+<rect x="585.00" y="437.41" width="7.74" height="4.59" fill="#6c5b8e"/>
+<text x="582.19" y="455" transform="rotate(60 582.19 455)" class="small">-&gt;␠lis</text>
+<rect x="604.70" y="423.74" width="7.74" height="18.26" fill="#356f8a"/>
+<rect x="612.44" y="423.92" width="7.74" height="18.08" fill="#b06b45"/>
+<rect x="620.19" y="438.17" width="7.74" height="3.83" fill="#6c5b8e"/>
+<text x="617.37" y="455" transform="rotate(60 617.37 455)" class="small">各要素の絶対値</text>
+<rect x="639.89" y="425.24" width="7.74" height="16.76" fill="#356f8a"/>
+<rect x="647.63" y="426.24" width="7.74" height="15.76" fill="#b06b45"/>
+<rect x="655.37" y="439.06" width="7.74" height="2.94" fill="#6c5b8e"/>
+<text x="652.56" y="455" transform="rotate(60 652.56 455)" class="small">を取る↵␠␠␠␠</text>
+<rect x="675.07" y="421.37" width="7.74" height="20.63" fill="#356f8a"/>
+<rect x="682.81" y="419.58" width="7.74" height="22.42" fill="#b06b45"/>
+<rect x="690.56" y="438.42" width="7.74" height="3.58" fill="#6c5b8e"/>
+<text x="687.74" y="455" transform="rotate(60 687.74 455)" class="small">output:␠l</text>
+<rect x="710.26" y="422.97" width="7.74" height="19.03" fill="#356f8a"/>
+<rect x="718.00" y="423.65" width="7.74" height="18.35" fill="#b06b45"/>
+<rect x="725.74" y="439.22" width="7.74" height="2.78" fill="#6c5b8e"/>
+<text x="722.93" y="455" transform="rotate(60 722.93 455)" class="small">␠=␠[abs(</text>
+<rect x="745.44" y="418.36" width="7.74" height="23.64" fill="#356f8a"/>
+<rect x="753.19" y="417.41" width="7.74" height="24.59" fill="#b06b45"/>
+<rect x="760.93" y="438.90" width="7.74" height="3.10" fill="#6c5b8e"/>
+<text x="758.11" y="455" transform="rotate(60 758.11 455)" class="small">value)␠fo</text>
+<rect x="780.63" y="416.05" width="7.74" height="25.95" fill="#356f8a"/>
+<rect x="788.37" y="416.53" width="7.74" height="25.47" fill="#b06b45"/>
+<rect x="796.11" y="438.98" width="7.74" height="3.02" fill="#6c5b8e"/>
+<text x="793.30" y="455" transform="rotate(60 793.30 455)" class="small">xs]↵␠␠␠␠#</text>
+<rect x="815.81" y="419.67" width="7.74" height="22.33" fill="#356f8a"/>
+<rect x="823.56" y="420.68" width="7.74" height="21.32" fill="#b06b45"/>
+<rect x="831.30" y="439.68" width="7.74" height="2.32" fill="#6c5b8e"/>
+<text x="828.48" y="455" transform="rotate(60 828.48 455)" class="small">二乗する↵␠␠␠␠</text>
+<rect x="851.00" y="400.36" width="7.74" height="41.64" fill="#356f8a"/>
+<rect x="858.74" y="394.78" width="7.74" height="47.22" fill="#b06b45"/>
+<rect x="866.48" y="439.01" width="7.74" height="2.99" fill="#6c5b8e"/>
+<text x="863.67" y="455" transform="rotate(60 863.67 455)" class="small">result:␠l</text>
+<rect x="886.19" y="411.18" width="7.74" height="30.82" fill="#356f8a"/>
+<rect x="893.93" y="409.26" width="7.74" height="32.74" fill="#b06b45"/>
+<rect x="901.67" y="439.75" width="7.74" height="2.25" fill="#6c5b8e"/>
+<text x="898.85" y="455" transform="rotate(60 898.85 455)" class="small">␠=␠[]↵␠␠␠</text>
+<rect x="921.37" y="413.94" width="7.74" height="28.06" fill="#356f8a"/>
+<rect x="929.11" y="415.10" width="7.74" height="26.90" fill="#b06b45"/>
+<rect x="936.85" y="440.67" width="7.74" height="1.33" fill="#6c5b8e"/>
+<text x="934.04" y="455" transform="rotate(60 934.04 455)" class="small">output</text>
+<rect x="956.56" y="409.34" width="7.74" height="32.66" fill="#356f8a"/>
+<rect x="964.30" y="409.83" width="7.74" height="32.17" fill="#b06b45"/>
+<rect x="972.04" y="440.60" width="7.74" height="1.40" fill="#6c5b8e"/>
+<text x="969.22" y="455" transform="rotate(60 969.22 455)" class="small">:↵␠␠␠␠␠␠␠</text>
+<rect x="991.74" y="410.63" width="7.74" height="31.37" fill="#356f8a"/>
+<rect x="999.48" y="411.44" width="7.74" height="30.56" fill="#b06b45"/>
+<rect x="1007.22" y="438.43" width="7.74" height="3.57" fill="#6c5b8e"/>
+<text x="1004.41" y="455" transform="rotate(60 1004.41 455)" class="small">value␠*␠v</text>
+<rect x="72" y="528" width="12" height="12" fill="#356f8a"/>
+<text x="89" y="538" class="small">生attention</text>
+<rect x="332" y="528" width="12" height="12" fill="#b06b45"/>
+<text x="349" y="538" class="small">attention×projected Value norm</text>
+<rect x="592" y="528" width="12" height="12" fill="#6c5b8e"/>
+<text x="609" y="538" class="small">attention rollout</text>
+</svg>

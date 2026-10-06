@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="540" viewBox="0 0 980 540" role="img">
+<title>繰り返し参照されたtoken／参照の少ないtoken</title>
+<desc>左は全層・全headでtop 5に入った率。右は参照可能なstepでの平均attention。いずれも出現機会で正規化。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#17212b;font-size:12px}.small{font-size:10px;fill:#52606d}.title{font-size:20px;font-weight:500}.label{font-size:13px;font-weight:500}</style>
+<text x="24" y="30" class="title">繰り返し参照されたtoken／参照の少ないtoken</text>
+<text x="24" y="52" class="small">左は全層・全headでtop 5に入った率。右は参照可能なstepでの平均attention。いずれも出現機会で正規化。</text>
+<text x="34" y="78" class="label">top 5へ繰り返し入ったtoken</text>
+<text x="34" y="103" class="small">36: output␠=␠output[::-1</text>
+<rect x="34" y="109" width="430" height="14" fill="#edf0f2"/>
+<rect x="34" y="109" width="430.00" height="14" fill="#356f8a"/>
+<text x="464" y="103" text-anchor="end" class="small">55.56%</text>
+<text x="34" y="149" class="small">29: output:␠list[int]</text>
+<rect x="34" y="155" width="430" height="14" fill="#edf0f2"/>
+<rect x="34" y="155" width="408.50" height="14" fill="#356f8a"/>
+<text x="464" y="149" text-anchor="end" class="small">52.78%</text>
+<text x="34" y="195" class="small">0: &lt;|bos|&gt;</text>
+<rect x="34" y="201" width="430" height="14" fill="#edf0f2"/>
+<rect x="34" y="201" width="399.70" height="14" fill="#356f8a"/>
+<text x="464" y="195" text-anchor="end" class="small">51.64%</text>
+<text x="34" y="241" class="small">32: :↵␠␠␠␠␠␠␠␠output␠+=␠</text>
+<rect x="34" y="247" width="430" height="14" fill="#edf0f2"/>
+<rect x="34" y="247" width="348.30" height="14" fill="#356f8a"/>
+<text x="464" y="241" text-anchor="end" class="small">45.00%</text>
+<text x="34" y="287" class="small">1: &lt;|task|&gt;</text>
+<rect x="34" y="293" width="430" height="14" fill="#edf0f2"/>
+<rect x="34" y="293" width="327.39" height="14" fill="#356f8a"/>
+<text x="464" y="287" text-anchor="end" class="small">42.30%</text>
+<text x="34" y="333" class="small">17: (xs:␠list[int],␠k</text>
+<rect x="34" y="339" width="430" height="14" fill="#edf0f2"/>
+<rect x="34" y="339" width="306.37" height="14" fill="#356f8a"/>
+<text x="464" y="333" text-anchor="end" class="small">39.58%</text>
+<text x="34" y="379" class="small">16: def␠solve</text>
+<rect x="34" y="385" width="430" height="14" fill="#edf0f2"/>
+<rect x="34" y="385" width="270.29" height="14" fill="#356f8a"/>
+<text x="464" y="379" text-anchor="end" class="small">34.92%</text>
+<text x="34" y="425" class="small">35: 順を反転する↵␠␠␠␠</text>
+<rect x="34" y="431" width="430" height="14" fill="#edf0f2"/>
+<rect x="34" y="431" width="258.00" height="14" fill="#356f8a"/>
+<text x="464" y="425" text-anchor="end" class="small">33.33%</text>
+<text x="520" y="78" class="label">平均attentionが小さいtoken</text>
+<text x="520" y="103" class="small">9: 降</text>
+<rect x="520" y="109" width="430" height="14" fill="#edf0f2"/>
+<rect x="520" y="109" width="373.81" height="14" fill="#a96745"/>
+<text x="950" y="103" text-anchor="end" class="small">2.26%</text>
+<text x="520" y="149" class="small">10: 順に並べ</text>
+<rect x="520" y="155" width="430" height="14" fill="#edf0f2"/>
+<rect x="520" y="155" width="377.90" height="14" fill="#a96745"/>
+<text x="950" y="149" text-anchor="end" class="small">2.29%</text>
+<text x="520" y="195" class="small">11: るsolve関数を書</text>
+<rect x="520" y="201" width="430" height="14" fill="#edf0f2"/>
+<rect x="520" y="201" width="384.29" height="14" fill="#a96745"/>
+<text x="950" y="195" text-anchor="end" class="small">2.33%</text>
+<text x="520" y="241" class="small">8: して</text>
+<rect x="520" y="247" width="430" height="14" fill="#edf0f2"/>
+<rect x="520" y="247" width="388.32" height="14" fill="#a96745"/>
+<text x="950" y="241" text-anchor="end" class="small">2.35%</text>
+<text x="520" y="287" class="small">7: に</text>
+<rect x="520" y="293" width="430" height="14" fill="#edf0f2"/>
+<rect x="520" y="293" width="399.74" height="14" fill="#a96745"/>
+<text x="950" y="287" text-anchor="end" class="small">2.42%</text>
+<text x="520" y="333" class="small">4: の</text>
+<rect x="520" y="339" width="430" height="14" fill="#edf0f2"/>
+<rect x="520" y="339" width="403.92" height="14" fill="#a96745"/>
+<text x="950" y="333" text-anchor="end" class="small">2.44%</text>
+<text x="520" y="379" class="small">3: xs</text>
+<rect x="520" y="385" width="430" height="14" fill="#edf0f2"/>
+<rect x="520" y="385" width="428.83" height="14" fill="#a96745"/>
+<text x="950" y="379" text-anchor="end" class="small">2.59%</text>
+<text x="520" y="425" class="small">5: 各要素を</text>
+<rect x="520" y="431" width="430" height="14" fill="#edf0f2"/>
+<rect x="520" y="431" width="430.00" height="14" fill="#a96745"/>
+<text x="950" y="425" text-anchor="end" class="small">2.60%</text>
+</svg>

@@ -1,0 +1,4913 @@
+{
+  "model_directory": "data/models/architecture_ablation_run_20261006/15m_heads_4_dim64_seed20260925/model",
+  "tokenizer": "data/tokenizers/bpe_2048/tokenizer.json",
+  "model_config": {
+    "parameter_count": 9441536,
+    "layers": 8,
+    "heads": 4,
+    "head_dimension": 64,
+    "hidden_size": 256,
+    "ffn_size": 1024
+  },
+  "diagnostic_design": {
+    "template_id": "single-operation-training-aligned-v1",
+    "without_k_template": "整数リストxsから{canonical_meaning}solve関数を書いてください。",
+    "with_k_template": "整数リストxsと整数kを受け取り、{canonical_meaning}solve関数を書いてください。",
+    "k_operation_ids": [
+      "atomic-000003",
+      "atomic-000004",
+      "atomic-000005",
+      "atomic-000006",
+      "atomic-000007",
+      "atomic-000011",
+      "atomic-000012",
+      "atomic-000013",
+      "atomic-000022",
+      "atomic-000023"
+    ],
+    "prompt_count": 24,
+    "coverage": "24 atomic operations, one training-aligned canonical instruction per operation",
+    "hidden_tests_per_prompt": 33,
+    "generation": "greedy",
+    "ablation": "head output is zeroed before out_proj; token-position experiment zeros V but preserves K and attention weights"
+  },
+  "baseline": {
+    "passed": 22,
+    "total": 24,
+    "teacher_forced_nll": 0.43650605,
+    "generated_token_count": 218
+  },
+  "head_roles": [
+    {
+      "id": "L1H1",
+      "layer": 1,
+      "head": 1,
+      "bos_attention": 0.07442968,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.34889796,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.39669213,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.2858834,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.06722195,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07647666,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.27893543,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.99071437,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.0613125,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06661654,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.35014427,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.937621,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L1H2",
+      "layer": 1,
+      "head": 2,
+      "bos_attention": 0.06718396,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.33873349,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.41189578,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.28022084,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07177238,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07562375,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.27907681,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.99346912,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.06891636,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.07458717,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.20596433,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.05951488,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L1H3",
+      "layer": 1,
+      "head": 3,
+      "bos_attention": 0.06993827,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.35046852,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.39673051,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.28407511,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.0730053,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.06864442,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.27141762,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.99010098,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.06893363,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.08281294,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.04276764,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.05142426,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L1H4",
+      "layer": 1,
+      "head": 4,
+      "bos_attention": 0.07233973,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.35079238,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.38690117,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.29475683,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07480256,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07510179,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.28822383,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.99196309,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.06974954,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.08054101,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 0.89061302,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.11423409,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L2H1",
+      "layer": 2,
+      "head": 1,
+      "bos_attention": 0.06324259,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.26900387,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.42650202,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.34216332,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.09049491,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.08642362,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.33236742,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.9630729,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.05550227,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.04910179,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 0.8084085,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.03876901,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L2H2",
+      "layer": 2,
+      "head": 2,
+      "bos_attention": 0.06159349,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.32031998,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.39861286,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.31583825,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.08179606,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07644302,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.31206334,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.97685558,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.06510852,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.07254276,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.13020694,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.95002377,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L2H3",
+      "layer": 2,
+      "head": 3,
+      "bos_attention": 0.05632528,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.3000018,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.40273061,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.33404309,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.08240915,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.08432553,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.33108687,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.97300905,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.06224937,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06290615,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.51774049,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.85604638,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L2H4",
+      "layer": 2,
+      "head": 4,
+      "bos_attention": 0.0728466,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.29625165,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.41239211,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.32740051,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.08815581,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07915812,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.31456843,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.97902554,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.05590931,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.04821382,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 0.72383314,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.96522081,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L3H1",
+      "layer": 3,
+      "head": 1,
+      "bos_attention": 0.03848842,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.58229077,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.26990032,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.16609481,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.05595541,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.06549927,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.22363208,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.73046029,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.03738951,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.0386983,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.69437432,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.11992049,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L3H2",
+      "layer": 3,
+      "head": 2,
+      "bos_attention": 0.04363221,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.43894863,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.33442685,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.25466052,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07133275,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.06086475,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.27557471,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.93323767,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.04306144,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.04543173,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.30305147,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.13028479,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L3H3",
+      "layer": 3,
+      "head": 3,
+      "bos_attention": 0.04526214,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.38575345,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.35150942,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.29524088,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.08311772,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.06842211,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.31845677,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.88597322,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.04439781,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.04003407,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.71165013,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.63104481,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L3H4",
+      "layer": 3,
+      "head": 4,
+      "bos_attention": 0.06098928,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.31300822,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.37026438,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.35591015,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07763334,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07399516,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.33958462,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.93737072,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.05367261,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.0508478,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.52022111,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.77367246,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L4H1",
+      "layer": 4,
+      "head": 1,
+      "bos_attention": 0.05442326,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.35566291,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.36136982,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.31797343,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.08656081,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.11451486,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.33231455,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.91862637,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.05853558,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06117321,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.49655735,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.87119335,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L4H2",
+      "layer": 4,
+      "head": 2,
+      "bos_attention": 0.07283589,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.37403652,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.391987,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.26292208,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.05854725,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.09658261,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.28817156,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.906726,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.07115403,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06655248,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.66621256,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.58944577,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L4H3",
+      "layer": 4,
+      "head": 3,
+      "bos_attention": 0.03991524,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.45139709,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.3182967,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.25879768,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.06311215,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.09717774,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.2819446,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.89819747,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.0374437,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.03404053,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.04719388,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.72693801,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L4H4",
+      "layer": 4,
+      "head": 4,
+      "bos_attention": 0.07353339,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.37971476,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.39295775,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.2554504,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.06290407,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.08746407,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.28522068,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.91515458,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.07217372,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06548826,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.49839091,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.54457313,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L5H1",
+      "layer": 5,
+      "head": 1,
+      "bos_attention": 0.07306912,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.30486384,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.4236044,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.30512357,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07572349,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.09377169,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.31416401,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.94645768,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.06700695,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06603689,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.07749999,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.05939806,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L5H2",
+      "layer": 5,
+      "head": 2,
+      "bos_attention": 0.07991067,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.31604901,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.43212926,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.28297511,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07493418,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.06965422,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.27822322,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.97580874,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.07280804,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.07133711,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 0.73546952,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.19782484,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L5H3",
+      "layer": 5,
+      "head": 3,
+      "bos_attention": 0.09245495,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.2809025,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.45293972,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.29908434,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.06714593,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.09063866,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.28847939,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.95493883,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.08344765,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.07393781,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.00549495,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.8601439,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L5H4",
+      "layer": 5,
+      "head": 4,
+      "bos_attention": 0.09318069,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.24760337,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.47233802,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.3147051,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07441068,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.08999846,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.32110715,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.973957,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.09336418,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.09044725,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.53802884,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.66280597,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L6H1",
+      "layer": 6,
+      "head": 1,
+      "bos_attention": 0.08494402,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.3129999,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.43813008,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.27965832,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.06896234,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07559606,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.27837926,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.978306,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.08707177,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.0806725,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.39071345,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.86299282,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L6H2",
+      "layer": 6,
+      "head": 2,
+      "bos_attention": 0.08036677,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.29996043,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.44104806,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.2910316,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07965752,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07564361,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.28196064,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.98225915,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.07005144,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06845623,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 0.78575635,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.94786751,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L6H3",
+      "layer": 6,
+      "head": 3,
+      "bos_attention": 0.07864855,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.31419554,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.43483052,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.28202194,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.06811669,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07283247,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.27834645,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.98117697,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.07931597,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.08047604,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.17976248,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.92592824,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L6H4",
+      "layer": 6,
+      "head": 4,
+      "bos_attention": 0.076735,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.31031129,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.44500977,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.27494866,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.06138802,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.083332,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.28185433,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.97166026,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.0756598,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06983425,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.53516638,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.71817863,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L7H1",
+      "layer": 7,
+      "head": 1,
+      "bos_attention": 0.07453251,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.24182028,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.48236048,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.30994132,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.085302,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.08858074,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.33563238,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.97049862,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.07328723,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06420402,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.54673493,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.16380286,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L7H2",
+      "layer": 7,
+      "head": 2,
+      "bos_attention": 0.08930764,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.27239165,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.4739531,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.28503522,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07385273,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.08236821,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.30212507,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.9591459,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.0925897,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.08814102,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.60203254,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.68458754,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L7H3",
+      "layer": 7,
+      "head": 3,
+      "bos_attention": 0.08289279,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.316603,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.45740142,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.25395373,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07348455,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07202505,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.27801067,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.96682942,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.08310583,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.08140171,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.1396879,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 1.15135658,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L7H4",
+      "layer": 7,
+      "head": 4,
+      "bos_attention": 0.08466264,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.27811638,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.47332329,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.27931008,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.06429603,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.0810855,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.28955343,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.97162521,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.09218719,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.09789086,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.35603547,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.76630813,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L8H1",
+      "layer": 8,
+      "head": 1,
+      "bos_attention": 0.09673116,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.20510672,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.46980146,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.36530933,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.08154108,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.09706785,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.35932714,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.94273055,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.08587911,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.07773249,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.33995616,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.89116567,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L8H2",
+      "layer": 8,
+      "head": 2,
+      "bos_attention": 0.14033316,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.19160147,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.51465082,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.33008757,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.07687115,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.08360365,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.32171091,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.93055493,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.14896615,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.14203736,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.33953607,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.53643185,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L8H3",
+      "layer": 8,
+      "head": 3,
+      "bos_attention": 0.08878707,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.23134902,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.49559939,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.30683115,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.06548011,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.07346263,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.31238019,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.92720586,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.08221181,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.06011469,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 1.87114787,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.48103827,
+      "induction_like_relative_observations": 26
+    },
+    {
+      "id": "L8H4",
+      "layer": 8,
+      "head": 4,
+      "bos_attention": 0.10210882,
+      "bos_attention_observations": 218,
+      "instruction_attention": 0.24209894,
+      "instruction_attention_observations": 218,
+      "control_attention": 0.4727442,
+      "control_attention_observations": 218,
+      "generated_code_attention": 0.32043406,
+      "generated_code_attention_observations": 194,
+      "previous_token_attention": 0.0720906,
+      "previous_token_attention_observations": 218,
+      "self_attention": 0.08190764,
+      "self_attention_observations": 218,
+      "recent4_attention": 0.30521193,
+      "recent4_attention_observations": 218,
+      "normalized_entropy": 0.96093339,
+      "normalized_entropy_observations": 218,
+      "bos_value_norm_share": 0.08891687,
+      "bos_value_norm_share_observations": 218,
+      "bos_projected_norm_share": 0.08991774,
+      "bos_projected_norm_share_observations": 218,
+      "copy_relative": 2.00412965,
+      "copy_relative_observations": 26,
+      "induction_like_relative": 0.73908973,
+      "induction_like_relative_observations": 26
+    }
+  ],
+  "role_rankings": {
+    "bos_attention": [
+      {
+        "id": "L8H2",
+        "value": 0.14033316
+      },
+      {
+        "id": "L8H4",
+        "value": 0.10210882
+      },
+      {
+        "id": "L8H1",
+        "value": 0.09673116
+      },
+      {
+        "id": "L5H4",
+        "value": 0.09318069
+      },
+      {
+        "id": "L5H3",
+        "value": 0.09245495
+      },
+      {
+        "id": "L7H2",
+        "value": 0.08930764
+      }
+    ],
+    "instruction_attention": [
+      {
+        "id": "L3H1",
+        "value": 0.58229077
+      },
+      {
+        "id": "L4H3",
+        "value": 0.45139709
+      },
+      {
+        "id": "L3H2",
+        "value": 0.43894863
+      },
+      {
+        "id": "L3H3",
+        "value": 0.38575345
+      },
+      {
+        "id": "L4H4",
+        "value": 0.37971476
+      },
+      {
+        "id": "L4H2",
+        "value": 0.37403652
+      }
+    ],
+    "control_attention": [
+      {
+        "id": "L8H2",
+        "value": 0.51465082
+      },
+      {
+        "id": "L8H3",
+        "value": 0.49559939
+      },
+      {
+        "id": "L7H1",
+        "value": 0.48236048
+      },
+      {
+        "id": "L7H2",
+        "value": 0.4739531
+      },
+      {
+        "id": "L7H4",
+        "value": 0.47332329
+      },
+      {
+        "id": "L8H4",
+        "value": 0.4727442
+      }
+    ],
+    "generated_code_attention": [
+      {
+        "id": "L8H1",
+        "value": 0.36530933
+      },
+      {
+        "id": "L3H4",
+        "value": 0.35591015
+      },
+      {
+        "id": "L2H1",
+        "value": 0.34216332
+      },
+      {
+        "id": "L2H3",
+        "value": 0.33404309
+      },
+      {
+        "id": "L8H2",
+        "value": 0.33008757
+      },
+      {
+        "id": "L2H4",
+        "value": 0.32740051
+      }
+    ],
+    "previous_token_attention": [
+      {
+        "id": "L2H1",
+        "value": 0.09049491
+      },
+      {
+        "id": "L2H4",
+        "value": 0.08815581
+      },
+      {
+        "id": "L4H1",
+        "value": 0.08656081
+      },
+      {
+        "id": "L7H1",
+        "value": 0.085302
+      },
+      {
+        "id": "L3H3",
+        "value": 0.08311772
+      },
+      {
+        "id": "L2H3",
+        "value": 0.08240915
+      }
+    ],
+    "self_attention": [
+      {
+        "id": "L4H1",
+        "value": 0.11451486
+      },
+      {
+        "id": "L4H3",
+        "value": 0.09717774
+      },
+      {
+        "id": "L8H1",
+        "value": 0.09706785
+      },
+      {
+        "id": "L4H2",
+        "value": 0.09658261
+      },
+      {
+        "id": "L5H1",
+        "value": 0.09377169
+      },
+      {
+        "id": "L5H3",
+        "value": 0.09063866
+      }
+    ],
+    "recent4_attention": [
+      {
+        "id": "L8H1",
+        "value": 0.35932714
+      },
+      {
+        "id": "L3H4",
+        "value": 0.33958462
+      },
+      {
+        "id": "L7H1",
+        "value": 0.33563238
+      },
+      {
+        "id": "L2H1",
+        "value": 0.33236742
+      },
+      {
+        "id": "L4H1",
+        "value": 0.33231455
+      },
+      {
+        "id": "L2H3",
+        "value": 0.33108687
+      }
+    ],
+    "normalized_entropy": [
+      {
+        "id": "L1H2",
+        "value": 0.99346912
+      },
+      {
+        "id": "L1H4",
+        "value": 0.99196309
+      },
+      {
+        "id": "L1H1",
+        "value": 0.99071437
+      },
+      {
+        "id": "L1H3",
+        "value": 0.99010098
+      },
+      {
+        "id": "L6H2",
+        "value": 0.98225915
+      },
+      {
+        "id": "L6H3",
+        "value": 0.98117697
+      }
+    ],
+    "bos_value_norm_share": [
+      {
+        "id": "L8H2",
+        "value": 0.14896615
+      },
+      {
+        "id": "L5H4",
+        "value": 0.09336418
+      },
+      {
+        "id": "L7H2",
+        "value": 0.0925897
+      },
+      {
+        "id": "L7H4",
+        "value": 0.09218719
+      },
+      {
+        "id": "L8H4",
+        "value": 0.08891687
+      },
+      {
+        "id": "L6H1",
+        "value": 0.08707177
+      }
+    ],
+    "bos_projected_norm_share": [
+      {
+        "id": "L8H2",
+        "value": 0.14203736
+      },
+      {
+        "id": "L7H4",
+        "value": 0.09789086
+      },
+      {
+        "id": "L5H4",
+        "value": 0.09044725
+      },
+      {
+        "id": "L8H4",
+        "value": 0.08991774
+      },
+      {
+        "id": "L7H2",
+        "value": 0.08814102
+      },
+      {
+        "id": "L1H3",
+        "value": 0.08281294
+      }
+    ],
+    "copy_relative": [
+      {
+        "id": "L8H4",
+        "value": 2.00412965
+      },
+      {
+        "id": "L8H3",
+        "value": 1.87114787
+      },
+      {
+        "id": "L3H3",
+        "value": 1.71165013
+      },
+      {
+        "id": "L3H1",
+        "value": 1.69437432
+      },
+      {
+        "id": "L4H2",
+        "value": 1.66621256
+      },
+      {
+        "id": "L7H2",
+        "value": 1.60203254
+      }
+    ],
+    "induction_like_relative": [
+      {
+        "id": "L5H2",
+        "value": 1.19782484
+      },
+      {
+        "id": "L7H1",
+        "value": 1.16380286
+      },
+      {
+        "id": "L7H3",
+        "value": 1.15135658
+      },
+      {
+        "id": "L3H2",
+        "value": 1.13028479
+      },
+      {
+        "id": "L3H1",
+        "value": 1.11992049
+      },
+      {
+        "id": "L1H4",
+        "value": 1.11423409
+      }
+    ]
+  },
+  "head_ablation": [
+    {
+      "id": "L1H1",
+      "layer": 1,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.49201443,
+      "delta_nll": 0.05550838,
+      "mean_kl_divergence": 0.05464577,
+      "argmax_changed_tokens": 17,
+      "argmax_changed_rate": 0.07798165
+    },
+    {
+      "id": "L1H2",
+      "layer": 1,
+      "head": 2,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.48946478,
+      "delta_nll": 0.05295873,
+      "mean_kl_divergence": 0.05687269,
+      "argmax_changed_tokens": 14,
+      "argmax_changed_rate": 0.06422018
+    },
+    {
+      "id": "L1H3",
+      "layer": 1,
+      "head": 3,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.607793,
+      "delta_nll": 0.17128695,
+      "mean_kl_divergence": 0.16259865,
+      "argmax_changed_tokens": 24,
+      "argmax_changed_rate": 0.11009174
+    },
+    {
+      "id": "L1H4",
+      "layer": 1,
+      "head": 4,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.68221228,
+      "delta_nll": 0.24570623,
+      "mean_kl_divergence": 0.24900627,
+      "argmax_changed_tokens": 32,
+      "argmax_changed_rate": 0.14678899
+    },
+    {
+      "id": "L2H1",
+      "layer": 2,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.44659565,
+      "delta_nll": 0.0100896,
+      "mean_kl_divergence": 0.0223278,
+      "argmax_changed_tokens": 18,
+      "argmax_changed_rate": 0.08256881
+    },
+    {
+      "id": "L2H2",
+      "layer": 2,
+      "head": 2,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.48442432,
+      "delta_nll": 0.04791827,
+      "mean_kl_divergence": 0.04839252,
+      "argmax_changed_tokens": 19,
+      "argmax_changed_rate": 0.08715596
+    },
+    {
+      "id": "L2H3",
+      "layer": 2,
+      "head": 3,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.49711199,
+      "delta_nll": 0.06060594,
+      "mean_kl_divergence": 0.06574108,
+      "argmax_changed_tokens": 12,
+      "argmax_changed_rate": 0.05504587
+    },
+    {
+      "id": "L2H4",
+      "layer": 2,
+      "head": 4,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.45314334,
+      "delta_nll": 0.01663729,
+      "mean_kl_divergence": 0.01804527,
+      "argmax_changed_tokens": 10,
+      "argmax_changed_rate": 0.04587156
+    },
+    {
+      "id": "L3H1",
+      "layer": 3,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.50782158,
+      "delta_nll": 0.07131553,
+      "mean_kl_divergence": 0.05478709,
+      "argmax_changed_tokens": 21,
+      "argmax_changed_rate": 0.09633028
+    },
+    {
+      "id": "L3H2",
+      "layer": 3,
+      "head": 2,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.44647534,
+      "delta_nll": 0.00996929,
+      "mean_kl_divergence": 0.00514684,
+      "argmax_changed_tokens": 8,
+      "argmax_changed_rate": 0.03669725
+    },
+    {
+      "id": "L3H3",
+      "layer": 3,
+      "head": 3,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.44167268,
+      "delta_nll": 0.00516663,
+      "mean_kl_divergence": 0.00956661,
+      "argmax_changed_tokens": 12,
+      "argmax_changed_rate": 0.05504587
+    },
+    {
+      "id": "L3H4",
+      "layer": 3,
+      "head": 4,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.44493941,
+      "delta_nll": 0.00843336,
+      "mean_kl_divergence": 0.00827345,
+      "argmax_changed_tokens": 9,
+      "argmax_changed_rate": 0.0412844
+    },
+    {
+      "id": "L4H1",
+      "layer": 4,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.44575656,
+      "delta_nll": 0.00925051,
+      "mean_kl_divergence": 0.00375667,
+      "argmax_changed_tokens": 7,
+      "argmax_changed_rate": 0.03211009
+    },
+    {
+      "id": "L4H2",
+      "layer": 4,
+      "head": 2,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43589085,
+      "delta_nll": -0.0006152,
+      "mean_kl_divergence": 0.00470658,
+      "argmax_changed_tokens": 7,
+      "argmax_changed_rate": 0.03211009
+    },
+    {
+      "id": "L4H3",
+      "layer": 4,
+      "head": 3,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.44807335,
+      "delta_nll": 0.0115673,
+      "mean_kl_divergence": 0.00576939,
+      "argmax_changed_tokens": 5,
+      "argmax_changed_rate": 0.02293578
+    },
+    {
+      "id": "L4H4",
+      "layer": 4,
+      "head": 4,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.44044041,
+      "delta_nll": 0.00393436,
+      "mean_kl_divergence": 0.00168841,
+      "argmax_changed_tokens": 3,
+      "argmax_changed_rate": 0.01376147
+    },
+    {
+      "id": "L5H1",
+      "layer": 5,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.4344347,
+      "delta_nll": -0.00207134,
+      "mean_kl_divergence": 0.00185231,
+      "argmax_changed_tokens": 4,
+      "argmax_changed_rate": 0.01834862
+    },
+    {
+      "id": "L5H2",
+      "layer": 5,
+      "head": 2,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43548899,
+      "delta_nll": -0.00101706,
+      "mean_kl_divergence": 0.0018146,
+      "argmax_changed_tokens": 7,
+      "argmax_changed_rate": 0.03211009
+    },
+    {
+      "id": "L5H3",
+      "layer": 5,
+      "head": 3,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43283315,
+      "delta_nll": -0.0036729,
+      "mean_kl_divergence": 0.00304087,
+      "argmax_changed_tokens": 3,
+      "argmax_changed_rate": 0.01376147
+    },
+    {
+      "id": "L5H4",
+      "layer": 5,
+      "head": 4,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.4380277,
+      "delta_nll": 0.00152165,
+      "mean_kl_divergence": 0.0015342,
+      "argmax_changed_tokens": 4,
+      "argmax_changed_rate": 0.01834862
+    },
+    {
+      "id": "L6H1",
+      "layer": 6,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43699282,
+      "delta_nll": 0.00048677,
+      "mean_kl_divergence": 0.00024851,
+      "argmax_changed_tokens": 2,
+      "argmax_changed_rate": 0.00917431
+    },
+    {
+      "id": "L6H2",
+      "layer": 6,
+      "head": 2,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43595195,
+      "delta_nll": -0.0005541,
+      "mean_kl_divergence": 0.00018033,
+      "argmax_changed_tokens": 4,
+      "argmax_changed_rate": 0.01834862
+    },
+    {
+      "id": "L6H3",
+      "layer": 6,
+      "head": 3,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43699102,
+      "delta_nll": 0.00048497,
+      "mean_kl_divergence": 0.00013471,
+      "argmax_changed_tokens": 4,
+      "argmax_changed_rate": 0.01834862
+    },
+    {
+      "id": "L6H4",
+      "layer": 6,
+      "head": 4,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43766345,
+      "delta_nll": 0.0011574,
+      "mean_kl_divergence": 0.00016067,
+      "argmax_changed_tokens": 2,
+      "argmax_changed_rate": 0.00917431
+    },
+    {
+      "id": "L7H1",
+      "layer": 7,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43696341,
+      "delta_nll": 0.00045736,
+      "mean_kl_divergence": 0.00012064,
+      "argmax_changed_tokens": 4,
+      "argmax_changed_rate": 0.01834862
+    },
+    {
+      "id": "L7H2",
+      "layer": 7,
+      "head": 2,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43663754,
+      "delta_nll": 0.00013149,
+      "mean_kl_divergence": 0.00011041,
+      "argmax_changed_tokens": 1,
+      "argmax_changed_rate": 0.00458716
+    },
+    {
+      "id": "L7H3",
+      "layer": 7,
+      "head": 3,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43910028,
+      "delta_nll": 0.00259423,
+      "mean_kl_divergence": 0.00014898,
+      "argmax_changed_tokens": 2,
+      "argmax_changed_rate": 0.00917431
+    },
+    {
+      "id": "L7H4",
+      "layer": 7,
+      "head": 4,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43708327,
+      "delta_nll": 0.00057722,
+      "mean_kl_divergence": 0.00014991,
+      "argmax_changed_tokens": 3,
+      "argmax_changed_rate": 0.01376147
+    },
+    {
+      "id": "L8H1",
+      "layer": 8,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43675787,
+      "delta_nll": 0.00025182,
+      "mean_kl_divergence": 0.00017022,
+      "argmax_changed_tokens": 1,
+      "argmax_changed_rate": 0.00458716
+    },
+    {
+      "id": "L8H2",
+      "layer": 8,
+      "head": 2,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43546572,
+      "delta_nll": -0.00104033,
+      "mean_kl_divergence": 0.00016538,
+      "argmax_changed_tokens": 3,
+      "argmax_changed_rate": 0.01376147
+    },
+    {
+      "id": "L8H3",
+      "layer": 8,
+      "head": 3,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43257856,
+      "delta_nll": -0.00392749,
+      "mean_kl_divergence": 0.00110153,
+      "argmax_changed_tokens": 6,
+      "argmax_changed_rate": 0.02752294
+    },
+    {
+      "id": "L8H4",
+      "layer": 8,
+      "head": 4,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43920612,
+      "delta_nll": 0.00270008,
+      "mean_kl_divergence": 0.00013507,
+      "argmax_changed_tokens": 2,
+      "argmax_changed_rate": 0.00917431
+    }
+  ],
+  "most_causally_influential_heads": [
+    {
+      "id": "L1H4",
+      "layer": 1,
+      "head": 4,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.68221228,
+      "delta_nll": 0.24570623,
+      "mean_kl_divergence": 0.24900627,
+      "argmax_changed_tokens": 32,
+      "argmax_changed_rate": 0.14678899
+    },
+    {
+      "id": "L1H3",
+      "layer": 1,
+      "head": 3,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.607793,
+      "delta_nll": 0.17128695,
+      "mean_kl_divergence": 0.16259865,
+      "argmax_changed_tokens": 24,
+      "argmax_changed_rate": 0.11009174
+    },
+    {
+      "id": "L3H1",
+      "layer": 3,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.50782158,
+      "delta_nll": 0.07131553,
+      "mean_kl_divergence": 0.05478709,
+      "argmax_changed_tokens": 21,
+      "argmax_changed_rate": 0.09633028
+    }
+  ],
+  "least_causally_influential_heads": [
+    {
+      "id": "L7H2",
+      "layer": 7,
+      "head": 2,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43663754,
+      "delta_nll": 0.00013149,
+      "mean_kl_divergence": 0.00011041,
+      "argmax_changed_tokens": 1,
+      "argmax_changed_rate": 0.00458716
+    },
+    {
+      "id": "L8H1",
+      "layer": 8,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43675787,
+      "delta_nll": 0.00025182,
+      "mean_kl_divergence": 0.00017022,
+      "argmax_changed_tokens": 1,
+      "argmax_changed_rate": 0.00458716
+    },
+    {
+      "id": "L7H1",
+      "layer": 7,
+      "head": 1,
+      "baseline_nll": 0.43650605,
+      "ablated_nll": 0.43696341,
+      "delta_nll": 0.00045736,
+      "mean_kl_divergence": 0.00012064,
+      "argmax_changed_tokens": 4,
+      "argmax_changed_rate": 0.01834862
+    }
+  ],
+  "attention_causal_correlations": {
+    "bos_attention": {
+      "pearson": -0.22049227,
+      "spearman": -0.68291789
+    },
+    "instruction_attention": {
+      "pearson": 0.28626028,
+      "spearman": 0.54178886
+    },
+    "previous_token_attention": {
+      "pearson": -0.00352244,
+      "spearman": 0.10007331
+    },
+    "recent4_attention": {
+      "pearson": -0.2606293,
+      "spearman": -0.17558651
+    },
+    "induction_like_relative": {
+      "pearson": 0.36646107,
+      "spearman": 0.32221408
+    }
+  },
+  "causal_generation_results": [
+    {
+      "name": "baseline",
+      "label": "baseline",
+      "kind": "baseline",
+      "passed": 22,
+      "total": 24,
+      "pass_rate": 0.91666667,
+      "same_code_count": 24,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if 0 == value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % 2 != 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if x > k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value >= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if value < k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k >= value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if 0 == x % k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 正の値だけを残す\n    result = [value for value in xs if value > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 負の値だけを残す\n    result: list[int] = [value for value in xs if value < 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [x + k for x in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value * 3 for value in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output: list[int] = [abs(value) for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 昇順に並べる\n    output = sorted(xs, reverse=False)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[0:k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k::]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = xs[::2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "zero_bos_values",
+      "label": "BOS Value=0",
+      "kind": "values",
+      "positions": "bos",
+      "passed": 12,
+      "total": 24,
+      "pass_rate": 0.5,
+      "same_code_count": 2,
+      "syntax_valid": 20,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [-value]\n    output = [value for value in result if 0 == value % 2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[4, 2], actual=[-4, -2]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = [value for value in output if value % 2 == 0]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # kより大きい値だけを残す\n    result: list[int] = [value for value in xs if value > k]\n    # 各要素の符号を反転する\n    output: list[int] = []\n    for x in result:\n        output += [-x]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[5], actual=[-5]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value > k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value < k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # k以下の値だけを残す\n    result: list[int] = [value for value in xs if value <= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # kの倍数だけを残す\n    result: list[int] = []\n    for x in xs:\n        if 0 == x % k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if x > 0:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if 0 > value:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = [value + k for value in result]\n    return output\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        output += [value + k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = [-value for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    result: list[int] = []\n    for value in xs:\n        result += [abs(value)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    return [value <= k]\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: value"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = sorted(xs)[::-1]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    return [value <= k][::-1]\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: value"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = xs[:k]\n    output = []\n    for value in result:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = xs[0::2]\n    output = []\n    for value in result:\n        output += [value * 3]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    return [value > k][::-1]\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: value"
+        }
+      ]
+    },
+    {
+      "name": "zero_instruction_values",
+      "label": "日本語 Value=0",
+      "kind": "values",
+      "positions": "instruction",
+      "passed": 0,
+      "total": 24,
+      "pass_rate": 0.0,
+      "same_code_count": 0,
+      "syntax_valid": 21,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in output:\n        if value > k:\n            result += [value]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output = []\n    for value in xs:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in output:\n        if value > k:\n            result += [value]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[-1]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in output:\n        if value > k:\n            result += [value]\n    return result\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: output"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L1H4",
+      "label": "L1H4=0",
+      "kind": "head",
+      "layer": 0,
+      "head": 3,
+      "selection": "top_delta_nll",
+      "passed": 11,
+      "total": 24,
+      "pass_rate": 0.45833333,
+      "same_code_count": 3,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if 0 == value % 2:\n            result += [value]\n    output = []\n    for value in result:\n        if 0 == value % 2:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if 0 != value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k < value]\n    output: list[int] = []\n    for value in result:\n        output += [value * k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[5], actual=[10]"
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k <= value]\n    output: list[int] = []\n    for value in result:\n        if value >= k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value < k:\n            result += [value]\n    output: list[int] = []\n    for value in result:\n        if value < k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k >= value]\n    output: list[int] = []\n    for value in result:\n        output += [value * value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if 0 == x % k:\n            result += [x]\n    output: list[int] = []\n    for value in result:\n        output += [value + k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 正の値だけを残す\n    result: list[int] = [value for value in xs if value > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if 0 > value:\n            result += [value]\n    output: list[int] = []\n    for value in result:\n        output += [value ** 2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    output: list[int] = []\n    for value in result:\n        output += [value * value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [x + k for x in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    result = [x - k for x in result]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[-2]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * k]\n    result = [x * k for x in result]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-10], actual=[-100]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value * 2 for value in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value * 3 for value in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = []\n    for value in result:\n        output += [-value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [abs(x)]\n    output = []\n    for value in result:\n        if value < k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)\n    result: list[int] = []\n    for value in output:\n        if value < k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = sorted(xs, reverse=True)\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[::-1]\n    output: list[int] = []\n    for value in result:\n        if value % k == 0:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[0:k]\n    output: list[int] = []\n    for value in result:\n        if value < k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k::]\n    output: list[int] = []\n    for value in result:\n        if value < k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = xs[::2]\n    output = [value for value in result if value < k]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L1H3",
+      "label": "L1H3=0",
+      "kind": "head",
+      "layer": 0,
+      "head": 2,
+      "selection": "top_delta_nll",
+      "passed": 15,
+      "total": 24,
+      "pass_rate": 0.625,
+      "same_code_count": 8,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if 0 == value % 2:\n            result += [value]\n    output = []\n    for value in result:\n        if 0 == value % 2:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if 0 != value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if x > k:\n            result += [x]\n    output: list[int] = []\n    for value in result:\n        if value > k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value >= k:\n            result += [value]\n    output: list[int] = []\n    for value in result:\n        if value >= k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value < k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k >= value]\n    output: list[int] = []\n    for value in result:\n        if value < k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if 0 == x % k:\n            result += [x]\n    output: list[int] = []\n    for value in result:\n        if value >= k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 正の値だけを残す\n    result = [value for value in xs if value > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value < 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    output: list[int] = []\n    for value in result:\n        if value >= k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[0], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [x + k for x in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    result = [x - k for x in result]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[-1], actual=[-2]"
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value * 3 for value in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    output: list[int] = []\n    for value in result:\n        output += [-value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[-1], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [abs(x)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)\n    result: list[int] = []\n    for value in output:\n        if value < k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = list(reversed(xs))\n    output: list[int] = []\n    for x in result:\n        output += [x * 2]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[0:k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k::]\n    output: list[int] = []\n    for value in result:\n        if value < k:\n            output += [value]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    return [value * 3 for value in xs]\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L3H1",
+      "label": "L3H1=0",
+      "kind": "head",
+      "layer": 2,
+      "head": 0,
+      "selection": "top_delta_nll",
+      "passed": 14,
+      "total": 24,
+      "pass_rate": 0.58333333,
+      "same_code_count": 7,
+      "syntax_valid": 22,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % 2 == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % 2 != 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value > k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value >= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value < k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k >= value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if value % k == 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 正の値だけを残す\n    result = [value for value in xs if 0 < value]\n    # 現在の要素順を反転する\n    result = list(reversed(result))\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[1, 5], actual=[5, 1]"
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 負の値だけを残す\n    result: list[int] = [value for value in xs if 0 > value]\n    # 現在の要素順を反転する\n    output: list[int] = result[::-1]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1], actual=[-1, -5]"
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[0], k=1, expected=[1], actual=[0]"
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [abs(value)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-1], k=10, expected=[-10], actual=[1]"
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output: list[int] = []\n    for value in xs:\n        output += [abs(value)]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    return [value > 0]\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "未定義または許可されていない名前です: value"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    return [value * 2 for value in xs], reverse=True)\n",
+          "syntax_ok": false,
+          "ast_safe": false,
+          "signature_ok": false,
+          "tests_passed": false,
+          "error": "生成コードをast.parseできません"
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        if 0 == value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[::-1]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-5, -1], actual=[5, 1, 0, -1, -5]"
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k:]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    return [value * 2 for value in xs][::-1]\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[2]"
+        }
+      ]
+    },
+    {
+      "name": "ablate_L7H2",
+      "label": "L7H2=0",
+      "kind": "head",
+      "layer": 6,
+      "head": 1,
+      "selection": "lowest_absolute_delta_nll",
+      "passed": 22,
+      "total": 24,
+      "pass_rate": 0.91666667,
+      "same_code_count": 23,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if 0 == value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % 2 != 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if x > k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if value >= k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if value < k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k >= value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if 0 == x % k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 正の値だけを残す\n    result = [value for value in xs if value > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 負の値だけを残す\n    result: list[int] = [value for value in xs if value < 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [x + k for x in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value * 3 for value in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output: list[int] = [abs(value) for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 昇順に並べる\n    output = sorted(xs, reverse=False)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[0:k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k::]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = xs[::2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "ablate_L8H1",
+      "label": "L8H1=0",
+      "kind": "head",
+      "layer": 7,
+      "head": 0,
+      "selection": "lowest_absolute_delta_nll",
+      "passed": 22,
+      "total": 24,
+      "pass_rate": 0.91666667,
+      "same_code_count": 23,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if 0 == value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % 2 != 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if x > k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value >= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value < k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k >= value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if 0 == x % k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 正の値だけを残す\n    result = [value for value in xs if value > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 負の値だけを残す\n    result: list[int] = [value for value in xs if value < 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [x + k for x in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value * 3 for value in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output: list[int] = [abs(value) for value in output]\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 昇順に並べる\n    output = sorted(xs, reverse=False)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[0:k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k::]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = xs[::2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "ablate_L7H1",
+      "label": "L7H1=0",
+      "kind": "head",
+      "layer": 6,
+      "head": 0,
+      "selection": "lowest_absolute_delta_nll",
+      "passed": 22,
+      "total": 24,
+      "pass_rate": 0.91666667,
+      "same_code_count": 20,
+      "syntax_valid": 24,
+      "results": [
+        {
+          "operation_id": "atomic-000001",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if 0 == value % 2:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000002",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % 2 != 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000003",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k < value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000004",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value >= k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000005",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if value < k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000006",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k >= value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000007",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if 0 == x % k:\n            result += [x]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000008",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 正の値だけを残す\n    result: list[int] = [value for value in xs if value > 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000009",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 負の値だけを残す\n    result: list[int] = [value for value in xs if value < 0]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000010",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000011",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [x + k for x in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000012",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000013",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000014",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000015",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value * 3 for value in xs]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000016",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000017",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for x in xs:\n        result += [abs(x)]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000018",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000019",
+          "reached_eos": true,
+          "same_code_as_baseline": false,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs)\n    result: list[int] = []\n    for value in output:\n        if value < k:\n            result += [value]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[]"
+        },
+        {
+          "operation_id": "atomic-000020",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000021",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": false,
+          "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+        },
+        {
+          "operation_id": "atomic-000022",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[0:k]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000023",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k::]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        },
+        {
+          "operation_id": "atomic-000024",
+          "reached_eos": true,
+          "same_code_as_baseline": true,
+          "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = xs[::2]\n    return result\n",
+          "syntax_ok": true,
+          "ast_safe": true,
+          "signature_ok": true,
+          "tests_passed": true,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "rollout_example": {
+    "operation_id": "atomic-000017",
+    "instruction": "整数リストxsから各要素の絶対値を取るsolve関数を書いてください。",
+    "query_position": 20,
+    "tokens": [
+      "<|bos|>",
+      "<|task|>",
+      "↵",
+      "整数リストxsから",
+      "各要素の絶対値",
+      "を取",
+      "るsolve関数を書",
+      "いてください。",
+      "↵",
+      "<|code|>",
+      "↵",
+      "def␠solve",
+      "(xs:␠list[int],␠k",
+      ":␠int)␠",
+      "->␠list[int]:↵␠␠␠␠#␠",
+      "各要素の絶対値",
+      "を取る↵␠␠␠␠",
+      "output:␠list[int]",
+      "␠=␠[abs(",
+      "value)␠for␠value␠in␠",
+      "output"
+    ],
+    "raw_attention": [
+      0.05881844,
+      0.05562046,
+      0.03732885,
+      0.03462744,
+      0.03207073,
+      0.0304666,
+      0.03670692,
+      0.03140483,
+      0.04313211,
+      0.04408594,
+      0.04750537,
+      0.03384996,
+      0.04144891,
+      0.03634079,
+      0.04669801,
+      0.04403216,
+      0.04676158,
+      0.06217881,
+      0.05693569,
+      0.10403891,
+      0.07594745
+    ],
+    "projected_value_norm_share": [
+      0.05525281,
+      0.05329034,
+      0.045906,
+      0.03316481,
+      0.03115557,
+      0.02473408,
+      0.03210505,
+      0.02968086,
+      0.05619532,
+      0.04209178,
+      0.0609105,
+      0.03113525,
+      0.04417121,
+      0.03427601,
+      0.04341439,
+      0.04370219,
+      0.04456112,
+      0.06820447,
+      0.05276108,
+      0.10419875,
+      0.06908841
+    ],
+    "attention_rollout": [
+      0.50055254,
+      0.13854027,
+      0.11387177,
+      0.04700644,
+      0.03944243,
+      0.03023037,
+      0.02077211,
+      0.01653223,
+      0.0155163,
+      0.01217262,
+      0.01005397,
+      0.00732097,
+      0.00649233,
+      0.00520984,
+      0.00568657,
+      0.00540579,
+      0.00454918,
+      0.00452892,
+      0.00369296,
+      0.00548298,
+      0.00693949
+    ]
+  },
+  "samples": [
+    {
+      "operation_id": "atomic-000001",
+      "instruction": "整数リストxsから偶数だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "even"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 10,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if 0 == value % 2:\n            result += [value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000002",
+      "instruction": "整数リストxsから奇数だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "odd"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 10,
+      "generated_token_count": 11,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % 2 != 0:\n            result += [value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000003",
+      "instruction": "整数リストxsと整数kを受け取り、kより大きい値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "gt_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if x > k:\n            result += [x]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000004",
+      "instruction": "整数リストxsと整数kを受け取り、k以上の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "ge_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 12,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value >= k:\n            result += [value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000005",
+      "instruction": "整数リストxsと整数kを受け取り、kより小さい値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "lt_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 13,
+      "generated_token_count": 9,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if value < k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000006",
+      "instruction": "整数リストxsと整数kを受け取り、k以下の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "le_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 12,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value for value in xs if k >= value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000007",
+      "instruction": "整数リストxsと整数kを受け取り、kの倍数だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "multiple_of_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 12,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if 0 == x % k:\n            result += [x]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000008",
+      "instruction": "整数リストxsから正の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "positive"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 11,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 正の値だけを残す\n    result = [value for value in xs if value > 0]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000009",
+      "instruction": "整数リストxsから負の値だけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "negative"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 11,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 負の値だけを残す\n    result: list[int] = [value for value in xs if value < 0]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000010",
+      "instruction": "整数リストxsからゼロだけを残すsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "filter": [
+              "zero"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 10,
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        if value == 0:\n            result += [value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000011",
+      "instruction": "整数リストxsと整数kを受け取り、各要素にkを加えるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "add_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 12,
+      "generated_token_count": 7,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [x + k for x in xs]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000012",
+      "instruction": "整数リストxsと整数kを受け取り、各要素からkを引くsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "sub_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 12,
+      "generated_token_count": 9,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value - k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000013",
+      "instruction": "整数リストxsと整数kを受け取り、各要素にkを掛けるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 12,
+      "generated_token_count": 9,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000014",
+      "instruction": "整数リストxsから各要素を2倍するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_const",
+              2
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 10,
+      "generated_token_count": 9,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * 2]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000015",
+      "instruction": "整数リストxsから各要素を3倍するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "mul_const",
+              3
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 10,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = [value * 3 for value in xs]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000016",
+      "instruction": "整数リストxsから各要素の符号を反転するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "negate"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 11,
+      "generated_token_count": 9,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [-value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000017",
+      "instruction": "整数リストxsから各要素の絶対値を取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "abs"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 11,
+      "generated_token_count": 11,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 各要素の絶対値を取る\n    output: list[int] = [abs(value) for value in output]\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "UnboundLocalError: cannot access local variable 'output' where it is not associated with a value"
+      }
+    },
+    {
+      "operation_id": "atomic-000018",
+      "instruction": "整数リストxsから各要素を二乗するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "map": [
+              "square"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 10,
+      "generated_token_count": 9,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [value * value]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000019",
+      "instruction": "整数リストxsから値を昇順に並べるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "ascending"
+          }
+        ]
+      },
+      "prompt_token_count": 10,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    # 昇順に並べる\n    output = sorted(xs, reverse=False)\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000020",
+      "instruction": "整数リストxsから値を降順に並べるsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "descending"
+          }
+        ]
+      },
+      "prompt_token_count": 10,
+      "generated_token_count": 8,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = sorted(xs, reverse=True)\n    return output\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000021",
+      "instruction": "整数リストxsから現在の要素順を反転するsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "order": "reverse"
+          }
+        ]
+      },
+      "prompt_token_count": 11,
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = list(reversed(xs))\n    result: list[int] = []\n    for value in output:\n        result += [value * 3]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "error": "不一致: xs=[1], k=1, expected=[1], actual=[3]"
+      }
+    },
+    {
+      "operation_id": "atomic-000022",
+      "instruction": "整数リストxsと整数kを受け取り、先頭からk個を取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "slice": [
+              "take_first_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 12,
+      "generated_token_count": 7,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[0:k]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000023",
+      "instruction": "整数リストxsと整数kを受け取り、末尾からk個を取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "slice": [
+              "take_last_k"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 12,
+      "generated_token_count": 7,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = xs[-k::]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    },
+    {
+      "operation_id": "atomic-000024",
+      "instruction": "整数リストxsから先頭から1個おきに取るsolve関数を書いてください。",
+      "semantic_ast": {
+        "sequence": [
+          {
+            "slice": [
+              "every_other"
+            ]
+          }
+        ]
+      },
+      "prompt_token_count": 11,
+      "generated_token_count": 7,
+      "reached_eos": true,
+      "verification": {
+        "code": "def solve(xs: list[int], k: int) -> list[int]:\n    result = xs[::2]\n    return result\n",
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "error": null
+      }
+    }
+  ],
+  "figures": {
+    "head_roles": "docs/results/attention_ablation_20261006/heads_4_dim64/figures/attention_head_roles.svg",
+    "attention_sink": "docs/results/attention_ablation_20261006/heads_4_dim64/figures/attention_sink_contribution.svg",
+    "causal_ablation": "docs/results/attention_ablation_20261006/heads_4_dim64/figures/attention_causal_ablation.svg",
+    "rollout": "docs/results/attention_ablation_20261006/heads_4_dim64/figures/attention_rollout.svg"
+  }
+}

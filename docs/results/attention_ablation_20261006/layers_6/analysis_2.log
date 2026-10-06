@@ -1,0 +1,327 @@
+{
+  "baseline": {
+    "passed": 22,
+    "total": 24,
+    "teacher_forced_nll": 0.45940034,
+    "generated_token_count": 203
+  },
+  "top_role_rankings": {
+    "bos_attention": [
+      {
+        "id": "L6H4",
+        "value": 0.11044725
+      },
+      {
+        "id": "L6H5",
+        "value": 0.10732783
+      },
+      {
+        "id": "L5H4",
+        "value": 0.106675
+      }
+    ],
+    "instruction_attention": [
+      {
+        "id": "L2H1",
+        "value": 0.55859697
+      },
+      {
+        "id": "L3H4",
+        "value": 0.36252323
+      },
+      {
+        "id": "L3H1",
+        "value": 0.35416859
+      }
+    ],
+    "control_attention": [
+      {
+        "id": "L6H6",
+        "value": 0.50187355
+      },
+      {
+        "id": "L5H4",
+        "value": 0.49642295
+      },
+      {
+        "id": "L2H4",
+        "value": 0.48937488
+      }
+    ],
+    "generated_code_attention": [
+      {
+        "id": "L4H4",
+        "value": 0.42830738
+      },
+      {
+        "id": "L6H5",
+        "value": 0.41634095
+      },
+      {
+        "id": "L2H3",
+        "value": 0.39605919
+      }
+    ],
+    "previous_token_attention": [
+      {
+        "id": "L2H3",
+        "value": 0.12739278
+      },
+      {
+        "id": "L4H4",
+        "value": 0.10200711
+      },
+      {
+        "id": "L6H1",
+        "value": 0.10039704
+      }
+    ],
+    "self_attention": [
+      {
+        "id": "L3H2",
+        "value": 0.13069291
+      },
+      {
+        "id": "L3H5",
+        "value": 0.11280604
+      },
+      {
+        "id": "L4H4",
+        "value": 0.11009926
+      }
+    ],
+    "recent4_attention": [
+      {
+        "id": "L2H3",
+        "value": 0.43105897
+      },
+      {
+        "id": "L4H4",
+        "value": 0.3894147
+      },
+      {
+        "id": "L4H3",
+        "value": 0.37668148
+      }
+    ],
+    "normalized_entropy": [
+      {
+        "id": "L1H2",
+        "value": 0.98501742
+      },
+      {
+        "id": "L1H5",
+        "value": 0.98448753
+      },
+      {
+        "id": "L1H6",
+        "value": 0.98302579
+      }
+    ],
+    "bos_value_norm_share": [
+      {
+        "id": "L6H4",
+        "value": 0.11689636
+      },
+      {
+        "id": "L6H3",
+        "value": 0.10932097
+      },
+      {
+        "id": "L6H5",
+        "value": 0.10561868
+      }
+    ],
+    "bos_projected_norm_share": [
+      {
+        "id": "L6H4",
+        "value": 0.12224755
+      },
+      {
+        "id": "L6H3",
+        "value": 0.10610668
+      },
+      {
+        "id": "L6H5",
+        "value": 0.10349143
+      }
+    ],
+    "copy_relative": [
+      {
+        "id": "L2H3",
+        "value": 2.03152418
+      },
+      {
+        "id": "L2H1",
+        "value": 1.97743714
+      },
+      {
+        "id": "L6H6",
+        "value": 1.5972563
+      }
+    ],
+    "induction_like_relative": [
+      {
+        "id": "L6H3",
+        "value": 1.27588475
+      },
+      {
+        "id": "L1H2",
+        "value": 1.13983178
+      },
+      {
+        "id": "L1H4",
+        "value": 1.11400306
+      }
+    ]
+  },
+  "top_head_ablation": [
+    {
+      "id": "L1H4",
+      "layer": 1,
+      "head": 4,
+      "baseline_nll": 0.45940034,
+      "ablated_nll": 0.70331885,
+      "delta_nll": 0.2439185,
+      "mean_kl_divergence": 0.24106499,
+      "argmax_changed_tokens": 26,
+      "argmax_changed_rate": 0.12807882
+    },
+    {
+      "id": "L1H2",
+      "layer": 1,
+      "head": 2,
+      "baseline_nll": 0.45940034,
+      "ablated_nll": 0.68379857,
+      "delta_nll": 0.22439822,
+      "mean_kl_divergence": 0.23944877,
+      "argmax_changed_tokens": 23,
+      "argmax_changed_rate": 0.11330049
+    },
+    {
+      "id": "L1H6",
+      "layer": 1,
+      "head": 6,
+      "baseline_nll": 0.45940034,
+      "ablated_nll": 0.61395045,
+      "delta_nll": 0.15455011,
+      "mean_kl_divergence": 0.15844034,
+      "argmax_changed_tokens": 25,
+      "argmax_changed_rate": 0.12315271
+    }
+  ],
+  "low_head_ablation": [
+    {
+      "id": "L5H4",
+      "layer": 5,
+      "head": 4,
+      "baseline_nll": 0.45940034,
+      "ablated_nll": 0.45948143,
+      "delta_nll": 8.109e-05,
+      "mean_kl_divergence": 0.00020777,
+      "argmax_changed_tokens": 5,
+      "argmax_changed_rate": 0.02463054
+    },
+    {
+      "id": "L5H3",
+      "layer": 5,
+      "head": 3,
+      "baseline_nll": 0.45940034,
+      "ablated_nll": 0.45928132,
+      "delta_nll": -0.00011902,
+      "mean_kl_divergence": 0.00011763,
+      "argmax_changed_tokens": 1,
+      "argmax_changed_rate": 0.00492611
+    },
+    {
+      "id": "L5H6",
+      "layer": 5,
+      "head": 6,
+      "baseline_nll": 0.45940034,
+      "ablated_nll": 0.45955648,
+      "delta_nll": 0.00015614,
+      "mean_kl_divergence": 0.00023043,
+      "argmax_changed_tokens": 0,
+      "argmax_changed_rate": 0.0
+    }
+  ],
+  "correlations": {
+    "bos_attention": {
+      "pearson": -0.30076487,
+      "spearman": -0.62136422
+    },
+    "instruction_attention": {
+      "pearson": 0.49438632,
+      "spearman": 0.62882883
+    },
+    "previous_token_attention": {
+      "pearson": -0.17002856,
+      "spearman": -0.07593308
+    },
+    "recent4_attention": {
+      "pearson": -0.42269989,
+      "spearman": -0.196139
+    },
+    "induction_like_relative": {
+      "pearson": 0.30763275,
+      "spearman": -0.02934363
+    }
+  },
+  "causal_generation": [
+    {
+      "name": "baseline",
+      "passed": 22,
+      "total": 24,
+      "same_code_count": 24
+    },
+    {
+      "name": "zero_bos_values",
+      "passed": 8,
+      "total": 24,
+      "same_code_count": 4
+    },
+    {
+      "name": "zero_instruction_values",
+      "passed": 0,
+      "total": 24,
+      "same_code_count": 0
+    },
+    {
+      "name": "ablate_L1H4",
+      "passed": 13,
+      "total": 24,
+      "same_code_count": 6
+    },
+    {
+      "name": "ablate_L1H2",
+      "passed": 15,
+      "total": 24,
+      "same_code_count": 8
+    },
+    {
+      "name": "ablate_L1H6",
+      "passed": 13,
+      "total": 24,
+      "same_code_count": 5
+    },
+    {
+      "name": "ablate_L5H4",
+      "passed": 21,
+      "total": 24,
+      "same_code_count": 19
+    },
+    {
+      "name": "ablate_L5H3",
+      "passed": 21,
+      "total": 24,
+      "same_code_count": 23
+    },
+    {
+      "name": "ablate_L5H6",
+      "passed": 22,
+      "total": 24,
+      "same_code_count": 24
+    }
+  ],
+  "metrics": "docs/results/attention_ablation_20261006/layers_6/interpretability.json"
+}

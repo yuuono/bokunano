@@ -1,0 +1,426 @@
+{
+  "generated_code": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for value in xs:\n        result += [abs(value)]\n    output: list[int] = []\n    for x in result:\n        output += [abs(x)]\n    return output\n",
+  "row_sum_range": [
+    0.9999998807907104,
+    1.0000001192092896
+  ],
+  "fused_attention_output_validation": {
+    "comparison": "reconstructed attention weights @ V versus fused attention output before out_proj",
+    "comparison_count": 28,
+    "maximum_absolute_error": 3.5762786865234375e-07,
+    "mean_absolute_error": 1.768157293596013e-08,
+    "minimum_cosine_similarity": 0.9999998211860657,
+    "by_step_and_layer": [
+      [
+        {
+          "maximum_absolute_error": 5.960464477539063e-08,
+          "mean_absolute_error": 1.0961343832605053e-08,
+          "cosine_similarity": 1.0
+        },
+        {
+          "maximum_absolute_error": 1.4901161193847656e-07,
+          "mean_absolute_error": 1.9535340456400263e-08,
+          "cosine_similarity": 0.9999998807907104
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 1.4901161193847656e-07,
+          "mean_absolute_error": 2.4050526903351965e-08,
+          "cosine_similarity": 1.0
+        },
+        {
+          "maximum_absolute_error": 1.1920928955078125e-07,
+          "mean_absolute_error": 1.2358451151328609e-08,
+          "cosine_similarity": 1.0000001192092896
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 5.960464477539063e-08,
+          "mean_absolute_error": 1.2774395763415214e-08,
+          "cosine_similarity": 0.9999999403953552
+        },
+        {
+          "maximum_absolute_error": 1.1920928955078125e-07,
+          "mean_absolute_error": 1.7743312596962824e-08,
+          "cosine_similarity": 1.0000001192092896
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 8.195638656616211e-08,
+          "mean_absolute_error": 1.3918906915932894e-08,
+          "cosine_similarity": 1.0000001192092896
+        },
+        {
+          "maximum_absolute_error": 1.1920928955078125e-07,
+          "mean_absolute_error": 2.1197214650214846e-08,
+          "cosine_similarity": 1.0000001192092896
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 5.21540641784668e-08,
+          "mean_absolute_error": 9.707719073048793e-09,
+          "cosine_similarity": 0.9999998211860657
+        },
+        {
+          "maximum_absolute_error": 1.4901161193847656e-07,
+          "mean_absolute_error": 2.2021026779839303e-08,
+          "cosine_similarity": 1.0000001192092896
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 5.960464477539063e-08,
+          "mean_absolute_error": 1.158393114764067e-08,
+          "cosine_similarity": 1.0
+        },
+        {
+          "maximum_absolute_error": 3.5762786865234375e-07,
+          "mean_absolute_error": 4.153859478606137e-08,
+          "cosine_similarity": 1.0
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 7.450580596923828e-08,
+          "mean_absolute_error": 1.3700248935322179e-08,
+          "cosine_similarity": 1.0000001192092896
+        },
+        {
+          "maximum_absolute_error": 1.1920928955078125e-07,
+          "mean_absolute_error": 1.69893610291183e-08,
+          "cosine_similarity": 1.0
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 4.470348358154297e-08,
+          "mean_absolute_error": 9.998984751291573e-09,
+          "cosine_similarity": 1.0
+        },
+        {
+          "maximum_absolute_error": 1.4901161193847656e-07,
+          "mean_absolute_error": 1.862455611956193e-08,
+          "cosine_similarity": 1.0
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 5.960464477539063e-08,
+          "mean_absolute_error": 9.374510057114094e-09,
+          "cosine_similarity": 1.0
+        },
+        {
+          "maximum_absolute_error": 2.384185791015625e-07,
+          "mean_absolute_error": 2.8660982920314382e-08,
+          "cosine_similarity": 1.0
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 4.470348358154297e-08,
+          "mean_absolute_error": 9.33634236588432e-09,
+          "cosine_similarity": 1.0
+        },
+        {
+          "maximum_absolute_error": 2.384185791015625e-07,
+          "mean_absolute_error": 2.5376721168868244e-08,
+          "cosine_similarity": 1.0
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 5.21540641784668e-08,
+          "mean_absolute_error": 1.0374776593380375e-08,
+          "cosine_similarity": 1.0
+        },
+        {
+          "maximum_absolute_error": 1.1920928955078125e-07,
+          "mean_absolute_error": 1.8044298499830802e-08,
+          "cosine_similarity": 1.0
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 1.341104507446289e-07,
+          "mean_absolute_error": 1.980727937223037e-08,
+          "cosine_similarity": 0.9999999403953552
+        },
+        {
+          "maximum_absolute_error": 1.4901161193847656e-07,
+          "mean_absolute_error": 1.9904291548300534e-08,
+          "cosine_similarity": 0.9999998807907104
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 8.940696716308594e-08,
+          "mean_absolute_error": 1.2095028978365008e-08,
+          "cosine_similarity": 1.0
+        },
+        {
+          "maximum_absolute_error": 1.0803341865539551e-07,
+          "mean_absolute_error": 1.9852450350299478e-08,
+          "cosine_similarity": 1.0000001192092896
+        }
+      ],
+      [
+        {
+          "maximum_absolute_error": 7.450580596923828e-08,
+          "mean_absolute_error": 8.234223969338927e-09,
+          "cosine_similarity": 1.0
+        },
+        {
+          "maximum_absolute_error": 3.5762786865234375e-07,
+          "mean_absolute_error": 3.731922149086131e-08,
+          "cosine_similarity": 0.9999999403953552
+        }
+      ]
+    ]
+  },
+  "region_token_normalized": {
+    "control": {
+      "mean_attention_mass": 0.26926261612347197,
+      "mean_attention_per_token_when_available": 0.044877102687245325,
+      "mean_uniform_expected_mass": 0.27575348758202767,
+      "mean_relative_to_uniform_when_available": 0.9391100543240707
+    },
+    "instruction": {
+      "mean_attention_mass": 0.3709561824798584,
+      "mean_attention_per_token_when_available": 0.037095618247985844,
+      "mean_uniform_expected_mass": 0.4595891459700461,
+      "mean_relative_to_uniform_when_available": 0.8070359757968358
+    },
+    "generated_code": {
+      "mean_attention_mass": 0.35978120139666964,
+      "mean_attention_per_token_when_available": 0.06577290991454149,
+      "mean_uniform_expected_mass": 0.26465736644792626,
+      "mean_relative_to_uniform_when_available": 1.4398232370598465
+    }
+  },
+  "highest_instruction_attention_heads": [
+    {
+      "layer": 2,
+      "head": 3,
+      "mean_instruction_attention": 0.6070927381515503
+    },
+    {
+      "layer": 1,
+      "head": 6,
+      "mean_instruction_attention": 0.4354589283466339
+    },
+    {
+      "layer": 1,
+      "head": 1,
+      "mean_instruction_attention": 0.4266330301761627
+    },
+    {
+      "layer": 1,
+      "head": 2,
+      "mean_instruction_attention": 0.42052698135375977
+    },
+    {
+      "layer": 1,
+      "head": 3,
+      "mean_instruction_attention": 0.4118730425834656
+    }
+  ],
+  "key": {
+    "mean_off_diagonal": 0.01781788282096386,
+    "mean_absolute_off_diagonal": 0.10688164085149765,
+    "maximum_off_diagonal": 0.8491774201393127,
+    "maximum_pair": [
+      {
+        "position": 13,
+        "token": "↵"
+      },
+      {
+        "position": 15,
+        "token": "↵"
+      }
+    ]
+  },
+  "value": {
+    "mean_off_diagonal": 0.03553972393274307,
+    "mean_absolute_off_diagonal": 0.10007724910974503,
+    "maximum_off_diagonal": 0.9976779818534851,
+    "maximum_pair": [
+      {
+        "position": 13,
+        "token": "↵"
+      },
+      {
+        "position": 15,
+        "token": "↵"
+      }
+    ]
+  },
+  "repeated": [
+    {
+      "position": 25,
+      "token": "␠=␠[]↵␠␠␠␠for␠x␠in␠",
+      "available_steps": 4,
+      "mean_attention": 0.07415568782016635,
+      "top5_hits": 26,
+      "top5_hit_rate": 0.5416666666666666,
+      "distinct_layer_heads": 12,
+      "referenced_steps": 4
+    },
+    {
+      "position": 23,
+      "token": "abs(value)",
+      "available_steps": 6,
+      "mean_attention": 0.07029566230873267,
+      "top5_hits": 38,
+      "top5_hit_rate": 0.5277777777777778,
+      "distinct_layer_heads": 12,
+      "referenced_steps": 6
+    },
+    {
+      "position": 24,
+      "token": "]↵␠␠␠␠output:␠list[int]",
+      "available_steps": 5,
+      "mean_attention": 0.09180231466889381,
+      "top5_hits": 31,
+      "top5_hit_rate": 0.5166666666666667,
+      "distinct_layer_heads": 10,
+      "referenced_steps": 5
+    },
+    {
+      "position": 28,
+      "token": "abs(x)",
+      "available_steps": 1,
+      "mean_attention": 0.0645466074347496,
+      "top5_hits": 5,
+      "top5_hit_rate": 0.4166666666666667,
+      "distinct_layer_heads": 5,
+      "referenced_steps": 1
+    },
+    {
+      "position": 0,
+      "token": "<|bos|>",
+      "available_steps": 14,
+      "mean_attention": 0.062349475121923854,
+      "top5_hits": 69,
+      "top5_hit_rate": 0.4107142857142857,
+      "distinct_layer_heads": 12,
+      "referenced_steps": 14
+    },
+    {
+      "position": 17,
+      "token": "(xs:␠list[int],␠k",
+      "available_steps": 12,
+      "mean_attention": 0.05569275515154004,
+      "top5_hits": 52,
+      "top5_hit_rate": 0.3611111111111111,
+      "distinct_layer_heads": 12,
+      "referenced_steps": 12
+    },
+    {
+      "position": 19,
+      "token": "->␠list[int]:↵␠␠␠␠",
+      "available_steps": 10,
+      "mean_attention": 0.054920099675655365,
+      "top5_hits": 42,
+      "top5_hit_rate": 0.35,
+      "distinct_layer_heads": 11,
+      "referenced_steps": 10
+    },
+    {
+      "position": 20,
+      "token": "result:␠list[int]",
+      "available_steps": 9,
+      "mean_attention": 0.055661845952272415,
+      "top5_hits": 33,
+      "top5_hit_rate": 0.3055555555555556,
+      "distinct_layer_heads": 8,
+      "referenced_steps": 9
+    }
+  ],
+  "barely": [
+    {
+      "position": 8,
+      "token": "して",
+      "available_steps": 14,
+      "mean_attention": 0.02904187249285834,
+      "top5_hits": 13,
+      "top5_hit_rate": 0.07738095238095238,
+      "distinct_layer_heads": 7,
+      "referenced_steps": 7
+    },
+    {
+      "position": 2,
+      "token": "↵",
+      "available_steps": 14,
+      "mean_attention": 0.03219605004414916,
+      "top5_hits": 21,
+      "top5_hit_rate": 0.125,
+      "distinct_layer_heads": 11,
+      "referenced_steps": 8
+    },
+    {
+      "position": 7,
+      "token": "に",
+      "available_steps": 14,
+      "mean_attention": 0.03410698619804212,
+      "top5_hits": 19,
+      "top5_hit_rate": 0.1130952380952381,
+      "distinct_layer_heads": 9,
+      "referenced_steps": 8
+    },
+    {
+      "position": 9,
+      "token": "降",
+      "available_steps": 14,
+      "mean_attention": 0.03473569466067212,
+      "top5_hits": 23,
+      "top5_hit_rate": 0.13690476190476192,
+      "distinct_layer_heads": 10,
+      "referenced_steps": 11
+    },
+    {
+      "position": 12,
+      "token": "いてください。",
+      "available_steps": 14,
+      "mean_attention": 0.03511722345969507,
+      "top5_hits": 29,
+      "top5_hit_rate": 0.17261904761904762,
+      "distinct_layer_heads": 11,
+      "referenced_steps": 11
+    },
+    {
+      "position": 11,
+      "token": "るsolve関数を書",
+      "available_steps": 14,
+      "mean_attention": 0.035862735472619534,
+      "top5_hits": 15,
+      "top5_hit_rate": 0.08928571428571429,
+      "distinct_layer_heads": 8,
+      "referenced_steps": 10
+    },
+    {
+      "position": 10,
+      "token": "順に並べ",
+      "available_steps": 14,
+      "mean_attention": 0.0359830003497856,
+      "top5_hits": 18,
+      "top5_hit_rate": 0.10714285714285714,
+      "distinct_layer_heads": 9,
+      "referenced_steps": 9
+    },
+    {
+      "position": 4,
+      "token": "の",
+      "available_steps": 14,
+      "mean_attention": 0.036568551257784875,
+      "top5_hits": 21,
+      "top5_hit_rate": 0.125,
+      "distinct_layer_heads": 10,
+      "referenced_steps": 10
+    }
+  ],
+  "metrics": "docs/results/attention_ablation_20261006/layers_2/attention.json"
+}
