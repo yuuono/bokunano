@@ -1,0 +1,13 @@
+{
+  "load_state_dict": "strict",
+  "runtime_dtype": "float16",
+  "checkpoint_tensor_dtypes": {
+    "torch.bfloat16": 311
+  },
+  "quantization": null,
+  "parameter_count": 1720574976,
+  "weight_shards": [
+    "model-00001-of-00002.safetensors",
+    "model-00002-of-00002.safetensors"
+  ]
+}

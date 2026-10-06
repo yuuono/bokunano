@@ -57,6 +57,8 @@ docs/
 
 ## 結果
 
+- [`results/browser_100/dev50_20261006_qwen3_1_7b.md`](results/browser_100/dev50_20261006_qwen3_1_7b.md): Qwen3-1.7Bの条件A・50問追加評価（公式非量子化重みをFP16でMacのMPS実行）、全6モデル比較
+
 - [`results/browser_100/dev50_20261006_qwen3_4b_awq.md`](results/browser_100/dev50_20261006_qwen3_4b_awq.md): Qwen3-4B-AWQの条件A・50問追加評価（公式AWQ重みをFP16展開しMacのMPSで実行）
 
 - [`results/browser_100/dev50_20261005_additional_models.md`](results/browser_100/dev50_20261005_additional_models.md): 条件Aに5M・1epochと1M・3epochを追加した4モデル比較、全50問の実プロンプト・出力・反例

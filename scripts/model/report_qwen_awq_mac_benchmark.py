@@ -75,6 +75,8 @@ def append_existing():
         content = f'[Qwen3-4B-AWQの全50問の追記]({FILENAME})' if name.endswith('_details.md') else section
         path.write_text(text+'\n\n'+MARKER+'\n\n## 追記：2026年10月6日 Qwen3-4B-AWQの条件A評価\n\n'+content+'\n')
 
+    from report_qwen_17b_mac_benchmark import append_existing as append_17b
+    append_17b()
 
 def main():
     qs, baseline, raw, records, scores, config = data()
