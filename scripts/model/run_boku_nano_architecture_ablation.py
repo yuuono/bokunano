@@ -15,7 +15,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from scripts.model.boku_nano import BokuNanoConfig, BokuNanoForCausalLM  # noqa: E402
 
-TARGETS = {"1m": 1_016_704, "5m": 5_065_472}
+BASELINES = {"1m": (128, 3, 4, 256), "5m": (256, 5, 4, 704)}
+STRATEGIES = ("existing", "heads_2", "heads_8", "layers_minus_1", "layers_plus_1")
 
 
 def count(d: int, layers: int, ff: int) -> int:
@@ -24,21 +25,17 @@ def count(d: int, layers: int, ff: int) -> int:
 
 
 def architecture(size: str, strategy: str) -> dict[str, int]:
-    if strategy == "existing":
-        d, layers, heads, ff = (128, 3, 4, 256) if size == "1m" else (256, 5, 4, 704)
-    else:
-        layers = (3 if size == "1m" else 5) if strategy == "fixed_heads" else 8
-        # head固定は偶数head_dim、layer固定は1Mで2 heads、5Mで4 headsに縮小。
-        candidates = []
-        for d in range(24, 385):
-            heads = 6 if strategy == "fixed_heads" else (2 if size == "1m" else 4)
-            if heads < 1 or d % heads or (d // heads) % 2:
-                continue
-            for ff in range(8, 1537, 8):
-                if 2 <= ff / d <= 4:
-                    candidates.append((abs(count(d, layers, ff) - TARGETS[size]),
-                                       abs(ff / d - 8 / 3), d, heads, ff))
-        _, _, d, heads, ff = min(candidates)
+    d, layers, heads, ff = BASELINES[size]
+    if strategy == "heads_2":
+        heads = 2
+    elif strategy == "heads_8":
+        heads = 8
+    elif strategy == "layers_minus_1":
+        layers -= 1
+    elif strategy == "layers_plus_1":
+        layers += 1
+    elif strategy != "existing":
+        raise ValueError(f"未知の比較条件: {strategy}")
     return dict(d_model=d, n_layers=layers, n_heads=heads, d_ff=ff)
 
 
@@ -46,19 +43,18 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", type=Path, required=True,
                         help="新規ディレクトリ。既存パスは上書きしない")
-    parser.add_argument("--sizes", nargs="+", choices=TARGETS, default=list(TARGETS))
-    parser.add_argument("--strategies", nargs="+", choices=["existing", "fixed_heads", "fixed_layers"],
-                        default=["existing", "fixed_heads", "fixed_layers"])
-    parser.add_argument("--seeds", nargs="+", type=int, default=[20260925, 20260926, 20260927])
+    parser.add_argument("--sizes", nargs="+", choices=BASELINES, default=list(BASELINES))
+    parser.add_argument("--strategies", nargs="+", choices=STRATEGIES, default=list(STRATEGIES))
+    parser.add_argument("--seed", type=int, default=20260925)
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--tokenizer", choices=["bpe_2048_minfreq5_maxlen24", "bpe_2048_minfreq2_maxlen8"],
                         default="bpe_2048_minfreq5_maxlen24")
     parser.add_argument("--validate", action="store_true", help="固定入力hash等も既存trainerで検証")
     parser.add_argument("--run", action="store_true", help="検証後、全条件を順次学習")
     args = parser.parse_args()
-    if args.epochs < 1 or any(seed < 0 or seed >= 2**32 for seed in args.seeds):
+    if args.epochs < 1 or not 0 <= args.seed < 2**32:
         parser.error("epochsは正整数、seedは0以上2**32未満にしてください")
-    for values in (args.sizes, args.strategies, args.seeds):
+    for values in (args.sizes, args.strategies):
         if len(values) != len(set(values)):
             parser.error("条件の重複は指定できません")
     os.chdir(ROOT)
@@ -74,16 +70,16 @@ def main() -> None:
             model = dict(base["model"], **architecture(size, strategy))
             actual = BokuNanoForCausalLM(BokuNanoConfig.from_dict(model)).parameter_count()
             expected = count(model["d_model"], model["n_layers"], model["d_ff"])
-            if actual != expected or abs(actual / TARGETS[size] - 1) > 0.01:
+            if actual != expected:
                 raise ValueError(f"parameter検証失敗: {size}/{strategy}: {actual}")
-            for seed in args.seeds:
-                name = f"{size}_{strategy}_seed{seed}"
-                config = deepcopy(base)
-                config["model"] = model
-                config["model_validation"]["expected_parameter_count"] = actual
-                config["training"].update(seed=seed, epochs=args.epochs)
-                config["output"]["directory"] = str(output / name / "model")
-                jobs.append((name, config, actual))
+            seed = args.seed
+            name = f"{size}_{strategy}_seed{seed}"
+            config = deepcopy(base)
+            config["model"] = model
+            config["model_validation"]["expected_parameter_count"] = actual
+            config["training"].update(seed=seed, epochs=args.epochs)
+            config["output"]["directory"] = str(output / name / "model")
+            jobs.append((name, config, actual))
     output.mkdir(parents=True, exist_ok=False)
     manifest = []
     for name, config, actual in jobs:
