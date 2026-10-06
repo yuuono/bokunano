@@ -1,4 +1,4 @@
-"""15Mからhead数だけ／layer数だけを変更し、明示指定時だけ順次学習する。"""
+"""head_dim=64を維持してhead数またはlayer数を減らし、明示指定時だけ学習する。"""
 from __future__ import annotations
 
 import argparse
@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT))
 from scripts.model.boku_nano import BokuNanoConfig, BokuNanoForCausalLM  # noqa: E402
 
 BASELINES = {"15m": (384, 8, 6, 1024)}
-STRATEGIES = ("existing", "heads_4", "layers_2")
+STRATEGIES = ("existing", "heads_4_dim64", "layers_2")
 
 
 def count(d: int, layers: int, ff: int) -> int:
@@ -26,8 +26,10 @@ def count(d: int, layers: int, ff: int) -> int:
 
 def architecture(size: str, strategy: str) -> dict[str, int]:
     d, layers, heads, ff = BASELINES[size]
-    if strategy == "heads_4":
+    if strategy == "heads_4_dim64":
+        head_dim = d // heads
         heads = 4
+        d = heads * head_dim
     elif strategy == "layers_2":
         layers = 2
     elif strategy != "existing":
