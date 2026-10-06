@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT))
 from scripts.model.boku_nano import BokuNanoConfig, BokuNanoForCausalLM  # noqa: E402
 
 BASELINES = {"15m": (384, 8, 6, 1024)}
-STRATEGIES = ("existing", "heads_4_dim64", "layers_2")
+STRATEGIES = ("existing", "heads_4_dim64", "layers_2", "layers_4", "layers_6")
 
 
 def count(d: int, layers: int, ff: int) -> int:
@@ -30,8 +30,8 @@ def architecture(size: str, strategy: str) -> dict[str, int]:
         head_dim = d // heads
         heads = 4
         d = heads * head_dim
-    elif strategy == "layers_2":
-        layers = 2
+    elif strategy in ("layers_2", "layers_4", "layers_6"):
+        layers = int(strategy.removeprefix("layers_"))
     elif strategy != "existing":
         raise ValueError(f"未知の比較条件: {strategy}")
     return dict(d_model=d, n_layers=layers, n_heads=heads, d_ff=ff)

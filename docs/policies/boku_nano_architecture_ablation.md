@@ -5,24 +5,28 @@
 既存15Mを共通の起点にし、head_dim=64を固定してhead数を減らす構成と、layer数だけを減らす構成を比較する。d_ff=1024を全条件で固定する。head数を減らす場合は `d_model = n_heads × 64` として幅を連動させる。既存5Mは15Mから幅・layer数・head数・FFN幅を同時に変えた構成なので、この比較の対照には使わない。
 
 - `existing`: 15Mの基準構成。
-- `heads_4_dim64`: layer数8・head_dim64・FFN1024を固定し、head数6→4、幅384→256とする。総parameter数は9,441,536になる。
+- `heads_4_dim64`: layer数8・head_dim64・FFN1024を固定し、head数6→4、幅384→256とする。総parameter数は9,441,536（約9.5M）になる。
 - `layers_2`: head数6・幅384・FFN1024を固定し、layer数だけ8→2にする。head_dim=64を維持して5,113,728 parametersの約5Mを作る。
 
-1 seedで計3学習。全条件をランダム初期値から同じデータ・学習条件で学習する。既存重みのpruningではない。
+- `layers_4` / `layers_6`: head数6・幅384・FFN1024を固定し、layer数だけ8→4または8→6にする。
+
+1 seedで計5学習。全条件をランダム初期値から同じデータ・学習条件で学習する。既存重みのpruningではない。
 
 ## 実験表
 
-|起点|条件名|d_model|layers|heads|head_dim|d_ff|実parameter数|
-|---|---|---:|---:|---:|---:|---:|---:|
-|15M|existing|384|8|6|64|1024|15,735,168|
-|15M|heads_4_dim64|256|8|4|64|1024|9,441,536|
-|15M|layers_2（約5M）|384|2|6|64|1024|5,113,728|
+|条件名|d_model|layers|heads|head_dim|d_ff|実parameter数|
+|---|---:|---:|---:|---:|---:|---:|
+|existing（15M）|384|8|6|64|1024|15,735,168|
+|heads_4_dim64（約9.5M）|256|8|4|64|1024|9,441,536|
+|layers_2（約5M）|384|2|6|64|1024|5,113,728|
+|layers_4（約8.7M）|384|4|6|64|1024|8,654,208|
+|layers_6（約12.2M）|384|6|6|64|1024|12,194,688|
 
 設定元は [`config/boku_nano_bpe_2048_1epoch.yaml`](../../config/boku_nano_bpe_2048_1epoch.yaml)。各変更行を同じ表の `existing` と比較する。head数とlayer数を同時に変更する行は設けない。
 
-今回のhead縮小はhead_dimを64に固定するため、幅も縮小し、projection・embedding等の重みが減る。以前の「幅384を固定してhead数だけ6→4にする」構成とは異なる。head数4では約9.44Mであり、約5Mと表記しない。予算を合わせるためのlayer数やFFN幅の追加調整は行わない。
+今回のhead縮小はhead_dimを64に固定するため、幅も縮小し、projection・embedding等の重みが減る。以前の「幅384を固定してhead数だけ6→4にする」構成とは異なる。head数4の構成名には「約9.5M」を用い、正確なparameter数は表の9,441,536を参照する。予算を合わせるためのlayer数やFFN幅の追加調整は行わない。
 
-この固定条件では約1Mには届かない。head縮小は1 head・幅64まで減らしても1,967,168 parameters、layer縮小は1 layerまで減らしても3,343,488 parametersになる。1Mは幅やFFN等の変更を要する別実験として扱い、まず上の3構成を比較する。削除済みの「1M・8 layers・head_dim=64」候補は復活させない。
+この固定条件では約1Mには届かない。head縮小は1 head・幅64まで減らしても1,967,168 parameters、layer縮小は1 layerまで減らしても3,343,488 parametersになる。1Mは幅やFFN等の変更を要する別実験として扱い、まず上の5構成を比較する。削除済みの「1M・8 layers・head_dim=64」候補は復活させない。
 
 15Mを含めた残りのmodel設定は次の通り。
 
@@ -43,13 +47,13 @@
 
 参考文献は Vaswani et al. (2017), [Attention Is All You Need](https://papers.neurips.cc/paper/7181-attention-isall-you-need.pdf), §3.2.2・§6.2・Table 3。Table 3(A)ではhead数と各headのkey/value次元を連動させ、計算量を固定して比較している。Table 3(C)には他の設定を基準に揃えたlayer数の比較もある。今回のhead縮小はhead_dimを固定して幅と計算量も減らすため、Table 3(A)の再現ではない。比較方法の関連文献として引用し、今回の固定条件を論文由来のものとは扱わない。
 
-今回のhead数4は元の6から減らす比較候補として選び、ユーザー指定のhead_dim=64を維持する。幅256は4×64から決まる。layer数2は幅・FFN・head数を変えず約5Mになる整数層数として選ぶ。論文がこの候補値を推奨したという意味ではなく、最適値探索でもない。論文のencoder-decoder Transformerと本モデルのdecoder-only・SwiGLU・RoPE構成は異なるため、論文の性能結果を本モデルへ直接適用しない。
+今回のhead数4は元の6から減らす比較候補として選び、ユーザー指定のhead_dim=64を維持する。幅256は4×64から決まる。layer数2は幅・FFN・head数を変えず約5Mになる整数層数として選ぶ。layer数4・6はユーザー指定の比較例として追加し、幅・FFN・head数は同様に固定する。論文がこの候補値を推奨したという意味ではなく、最適値探索でもない。論文のencoder-decoder Transformerと本モデルのdecoder-only・SwiGLU・RoPE構成は異なるため、論文の性能結果を本モデルへ直接適用しない。
 
 ## 統制条件と解釈
 
 1 epoch、seed=20260925の1回に統一する。複数seedの反復は行わない。既存15Mの学習YAMLを複製し、表のmodel設定、期待parameter数、seed、epochs、出力先だけを変更する。基準15Mについても同じ実行で再学習し、過去の別条件の重みと混ぜない。
 
-tokenizerとtrain/validationの固定hash、語彙2048、context 256、非共有embedding、code+EOS loss、batch 512、AdamW、学習率・scheduler・dropout等を揃える。デフォルトtokenizerは `bpe_2048_minfreq5_maxlen24`。短いpiece版は `bpe_2048_minfreq2_maxlen8` を指定して全3条件を別出力先へ実行する。3 epochを調べる場合も全条件を揃える。
+tokenizerとtrain/validationの固定hash、語彙2048、context 256、非共有embedding、code+EOS loss、batch 512、AdamW、学習率・scheduler・dropout等を揃える。デフォルトtokenizerは `bpe_2048_minfreq5_maxlen24`。短いpiece版は `bpe_2048_minfreq2_maxlen8` を指定して全5条件を別出力先へ実行する。3 epochを調べる場合も全条件を揃える。
 
 同じseedでデータ順序を揃えるが、構造の異なるモデルの初期重みが同じになることは保証しない。計算時間を固定する実験ではなく、データ提示量を揃える。head比較はhead_dimを固定し、head数と幅が連動する縮小方針の比較と解釈する。幅や総容量を一定に保ったhead分割だけの効果とは解釈しない。layer比較では層数とともに容量・計算量も変わるため、それらを除いた深さだけの効果とは解釈しない。単一seedなのでseedに対する安定性・分散は評価しない。
 
@@ -72,7 +76,7 @@ uv run --group model-training --python 3.12.12 python \
   --epochs 1 --seed 20260925 --run
 ```
 
-約5Mのlayer変更構成だけを生成・学習する場合は `--strategies layers_2` を付ける。head_dim=64固定のhead縮小は `--strategies heads_4_dim64`、基準を含めたhead比較は `--strategies existing heads_4_dim64` を使う。`--sizes` は起点を表す `15m` のみを受け付ける。以前の1M・5M基準の条件と複数seed指定は対象外とし、旧方針の設定を使わず新しく生成する。旧条件名 `heads_4` は廃止し、幅384・head_dim96の旧成果物との混同を避ける。
+約5Mのlayer変更構成だけを生成・学習する場合は `--strategies layers_2` を付ける。4・6 layersの例だけなら `--strategies layers_4 layers_6`、基準も含むlayer比較なら `--strategies existing layers_2 layers_4 layers_6` を使う。head_dim=64固定のhead縮小は `--strategies heads_4_dim64`、基準を含めたhead比較は `--strategies existing heads_4_dim64` を使う。`--sizes` は起点を表す `15m` のみを受け付ける。以前の1M・5M基準の条件と複数seed指定は対象外とし、旧方針の設定を使わず新しく生成する。旧条件名 `heads_4` は廃止し、幅384・head_dim96の旧成果物との混同を避ける。
 
 出力先は毎回新規パスを指定する。既存ディレクトリは拒否し、失敗時は後続条件を停止する。途中再開・自動スキップは行わず、ログを確認して新しい出力先で条件を限定して再実行する。
 
