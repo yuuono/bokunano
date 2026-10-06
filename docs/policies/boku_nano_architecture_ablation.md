@@ -12,14 +12,30 @@
 
 ## 実験表
 
+起点の15M設定は [`config/boku_nano_bpe_2048_1epoch.yaml`](../../config/boku_nano_bpe_2048_1epoch.yaml) に対応する。縮小前後の構造を以下に並べる。
+
 |規模|方針|d_model|layers|heads|head_dim|d_ff|実parameter数|
 |---|---|---:|---:|---:|---:|---:|---:|
+|15M|縮小前の起点（参考）|384|8|6|64|1024|15,735,168|
 |1M|existing|128|3|4|32|256|1,016,704|
 |1M|fixed_heads|120|3|6|20|328|1,019,400|
 |1M|fixed_layers|88|8|2|44|192|1,015,256|
 |5M|existing|256|5|4|64|704|5,065,472|
 |5M|fixed_heads|228|5|6|38|904|5,067,756|
 |5M|fixed_layers|192|8|4|48|672|5,065,920|
+
+15Mの残りのmodel設定も、縮小後の全構成で共通とする。
+
+|設定|15Mおよび縮小後の値|
+|---|---|
+|vocab_size|2048|
+|context_length|256|
+|dropout|0.0|
+|rope_base|10000.0|
+|rms_norm_eps|1.0e-5|
+|tie_word_embeddings|false（入力embeddingと出力層は非共有）|
+
+`head_dim` は `d_model / n_heads` から求める値で、15Mでは384 / 6 = 64。15M行は設計上の参考であり、runnerの18試行には含めない。
 
 予算は既存構成の実数に合わせる。候補は幅24〜384、偶数head_dim、FFNは8刻み、2 ≤ d_ff/d_model ≤ 4。予算との絶対差を最優先し、同率ではFFN比率8/3への近さ、その後は幅・head数・FFN幅の昇順で決定する。性能評価を使って構造を選ばない。予算差1%超は実行前に拒否する。
 
