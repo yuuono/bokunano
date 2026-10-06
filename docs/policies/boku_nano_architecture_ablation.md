@@ -1,36 +1,28 @@
-# 既存1M・5Mを基準とする構造ablation study
+# 15Mから1項目だけを変更する構造ablation study
 
 ## 目的と比較方法
 
-既存1M・5Mをそれぞれ基準にし、head数だけ、またはlayer数だけを変更して結果を比較する。各規模内ではd_modelとd_ffを固定する。全条件をランダム初期値から同じデータ・学習条件で学習する。
+まず既存15Mを共通の起点にし、head数だけ、またはlayer数だけを変更した構成を作成する。d_model=384とd_ff=1024を全条件で固定する。既存5Mは15Mから幅・layer数・head数・FFN幅を同時に変えた構成なので、この比較の対照には使わない。
 
-- head比較: layer数・d_model・d_ffを固定し、n_headsを基準4の半分2、基準4、倍の8にする。head_dimはd_model/n_headsとして連動し、総parameter数は変わらない。
-- layer比較: head数・d_model・d_ffを固定し、n_layersを基準−1、基準、基準＋1にする。head_dimは変わらず、総parameter数は変わる。
-- 各規模の基準構成は両比較で共用する。各5構成×2規模×1 seedで計10学習。
+- `existing`: 15Mの基準構成。
+- `heads_4`: layer数8・幅384・FFN1024を固定し、head数だけ6→4にする。head_dimは64→96に連動するが、総parameter数は15,735,168のまま。
+- `layers_2`: head数6・幅384・FFN1024を固定し、layer数だけ8→2にする。head_dim=64を維持して5,113,728 parametersの約5Mを作る。
 
-以前の `fixed_heads` / `fixed_layers` は、15Mから同じparameter予算に縮小するため幅・layer数・head数・FFN幅を複数変更していた。この比較で測れるのは構成全体の差で、head数やlayer数の変更による差を切り分けられないため、今回の実験から外す。名前も「何を変更するか」が分かるものに変更する。
+1 seedで計3学習。全条件をランダム初期値から同じデータ・学習条件で学習する。既存重みのpruningではない。
 
 ## 実験表
 
-1M・5Mは**基準モデルの名前**を示す。layer変更後のモデルを厳密な1M・5M予算に戻す調整は行わない。比較はそれぞれの `existing` を対照とし、1Mと5Mの間の差から単独の要因を推定しない。
-
-|基準|条件名|d_model|layers|heads|head_dim|d_ff|実parameter数|
+|起点|条件名|d_model|layers|heads|head_dim|d_ff|実parameter数|
 |---|---|---:|---:|---:|---:|---:|---:|
-|15M|参考|384|8|6|64|1024|15,735,168|
-|1M|existing|128|3|4|32|256|1,016,704|
-|1M|heads_2|128|3|2|64|256|1,016,704|
-|1M|heads_8|128|3|8|16|256|1,016,704|
-|1M|layers_minus_1|128|2|4|32|256|852,608|
-|1M|layers_plus_1|128|4|4|32|256|1,180,800|
-|5M|existing|256|5|4|64|704|5,065,472|
-|5M|heads_2|256|5|2|128|704|5,065,472|
-|5M|heads_8|256|5|8|32|704|5,065,472|
-|5M|layers_minus_1|256|4|4|64|704|4,262,144|
-|5M|layers_plus_1|256|6|4|64|704|5,868,800|
+|15M|existing|384|8|6|64|1024|15,735,168|
+|15M|heads_4|384|8|4|96|1024|15,735,168|
+|15M|layers_2（約5M）|384|2|6|64|1024|5,113,728|
 
-15Mの設定元は [`config/boku_nano_bpe_2048_1epoch.yaml`](../../config/boku_nano_bpe_2048_1epoch.yaml)。表に参考として残すが、今回の比較の対照でもrunnerの実行対象でもない。既存1M・5Mの設定元はそれぞれ [`config/boku_nano_1m_bpe_2048_1epoch.yaml`](../../config/boku_nano_1m_bpe_2048_1epoch.yaml)、[`config/boku_nano_5m_bpe_2048_1epoch.yaml`](../../config/boku_nano_5m_bpe_2048_1epoch.yaml)。
+設定元は [`config/boku_nano_bpe_2048_1epoch.yaml`](../../config/boku_nano_bpe_2048_1epoch.yaml)。各変更行を同じ表の `existing` と比較する。head数とlayer数を同時に変更する行は設けない。
 
-1Mの `heads_2` は、以前の「head_dim=64追加候補」と同一構成で、今回からrunnerの対象に含む。削除した「1M・8 layers・head_dim=64」構成は含めない。
+head数だけではprojectionの重みの大きさが変わらず、約5Mにはならない。head_dimを固定してhead数を減らすとd_modelも変わるため、今回の「head数だけ」の比較には含めない。
+
+同じ制約のまま約1Mを作ることもできない。head数だけでは総数は不変で、layer数だけを1まで減らしても3,343,488 parametersになる。1Mは幅やFFN等の変更を要する別実験として扱い、まず上の3構成を比較する。削除済みの「1M・8 layers・head_dim=64」候補は復活させない。
 
 15Mを含めた残りのmodel設定は次の通り。
 
@@ -43,7 +35,7 @@
 |rms_norm_eps|1.0e-5|
 |tie_word_embeddings|false（入力embeddingと出力層は非共有）|
 
-語彙V=2048、幅d、layer数L、FFN幅fについて、総parameter数は `2Vd + L(4d² + 3df + 2d) + d`。現行実装ではこの式にhead数が入らない。runnerは実モデルを生成し、この式との一致を検査する。layerを1つ増減したときの差は1M基準で164,096、5M基準で803,328 parameters。
+語彙V=2048、幅d、layer数L、FFN幅fについて、総parameter数は `2Vd + L(4d² + 3df + 2d) + d`。head数はこの式に入らない。runnerは実モデルを生成し、この式との一致を検査する。15Mでは1 layerあたり1,770,240 parametersで、8→2 layersにすると5,113,728 parametersになる。
 
 ## 候補値の根拠と文献
 
@@ -51,13 +43,13 @@
 
 参考文献は Vaswani et al. (2017), [Attention Is All You Need](https://papers.neurips.cc/paper/7181-attention-isall-you-need.pdf), §3.2.2・§6.2・Table 3。Table 3(A)ではhead数と各headのkey/value次元を連動させ、計算量を固定して比較している。Table 3(C)には他の設定を基準に揃えたlayer数の比較もある。本実験はこの「基準から変更項目を限定して比較する」考え方を参考にする。
 
-今回のhead数2/4/8は既存head数4の半分・そのまま・倍、layer数は既存値の前後1層という、本リポジトリ用の局所比較である。論文がこの候補値を推奨したという意味ではなく、最適値探索でもない。論文のencoder-decoder Transformerと本モデルのdecoder-only・SwiGLU・RoPE構成は異なるため、論文の性能結果を本モデルへ直接適用しない。
+今回のhead数4は元の6から減らし、幅384を割り切れて偶数head_dimになる比較候補として選ぶ。layer数2は幅・FFN・head数を変えず約5Mになる整数層数として選ぶ。論文がこの候補値を推奨したという意味ではなく、最適値探索でもない。論文のencoder-decoder Transformerと本モデルのdecoder-only・SwiGLU・RoPE構成は異なるため、論文の性能結果を本モデルへ直接適用しない。
 
 ## 統制条件と解釈
 
-1 epoch、seed=20260925の1回に統一する。複数seedの反復は行わない。既存1Mの学習YAMLを複製し、表のmodel設定、期待parameter数、seed、epochs、出力先だけを変更する。基準1M・5Mについても同じ実行で再学習し、過去の別条件の重みと混ぜない。
+1 epoch、seed=20260925の1回に統一する。複数seedの反復は行わない。既存15Mの学習YAMLを複製し、表のmodel設定、期待parameter数、seed、epochs、出力先だけを変更する。基準15Mについても同じ実行で再学習し、過去の別条件の重みと混ぜない。
 
-tokenizerとtrain/validationの固定hash、語彙2048、context 256、非共有embedding、code+EOS loss、batch 512、AdamW、学習率・scheduler・dropout等を揃える。デフォルトtokenizerは `bpe_2048_minfreq5_maxlen24`。短いpiece版は `bpe_2048_minfreq2_maxlen8` を指定して全10条件を別出力先へ実行する。3 epochを調べる場合も全条件を揃える。
+tokenizerとtrain/validationの固定hash、語彙2048、context 256、非共有embedding、code+EOS loss、batch 512、AdamW、学習率・scheduler・dropout等を揃える。デフォルトtokenizerは `bpe_2048_minfreq5_maxlen24`。短いpiece版は `bpe_2048_minfreq2_maxlen8` を指定して全3条件を別出力先へ実行する。3 epochを調べる場合も全条件を揃える。
 
 同じseedでデータ順序を揃えるが、構造の異なるモデルの初期重みが同じになることは保証しない。計算時間を固定する実験ではなく、データ提示量を揃える。head比較はhead_dimも連動するので「head分割」の比較と解釈する。layer比較では層数とともに容量・計算量も変わるため、それらを除いた深さだけの効果とは解釈しない。単一seedなのでseedに対する安定性・分散は評価しない。
 
@@ -80,7 +72,7 @@ uv run --group model-training --python 3.12.12 python \
   --epochs 1 --seed 20260925 --run
 ```
 
-`--sizes 5m --strategies existing heads_2 heads_8` で5Mのhead比較だけを実行できる。layer比較は `--strategies existing layers_minus_1 layers_plus_1` を使う。以前の `fixed_heads` / `fixed_layers` と複数値を受け取る `--seeds` は廃止する。旧方針の設定を使わず、新しく生成する。
+約5Mのlayer変更構成だけを生成・学習する場合は `--strategies layers_2` を付ける。head数だけの変更は `--strategies heads_4`、基準を含めたhead比較は `--strategies existing heads_4` を使う。`--sizes` は起点を表す `15m` のみを受け付ける。以前の1M・5M基準の条件と複数seed指定は対象外とし、旧方針の設定を使わず新しく生成する。
 
 出力先は毎回新規パスを指定する。既存ディレクトリは拒否し、失敗時は後続条件を停止する。途中再開・自動スキップは行わず、ログを確認して新しい出力先で条件を限定して再実行する。
 
@@ -90,6 +82,6 @@ uv run --group model-training --python 3.12.12 python \
 
 全条件の最終epoch validation lossとperplexityを比較する。主指標は既存 `evaluate_boku_nano.py` による固定5集合（normal/compositional/paraphrase/repetition/boundary）の実行正解率。各model出力を指定し、生成条件・入力・件数・実行制限を揃える。runnerの自動化範囲は設定生成・入力検証・学習までで、生成評価は別途実行する。
 
-各条件の単一seedの実測値と、同じ規模のexistingからの差を報告する。seed間の平均・標準偏差は計算しない。正解率は集合別、総正解数/総件数のmicro平均、5集合のmacro平均を区別する。parameter数、学習時間、生成速度、peak memoryも同一hardware・dtypeで記録する。
+各条件の単一seedの実測値と、15Mのexistingからの差を報告する。seed間の平均・標準偏差は計算しない。正解率は集合別、総正解数/総件数のmicro平均、5集合のmacro平均を区別する。parameter数、学習時間、生成速度、peak memoryも同一hardware・dtypeで記録する。
 
 testの結果を見て候補値を調整しない。追加調整はvalidationだけを使用し、別実験として扱う。

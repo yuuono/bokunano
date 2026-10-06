@@ -1,4 +1,4 @@
-"""1M/5Mの構造比較を生成・検証し、明示指定時だけ順次学習する。"""
+"""15Mからhead数だけ／layer数だけを変更し、明示指定時だけ順次学習する。"""
 from __future__ import annotations
 
 import argparse
@@ -15,8 +15,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from scripts.model.boku_nano import BokuNanoConfig, BokuNanoForCausalLM  # noqa: E402
 
-BASELINES = {"1m": (128, 3, 4, 256), "5m": (256, 5, 4, 704)}
-STRATEGIES = ("existing", "heads_2", "heads_8", "layers_minus_1", "layers_plus_1")
+BASELINES = {"15m": (384, 8, 6, 1024)}
+STRATEGIES = ("existing", "heads_4", "layers_2")
 
 
 def count(d: int, layers: int, ff: int) -> int:
@@ -26,14 +26,10 @@ def count(d: int, layers: int, ff: int) -> int:
 
 def architecture(size: str, strategy: str) -> dict[str, int]:
     d, layers, heads, ff = BASELINES[size]
-    if strategy == "heads_2":
-        heads = 2
-    elif strategy == "heads_8":
-        heads = 8
-    elif strategy == "layers_minus_1":
-        layers -= 1
-    elif strategy == "layers_plus_1":
-        layers += 1
+    if strategy == "heads_4":
+        heads = 4
+    elif strategy == "layers_2":
+        layers = 2
     elif strategy != "existing":
         raise ValueError(f"未知の比較条件: {strategy}")
     return dict(d_model=d, n_layers=layers, n_heads=heads, d_ff=ff)
@@ -62,7 +58,7 @@ def main() -> None:
     if output.exists():
         parser.error(f"既存の出力先です: {output}")
     suffix = "" if args.tokenizer.endswith("minfreq5_maxlen24") else "_minfreq2_maxlen8"
-    base_path = ROOT / f"config/boku_nano_1m_bpe_2048{suffix}_1epoch.yaml"
+    base_path = ROOT / f"config/boku_nano_bpe_2048{suffix}_1epoch.yaml"
     base = yaml.safe_load(base_path.read_text())
     jobs = []
     for size in args.sizes:
