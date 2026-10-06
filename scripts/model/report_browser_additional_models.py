@@ -108,6 +108,8 @@ def append_existing():
             section = summary_lines(qs, scores)
         path.write_text(original + '\n\n' + MARKER + '\n\n## 追記：5M・1epochと1M・3epochの条件A評価\n\n' + '\n'.join(section) + '\n' + END + '\n')
 
+    from report_qwen_awq_mac_benchmark import append_existing as append_awq
+    append_awq()
 
 def main():
     qs, scores, runs = load()

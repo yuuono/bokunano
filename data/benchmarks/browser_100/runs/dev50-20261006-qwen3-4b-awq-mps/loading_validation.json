@@ -1,0 +1,15 @@
+{
+  "synthetic_all_nibbles_groups_signed_words": "exact_match",
+  "quantized_linear_layers": 252,
+  "scalar_checkpoint_checks": 1008,
+  "load_state_dict": "strict",
+  "runtime_dtype": "float16",
+  "original_quantization": {
+    "bits": 4,
+    "group_size": 128,
+    "modules_to_not_convert": null,
+    "quant_method": "awq",
+    "version": "gemm",
+    "zero_point": true
+  }
+}

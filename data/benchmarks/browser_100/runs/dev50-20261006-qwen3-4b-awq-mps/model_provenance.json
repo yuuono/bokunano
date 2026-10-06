@@ -1,0 +1,9 @@
+{
+  "model_id": "Qwen/Qwen3-4B-AWQ",
+  "revision": "74d4bd2bd4bff9cafc9345221320bffb08b406a3",
+  "model_safetensors_sha256": "a7043493ebd993f5fea18794ad7b5b3e064a52023f392a7fcce7ce0984c341f0",
+  "verified_against_download_metadata": true,
+  "model_url": "https://huggingface.co/Qwen/Qwen3-4B-AWQ/tree/74d4bd2bd4bff9cafc9345221320bffb08b406a3",
+  "unpacking_reference": "https://github.com/casper-hansen/AutoAWQ/blob/main/awq/utils/packing_utils.py",
+  "execution_note": "Official AWQ weights unpacked/dequantized to FP16, then PyTorch MPS; not native CUDA AWQ execution."
+}

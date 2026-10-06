@@ -1,0 +1,16 @@
+{
+  "scripts/model/run_qwen_awq_mac_benchmark.py": "bd065cb63936d8f834bc784d1d617895fb4885006c0add54d633932b71578bf3",
+  "data/benchmarks/browser_100/dev50.jsonl": "ba24af53978a61f3002834f9bd4914f40516eaa181b18d67cfe8cac1f5d91954",
+  "scripts/model/score_browser_100_benchmark.py": "b001cf8c414310606b2a213b0f5ad0993dc9c83ef06dbe9319c645307c4fc559",
+  "reference_interpreter.py": "0b6793d9e86b846911faa4bdb2d66c7385100f8d964bec1c6ca08fa8b5d0547e",
+  "generated_code_verifier.py": "3ec6c53baab408ba265e5e1e2f2d4edf7b1e4c0db3c87038593aa063d7644c29",
+  "model/LICENSE": "5de36594c10839788a8c589443a8ef9d8b8d17c65a1b5807206ae037fc36c6bd",
+  "model/README.md": "7e2971f6a961c63b43b810cceed23d4e318b3762079fa08f0bb4192cd80b883f",
+  "model/config.json": "cf74d40352c502483cca3a94fd8037dce0d7b31c21831f1721ff6ee360b50075",
+  "model/generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+  "model/merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+  "model/model.safetensors": "a7043493ebd993f5fea18794ad7b5b3e064a52023f392a7fcce7ce0984c341f0",
+  "model/tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "model/tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+  "model/vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+}

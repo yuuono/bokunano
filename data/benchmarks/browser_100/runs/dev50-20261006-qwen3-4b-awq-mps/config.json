@@ -1,0 +1,28 @@
+{
+  "run_id": "dev50-20261006-qwen3-4b-awq-mps",
+  "model_id": "Qwen/Qwen3-4B-AWQ",
+  "revision": "74d4bd2bd4bff9cafc9345221320bffb08b406a3",
+  "model": "qwen3-4b-awq",
+  "conditions": [
+    "A"
+  ],
+  "question_count": 50,
+  "questions_sha256": "ba24af53978a61f3002834f9bd4914f40516eaa181b18d67cfe8cac1f5d91954",
+  "backend": "pytorch-mps",
+  "weight_loading": "AWQ GEMM unpacked/dequantized to FP16; no requantization",
+  "temperature": 0,
+  "do_sample": false,
+  "repetition_penalty": 1,
+  "max_new_tokens": 512,
+  "enable_thinking": false,
+  "history": false,
+  "attention_implementation": "eager",
+  "prompt_matches_original_qwen": true,
+  "versions": {
+    "torch": "2.13.0",
+    "transformers": "4.51.3",
+    "accelerate": "1.15.0",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.21.4"
+  }
+}

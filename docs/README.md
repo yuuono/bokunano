@@ -57,6 +57,8 @@ docs/
 
 ## 結果
 
+- [`results/browser_100/dev50_20261006_qwen3_4b_awq.md`](results/browser_100/dev50_20261006_qwen3_4b_awq.md): Qwen3-4B-AWQの条件A・50問追加評価（公式AWQ重みをFP16展開しMacのMPSで実行）
+
 - [`results/browser_100/dev50_20261005_additional_models.md`](results/browser_100/dev50_20261005_additional_models.md): 条件Aに5M・1epochと1M・3epochを追加した4モデル比較、全50問の実プロンプト・出力・反例
 
 - [`results/browser_100/dev50_20261005_condition_a_failures.md`](results/browser_100/dev50_20261005_condition_a_failures.md): 条件Aで各モデルが不合格になった全40問、生成コード、実測反例、失敗原因
