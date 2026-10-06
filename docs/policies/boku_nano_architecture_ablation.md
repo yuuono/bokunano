@@ -41,6 +41,25 @@
 
 語彙V=2048、幅d、layer数L、FFN幅fについて、総数は `2Vd + L(4d² + 3df + 2d) + d`。スクリプトは実モデルを生成し、この式との一致も検査する。
 
+## 追加候補: head_dim=64を固定した縮小
+
+15Mと同じhead_dim=64を維持したまま、約1Mを作ることも可能。以下は実モデルを生成してparameter数を確認した構成で、他のmodel設定は上記の共通値を用いる。
+
+|規模|固定する条件|d_model|layers|heads|head_dim|d_ff|実parameter数|
+|---|---|---:|---:|---:|---:|---:|---:|
+|15M|縮小前の起点（参考）|384|8|6|64|1024|15,735,168|
+|1M|head_dim=64|128|3|2|64|256|1,016,704|
+|1M|head_dim=64・8 layers|64|8|1|64|400|1,008,704|
+|5M|head_dim=64（既存5Mと同一）|256|5|4|64|704|5,065,472|
+
+3 layersの1Mは、既存1Mのhead数を4から2へ変更するだけで得られる。d_model・layer数・FFN幅・parameter数は既存1Mと一致するため、この対比較ではhead分割（head数とhead_dim）の変更を調べられる。
+
+8 layersとhead_dim=64を両方固定する1Mも成立する。ただし、この構成のFFN比率は400/64=6.25であり、主実験の探索範囲「2 ≤ d_ff/d_model ≤ 4」から外れる。この範囲は実験設計上の制限で、モデル実装の制約ではない。この候補を採用する場合はFFN比率の上限を緩和する必要があり、比較結果にはFFN比率の変化も含まれる。
+
+head_dimを固定した縮小では `d_model = n_heads × 64` として幅も減らす。一方、6 headsとhead_dim=64を同時に固定すると幅384が維持され、非共有embeddingだけで1Mを超えるため、この共通設定では1Mにできない。
+
+この節は追加候補の記録であり、現行runnerの生成対象・18試行には含まれない（5M行は既存対照群と重複する）。実行する際は対応する設定を追加し、主実験と同じtokenizer・epochs・seedで比較する。
+
 ## 統制条件
 
 既存1MのYAMLを複製し、model、期待parameter数、seed、epochs、出力先だけを変更する。tokenizerとtrain/validationの固定hash、語彙2048、context 256、非共有embedding、code+EOS loss、batch 512、AdamW、学習率・scheduler・dropout等は全構成で揃える。
