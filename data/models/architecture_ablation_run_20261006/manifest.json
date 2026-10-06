@@ -1,0 +1,112 @@
+[
+  {
+    "name": "15m_existing_seed20260925",
+    "parameter_count": 15735168,
+    "model": {
+      "vocab_size": 2048,
+      "d_model": 384,
+      "n_layers": 8,
+      "n_heads": 6,
+      "d_ff": 1024,
+      "context_length": 256,
+      "dropout": 0.0,
+      "rope_base": 10000.0,
+      "rms_norm_eps": 1e-05,
+      "tie_word_embeddings": false
+    },
+    "command": [
+      "/home/ono_yusuke/my_git/bokunano/.venv/bin/python",
+      "/home/ono_yusuke/my_git/bokunano/scripts/model/train_boku_nano.py",
+      "--config",
+      "/home/ono_yusuke/my_git/bokunano/data/models/architecture_ablation_run_20261006/15m_existing_seed20260925/config.yaml"
+    ]
+  },
+  {
+    "name": "15m_heads_4_dim64_seed20260925",
+    "parameter_count": 9441536,
+    "model": {
+      "vocab_size": 2048,
+      "d_model": 256,
+      "n_layers": 8,
+      "n_heads": 4,
+      "d_ff": 1024,
+      "context_length": 256,
+      "dropout": 0.0,
+      "rope_base": 10000.0,
+      "rms_norm_eps": 1e-05,
+      "tie_word_embeddings": false
+    },
+    "command": [
+      "/home/ono_yusuke/my_git/bokunano/.venv/bin/python",
+      "/home/ono_yusuke/my_git/bokunano/scripts/model/train_boku_nano.py",
+      "--config",
+      "/home/ono_yusuke/my_git/bokunano/data/models/architecture_ablation_run_20261006/15m_heads_4_dim64_seed20260925/config.yaml"
+    ]
+  },
+  {
+    "name": "15m_layers_2_seed20260925",
+    "parameter_count": 5113728,
+    "model": {
+      "vocab_size": 2048,
+      "d_model": 384,
+      "n_layers": 2,
+      "n_heads": 6,
+      "d_ff": 1024,
+      "context_length": 256,
+      "dropout": 0.0,
+      "rope_base": 10000.0,
+      "rms_norm_eps": 1e-05,
+      "tie_word_embeddings": false
+    },
+    "command": [
+      "/home/ono_yusuke/my_git/bokunano/.venv/bin/python",
+      "/home/ono_yusuke/my_git/bokunano/scripts/model/train_boku_nano.py",
+      "--config",
+      "/home/ono_yusuke/my_git/bokunano/data/models/architecture_ablation_run_20261006/15m_layers_2_seed20260925/config.yaml"
+    ]
+  },
+  {
+    "name": "15m_layers_4_seed20260925",
+    "parameter_count": 8654208,
+    "model": {
+      "vocab_size": 2048,
+      "d_model": 384,
+      "n_layers": 4,
+      "n_heads": 6,
+      "d_ff": 1024,
+      "context_length": 256,
+      "dropout": 0.0,
+      "rope_base": 10000.0,
+      "rms_norm_eps": 1e-05,
+      "tie_word_embeddings": false
+    },
+    "command": [
+      "/home/ono_yusuke/my_git/bokunano/.venv/bin/python",
+      "/home/ono_yusuke/my_git/bokunano/scripts/model/train_boku_nano.py",
+      "--config",
+      "/home/ono_yusuke/my_git/bokunano/data/models/architecture_ablation_run_20261006/15m_layers_4_seed20260925/config.yaml"
+    ]
+  },
+  {
+    "name": "15m_layers_6_seed20260925",
+    "parameter_count": 12194688,
+    "model": {
+      "vocab_size": 2048,
+      "d_model": 384,
+      "n_layers": 6,
+      "n_heads": 6,
+      "d_ff": 1024,
+      "context_length": 256,
+      "dropout": 0.0,
+      "rope_base": 10000.0,
+      "rms_norm_eps": 1e-05,
+      "tie_word_embeddings": false
+    },
+    "command": [
+      "/home/ono_yusuke/my_git/bokunano/.venv/bin/python",
+      "/home/ono_yusuke/my_git/bokunano/scripts/model/train_boku_nano.py",
+      "--config",
+      "/home/ono_yusuke/my_git/bokunano/data/models/architecture_ablation_run_20261006/15m_layers_6_seed20260925/config.yaml"
+    ]
+  }
+]
