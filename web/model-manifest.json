@@ -1,6 +1,6 @@
 {
   "format_version": 2,
-  "default_model_id": "5m-1epoch",
+  "default_model_id": "15m-1epoch",
   "tokenizers": {
     "bpe-2048-minfreq5-maxlen24": {
       "label": "既存BPE（min 5 / max 24）",

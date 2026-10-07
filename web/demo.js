@@ -13,6 +13,7 @@ const $ = (id) => document.getElementById(id);
 const state = {
   manifest: null,
   qwenManifest: null,
+  qwenCatalog: null,
   tokenizers: new Map(),
   activeSession: null,
   job: null,
@@ -41,7 +42,7 @@ function setMessage(element, message, kind = "normal") {
 
 function updateControls() {
   const busy = Boolean(state.job);
-  for (const id of ["model", "qwen-temperature", "boku-temperature", "prompt", "cnl", "validate-cnl", "new-chat", "new-chat-top"]) {
+  for (const id of ["model", "qwen-model", "qwen-temperature", "boku-temperature", "prompt", "cnl", "validate-cnl", "new-chat", "new-chat-top"]) {
     $(id).disabled = !state.ready || busy;
   }
   $("translate").disabled = !state.ready || busy;
@@ -175,7 +176,7 @@ function addProcessingStage(reply, kind) {
   number.className = "stage-number";
   number.textContent = String(Object.keys(reply.stages).length + 1).padStart(2, "0");
   const name = document.createElement("strong");
-  name.textContent = kind === "qwen" ? "Qwen3-0.6B" : "Boku1-nano";
+  name.textContent = kind === "qwen" ? state.qwenManifest.label : "Boku1-nano";
   const purpose = document.createElement("span");
   purpose.textContent = kind === "qwen" ? "指示の整理" : "コード生成";
   heading.append(number, name, purpose);
@@ -294,6 +295,7 @@ async function translateInstruction(event) {
     return;
   }
   const temperature = validateTemperature($("qwen-temperature").value);
+  const qwenModel = state.qwenManifest;
   const usePrevious = usesConversationContext(instruction);
   const previousCnl = usePrevious ? (state.candidate?.valid ? state.candidate.cnl : state.contextCnl) : "";
   const previousK = usePrevious ? (state.candidate?.valid ? state.candidate.kValue : state.contextK) : null;
@@ -344,7 +346,7 @@ async function translateInstruction(event) {
       if (message.type === "phase") setMessage($("translation-status"), message.message);
       if (message.type === "prompt") {
         promptDetails(reply.stages.qwen.body, `Qwenの実際のプロンプトを見る（${message.attempt}回目）`,
-          `モデル: ${state.qwenManifest.model_id}\n\n生成条件:\n${JSON.stringify(message.options, null, 2)}\n\nメッセージ:\n${message.messages.map(item => `[${item.role}]\n${item.content}`).join("\n\n")}\n\nモデルに渡した文字列（チャットテンプレート適用後）:\n${message.prompt}`);
+          `モデル: ${qwenModel.model_id}\n\n生成条件:\n${JSON.stringify(message.options, null, 2)}\n\nメッセージ:\n${message.messages.map(item => `[${item.role}]\n${item.content}`).join("\n\n")}\n\nモデルに渡した文字列（チャットテンプレート適用後）:\n${message.prompt}`);
       }
       if (message.type === "attempt-result") {
         promptDetails(reply.stages.qwen.body, `Qwenの出力と検査結果（${message.attempt}回目・${message.valid ? "通過" : "不合格"}）`,
@@ -356,7 +358,7 @@ async function translateInstruction(event) {
         setMessage($("translation-status"), `Qwenを読み込んでいます…${progress}${size}`);
       }
       if (message.type === "result") {
-        $("translation-metrics").textContent = `Qwen3-0.6B · T=${temperature.toFixed(1)} · ${message.elapsed_seconds.toFixed(1)}秒 · ${message.attempts}回生成`;
+        $("translation-metrics").textContent = `${qwenModel.label} · T=${temperature.toFixed(1)} · ${message.elapsed_seconds.toFixed(1)}秒 · ${message.attempts}回生成`;
         if (message.plan && !message.supported) {
           const details = document.createElement("details");
           details.className = "plan-details";
@@ -375,7 +377,7 @@ async function translateInstruction(event) {
           state.contextK = previousK;
           fail(message.error || "この指示を解釈できませんでした。操作を具体的に伝えるか、CNLを直接編集してください。対応は24種類・最大4操作です。");
         } else {
-          promptDetails(reply.stages.qwen.body, "Qwen3-0.6B の出力", message.plan || "（出力なし）");
+          promptDetails(reply.stages.qwen.body, `${qwenModel.label} の出力`, message.plan || "（出力なし）");
           const metrics = document.createElement("p");
           metrics.className = "metrics";
           metrics.textContent = $("translation-metrics").textContent;
@@ -398,7 +400,7 @@ async function translateInstruction(event) {
       worker.terminate();
       finish(job);
     });
-    worker.postMessage({ type: "translate", instruction, contextCnl, contextK, temperature, selection, manifest: state.qwenManifest });
+    worker.postMessage({ type: "translate", instruction, contextCnl, contextK, temperature, selection, manifest: qwenModel });
   } catch (error) {
     fail(errorText(error));
     job.worker?.terminate();
@@ -671,12 +673,25 @@ function newConversation() {
   updateScrollButton();
 }
 
+function selectQwenModel() {
+  state.qwenManifest = state.qwenCatalog.models.find(model => model.model_id === $("qwen-model").value);
+  $("qwen-model-summary").textContent = `${state.qwenManifest.label}は日本語の変換に使用。初回はモデル約${formatBytes(state.qwenManifest.model_file_size_bytes)}を取得します。`;
+}
+
 async function initialize() {
   ort.env.wasm.wasmPaths = new URL("./vendor/", window.location.href).href;
   ort.env.wasm.numThreads = 1;
-  const responses = await Promise.all([fetch("./model-manifest.json?v=5"), fetch("./qwen-manifest.json")]);
+  const responses = await Promise.all([fetch("./model-manifest.json?v=26"), fetch("./qwen-manifest.json?v=26")]);
   if (responses.some(response => !response.ok)) throw new Error("モデル設定を取得できませんでした。ページを再読み込みしてください。");
-  [state.manifest, state.qwenManifest] = await Promise.all(responses.map(response => response.json()));
+  [state.manifest, state.qwenCatalog] = await Promise.all(responses.map(response => response.json()));
+  for (const model of state.qwenCatalog.models) {
+    const option = document.createElement("option");
+    option.value = model.model_id;
+    option.textContent = model.label;
+    $("qwen-model").append(option);
+  }
+  $("qwen-model").value = state.qwenCatalog.default_model_id;
+  selectQwenModel();
   const groups = new Map();
   for (const model of state.manifest.models) {
     const groupName = model.group || "その他";
@@ -746,6 +761,7 @@ $("stop").addEventListener("click", stopJob);
 $("new-chat").addEventListener("click", newConversation);
 $("new-chat-top").addEventListener("click", newConversation);
 $("model").addEventListener("change", renderModelSummary);
+$("qwen-model").addEventListener("change", selectQwenModel);
 for (const kind of ["qwen", "boku"]) {
   $(`${kind}-temperature`).addEventListener("input", () => {
     const value = validateTemperature($(`${kind}-temperature`).value);

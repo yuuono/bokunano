@@ -7,12 +7,12 @@
     <meta name="color-scheme" content="light" />
     <meta name="description" content="日本語で指示して、Pythonコードを生成。QwenとBoku1-nanoがブラウザ内で動くチャットデモ。" />
     <title>Boku1-nano — コード生成チャット</title>
-    <link rel="stylesheet" href="./demo.css?v=24" />
+    <link rel="stylesheet" href="./demo.css?v=26" />
     <script src="./vendor/ort.webgpu.min.js"></script>
-    <script type="module" src="./demo.js?v=25"></script>
+    <script type="module" src="./demo.js?v=26"></script>
   </head>
   <body>
-    <main class="studio" data-release="chat-studio-v25">
+    <main class="studio" data-release="chat-studio-v26">
       <header class="topbar">
         <a class="wordmark" href="./">b<span>.</span> <strong>Boku1-nano</strong><small>コード生成チャット</small></a>
         <div class="topbar-actions"><span class="local-badge">● ブラウザ内で実行</span><button id="new-chat" type="button" hidden>新しい会話</button></div>
@@ -28,8 +28,11 @@
               <div id="model-options" class="model-options" role="radiogroup" aria-label="使用するBoku1-nanoモデル"></div>
               <p id="model-summary" class="model-summary"></p>
               <div class="temperature-control"><label for="boku-temperature">Bokuの温度 <output id="boku-temperature-value" for="boku-temperature">0.0</output></label><input id="boku-temperature" type="range" min="0" max="2" step="0.1" value="0" /><span id="boku-temperature-mode">Greedy</span></div>
+              <label for="qwen-model">日本語を整理するQwen</label>
+              <select id="qwen-model" class="qwen-model-select" disabled></select>
+              <p id="qwen-model-summary" class="setting-help"></p>
               <div class="temperature-control"><label for="qwen-temperature">Qwenの温度 <output id="qwen-temperature-value" for="qwen-temperature">0.0</output></label><input id="qwen-temperature" type="range" min="0" max="2" step="0.1" value="0" /><span id="qwen-temperature-mode">Greedy</span></div>
-              <p class="setting-help">0は確率最大の候補を選択。値を上げると出力が変化しやすくなります。</p><p class="setting-help">Qwen 0.6Bは日本語の変換に使用。初回のみ約543 MiBを取得します。</p>
+              <p class="setting-help">0は確率最大の候補を選択。値を上げると出力が変化しやすくなります。</p>
             </section>
             <section id="interpretation" class="input-section interpretation" aria-labelledby="interpretation-title">
               <h2 id="interpretation-title">内容を確認して生成</h2>

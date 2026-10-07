@@ -362,3 +362,5 @@ html, body { height: 100%; overflow: hidden; }
 .processing-stage-boku { border-color: #cbd2d8; }
 .processing-stage-boku .stage-number { background: #e9edf1; color: #506070; }
 @media (max-width: 480px) { .processing-stage { padding: 14px; } }
+
+.qwen-model-select { width: 100%; padding: 10px 12px; margin-top: 8px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--text); }

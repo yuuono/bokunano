@@ -9,5 +9,34 @@
   "model_file_size_bytes": 569789750,
   "model_file_sha256": "9e33a5911974174761d0dfdcc0bec975d9c45af0eae5e9eb647b8ba9442a8f91",
   "transformers_js_version": "4.3.0",
-  "transformers_js_url": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0"
+  "transformers_js_url": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0",
+  "default_model_id": "onnx-community/Qwen3-0.6B-ONNX",
+  "models": [
+    {
+      "model_id": "onnx-community/Qwen3-0.6B-ONNX",
+      "upstream_model_id": "Qwen/Qwen3-0.6B",
+      "revision": "da1453100cf3ff33ef56d17983fc7a8648706db6",
+      "dtype": "q4f16",
+      "device": "webgpu",
+      "model_file": "onnx/model_q4f16.onnx",
+      "model_file_size_bytes": 569789750,
+      "model_file_sha256": "9e33a5911974174761d0dfdcc0bec975d9c45af0eae5e9eb647b8ba9442a8f91",
+      "transformers_js_version": "4.3.0",
+      "transformers_js_url": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0",
+      "label": "Qwen3-0.6B"
+    },
+    {
+      "model_id": "onnx-community/Qwen3-1.7B-ONNX",
+      "upstream_model_id": "Qwen/Qwen3-1.7B",
+      "revision": "cc6a06a21d614e9b8e92a6adfab1074d4e7d2438",
+      "dtype": "q4f16",
+      "device": "webgpu",
+      "model_file": "onnx/model_q4f16.onnx",
+      "model_file_size_bytes": 1426069098,
+      "model_file_sha256": "fb85b44defdf43ace50c7a4937127e889b9f8a0483eb87a6c4151a815c5da3b5",
+      "transformers_js_version": "4.3.0",
+      "transformers_js_url": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0",
+      "label": "Qwen3-1.7B"
+    }
+  ]
 }
