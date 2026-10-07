@@ -74,8 +74,8 @@ test('free text also retries invalid or unsupported output without injecting a k
 test('all displayed examples have independent expected operation sequences for validation', () => {
   const html = readFileSync(new URL('../../web/index.html', import.meta.url), 'utf8');
   const examples = [...html.matchAll(/<dd data-example-instruction>(.*?)<\/dd>/g)];
-  assert.equal(examples.length, 4);
-  examples.forEach((match, i) => assert.equal(captureSelection(match[1]).ids.length, i + 1));
+  assert.equal(examples.length, 12);
+  examples.forEach((match, i) => assert.equal(captureSelection(match[1]).ids.length, Math.floor(i / 3) + 1));
 });
 
 
