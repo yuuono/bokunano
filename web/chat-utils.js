@@ -1,4 +1,4 @@
-import { CNL_OPERATIONS, MAX_OPERATIONS, operationRequest, OPERATION_REQUESTS, validateOperationPlan } from './cnl.js?v=10';
+import { CNL_OPERATIONS, MAX_OPERATIONS, operationRequest, OPERATION_REQUESTS, validateOperationPlan } from './cnl.js?v=23';
 
 export function appendOperationToDraft(text, id) {
   const operation = CNL_OPERATIONS.find(op => op.id === id);
@@ -35,11 +35,17 @@ export function resolveSelection(text, snapshot) {
 
 // Known input meaning is a validator only; never substitute it for model output.
 export function validateExpectedPlan(generated, expected) {
-  if (!generated.valid || !expected?.valid) return generated;
+  if (!expected?.valid) return generated;
+  const required = `入力の全${expected.operations.length}操作をこの順番で出力してください: ${expected.operations.map(op => op.label).join(" → ")}`;
+  // A parse failure must not hide the known order/meaning from the repair turn.
+  if (!generated.valid) {
+    const parameter = expected.kValue === null ? "入力にないkの数値を補わないでください。" : `k=${expected.kValue}を出力してください。`;
+    return { ...generated, error: `${generated.error}\n${required}\n${parameter}` };
+  }
   const ids = plan => plan.operations.map(op => op.id);
   let error = null;
   if (JSON.stringify(ids(generated)) !== JSON.stringify(ids(expected))) {
-    error = `操作の欠落・追加、または順序の不一致があります。入力の全${expected.operations.length}操作をこの順番で出力してください: ${expected.operations.map(op => op.label).join(" → ")}`;
+    error = `操作の欠落・追加、または順序の不一致があります。${required}`;
   } else if (generated.kValue !== expected.kValue) {
     error = expected.kValue === null
       ? "入力にないkの数値を補わないでください。"

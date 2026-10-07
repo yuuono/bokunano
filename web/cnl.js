@@ -1,3 +1,5 @@
+import { APPROVED_OPERATION_EXPRESSIONS } from "./approved-expressions.js?v=23";
+
 const WITHOUT_K_PREFIX = "整数リストxsから";
 const WITH_K_PREFIX = "整数リストxsと整数kを受け取り、";
 const SUFFIX = "solve関数を書いてください。";
@@ -67,6 +69,18 @@ const OPERATION_ALIASES = {
   order_reverse: ["要素の順番を逆にして", "要素の順番を逆にする", "要素順を逆にする", "順番を逆にする", "逆順にする", "要素の順序を反転する"],
 };
 
+const operationByPhrase = new Map();
+for (const operation of CNL_OPERATIONS) {
+  const phrases = [operation.label, operation.connective, operation.final, OPERATION_REQUESTS[operation.id],
+    ...(OPERATION_ALIASES[operation.id] || []), ...(APPROVED_OPERATION_EXPRESSIONS[operation.id] || [])];
+  for (const phrase of phrases) {
+    const normalized = phrase.normalize("NFKC");
+    const previous = operationByPhrase.get(normalized);
+    if (previous && previous.id !== operation.id) throw new Error(`操作の意味が重複しています: ${phrase}`);
+    operationByPhrase.set(normalized, operation);
+  }
+}
+
 function invalid(error, cnl = "") {
   return { valid: false, error, cnl, operations: [] };
 }
@@ -133,6 +147,7 @@ export function buildNormalizerSystemPrompt() {
   const allowed = CNL_OPERATIONS.map(item => `- ${item.label}`).join("\n");
   return `日本語の依頼を、許可表の1～4操作に変換してください。
 出力は操作名を1行ずつ。番号と説明は不要です。順序・重複を保ち、全操作を残してください。
+出力は許可表の標準名を優先してください。同じ操作を表す承認済み辞書の言い換えも検査で受け付けます。「大きい順」は降順、「小さい順」は昇順です。「最初のk個」は「先頭からk個を取る」です。
 5操作以上、許可表にない処理、異なるkの値を同時に必要とする処理には「${UNSUPPORTED_CNL}」と答えてください。
 kを含む操作で具体的な整数が指定された場合だけ、末尾にk=整数を付けてください。未指定のkを補わないでください。
 2倍・3倍は専用の操作なのでkは不要です。それ以外の倍率はkを掛ける操作を使います。
@@ -226,8 +241,7 @@ export function validateOperationPlan(text) {
   }
   const phrases = body.join("\n").split(/\n|、|。|\s*(?:→|->|;)\s*/).map(part => part.trim()).filter(Boolean);
   const operations = [];
-  const findOperation = phrase => CNL_OPERATIONS.find(op =>
-    [op.label, op.connective, op.final, OPERATION_REQUESTS[op.id], ...(OPERATION_ALIASES[op.id] || [])].includes(phrase));
+  const findOperation = phrase => operationByPhrase.get(phrase);
   for (let phrase of phrases) {
     phrase = phrase.replace(/^(?:その後|次に|最後に)\s*/, "").replace(/[.]$/, "").replace(/ください$/, "").replace(/元素/g, "要素").trim();
     if (!phrase) continue;

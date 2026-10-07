@@ -23,7 +23,8 @@ test('omitted multiply step triggers a second actual generation with failure fee
   assert.equal(calls.length, 2);
   assert.equal(attempts[0].valid, false);
   assert.match(attempts[0].error, /欠落/);
-  assert.equal(calls[1].at(-2).content, missing);
+  assert.equal(calls[1].some(message => message.role === 'assistant'), false);
+  assert.equal(attempts[0].plan, missing);
   assert.match(calls[1].at(-1).content, /各要素を2倍する/);
   assert.equal(result.supported, true);
   assert.equal(result.attempts, 2);
@@ -76,6 +77,38 @@ test('all displayed examples have independent expected operation sequences for v
   const examples = [...html.matchAll(/<dd data-example-instruction>(.*?)<\/dd>/g)];
   assert.equal(examples.length, 12);
   examples.forEach((match, i) => assert.equal(captureSelection(match[1]).ids.length, Math.floor(i / 3) + 1));
+});
+
+test('an unreadable phrase does not hide the descending order from Qwen repair feedback', async () => {
+  const input = 'それぞれの数を2乗して、大きい順に並べて、最初のk個だけを取り出してください。';
+  const bad = '- 各要素を二乗する\n- 値を昇順に並べる\n- 最初のk個だけを取り出る';
+  const correct = '各要素を二乗する\n値を降順に並べる\n先頭からk個を取る';
+  const { result, calls, attempts } = await run(input, [bad, correct]);
+  assert.equal(attempts[0].valid, false);
+  assert.match(calls[1].at(-1).content, /各要素を二乗する\n値を降順に並べる\n先頭からk個を取る/);
+  assert.doesNotMatch(calls[1].at(-1).content, /取り出る/);
+  assert.match(calls[1].at(-1).content, /入力にないkの数値を補わない/);
+  assert.equal(result.supported, true);
+  assert.equal(result.plan, correct);
+  assert.deepEqual(result.operations.map(op => op.id), ['map_square', 'order_descending', 'slice_first_k']);
+
+  // Merely fixing the typo must not accept the original wrong sorting direction.
+  for (const second of [bad, '各要素を二乗する\n値を昇順に並べる\n先頭からk個を取る']) {
+    const failed = await run(input, [bad, second]);
+    assert.equal(failed.calls.length, 2);
+    assert.equal(failed.result.supported, false);
+    assert.equal(failed.result.cnl, '');
+  }
+});
+
+test('Qwen approved wording is accepted without replacing its output or retrying', async () => {
+  const input = 'それぞれの数を2乗して、大きい順に並べて、最初のk個だけを取り出してください。';
+  const output = '値を二乗する\n大きい順に並べる\n最初のk個を取り出す';
+  const { result, calls } = await run(input, [output]);
+  assert.equal(calls.length, 1);
+  assert.equal(result.supported, true);
+  assert.equal(result.plan, output);
+  assert.deepEqual(result.operations.map(op => op.id), ['map_square', 'order_descending', 'slice_first_k']);
 });
 
 
