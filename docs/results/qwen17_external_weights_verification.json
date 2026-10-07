@@ -1,0 +1,10 @@
+{
+  "all_model_fields_equal_after_externalizing_weights": true,
+  "initializer_count": 508,
+  "external_tensors_compared": 508,
+  "graph_nodes": 611,
+  "tokenizer_semantic_equality": true,
+  "original_model_sha256": "fb85b44defdf43ace50c7a4937127e889b9f8a0483eb87a6c4151a815c5da3b5",
+  "external_graph_sha256": "e2b99146717af080774aade2ad81f0b6c141b047292776979c254ca0b1579fe0",
+  "external_weights_sha256": "70c82eb223466746db1e98c62cef90b18a49748f8568d17997450d36cace64ed"
+}

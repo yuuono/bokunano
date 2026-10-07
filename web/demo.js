@@ -1,3 +1,4 @@
+import { qwenRuntimeFailure } from "./qwen-errors.js?v=27";
 import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
 import { usesConversationContext, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=25";
 import { selectToken, validateTemperature } from "./sampling.js";
@@ -321,7 +322,7 @@ async function translateInstruction(event) {
   state.job = job;
   updateControls();
   setMessage($("translation-status"), "Qwenを準備しています…");
-  const fail = (message) => {
+  const fail = (message, runtimeSummary = null) => {
     if (!current(job)) return;
     job.autoGenerate = false;
     $("cnl").value = "";
@@ -330,7 +331,7 @@ async function translateInstruction(event) {
     state.contextCnl = previousCnl;
     state.contextK = previousK;
     const explanation = message;
-    finishThinking(reply, "生成できませんでした。指示を見直して、もう一度送信してください。");
+    finishThinking(reply, runtimeSummary || "生成できませんでした。指示を見直して、もう一度送信してください。");
     setMessage($("cnl-status"), "今回の指示は未確定です。再送信してください。");
     followScroll($("conversation"), () => { reply.phase.textContent = explanation; });
     reply.message.dataset.kind = "error";
@@ -339,7 +340,7 @@ async function translateInstruction(event) {
   try {
     await releaseActiveSession();
     if (!current(job)) return;
-    const worker = new Worker(new URL("./qwen-worker.js?v=25", import.meta.url), { type: "module" });
+    const worker = new Worker(new URL("./qwen-worker.js?v=27", import.meta.url), { type: "module" });
     job.worker = worker;
     worker.addEventListener("message", ({ data: message }) => {
       if (!current(job)) return;
@@ -387,7 +388,7 @@ async function translateInstruction(event) {
           setMessage($("translation-status"), "Qwenの整理が完了しました。Boku1-nanoへ切り替えています…", "success");
         }
       }
-      if (message.type === "error") fail(message.message);
+      if (message.type === "error") fail(message.message, qwenRuntimeFailure(message.message, message.phase, qwenModel.label));
       if (message.type === "released") {
         worker.terminate();
         finish(job);
@@ -396,13 +397,13 @@ async function translateInstruction(event) {
       }
     });
     worker.addEventListener("error", (event) => {
-      fail(event.message || "Qwenの実行に失敗しました。もう一度送信してください。");
+      fail(event.message || "Qwenの実行に失敗しました。", qwenRuntimeFailure(event.message, "runtime", qwenModel.label));
       worker.terminate();
       finish(job);
     });
     worker.postMessage({ type: "translate", instruction, contextCnl, contextK, temperature, selection, manifest: qwenModel });
   } catch (error) {
-    fail(errorText(error));
+    fail(errorText(error), qwenRuntimeFailure(errorText(error), "runtime", qwenModel.label));
     job.worker?.terminate();
     finish(job);
   }
@@ -675,13 +676,13 @@ function newConversation() {
 
 function selectQwenModel() {
   state.qwenManifest = state.qwenCatalog.models.find(model => model.model_id === $("qwen-model").value);
-  $("qwen-model-summary").textContent = `${state.qwenManifest.label}は日本語の変換に使用。初回はモデル約${formatBytes(state.qwenManifest.model_file_size_bytes)}を取得します。`;
+  $("qwen-model-summary").textContent = `${state.qwenManifest.label}は日本語の変換に使用。初回はモデル約${formatBytes(state.qwenManifest.download_size_bytes ?? state.qwenManifest.model_file_size_bytes)}を取得します。`;
 }
 
 async function initialize() {
   ort.env.wasm.wasmPaths = new URL("./vendor/", window.location.href).href;
   ort.env.wasm.numThreads = 1;
-  const responses = await Promise.all([fetch("./model-manifest.json?v=26"), fetch("./qwen-manifest.json?v=26")]);
+  const responses = await Promise.all([fetch("./model-manifest.json?v=27"), fetch("./qwen-manifest.json?v=27")]);
   if (responses.some(response => !response.ok)) throw new Error("モデル設定を取得できませんでした。ページを再読み込みしてください。");
   [state.manifest, state.qwenCatalog] = await Promise.all(responses.map(response => response.json()));
   for (const model of state.qwenCatalog.models) {

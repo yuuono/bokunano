@@ -70,8 +70,10 @@ self.addEventListener("message", async (event) => {
   if (event.data?.type !== "translate") return;
   const { instruction, manifest, contextCnl = "", contextK = null, temperature = 0, selection = null } = event.data;
   const startedAt = performance.now();
+  let phase = "loading";
   try {
     await loadGenerator(manifest);
+    phase = "generation";
     const result = await translateWithRetry({
       instruction, contextCnl, contextK, selection,
       generate: async (messages, attempt) => {
@@ -82,7 +84,7 @@ self.addEventListener("message", async (event) => {
     });
     send("result", { ...result, elapsed_seconds: (performance.now() - startedAt) / 1000 });
   } catch (error) {
-    send("error", { message: error instanceof Error ? error.message : String(error) });
+    send("error", { phase, message: error instanceof Error ? error.message : String(error) });
   } finally {
     try {
       await disposeGenerator();

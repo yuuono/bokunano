@@ -26,17 +26,31 @@
       "label": "Qwen3-0.6B"
     },
     {
-      "model_id": "onnx-community/Qwen3-1.7B-ONNX",
+      "model_id": "Exempliss/Qwen3-1.7B-ONNX-Split",
       "upstream_model_id": "Qwen/Qwen3-1.7B",
-      "revision": "cc6a06a21d614e9b8e92a6adfab1074d4e7d2438",
+      "revision": "f9b9656836a4315a690d0270f885b0758923bd13",
       "dtype": "q4f16",
       "device": "webgpu",
       "model_file": "onnx/model_q4f16.onnx",
-      "model_file_size_bytes": 1426069098,
-      "model_file_sha256": "fb85b44defdf43ace50c7a4937127e889b9f8a0483eb87a6c4151a815c5da3b5",
+      "model_file_size_bytes": 318014,
+      "model_file_sha256": "e2b99146717af080774aade2ad81f0b6c141b047292776979c254ca0b1579fe0",
       "transformers_js_version": "4.3.0",
       "transformers_js_url": "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.0",
-      "label": "Qwen3-1.7B"
+      "label": "Qwen3-1.7B",
+      "source_model": {
+        "model_id": "onnx-community/Qwen3-1.7B-ONNX",
+        "revision": "cc6a06a21d614e9b8e92a6adfab1074d4e7d2438",
+        "model_file": "onnx/model_q4f16.onnx",
+        "model_file_sha256": "fb85b44defdf43ace50c7a4937127e889b9f8a0483eb87a6c4151a815c5da3b5"
+      },
+      "external_data_files": [
+        {
+          "path": "onnx/model_q4f16.onnx_data",
+          "size_bytes": 1425786880,
+          "sha256": "70c82eb223466746db1e98c62cef90b18a49748f8568d17997450d36cace64ed"
+        }
+      ],
+      "download_size_bytes": 1426104894
     }
   ]
 }
