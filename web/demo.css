@@ -108,6 +108,9 @@ textarea::placeholder { color: #787167; opacity: 1; }
 .message p { margin: 0; white-space: pre-wrap; }
 .message.user { margin-left: auto; max-width: 88%; width: fit-content; background: #f3f0ed; padding: 14px 20px; border-radius: 18px 18px 4px 18px; }
 .message.assistant { padding: 8px 0; }
+.message-actions { display: flex; justify-content: flex-end; gap: 6px; margin-top: 10px; }
+.message-actions button { padding: 4px 10px; font-size: 13px; color: var(--muted); background: transparent; border: 1px solid transparent; border-radius: 6px; }
+.message-actions button:hover:not(:disabled) { color: var(--text); background: #fffdfa; border-color: var(--line); }
 .message.assistant > .message-label { color: var(--accent); }
 .cnl-result { background: #f8f5f2; border-left: 3px solid #a58e70; padding: 15px; margin-top: 18px; }
 .cnl-result strong { font-size: 13px; color: #564631; }

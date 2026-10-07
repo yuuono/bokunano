@@ -52,6 +52,7 @@ function updateControls() {
     input.disabled = !state.ready || busy;
   }
   for (const button of document.querySelectorAll('#operation-list button')) button.disabled = !state.ready || busy || button.dataset.unavailable === "true";
+  for (const button of document.querySelectorAll('[data-edit-message]')) button.disabled = !state.ready || busy;
 }
 
 function updateScrollButton() {
@@ -117,7 +118,36 @@ function addMessage(role, text, kind = "normal", stageKind = "qwen") {
     }
     turn.append(message);
   });
-  if (role === "user") return { message, body };
+  if (role === "user") {
+    const actions = document.createElement("div");
+    actions.className = "message-actions";
+    const copy = document.createElement("button");
+    copy.type = "button";
+    copy.textContent = "コピー";
+    copy.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(text); copy.textContent = "コピーしました"; }
+      catch { copy.textContent = "コピーできませんでした"; }
+      setTimeout(() => { copy.textContent = "コピー"; }, 1800);
+    });
+    const edit = document.createElement("button");
+    edit.type = "button";
+    edit.textContent = "編集";
+    edit.title = "入力欄に戻して編集・再送信";
+    edit.dataset.editMessage = "true";
+    edit.disabled = !state.ready || Boolean(state.job);
+    edit.addEventListener("click", () => {
+      if (!state.ready || state.job) return;
+      setSettingsOpen(false);
+      $("prompt").value = text;
+      promptHistory.resetDraft(text);
+      updateDraft();
+      $("prompt").focus();
+      $("prompt").setSelectionRange(text.length, text.length);
+    });
+    actions.append(copy, edit);
+    message.append(actions);
+    return { message, body };
+  }
   const details = document.createElement("details");
   details.className = "thinking-details";
   details.dataset.busy = "true";
@@ -256,6 +286,7 @@ async function translateInstruction(event) {
   if (!state.ready || state.job) return;
   const instruction = $("prompt").value.trim();
   if (!instruction) { $("prompt").focus(); return; }
+  setSettingsOpen(false);
   setMessage($("status"), "");
   $("metrics").textContent = "";
   if (!("gpu" in navigator)) {
@@ -461,7 +492,7 @@ async function createSession(model, job) {
 function newCodeCard(model, validation, temperature) {
   const confirmed = state.confirmedReply;
   const lastTurn = $("conversation").querySelector(".chat-turn:last-child");
-  const sameTurn = confirmed?.message.parentElement === lastTurn && confirmed.cnl === validation.cnl && confirmed.kValue === validation.kValue;
+  const sameTurn = confirmed?.reply.details.dataset.busy === "true" && confirmed.message.parentElement === lastTurn && confirmed.cnl === validation.cnl && confirmed.kValue === validation.kValue;
   if (!sameTurn) addMessage("user", validation.cnl + (validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""));
   const reply = sameTurn ? confirmed.reply : addMessage("assistant", "Boku1-nanoを準備しています…", "normal", "boku");
   const boku = addProcessingStage(reply, "boku");
@@ -515,6 +546,7 @@ async function generateCode() {
   if (!state.ready || state.job) return;
   const validation = checkCnl();
   if (!validation.valid) return;
+  setSettingsOpen(false);
   const semanticAst = captureSemanticAst(validation);
   const model = selectedModel();
   const temperature = validateTemperature($("boku-temperature").value);
@@ -536,6 +568,9 @@ async function generateCode() {
   const startedAt = performance.now();
   let generatedCount = 0;
   try {
+    // Give the fresh thinking indicator a paint opportunity before cached-model work.
+    await new Promise(resolve => setTimeout(resolve, 0));
+    if (!current(job)) return;
     const tokenizer = await tokenizerForModel(model);
     const promptIds = tokenizer.encodePrompt(validation.cnl);
     if (promptIds.includes(state.manifest.special_token_ids.unk)) throw new Error("この指示にはモデルが扱えない文字が含まれています。CNLを修正してください。");
