@@ -1,8 +1,8 @@
 import { BokuNanoTokenizer, formatBokuPrompt } from "./tokenizer.js?v=3";
-import { usesConversationContext, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=23";
+import { usesConversationContext, validateOperationPlan, buildNormalizerSystemPrompt, buildNormalizerUserPrompt, validateCnl, parseK, bindKDefault } from "./cnl.js?v=25";
 import { selectToken, validateTemperature } from "./sampling.js";
 
-import { nearBottom, captureSelection } from "./chat-utils.js?v=23";
+import { nearBottom, captureSelection } from "./chat-utils.js?v=25";
 import { highlightPython } from "./python-highlight.js?v=7";
 import { captureSemanticAst } from "./semantic-ast.js?v=11";
 
@@ -337,7 +337,7 @@ async function translateInstruction(event) {
   try {
     await releaseActiveSession();
     if (!current(job)) return;
-    const worker = new Worker(new URL("./qwen-worker.js?v=23", import.meta.url), { type: "module" });
+    const worker = new Worker(new URL("./qwen-worker.js?v=25", import.meta.url), { type: "module" });
     job.worker = worker;
     worker.addEventListener("message", ({ data: message }) => {
       if (!current(job)) return;

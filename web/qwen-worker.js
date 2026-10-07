@@ -1,4 +1,4 @@
-import { translateWithRetry } from "./qwen-translation.js?v=23";
+import { translateWithRetry } from "./qwen-translation.js?v=25";
 import { qwenSamplingOptions } from "./sampling.js";
 
 let generator = null;

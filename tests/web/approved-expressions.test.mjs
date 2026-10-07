@@ -30,7 +30,24 @@ test('approved synonyms retain meaning, ordering and numeric bindings without fu
   const expected = resolveSelection('各要素を二乗する、値を降順に並べる、先頭からk個を取る', captureSelection('各要素を二乗する、値を降順に並べる、先頭からk個を取る'));
   assert.equal(validateExpectedPlan(validateOperationPlan('各要素を二乗する\n小さい順に並べる\n最初のk個を取り出す'), expected).valid, false);
   assert.equal(validateOperationPlan('最初の3個を取り出す').kValue, 3);
-  for (const bad of ['最初のk個だけを取り出る', '偶数を残さない', '中央値を求める']) {
+  for (const bad of ['最初のk個だけを取り出さない', '偶数を残さない', '中央値を求める']) {
     assert.equal(validateOperationPlan(bad).valid, false, bad);
+  }
+});
+
+test('bounded extraction typos preserve the chosen end and count', () => {
+  for (const [phrase, id, k] of [
+    ['最初のk個だけを取り出る', 'slice_first_k', null],
+    ['先頭から3個を取り出る', 'slice_first_k', 3],
+    ['最後のk個だけを取り出る', 'slice_last_k', null],
+    ['末尾の5個を取り出る', 'slice_last_k', 5],
+  ]) {
+    const result = validateOperationPlan(phrase);
+    assert.equal(result.valid, true, phrase);
+    assert.deepEqual(result.operations.map(op => op.id), [id]);
+    assert.equal(result.kValue, k);
+  }
+  for (const phrase of ['k個を取り出る', '最初のk個以外を取り出る', '最初のk個だけを取り出るな']) {
+    assert.equal(validateOperationPlan(phrase).valid, false, phrase);
   }
 });

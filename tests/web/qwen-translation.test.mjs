@@ -81,12 +81,12 @@ test('all displayed examples have independent expected operation sequences for v
 
 test('an unreadable phrase does not hide the descending order from Qwen repair feedback', async () => {
   const input = 'それぞれの数を2乗して、大きい順に並べて、最初のk個だけを取り出してください。';
-  const bad = '- 各要素を二乗する\n- 値を昇順に並べる\n- 最初のk個だけを取り出る';
+  const bad = '- 各要素を二乗する\n- 値を昇順に並べる\n- 最初のk個をどこかへ移す';
   const correct = '各要素を二乗する\n値を降順に並べる\n先頭からk個を取る';
   const { result, calls, attempts } = await run(input, [bad, correct]);
   assert.equal(attempts[0].valid, false);
   assert.match(calls[1].at(-1).content, /各要素を二乗する\n値を降順に並べる\n先頭からk個を取る/);
-  assert.doesNotMatch(calls[1].at(-1).content, /取り出る/);
+  assert.doesNotMatch(calls[1].at(-1).content, /どこかへ移す/);
   assert.match(calls[1].at(-1).content, /入力にないkの数値を補わない/);
   assert.equal(result.supported, true);
   assert.equal(result.plan, correct);
@@ -109,6 +109,17 @@ test('Qwen approved wording is accepted without replacing its output or retrying
   assert.equal(result.supported, true);
   assert.equal(result.plan, output);
   assert.deepEqual(result.operations.map(op => op.id), ['map_square', 'order_descending', 'slice_first_k']);
+});
+
+test('reported typo in Qwen output passes even when the user input cannot be parsed', async () => {
+  const input = 'それぞれの数を2乗して、小きい順に並べて、最初のk個だけを取り出してください。';
+  assert.equal(captureSelection(input), null);
+  const output = '- 各要素を二乗する  \n- 値を昇順に並べる  \n- 最初のk個だけを取り出る';
+  const { result, calls } = await run(input, [output]);
+  assert.equal(calls.length, 1);
+  assert.equal(result.supported, true);
+  assert.equal(result.plan, output); // Keep Qwen's raw wording visible in details.
+  assert.deepEqual(result.operations.map(op => op.id), ['map_square', 'order_ascending', 'slice_first_k']);
 });
 
 

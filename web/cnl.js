@@ -245,6 +245,10 @@ export function validateOperationPlan(text) {
   for (let phrase of phrases) {
     phrase = phrase.replace(/^(?:その後|次に|最後に)\s*/, "").replace(/[.]$/, "").replace(/ください$/, "").replace(/元素/g, "要素").trim();
     if (!phrase) continue;
+    // Qwen's "取り出る" typo is unambiguous only with an explicit end and count.
+    // Preserve the end and numeric argument; never fuzzily match negation or sort order.
+    phrase = phrase.replace(/^(最初の|先頭(?:から|の)?|最後の|末尾(?:から|の)?)(k|[+-]?\d+)個(?:だけ)?を取り出る$/, (_, end, count) =>
+      `${/^(最初|先頭)/.test(end) ? "先頭" : "末尾"}から${count}個を取る`);
     let operation = findOperation(phrase);
     if (!operation) {
       // Concrete numbers are fine too: "各要素に3を足す" means add_k with k=3.
