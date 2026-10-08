@@ -186,12 +186,12 @@ style: |
 
 # Boku-nano
 
-## 制限された日本語の指示から Pythonの関数を生成する小型言語モデル（SLM）
+## 制限された日本語からPythonの関数を生成する小型言語モデル（SLM）
 
 <!--
 小さなモデルをゼロから学習し、動作と表現への強さを確かめる
 
-**Boku Nanoの実験結果は、すべて1 epoch学習**
+**基本比較は1 epoch学習。1Mの損失には3 epoch学習の結果も掲載。**
 
 
 1 epochは、訓練データ全体を1回使う学習です。先行研究のモデルの学習回数を主張するものではありません。
@@ -202,7 +202,7 @@ style: |
 <!-- _class: intro-overview -->
 <!-- _header: "" -->
 
-# Boku-nano：制限された日本語の指示から Pythonの関数を生成する小型言語モデル（SLM）
+# Boku-nano：制限された日本語からPythonの関数を生成する小型言語モデル（SLM）
 
 24種類の整数リスト操作を扱う、小型言語モデルをフルスクラッチ学習
 
@@ -739,20 +739,21 @@ Boku1-nanoはDecoder-onlyであり、この記事のEncoder-Decoder構成のCros
 <!-- _class: scientific -->
 <!-- _header: "5. 学習結果と課題" -->
 
-# 1M：損失の推移
+# 1M：3 epochまでの損失の推移
 
-1 epochの学習。訓練損失と、検証データで測った損失を示す。
+3 epochの学習。訓練損失は20 stepごと、検証損失は各epoch終了時の実測値。
 
-![w:1100 h:380](figure/loss_1m.png)
+![w:1100 h:380](figure/loss_1m_3epoch.png)
 
-**学習終了時の val loss：1.3781**
+**val loss：1 epoch 0.8737 ／ 2 epoch 0.4691 ／ 3 epoch 0.4364**
 
-val lossは終了時の1点。途中の検証値は保存されていない。
+20 stepごとのvalidationは未記録。図は保存済みの3点を表示。
 
 <!--
-保存された19点のtrain lossと、1点のvalidation lossをすべて使用。曲線はtrain lossだけであり、val lossの推移を補間していない。縦軸は保存済みの各モデルの図の対数目盛をそのまま使用する。モデルごとに範囲は異なる。最終stepは377。validationは24,040レコードのコード部分を評価。
-使用図：../results/figures/training_loss_20step/boku_nano_1m_bpe_2048_minfreq5_maxlen24_1epoch.svg
-根拠：../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_1epoch/training_metrics.jsonl
+3epoch設定の1回の訓練ログを使用。train loss 57点、validation loss 3点。最終stepは1131、epoch境界は377・754・1131。validationは24,040レコードのコード部分を評価。
+1epoch専用runとは学習率スケジュールが異なるため、1epoch専用runの終了値1.3781と接続しない。
+使用図：figure/loss_1m_3epoch.svg
+根拠：../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/training_metrics.jsonl
 -->
 
 ---

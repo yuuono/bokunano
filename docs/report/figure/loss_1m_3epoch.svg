@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620">
+<title>Boku Nano 1M / 3 epoch：20 stepごとのloss推移</title>
+<desc>train: 20 optimizer stepごとの区間平均（最終区間を含む） / validation: 各epoch終了時 / train 57点・validation 3点</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<style>
+text{font-family:system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif;fill:#172033}
+.title{font-size:22px;font-weight:650}.subtitle{font-size:13px;fill:#526079}
+.label{font-size:13px}.small{font-size:12px;fill:#526079}.grid{stroke:#dce3ec;stroke-width:1}
+.axis{stroke:#667085;stroke-width:1.4}.epoch{stroke:#98a2b3;stroke-width:1.2;stroke-dasharray:5 5}
+</style>
+<text x="560" y="35" text-anchor="middle" class="title">Boku Nano 1M / 3 epoch</text>
+<text x="560" y="61" text-anchor="middle" class="subtitle">train: 20 optimizer stepごとの区間平均（最終区間を含む） / validation: 各epoch終了時 / train 57点・validation 3点</text>
+<line x1="92" y1="538.00" x2="1086" y2="538.00" class="grid"/>
+<text x="79" y="543.00" text-anchor="end" class="label">0.2</text>
+<line x1="92" y1="436.35" x2="1086" y2="436.35" class="grid"/>
+<text x="79" y="441.35" text-anchor="end" class="label">0.5</text>
+<line x1="92" y1="359.45" x2="1086" y2="359.45" class="grid"/>
+<text x="79" y="364.45" text-anchor="end" class="label">1</text>
+<line x1="92" y1="282.55" x2="1086" y2="282.55" class="grid"/>
+<text x="79" y="287.55" text-anchor="end" class="label">2</text>
+<line x1="92" y1="180.90" x2="1086" y2="180.90" class="grid"/>
+<text x="79" y="185.90" text-anchor="end" class="label">5</text>
+<line x1="92" y1="104.00" x2="1086" y2="104.00" class="grid"/>
+<text x="79" y="109.00" text-anchor="end" class="label">10</text>
+<line x1="92.00" y1="104" x2="92.00" y2="538" class="grid"/>
+<text x="92.00" y="565" text-anchor="middle" class="label">0</text>
+<line x1="267.77" y1="104" x2="267.77" y2="538" class="grid"/>
+<text x="267.77" y="565" text-anchor="middle" class="label">200</text>
+<line x1="443.55" y1="104" x2="443.55" y2="538" class="grid"/>
+<text x="443.55" y="565" text-anchor="middle" class="label">400</text>
+<line x1="619.32" y1="104" x2="619.32" y2="538" class="grid"/>
+<text x="619.32" y="565" text-anchor="middle" class="label">600</text>
+<line x1="795.09" y1="104" x2="795.09" y2="538" class="grid"/>
+<text x="795.09" y="565" text-anchor="middle" class="label">800</text>
+<line x1="970.87" y1="104" x2="970.87" y2="538" class="grid"/>
+<text x="970.87" y="565" text-anchor="middle" class="label">1,000</text>
+<line x1="1086.00" y1="104" x2="1086.00" y2="538" class="grid"/>
+<text x="1086.00" y="565" text-anchor="middle" class="label">1,131</text>
+<line x1="423.33" y1="104" x2="423.33" y2="538" class="epoch"/>
+<text x="429.33" y="121" class="small">Epoch 1終了</text>
+<line x1="754.67" y1="104" x2="754.67" y2="538" class="epoch"/>
+<text x="760.67" y="121" class="small">Epoch 2終了</text>
+<line x1="92" y1="538" x2="1086" y2="538" class="axis"/>
+<line x1="92" y1="104" x2="92" y2="538" class="axis"/>
+<polyline points="109.58,137.38 127.15,148.69 144.73,163.68 162.31,181.45 179.89,200.08 197.46,219.64 215.04,240.15 232.62,260.40 250.20,278.01 267.77,293.20 285.35,305.32 302.93,315.89 320.51,325.52 338.08,334.53 355.66,342.88 373.24,350.47 390.82,357.92 408.39,364.95 425.97,371.28 443.55,378.16 461.12,384.38 478.70,390.12 496.28,396.21 513.86,401.79 531.43,407.38 549.01,412.13 566.59,416.59 584.17,421.46 601.74,424.70 619.32,427.53 636.90,430.64 654.48,432.76 672.05,435.23 689.63,437.04 707.21,438.74 724.79,440.30 742.36,440.77 759.94,441.89 777.52,444.17 795.09,444.16 812.67,445.13 830.25,445.81 847.83,446.78 865.40,447.29 882.98,447.42 900.56,447.75 918.14,448.38 935.71,448.83 953.29,449.45 970.87,449.88 988.45,449.97 1006.02,450.52 1023.60,450.00 1041.18,449.97 1058.76,450.51 1076.33,450.71 1086.00,450.70" fill="none" stroke="#1463d6" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="109.58" cy="137.38" r="3.0" fill="#1463d6"/>
+<circle cx="127.15" cy="148.69" r="3.0" fill="#1463d6"/>
+<circle cx="144.73" cy="163.68" r="3.0" fill="#1463d6"/>
+<circle cx="162.31" cy="181.45" r="3.0" fill="#1463d6"/>
+<circle cx="179.89" cy="200.08" r="3.0" fill="#1463d6"/>
+<circle cx="197.46" cy="219.64" r="3.0" fill="#1463d6"/>
+<circle cx="215.04" cy="240.15" r="3.0" fill="#1463d6"/>
+<circle cx="232.62" cy="260.40" r="3.0" fill="#1463d6"/>
+<circle cx="250.20" cy="278.01" r="3.0" fill="#1463d6"/>
+<circle cx="267.77" cy="293.20" r="3.0" fill="#1463d6"/>
+<circle cx="285.35" cy="305.32" r="3.0" fill="#1463d6"/>
+<circle cx="302.93" cy="315.89" r="3.0" fill="#1463d6"/>
+<circle cx="320.51" cy="325.52" r="3.0" fill="#1463d6"/>
+<circle cx="338.08" cy="334.53" r="3.0" fill="#1463d6"/>
+<circle cx="355.66" cy="342.88" r="3.0" fill="#1463d6"/>
+<circle cx="373.24" cy="350.47" r="3.0" fill="#1463d6"/>
+<circle cx="390.82" cy="357.92" r="3.0" fill="#1463d6"/>
+<circle cx="408.39" cy="364.95" r="3.0" fill="#1463d6"/>
+<circle cx="425.97" cy="371.28" r="3.0" fill="#1463d6"/>
+<circle cx="443.55" cy="378.16" r="3.0" fill="#1463d6"/>
+<circle cx="461.12" cy="384.38" r="3.0" fill="#1463d6"/>
+<circle cx="478.70" cy="390.12" r="3.0" fill="#1463d6"/>
+<circle cx="496.28" cy="396.21" r="3.0" fill="#1463d6"/>
+<circle cx="513.86" cy="401.79" r="3.0" fill="#1463d6"/>
+<circle cx="531.43" cy="407.38" r="3.0" fill="#1463d6"/>
+<circle cx="549.01" cy="412.13" r="3.0" fill="#1463d6"/>
+<circle cx="566.59" cy="416.59" r="3.0" fill="#1463d6"/>
+<circle cx="584.17" cy="421.46" r="3.0" fill="#1463d6"/>
+<circle cx="601.74" cy="424.70" r="3.0" fill="#1463d6"/>
+<circle cx="619.32" cy="427.53" r="3.0" fill="#1463d6"/>
+<circle cx="636.90" cy="430.64" r="3.0" fill="#1463d6"/>
+<circle cx="654.48" cy="432.76" r="3.0" fill="#1463d6"/>
+<circle cx="672.05" cy="435.23" r="3.0" fill="#1463d6"/>
+<circle cx="689.63" cy="437.04" r="3.0" fill="#1463d6"/>
+<circle cx="707.21" cy="438.74" r="3.0" fill="#1463d6"/>
+<circle cx="724.79" cy="440.30" r="3.0" fill="#1463d6"/>
+<circle cx="742.36" cy="440.77" r="3.0" fill="#1463d6"/>
+<circle cx="759.94" cy="441.89" r="3.0" fill="#1463d6"/>
+<circle cx="777.52" cy="444.17" r="3.0" fill="#1463d6"/>
+<circle cx="795.09" cy="444.16" r="3.0" fill="#1463d6"/>
+<circle cx="812.67" cy="445.13" r="3.0" fill="#1463d6"/>
+<circle cx="830.25" cy="445.81" r="3.0" fill="#1463d6"/>
+<circle cx="847.83" cy="446.78" r="3.0" fill="#1463d6"/>
+<circle cx="865.40" cy="447.29" r="3.0" fill="#1463d6"/>
+<circle cx="882.98" cy="447.42" r="3.0" fill="#1463d6"/>
+<circle cx="900.56" cy="447.75" r="3.0" fill="#1463d6"/>
+<circle cx="918.14" cy="448.38" r="3.0" fill="#1463d6"/>
+<circle cx="935.71" cy="448.83" r="3.0" fill="#1463d6"/>
+<circle cx="953.29" cy="449.45" r="3.0" fill="#1463d6"/>
+<circle cx="970.87" cy="449.88" r="3.0" fill="#1463d6"/>
+<circle cx="988.45" cy="449.97" r="3.0" fill="#1463d6"/>
+<circle cx="1006.02" cy="450.52" r="3.0" fill="#1463d6"/>
+<circle cx="1023.60" cy="450.00" r="3.0" fill="#1463d6"/>
+<circle cx="1041.18" cy="449.97" r="3.0" fill="#1463d6"/>
+<circle cx="1058.76" cy="450.51" r="3.0" fill="#1463d6"/>
+<circle cx="1076.33" cy="450.71" r="3.0" fill="#1463d6"/>
+<circle cx="1086.00" cy="450.70" r="3.0" fill="#1463d6"/>
+<rect x="418.33" y="369.43" width="10" height="10" rx="1" fill="#d65a12" stroke="#ffffff" stroke-width="1.5"/>
+<text x="415.33" y="364.43" text-anchor="end" class="small">E1: 0.8737</text>
+<rect x="749.67" y="438.43" width="10" height="10" rx="1" fill="#d65a12" stroke="#ffffff" stroke-width="1.5"/>
+<text x="746.67" y="433.43" text-anchor="end" class="small">E2: 0.4691</text>
+<rect x="1081.00" y="446.43" width="10" height="10" rx="1" fill="#d65a12" stroke="#ffffff" stroke-width="1.5"/>
+<text x="1078.00" y="441.43" text-anchor="end" class="small">E3: 0.4364</text>
+<line x1="92" y1="595" x2="123" y2="595" stroke="#1463d6" stroke-width="2.4"/>
+<circle cx="108" cy="595" r="3" fill="#1463d6"/>
+<text x="132" y="600" class="label">Train loss</text>
+<rect x="254" y="590" width="10" height="10" rx="1" fill="#d65a12"/>
+<text x="273" y="600" class="label">Validation loss</text>
+<text x="560" y="573" text-anchor="middle" class="label">Optimizer step</text>
+<text x="24" y="321" text-anchor="middle" class="label" transform="rotate(-90 24 321)">Loss（対数目盛）</text>
+</svg>

@@ -1,0 +1,14 @@
+{
+  "sources": {
+    "data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/training_metrics.jsonl": "69d26ba0f6c92fef95ca133ff15574138d650eeaa653c33cdc4eda495e4b3a25",
+    "scripts/model/plot_training_loss_every_20_steps.py": "f15dcc0a2f66c021bca8d84360d59e446ff292c6080d2bb254fb55d60ff994bb",
+    "docs/report/figure/loss_1m_3epoch.svg": "e1b220dfe07bf204fc780cf24ad85cd1f3a5035468c0a1804cef42896be8026f"
+  },
+  "training_points": 57,
+  "validation_steps": [
+    377,
+    754,
+    1131
+  ],
+  "validation_every_20_steps_available": false
+}
