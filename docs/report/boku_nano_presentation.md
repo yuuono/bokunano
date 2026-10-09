@@ -5,7 +5,7 @@ size: 16:9
 paginate: true
 lang: ja
 title: Boku-nano 日本語の指示からコードを作る小さなモデル
-description: 1 epochのモデル規模別評価、val loss、全層・全ヘッドのattention
+description: モデル規模別評価、1Mの3epoch loss、attention、組み合わせ汎化ベンチマークと評価設計
 style: |
   section { display: block; padding: 48px 62px 46px; background: #fff; color: #17212b; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 27px; line-height: 1.5; }
   h1 { font-size: 38px; line-height: 1.3; color: #245f8b; margin: 0 0 24px; }
@@ -86,6 +86,18 @@ style: |
   section.intro-overview .ov-step p:last-child { font-size: 14px; color: #52606d; }
   section.intro-overview blockquote { margin: 31px 0 0; padding: 10px 18px; border: 0; border-radius: 11px; background: #f4f6f9; }
   section.intro-overview blockquote p { margin: 0; color: #46566a; font-size: 14px; line-height: 1.5; }
+  section.benchmark-data { font-size: 22px; }
+  section.benchmark-data table { font-size: 20px; margin: 14px 0; }
+  section.benchmark-data th, section.benchmark-data td { padding: 7px 11px; }
+  section.ar-code { font-size: 22px; line-height: 1.4; }
+  section.ar-code h1 { font-size: 33px; margin-bottom: 14px; }
+  section.ar-code p { margin: 12px 0; }
+  section.ar-code pre { font-size: 17px; line-height: 1.35; padding: 13px 17px; margin: 12px 0; }
+  section.ar-code pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
+  section.ar-code table { font-size: 21px; margin: 12px 0; }
+  section.ar-code th, section.ar-code td { padding: 5px 12px; }
+  section.ar-code li { margin: 7px 0; }
+  section.ar-code .code-source { font-size: 15px; color: #52606d; margin-top: 12px; }
   /* 損失とattentionは保存済みの結果図をファイル参照で使用する。 */
   section.scientific { font-size: 23px; }
   section.scientific h1 { margin: 0 0 14px; font-size: 36px; }
@@ -714,6 +726,154 @@ Boku1-nanoはDecoder-onlyであり、この記事のEncoder-Decoder構成のCros
 -->
 
 ---
+<!-- _class: ar-code -->
+<!-- _header: "4. モデルと評価方法" -->
+
+# 実装①：生成したトークンを、次の入力に加える
+
+`currentIds` は日本語指示と生成済みコード。**1回の推論で次の1トークンを選ぶ。**
+
+```javascript
+const currentIds = [...promptIds];
+const generatedIds = [];
+const limit = model.context_length - promptIds.length;
+let ended = false;
+// …（表示の準備などを省略）
+for (let step = 0; step < limit && current(job); step += 1) {
+  const input = new ort.Tensor("int64", BigInt64Array.from(currentIds, BigInt), [1, currentIds.length]);
+  let outputs;
+  try {
+    outputs = await runtime.session.run({ input_ids: input });
+    if (!current(job)) break;
+    const tokenId = selectToken(outputs.logits.data, temperature);
+    if (tokenId === state.manifest.special_token_ids.eos) { ended = true; break; }
+    currentIds.push(tokenId);
+    generatedIds.push(tokenId);
+    // …（表示更新・finallyによるリソース解放・閉じ括弧を省略）
+```
+
+**`currentIds.push(tokenId)` で入力を伸ばし、同じモデルをもう一度呼ぶ。**
+終了トークン `eos`、長さの上限、または中断で止まる。
+
+<div class="code-source">抜粋：web/demo.js 585–601行。字下げを調整し、省略箇所を明示。</div>
+
+<!--
+上のコードは関数全体ではない。生成ループの表示処理とfinally、閉じ括弧を末尾で省略している。生成時に重みは更新しない。
+現行Web実装は毎回currentIds全体をONNXへ入力する。KVキャッシュ版の説明ではない。
+出典：../../web/demo.js 585–601行。
+ONNXはLastTokenLogits.forwardで末尾位置のlogitsだけを返す：../../scripts/model/export_boku_nano_onnx.py 85–86行。
+-->
+
+---
+<!-- _class: ar-code -->
+
+# 実装②：ロジットを温度で調整し、確率にする
+
+ロジットは各候補トークンの点数。**T > 0では `softmax(logits / T)` を計算する。**
+
+```javascript
+export function temperatureProbabilities(logits, temperature) {
+  const t = validateTemperature(temperature);
+  // …（T=0・空配列の検査を省略）
+  let maximum = -Infinity;
+  for (const value of logits) {
+    // …（不正な数値の検査を省略）
+    maximum = Math.max(maximum, value);
+  }
+  // …（元コードのコメントを省略）
+  const probabilities = Float64Array.from(logits, value => Math.exp((value - maximum) / t));
+  const sum = probabilities.reduce((total, value) => total + value, 0);
+  return probabilities.map(value => value / sum);
+}
+```
+
+1. 最大値を引いてから **Tで割り、expを計算**する。
+2. 全候補の合計で割り、**合計が1になる確率分布**にする。
+
+最大値を引くのは数値の発散を防ぐため。`softmax(logits / T)` と数学的に同じ確率になる。
+
+<div class="code-source">抜粋：web/sampling.js 10–23行。省略は入力検査とコメントのみ。</div>
+
+<!--
+p_i = exp((z_i - max_j z_j)/T) / sum_j exp((z_j - max_k z_k)/T)。共通因子exp(-max/T)が約分されるため、exp(z_i/T)/sum_j exp(z_j/T)と一致する。
+実装で受理する温度は0〜2。T=0はこの関数ではエラーとし、selectToken内の別分岐で処理する。
+出典：../../web/sampling.js 2–23行。
+-->
+
+---
+<!-- _class: ar-code -->
+
+# 実装③：温度による違いと、T=0の処理
+
+**同じロジット `[2, 1, 0]`** に対する確率。実モデルの出力ではなく、計算例。
+
+| 温度T | 候補A | 候補B | 候補C |
+| ---: | ---: | ---: | ---: |
+| 0.5 | 86.7% | 11.7% | 1.6% |
+| 1.0 | 66.5% | 24.5% | 9.0% |
+| 2.0 | 50.6% | 30.7% | 18.6% |
+
+Tを小さくすると最大候補に集中し、大きくすると他の候補も選ばれやすくなる。
+
+```javascript
+if (t === 0) {
+  let best = 0;
+  for (let i = 0; i < logits.length; i += 1) {
+    // …（不正な数値の検査を省略）
+    if (logits[i] > logits[best]) best = i;
+  }
+  return best;
+}
+```
+
+**T=0ではsoftmaxを計算せず、最大候補を選ぶ（greedy）。** 温度を上げても正解率が上がるとは限らない。
+
+<div class="code-source">抜粋：web/sampling.js 28–35行。表は同ファイルのtemperatureProbabilitiesで算出（丸めで合計に差）。</div>
+
+<!--
+正の温度で割ってもロジットの順位は変わらない。変わるのは候補間の確率の偏り。T=0の分岐はゼロ除算をしない。
+同点の最大値は先に現れたIDを選ぶ。greedyはその時点の局所的な最大候補を選ぶ処理であり、系列全体で最高確率の出力を保証しない。
+出典：../../web/sampling.js 28–35行。数値例はT=0.5,1,2に対して同関数を直接実行して確認。
+-->
+
+---
+<!-- _class: ar-code -->
+
+# 実装④：確率に従って1トークンを選ぶ
+
+T > 0では、**0以上1未満の乱数を引き、確率の幅に応じて候補を選ぶ。**
+
+```javascript
+export function selectToken(logits, temperature, random = Math.random) {
+  const t = validateTemperature(temperature);
+  // …（空配列の検査とT=0の分岐を省略）
+  const probabilities = temperatureProbabilities(logits, t);
+  let threshold = random();
+  // …（乱数が0以上1未満であることの検査を省略）
+  for (let i = 0; i < probabilities.length; i += 1) {
+    threshold -= probabilities[i];
+    if (threshold < 0) return i;
+  }
+  // …（丸め誤差で候補が決まらなかった場合の処理を省略）
+}
+```
+
+例：確率が `[0.6, 0.3, 0.1]` で乱数が `0.7` の場合
+
+- 候補A：`0.7 − 0.6 = 0.1`。まだ0以上なので次へ。
+- 候補B：`0.1 − 0.3 = −0.2`。0未満になり、**候補Bを選ぶ**。
+
+選んだIDを `currentIds` に追加し、**更新された入力で次のトークンを予測する。**
+
+<div class="code-source">抜粋：web/sampling.js 25–47行。モデルの出力確率に従う抽選で、毎回同じ候補になるとは限らない。</div>
+
+<!--
+乱数rに対し、累積確率がrを初めて上回る候補を返す。元実装は最後に丸め誤差用のフォールバックも持つ。
+T=0のベンチマーク結果と、T>0のデモ生成を混同しない。この説明のためにモデルや生成実装を変更していない。
+出典：../../web/sampling.js 25–47行、../../web/demo.js 598–601行。
+-->
+
+---
 <!-- _class: compact -->
 
 # 五つのテストで、生成コードを実行する
@@ -1242,11 +1402,142 @@ def solve(xs: list[int], k: int) -> list[int]:
 -->
 
 ---
+<!-- _class: compact -->
+<!-- _header: "6. 組み合わせ汎化を測る" -->
+
+# 組み合わせ汎化ベンチマークの前提
+
+**各操作を表す日本語表現は、Bokuの訓練データに登場する。**
+**ただし、完成した指示文は訓練データと完全一致しない。**
+
+評価872問と訓練192,900件を照合し、指示全文の一致は0件。
+
+| 課題 | 訓練と評価で何が変わるか |
+| :--- | :--- |
+| 複数操作で学んだ表現を1操作で使う | 複数操作の指示でだけ使った言い方を、単独操作に使う |
+| 初めて組み合わせる2操作 | 訓練では同じ指示に登場しない2操作を組み合わせる |
+| 3操作で学んだ順序を2操作で使う | 3操作中の既知の順序を、未学習の2操作列として使う |
+
+未知の日本語表現への強さとは分けて、**既知の表現を異なる構成で使う能力**を調べる。
+
+<!--
+全文未出でも、操作や機能まで未知とは限らない。Qwenの事前学習との重複は不明。
+根拠：../results/composition_suite_20261008/report.md、../../data/benchmarks/composition_suite_20261008/questions.jsonl
+全文一致0件は2026年10月8日に訓練アーカイブを走査して確認。
+-->
+
+---
+<!-- _class: benchmark-data -->
+
+# データセットの構成：9種類・872問
+
+| 操作数 | 問題の種類 | 問数 | 構成 |
+| ---: | :--- | ---: | :--- |
+| 1 | 複数操作で学んだ表現を1操作で使う | 96 | 24操作 × 4表現 |
+| 2 | 初めて組み合わせる2操作 | 100 | 5ペア × 両順序 × 10表現 |
+| 2 | 同じ操作を2回 | 96 | 24操作 × 4表現 |
+| 2 | 3操作で学んだ順序を2操作で使う | 88 | 88種類の操作列 |
+| 3 | 初めてのペアを含む3操作 | 100 | 100種類の操作列 |
+| 3 | 同じ操作を3回 | 96 | 24操作 × 4表現 |
+| 4 | 同じ操作を4回 | 96 | 24操作 × 4表現 |
+| 4 | 異なる4操作を組み合わせる | 100 | 100種類の操作列 |
+| 4 | 2操作の組を2回繰り返す | 100 | A・B・A・Bの100種類 |
+
+各問題でコードを1つ生成。**179通りの共通テスト入力ですべて合格した問題の割合**を正答率とする。
+
+<!--
+関数契約・許可構文・入力非変更も採点条件。179入力は境界9、固定seedのランダム128、k関連40、操作順序確認2。任意入力での正しさの証明ではない。
+根拠：../../data/benchmarks/composition_suite_20261008/protocol.json、../results/composition_suite_20261008/report.md
+-->
+
+---
+<!-- _class: default -->
+<!-- _header: "" -->
+
+![bg contain](figure/composition_benchmark/plot.png)
+
+<!--
+条件A、greedy、各問題1生成・修復なし。標準BPEのBoku 15M・1epochと1M・3epoch、Qwen3-1.7Bを比較。訓練回数・生成上限・実行基盤などは一致しない。
+図：figure/composition_benchmark/plot.png
+数値・実行条件・入力hash：figure/composition_benchmark/values.json
+作図：.venv/bin/python scripts/model/benchmark.py --models boku-15m-1epoch boku-1m-3epoch qwen3-1.7b --presentation --rows 1 --columns 9 --output docs/report/figure/composition_benchmark
+-->
+
+---
+<!-- _class: compact -->
+<!-- _header: "6. 組み合わせ汎化を測る" -->
+
+# 高得点の課題と、残る課題を分けて読む
+
+| 問題の種類 | Boku 15M・1ep | Boku 1M・3ep | Qwen3-1.7B |
+| :--- | ---: | ---: | ---: |
+| 初めて組み合わせる2操作 | 98 / 100 | 99 / 100 | 34 / 100 |
+| 初めてのペアを含む3操作 | 96 / 100 | 100 / 100 | 27 / 100 |
+| 異なる4操作を組み合わせる | 29 / 100 | 43 / 100 | 26 / 100 |
+
+- **今回の2・3操作の課題では、小規模モデルにも有望な結果がある。**
+- 4操作では誤りが多く残る。どの操作を落とすか、順序を変えるかを分析する。
+- 1Mは3epoch、15Mは1epoch。生成条件も異なり、規模だけの優劣とは解釈しない。
+
+<!--
+2操作は10種類の意味ASTの表現違い。3操作と4操作は対応した同一問題ではないため、1操作の増加だけの効果を示す比較ではない。
+Bokuは入力込み256 token、Qwenは最大512新規token・thinking無効。各構成単一seed。
+根拠：figure/composition_benchmark/values.json、../results/composition_suite_20261008/report.md
+-->
+
+---
+<!-- _class: default -->
+<!-- _header: "7. ベンチマークから研究課題を考える" -->
+
+# 今回の結果の意義と、次の研究課題
+
+**今回のベンチマークでは、小規模モデルの組み合わせ汎化について有望な結果が得られた。**
+
+今後は比較条件を揃え、より大きなモデルとの比較を追加するとともに、**評価設計と作成手順を明文化する。**
+
+- 比較条件：訓練回数、プロンプト、生成上限などを記録し、揃えられる条件を揃える。
+- 評価設計：何を既知・未知とするか、どの誤りを検出したいかを定める。
+- 作成手順：問題の選定、訓練との照合、採点方法、再現手順を公開可能な形に整理する。
+
+<!--
+小規模モデルの一般的優位を主張するものではなく、今回の限定した課題での結果と今後の研究方針。
+-->
+
+---
+<!-- _class: default -->
+
+# ベンチマークの役割
+
+**モデルの能力と限界を観測し、次に取り組む研究課題を明確にする。**
+
+- 入出力の成功例だけでは、能力を獲得したか判断できない。共通の基準で定量評価する。
+- 正誤を検証できる課題では、評価基準を明確にしやすい。小規模モデルでも改善を確かめられる。
+- 得点だけでなく、どの条件で成功し、どの条件で失敗するかを見る。
+
+今回なら、**2・3操作での高得点と、4操作で残る誤り**が、次の分析対象を教えてくれる。
+
+---
+<!-- _class: default -->
+
+# 自分の研究でベンチマークを作るには
+
+1. **測りたい能力を先に決める。** 例：既知の操作を、新しい組み合わせで実行できるか。
+2. **目的に沿って課題と正解基準を作る。** 何を変え、何を固定するかを決める。
+3. **共通条件で測り、成功と失敗を分析する。** 作成手順と比較条件も記録する。
+4. **高得点で差が見えなくなったら、評価の役割を見直す。** 元の結果を残し、次に測る能力を定める。
+
+**得点を上げる研究と、能力向上を観測できる評価を作る研究を、両方考える。**
+
+<!--
+学生に求めるのは結果の暗記ではなく、自分の研究で測りたい能力、評価課題、採点基準、次の研究課題を説明できること。
+-->
+
+---
 <!-- _class: default -->
 
 # この結果が示す範囲
 
-- 対象は、24操作を最大3つ組み合わせるコード生成。
+- 訓練は24操作を最大3つ組み合わせるコード生成。追加評価では4操作まで調べた。
 - 冒頭変更の比較は14操作。日本語能力全体の測定ではない。
 - 学習は一つの乱数設定。繰り返し実験のばらつきは未確認。
 
@@ -1264,7 +1555,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 **限定したコード生成は、小さなモデルでも1 epochで学習できた。**
 
-**表現を変えた場合の性能は、別に確かめる必要がある。**
+**表現を変えた場合の性能と、操作を組み合わせる能力は、分けて確かめる必要がある。**
 
 | デモの流れ | 役割 |
 | :--- | :--- |

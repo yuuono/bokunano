@@ -1,0 +1,326 @@
+{
+  "created_at": "2026-10-08T08:16:48.880782+00:00",
+  "title": "問題カテゴリ別のモデル比較",
+  "metric": "accuracy",
+  "models": [
+    {
+      "id": "boku-15m-1epoch",
+      "label": "Boku 15M / 1ep",
+      "family": "boku",
+      "group": "regular",
+      "parameter_count": 15735168,
+      "epochs": 1,
+      "tokenizer": "standard",
+      "model_path": "web/models/boku-nano-15m-1epoch.onnx",
+      "weight_sha256": "7b49bea89c85aa03f688b4b7c3c1bc587972067c2798e1ea72775cb999e28c55",
+      "source_weight_sha256": "1a0002e1b50aeae59805d8087fbaa16be1b6e2716d78a085230f2cc35edbf68f",
+      "tokenizer_path": "web/tokenizers/bpe-2048-minfreq5-maxlen24.json",
+      "tokenizer_sha256": "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293",
+      "prompt_template": "<|bos|><|task|>\n{instruction_ja}\n<|code|>\n",
+      "context_length": 256,
+      "training_manifest": "data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch/training_manifest.json",
+      "model_config": {
+        "context_length": 256,
+        "d_ff": 1024,
+        "d_model": 384,
+        "dropout": 0.0,
+        "n_heads": 6,
+        "n_layers": 8,
+        "rms_norm_eps": 1e-05,
+        "rope_base": 10000.0,
+        "tie_word_embeddings": false,
+        "vocab_size": 2048
+      }
+    },
+    {
+      "id": "boku-1m-3epoch",
+      "label": "Boku 1M / 3ep",
+      "family": "boku",
+      "group": "regular",
+      "parameter_count": 1016704,
+      "epochs": 3,
+      "tokenizer": "standard",
+      "model_path": "web/models/boku-nano-1m-3epoch.onnx",
+      "weight_sha256": "b882366c28977b2a88d5e71997db82bf3c8b28707d8c58a9772339a3a7b68bb3",
+      "source_weight_sha256": "e9eafad8c5195b501414c4456b04918258cc1a3a6ef799d5d77f3ea69cd17533",
+      "tokenizer_path": "web/tokenizers/bpe-2048-minfreq5-maxlen24.json",
+      "tokenizer_sha256": "6840a392e8fcae1083be06842774fa912a1797217c7033944ba2d87f1c227293",
+      "prompt_template": "<|bos|><|task|>\n{instruction_ja}\n<|code|>\n",
+      "context_length": 256,
+      "training_manifest": "data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/training_manifest.json",
+      "model_config": {
+        "context_length": 256,
+        "d_ff": 256,
+        "d_model": 128,
+        "dropout": 0.0,
+        "n_heads": 4,
+        "n_layers": 3,
+        "rms_norm_eps": 1e-05,
+        "rope_base": 10000.0,
+        "tie_word_embeddings": false,
+        "vocab_size": 2048
+      }
+    },
+    {
+      "id": "qwen3-1.7b",
+      "family": "qwen",
+      "group": "qwen",
+      "label": "Qwen3-1.7B",
+      "nominal_parameter_billions": 1.7
+    }
+  ],
+  "categories": [
+    "transfer_1op",
+    "composition_2op",
+    "transfer_3to2",
+    "repeat_2",
+    "composition_3op",
+    "repeat_3",
+    "general_4op",
+    "repeat_abab",
+    "repeat_4"
+  ],
+  "dataset_directory": "data/benchmarks/composition_suite_20261008",
+  "category_operation_counts": {
+    "transfer_1op": [
+      1
+    ],
+    "composition_2op": [
+      2
+    ],
+    "transfer_3to2": [
+      2
+    ],
+    "repeat_2": [
+      2
+    ],
+    "composition_3op": [
+      3
+    ],
+    "repeat_3": [
+      3
+    ],
+    "general_4op": [
+      4
+    ],
+    "repeat_abab": [
+      4
+    ],
+    "repeat_4": [
+      4
+    ]
+  },
+  "values": [
+    {
+      "model": "boku-15m-1epoch",
+      "suite": "transfer_1op",
+      "passed": 88,
+      "total": 96,
+      "percentage": 91.66666666666667
+    },
+    {
+      "model": "boku-15m-1epoch",
+      "suite": "composition_2op",
+      "passed": 98,
+      "total": 100,
+      "percentage": 98.0
+    },
+    {
+      "model": "boku-15m-1epoch",
+      "suite": "transfer_3to2",
+      "passed": 88,
+      "total": 88,
+      "percentage": 100.0
+    },
+    {
+      "model": "boku-15m-1epoch",
+      "suite": "repeat_2",
+      "passed": 94,
+      "total": 96,
+      "percentage": 97.91666666666667
+    },
+    {
+      "model": "boku-15m-1epoch",
+      "suite": "composition_3op",
+      "passed": 96,
+      "total": 100,
+      "percentage": 96.0
+    },
+    {
+      "model": "boku-15m-1epoch",
+      "suite": "repeat_3",
+      "passed": 94,
+      "total": 96,
+      "percentage": 97.91666666666667
+    },
+    {
+      "model": "boku-15m-1epoch",
+      "suite": "general_4op",
+      "passed": 29,
+      "total": 100,
+      "percentage": 29.0
+    },
+    {
+      "model": "boku-15m-1epoch",
+      "suite": "repeat_abab",
+      "passed": 70,
+      "total": 100,
+      "percentage": 70.0
+    },
+    {
+      "model": "boku-15m-1epoch",
+      "suite": "repeat_4",
+      "passed": 71,
+      "total": 96,
+      "percentage": 73.95833333333333
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "suite": "transfer_1op",
+      "passed": 82,
+      "total": 96,
+      "percentage": 85.41666666666667
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "suite": "composition_2op",
+      "passed": 99,
+      "total": 100,
+      "percentage": 99.0
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "suite": "transfer_3to2",
+      "passed": 88,
+      "total": 88,
+      "percentage": 100.0
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "suite": "repeat_2",
+      "passed": 96,
+      "total": 96,
+      "percentage": 100.0
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "suite": "composition_3op",
+      "passed": 100,
+      "total": 100,
+      "percentage": 100.0
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "suite": "repeat_3",
+      "passed": 95,
+      "total": 96,
+      "percentage": 98.95833333333333
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "suite": "general_4op",
+      "passed": 43,
+      "total": 100,
+      "percentage": 43.0
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "suite": "repeat_abab",
+      "passed": 78,
+      "total": 100,
+      "percentage": 78.0
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "suite": "repeat_4",
+      "passed": 70,
+      "total": 96,
+      "percentage": 72.91666666666667
+    },
+    {
+      "model": "qwen3-1.7b",
+      "suite": "transfer_1op",
+      "passed": 60,
+      "total": 96,
+      "percentage": 62.5
+    },
+    {
+      "model": "qwen3-1.7b",
+      "suite": "composition_2op",
+      "passed": 34,
+      "total": 100,
+      "percentage": 34.0
+    },
+    {
+      "model": "qwen3-1.7b",
+      "suite": "transfer_3to2",
+      "passed": 24,
+      "total": 88,
+      "percentage": 27.272727272727273
+    },
+    {
+      "model": "qwen3-1.7b",
+      "suite": "repeat_2",
+      "passed": 43,
+      "total": 96,
+      "percentage": 44.791666666666664
+    },
+    {
+      "model": "qwen3-1.7b",
+      "suite": "composition_3op",
+      "passed": 27,
+      "total": 100,
+      "percentage": 27.0
+    },
+    {
+      "model": "qwen3-1.7b",
+      "suite": "repeat_3",
+      "passed": 44,
+      "total": 96,
+      "percentage": 45.833333333333336
+    },
+    {
+      "model": "qwen3-1.7b",
+      "suite": "general_4op",
+      "passed": 26,
+      "total": 100,
+      "percentage": 26.0
+    },
+    {
+      "model": "qwen3-1.7b",
+      "suite": "repeat_abab",
+      "passed": 16,
+      "total": 100,
+      "percentage": 16.0
+    },
+    {
+      "model": "qwen3-1.7b",
+      "suite": "repeat_4",
+      "passed": 51,
+      "total": 96,
+      "percentage": 53.125
+    }
+  ],
+  "font_path": "/System/Library/Fonts/ヒラギノ角ゴシック W3.ttc",
+  "render_options": {
+    "columns": 9,
+    "rows": 1,
+    "presentation": true,
+    "formats": [
+      "png",
+      "svg",
+      "pdf"
+    ],
+    "values": "auto",
+    "dpi": 180
+  },
+  "questions_sha256": "aa119fa2a9e8507136ad14a54b9d3d2e9043fd81af9e48251ef7f5c49c20f97f",
+  "test_cases_sha256": "0090a38d255848a813876ce3b64a8029603aa14e4181b453a89801b41ac67fc2",
+  "scored_sha256": {
+    "boku-15m-1epoch": "526148a3599ff9778345de49b8fd66661de539bd30b976effaa57a158c70c9a3",
+    "boku-1m-3epoch": "32a601f236a4ffe4d827e906b6544efd192e7f649cfd837b00ec4c9fa03ae35c",
+    "qwen3-1.7b": "26a555702d4d75041b55ab4ff4b22710779722a93737a10c4c51f26b8738b31f"
+  },
+  "plotter_sha256": "b004e0eb37ea7c550a183e9869424aa92acb0fc3c195963dd09728949c4c45de",
+  "presentation_plotter_sha256": "fd0270120d210772a8faa329428b746431281ec4d26390610ea532d264a58b0c"
+}
