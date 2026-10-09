@@ -89,15 +89,18 @@ style: |
   section.benchmark-data { font-size: 22px; }
   section.benchmark-data table { font-size: 20px; margin: 14px 0; }
   section.benchmark-data th, section.benchmark-data td { padding: 7px 11px; }
-  section.ar-code { font-size: 22px; line-height: 1.4; }
-  section.ar-code h1 { font-size: 33px; margin-bottom: 14px; }
+  section.ar-code { font-size: 21px; line-height: 1.4; }
+  section.ar-code h1 { font-size: 34px; margin-bottom: 22px; }
+  section.ar-code .code-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  section.ar-code .code-columns > div { min-width: 0; }
+  section.ar-code h2 { font-size: 24px; margin: 6px 0 14px; }
   section.ar-code p { margin: 12px 0; }
-  section.ar-code pre { font-size: 17px; line-height: 1.35; padding: 13px 17px; margin: 12px 0; }
+  section.ar-code pre { font-size: 17px; line-height: 1.4; padding: 13px 15px; margin: 0 0 14px; }
   section.ar-code pre code { white-space: pre-wrap; overflow-wrap: anywhere; }
-  section.ar-code table { font-size: 21px; margin: 12px 0; }
-  section.ar-code th, section.ar-code td { padding: 5px 12px; }
-  section.ar-code li { margin: 7px 0; }
-  section.ar-code .code-source { font-size: 15px; color: #52606d; margin-top: 12px; }
+  section.ar-code table { font-size: 20px; margin: 14px 0; }
+  section.ar-code th, section.ar-code td { padding: 6px 9px; }
+  section.ar-code li { margin: 9px 0; }
+  section.ar-code .code-source { font-size: 14px; color: #52606d; margin-top: 12px; }
   /* 損失とattentionは保存済みの結果図をファイル参照で使用する。 */
   section.scientific { font-size: 23px; }
   section.scientific h1 { margin: 0 0 14px; font-size: 36px; }
@@ -729,148 +732,288 @@ Boku1-nanoはDecoder-onlyであり、この記事のEncoder-Decoder構成のCros
 <!-- _class: ar-code -->
 <!-- _header: "4. モデルと評価方法" -->
 
-# 実装①：生成したトークンを、次の入力に加える
+# ① 次のトークンは、候補ごとの確率分布で表す
 
-`currentIds` は日本語指示と生成済みコード。**1回の推論で次の1トークンを選ぶ。**
+<div class="code-columns">
+<div>
 
-```javascript
-const currentIds = [...promptIds];
-const generatedIds = [];
-const limit = model.context_length - promptIds.length;
-let ended = false;
-// …（表示の準備などを省略）
-for (let step = 0; step < limit && current(job); step += 1) {
-  const input = new ort.Tensor("int64", BigInt64Array.from(currentIds, BigInt), [1, currentIds.length]);
-  let outputs;
-  try {
-    outputs = await runtime.session.run({ input_ids: input });
-    if (!current(job)) break;
-    const tokenId = selectToken(outputs.logits.data, temperature);
-    if (tokenId === state.manifest.special_token_ids.eos) { ended = true; break; }
-    currentIds.push(tokenId);
-    generatedIds.push(tokenId);
-    // …（表示更新・finallyによるリソース解放・閉じ括弧を省略）
+```python
+# 今の入力から、次のトークンの点数を得る
+# まずは temperature=1.0 として読む
+logits = (
+    model(input_ids).logits[:, -1, :]
+    / temperature
+)
+
+# 候補を点数の高い順に並べる
+sorted_logits, sorted_indices = torch.sort(
+    logits, descending=True, dim=-1
+)
+
+# softmaxで、点数を確率分布に変換する
+sorted_probabilities = torch.softmax(
+    sorted_logits, dim=-1
+)
 ```
 
-**`currentIds.push(tokenId)` で入力を伸ばし、同じモデルをもう一度呼ぶ。**
-終了トークン `eos`、長さの上限、または中断で止まる。
+<div class="code-source">Python比較評価から抜粋。コメントを追加し、改行を調整。<br>evaluate_boku_nano_comparison.py：209–211行</div>
 
-<div class="code-source">抜粋：web/demo.js 585–601行。字下げを調整し、省略箇所を明示。</div>
+</div>
+<div>
+
+## 最初から1つの答えが出るわけではない
+
+モデルは、語彙の全トークンに対する **点数**（ロジット）を出す。
+
+`[:, -1, :]` は、入力の**最後の位置**から予測する、全候補の点数。
+
+softmaxで変換すると、各候補が0〜1の値を持ち、**合計が1**になる。
+
+| 候補 | 点数 | 確率 |
+| :--- | ---: | ---: |
+| A | 2 | 66.5% |
+| B | 1 | 24.5% |
+| C | 0 | 9.0% |
+
+計算例。この分布から**どの候補を選ぶか**が、次の処理。
+
+</div>
+</div>
 
 <!--
-上のコードは関数全体ではない。生成ループの表示処理とfinally、閉じ括弧を末尾で省略している。生成時に重みは更新しない。
-現行Web実装は毎回currentIds全体をONNXへ入力する。KVキャッシュ版の説明ではない。
-出典：../../web/demo.js 585–601行。
-ONNXはLastTokenLogits.forwardで末尾位置のlogitsだけを返す：../../scripts/model/export_boku_nano_onnx.py 85–86行。
+3候補の数値は説明用。実際は全語彙に対する分布。候補をソートしても各トークンの確率は変わらない。
+temperature=1.0なので、左の除算は点数を変えない。モデルの直接出力はロジットであり、モデル自体がsoftmax済み確率を返すとは説明しない。
+出典：../../scripts/model/evaluate_boku_nano_comparison.py sample_generate_equal_length、209–211行。
+コード本体は実装の抜粋。日本語コメント・空行は説明用に追加。softmaxは最後の語彙次元dim=-1に適用する。
 -->
 
 ---
 <!-- _class: ar-code -->
 
-# 実装②：ロジットを温度で調整し、確率にする
+# ② 選んだトークンを入力に加え、予測を繰り返す
 
-ロジットは各候補トークンの点数。**T > 0では `softmax(logits / T)` を計算する。**
+<div class="code-columns">
+<div>
 
-```javascript
-export function temperatureProbabilities(logits, temperature) {
-  const t = validateTemperature(temperature);
-  // …（T=0・空配列の検査を省略）
-  let maximum = -Infinity;
-  for (const value of logits) {
-    // …（不正な数値の検査を省略）
-    maximum = Math.max(maximum, value);
-  }
-  // …（元コードのコメントを省略）
-  const probabilities = Float64Array.from(logits, value => Math.exp((value - maximum) / t));
-  const sum = probabilities.reduce((total, value) => total + value, 0);
-  return probabilities.map(value => value / sum);
-}
+```python
+# 日本語指示を含む入力ID列をコピーする
+current = prompt_ids.copy()
+generated: list[int] = []
+
+# 勾配を計算せず、次のトークンを順に生成
+with torch.inference_mode():
+    for _ in range(min(
+        max_new_tokens,
+        model.config.context_length - len(current)
+    )):
+        values = torch.tensor(
+            [current], dtype=torch.long)
+        # この実装では最大点数の候補を選ぶ
+        token_id = int(torch.argmax(
+            model(values).logits[0, -1]).item())
+        # 終了トークンなら生成を止める
+        if token_id == eos_token_id:
+            break
+        # 選んだIDを出力と次回の入力へ追加
+        generated.append(token_id)
+        current.append(token_id)
 ```
 
-1. 最大値を引いてから **Tで割り、expを計算**する。
-2. 全候補の合計で割り、**合計が1になる確率分布**にする。
+<div class="code-source">Python推論から抜粋。コメントを追加し、改行を調整。<br>export_boku_nano_onnx.py：232–241行</div>
 
-最大値を引くのは数値の発散を防ぐため。`softmax(logits / T)` と数学的に同じ確率になる。
+</div>
+<div>
 
-<div class="code-source">抜粋：web/sampling.js 10–23行。省略は入力検査とコメントのみ。</div>
+## 自己回帰の中心は `current.append`
+
+1. **ここまでの入力**から次の候補を予測する。
+2. 候補を1つ選び、**入力末尾に追加**する。
+3. 伸びた入力を使って、**同じモデル**でもう一度予測する。
+
+重みは更新せず、入力が1トークンずつ伸びる。
+
+## このコードはgreedy生成
+
+`argmax` は最大の点数の候補を選ぶ。
+
+softmaxを通しても順位は同じなので、**greedyでは確率への変換を省ける。**
+
+EOSまたは生成長の上限で止まる。
+
+</div>
+</div>
 
 <!--
-p_i = exp((z_i - max_j z_j)/T) / sum_j exp((z_j - max_k z_k)/T)。共通因子exp(-max/T)が約分されるため、exp(z_i/T)/sum_j exp(z_j/T)と一致する。
-実装で受理する温度は0〜2。T=0はこの関数ではエラーとし、selectToken内の別分岐で処理する。
-出典：../../web/sampling.js 2–23行。
+出典：../../scripts/model/export_boku_nano_onnx.py generate_with_pytorch、232–241行。関数宣言と末尾のreturnを省略し、日本語コメント・空行を追加。
+ONNXとの一致確認に使う実際のPyTorch推論ループ。通常のバッチ評価にも同じargmax方式がある：../../scripts/model/evaluate_boku_nano.py 488–490行。
+currentは特殊トークンを含むプロンプトIDと生成済みID。毎回全入力を与える実装。KVキャッシュの説明ではない。
 -->
 
 ---
 <!-- _class: ar-code -->
 
-# 実装③：温度による違いと、T=0の処理
+# ③ 温度は、確率分布の偏りを調整する
 
-**同じロジット `[2, 1, 0]`** に対する確率。実モデルの出力ではなく、計算例。
+<div class="code-columns">
+<div>
 
-| 温度T | 候補A | 候補B | 候補C |
+```python
+# 全候補のロジットを温度Tで割る
+logits = (
+    model(input_ids).logits[:, -1, :]
+    / temperature
+)
+
+# 候補のIDを保持して点数順に並べる
+sorted_logits, sorted_indices = torch.sort(
+    logits, descending=True, dim=-1
+)
+
+# 調整後の点数をsoftmaxで確率にする
+sorted_probabilities = torch.softmax(
+    sorted_logits, dim=-1
+)
+```
+
+<div class="code-source">evaluate_boku_nano_comparison.py：209–211行。<br>Pythonのsampling処理では temperature > 0 が条件。</div>
+
+</div>
+<div>
+
+## 計算は `softmax(logits / T)`
+
+各候補の点数を**Tで割ってから**、softmaxを適用する。
+
+点数 `[2, 1, 0]` の例：
+
+| 温度T | A | B | C |
 | ---: | ---: | ---: | ---: |
 | 0.5 | 86.7% | 11.7% | 1.6% |
 | 1.0 | 66.5% | 24.5% | 9.0% |
 | 2.0 | 50.6% | 30.7% | 18.6% |
 
-Tを小さくすると最大候補に集中し、大きくすると他の候補も選ばれやすくなる。
+**小さいT**：最大候補に確率が集中する。
+**大きいT**：他の候補も選ばれやすくなる。
 
-```javascript
-if (t === 0) {
-  let best = 0;
-  for (let i = 0; i < logits.length; i += 1) {
-    // …（不正な数値の検査を省略）
-    if (logits[i] > logits[best]) best = i;
-  }
-  return best;
-}
-```
+順位は変わらない。温度を上げても、正解率が上がるとは限らない。
 
-**T=0ではsoftmaxを計算せず、最大候補を選ぶ（greedy）。** 温度を上げても正解率が上がるとは限らない。
+**T=0は除算せず、前ページのgreedy方式を使う。**
 
-<div class="code-source">抜粋：web/sampling.js 28–35行。表は同ファイルのtemperatureProbabilitiesで算出（丸めで合計に差）。</div>
+</div>
+</div>
 
 <!--
-正の温度で割ってもロジットの順位は変わらない。変わるのは候補間の確率の偏り。T=0の分岐はゼロ除算をしない。
-同点の最大値は先に現れたIDを選ぶ。greedyはその時点の局所的な最大候補を選ぶ処理であり、系列全体で最高確率の出力を保証しない。
-出典：../../web/sampling.js 28–35行。数値例はT=0.5,1,2に対して同関数を直接実行して確認。
+softmax(z/T)の各候補確率はexp(z_i/T)/sum_j exp(z_j/T)。数値表はPyTorchで直接算出。丸めにより合計100%にならない場合がある。
+Python比較評価の設定検査は正のtemperatureを要求する（evaluate_boku_nano_comparison.py 105–106行）。同じ関数にT=0を入れてgreedyへ分岐する実装ではなく、別のgreedy実装を説明している。
+出典：../../scripts/model/evaluate_boku_nano_comparison.py 209–211行、../../scripts/model/export_boku_nano_onnx.py 237行。
 -->
 
 ---
 <!-- _class: ar-code -->
 
-# 実装④：確率に従って1トークンを選ぶ
+# ④ top-pで、抽選する候補を絞る
 
-T > 0では、**0以上1未満の乱数を引き、確率の幅に応じて候補を選ぶ。**
+<div class="code-columns">
+<div>
 
-```javascript
-export function selectToken(logits, temperature, random = Math.random) {
-  const t = validateTemperature(temperature);
-  // …（空配列の検査とT=0の分岐を省略）
-  const probabilities = temperatureProbabilities(logits, t);
-  let threshold = random();
-  // …（乱数が0以上1未満であることの検査を省略）
-  for (let i = 0; i < probabilities.length; i += 1) {
-    threshold -= probabilities[i];
-    if (threshold < 0) return i;
-  }
-  // …（丸め誤差で候補が決まらなかった場合の処理を省略）
-}
+```python
+# …（ロジットの計算・softmaxまでを省略）
+# 高確率の候補から累積確率を計算する
+cumulative = torch.cumsum(
+    sorted_probabilities, dim=-1)
+# top-pに達した後の候補を除外する
+remove = (
+    cumulative - sorted_probabilities >= top_p
+)
+# 範囲外の候補の確率を0にする
+sorted_probabilities = (
+    sorted_probabilities.masked_fill(remove, 0.0)
+)
+# 残した候補の合計が1になるよう正規化
+sorted_probabilities /= sorted_probabilities.sum(
+    dim=-1, keepdim=True)
 ```
 
-例：確率が `[0.6, 0.3, 0.1]` で乱数が `0.7` の場合
+<div class="code-source">evaluate_boku_nano_comparison.py：212–215行。<br>説明用コメントを追加し、改行・字下げを調整。</div>
 
-- 候補A：`0.7 − 0.6 = 0.1`。まだ0以上なので次へ。
-- 候補B：`0.1 − 0.3 = −0.2`。0未満になり、**候補Bを選ぶ**。
+</div>
+<div>
 
-選んだIDを `currentIds` に追加し、**更新された入力で次のトークンを予測する。**
+## このPython実装はtop-pも使う
 
-<div class="code-source">抜粋：web/sampling.js 25–47行。モデルの出力確率に従う抽選で、毎回同じ候補になるとは限らない。</div>
+確率の高い順に足し、**累積がtop-p以上になる最小の候補群**を残す。
+
+例：確率 `[0.6, 0.3, 0.1]`、top-p=0.8
+
+| 候補 | 累積確率 | 残すか |
+| :--- | ---: | :--- |
+| A | 0.6 | 残す |
+| B | 0.9 | 残す |
+| C | 1.0 | 除外 |
+
+AとBの確率を再び合計1にすると、<strong>Aは約66.7%、Bは約33.3%</strong>になる。
+
+top-p=1なら、正の確率を持つ全候補を残す。
+
+</div>
+</div>
 
 <!--
-乱数rに対し、累積確率がrを初めて上回る候補を返す。元実装は最後に丸め誤差用のフォールバックも持つ。
-T=0のベンチマーク結果と、T>0のデモ生成を混同しない。この説明のためにモデルや生成実装を変更していない。
-出典：../../web/sampling.js 25–47行、../../web/demo.js 598–601行。
+出典：../../scripts/model/evaluate_boku_nano_comparison.py 212–215行。閾値を初めて超える候補まで残す実装。温度による分布の調整とは別の処理。
+-->
+
+---
+<!-- _class: ar-code -->
+
+# ⑤ 確率に従って選び、次の入力へ追加する
+
+<div class="code-columns">
+<div>
+
+```python
+# 確率に従って1つ抽選する
+sampled_positions = torch.multinomial(
+    sorted_probabilities,
+    num_samples=1,
+    generator=generator,
+)
+# 並べ替えた位置から元のトークンIDに戻す
+next_ids = sorted_indices.gather(
+    1, sampled_positions).squeeze(1)
+# …（EOS判定・系列ごとの追加ID作成を省略）
+# 次の入力に加えるIDをテンソルにする
+appended = torch.tensor(
+    append_values, dtype=torch.long, device=device)
+# 入力列の末尾へ追加する
+input_ids = torch.cat(
+    (input_ids, appended[:, None]), dim=1)
+```
+
+<div class="code-source">evaluate_boku_nano_comparison.py：216–222、237–238行。<br>省略を明示。コメントを追加し、改行・字下げを調整。</div>
+
+</div>
+<div>
+
+## 抽選は `torch.multinomial`
+
+`num_samples=1` で、各入力について**候補を1つ**選ぶ。
+
+確率が約66.7%と約33.3%なら、その比率に応じて選ばれる。毎回最大候補になるとは限らない。
+
+## 選んだトークンを次の入力へ
+
+`gather` で、点数順に並べた位置を**元のトークンID**へ戻す。
+
+終了判定などを行った後、`torch.cat` で**入力の末尾に追加**する。
+
+伸びた入力で次を予測する。この繰り返しが、**自己回帰生成**。
+
+</div>
+</div>
+
+<!--
+出典：../../scripts/model/evaluate_boku_nano_comparison.py 216–222、237–238行。生成済みの系列にはpadを加え、全系列終了ならループを抜ける処理は省略している。
+コードは改行・字下げと同値な括弧の追加のみ調整し、処理自体は変更していない。ベンチマークのgreedy結果とsamplingの結果は混同しない。
 -->
 
 ---
