@@ -1,5 +1,6 @@
 ---
 marp: true
+math: mathjax
 theme: default
 size: 16:9
 paginate: true
@@ -28,6 +29,8 @@ style: |
     section.cover { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 65px 540px 65px 100px; }
   section.cover h1 { font-size: 62px; }
     section.cover h2 { font-size: 36px; margin-top: 42px; color: #17212b; }
+    section.cover p.cover-demo-link { margin: 28px 0 0; font-size: 21px; }
+    section.cover p.cover-demo-link a { display: inline-block; padding: 10px 16px; border-radius: 6px; background: #2877aa; color: #fff; font-weight: 600; text-decoration: none; }
     section.cover img.cover-avatar { position: absolute; top: 42%; right: 90px; width: 360px; height: 360px; transform: translateY(-50%); object-fit: cover; border-radius: 50%; }
   section.compact { font-size: 25px; }
   section.compact table { font-size: 22px; }
@@ -221,6 +224,8 @@ style: |
 # Boku-nano
 
 ## 限られた日本語指示から<br>Python関数を生成する小型言語モデル
+
+<p class="cover-demo-link"><a href="https://yuuono.github.io/bokunano/">Webデモを開く</a></p>
 
 <img class="cover-avatar" src="figures/bokunano_circle.png" alt="Boku-nanoのキャラクター">
 
@@ -1778,7 +1783,7 @@ Astraの温度・出力上限は製品既定。独立チャットの本文へ共
 ---
 <!-- _class: diagram -->
 
-# まとめとWebデモ
+# [まとめとWebデモ](https://yuuono.github.io/bokunano/)
 
 **限定したコード生成は、小さなモデルでも1 epochで学習できた。**
 
