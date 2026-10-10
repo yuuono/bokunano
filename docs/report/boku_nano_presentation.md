@@ -25,9 +25,10 @@ style: |
   pre { padding: 16px 22px; border: 1px solid #d8e1e9; background: #f7f9fc; font-size: 23px; line-height: 1.45; }
   pre code { font-size: 1em; background: transparent; }
   a { color: #2877aa; }
-  section.cover { display: flex; justify-content: center; padding: 65px; }
+    section.cover { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 65px 540px 65px 100px; }
   section.cover h1 { font-size: 62px; }
   section.cover h2 { font-size: 36px; color: #17212b; }
+    section.cover img.cover-avatar { position: absolute; top: 50%; right: 90px; width: 430px; height: 430px; transform: translateY(-50%); object-fit: cover; border-radius: 50%; }
   section.compact { font-size: 25px; }
   section.compact table { font-size: 22px; }
   section.compact th, section.compact td { padding: 9px 12px; }
@@ -86,6 +87,15 @@ style: |
   section.intro-overview .ov-step p:last-child { font-size: 14px; color: #52606d; }
   section.intro-overview blockquote { margin: 31px 0 0; padding: 10px 18px; border: 0; border-radius: 11px; background: #f4f6f9; }
   section.intro-overview blockquote p { margin: 0; color: #46566a; font-size: 14px; line-height: 1.5; }
+  section.astra-matched { font-size: 20px; }
+  section.astra-matched h1 { font-size: 34px; margin-bottom: 12px; }
+  section.astra-matched p { margin: 10px 0; }
+  section.astra-matched table { font-size: 18px; margin: 10px 0; }
+  section.astra-matched th, section.astra-matched td { padding: 4px 10px; }
+  section.astra-settings { font-size: 22px; }
+  section.astra-settings table { font-size: 21px; margin: 14px 0; }
+  section.astra-settings th, section.astra-settings td { padding: 7px 11px; }
+  section.astra-settings blockquote p { font-size: 22px; line-height: 1.5; }
   section.benchmark-data { font-size: 22px; }
   section.benchmark-data table { font-size: 20px; margin: 14px 0; }
   section.benchmark-data th, section.benchmark-data td { padding: 7px 11px; }
@@ -101,6 +111,15 @@ style: |
   section.ar-code th, section.ar-code td { padding: 6px 9px; }
   section.ar-code li { margin: 9px 0; }
   section.ar-code .code-source { font-size: 14px; color: #52606d; margin-top: 12px; }
+  section.temperature-example .katex-display { margin: 10px 0; }
+  section.ar-code .temperature-panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 18px 0; }
+  section.ar-code .temperature-panel { padding: 14px 20px 10px; border: 1px solid #d8e1e9; border-radius: 8px; background: #f7f9fc; }
+  section.ar-code .temperature-panel h2 { font-size: 23px; margin: 0 0 5px; }
+  section.ar-code .temperature-panel p { margin: 5px 0; font-size: 18px; }
+  section.ar-code .prob-bars { height: 115px; display: flex; align-items: end; justify-content: space-around; border-bottom: 2px solid #64748b; margin-top: 28px; }
+  section.ar-code .prob-bar { position: relative; width: 54px; background: #745db3; }
+  section.ar-code .prob-bar span { position: absolute; top: -25px; width: 80px; left: -13px; text-align: center; font-size: 18px; }
+  section.ar-code .prob-labels { display: flex; justify-content: space-around; font-size: 18px; margin-top: 4px; }
   /* 損失とattentionは保存済みの結果図をファイル参照で使用する。 */
   section.scientific { font-size: 23px; }
   section.scientific h1 { margin: 0 0 14px; font-size: 36px; }
@@ -201,7 +220,9 @@ style: |
 
 # Boku-nano
 
-## 制限された日本語からPythonの関数を生成する小型言語モデル（SLM）
+## 限られた日本語指示からPython関数を生成する小型言語モデル
+
+<img class="cover-avatar" src="figures/bokunano_circle.png" alt="Boku-nanoのキャラクター">
 
 <!--
 小さなモデルをゼロから学習し、動作と表現への強さを確かめる
@@ -217,11 +238,11 @@ style: |
 <!-- _class: intro-overview -->
 <!-- _header: "" -->
 
-# Boku-nano：制限された日本語からPythonの関数を生成する小型言語モデル（SLM）
+# Boku-nano：限られた日本語指示からPython関数を生成するSLM
 
 24種類の整数リスト操作を扱う、小型言語モデルをフルスクラッチ学習
 
-## 使うとき
+##
 
 <div class="ov-flow">
 <div class="ov-card">
@@ -229,8 +250,7 @@ style: |
 ### ① 日本語の指示
 
 整数リストxs から
-偶数だけを残し、  
-各要素に k を加える  
+偶数だけを残し、 各要素に k を加える  
 solve 関数を書いて
 
 決められた操作・文型の範囲
@@ -240,9 +260,9 @@ solve 関数を書いて
 
 ### ② Boku-nano
 
-15M パラメータ
+1M, 5M, 15M パラメータ
 
-Decoder-only Transformer
+Decoder Transformer
 
 指示を読み、コードを生成
 
@@ -273,25 +293,26 @@ Decoder-only Transformer
 </div>
 <div class="ov-step">
 
-### **2** 教材を作る
+### **2** 訓練データ合成
 
-日本語指示と正解コード
+日本語指示文と正解コード
 
 訓練データ 192,900件
 
 </div>
 <div class="ov-step">
 
-### **3** モデルを学習
+### **3** フルスクラッチ学習
 
-トークナイザもモデルも
+トークナイザとモデルを
+ランダム初期値から学習
 
-既存の重みを使わず学習
+ついて
 
 </div>
 <div class="ov-step">
 
-### **4** 実行して評価
+### **4** テスト・ベンチマーク<br>による評価
 
 生成コードの動作を確認
 
@@ -300,7 +321,7 @@ Decoder-only Transformer
 </div>
 </div>
 
-> 評価結果は「24操作・最大3操作」という限定された範囲でのものです。Webデモの自由な日本語入力は、別モデルで決められた文型に整えてから -nano に渡します。
+<!-- > 評価結果は「24操作・最大3操作」という限定された範囲でのものです。Webデモの自由な日本語入力は、別モデルで決められた文型に整えてから -nano に渡します。 -->
 
 <!--
 日本語の指示からPython関数を作る流れと、教材生成・学習・実行評価の流れを説明する。
@@ -732,14 +753,69 @@ Boku1-nanoはDecoder-onlyであり、この記事のEncoder-Decoder構成のCros
 <!-- _class: ar-code -->
 <!-- _header: "4. モデルと評価方法" -->
 
-# ① 次のトークンは、候補ごとの確率分布で表す
+# ① ロジットは、確率に変換する前の「候補の点数」
 
 <div class="code-columns">
 <div>
 
 ```python
-# 今の入力から、次のトークンの点数を得る
-# まずは temperature=1.0 として読む
+# 語彙の各トークンに点数を付ける層を定義
+self.lm_head = nn.Linear(
+    config.d_model, config.vocab_size,
+    bias=False)
+
+# …（初期化の続き・forwardの前半を省略）
+# 入力から得た表現を整える
+hidden_states = self.final_norm(hidden_states)
+
+# 表現を、全候補の点数（logits）へ変換
+logits = self.lm_head(hidden_states).float()
+
+# 推論時は、この点数を返す
+if labels is None:
+    return CausalLMOutput(
+        logits=logits, loss=None)
+```
+
+<div class="code-source">boku_nano.py：330、395–400行から抜粋。<br>省略を明示。コメントを追加し、改行を調整。</div>
+
+</div>
+<div>
+
+## 「次に続きそうか」を比べる点数
+
+今の入力に続く候補ごとに、モデルがロジット $z_i$ を計算する。**高い候補ほど選ばれやすい。**
+
+$$z_i = \mathbf{w}_i^\top \mathbf{h}$$
+
+$\mathbf{h}$：ここまでの入力から作った表現<br>
+$\mathbf{w}_i$：候補 $i$ に対応する学習済みの重み
+
+## ロジットは確率ではない
+
+ロジットは負の値も取れ、合計も1とは限らない。例えば `[2, 1, 0]` は、A・B・Cの点数。
+
+**softmaxで確率に変換してから、候補を選ぶ。**
+
+</div>
+</div>
+
+<!--
+式は最後の入力位置のhidden_statesをhとし、bias=Falseのlm_headを表す。w_iは出力重み行列の候補iに対応する行。ロジットは正答率や校正済みの信頼度そのものではない。
+出典：../../scripts/model/boku_nano.py 330、395–400行。コードは非連続箇所の抜粋。日本語コメントと改行・字下げを調整。
+-->
+
+---
+<!-- _class: ar-code -->
+
+# ② softmaxは、点数を「合計1の確率」に変換する
+
+<div class="code-columns">
+<div>
+
+```python
+# 入力の最後の位置にある、全候補の点数
+# このページでは temperature=1.0 とする
 logits = (
     model(input_ids).logits[:, -1, :]
     / temperature
@@ -750,47 +826,48 @@ sorted_logits, sorted_indices = torch.sort(
     logits, descending=True, dim=-1
 )
 
-# softmaxで、点数を確率分布に変換する
+# 点数を、合計1の確率分布に変換する
 sorted_probabilities = torch.softmax(
     sorted_logits, dim=-1
 )
 ```
 
-<div class="code-source">Python比較評価から抜粋。コメントを追加し、改行を調整。<br>evaluate_boku_nano_comparison.py：209–211行</div>
+<div class="code-source">evaluate_boku_nano_comparison.py：209–211行。<br>コメントを追加し、改行を調整。</div>
 
 </div>
 <div>
 
-## 最初から1つの答えが出るわけではない
+## 指数に変換し、全候補の合計で割る
 
-モデルは、語彙の全トークンに対する **点数**（ロジット）を出す。
+$$p_i = \frac{e^{z_i}}{\sum_{j=1}^{V} e^{z_j}}$$
 
-`[:, -1, :]` は、入力の**最後の位置**から予測する、全候補の点数。
+$z_i$：候補 $i$ の点数、$p_i$：その選択確率<br>
+$V$：候補数、$\sum$：全候補の足し算、$e\approx2.718$
 
-softmaxで変換すると、各候補が0〜1の値を持ち、**合計が1**になる。
+| 候補 | 点数 $z_i$ | $e^{z_i}$ | 確率 $p_i$ |
+| :--- | ---: | ---: | ---: |
+| A | 2 | 7.389 | 66.5% |
+| B | 1 | 2.718 | 24.5% |
+| C | 0 | 1.000 | 9.0% |
 
-| 候補 | 点数 | 確率 |
-| :--- | ---: | ---: |
-| A | 2 | 66.5% |
-| B | 1 | 24.5% |
-| C | 0 | 9.0% |
+$$p_A=\frac{7.389}{7.389+2.718+1}\approx0.665$$
 
-計算例。この分布から**どの候補を選ぶか**が、次の処理。
+**点数0でも確率0ではない。** $e^0=1$ だから。
 
 </div>
 </div>
 
 <!--
 3候補の数値は説明用。実際は全語彙に対する分布。候補をソートしても各トークンの確率は変わらない。
-temperature=1.0なので、左の除算は点数を変えない。モデルの直接出力はロジットであり、モデル自体がsoftmax済み確率を返すとは説明しない。
+temperature=1.0なので左の除算は点数を変えない。モデルの直接出力はロジット。
 出典：../../scripts/model/evaluate_boku_nano_comparison.py sample_generate_equal_length、209–211行。
-コード本体は実装の抜粋。日本語コメント・空行は説明用に追加。softmaxは最後の語彙次元dim=-1に適用する。
+softmaxは最後の語彙次元dim=-1に適用する。表はsoftmaxで計算した確率。
 -->
 
 ---
 <!-- _class: ar-code -->
 
-# ② 選んだトークンを入力に加え、予測を繰り返す
+# ③ 選んだトークンを入力に加え、予測を繰り返す
 
 <div class="code-columns">
 <div>
@@ -808,7 +885,7 @@ with torch.inference_mode():
     )):
         values = torch.tensor(
             [current], dtype=torch.long)
-        # この実装では最大点数の候補を選ぶ
+        # 最も確率が高いトークンを選ぶ
         token_id = int(torch.argmax(
             model(values).logits[0, -1]).item())
         # 終了トークンなら生成を止める
@@ -824,21 +901,21 @@ with torch.inference_mode():
 </div>
 <div>
 
+`logits[0, -1]` は先頭の入力系列の **最後の位置** にある、全候補の点数。
+
 ## 自己回帰の中心は `current.append`
 
 1. **ここまでの入力**から次の候補を予測する。
 2. 候補を1つ選び、**入力末尾に追加**する。
 3. 伸びた入力を使って、**同じモデル**でもう一度予測する。
 
-重みは更新せず、入力が1トークンずつ伸びる。
+## 各ステップで、最も確率が高いトークンを選ぶ
 
-## このコードはgreedy生成
+選んだトークンを入力に加え、次の予測でも **最も確率が高いトークン** を選ぶ。終了トークンか長さの上限まで繰り返す。
 
-`argmax` は最大の点数の候補を選ぶ。
+softmaxで確率に変換しても、候補の順位は変わらない。
 
-softmaxを通しても順位は同じなので、**greedyでは確率への変換を省ける。**
-
-EOSまたは生成長の上限で止まる。
+そのため、コードでは **ロジットが最大の位置を求める `argmax`** で、同じトークンを選べる。
 
 </div>
 </div>
@@ -852,7 +929,7 @@ currentは特殊トークンを含むプロンプトIDと生成済みID。毎回
 ---
 <!-- _class: ar-code -->
 
-# ③ 温度は、確率分布の偏りを調整する
+# ④ 温度は、softmaxに入れる点数の差を変える
 
 <div class="code-columns">
 <div>
@@ -875,145 +952,93 @@ sorted_probabilities = torch.softmax(
 )
 ```
 
-<div class="code-source">evaluate_boku_nano_comparison.py：209–211行。<br>Pythonのsampling処理では temperature > 0 が条件。</div>
+<div class="code-source">evaluate_boku_nano_comparison.py：209–211行。<br>確率に従って抽選する場合の実装から抜粋。<br>今回のBoku評価では、最も確率が高いトークンを選ぶ。</div>
 
 </div>
 <div>
 
-## 計算は `softmax(logits / T)`
+## 抽選する場合の分布を温度で調整する
 
-各候補の点数を**Tで割ってから**、softmaxを適用する。
+$$p_i(T)=\frac{e^{z_i/T}}{\sum_{j=1}^{V}e^{z_j/T}},\quad T>0$$
 
-点数 `[2, 1, 0]` の例：
+$T$：温度。$T=1$ なら元のsoftmaxと同じ。
 
-| 温度T | A | B | C |
+AとBの点数が2と1なら、差は1。割った後の差は **$1/T$** になる。
+
+| 温度 $T$ | Aの点数 $2/T$ | Bの点数 $1/T$ | 差 |
 | ---: | ---: | ---: | ---: |
-| 0.5 | 86.7% | 11.7% | 1.6% |
-| 1.0 | 66.5% | 24.5% | 9.0% |
-| 2.0 | 50.6% | 30.7% | 18.6% |
+| 0.5 | 4 | 2 | 2 |
+| 1 | 2 | 1 | 1 |
+| 2 | 1 | 0.5 | 0.5 |
 
-**小さいT**：最大候補に確率が集中する。
-**大きいT**：他の候補も選ばれやすくなる。
+**小さい温度 → 差が広がる → 高い点数に集中**
 
-順位は変わらない。温度を上げても、正解率が上がるとは限らない。
-
-**T=0は除算せず、前ページのgreedy方式を使う。**
+**大きい温度 → 差が縮まる → 他の候補も選ばれる**
 
 </div>
 </div>
 
 <!--
-softmax(z/T)の各候補確率はexp(z_i/T)/sum_j exp(z_j/T)。数値表はPyTorchで直接算出。丸めにより合計100%にならない場合がある。
-Python比較評価の設定検査は正のtemperatureを要求する（evaluate_boku_nano_comparison.py 105–106行）。同じ関数にT=0を入れてgreedyへ分岐する実装ではなく、別のgreedy実装を説明している。
-出典：../../scripts/model/evaluate_boku_nano_comparison.py 209–211行、../../scripts/model/export_boku_nano_onnx.py 237行。
+出典：../../scripts/model/evaluate_boku_nano_comparison.py 209–211行。正のtemperatureの検査は105–106行。
+温度を変更しても学習済み重みは変わらない。softmaxに入力する相対的な点数差を調整する。
 -->
 
 ---
-<!-- _class: ar-code -->
+<!-- _class: ar-code temperature-example -->
 
-# ④ top-pで、抽選する候補を絞る
+# ⑤ 同じロジットでも、温度で「選ばれる割合」が変わる
 
-<div class="code-columns">
-<div>
+元の点数はずっと **A=2、B=1、C=0**。温度だけを変えた確率分布を比べる。
 
-```python
-# …（ロジットの計算・softmaxまでを省略）
-# 高確率の候補から累積確率を計算する
-cumulative = torch.cumsum(
-    sorted_probabilities, dim=-1)
-# top-pに達した後の候補を除外する
-remove = (
-    cumulative - sorted_probabilities >= top_p
-)
-# 範囲外の候補の確率を0にする
-sorted_probabilities = (
-    sorted_probabilities.masked_fill(remove, 0.0)
-)
-# 残した候補の合計が1になるよう正規化
-sorted_probabilities /= sorted_probabilities.sum(
-    dim=-1, keepdim=True)
-```
-
-<div class="code-source">evaluate_boku_nano_comparison.py：212–215行。<br>説明用コメントを追加し、改行・字下げを調整。</div>
-
+<div class="temperature-panels">
+<div class="temperature-panel">
+<h2>T = 0.5：Aに集中</h2>
+<p>割った後の点数：[4, 2, 0]</p>
+<div class="prob-bars">
+<div class="prob-bar" style="height:86.7%"><span>86.7%</span></div>
+<div class="prob-bar" style="height:11.7%"><span>11.7%</span></div>
+<div class="prob-bar" style="height:1.6%"><span>1.6%</span></div>
 </div>
-<div>
-
-## このPython実装はtop-pも使う
-
-確率の高い順に足し、**累積がtop-p以上になる最小の候補群**を残す。
-
-例：確率 `[0.6, 0.3, 0.1]`、top-p=0.8
-
-| 候補 | 累積確率 | 残すか |
-| :--- | ---: | :--- |
-| A | 0.6 | 残す |
-| B | 0.9 | 残す |
-| C | 1.0 | 除外 |
-
-AとBの確率を再び合計1にすると、<strong>Aは約66.7%、Bは約33.3%</strong>になる。
-
-top-p=1なら、正の確率を持つ全候補を残す。
-
+<div class="prob-labels"><span>A</span><span>B</span><span>C</span></div>
+</div>
+<div class="temperature-panel">
+<h2>T = 1：基準</h2>
+<p>割った後の点数：[2, 1, 0]</p>
+<div class="prob-bars">
+<div class="prob-bar" style="height:66.5%"><span>66.5%</span></div>
+<div class="prob-bar" style="height:24.5%"><span>24.5%</span></div>
+<div class="prob-bar" style="height:9.0%"><span>9.0%</span></div>
+</div>
+<div class="prob-labels"><span>A</span><span>B</span><span>C</span></div>
+</div>
+<div class="temperature-panel">
+<h2>T = 2：B・Cも選びやすい</h2>
+<p>割った後の点数：[1, 0.5, 0]</p>
+<div class="prob-bars">
+<div class="prob-bar" style="height:50.6%"><span>50.6%</span></div>
+<div class="prob-bar" style="height:30.7%"><span>30.7%</span></div>
+<div class="prob-bar" style="height:18.6%"><span>18.6%</span></div>
+</div>
+<div class="prob-labels"><span>A</span><span>B</span><span>C</span></div>
 </div>
 </div>
+
+## AはBの何倍選ばれやすいか（棒の高さは共通尺度：0〜100%）
+
+$$\frac{p_A(T)}{p_B(T)}=e^{(z_A-z_B)/T}=e^{1/T}$$
+
+$T=0.5$ なら約 **7.39倍**、$T=1$ なら約 **2.72倍**、$T=2$ なら約 **1.65倍**。
+
+正の温度では順位は同じ。**抽選のばらつき**が変わる。温度を上げても正解率が上がるとは限らない。
+
+$T \to 0^+$ では最大候補に集中（最大が1つの場合）。$T=0$ の除算はせず、最大の候補を直接選ぶ。
 
 <!--
-出典：../../scripts/model/evaluate_boku_nano_comparison.py 212–215行。閾値を初めて超える候補まで残す実装。温度による分布の調整とは別の処理。
--->
-
----
-<!-- _class: ar-code -->
-
-# ⑤ 確率に従って選び、次の入力へ追加する
-
-<div class="code-columns">
-<div>
-
-```python
-# 確率に従って1つ抽選する
-sampled_positions = torch.multinomial(
-    sorted_probabilities,
-    num_samples=1,
-    generator=generator,
-)
-# 並べ替えた位置から元のトークンIDに戻す
-next_ids = sorted_indices.gather(
-    1, sampled_positions).squeeze(1)
-# …（EOS判定・系列ごとの追加ID作成を省略）
-# 次の入力に加えるIDをテンソルにする
-appended = torch.tensor(
-    append_values, dtype=torch.long, device=device)
-# 入力列の末尾へ追加する
-input_ids = torch.cat(
-    (input_ids, appended[:, None]), dim=1)
-```
-
-<div class="code-source">evaluate_boku_nano_comparison.py：216–222、237–238行。<br>省略を明示。コメントを追加し、改行・字下げを調整。</div>
-
-</div>
-<div>
-
-## 抽選は `torch.multinomial`
-
-`num_samples=1` で、各入力について**候補を1つ**選ぶ。
-
-確率が約66.7%と約33.3%なら、その比率に応じて選ばれる。毎回最大候補になるとは限らない。
-
-## 選んだトークンを次の入力へ
-
-`gather` で、点数順に並べた位置を**元のトークンID**へ戻す。
-
-終了判定などを行った後、`torch.cat` で**入力の末尾に追加**する。
-
-伸びた入力で次を予測する。この繰り返しが、**自己回帰生成**。
-
-</div>
-</div>
-
-<!--
-出典：../../scripts/model/evaluate_boku_nano_comparison.py 216–222、237–238行。生成済みの系列にはpadを加え、全系列終了ならループを抜ける処理は省略している。
-コードは改行・字下げと同値な括弧の追加のみ調整し、処理自体は変更していない。ベンチマークのgreedy結果とsamplingの結果は混同しない。
+参考：ユーザー提供の書籍画像 IMG_0947.jpg（p.124）、IMG_0948.jpg（p.125）。書名・著者は画像から未確認。説明の構成を参考にし、図は独自の3候補の数値からMarkdown/CSSで作成。
+3候補の説明用の計算例。丸めにより合計100%にならない場合がある。
+確率比ではsoftmaxの共通分母が相殺される。図はtemperatureだけを変えたsoftmaxの分布。
+Pythonのsampling関数はT>0のみを受け付ける。T=0を渡して分岐する実装ではなく、greedyは別の実装。
+出典：../../scripts/model/evaluate_boku_nano_comparison.py 105–106、209–211行、../../scripts/model/export_boku_nano_onnx.py 237行。
 -->
 
 ---
@@ -1594,16 +1619,42 @@ def solve(xs: list[int], k: int) -> list[int]:
 -->
 
 ---
+<!-- _class: astra-settings -->
+<!-- _header: "6. 組み合わせ汎化を測る" -->
+
+# Astraの評価設定：思考low・ツール使用を禁止
+
+| 項目 | 設定 |
+| :--- | :--- |
+| モデル・推論設定 | `gpt-6-astra` ／ reasoning effort：**low** |
+| 評価対象 | 872問から固定seedで抽出した各カテゴリ10問、計90問 |
+| 会話・回答 | 1問ごとに独立チャット。最初の回答1回を採点。修正・再生成なし |
+| ツール | 使用禁止を指示。**90問すべての実行記録で使用0件を確認** |
+
+各問題の冒頭に与えた指示：
+
+> ツールは一切使用せず、このメッセージだけから回答してください。ファイル閲覧、検索、コード実行、他のエージェントへの依頼は行わないでください。回答は一度だけ、指定されたコードのみを出力してください。
+
+ツールの技術的な無効化ではなく、**指示による禁止と記録確認**。採点は回答保存後に行い、結果をAstraへ返していない。
+
+<!--
+上記の後にQwenと同じ共通のコード生成指示と各問題の日本語指示を続けた。AST・参照コード・テスト入力・過去の得点は渡していない。
+温度は未指定。出力上限は製品既定で呼出側から制御していない。製品側の既定指示が残るため、Qwenとの完全に同一の実行条件ではない。
+根拠：../../data/benchmarks/composition_suite_20261008/runs/astra-chat-low/sample90/config.json、chat_audit.json
+抽出seed：20261009。各カテゴリで10種類の異なる意味ASTから各1表現。
+-->
+
+---
 <!-- _class: default -->
 <!-- _header: "" -->
 
-![bg contain](figure/composition_benchmark/plot.png)
+![bg contain](figure/composition_benchmark_astra_no_values/plot.png)
 
 <!--
-条件A、greedy、各問題1生成・修復なし。標準BPEのBoku 15M・1epochと1M・3epoch、Qwen3-1.7Bを比較。訓練回数・生成上限・実行基盤などは一致しない。
-図：figure/composition_benchmark/plot.png
-数値・実行条件・入力hash：figure/composition_benchmark/values.json
-作図：.venv/bin/python scripts/model/benchmark.py --models boku-15m-1epoch boku-1m-3epoch qwen3-1.7b --presentation --rows 1 --columns 9 --output docs/report/figure/composition_benchmark
+Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。Astraは独立チャット・low、各カテゴリ10問のみの参考値。Astraの温度は未指定でありgreedyとは主張しない。訓練回数・生成上限・実行基盤などは一致しない。
+図：figure/composition_benchmark_astra_no_values/plot.png（棒の数値ラベルなし）
+数値・実行条件・入力hash：figure/composition_benchmark_astra/values.json
+作図：.venv/bin/python scripts/model/benchmark.py --models boku-15m-1epoch boku-1m-3epoch qwen3-1.7b --astra-reference --presentation --rows 1 --columns 9 --values no --output docs/report/figure/composition_benchmark_astra_no_values
 -->
 
 ---
@@ -1612,20 +1663,51 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 # 高得点の課題と、残る課題を分けて読む
 
-| 問題の種類 | Boku 15M・1ep | Boku 1M・3ep | Qwen3-1.7B |
-| :--- | ---: | ---: | ---: |
-| 初めて組み合わせる2操作 | 98 / 100 | 99 / 100 | 34 / 100 |
-| 初めてのペアを含む3操作 | 96 / 100 | 100 / 100 | 27 / 100 |
-| 異なる4操作を組み合わせる | 29 / 100 | 43 / 100 | 26 / 100 |
+| 問題の種類 | Boku 15M・1ep | Boku 1M・3ep | Qwen3-1.7B | Astra・参考値 |
+| :--- | ---: | ---: | ---: | ---: |
+| 初めて組み合わせる2操作 | 98 / 100 | 99 / 100 | 34 / 100 | 9 / 10 |
+| 初めてのペアを含む3操作 | 96 / 100 | 100 / 100 | 27 / 100 | 10 / 10 |
+| 異なる4操作を組み合わせる | 29 / 100 | 43 / 100 | 26 / 100 | 9 / 10 |
+
+Astraだけ各カテゴリ10問。**分母と対象問題が異なるため、参考比較。**
 
 - **今回の2・3操作の課題では、小規模モデルにも有望な結果がある。**
-- 4操作では誤りが多く残る。どの操作を落とすか、順序を変えるかを分析する。
+- Bokuの4操作では誤りが多く残る。どの操作を落とすか、順序を変えるかを分析する。
 - 1Mは3epoch、15Mは1epoch。生成条件も異なり、規模だけの優劣とは解釈しない。
 
 <!--
 2操作は10種類の意味ASTの表現違い。3操作と4操作は対応した同一問題ではないため、1操作の増加だけの効果を示す比較ではない。
 Bokuは入力込み256 token、Qwenは最大512新規token・thinking無効。各構成単一seed。
-根拠：figure/composition_benchmark/values.json、../results/composition_suite_20261008/report.md
+根拠：figure/composition_benchmark_astra/values.json、../results/composition_suite_20261008/report.md
+-->
+
+---
+<!-- _class: astra-matched -->
+<!-- _header: "" -->
+
+# Astraとの比較：同じ90問に揃えた結果
+
+Boku・Qwenも、Astraに出した**同じ各10問**の結果だけを再集計。
+
+| 問題の種類 | Boku 15M・1ep | Boku 1M・3ep | Qwen3-1.7B | Astra・low |
+| :--- | ---: | ---: | ---: | ---: |
+| 複数操作の表現を1操作に使用 | 10 / 10 | 8 / 10 | 6 / 10 | 10 / 10 |
+| 初めて組み合わせる2操作 | 10 / 10 | 10 / 10 | 4 / 10 | 9 / 10 |
+| 3操作の順序を2操作に使用 | 10 / 10 | 10 / 10 | 2 / 10 | 10 / 10 |
+| 同じ操作を2回 | 10 / 10 | 10 / 10 | 5 / 10 | 10 / 10 |
+| 初めてのペアを含む3操作 | 10 / 10 | 10 / 10 | 0 / 10 | 10 / 10 |
+| 同じ操作を3回 | 10 / 10 | 10 / 10 | 5 / 10 | 10 / 10 |
+| 異なる4操作 | 3 / 10 | 6 / 10 | 3 / 10 | 9 / 10 |
+| 2操作の組を2回（ABAB） | 4 / 10 | 6 / 10 | 0 / 10 | 10 / 10 |
+| 同じ操作を4回 | 10 / 10 | 8 / 10 | 6 / 10 | 9 / 10 |
+| **全90問** | **77 / 90** | **78 / 90** | **31 / 90** | **87 / 90** |
+| **正答率** | **85.6%** | **86.7%** | **34.4%** | **96.7%** |
+
+Astraは87/90正解。各カテゴリは**1問差で10ポイント**。問題は同じでも、推論・実行条件は完全には揃っていない。
+
+<!--
+Astraの温度・出力上限は製品既定。独立チャットの本文へ共通指示を配置。Boku/Qwenの生成をやり直したものではなく保存済み結果の再集計。
+根拠：../results/astra_chat_sample90_20261009/report.md、values.json
 -->
 
 ---
