@@ -27,8 +27,8 @@ style: |
   a { color: #2877aa; }
     section.cover { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 65px 540px 65px 100px; }
   section.cover h1 { font-size: 62px; }
-  section.cover h2 { font-size: 36px; color: #17212b; }
-    section.cover img.cover-avatar { position: absolute; top: 50%; right: 90px; width: 430px; height: 430px; transform: translateY(-50%); object-fit: cover; border-radius: 50%; }
+    section.cover h2 { font-size: 36px; margin-top: 42px; color: #17212b; }
+    section.cover img.cover-avatar { position: absolute; top: 42%; right: 90px; width: 360px; height: 360px; transform: translateY(-50%); object-fit: cover; border-radius: 50%; }
   section.compact { font-size: 25px; }
   section.compact table { font-size: 22px; }
   section.compact th, section.compact td { padding: 9px 12px; }
@@ -160,7 +160,7 @@ style: |
   section.ast-training-pair .ast-output pre { padding: 0; margin: 12px 0 0; background: transparent; border: 0; font-size: 21px; line-height: 1.55; }
   section.ast-training-pair > blockquote { margin: 22px 0 0; padding: 12px 18px; }
   section.ast-training-pair > blockquote p { font-size: 25px; }
-  /* 教材生成・検証の説明を分岐図へ統合する。 */
+  /* 合成データ生成・検証の説明を分岐図へ統合する。 */
   section.ast-merged h1 { margin-bottom: 14px; }
   section.ast-merged .ast-source { width: 610px; padding: 10px 20px; }
   section.ast-merged .ast-source h3 { font-size: 23px; margin-bottom: 6px; }
@@ -220,7 +220,7 @@ style: |
 
 # Boku-nano
 
-## 限られた日本語指示からPython関数を生成する小型言語モデル
+## 限られた日本語指示から<br>Python関数を生成する小型言語モデル
 
 <img class="cover-avatar" src="figures/bokunano_circle.png" alt="Boku-nanoのキャラクター">
 
@@ -247,7 +247,7 @@ style: |
 <div class="ov-flow">
 <div class="ov-card">
 
-### ① 日本語の指示
+### ① 制限された日本語指示文
 
 整数リストxs から
 偶数だけを残し、 各要素に k を加える  
@@ -262,9 +262,10 @@ solve 関数を書いて
 
 1M, 5M, 15M パラメータ
 
-Decoder Transformer
+Decoder Transformerによる
+next token prediction 
 
-指示を読み、コードを生成
+日本語指示から、python関数を生成
 
 </div>
 <div class="ov-card">
@@ -276,6 +277,7 @@ Decoder Transformer
 `return [x + k for x in xs`  
 `if x % 2 == 0]`
 
+参照インタプリタによる実行・検証
 </div>
 </div>
 
@@ -312,7 +314,7 @@ Decoder Transformer
 </div>
 <div class="ov-step">
 
-### **4** テスト・ベンチマーク<br>による評価
+### **4** テスト検証・<br>ベンチマークによる評価
 
 生成コードの動作を確認
 
@@ -324,7 +326,7 @@ Decoder Transformer
 <!-- > 評価結果は「24操作・最大3操作」という限定された範囲でのものです。Webデモの自由な日本語入力は、別モデルで決められた文型に整えてから -nano に渡します。 -->
 
 <!--
-日本語の指示からPython関数を作る流れと、教材生成・学習・実行評価の流れを説明する。
+日本語の指示からPython関数を作る流れと、合成データ生成・学習・実行評価の流れを説明する。
 このページの本文はboku1_nano_overview_intro_marp.mdからコピーした。
 根拠：../results/model_reports/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch.md
 -->
@@ -380,7 +382,7 @@ Decoder Transformer
 <!--
 目安：40秒
 
-実際の仕様からsemantic_astの部分を抜き出しています。抽出がfilter、各要素への変換がmapです。ASTは教材を作るために使用し、推論時には日本語だけをモデルへ渡します。
+実際の仕様からsemantic_astの部分を抜き出しています。抽出がfilter、各要素への変換がmapです。ASTは合成データを作るために使用し、推論時には日本語だけをモデルへ渡します。
 
 根拠：
 - [atomic_semantic_asts.md](../specifications/atomic_semantic_asts.md)
@@ -456,14 +458,14 @@ def solve(xs, k):
 </div>
 
 <!--
-旧5ページの分岐図に、旧6ページの教材生成・検証の説明を統合。
-意味ASTが共通の生成元であり、そこから日本語の指示文と正解のPythonコードの両方を作る。日本語をモデルでコードに翻訳して教材を作るという図ではない。
+旧5ページの分岐図に、旧6ページの合成データ生成・検証の説明を統合。
+意味ASTが共通の生成元であり、そこから日本語の指示文と正解のPythonコードの両方を作る。日本語をモデルでコードに翻訳して合成データを作るという図ではない。
 説明用に同じ処理の例を示し、Pythonの型注釈は省略した。filter(even)を先に適用し、その結果にmap(add_k)を適用する。
 日本語側では、Qwenで各単純操作の終止形・接続形の候補を生成し、検査・承認した表現を使う。意味ASTの操作順に表現を結合し、固定した外側文の{operations}へ挿入する。外側テンプレートへの挿入はルールベースで行う。
 根拠：../policies/rule_generated_instruction_policy.md
-生成したコードはPythonとして解析し、実行結果を独立に実装した参照インタプリタの期待値と比較する。教材のコードは境界値9件とランダム32件の計41入力で検証。有限個の入力での検証であり、全入力に対する正しさの証明ではない。
-意味ASTは教材の生成・検証用であり、学習と推論の入力へASTそのものを加えるわけではない。
-対象を24操作に限定し、教材を自動生成・検証することで、小規模モデルの学習を目指す。実験のGPUはRTX 5090であり、計算資源が不要という意味ではない。
+生成したコードはPythonとして解析し、実行結果を独立に実装した参照インタプリタの期待値と比較する。合成データのコードは境界値9件とランダム32件の計41入力で検証。有限個の入力での検証であり、全入力に対する正しさの証明ではない。
+意味ASTは合成データの生成・検証用であり、学習と推論の入力へASTそのものを加えるわけではない。
+対象を24操作に限定し、合成データを自動生成・検証することで、小規模モデルの学習を目指す。実験のGPUはRTX 5090であり、計算資源が不要という意味ではない。
 根拠：../specifications/atomic_semantic_asts.md
 根拠：../results/final_train_dataset_results.md
 根拠：../results/multi_operation_python_code_generation_results.md
@@ -526,7 +528,7 @@ ASTは抽象構文木の略です。本研究では操作の種類と順序を�
 **指示と正解を、一つの意味に対応付ける。**
 
 <!--
-意味ASTは教材の生成と検証に使います。推論では意味ASTを与えず、日本語の指示をモデルに渡します。
+意味ASTは合成データの生成と検証に使います。推論では意味ASTを与えず、日本語の指示をモデルに渡します。
 根拠：../results/final_train_dataset_results.md、../specifications/reference_interpreter.md
 -->
 
@@ -562,7 +564,7 @@ ASTは抽象構文木の略です。本研究では操作の種類と順序を�
 | 偶数を残す | 偶数の要素を取り出す |
 | 偶数を残す | 偶数の値を抽出する |
 
-ルールと補助モデルを使い、意味を確認して教材に採用する。
+ルールと補助モデルを使い、意味を確認して合成データに採用する。
 
 **訓練・検証・テストに意味を分けてから、表現を増やす。**
 
@@ -610,7 +612,7 @@ for x in xs:
 
 <!-- _class: default -->
 
-# 学習に使った教材は192,900件
+# 学習に使った合成データは192,900件
 
 1件は「日本語の指示」と「正解コード」の組。
 
@@ -621,7 +623,7 @@ for x in xs:
 | 3操作 | 183,760 |
 | 合計 | **192,900** |
 
-**約95%が3操作の教材。** 単独操作の教材は少ない。
+**約95%が3操作の合成データ。** 単独操作の合成データは少ない。
 
 <!--
 3操作の割合は95.2618%。データの偏りは文型依存の考察につながります。
@@ -637,11 +639,11 @@ for x in xs:
 
 | 呼び名 | パラメータ数 | 今回の学習 |
 | :--- | ---: | :--- |
-| 1M | 約100万 | 教材全体を1回使う |
-| 5M | 約500万 | 教材全体を1回使う |
-| 15M | 約1,500万 | 教材全体を1回使う |
+| 1M | 約100万 | 合成データ全体を1回使う |
+| 5M | 約500万 | 合成データ全体を1回使う |
+| 15M | 約1,500万 | 合成データ全体を1回使う |
 
-<!-- 教材全体を1回使う学習を、**1 epoch（1エポック）**と呼ぶ。 -->
+<!-- 合成データ全体を1回使う学習を、**1 epoch（1エポック）**と呼ぶ。 -->
 
 既存の学習済み重みを使わず、Transformerをゼロから学習する。
 
@@ -1307,7 +1309,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 
 この文型を、複数の操作と結び付けて覚えた可能性がある。
 
-**原因の確定には、教材を変えた追加比較が必要。**
+**原因の確定には、合成データを変えた追加比較が必要。**
 
 <!--
 解釈は仮説です。頻度や操作数の偏り以外に、モデル規模も関係し得ます。失敗だけで原因を断定しません。
@@ -1766,7 +1768,7 @@ Astraの温度・出力上限は製品既定。独立チャットの本文へ共
 - 冒頭変更の比較は14操作。日本語能力全体の測定ではない。
 - 学習は一つの乱数設定。繰り返し実験のばらつきは未確認。
 
-今後は文型の偏りを減らした教材で、表現への強さを再評価する。
+今後は文型の偏りを減らした合成データで、表現への強さを再評価する。
 
 <!--
 乱数seedは学習20260925、内部診断20260930。追加実験は今後の提案です。
@@ -1787,6 +1789,7 @@ Astraの温度・出力上限は製品既定。独立チャットの本文へ共
 | ① 自由な日本語を入力 | 作りたい処理を伝える |
 | ② 補助モデルで文型を整える | 対象の操作と表現にそろえる |
 | ③ 指示を確認して生成する | Boku-nanoがPythonコードを作る |
+| Webデモ | [Boku-nanoを試す](https://yuuono.github.io/bokunano/) |
 
 <!--
 デモの文型整形の効果は上記の実験評価値に含めていません。整形はQwen3-0.6B、生成は選択したBoku Nano。デモでは1 epochモデルを選択してください。自由な日本語をBoku Nano単体が扱うとは説明しないこと。
