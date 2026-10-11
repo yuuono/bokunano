@@ -39,8 +39,36 @@ style: |
         section.closing th, section.closing td { padding: 6px 10px; }
     section.closing > h2 { font-size: 26px; margin: 26px 0 10px; padding-top: 18px; border-top: 1px solid #d8e1e9; }
       section.overview-original { padding: 0; }
-      section.overview-original p { margin: 0; }
-      section.overview-original img { display: block; width: 1280px; height: 720px; object-fit: contain; }
+    section.overview-original .canvas { width: 1920px; height: 1080px; box-sizing: border-box; padding: 22px 28px 16px; transform: scale(0.6666667); transform-origin: 0 0; color: #17212b; font-family: Arial, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 14px; font-weight: 400; line-height: 1.33; display: block; }
+    section.overview-original h1 { margin: 0; font-size: 32px; font-weight: 600; line-height: 1.2; color: #17212b; }
+    section.overview-original .sub { margin: 2px 0 8px; font-size: 16px; color: #52606d; }
+    section.overview-original .lane { display: grid; grid-template-columns: 52px 330px 34px 520px 34px 400px 26px 1fr; align-items: stretch; background: #f5f7f9; border-radius: 10px; padding: 7px 12px 7px 0; }
+    section.overview-original .lane.alt { background: #fbfcfd; border: 1px solid #edf0f3; }
+    section.overview-original .lname { display: flex; flex-direction: column; align-items: center; font-weight: 700; color: #3d4b57; }
+    section.overview-original .lname .n { font-size: 22px; line-height: 1.1; }
+    section.overview-original .lname .t { font-size: 15px; writing-mode: vertical-rl; margin-top: 6px; letter-spacing: 2px; }
+    section.overview-original .conn { display: grid; grid-template-columns: 52px 330px 34px 520px 34px 400px 26px 1fr; height: 20px; align-items: center; font-size: 13px; color: #4a5763; }
+    section.overview-original .conn .dash { color: #8a6d1f; }
+    section.overview-original .box { background: #eaf2f8; border: 1.5px solid #3d7591; border-left: 7px solid #3d7591; border-radius: 8px; padding: 5px 12px 6px; }
+    section.overview-original .box b.t { display: block; font-size: 17px; font-weight: 600; margin-bottom: 1px; }
+    section.overview-original .rule { background: #eaf2f8; border-color: #3d7591; }
+    section.overview-original .teacher { background: #fbeee3; border-color: #c47a36; }
+    section.overview-original .data { background: #edf5eb; border-color: #4f8a4b; }
+    section.overview-original .model { background: #f0ebf8; border-color: #6b55a3; }
+    section.overview-original .eval { background: #fdf4dc; border-color: #a9821b; }
+    section.overview-original .note { color: #8a4b16; font-size: 13px; }
+    section.overview-original .mono { font-family: "Courier New", Menlo, Consolas, monospace; font-size: 13px; }
+    section.overview-original .stack { display: flex; flex-direction: column; gap: 8px; }
+    section.overview-original .stack .box { flex: 1; }
+    section.overview-original .arrow { display: flex; align-items: center; justify-content: center; font-size: 22px; color: #4a5763; }
+    section.overview-original .arrow.dot { color: #4f8a4b; font-size: 18px; }
+    section.overview-original .span-c3c4 { grid-column: 6 / 9; }
+    section.overview-original .span-c1c2 { grid-column: 2 / 5; }
+    section.overview-original .demo { display: flex; align-items: stretch; gap: 0; }
+    section.overview-original .demo .box { flex: 1; }
+    section.overview-original .demo .arrow { width: 40px; }
+    section.overview-original .legend { display: flex; gap: 34px; margin-top: 8px; font-size: 14px; align-items: center; }
+    section.overview-original .legend span.k { display: inline-block; width: 16px; height: 16px; border-radius: 3px; border: 1.5px solid; vertical-align: -3px; margin-right: 6px; }
   section.compact { font-size: 25px; }
   section.compact table { font-size: 22px; }
   section.compact th, section.compact td { padding: 9px 12px; }
@@ -128,6 +156,10 @@ style: |
   section.benchmark-data { font-size: 22px; }
   section.benchmark-data table { font-size: 20px; margin: 14px 0; }
   section.benchmark-data th, section.benchmark-data td { padding: 7px 11px; }
+  section.logit-overview { padding: 36px 40px 40px; }
+  section.logit-overview p { margin: 0; }
+  section.logit-overview img { display: block; width: 1200px; height: 600px; }
+  section.logit-overview .figure-reference { margin: 4px 20px 0; font-size: 15px; color: #52606d; }
   section.ar-code { font-size: 21px; line-height: 1.4; }
   section.ar-code h1 { font-size: 34px; margin-bottom: 22px; }
   section.ar-code .code-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
@@ -140,7 +172,7 @@ style: |
   section.ar-code th, section.ar-code td { padding: 6px 9px; }
   section.ar-code li { margin: 9px 0; }
   section.ar-code .code-source { font-size: 14px; color: #52606d; margin-top: 12px; }
-  section.temperature-example .katex-display { margin: 10px 0; }
+  section.temperature-example .katex-display { margin: 6px 0; }
   section.ar-code .temperature-panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 18px 0; }
   section.ar-code .temperature-panel { padding: 14px 20px 10px; border: 1px solid #d8e1e9; border-radius: 8px; background: #f7f9fc; }
   section.ar-code .temperature-panel h2 { font-size: 23px; margin: 0 0 5px; }
@@ -148,6 +180,7 @@ style: |
   section.ar-code .prob-bars { height: 115px; display: flex; align-items: end; justify-content: space-around; border-bottom: 2px solid #64748b; margin-top: 28px; }
   section.ar-code .prob-bar { position: relative; width: 54px; background: #745db3; }
   section.ar-code .prob-bar span { position: absolute; top: -25px; width: 80px; left: -13px; text-align: center; font-size: 18px; }
+  section.ar-code.temperature-example .prob-bars { height: 85px; }
   section.ar-code .prob-labels { display: flex; justify-content: space-around; font-size: 18px; margin-top: 4px; }
   /* 損失とattentionは保存済みの結果図をファイル参照で使用する。 */
   section.scientific { font-size: 23px; }
@@ -809,6 +842,25 @@ Boku1-nanoはDecoder-onlyであり、この記事のEncoder-Decoder構成のCros
 -->
 
 ---
+<!-- _class: logit-overview -->
+<!-- _header: "" -->
+
+![ロジットをsoftmaxで確率に変換し、最も確率の高い「好き」を次の入力に加える](figure/logit_to_probability.svg)
+
+<div class="figure-reference">図：提供SVGを改訂。参考：<a href="https://www.3blue1brown.com/lessons/gpt/">3Blue1Brownの公式解説（Softmax）</a>・<a href="https://www.youtube.com/watch?v=yMQPQuz5WpA">指定動画</a></div>
+
+<!--
+自己回帰の説明とPythonコードの間をつなぐ概念図。添付logit_to_probability.svgのレイアウトを利用し、確率・選択方法・注記を修正。
+説明用に語彙を「好き・嫌い・苦手・机」の4候補に限定し、ロジット[3,2,1,-2]をsoftmaxで変換。T=1の確率は約[66.2272,24.3636,8.9629,0.4462]%。表示は小数1桁に丸める。
+実測出力やBokuの実際のトークン分割ではない。「上位3候補だけに絞る」処理でもない。
+元SVGのくじ引きの例を、今回のBoku評価の最大確率選択に修正。実装では順位が同じなのでロジットのargmaxを使い、確率への変換を省略できる。
+元SVGの「大小だけが意味を持つ」は不正確なので、ロジットの差が確率の比を決めると修正。
+YouTubeの動画本文は直接取得できず、ユーザー添付のキャプチャと3Blue1Brownの公式テキスト解説を参照。
+https://www.3blue1brown.com/lessons/gpt/ （Unembedding / Softmax）
+https://www.youtube.com/watch?v=yMQPQuz5WpA
+-->
+
+---
 <!-- _class: ar-code -->
 <!-- _header: "4. モデルと評価方法" -->
 
@@ -854,7 +906,7 @@ $\mathbf{w}_i$：候補 $i$ に対応する学習済みの重み
 
 ロジットは負の値も取れ、合計も1とは限らない。例えば `[2, 1, 0]` は、A・B・Cの点数。
 
-**softmaxで確率に変換してから、候補を選ぶ。**
+**softmaxは、ロジットを確率分布に変換する。**
 
 </div>
 </div>
@@ -988,7 +1040,7 @@ currentは特殊トークンを含むプロンプトIDと生成済みID。毎回
 ---
 <!-- _class: ar-code -->
 
-# ④ 温度は、softmaxに入れる点数の差を変える
+# ④ 温度は、候補の確率の偏りを調整する
 
 <div class="code-columns">
 <div>
@@ -1011,7 +1063,7 @@ sorted_probabilities = torch.softmax(
 )
 ```
 
-<div class="code-source">evaluate_boku_nano_comparison.py：209–211行。<br>確率に従って抽選する場合の実装から抜粋。<br>今回のBoku評価では、最も確率が高いトークンを選ぶ。</div>
+<div class="code-source">evaluate_boku_nano_comparison.py：209–211行。<br>確率に従って抽選する場合の実装から抜粋。<br>今回のBoku評価では、最も確率が高いトークンを選ぶ。<br>参考：<a href="https://aman.ai/primers/ai/token-sampling/#temperature">Aman AI：Temperature</a></div>
 
 </div>
 <div>
@@ -1020,7 +1072,8 @@ sorted_probabilities = torch.softmax(
 
 $$p_i(T)=\frac{e^{z_i/T}}{\sum_{j=1}^{V}e^{z_j/T}},\quad T>0$$
 
-$T$：温度。$T=1$ なら元のsoftmaxと同じ。
+$T$：生成時に指定する温度。$T=1$ が基準。
+学習済みの重みは変えず、ロジットを $T$ で割る。
 
 AとBの点数が2と1なら、差は1。割った後の差は **$1/T$** になる。
 
@@ -1030,9 +1083,9 @@ AとBの点数が2と1なら、差は1。割った後の差は **$1/T$** にな�
 | 1 | 2 | 1 | 1 |
 | 2 | 1 | 0.5 | 0.5 |
 
-**小さい温度 → 差が広がる → 高い点数に集中**
+**$0<T<1$**：点数差が広がり、高確率の候補に集中する。
 
-**大きい温度 → 差が縮まる → 他の候補も選ばれる**
+**$T>1$**：点数差が縮まり、分布が平らになる。
 
 </div>
 </div>
@@ -1040,14 +1093,16 @@ AとBの点数が2と1なら、差は1。割った後の差は **$1/T$** にな�
 <!--
 出典：../../scripts/model/evaluate_boku_nano_comparison.py 209–211行。正のtemperatureの検査は105–106行。
 温度を変更しても学習済み重みは変わらない。softmaxに入力する相対的な点数差を調整する。
+参考：https://aman.ai/primers/ai/token-sampling/#temperature （The Role of Temperature in Softmax）。Tが0に近づくと最大候補に集中（最大が一つの場合）、十分大きくなると有限語彙上の一様分布に近づく。T=0で除算しない。
+数式と順位不変性は3Blue1Brown公式解説およびローカルPython実装でも照合。
 -->
 
 ---
 <!-- _class: ar-code temperature-example -->
 
-# ⑤ 同じロジットでも、温度で「選ばれる割合」が変わる
+# ⑤ 温度を上げると、低い確率の候補も選ばれやすくなる
 
-元の点数はずっと **A=2、B=1、C=0**。温度だけを変えた確率分布を比べる。
+ここでは3候補 **A=2、B=1、C=0** の点数を固定し、温度だけを変えて比べる。
 
 <div class="temperature-panels">
 <div class="temperature-panel">
@@ -1088,9 +1143,11 @@ $$\frac{p_A(T)}{p_B(T)}=e^{(z_A-z_B)/T}=e^{1/T}$$
 
 $T=0.5$ なら約 **7.39倍**、$T=1$ なら約 **2.72倍**、$T=2$ なら約 **1.65倍**。
 
-正の温度では順位は同じ。**抽選のばらつき**が変わる。温度を上げても正解率が上がるとは限らない。
+**確率に従って抽選する場合**は、温度を上げると出力のばらつきが増える。
 
-$T \to 0^+$ では最大候補に集中（最大が1つの場合）。$T=0$ の除算はせず、最大の候補を直接選ぶ。
+**最も確率が高い候補を選ぶ場合**は、正の温度を変えても選ぶ候補は同じ。
+
+<div class="code-source">参考：<a href="https://aman.ai/primers/ai/token-sampling/#temperature">Aman AI：Temperature</a>。温度は正解率の向上を保証しない。</div>
 
 <!--
 参考：ユーザー提供の書籍画像 IMG_0947.jpg（p.124）、IMG_0948.jpg（p.125）。書名・著者は画像から未確認。説明の構成を参考にし、図は独自の3候補の数値からMarkdown/CSSで作成。
@@ -1862,5 +1919,214 @@ ONNX形式で保存したモデルを、ONNX Runtimeでブラウザ内実行。P
 ---
 <!-- _class: overview-original -->
 <!-- _paginate: false -->
+<!-- _header: "" -->
 
-![Boku1-nano 全体図](figures/boku1_nano_overview_one_page.png)
+<div class="canvas">
+
+<h1>Boku-nano 全体図</h1>
+<div class="sub">日本語の限定的な指示から solve(xs, k) を生成する小型Decoder-only Transformer。意味ASTを起点に、データ生成・学習・評価をすべて同じ意味仕様でつなぐ。</div>
+
+<div class="lane">
+    <div class="lname"><span class="n">1</span><span class="t">意味</span></div>
+    <div class="box rule">
+        <b class="t">24の基本操作</b>
+        抽出 10：偶数・奇数・&gt;k・≥k・&lt;k・≤k・kの倍数・正・負・ゼロ<br>
+        変換 8：+k・−k・×k・2倍・3倍・符号反転・絶対値・二乗<br>
+        並べ替え 3／切り出し 3
+    </div>
+    <div class="arrow">→</div>
+    <div class="box rule">
+        <b class="t">意味AST　12,720仕様</b>
+        24操作から1〜3操作を順序付きで選ぶ（重複なし）<br>
+        24 ＋ 24×23 ＋ 24×23×22 ＝ 12,720<br>
+        <span class="mono">{"sequence": [{"filter": ["even"]}, {"map": ["add_k"]}]}</span><br>
+        <span class="note">※日本語・コード・期待値・splitの共通の根拠</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="box rule span-c3c4">
+        <b class="t">参照インタプリタ（期待値の計算）</b>
+        意味ASTを入力リストに適用して、正しい出力を計算する<br>
+        operator・itertools・heapq・deque・while で実装し、生成されるsolve関数の表現空間の外側に置く<br>
+        → 正解コードの検証（2）とhidden test採点（4）に使う<br>
+        <span class="note">※参照実装と生成コードが同じ式を書いて誤りを共有しないため</span>
+    </div>
+</div>
+
+<div class="conn">
+    <div></div>
+    <div>↓ 意味ASTを分割</div>
+    <div></div>
+    <div class="dash" style="text-align:right">⇣ 期待値で検証（参照インタプリタ → 正解コード生成）</div>
+</div>
+
+<div class="lane alt">
+    <div class="lname"><span class="n">2</span><span class="t">データ</span></div>
+    <div class="box rule">
+        <b class="t">意味ASTの分割</b>
+        12,720 から 670 を組合せ汎化へ<br>
+        残り 12,050 をハッシュ順で分割<br>
+        　train　9,646（1操作24は全部）<br>
+        　validation　1,202<br>
+        　通常テスト　1,202（境界値も流用）<br>
+        別枠：同一操作の反復 1,152<br>
+        　　　日本語言い換え 30指示
+    </div>
+    <div class="arrow">→</div>
+    <div class="stack">
+        <div class="box rule">
+            <b class="t">正解コード生成（自作テンプレート）</b>
+            style_specでfor／内包表記・変数名・スライス表記などを変える<br>
+            277,440候補 → 構文・Safe-AST・signature・入力非破壊・<br>
+            41入力で参照インタプリタと出力一致、を全部通したものだけ
+        </div>
+        <div class="box teacher">
+            <b class="t">日本語指示生成</b>
+            ルール：承認済み表現辞書（train 522件）を定型文へ連結<br>
+            教師言い換え：Qwen3-4B-AWQ が意味と順序を保って言い換え<br>
+            <span class="note">※Qwenは日本語だけを作り、コードや重みは提供しない</span>
+        </div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="stack">
+        <div class="box data">
+            <b class="t">評価JSONL　108,590件</b>
+            validation 24,040<br>
+            正式5テスト 84,550問<br>
+            hidden入力はコード作成時と別
+        </div>
+        <div class="box data">
+            <b class="t">訓練JSONL　192,900件</b>
+            1操作 460／2操作 8,680／3操作 183,760<br>
+            ルール文 96,510＋言い換え 96,390<br>
+            1意味ASTあたり原則20件
+        </div>
+    </div>
+    <div class="arrow dot">┅</div>
+    <div class="box data">
+        <b class="t">1レコードの中身</b>
+        instruction_ja（日本語指示）<br>
+        semantic_ast（意味AST）<br>
+        reference_code（正解コード）<br>
+        style_spec・code_style<br>
+        split・tests・verification<br>
+        SHA-256・seed・生成器version<br>
+        教師モデル由来かどうかの来歴
+    </div>
+</div>
+
+<div class="conn">
+    <div></div>
+    <div>↓ train の指示とコード（訓練JSONLから）</div>
+</div>
+
+<div class="lane">
+    <div class="lname"><span class="n">3</span><span class="t">学習</span></div>
+    <div class="box rule">
+        <b class="t">BPEトークナイザ</b>
+        ByteLevel BPE・語彙 2,048<br>
+        trainの日本語指示と正解コードだけから学習<br>
+        （評価データは入れない）<br>
+        min_frequency 5・最大token長 24<br>
+        unknown token 0件
+    </div>
+    <div class="arrow">→</div>
+    <div class="box model">
+        <b class="t">学習系列とloss</b>
+        <span class="mono">&lt;|bos|&gt;&lt;|task|&gt; {instruction_ja}</span><br>
+        <span class="mono">&lt;|code|&gt; {reference_code}&lt;|eos|&gt;</span><br>
+        lossはコードとEOSだけ（指示は条件として読むだけ）<br>
+        batch 512件・1エポック 377 step・AdamW・bf16
+    </div>
+    <div class="arrow">→</div>
+    <div class="box model span-c3c4">
+        <b class="t">Decoder-only Transformer（ランダム初期値から学習）</b>
+        RoPE・RMSNorm・SwiGLU・通常のMulti-Head Attention・最大系列長 256<br>
+        　1M　d=128・3層・4 head<br>
+        　5M　d=256・5層・4 head<br>
+        　15M　d=384・8層・6 head<br>
+        3つの規模を、それぞれ1エポック学習（RTX 5090）
+    </div>
+</div>
+
+<div class="conn">
+    <div></div>
+    <div>↓ 学習済みモデル</div>
+    <div></div><div></div><div></div><div></div><div></div>
+    <div style="padding-left:120px">↓</div>
+</div>
+
+<div class="lane alt">
+    <div class="lname"><span class="n">4</span><span class="t">評価</span></div>
+    <div class="box eval span-c1c2">
+        <b class="t">hidden test評価（正式5テスト 84,550問）</b>
+        greedy生成 → 構文 → Safe-AST → signature → 隔離実行<br>
+        → hidden入力すべてで参照インタプリタと同じ出力なら合格<br>
+        文字列一致ではなく、実行結果で判定する<br>
+        　通常 24,040　　組合せ汎化 13,400　　日本語言い換え 30<br>
+        　同一操作の反復 23,040　　境界値 24,040<br>
+        <span class="note">※attention診断の24問（1操作）はこれとは別の解析用テスト</span>
+    </div>
+    <div class="arrow">→</div>
+    <div class="box eval">
+        <b class="t">主な結果（1エポック・正式5テスト合計）</b>
+        15M　99.56%（84,180 / 84,550）<br>
+        5M　96.46%（81,557 / 84,550）<br>
+        1M　1.74%（1,467 / 84,550）<br>
+        <span class="note">※弱点：未学習の言い換え（15Mでも30問中15問）</span>
+    </div>
+    <div></div>
+    <div class="box eval">
+        <b class="t">内部解析</b>
+        Q・K・Vを取り出しattentionを計算<br>
+        head別のattention配分・Value norm・<br>
+        BOS sink・attention rollout<br>
+        head／位置ablation：NLL差（nat）と<br>
+        再生成コードの合格数で因果を確認
+    </div>
+</div>
+
+<div class="conn"></div>
+
+<div class="lane">
+    <div class="lname"><span class="n">5</span><span class="t">デモ</span></div>
+    <div class="demo" style="grid-column: 2 / 9;">
+        <div class="box rule">
+            <b class="t">自由な日本語</b>
+            例：全部プラスにして大きい順に並べて
+        </div>
+        <div class="arrow">→</div>
+        <div class="box teacher">
+            <b class="t">Qwen3-0.6B（ブラウザ）</b>
+            自由文をCNLへ翻訳するだけ<br>
+            追加学習なし・コードは書かない
+        </div>
+        <div class="arrow">→</div>
+        <div class="box rule">
+            <b class="t">JavaScript検査</b>
+            24操作・最大3操作・<br>
+            定型文法に合うか確認
+        </div>
+        <div class="arrow">→</div>
+        <div class="box model">
+            <b class="t">Boku1-nano ONNX</b>
+            学習済みモデルを選んで<br>
+            ブラウザ内でgreedy生成
+        </div>
+        <div class="arrow">→</div>
+        <div class="box data">
+            <b class="t">Pythonコード</b>
+            <span class="mono">def solve(xs, k) -&gt; list[int]</span>
+        </div>
+    </div>
+</div>
+
+<div class="legend">
+    <div><span class="k" style="background:#eaf2f8;border-color:#3d7591"></span>自作ルール・決定的な処理</div>
+    <div><span class="k" style="background:#fbeee3;border-color:#c47a36"></span>Qwenを使う処理（日本語のみ）</div>
+    <div><span class="k" style="background:#edf5eb;border-color:#4f8a4b"></span>データ・出力</div>
+    <div><span class="k" style="background:#f0ebf8;border-color:#6b55a3"></span>学習・モデル</div>
+    <div><span class="k" style="background:#fdf4dc;border-color:#a9821b"></span>評価・解析</div>
+    <div style="color:#8a6d1f">⇣ 参照インタプリタによる検証</div>
+</div>
+
+</div>
