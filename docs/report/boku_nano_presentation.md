@@ -69,6 +69,12 @@ style: |
     section.operation-scope p { font-size: 18px; margin: 6px 0; }
     section.operation-scope table { font-size: 18px; margin: 6px 0; }
     section.operation-scope th, section.operation-scope td { padding: 5px 9px; }
+    section.operation-scope th, section.operation-scope td { text-align: right; }
+    section.operation-scope .operation-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.9fr); gap: 30px; align-items: start; }
+    section.operation-scope .operation-ast { min-width: 0; align-self: center; padding: 20px 22px; background: #eaf3fb; border: 2px solid #92b1c8; border-radius: 8px; }
+    section.operation-scope .operation-ast h2 { margin-top: 0; color: #245f8b; }
+    section.operation-scope .operation-ast p { font-size: 18px; line-height: 1.5; }
+    section.operation-scope .operation-ast pre { margin: 12px 0 0; padding: 14px; font-size: 20px; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; }
 
   /* 全体図の文字は2ページ目のMarkdown本文で編集する */
   section.intro-overview { font-size: 17px; line-height: 1.45; }
@@ -96,6 +102,8 @@ style: |
   section.intro-overview .ov-step:nth-child(4) h3 strong { background: #3b9460; }
   section.intro-overview .ov-step p { margin: 0 0 6px; font-size: 17px; line-height: 1.45; }
   section.intro-overview .ov-step p:last-child { font-size: 14px; color: #52606d; }
+    section.intro-overview .ov-step:nth-child(3) p:last-child { font-size: 17px; line-height: 1.45; color: #17212b; }
+    section.intro-overview .ov-step:nth-child(3) p { font-size: 17px; line-height: 1.4; color: #17212b; }
     section.intro-overview .ov-step:first-child pre { margin: 8px 0 0; padding: 8px; font-size: 14px; line-height: 1.3; white-space: pre-wrap; overflow-wrap: anywhere; }
   section.intro-overview blockquote { margin: 31px 0 0; padding: 10px 18px; border: 0; border-radius: 11px; background: #f4f6f9; }
   section.intro-overview blockquote p { margin: 0; color: #46566a; font-size: 14px; line-height: 1.5; }
@@ -275,7 +283,8 @@ solve 関数を書いてください
 
 語彙数2048のトークナイザ
 1M, 5M & 15M パラメータ
-Decoder Transformerによる
+トークナイザとモデルをゼロから学習
+decoder Transformerによる
 next token prediction 
 
 日本語指示から、python関数を生成
@@ -328,10 +337,12 @@ pythonコードを生成
 
 ### **3** フルスクラッチ学習
 
-トークナイザとモデルを
-ランダム初期値から学習
+トークナイザと
+transformer をゼロから学習
 
-ついて
+15M parameter
+8 layers・6 heads
+1ヘッドあたり64次元
 
 </div>
 <div class="ov-step">
@@ -413,12 +424,15 @@ pythonコードを生成
 ---
 <!-- _class: operation-scope -->
 
-# 対象操作は24種類、3操作まで組み合せで12,720通り
+# 意味ASTは24種類、3操作まで組み合せで12,720通り
+
+<div class="operation-layout">
+<div class="operation-tables">
 
 ## 基本操作
 
 | 種類 | 操作数 | 例 |
-| :--- | ---: | :--- |
+| ---: | ---: | ---: |
 | 条件に合う数を残す | 10 | 偶数、奇数、正の値、kより大きい値 |
 | 一つずつ値を変える | 8 | kを加える、2倍、絶対値、二乗 |
 | 順序を変える | 3 | 昇順、降順、現在の順序の反転 |
@@ -429,11 +443,31 @@ pythonコードを生成
 <!-- 同じ操作を繰り返さず、順序を区別して数える。 -->
 
 | 操作数 | 数え方 | 意味の種類 |
-| ---: | :--- | ---: |
+| ---: | ---: | ---: |
 | 1操作 | 24 | 24 |
 | 2操作 | 24 × 23 | 552 |
 | 3操作 | 24 × 23 × 22 | 12,144 |
 | 合計 | 24 ＋ 552 ＋ 12,144 | **12,720** |
+
+</div>
+<div class="operation-ast">
+
+## 意味ASTの例
+
+日本語：奇数だけを残し、各要素を2倍して降順に並べる
+
+```json
+{
+    "sequence": [
+        {"filter": ["odd"]},
+        {"map": ["mul_const", 2]},
+        {"order": "descending"}
+    ]
+}
+```
+
+</div>
+</div>
 
 <!-- 同じ操作の反復は、テストで確かめる。 -->
 
