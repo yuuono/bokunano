@@ -29,9 +29,9 @@ style: |
     section.cover { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 65px 540px 65px 100px; }
   section.cover h1 { font-size: 62px; }
     section.cover h2 { font-size: 36px; margin-top: 42px; color: #17212b; }
-    section.cover p.cover-demo-link { margin: 28px 0 0; font-size: 21px; }
-    section.cover p.cover-demo-link a { display: inline-block; padding: 10px 16px; border-radius: 6px; background: #2877aa; color: #fff; font-weight: 600; text-decoration: none; }
     section.cover img.cover-avatar { position: absolute; top: 42%; right: 90px; width: 360px; height: 360px; transform: translateY(-50%); object-fit: cover; border-radius: 50%; }
+    section.closing h1 { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    section.closing h1 a { flex: none; padding: 10px 16px; border-radius: 6px; background: #2877aa; color: #fff; font-size: 20px; font-weight: 600; text-decoration: none; }
   section.compact { font-size: 25px; }
   section.compact table { font-size: 22px; }
   section.compact th, section.compact td { padding: 9px 12px; }
@@ -63,13 +63,19 @@ style: |
   section.key-data h2 { font-size: 28px; text-align: center; margin: 18px 0; color: #745db3; }
   section.key-data p { margin: 18px 0; }
   section.key-data blockquote p { font-size: 27px; }
+    section.operation-scope { font-size: 21px; }
+    section.operation-scope h1 { font-size: 34px; margin-bottom: 14px; }
+    section.operation-scope h2 { font-size: 23px; margin: 12px 0 6px; }
+    section.operation-scope p { font-size: 18px; margin: 6px 0; }
+    section.operation-scope table { font-size: 18px; margin: 6px 0; }
+    section.operation-scope th, section.operation-scope td { padding: 5px 9px; }
 
   /* 全体図の文字は2ページ目のMarkdown本文で編集する */
   section.intro-overview { font-size: 17px; line-height: 1.45; }
   section.intro-overview h1 { margin: 0 0 6px; font-size: 35px; line-height: 1.25; color: #17212b; }
   section.intro-overview h1 + p { margin: 0; font-size: 18px; color: #52606d; }
   section.intro-overview h2 { margin: 27px 0 12px; font-size: 19px; line-height: 1.25; color: #334155; }
-  section.intro-overview .ov-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; height: 184px; }
+    section.intro-overview .ov-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; height: 220px; }
   section.intro-overview .ov-card { position: relative; padding: 16px 20px; border-radius: 14px; background: #eaf3fb; }
   section.intro-overview .ov-card:nth-child(2) { background: #e9e7f8; }
   section.intro-overview .ov-card:nth-child(3) { background: #e9f5ed; }
@@ -77,8 +83,10 @@ style: |
   section.intro-overview .ov-card h3 { margin: 0 0 12px; font-size: 21px; line-height: 1.3; color: #245f8b; }
   section.intro-overview .ov-card p { margin: 0 0 8px; font-size: 17px; line-height: 1.45; }
   section.intro-overview .ov-card p:last-child { position: absolute; left: 20px; right: 20px; bottom: 14px; margin: 0; font-size: 14px; color: #52606d; }
-  section.intro-overview .ov-card:last-child p:last-child { position: static; font-size: 15px; color: #17212b; }
+    section.intro-overview .ov-card:last-child p:last-child { position: absolute; left: 20px; right: 20px; bottom: 14px; margin: 0; font-size: 15px; color: #17212b; }
   section.intro-overview .ov-card code { background: transparent; font-size: 15px; white-space: normal; }
+    section.intro-overview .ov-card:last-child pre { margin: 0 0 8px; padding: 10px 12px; font-size: 20px; line-height: 1.3; }
+    section.intro-overview .ov-card:last-child pre code { display: block; font-size: 1em; white-space: pre-wrap; overflow-wrap: anywhere; }
   section.intro-overview .ov-steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; padding-top: 31px; }
   section.intro-overview .ov-steps::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: #ced7e1; }
   section.intro-overview .ov-step { position: relative; padding: 0 8px; }
@@ -88,6 +96,7 @@ style: |
   section.intro-overview .ov-step:nth-child(4) h3 strong { background: #3b9460; }
   section.intro-overview .ov-step p { margin: 0 0 6px; font-size: 17px; line-height: 1.45; }
   section.intro-overview .ov-step p:last-child { font-size: 14px; color: #52606d; }
+    section.intro-overview .ov-step:first-child pre { margin: 8px 0 0; padding: 8px; font-size: 14px; line-height: 1.3; white-space: pre-wrap; overflow-wrap: anywhere; }
   section.intro-overview blockquote { margin: 31px 0 0; padding: 10px 18px; border: 0; border-radius: 11px; background: #f4f6f9; }
   section.intro-overview blockquote p { margin: 0; color: #46566a; font-size: 14px; line-height: 1.5; }
   section.astra-matched { font-size: 20px; }
@@ -225,8 +234,6 @@ style: |
 
 ## 限られた日本語指示から<br>Python関数を生成する小型言語モデル
 
-<p class="cover-demo-link"><a href="https://yuuono.github.io/bokunano/">Webデモを開く</a></p>
-
 <img class="cover-avatar" src="figures/bokunano_circle.png" alt="Boku-nanoのキャラクター">
 
 <!--
@@ -254,9 +261,10 @@ style: |
 
 ### ① 制限された日本語指示文
 
-整数リストxs から
-偶数だけを残し、 各要素に k を加える  
-solve 関数を書いて
+整数リストxsと整数kを受け取り、  
+偶数だけを残し、 
+各要素に k を加える  
+solve 関数を書いてください
 
 決められた操作・文型の範囲
 
@@ -265,8 +273,8 @@ solve 関数を書いて
 
 ### ② Boku-nano
 
-1M, 5M, 15M パラメータ
-
+語彙数2048のトークナイザ
+1M, 5M & 15M パラメータ
 Decoder Transformerによる
 next token prediction 
 
@@ -275,12 +283,13 @@ next token prediction
 </div>
 <div class="ov-card">
 
-### ③ Python の関数
+### ③ Python関数
 
-`def solve(xs, k):`
-
-`return [x + k for x in xs`  
-`if x % 2 == 0]`
+```python
+def solve(xs, k):
+    return [x + k for x in xs
+            if x % 2 == 0]
+```
 
 参照インタプリタによる実行・検証
 </div>
@@ -291,20 +300,28 @@ next token prediction
 <div class="ov-steps">
 <div class="ov-step">
 
-### **1** 意味を定義
+### **1** 中間表現を定義
 
-24操作を最大3つ
+訓練データ合成のための<br>中間表現（意味AST）
+24基本操作を最大3つ組み合せ
 
-順序も含めて組み合わせる
+```json
+{"sequence": [{"filter": ["even"]},
+              {"map": ["add_k"]}]}
+```
 
 </div>
 <div class="ov-step">
 
-### **2** 訓練データ合成
+### **2** 合成データ作成
 
-日本語指示文と正解コード
+意味ASTから、日本語指示文と
+pythonコードを生成
 
-訓練データ 192,900件
+それぞれ基本操作に対して、20通りの
+日本語表現とpythonコード合成し、
+ルールベースで組み合わせる
+訓練データ 約19万件
 
 </div>
 <div class="ov-step">
@@ -321,7 +338,8 @@ next token prediction
 
 ### **4** テスト検証・<br>ベンチマークによる評価
 
-生成コードの動作を確認
+出力されたコードを
+参照インタプリタで検証
 
 84,180 / 84,550問 合格
 
@@ -336,11 +354,11 @@ next token prediction
 根拠：../results/model_reports/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch.md
 -->
 
----
-<!-- _class: key-goal -->
-<!-- _header: "1. 課題と狙い" -->
+<!-- ---  -->
+<!-- 1_class: key-goal -->
+<!-- 1_header: "1. 課題と狙い" -->
 
-# 課題と狙い
+<!-- # 課題と狙い
 
 抽出や順序の変更など、**対象を24種類の操作に限定**する
 
@@ -352,7 +370,7 @@ next token prediction
 ## 別の用途への応用
 
 関数の組み合わせで表せる処理なら、  
-同じ考え方を **NPCの挙動などにも応用できる可能性**がある
+同じ考え方を **NPCの挙動などにも応用できる可能性**がある -->
 
 <!--
 目安：60秒
@@ -365,11 +383,10 @@ next token prediction
 - [trained_model_inventory.md](../results/trained_model_inventory.md)
 -->
 
----
-<!-- _class: default -->
-<!-- _header: "2. 学習を成立させるための工夫" -->
-
-# 意味ASTの具体例
+<!-- --- -->
+<!-- 2_class: default -->
+<!-- 2_header: "2. 学習を成立させるための工夫" -->
+<!-- # 意味ASTの具体例
 
 日本語：**偶数だけを残して、各要素にkを加える**
 
@@ -382,7 +399,7 @@ next token prediction
 }
 ```
 
-偶数の抽出 → kを加える、という処理の順序を保存
+偶数の抽出 → kを加える、という処理の順序を保存 -->
 
 <!--
 目安：40秒
@@ -394,8 +411,40 @@ next token prediction
 -->
 
 ---
+<!-- _class: operation-scope -->
+
+# 対象操作は24種類、3操作まで組み合せで12,720通り
+
+## 基本操作
+
+| 種類 | 操作数 | 例 |
+| :--- | ---: | :--- |
+| 条件に合う数を残す | 10 | 偶数、奇数、正の値、kより大きい値 |
+| 一つずつ値を変える | 8 | kを加える、2倍、絶対値、二乗 |
+| 順序を変える | 3 | 昇順、降順、現在の順序の反転 |
+| 一部を取り出す | 3 | 先頭k個、末尾k個、1個おき |
+
+## 操作の組み合わせ
+
+<!-- 同じ操作を繰り返さず、順序を区別して数える。 -->
+
+| 操作数 | 数え方 | 意味の種類 |
+| ---: | :--- | ---: |
+| 1操作 | 24 | 24 |
+| 2操作 | 24 × 23 | 552 |
+| 3操作 | 24 × 23 × 22 | 12,144 |
+| 合計 | 24 ＋ 552 ＋ 12,144 | **12,720** |
+
+<!-- 同じ操作の反復は、テストで確かめる。 -->
+
+<!--
+汎用のプログラミング全般を扱う実験ではありません。
+根拠：../specifications/atomic_semantic_asts.md
+-->
+
+---
 <!-- _class: ast-training-pair ast-merged -->
-<!-- _header: "2. 学習を成立させるための工夫" -->
+<!-- 2_header: "2. 学習を成立させるための工夫" -->
 
 # 意味ASTから訓練データを自動生成・検証する
 
@@ -405,7 +454,7 @@ next token prediction
 
 ```json
 {"sequence": [
-  {"filter": ["even"]}, {"map": ["add_k"]}
+    {"filter": ["even"]}, {"map": ["add_k"]}
 ]}
 ```
 
@@ -420,7 +469,7 @@ next token prediction
 
 #### 生成の手順
 
-**Qwenで各操作の日本語表現を生成。**  
+**Qwenで各操作の日本語表現を生成**  
 ASTの順に結合し、テンプレートの  
 `{operations}`をルールベースで埋める。
 
@@ -431,7 +480,7 @@ ASTの順に結合し、テンプレートの
 
 整数リストxsと整数kを受け取り、  
 偶数だけを残し、各要素にkを加える  
-solve関数を書いてください。
+solve関数を書いてください
 
 </div>
 </div>
@@ -443,9 +492,9 @@ solve関数を書いてください。
 
 #### 生成の手順
 
-**ASTの操作をPythonコードへ変換。**  
+**ASTの操作をPythonコードへ変換**  
 構文を確認し、実行結果を  
-参照インタプリタの期待値と照合する。
+参照インタプリタの結果と検証
 
 </div>
 <div class="ast-example">
@@ -454,8 +503,8 @@ solve関数を書いてください。
 
 ```python
 def solve(xs, k):
-    return [x + k for x in xs
-            if x % 2 == 0]
+        return [x + k for x in xs
+                        if x % 2 == 0]
 ```
 
 </div>
@@ -475,25 +524,6 @@ def solve(xs, k):
 根拠：../results/final_train_dataset_results.md
 根拠：../results/multi_operation_python_code_generation_results.md
 根拠：../specifications/reference_interpreter.md
--->
-
----
-<!-- _class: default -->
-
-# 扱う範囲は24種類の操作
-
-| 種類 | 操作数 | 例 |
-| :--- | ---: | :--- |
-| 条件に合う数を残す | 10 | 偶数、奇数、正の値、kより大きい値 |
-| 一つずつ値を変える | 8 | kを加える、2倍、絶対値、二乗 |
-| 順序を変える | 3 | 昇順、降順、現在の順序の反転 |
-| 一部を取り出す | 3 | 先頭k個、末尾k個、1個おき |
-
-**最大3操作を組み合わせる、限定されたコード生成課題。**
-
-<!--
-汎用のプログラミング全般を扱う実験ではありません。
-根拠：../specifications/atomic_semantic_asts.md
 -->
 
 ---
@@ -535,27 +565,6 @@ ASTは抽象構文木の略です。本研究では操作の種類と順序を�
 <!--
 意味ASTは合成データの生成と検証に使います。推論では意味ASTを与えず、日本語の指示をモデルに渡します。
 根拠：../results/final_train_dataset_results.md、../specifications/reference_interpreter.md
--->
-
----
-<!-- _class: default -->
-
-# 操作の組み合わせは12,720種類
-
-同じ操作を繰り返さず、順序を区別して数える。
-
-| 操作の数 | 数え方 | 意味の種類 |
-| :--- | :--- | ---: |
-| 1操作 | 24 | 24 |
-| 2操作 | 24 × 23 | 552 |
-| 3操作 | 24 × 23 × 22 | 12,144 |
-| 合計 | 24 ＋ 552 ＋ 12,144 | **12,720** |
-
-同じ操作の繰り返しは、別のテストで確かめる。
-
-<!--
-12,720は指示文やコードの件数ではなく、反復のない意味仕様の総数です。
-根拠：../policies/ast_split_policy.md
 -->
 
 ---
@@ -635,10 +644,10 @@ for x in xs:
 根拠：../results/final_train_dataset_results.md
 -->
 
----
-<!-- _class: compact -->
+<!-- --- -->
+<!-- 1_class: compact -->
 
-# 三つの大きさを、1 epochで比較する
+<!-- # 三つの大きさを、1 epochで比較する
 
 **パラメータ**は、学習で調整するモデル内部の数値。
 
@@ -646,11 +655,11 @@ for x in xs:
 | :--- | ---: | :--- |
 | 1M | 約100万 | 合成データ全体を1回使う |
 | 5M | 約500万 | 合成データ全体を1回使う |
-| 15M | 約1,500万 | 合成データ全体を1回使う |
+| 15M | 約1,500万 | 合成データ全体を1回使う | -->
 
 <!-- 合成データ全体を1回使う学習を、**1 epoch（1エポック）**と呼ぶ。 -->
 
-既存の学習済み重みを使わず、Transformerをゼロから学習する。
+<!-- 既存の学習済み重みを使わず、Transformerをゼロから学習する。 -->
 
 <!--
 正確には1,016,704、5,065,472、15,735,168パラメータ。共通の分割設定で学習した3モデルを本編に採用。Transformerは文章内の情報を参照しながら次の単位を予測するモデル。すべてDecoder-only、最大系列長256。
@@ -740,7 +749,7 @@ GPTなどの言語モデルは、**直前までの言葉から次を予測**し�
 
 <div class="ar-note">
 
-説明用に言葉で区切った例。実際はトークン単位で予測し、生成を繰り返す。
+<!-- 説明用に言葉で区切った例。実際はトークン単位で予測し、生成を繰り返す。 -->
 
 </div>
 
@@ -1781,9 +1790,9 @@ Astraの温度・出力上限は製品既定。独立チャットの本文へ共
 -->
 
 ---
-<!-- _class: diagram -->
+<!-- _class: diagram closing -->
 
-# [まとめとWebデモ](https://yuuono.github.io/bokunano/)
+# まとめとWebデモ <a href="https://yuuono.github.io/bokunano/">Webデモを開く</a>
 
 **限定したコード生成は、小さなモデルでも1 epochで学習できた。**
 
