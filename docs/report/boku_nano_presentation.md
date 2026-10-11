@@ -30,8 +30,17 @@ style: |
   section.cover h1 { font-size: 62px; }
     section.cover h2 { font-size: 36px; margin-top: 42px; color: #17212b; }
     section.cover img.cover-avatar { position: absolute; top: 42%; right: 90px; width: 360px; height: 360px; transform: translateY(-50%); object-fit: cover; border-radius: 50%; }
-    section.closing h1 { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    section.closing h1 a { flex: none; padding: 10px 16px; border-radius: 6px; background: #2877aa; color: #fff; font-size: 20px; font-weight: 600; text-decoration: none; }
+    section.closing .demo-link { text-align: right; margin-top: 20px; }
+    section.closing .demo-link a { display: inline-block; padding: 10px 16px; border-radius: 6px; background: #2877aa; color: #fff; font-size: 20px; font-weight: 600; text-decoration: none; }
+        section.closing { font-size: 21px; line-height: 1.4; }
+        section.closing h1 { margin-bottom: 18px; }
+        section.closing p { margin: 8px 0; }
+        section.closing table { font-size: 20px; margin: 8px 0; }
+        section.closing th, section.closing td { padding: 6px 10px; }
+    section.closing > h2 { font-size: 26px; margin: 26px 0 10px; padding-top: 18px; border-top: 1px solid #d8e1e9; }
+      section.overview-original { padding: 0; }
+      section.overview-original p { margin: 0; }
+      section.overview-original img { display: block; width: 1280px; height: 720px; object-fit: contain; }
   section.compact { font-size: 25px; }
   section.compact table { font-size: 22px; }
   section.compact th, section.compact td { padding: 9px 12px; }
@@ -102,7 +111,7 @@ style: |
   section.intro-overview .ov-step:nth-child(4) h3 strong { background: #3b9460; }
   section.intro-overview .ov-step p { margin: 0 0 6px; font-size: 17px; line-height: 1.45; }
   section.intro-overview .ov-step p:last-child { font-size: 14px; color: #52606d; }
-    section.intro-overview .ov-step:nth-child(3) p:last-child { font-size: 17px; line-height: 1.45; color: #17212b; }
+    section.intro-overview .ov-step:nth-child(3) p:last-child { font-size: 14px; line-height: 1.45; color: #52606d; }
     section.intro-overview .ov-step:nth-child(3) p { font-size: 17px; line-height: 1.4; color: #17212b; }
     section.intro-overview .ov-step:first-child pre { margin: 8px 0 0; padding: 8px; font-size: 14px; line-height: 1.3; white-space: pre-wrap; overflow-wrap: anywhere; }
   section.intro-overview blockquote { margin: 31px 0 0; padding: 10px 18px; border: 0; border-radius: 11px; background: #f4f6f9; }
@@ -357,7 +366,7 @@ transformer をゼロから学習
 </div>
 </div>
 
-<!-- > 評価結果は「24操作・最大3操作」という限定された範囲でのものです。Webデモの自由な日本語入力は、別モデルで決められた文型に整えてから -nano に渡します。 -->
+<!-- > 評価結果は「24操作・最大3操作」という限定された範囲でのものです。ブラウザデモの自由な日本語入力は、別モデルで決められた文型に整えてから -nano に渡します。 -->
 
 <!--
 日本語の指示からPython関数を作る流れと、合成データ生成・学習・実行評価の流れを説明する。
@@ -1824,22 +1833,34 @@ Astraの温度・出力上限は製品既定。独立チャットの本文へ共
 -->
 
 ---
-<!-- _class: diagram closing -->
+<!-- _class: closing -->
 
-# まとめとWebデモ <a href="https://yuuono.github.io/bokunano/">Webデモを開く</a>
+# まとめ
 
 **限定したコード生成は、小さなモデルでも1 epochで学習できた。**
 
 **表現を変えた場合の性能と、操作を組み合わせる能力は、分けて確かめる必要がある。**
 
+## 学習済みモデルをブラウザで試す
+
+ONNX形式で保存したモデルを、ONNX Runtimeでブラウザ内実行。Python環境・推論サーバーは不要。
+
 | デモの流れ | 役割 |
 | :--- | :--- |
 | ① 自由な日本語を入力 | 作りたい処理を伝える |
-| ② 補助モデルで文型を整える | 対象の操作と表現にそろえる |
-| ③ 指示を確認して生成する | Boku-nanoがPythonコードを作る |
-| Webデモ | [Boku-nanoを試す](https://yuuono.github.io/bokunano/) |
+| ② Qwen3-0.6Bで文型を整える | 自由文を決められた文型（CNL）に変換。コードは書かない |
+| ③ JavaScriptで指示を検査 | 24操作・最大3操作・定型文法に合うか確認 |
+| ④ Boku-nanoでコードを生成 | 選択した学習済みモデルがPython関数を出力 |
+
+<p class="demo-link"><a href="https://yuuono.github.io/bokunano/">ブラウザデモを開く</a></p>
 
 <!--
 デモの文型整形の効果は上記の実験評価値に含めていません。整形はQwen3-0.6B、生成は選択したBoku Nano。デモでは1 epochモデルを選択してください。自由な日本語をBoku Nano単体が扱うとは説明しないこと。
 根拠：../../web/index.html、../../web/app.js、../procedures/boku_nano_onnx_web_demo.md
 -->
+
+---
+<!-- _class: overview-original -->
+<!-- _paginate: false -->
+
+![Boku1-nano 全体図](figures/boku1_nano_overview_one_page.png)
