@@ -47,6 +47,8 @@ data/final/evaluation/*.jsonl
 
 # 本学習の重み、optimizer checkpoint、metricsは大容量の実行成果物なのでGitへ追加しない。
 # data/models/
+data/models/looped_*/
+data/models/boku_nano_looped_*/
 
 # モデル生成コードを含む評価の生JSONLはローカル成果物として保持する。
 data/evaluations/

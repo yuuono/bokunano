@@ -763,9 +763,7 @@ def save_training_checkpoint(
     # 一時保存先を作る
     temporary_path = path.with_name(path.name + ".tmp")
     # CPUへ移したモデル状態を作る
-    model_state = {
-        name: tensor.detach().cpu() for name, tensor in model.state_dict().items()
-    }
+    model_state = model.cpu_state_dict()
     # 再開に必要な状態をまとめる
     checkpoint = {
         "trainer_version": TRAINER_VERSION,
@@ -792,10 +790,7 @@ def save_final_weights(path: Path, model: BokuNanoForCausalLM) -> str:
     # 一時保存先を作る
     temporary_path = path.with_name(path.name + ".tmp")
     # safetensorsが扱える連続CPU Tensorへ変換する
-    state = {
-        name: tensor.detach().cpu().contiguous()
-        for name, tensor in model.state_dict().items()
-    }
+    state = model.cpu_state_dict()
     # 由来を最低限のmetadataへ入れて保存する
     save_safetensors(
         state,
@@ -1067,7 +1062,7 @@ def train(
         # ローカルの信頼済みcheckpointをCPUへ読む
         checkpoint = torch.load(resume_from, map_location="cpu", weights_only=True)
         # モデル設定が完全一致することを確認する
-        if checkpoint["model_config"] != model_config.to_dict():
+        if BokuNanoConfig.from_dict(checkpoint["model_config"]) != model_config:
             # 異なる構造への再開を拒否する
             raise ValueError("checkpointのmodel_configが現在設定と一致しません")
         # モデルparameterを復元する
@@ -1107,6 +1102,7 @@ def train(
     manifest: dict[str, Any] = {
         "trainer_version": TRAINER_VERSION,
         "status": "running",
+        "effective_layers": model_config.effective_layers,
         "started_at": started_at,
         "completed_at": None,
         "config_path": display_path(config_path),
@@ -1245,7 +1241,8 @@ def train(
             set_optimizer_learning_rate(optimizer, learning_rate)
             # gradient normを設定上限へclipする
             gradient_norm = torch.nn.utils.clip_grad_norm_(
-                model.parameters(), float(config["optimizer"]["gradient_clip_norm"])
+                model.parameters(), float(config["optimizer"]["gradient_clip_norm"]),
+                error_if_nonfinite=True,
             )
             # parameterを更新する
             optimizer.step()

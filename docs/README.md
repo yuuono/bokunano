@@ -18,6 +18,7 @@ docs/
 
 ## 方針
 
+- [`policies/boku_nano_looped_transformer_plan.md`](policies/boku_nano_looped_transformer_plan.md): 1M・3層・3epochを基準にした小型化方針。1層×3周とembedding共有で0.426M、幅縮小で0.289M・0.172M、8文献・保存/ONNX対応・能力維持の評価
 - [`policies/boku_nano_benchmark_100_plan.md`](policies/boku_nano_benchmark_100_plan.md): 100問ベンチマークの分類、70点を目安とした難易度設計、ブラウザ版Qwenとの比較・採点・検証計画
 - [`policies/boku_nano_chat_ui_plan.md`](policies/boku_nano_chat_ui_plan.md): チャット形式Web UIの画面、Qwenによる追加指示の処理、実装手順と完了条件
 - [`policies/boku_nano_autoregression_temperature_plan.md`](policies/boku_nano_autoregression_temperature_plan.md): 実コードに基づく自己回帰・温度の説明と、発表資料へ追加する2枚の作成計画
@@ -39,6 +40,7 @@ docs/
 
 ## 手順
 
+- [`procedures/boku_nano_looped_training.md`](procedures/boku_nano_looped_training.md): 0.426M・0.289M・0.172Mのloopモデルと通常モデルの3epoch比較、学習・再開・評価・ONNXの実行コマンド
 - [`procedures/implementation_order_guide.md`](procedures/implementation_order_guide.md): 24種類の基本操作からONNXブラウザ推論までの実装順と各文書の対応
 - [`procedures/japanese_instruction_generation.md`](procedures/japanese_instruction_generation.md): 日本語指示の候補生成、人間承認、ルール結合、教師言い換え
 - [`procedures/publishing_japanese_expression_dictionary.md`](procedures/publishing_japanese_expression_dictionary.md): 最終表現CSVと生成来歴JSONLだけをGitHubへ公開する手順

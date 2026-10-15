@@ -95,6 +95,8 @@ def greedy_generate(
 def capture_kv_rms(
     model: BokuNanoForCausalLM, token_ids: list[int]
 ) -> tuple[list[list[float]], list[list[float]], list[list[float]], list[list[float]]]:
+    if model.config.n_loops != 1:
+        raise ValueError("この解析はloopモデル未対応です。周回別捕捉が必要です")
     layer_keys: dict[int, torch.Tensor] = {}
     layer_values: dict[int, torch.Tensor] = {}
     hooks: list[Any] = []

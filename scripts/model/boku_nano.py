@@ -2,6 +2,7 @@
 
 # 型注釈付きの設定値を簡潔に保持する
 from dataclasses import asdict, dataclass
+from collections import OrderedDict
 # 設定辞書で任意型を表現する
 from typing import Any
 
@@ -38,6 +39,15 @@ class BokuNanoConfig:
     rms_norm_eps: float = 1.0e-5
     # token embeddingと出力層の重みを共有するか指定する
     tie_word_embeddings: bool = False
+    # 固有blockの層群を反復する回数。旧設定は1周として復元する
+    n_loops: int = 1
+    # 2周目以降に固定token embeddingを再加算するか指定する
+    loop_input_mode: str = "none"
+
+    @property
+    def effective_layers(self) -> int:
+        """重みの種類数とは区別したblock適用回数。"""
+        return self.n_layers * self.n_loops
 
     # YAMLなどの辞書から検証済み設定を作る
     @classmethod
@@ -63,6 +73,10 @@ class BokuNanoConfig:
     def validate(self) -> None:
         """attentionとSwiGLUに必要な設定制約を検証する。"""
 
+        if type(self.n_loops) is not int or self.n_loops < 1:
+            raise ValueError("n_loopsはboolを除く正の整数である必要があります")
+        if self.loop_input_mode not in ("none", "add"):
+            raise ValueError("loop_input_modeはnoneまたはaddである必要があります")
         # 語彙を正の値に限定する
         if self.vocab_size <= 0:
             # 不正値を明示する
@@ -308,7 +322,7 @@ class CausalLMOutput:
 
 # Boku-nano本体を定義する
 class BokuNanoForCausalLM(nn.Module):
-    """約1,600万parameterのDecoder-only causal language model。"""
+    """通常・共有反復のDecoder-only causal language model。"""
 
     # 設定から全層をランダム初期化する
     def __init__(self, config: BokuNanoConfig) -> None:
@@ -336,6 +350,33 @@ class BokuNanoForCausalLM(nn.Module):
         if config.tie_word_embeddings:
             # 同じParameterを参照させる
             self.lm_head.weight = self.token_embedding.weight
+
+    def load_state_dict(self, state_dict, strict: bool = True, assign: bool = False):
+        """共有headを省いた保存形式と従来形式を厳密に読み込む。"""
+        if self.config.tie_word_embeddings:
+            state = OrderedDict(state_dict)
+            if hasattr(state_dict, "_metadata"):
+                state._metadata = state_dict._metadata
+            embedding = state.get("token_embedding.weight")
+            head = state.get("lm_head.weight")
+            if embedding is not None:
+                if head is not None and not torch.equal(embedding, head):
+                    raise ValueError("共有embeddingとlm_headの保存値が一致しません")
+                state["lm_head.weight"] = embedding
+            state_dict = state
+        result = super().load_state_dict(state_dict, strict=strict, assign=assign)
+        if self.config.tie_word_embeddings:
+            # assign=Trueでも二つのParameterへ分離させない
+            self.lm_head.weight = self.token_embedding.weight
+        return result
+
+    def cpu_state_dict(self) -> dict[str, torch.Tensor]:
+        """共有語彙行列を一度だけ格納する保存用stateを返す。"""
+        return {
+            name: value.detach().cpu().contiguous()
+            for name, value in self.state_dict().items()
+            if not (self.config.tie_word_embeddings and name == "lm_head.weight")
+        }
 
     # 線形層と埋め込みを正規分布で初期化する
     @staticmethod
@@ -386,11 +427,14 @@ class BokuNanoForCausalLM(nn.Module):
                 f"{self.config.context_length}"
             )
         # token IDを埋め込みへ変換する
-        hidden_states = self.token_embedding(input_ids)
-        # 全Transformer blockを順番に適用する
-        for block in self.blocks:
-            # 現在の表現を更新する
-            hidden_states = block(hidden_states)
+        embedded = self.token_embedding(input_ids)
+        hidden_states = embedded
+        # 同一のblock群を再利用し、全周回へ勾配を伝える
+        for loop_index in range(self.config.n_loops):
+            if loop_index > 0 and self.config.loop_input_mode == "add":
+                hidden_states = hidden_states + embedded
+            for block in self.blocks:
+                hidden_states = block(hidden_states)
         # 最終表現を正規化する
         hidden_states = self.final_norm(hidden_states)
         # float32の語彙logitsへ変換する

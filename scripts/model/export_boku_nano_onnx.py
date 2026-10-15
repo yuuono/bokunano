@@ -197,7 +197,8 @@ def export_model(
                 "logits": {0: "batch"},
             },
             opset_version=opset,
-            do_constant_folding=True,
+            # tied headの転置を別の語彙行列として定数化しない
+            do_constant_folding=not model.config.tie_word_embeddings,
             dynamo=False,
         )
     checked = onnx.load(str(output_path), load_external_data=True)
@@ -329,6 +330,8 @@ def export_models_in_place(args: argparse.Namespace) -> None:
             raise ValueError("--in-placeのモデルとtokenizerはリポジトリ内に必要です") from error
         manifest = {
             "format_version": 1,
+            "model_config": config.to_dict(),
+            "effective_layers": config.effective_layers,
             "model_directory": model_directory,
             "model": {
                 "path": "model.safetensors",
@@ -425,6 +428,8 @@ def main() -> None:
                 "sha256": sha256(onnx_path),
                 "size_bytes": onnx_path.stat().st_size,
                 "source_sha256": sha256(weights_path),
+                "model_config": config.to_dict(),
+                "effective_layers": config.effective_layers,
                 "parameter_count": model.parameter_count(),
                 "context_length": config.context_length,
                 "vocab_size": config.vocab_size,

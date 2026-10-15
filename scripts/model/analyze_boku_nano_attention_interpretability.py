@@ -157,6 +157,8 @@ def attention_rollout(attention: torch.Tensor) -> torch.Tensor:
 def ablate_head(model: Any, layer: int, head: int) -> Iterator[None]:
     """指定headのattention出力をout projection前で0にする。"""
 
+    if model.config.n_loops != 1:
+        raise ValueError("loopモデルのhead介入は周回範囲を指定する実装が必要です")
     attention = model.blocks[layer].attention
     head_dim = attention.head_dim
 

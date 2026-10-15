@@ -61,6 +61,8 @@ def capture_qkv(
     torch.Tensor,
 ]:
     """各層のRoPE適用後Q/K、V、fused attention出力を取得する。"""
+    if model.config.n_loops != 1:
+        raise ValueError("この解析はloopモデル未対応です。周回別捕捉が必要です")
     captured: dict[int, tuple[torch.Tensor, torch.Tensor, torch.Tensor]] = {}
     fused_contexts: dict[int, torch.Tensor] = {}
     hooks = []
