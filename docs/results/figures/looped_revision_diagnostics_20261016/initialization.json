@@ -1,0 +1,448 @@
+{
+  "description": "CPU float32, initialization only, no optimizer update, 64 seeded uniformly sampled real training examples, nonpadding tokens only for RMS",
+  "seed": 20260925,
+  "example_count": 64,
+  "sequence_tokens": 2283,
+  "supervised_tokens": 1256,
+  "shape": [
+    64,
+    45
+  ],
+  "conditions": [
+    {
+      "loops": 1,
+      "extra_residual_init_scale": 1.0,
+      "initial_loss": 7.625126838684082,
+      "global_grad_norm": 3.340269127350329,
+      "embedding_grad_norm": 1.3144754348380667,
+      "block_grad_norms": [
+        1.6360984301295427,
+        1.7517361073520794,
+        1.4143408224017935
+      ],
+      "head_grad_norm": 1.2973797746499347,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.021838292479515076,
+          "update_rms": 0.008678368292748928
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.021838292479515076,
+          "output_rms": 0.024569295346736908,
+          "update_rms": 0.01072038896381855
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.024569295346736908,
+          "output_rms": 0.027598422020673752,
+          "update_rms": 0.013024072162806988
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.027598422020673752
+      ]
+    },
+    {
+      "loops": 2,
+      "extra_residual_init_scale": 1.0,
+      "initial_loss": 7.621327877044678,
+      "global_grad_norm": 5.330720684008659,
+      "embedding_grad_norm": 1.2564291603287137,
+      "block_grad_norms": [
+        2.9796736433918323,
+        3.0931850888969254,
+        2.5725639039652815
+      ],
+      "head_grad_norm": 1.3315596654647384,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.021838292479515076,
+          "update_rms": 0.008678368292748928
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.021838292479515076,
+          "output_rms": 0.024569295346736908,
+          "update_rms": 0.01072038896381855
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.024569295346736908,
+          "output_rms": 0.027598422020673752,
+          "update_rms": 0.013024072162806988
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.027598422020673752,
+          "output_rms": 0.03149603307247162,
+          "update_rms": 0.01371576264500618
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.03149603307247162,
+          "output_rms": 0.0369931235909462,
+          "update_rms": 0.014717953279614449
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.0369931235909462,
+          "output_rms": 0.04339287430047989,
+          "update_rms": 0.01582043431699276
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.027598422020673752,
+        0.04339287430047989
+      ]
+    },
+    {
+      "loops": 3,
+      "extra_residual_init_scale": 1.0,
+      "initial_loss": 7.625550270080566,
+      "global_grad_norm": 6.700630966335659,
+      "embedding_grad_norm": 1.3310928843021097,
+      "block_grad_norms": [
+        3.863949066924528,
+        3.894633798935353,
+        3.3404153103657204
+      ],
+      "head_grad_norm": 1.3672582989481104,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.021838292479515076,
+          "update_rms": 0.008678368292748928
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.021838292479515076,
+          "output_rms": 0.024569295346736908,
+          "update_rms": 0.01072038896381855
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.024569295346736908,
+          "output_rms": 0.027598422020673752,
+          "update_rms": 0.013024072162806988
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.027598422020673752,
+          "output_rms": 0.03149603307247162,
+          "update_rms": 0.01371576264500618
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.03149603307247162,
+          "output_rms": 0.0369931235909462,
+          "update_rms": 0.014717953279614449
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.0369931235909462,
+          "output_rms": 0.04339287430047989,
+          "update_rms": 0.01582043431699276
+        },
+        {
+          "block_application": 7,
+          "input_rms": 0.04339287430047989,
+          "output_rms": 0.04849584773182869,
+          "update_rms": 0.01570303738117218
+        },
+        {
+          "block_application": 8,
+          "input_rms": 0.04849584773182869,
+          "output_rms": 0.05616968870162964,
+          "update_rms": 0.017516059800982475
+        },
+        {
+          "block_application": 9,
+          "input_rms": 0.05616968870162964,
+          "output_rms": 0.06400590389966965,
+          "update_rms": 0.017255110666155815
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.027598422020673752,
+        0.04339287430047989,
+        0.06400590389966965
+      ]
+    },
+    {
+      "loops": 2,
+      "extra_residual_init_scale": 0.7071067811865476,
+      "initial_loss": 7.625839710235596,
+      "global_grad_norm": 5.27718195054633,
+      "embedding_grad_norm": 1.2705633575002717,
+      "block_grad_norms": [
+        2.9398361116117107,
+        3.030031542532348,
+        2.5932463129264867
+      ],
+      "head_grad_norm": 1.2981039451981735,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.02096271514892578,
+          "update_rms": 0.0061292992904782295
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.02096271514892578,
+          "output_rms": 0.022157149389386177,
+          "update_rms": 0.006753480527549982
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.022157149389386177,
+          "output_rms": 0.023402569815516472,
+          "update_rms": 0.007783422712236643
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.023402569815516472,
+          "output_rms": 0.025632409378886223,
+          "update_rms": 0.008215815760195255
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.025632409378886223,
+          "output_rms": 0.02873222529888153,
+          "update_rms": 0.009002397768199444
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.02873222529888153,
+          "output_rms": 0.03223179653286934,
+          "update_rms": 0.009982307441532612
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.023402569815516472,
+        0.03223179653286934
+      ]
+    },
+    {
+      "loops": 3,
+      "extra_residual_init_scale": 0.5773502691896257,
+      "initial_loss": 7.6289496421813965,
+      "global_grad_norm": 7.47453518811328,
+      "embedding_grad_norm": 1.2703315911729436,
+      "block_grad_norms": [
+        4.33521846669486,
+        4.338802418966015,
+        3.8632613153142095
+      ],
+      "head_grad_norm": 1.3077572098760954,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.020664388313889503,
+          "update_rms": 0.005001709330826998
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.020664388313889503,
+          "output_rms": 0.021407436579465866,
+          "update_rms": 0.005207636393606663
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.021407436579465866,
+          "output_rms": 0.022136909887194633,
+          "update_rms": 0.005834201816469431
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.022136909887194633,
+          "output_rms": 0.02371472865343094,
+          "update_rms": 0.006201612763106823
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.02371472865343094,
+          "output_rms": 0.025815775617957115,
+          "update_rms": 0.006756318733096123
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.025815775617957115,
+          "output_rms": 0.02813134901225567,
+          "update_rms": 0.007515567354857922
+        },
+        {
+          "block_application": 7,
+          "input_rms": 0.02813134901225567,
+          "output_rms": 0.030495405197143555,
+          "update_rms": 0.007553562521934509
+        },
+        {
+          "block_application": 8,
+          "input_rms": 0.030495405197143555,
+          "output_rms": 0.033695608377456665,
+          "update_rms": 0.00828890036791563
+        },
+        {
+          "block_application": 9,
+          "input_rms": 0.033695608377456665,
+          "output_rms": 0.03720530867576599,
+          "update_rms": 0.008859452791512012
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.022136909887194633,
+        0.02813134901225567,
+        0.03720530867576599
+      ]
+    },
+    {
+      "loops": 2,
+      "extra_residual_init_scale": 0.5,
+      "initial_loss": 7.63150691986084,
+      "global_grad_norm": 4.85940031710312,
+      "embedding_grad_norm": 1.2889890245247062,
+      "block_grad_norms": [
+        2.6640004257177443,
+        2.71962998381001,
+        2.4106137217969117
+      ],
+      "head_grad_norm": 1.2834810974875037,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.020514190196990967,
+          "update_rms": 0.004330047871917486
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.020514190196990967,
+          "output_rms": 0.0210503488779068,
+          "update_rms": 0.004355145152658224
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.0210503488779068,
+          "output_rms": 0.02155141532421112,
+          "update_rms": 0.0047963946126401424
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.02155141532421112,
+          "output_rms": 0.022778214886784554,
+          "update_rms": 0.005144630093127489
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.022778214886784554,
+          "output_rms": 0.024343103170394897,
+          "update_rms": 0.005532676819711924
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.024343103170394897,
+          "output_rms": 0.026031004264950752,
+          "update_rms": 0.006129769142717123
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.02155141532421112,
+        0.026031004264950752
+      ]
+    },
+    {
+      "loops": 3,
+      "extra_residual_init_scale": 0.3333333333333333,
+      "initial_loss": 7.634366989135742,
+      "global_grad_norm": 6.833924030880857,
+      "embedding_grad_norm": 1.2840073850662952,
+      "block_grad_norms": [
+        3.9167052662755655,
+        3.880192411440194,
+        3.6075664999290984
+      ],
+      "head_grad_norm": 1.281491140608093,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.02026316709816456,
+          "update_rms": 0.0028842617757618427
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.02026316709816456,
+          "output_rms": 0.020490819588303566,
+          "update_rms": 0.002698950469493866
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.020490819588303566,
+          "output_rms": 0.02067120559513569,
+          "update_rms": 0.0028698511887341738
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.02067120559513569,
+          "output_rms": 0.021255843341350555,
+          "update_rms": 0.0031769429333508015
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.021255843341350555,
+          "output_rms": 0.02190929837524891,
+          "update_rms": 0.00321240839548409
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.02190929837524891,
+          "output_rms": 0.02256336435675621,
+          "update_rms": 0.0034846747294068336
+        },
+        {
+          "block_application": 7,
+          "input_rms": 0.02256336435675621,
+          "output_rms": 0.02350645884871483,
+          "update_rms": 0.0036204459611326456
+        },
+        {
+          "block_application": 8,
+          "input_rms": 0.02350645884871483,
+          "output_rms": 0.02462746761739254,
+          "update_rms": 0.0038209843914955854
+        },
+        {
+          "block_application": 9,
+          "input_rms": 0.02462746761739254,
+          "output_rms": 0.025810714811086655,
+          "update_rms": 0.0041380152106285095
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.02067120559513569,
+        0.02256336435675621,
+        0.025810714811086655
+      ]
+    }
+  ],
+  "schedules": [
+    {
+      "epochs": 1,
+      "warmup_steps": 19,
+      "lr_at_377": 3e-05
+    },
+    {
+      "epochs": 3,
+      "warmup_steps": 57,
+      "lr_at_377": 0.00024505220633616934
+    }
+  ]
+}

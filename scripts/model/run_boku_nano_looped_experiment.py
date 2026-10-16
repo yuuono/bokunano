@@ -22,6 +22,12 @@ VARIANTS = {
     "u3_r2": (128, 256, 4, 3, 2, False, "none"),
     "u3_r3": (128, 256, 4, 3, 3, False, "none"),
     "u3_r6": (128, 256, 4, 3, 6, False, "none"),
+    # 修正候補は旧variantを変更せず、別名で一因子ずつ比較する
+    "u3_slow": (128, 256, 4, 3, 1, False, "none"),
+    "u3_r2_slow": (128, 256, 4, 3, 2, False, "none"),
+    "u3_r2_scaled": (128, 256, 4, 3, 2, False, "none"),
+    "u3_r2_add": (128, 256, 4, 3, 2, False, "add"),
+    "u3_middle4": (128, 256, 4, 3, 4, False, "none"),
     "u2": (128, 256, 4, 2, 1, False, "none"),
     "u1": (128, 256, 4, 1, 1, False, "none"),
     "l1": (128, 256, 4, 1, 3, False, "none"),
@@ -44,12 +50,21 @@ VARIANTS = {
 BASE_COMPARISON = ["u3", "u2", "u1", "l1", "t3", "t1", "lt1", "l1_add", "lt1_add"]
 # 1epochの主比較は通常3層と、同じ3層を2周・3周させたモデル
 ONE_M_COMPARISON = ["u3", "u3_r2", "u3_r3"]
+# 修正4候補と、通常・元loop・日程変更のみ通常版の3対照
+REVISION_CANDIDATES = ["u3_r2_slow", "u3_r2_scaled", "u3_r2_add", "u3_middle4"]
+REVISION_COMPARISON = ["u3", "u3_r2", "u3_slow", *REVISION_CANDIDATES]
+# 初期値は変えず、forwardの倍率または通過する層の順序だけを変える
+MODEL_OVERRIDES = {"u3_r2_scaled": {"residual_scale": 0.5},
+                   "u3_middle4": {"loop_pattern": "middle"}}
+# warmup19更新は元の1epochと同じ。減衰終了だけを1131更新へ延ばす
+SLOW_SCHEDULE = {"learning_rate_schedule_steps": 1131, "warmup_steps": 19}
 
 
 def architecture(variant: str) -> dict:
     d, f, heads, layers, loops, tied, mode = VARIANTS[variant]
     return dict(d_model=d, d_ff=f, n_heads=heads, n_layers=layers,
-                n_loops=loops, tie_word_embeddings=tied, loop_input_mode=mode)
+                n_loops=loops, tie_word_embeddings=tied, loop_input_mode=mode,
+                **MODEL_OVERRIDES.get(variant, {}))
 
 
 def parameter_count(config: BokuNanoConfig) -> int:
@@ -71,6 +86,11 @@ def build_configs(base: dict, evaluation_base: dict, variant: str, folder: Path,
         raise ValueError(f"parameter数が式と一致しません: {variant}: {actual} != {expected}")
     config["model_validation"]["expected_parameter_count"] = actual
     config["training"].update(epochs=epochs, seed=seed)
+    # 旧実験には手を加えず、新しい日程候補だけを1epochへ固定する
+    if variant in ("u3_slow", *REVISION_CANDIDATES) and epochs != 1:
+        raise ValueError("修正候補は1epoch比較です。epochs=1を指定してください")
+    if variant in ("u3_slow", "u3_r2_slow"):
+        config["optimizer"].update(SLOW_SCHEDULE)
     config["output"]["directory"] = str(folder / "model")
     evaluation = deepcopy(evaluation_base)
     evaluation["model"].update(directory=str(folder / "model"), expected_parameter_count=actual)
@@ -104,6 +124,14 @@ def write_comparison(output: Path, jobs: list) -> dict:
         row["delta_vs_u3_percentage_points"] = (
             100 * (row["pass_rate"] - baseline["pass_rate"]) if baseline else None
         )
+        # 修正候補は元loopとも比較し、日程変更では同日程の通常版も比べる
+        control_name = "u3_r2" if row["variant"] in REVISION_CANDIDATES else "u3"
+        matched_name = "u3_slow" if row["variant"] == "u3_r2_slow" else "u3"
+        for label, name in (("control", control_name), ("matched_nonloop", matched_name)):
+            control = next((r for r in rows if r["variant"] == name), None)
+            row[f"{label}_variant"] = name
+            row[f"delta_vs_{label}_percentage_points"] = (
+                100 * (row["pass_rate"] - control["pass_rate"]) if control else None)
     # 小さい言い換え集合が全体平均に埋もれないようsuite別値も残す
     comparison = {"baseline": "u3" if baseline else None, "models": rows}
     (output / "comparison.json").write_text(
@@ -167,7 +195,8 @@ def main(default_variants: list[str] | None = None, default_epochs: int = 3,
             command.extend(["--max-steps", str(args.max_steps)])
         jobs.append((folder, config, evaluation, {
             "variant": variant, "model_config": config["model"],
-            "effective_layers": config["model"]["n_layers"] * config["model"]["n_loops"],
+            "effective_layers": BokuNanoConfig.from_dict(config["model"]).effective_layers,
+            "optimizer_config": config["optimizer"],
             "parameter_count": config["model_validation"]["expected_parameter_count"],
             "command": command, "evaluation_config": str(folder / "evaluation.yaml"),
             # 評価だけ後から行う場合にも、そのまま再利用できるcommandを残す

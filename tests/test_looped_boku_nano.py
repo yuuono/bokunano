@@ -16,7 +16,7 @@ import yaml
 from scripts.model.boku_nano import BokuNanoConfig, BokuNanoForCausalLM, model_from_checkpoint
 from scripts.model.train_boku_nano import save_final_weights, save_training_checkpoint
 from scripts.model.run_boku_nano_looped_experiment import (
-    ROOT, VARIANTS, ONE_M_COMPARISON, build_configs, parameter_count, write_comparison,
+    ROOT, VARIANTS, ONE_M_COMPARISON, REVISION_CANDIDATES, build_configs, parameter_count, write_comparison,
 )
 
 
@@ -31,6 +31,8 @@ class LoopedModelTest(unittest.TestCase):
         values = self.config.to_dict()
         values.pop("n_loops")
         values.pop("loop_input_mode")
+        values.pop("loop_pattern")
+        values.pop("residual_scale")
         config = BokuNanoConfig.from_dict(values)
         self.assertEqual(config.n_loops, 1)
         model = BokuNanoForCausalLM(config)
@@ -229,9 +231,10 @@ class LoopedRunnerTest(unittest.TestCase):
                     "lt1": 426368, "lt2": 590464, "f128": 377216,
                     "w96": 289056, "w64": 172224}
         for name in VARIANTS:
-            config, ev = build_configs(base, evaluation, name, Path("/tmp/test-loop") / name, 7, 3)
+            epochs = 1 if name in ["u3_slow", *REVISION_CANDIDATES] else 3
+            config, ev = build_configs(base, evaluation, name, Path("/tmp/test-loop") / name, 7, epochs)
             model_config = BokuNanoConfig.from_dict(config["model"])
-            self.assertEqual(config["training"]["epochs"], 3)
+            self.assertEqual(config["training"]["epochs"], epochs)
             self.assertEqual(config["model_validation"]["expected_parameter_count"], parameter_count(model_config))
             self.assertEqual(ev["model"]["expected_parameter_count"], parameter_count(model_config))
             self.assertEqual(config["data"], base["data"])

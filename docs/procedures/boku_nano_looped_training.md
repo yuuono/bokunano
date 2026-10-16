@@ -241,3 +241,83 @@ uv run --group model-training --group onnx-export --python 3.12.12 python \
 ```
 
 R=1互換、因果性、展開モデルの勾配和、保存とoptimizer再開、設定生成、共有ONNXの数値一致を検証する。学習結果の能力評価とは別である。
+
+## 失敗結果を踏まえた修正4候補（2026-10-16追加）
+
+[方針§12](../policies/boku_nano_looped_transformer_plan.md#12-実験結果を踏まえた修正方針2026-10-16追記)に、これまでの失敗結果、文献による修正理由、判断上の限界を記録した。旧モデルや結果ファイルは残し、必ず新しい出力先を指定する。
+
+全候補は1,016,704 parameters・3物理層・1epoch。各候補は元の2周版から一要因だけを変える。候補同士は混ぜない。
+
+| 優先 | variant | 実行する計算・変更 |
+|---|---|---|
+| 1 | `u3_r2_slow` | 全3層×2周。warmup19更新のまま、cosine終端を1131更新へ延長。実学習は377更新 |
+| 2 | `u3_r2_scaled` | 全3層×2周。各attention/FFN残差枝のforward出力を0.5倍 |
+| 3 | `u3_r2_add` | 全3層×2周。第2周開始時に元のtoken embeddingを加算 |
+| 4 | `u3_middle4` | `B0 → B1 → B1 → B1 → B1 → B2`。中間層のみ4回使用 |
+
+既定では通常版`u3`、元の2周版`u3_r2`、通常版の日程変更`u3_slow`も加え、計7runを順次実行する。すべて同じseed、データ、実効batch512を使う。
+
+```bash
+# GPUで4候補＋3対照を学習し、全5集合を評価する
+uv run --python 3.12.12 --group model-training python \
+  scripts/model/run_boku_nano_looped_revision_experiment.py \
+  --output-root data/models/looped_revision_1m_1epoch_run \
+  --device cuda --dtype bfloat16 --run --evaluate
+```
+
+設定だけ確認する場合は、新しい出力先で`--run --evaluate`を外して`--validate`を指定する。生成済みディレクトリに同じrunnerを再実行すると、過去の結果を守るため拒否する。設定生成後に学習する場合は各`config.yaml`を訓練スクリプトへ渡すか、別の新しい出力先でrunnerを実行する。
+
+候補を分けて実行する例：
+
+```bash
+# 優先1：元日程・変更日程それぞれで通常版とloop版を比較
+uv run --python 3.12.12 --group model-training python \
+  scripts/model/run_boku_nano_looped_revision_experiment.py \
+  --output-root data/models/looped_revision_slow_run \
+  --variants u3 u3_r2 u3_slow u3_r2_slow --run --evaluate
+
+# 優先2・3・4：それぞれ独立したモデルとして保存・評価
+uv run --python 3.12.12 --group model-training python \
+  scripts/model/run_boku_nano_looped_revision_experiment.py \
+  --output-root data/models/looped_revision_arch_run \
+  --variants u3 u3_r2 u3_r2_scaled u3_r2_add u3_middle4 --run --evaluate
+```
+
+1候補だけ試す場合は`--variants u3_r2_scaled`等にする。比較相手が同じrunにない場合、その相手との差は`comparison.json`で`null`となる。別runの対照を使う場合はseed・データhash・日程・dtype・実効batchを照合する。
+
+CPUでの2更新だけの動作確認：
+
+```bash
+uv run --python 3.12.12 --group model-training python \
+  scripts/model/run_boku_nano_looped_revision_experiment.py \
+  --output-root data/models/looped_revision_cpu_smoke \
+  --variants u3_r2_slow u3_r2_scaled u3_r2_add u3_middle4 \
+  --device cpu --dtype float32 \
+  --micro-batch-size 16 --gradient-accumulation-steps 32 \
+  --run --max-steps 2
+```
+
+`--max-steps`は正式な性能比較には使わず、`--evaluate`との併用も拒否する。新候補は1epoch専用なので`--epochs 3`は拒否する。GPUメモリが足りない場合も上例のようにmicro batchを下げ、蓄積後の実効batch512を維持する。
+
+各`<variant>_seed20260925/`の出力：
+
+- `config.yaml`・`evaluation.yaml`：候補固有の訓練・評価条件。
+- `console.log`・`model/training_metrics.jsonl`：訓練とvalidationの記録。
+- `model/training_manifest.json`：完了状態と実際の更新数、`learning_rate_schedule`。
+- `model/model_config.json`・`model/model.safetensors`・`model/checkpoints/epoch_01.pt`：推論設定・最終重み・再開用状態。
+- `evaluation/`・`evaluation_console.log`：固定5集合の評価結果。
+
+全体の`comparison.json`は全件評価完了後に生成される。`delta_vs_u3_percentage_points`に加え、修正候補については`delta_vs_control_percentage_points`が元loopとの差、`delta_vs_matched_nonloop_percentage_points`が対応する通常版との差となる。日程変更loopの対応通常版は`u3_slow`、他候補は`u3`である。集合別の合格数も確認する。
+
+日程変更版の`learning_rate_schedule.schedule_steps=1131`は学習を1131回行う意味ではない。全件1epochを終了すれば、`global_step=377, configured_optimizer_steps=377, status=completed`になる。warmupは19なので、旧3epochのwarmup57とは異なる。生成評価は保存設定から残差倍率や中間層反復も復元する。
+
+旧attention/KV解析は引き続きloopモデルに未対応。今回の変更で周回別解析ができるようになったわけではない。学習後の診断は方針§12.4に従って別途実施する。
+
+```bash
+# 旧仕様の互換性と修正候補のテスト
+uv run --python 3.12.12 --group model-training python -m unittest \
+  tests.test_looped_boku_nano_revision tests.test_looped_boku_nano \
+  tests.test_train_boku_nano tests.test_evaluate_boku_nano
+```
+
+ONNX依存がある環境では、新候補の可変prefix長でPyTorchとの出力一致も検証する。これらの実装テストとCPUの短い動作確認は、1epoch学習後の生成性能を保証するものではない。

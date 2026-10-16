@@ -29,6 +29,8 @@ scripts/
 
 ## Boku Nanoモデル評価
 
+失敗結果を踏まえた1M・1epochの修正4候補は`model/run_boku_nano_looped_revision_experiment.py`を使う。学習率減衰の延長・残差倍率・入力再注入・中間層反復を別々に試し、既定で3対照を含む7runを生成する。[修正理由](../docs/policies/boku_nano_looped_transformer_plan.md#12-実験結果を踏まえた修正方針2026-10-16追記)と[実行手順](../docs/procedures/boku_nano_looped_training.md#失敗結果を踏まえた修正4候補2026-10-16追加)を参照する。
+
 既存1M・3層を保った1epoch反復比較は`model/run_boku_nano_1m_looped_experiment.py`を使う。通常版・2周・3周の学習と固定5集合評価を一括実行できる。小型化モデルも含む学習・比較・再開・ONNXは[Looped Boku-nano実行手順](../docs/procedures/boku_nano_looped_training.md)を参照する。
 
 学習済みモデルを5種類の固定テスト集合で生成・実行評価する。推論を行わず設定、hash、ZIP memberだけを確認する場合は次を実行する。

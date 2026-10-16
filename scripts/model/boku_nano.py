@@ -3,6 +3,8 @@
 # 型注釈付きの設定値を簡潔に保持する
 from dataclasses import asdict, dataclass
 from collections import OrderedDict
+# 残差倍率のNaN/Infを拒否する
+import math
 # 設定辞書で任意型を表現する
 from typing import Any
 
@@ -43,10 +45,17 @@ class BokuNanoConfig:
     n_loops: int = 1
     # 2周目以降に固定token embeddingを再加算するか指定する
     loop_input_mode: str = "none"
+    # 全層反復か、先頭・末尾を一度だけ通る中間層反復かを指定する
+    loop_pattern: str = "full"
+    # attentionとFFNの各残差枝に、forwardのたびに掛ける固定倍率
+    residual_scale: float = 1.0
 
     @property
     def effective_layers(self) -> int:
         """重みの種類数とは区別したblock適用回数。"""
+        # middleでは先頭・末尾の2層を反復数へ含めない
+        if self.loop_pattern == "middle":
+            return 2 + (self.n_layers - 2) * self.n_loops
         return self.n_layers * self.n_loops
 
     # YAMLなどの辞書から検証済み設定を作る
@@ -77,6 +86,15 @@ class BokuNanoConfig:
             raise ValueError("n_loopsはboolを除く正の整数である必要があります")
         if self.loop_input_mode not in ("none", "add"):
             raise ValueError("loop_input_modeはnoneまたはaddである必要があります")
+        # 初版の4候補ではmiddleと再注入を混ぜず、単独変更として扱う
+        if self.loop_pattern not in ("full", "middle"):
+            raise ValueError("loop_patternはfullまたはmiddleである必要があります")
+        if self.loop_pattern == "middle" and (self.n_layers < 3 or self.loop_input_mode != "none"):
+            raise ValueError("middleは3物理層以上かつloop_input_mode=noneが必要です")
+        # bool・文字列・非有限値・非正値を倍率として受け付けない
+        if (type(self.residual_scale) not in (int, float)
+                or not math.isfinite(self.residual_scale) or self.residual_scale <= 0):
+            raise ValueError("residual_scaleは有限の正の数である必要があります")
         # 語彙を正の値に限定する
         if self.vocab_size <= 0:
             # 不正値を明示する
@@ -292,19 +310,24 @@ class TransformerBlock(nn.Module):
         self.ffn_norm = RMSNorm(config.d_model, config.rms_norm_eps)
         # SwiGLU FFNを作る
         self.feed_forward = SwiGLU(config)
+        # 学習可能な重みを増やさず、保存設定から固定倍率を復元する
+        self.residual_scale = config.residual_scale
 
     # 二つのpre-norm残差更新を行う
     def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:
         """attentionとFFNを残差接続付きで順に適用する。"""
 
         # 正規化した入力のattention結果を残差加算する
-        hidden_states = hidden_states + self.attention(
-            self.attention_norm(hidden_states)
-        )
+        attention_update = self.attention(self.attention_norm(hidden_states))
+        # 旧モデルの倍率1では計算経路をそのまま保つ
+        if self.residual_scale != 1.0:
+            attention_update = attention_update * self.residual_scale
+        hidden_states = hidden_states + attention_update
         # 正規化した中間値のFFN結果を残差加算する
-        hidden_states = hidden_states + self.feed_forward(
-            self.ffn_norm(hidden_states)
-        )
+        ffn_update = self.feed_forward(self.ffn_norm(hidden_states))
+        if self.residual_scale != 1.0:
+            ffn_update = ffn_update * self.residual_scale
+        hidden_states = hidden_states + ffn_update
         # 更新済み表現を返す
         return hidden_states
 
@@ -429,12 +452,21 @@ class BokuNanoForCausalLM(nn.Module):
         # token IDを埋め込みへ変換する
         embedded = self.token_embedding(input_ids)
         hidden_states = embedded
+        # middleだけ先頭を一度通し、中間block群を反復対象にする
+        if self.config.loop_pattern == "middle":
+            hidden_states = self.blocks[0](hidden_states)
+            recurrent_blocks = self.blocks[1:-1]
+        else:
+            recurrent_blocks = self.blocks
         # 同一のblock群を再利用し、全周回へ勾配を伝える
         for loop_index in range(self.config.n_loops):
             if loop_index > 0 and self.config.loop_input_mode == "add":
                 hidden_states = hidden_states + embedded
-            for block in self.blocks:
+            for block in recurrent_blocks:
                 hidden_states = block(hidden_states)
+        # middleの末尾は全反復が終わった後に一度だけ適用する
+        if self.config.loop_pattern == "middle":
+            hidden_states = self.blocks[-1](hidden_states)
         # 最終表現を正規化する
         hidden_states = self.final_norm(hidden_states)
         # float32の語彙logitsへ変換する

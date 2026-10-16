@@ -618,6 +618,41 @@ def build_optimizer(
     )
 
 
+def resolve_learning_rate_schedule(optimizer_config: dict[str, Any], training_steps: int) -> dict[str, Any]:
+    """学習を終える更新数と、cosineを減衰し切る更新数を分離する。"""
+    # 省略時は従来どおり、学習終了と同時に最小学習率へ達する
+    schedule_steps = optimizer_config.get("learning_rate_schedule_steps", training_steps)
+    if type(schedule_steps) is not int or schedule_steps <= 0:
+        raise ValueError("learning_rate_schedule_stepsは正の整数が必要です")
+    # warmupの既定は実学習の更新数基準。減衰期間だけの変更と分離できる
+    ratio = float(optimizer_config["warmup_ratio"])
+    if not math.isfinite(ratio) or not 0 <= ratio < 1:
+        raise ValueError("warmup_ratioは0以上1未満が必要です")
+    warmup_steps = optimizer_config.get("warmup_steps", math.ceil(training_steps * ratio))
+    if type(warmup_steps) is not int or not 0 <= warmup_steps <= schedule_steps:
+        raise ValueError("warmup_stepsは0以上schedule steps以下の整数が必要です")
+    # 再開時には日程だけでなく最大・最小学習率も同じことを確認する
+    maximum = float(optimizer_config["learning_rate"])
+    minimum = float(optimizer_config["minimum_learning_rate"])
+    if not math.isfinite(maximum) or not math.isfinite(minimum) or not 0 <= minimum <= maximum or maximum == 0:
+        raise ValueError("学習率は有限で0 <= minimum <= maximumかつmaximum > 0が必要です")
+    return {"schedule_steps": schedule_steps, "warmup_steps": warmup_steps,
+            "maximum_learning_rate": maximum, "minimum_learning_rate": minimum}
+
+
+def validate_resume_schedule(checkpoint: dict[str, Any], schedule: dict[str, Any],
+                             optimizer_config: dict[str, Any]) -> None:
+    """異なる日程でのresumeを拒否し、旧checkpointの既定動作は維持する。"""
+    # 新形式では解決済み日程を照合する
+    saved = checkpoint.get("learning_rate_schedule")
+    if saved is not None:
+        if saved != schedule:
+            raise ValueError("checkpointのlearning_rate_scheduleが現在設定と一致しません")
+    # 日程記録のない旧形式に新しい日程overrideを後付けしない
+    elif any(key in optimizer_config for key in ("learning_rate_schedule_steps", "warmup_steps")):
+        raise ValueError("旧checkpointには日程情報がないためschedule override付きでresumeできません")
+
+
 # warmup付きcosine学習率を計算する
 def learning_rate_for_step(
     step: int,
@@ -755,6 +790,7 @@ def save_training_checkpoint(
     global_step: int,
     seen_sequence_tokens: int,
     seen_supervised_tokens: int,
+    learning_rate_schedule: dict[str, Any] | None = None,
 ) -> None:
     """epoch境界から再開するための状態を保存する。"""
 
@@ -774,6 +810,7 @@ def save_training_checkpoint(
         "global_step": global_step,
         "seen_sequence_tokens": seen_sequence_tokens,
         "seen_supervised_tokens": seen_supervised_tokens,
+        "learning_rate_schedule": learning_rate_schedule,
     }
     # PyTorch形式で一時保存する
     torch.save(checkpoint, temporary_path)
@@ -896,6 +933,13 @@ def validate_configuration(
         raise ValueError(
             f"parameter数が一致しません: {parameter_count} != {expected_parameter_count}"
         )
+    # データ件数とbatchから更新数を求め、新しい日程指定も学習前に検査する
+    training = config["training"]
+    if min(training["micro_batch_size"], training["gradient_accumulation_steps"]) <= 0:
+        raise ValueError("batch sizeとgradient accumulationは正の整数にしてください")
+    steps = math.ceil(math.ceil(config["data"]["expected_record_count"] / training["micro_batch_size"])
+                      / training["gradient_accumulation_steps"]) * int(training["epochs"])
+    schedule = resolve_learning_rate_schedule(config["optimizer"], steps)
     # 検証結果を返す
     return {
         "config_path": display_path(config_path),
@@ -903,6 +947,7 @@ def validate_configuration(
         "model_config": model_config.to_dict(),
         "parameter_count": parameter_count,
         "epochs": int(config["training"]["epochs"]),
+        "learning_rate_schedule": schedule,
         "tokenizer_sha256": tokenizer_sha256,
         "tokenizer_special_ids": special_ids,
         "source_archive": display_path(archive_path),
@@ -1045,10 +1090,8 @@ def train(
     if total_steps <= 0:
         # 不正overrideを拒否する
         raise ValueError("総optimizer step数は正である必要があります")
-    # warmup step数を割合から切り上げる
-    warmup_steps = math.ceil(
-        configured_total_steps * float(config["optimizer"]["warmup_ratio"])
-    )
+    # 正式な学習終了はepochsで決め、減衰期間だけを独立に設定する
+    learning_rate_schedule = resolve_learning_rate_schedule(config["optimizer"], configured_total_steps)
     # 再開前のepochを初期化する
     start_epoch = 0
     # optimizer stepを初期化する
@@ -1065,6 +1108,8 @@ def train(
         if BokuNanoConfig.from_dict(checkpoint["model_config"]) != model_config:
             # 異なる構造への再開を拒否する
             raise ValueError("checkpointのmodel_configが現在設定と一致しません")
+        # 日程が変わると再開後の比較条件が変わるため、重み読込前に拒否する
+        validate_resume_schedule(checkpoint, learning_rate_schedule, config["optimizer"])
         # モデルparameterを復元する
         model.load_state_dict(checkpoint["model_state_dict"], strict=True)
         # optimizer状態を復元する
@@ -1119,6 +1164,7 @@ def train(
         "epochs": epochs,
         "configured_optimizer_steps": configured_total_steps,
         "effective_optimizer_steps": total_steps,
+        "learning_rate_schedule": learning_rate_schedule,
         "micro_batch_size": micro_batch_size,
         "gradient_accumulation_steps": accumulation_steps,
         "effective_batch_size": micro_batch_size * accumulation_steps,
@@ -1232,10 +1278,10 @@ def train(
             # warmup + cosineの現在学習率を計算する
             learning_rate = learning_rate_for_step(
                 next_step,
-                configured_total_steps,
-                warmup_steps,
-                float(config["optimizer"]["learning_rate"]),
-                float(config["optimizer"]["minimum_learning_rate"]),
+                learning_rate_schedule["schedule_steps"],
+                learning_rate_schedule["warmup_steps"],
+                learning_rate_schedule["maximum_learning_rate"],
+                learning_rate_schedule["minimum_learning_rate"],
             )
             # optimizerへ現在学習率を設定する
             set_optimizer_learning_rate(optimizer, learning_rate)
@@ -1365,6 +1411,7 @@ def train(
                 global_step,
                 seen_sequence_tokens,
                 seen_supervised_tokens,
+                learning_rate_schedule=learning_rate_schedule,
             )
         # step上限なら次epochへ進まない
         if reached_step_limit:

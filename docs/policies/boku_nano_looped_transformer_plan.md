@@ -1,5 +1,7 @@
 # Boku-nanoへのLooped Transformer導入方針：1M未満への小型化
 
+> **2026-10-16更新**：§1–11は当初の方針・実装時点の記録です。その後の小型化・1M反復比較の結果と、文献を踏まえた優先4候補を[§12](#12-実験結果を踏まえた修正方針2026-10-16追記)に追記しました。冒頭の「評価未実施」は当初時点を指します。
+
 調査日: 2026-10-15。コード確認時のHEAD: `bf6db12`。未コミットの既存文書・評価結果も参照した。
 
 **モデルと訓練スクリプトを実装済み。** 固定反復、入力再注入、embedding共有、保存・復元、比較設定生成、ONNX書き出しに対応した。互換性等の22テストと実データ2更新のCPU学習を確認済み。3epochの小型モデルの生成性能評価は未実施である。[実行手順](../procedures/boku_nano_looped_training.md)を参照。周回別のattention解析、因子分解embedding、可変反復、KV cacheは後段の課題として残す。
@@ -387,3 +389,89 @@ uv run --group model-training --python 3.12.12 python \
 `--run`なしなら設定生成のみ。`--variants`を省くと通常モデルを含む9条件を生成する。小型候補は`--variants lt1 w96 w64`、対応する通常1層対照は`--variants t1 w96_plain w64_plain`で指定できる。全て3epochが既定。
 
 依存関係、固定YAMLでの直接学習、CPU動作確認、メモリ調整、再開、生成評価、ONNX、自動テストは[実行手順](../procedures/boku_nano_looped_training.md)に記載した。
+
+## 12. 実験結果を踏まえた修正方針（2026-10-16追記）
+
+### 12.1 これまでに試したことと結果
+
+§1–11は当初の設計判断・実装時点の記録として残す。小型化から着手したが、次の結果では既存能力を維持できなかった。その後、容量を既存1Mへ戻しても、単純に反復を増やすだけでは1epochの全体正解率が改善しなかった。この節は、その失敗を消さずに文献と診断から追加する修正案である。**4候補の本学習結果はまだない。**
+
+| 実験 | 条件 | パラメータ数 | 生成・実行正解率 |
+|---|---|---:|---:|
+| 小型化・3epoch | LT1 | 426,368 | 21.8604% |
+| 小型化・3epoch | F128 | 377,216 | 11.3601% |
+| 小型化・3epoch | W96 | 289,056 | 1.1674% |
+| 小型化・3epoch | W64 | 172,224 | 0.1549% |
+| 容量固定・1epoch | 通常3層 `u3` | 1,016,704 | 1.7351%（1,467 / 84,550） |
+| 容量固定・1epoch | 3層×2周 `u3_r2` | 1,016,704 | 1.6606%（1,404 / 84,550） |
+| 容量固定・1epoch | 3層×3周 `u3_r3` | 1,016,704 | 1.5494%（1,310 / 84,550） |
+
+既存の通常1M・3epochの99.5517%を考えると、小型化は大幅な能力低下だった。一方、通常1Mでも1epochでは低いため、1epoch比較はまだ学習途中の条件である。2周は合成集合で通常版より22件増えたが、反復集合で78件減り、合計63件減った。「loopはすべての能力に無効」とも「一部改善したので成功」とも判断しない。
+
+根拠は[小型化の結果](../results/boku_nano_looped_all_sizes_20261015.md)、[1M・1epochの結果](../results/boku_nano_looped_1m_1epoch_20261016.md)、その[集計値](../results/figures/looped_1m_1epoch_20261016/values.json)。これらの既存ファイル・旧variant・旧runnerの既定条件は変更しない。
+
+### 12.2 原因として確認できたこと、まだ仮説のこと
+
+**学習率を下げ切る時期が早い可能性。** 1epochは377更新、warmup19更新で、最後の学習率は3e-5。旧3epoch実験の同じ377更新時点はwarmup57更新、学習率約2.45052e-4だった。最初の377更新の学習率の和も約0.061935対0.098635と異なる。validation lossは1epoch終了時1.378111に対し、旧3epoch実験の第1epoch終了時0.873668。データを1周した回数が同じでも、学習の進み方は同じではない。ただしwarmupも違うので、この比較だけで減衰期間が原因と確定できない。今回の通常版とloop版には同じ日程を適用していたため、日程だけでloopの相対的な悪化も説明できない。
+
+**反復による残差と勾配の増加。** 同一seed・同一初期重み・実訓練データから64例を固定抽出し、CPU float32で初期状態を診断した。更新前の最終hidden RMSはR=1/2/3で0.02760 / 0.04339 / 0.06401、全parameterの勾配normは3.340 / 5.331 / 6.701だった。各残差枝のforward出力を1/R倍にすると、R=2/3のRMSは0.02603 / 0.02581、勾配normは3.010 / 2.981となった。これは尺度を揃える動機になるが、**学習後の改善を示す結果ではない**。旧loss曲線は下降しており、発散を確認したわけでもない。出力射影の初期重みだけを小さくする方法では同じ勾配抑制にならなかったため、初期化変更とforward倍率を区別する。
+
+診断の記録は[初期化比較](../results/figures/looped_revision_diagnostics_20261016/initialization.json)と[forward倍率比較](../results/figures/looped_revision_diagnostics_20261016/forward_scale.json)。seed20260925で192,900件の行番号から64件を重複なく抽出し、元の行順にtoken化した。2,283系列token・1,256教師token、paddingを除いたRMS、勾配clip前、optimizer更新なしの一batchである。
+
+**入力の利用低下や表現の均一化は未確認。** 既存attention図は1問のみで、通常版の生成10tokenに対しloop版15tokenと集計条件が異なる。生成コード側attention比率の増加だけから、入力を忘れた、表現が潰れた、という原因は断定できない。Geiping et al.は失敗例でtoken間相関が1へ近づくことや、反復回数を変えてもPPLが変わらない現象を報告しているが、bokunanoにも同じ現象があるかは測定が必要である。
+
+**証拠の制限。** 最新1M実験のraw学習ディレクトリ・重み・個別誤答・図生成スクリプトは今回取得したGit成果物に含まれていない。集計JSONと報告から読み取れる結果と、手元で行った初期状態の診断を区別する。初期状態の診断を学習済みモデルの解析と扱わず、以前の小型モデルの誤答原因を今回の1Mモデルへ移さない。
+
+### 12.3 文献を根拠に選ぶ優先4候補
+
+全候補を1,016,704 parameters、幅128、FFN256、4heads、3物理層、embedding/head非共有、1epochに固定する。容量削減や反復回数増加は一旦保留する。比較の起点は元の2周版 `u3_r2`。**4候補を混ぜず、候補ごとに別の学習・保存先・評価を持つ。**
+
+| 優先 | variant | 元の2周版からの変更 | この候補を選ぶ理由 |
+|---|---|---|---|
+| 1 | `u3_r2_slow` | cosine終端を377→1131更新に延長。warmup19更新は維持。実学習は377更新で終了 | まず1epochで通常版も十分に学べていない状況を調べる。Looped GPT-BERTの学習条件・学習率の検討も参考に、反復を増やす前に最適化条件を切り分ける |
+| 2 | `u3_r2_scaled` | attention・FFNそれぞれの残差枝を、毎forwardで0.5倍 | Wang et al.の共有残差の相関と1/Rスケーリング、および手元の初期状態診断を根拠にする。初期重みや学習率は変更しない |
+| 3 | `u3_r2_add` | 第2周の開始時だけ元のtoken embeddingを加算 | Looped GPT-BERTの入力再注入とYang et al.のinput injectionを参考に、入力を反復中も参照させる。効果はコード生成で未確認 |
+| 4 | `u3_middle4` | `B0 B1 B2 B0 B1 B2` → `B0 B1 B1 B1 B1 B2` | Saunshi et al.のmiddle loopingを参考に、入力処理と出力側の層を一度だけ通す。3物理層と合計6回のblock適用を揃えて反復位置を比較する |
+
+優先1は既存ログからの仮説が中心で、論文がこの1M・377更新条件を保証しているわけではない。1131は旧3epochの総更新数だが、warmup19なので**旧3epochの最初の1epochを完全再現する設定ではなく、減衰期間だけを変える実験**である。減衰中に学習を終えるため、最終validation lossが悪化する可能性も含めて測る。
+
+優先2は既存の物理3層基準の初期化を維持し、`h ← h + 0.5 × Attention(RMSNorm(h))`、続いて`h ← h + 0.5 × FFN(RMSNorm(h))`とする。Wang et al.の多blockに対する尺度はλ/(R√K)を含むが、ここではK=3を固定した旧モデルに対する追加の1/Rだけを試す。論文設定の完全再現ではなく、λやKに関する最適性も主張しない。学習率も同時に1/Rへ下げると要因が混ざるので行わない。
+
+優先3の注入は`h ← h + embedding(input_ids)`で、embeddingへの勾配も切らない。Yang et al.の主な実験はin-context回帰・反復外挿であり、固定2周のコード生成での利益は仮説である。Looped GPT-BERTは入力注入に加えてDWA等も使い、10epoch条件で評価している。今回の構成や1epochでの向上を直接裏付ける比較ではない。
+
+優先4では`n_loops=4`が**中間block群の適用回数**を表す。全3層を4周する意味ではない。先頭と末尾は各1回、中間1層は4回で合計6回になる。Saunshi et al.ではmiddle loopingの利点がタスク依存だったため、今回も総合点と集合別の退行を両方確認する。
+
+追加で参照した一次文献：
+
+- Wang et al. (2026), [On the Residual Scaling of Looped Transformers: Stability and Transferability](https://arxiv.org/html/2606.18524v1)、§3–5。共有残差の相関、反復数に応じたforward倍率。有限規模の実験結果を今回の1Mモデルの保証にしない。
+- Saunshi et al. (2025), [Reasoning with Latent Thoughts](https://arxiv.org/html/2502.17416v1)、§3.3。middle loopingとfull loopingの比較。
+- Geiping et al. (2025), [Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach](https://arxiv.org/html/2502.05171)、§4.3。失敗例における表現の相関・反復を利用しない現象。
+- Yang et al. (2024), [Looped Transformers are Better at Learning Learning Algorithms](https://arxiv.org/html/2311.12424)、§4.1。入力再注入。対象課題の違いに注意する。
+- Fan et al. (2026), [Looped GPT-BERT](https://arxiv.org/html/2609.09691v1)。入力再注入・DWA・学習条件。少ない重みでの能力維持と、1epochでのloopの優位性を混同しない。
+
+### 12.4 比較・採否・次の診断
+
+新runnerは4候補に加え、`u3`・`u3_r2`・`u3_slow`の3対照も同じseedで学習する。既定は計7run。比較するのは次の差である。
+
+1. 各候補 − `u3_r2`：今回の修正が元loopを改善したか。
+2. `u3_r2_slow` − `u3_slow`：同じ遅い減衰日程でもloopに利点があるか。
+3. その他3候補 − `u3`：元の日程で通常版を上回るか。
+4. `u3_slow` − `u3`：日程だけで通常版がどれだけ改善したか。
+
+全候補は合計6回のblock適用、通常版は3回。**同じ重み数・データ量・更新数の比較であり、同じFLOPsや実時間の比較ではない。** 日程変更版は減衰を終えずに1epochを完了する。訓練manifestの`status=completed`と`configured_optimizer_steps=377`を確認し、scheduleの1131を実学習の更新数と取り違えない。
+
+選択には固定validationの推移、生成・実行の合格数と集合別退行、生成長・timeout、学習・推論時間を併記する。全5集合84,550件の件数加重集計を使い、集合ごとの率を単純平均しない。既存評価はすでに参照しているため未使用の盲検とは呼ばない。小差を勝利と決めず、有望候補は複数seedで通常版・元loopとの再比較を行う。候補を組み合わせる実験は単独の効果を確認した後に別名で追加する。
+
+次に学習済み重みが揃ったら、同一の正解prefix・同一token位置に揃え、周回ごとのhidden RMS、token間cosine、共通headでの中間loss、反復を省略する介入を調べる。初期状態のnormだけで採用せず、attentionの割合だけで原因を確定しない。現時点ではこの学習済み診断や候補の生成性能測定は未実施である。
+
+### 12.5 実装・互換性・実行
+
+- `BokuNanoConfig.loop_pattern`：既定`full`、新規`middle`。middleは3物理層以上・入力注入なしに限定し、今回の単独比較を明確にする。
+- `BokuNanoConfig.residual_scale`：既定1.0。新しい学習parameterは増やさず、attention/FFN両枝のforwardで使用する。
+- optimizerの`learning_rate_schedule_steps`と`warmup_steps`：省略時は旧日程。実epoch数と独立に設定し、解決済み日程を学習manifest・checkpointへ保存する。異なる日程へのresumeは拒否する。日程情報を持たない旧checkpointは従来設定でのみresumeできる。
+- 旧設定の省略値は`loop_pattern=full, residual_scale=1.0`で、旧重みの読込・計算結果を維持する。各候補の初期重みは同一seedの既存1Mと一致する。
+- [修正比較runner](../../scripts/model/run_boku_nano_looped_revision_experiment.py)は候補別にYAML・重み・ログ・評価を保存し、既存出力先の上書きを拒否する。旧結果の置換は行わない。
+
+コマンド、候補の単独実行、結果の比較方法は[実行手順の修正4候補](../procedures/boku_nano_looped_training.md#失敗結果を踏まえた修正4候補2026-10-16追加)を参照する。
+
+実装検証では旧仕様を含む32テストが通過した。新しい3種の計算経路は長さ1・7・16のprefixでONNX/PyTorchの出力一致を確認した。4候補すべて実データを2更新だけCPU float32で学習し、有限loss、重み保存、保存重みを再読込した推論を確認した。日程が長くてもepochで終了することは2例のfixtureを使った実trainerテストで確認した。[検証記録](../results/figures/looped_revision_diagnostics_20261016/implementation_verification.json)は動作確認の記録であり、4候補の1epoch生成性能の結果ではない。

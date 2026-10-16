@@ -1,0 +1,283 @@
+{
+  "description": "CPU float32, initialization only, same weights, residual forward branches scaled, no optimizer update, 64 seeded uniformly sampled real training examples, nonpadding tokens only for RMS",
+  "seed": 20260925,
+  "example_count": 64,
+  "sequence_tokens": 2283,
+  "supervised_tokens": 1256,
+  "shape": [
+    64,
+    45
+  ],
+  "conditions": [
+    {
+      "loops": 2,
+      "residual_forward_scale": 0.7071067811865476,
+      "initial_loss": 7.625839710235596,
+      "global_grad_norm": 4.07322451205328,
+      "embedding_grad_norm": 1.2705633575002717,
+      "block_grad_norms": [
+        2.1564581044778617,
+        2.2293550029577385,
+        1.9159403049889145
+      ],
+      "head_grad_norm": 1.2981039451981735,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.02096271514892578,
+          "update_rms": 0.006129299756139517
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.02096271514892578,
+          "output_rms": 0.022157151252031326,
+          "update_rms": 0.006753480527549982
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.022157151252031326,
+          "output_rms": 0.023402569815516472,
+          "update_rms": 0.007783422712236643
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.023402569815516472,
+          "output_rms": 0.025632409378886223,
+          "update_rms": 0.008215815760195255
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.025632409378886223,
+          "output_rms": 0.02873222529888153,
+          "update_rms": 0.009002398699522018
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.02873222529888153,
+          "output_rms": 0.03223179653286934,
+          "update_rms": 0.009982308372855186
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.023402569815516472,
+        0.03223179653286934
+      ]
+    },
+    {
+      "loops": 3,
+      "residual_forward_scale": 0.5773502691896257,
+      "initial_loss": 7.628949165344238,
+      "global_grad_norm": 4.775609634649968,
+      "embedding_grad_norm": 1.2703314973318591,
+      "block_grad_norms": [
+        2.628724811249249,
+        2.6442046319775647,
+        2.362175406016305
+      ],
+      "head_grad_norm": 1.3077572098760954,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.020664388313889503,
+          "update_rms": 0.005001709330826998
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.020664388313889503,
+          "output_rms": 0.021407436579465866,
+          "update_rms": 0.00520763685926795
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.021407436579465866,
+          "output_rms": 0.022136909887194633,
+          "update_rms": 0.005834201816469431
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.022136909887194633,
+          "output_rms": 0.02371472865343094,
+          "update_rms": 0.00620161322876811
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.02371472865343094,
+          "output_rms": 0.025815775617957115,
+          "update_rms": 0.006756318733096123
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.025815775617957115,
+          "output_rms": 0.02813134901225567,
+          "update_rms": 0.007515566889196634
+        },
+        {
+          "block_application": 7,
+          "input_rms": 0.02813134901225567,
+          "output_rms": 0.030495405197143555,
+          "update_rms": 0.007553562521934509
+        },
+        {
+          "block_application": 8,
+          "input_rms": 0.030495405197143555,
+          "output_rms": 0.033695608377456665,
+          "update_rms": 0.00828890036791563
+        },
+        {
+          "block_application": 9,
+          "input_rms": 0.033695608377456665,
+          "output_rms": 0.03720530867576599,
+          "update_rms": 0.008859452791512012
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.022136909887194633,
+        0.02813134901225567,
+        0.03720530867576599
+      ]
+    },
+    {
+      "loops": 2,
+      "residual_forward_scale": 0.5,
+      "initial_loss": 7.63150691986084,
+      "global_grad_norm": 3.0103325633988334,
+      "embedding_grad_norm": 1.2889890245247062,
+      "block_grad_norms": [
+        1.4112247355479834,
+        1.4477442207392386,
+        1.290409295638197
+      ],
+      "head_grad_norm": 1.2834810974875037,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.020514190196990967,
+          "update_rms": 0.004330047871917486
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.020514190196990967,
+          "output_rms": 0.0210503488779068,
+          "update_rms": 0.004355145152658224
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.0210503488779068,
+          "output_rms": 0.02155141532421112,
+          "update_rms": 0.0047963946126401424
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.02155141532421112,
+          "output_rms": 0.022778214886784554,
+          "update_rms": 0.005144630093127489
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.022778214886784554,
+          "output_rms": 0.024343103170394897,
+          "update_rms": 0.005532676819711924
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.024343103170394897,
+          "output_rms": 0.026031004264950752,
+          "update_rms": 0.006129769142717123
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.02155141532421112,
+        0.026031004264950752
+      ]
+    },
+    {
+      "loops": 3,
+      "residual_forward_scale": 0.3333333333333333,
+      "initial_loss": 7.6343674659729,
+      "global_grad_norm": 2.9811513822508813,
+      "embedding_grad_norm": 1.2840073850662952,
+      "block_grad_norms": [
+        1.3968551803083644,
+        1.3964059756384577,
+        1.3017685827329144
+      ],
+      "head_grad_norm": 1.2814910475842007,
+      "captures": [
+        {
+          "block_application": 1,
+          "input_rms": 0.02007056400179863,
+          "output_rms": 0.02026316709816456,
+          "update_rms": 0.0028842617757618427
+        },
+        {
+          "block_application": 2,
+          "input_rms": 0.02026316709816456,
+          "output_rms": 0.020490819588303566,
+          "update_rms": 0.0026989507023245096
+        },
+        {
+          "block_application": 3,
+          "input_rms": 0.020490819588303566,
+          "output_rms": 0.02067120559513569,
+          "update_rms": 0.0028698511887341738
+        },
+        {
+          "block_application": 4,
+          "input_rms": 0.02067120559513569,
+          "output_rms": 0.021255841478705406,
+          "update_rms": 0.0031769429333508015
+        },
+        {
+          "block_application": 5,
+          "input_rms": 0.021255841478705406,
+          "output_rms": 0.02190929837524891,
+          "update_rms": 0.00321240839548409
+        },
+        {
+          "block_application": 6,
+          "input_rms": 0.02190929837524891,
+          "output_rms": 0.02256336435675621,
+          "update_rms": 0.0034846747294068336
+        },
+        {
+          "block_application": 7,
+          "input_rms": 0.02256336435675621,
+          "output_rms": 0.02350645884871483,
+          "update_rms": 0.0036204459611326456
+        },
+        {
+          "block_application": 8,
+          "input_rms": 0.02350645884871483,
+          "output_rms": 0.02462746761739254,
+          "update_rms": 0.003820984624326229
+        },
+        {
+          "block_application": 9,
+          "input_rms": 0.02462746761739254,
+          "output_rms": 0.025810716673731804,
+          "update_rms": 0.004138014744967222
+        }
+      ],
+      "loop_end_hidden_rms": [
+        0.02067120559513569,
+        0.02256336435675621,
+        0.025810716673731804
+      ]
+    }
+  ],
+  "schedules": [
+    {
+      "epochs": 1,
+      "warmup_steps": 19,
+      "lr_at_377": 3e-05
+    },
+    {
+      "epochs": 3,
+      "warmup_steps": 57,
+      "lr_at_377": 0.00024505220633616934
+    }
+  ]
+}
