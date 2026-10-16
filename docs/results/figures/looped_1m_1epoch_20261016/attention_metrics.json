@@ -1,0 +1,57 @@
+{
+  "instruction": "整数リストxsと整数kを受け取り、k以下の値だけを残すsolve関数を書いてください。",
+  "prompt": "<|bos|><|task|>\n整数リストxsと整数kを受け取り、k以下の値だけを残すsolve関数を書いてください。\n<|code|>\n",
+  "models": [
+    {
+      "variant": "u3",
+      "label": "通常 3層×1周",
+      "model_directory": "data/models/looped_1m_1epoch_20261016/u3_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 1,
+      "effective_layers": 3,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    return result\n",
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.3811859512701631,
+        "instruction": 0.3112278159707785,
+        "generated": 0.3075862269848585
+      },
+      "figure": "docs/results/figures/looped_1m_1epoch_20261016/u3_attention_heatmap.svg"
+    },
+    {
+      "variant": "u3_r2",
+      "label": "3層×2周",
+      "model_directory": "data/models/looped_1m_1epoch_20261016/u3_r2_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 2,
+      "effective_layers": 6,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        if value % k == 0:\n            output += [value]\n    result = []\n    for value in output:\n        result += [abs(value)]\n    return result\n",
+      "generated_token_count": 15,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.32948528143266836,
+        "instruction": 0.2985483561952909,
+        "generated": 0.3719663545489311
+      },
+      "figure": "docs/results/figures/looped_1m_1epoch_20261016/u3_r2_attention_heatmap.svg"
+    },
+    {
+      "variant": "u3_r3",
+      "label": "3層×3周",
+      "model_directory": "data/models/looped_1m_1epoch_20261016/u3_r3_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 3,
+      "effective_layers": 9,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        if value % k == 0:\n            output += [value]\n    result = []\n    for value in output:\n        result += [abs(value)]\n    return result\n",
+      "generated_token_count": 15,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.3307205535471439,
+        "instruction": 0.29112233097354573,
+        "generated": 0.3781571127474308
+      },
+      "figure": "docs/results/figures/looped_1m_1epoch_20261016/u3_r3_attention_heatmap.svg"
+    }
+  ]
+}

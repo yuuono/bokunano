@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="650" viewBox="0 0 1120 650" role="img">
+<title>1M通常版とloop版の1epoch train loss</title>
+<desc>同じ初期値、データ、optimizerで、3層を1周、2周、3周するモデルを比較。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#172033}.title{font-size:22px;font-weight:600}.sub{font-size:12px;fill:#5b6577}.axis{font-size:12px}.grid{stroke:#dce3ec;stroke-width:1}</style>
+<text x="560" y="34" text-anchor="middle" class="title">同じ1M構造でloop回数だけを増やした学習loss</text>
+<text x="560" y="57" text-anchor="middle" class="sub">線は20 optimizer step区間のtrain平均、右端の四角は固定validation。全条件1 epoch・377更新。</text>
+<line x1="86.0" y1="90" x2="86.0" y2="560" class="grid"/>
+<text x="86.0" y="584" text-anchor="middle" class="axis">0</text>
+<line x1="218.9" y1="90" x2="218.9" y2="560" class="grid"/>
+<text x="218.9" y="584" text-anchor="middle" class="axis">50</text>
+<line x1="351.8" y1="90" x2="351.8" y2="560" class="grid"/>
+<text x="351.8" y="584" text-anchor="middle" class="axis">100</text>
+<line x1="484.7" y1="90" x2="484.7" y2="560" class="grid"/>
+<text x="484.7" y="584" text-anchor="middle" class="axis">150</text>
+<line x1="617.6" y1="90" x2="617.6" y2="560" class="grid"/>
+<text x="617.6" y="584" text-anchor="middle" class="axis">200</text>
+<line x1="750.5" y1="90" x2="750.5" y2="560" class="grid"/>
+<text x="750.5" y="584" text-anchor="middle" class="axis">250</text>
+<line x1="883.3" y1="90" x2="883.3" y2="560" class="grid"/>
+<text x="883.3" y="584" text-anchor="middle" class="axis">300</text>
+<line x1="1016.2" y1="90" x2="1016.2" y2="560" class="grid"/>
+<text x="1016.2" y="584" text-anchor="middle" class="axis">350</text>
+<line x1="1088.0" y1="90" x2="1088.0" y2="560" class="grid"/>
+<text x="1088.0" y="584" text-anchor="middle" class="axis">377</text>
+<line x1="86" y1="423.8" x2="1088" y2="423.8" class="grid"/>
+<text x="74" y="427.8" text-anchor="end" class="axis">2</text>
+<line x1="86" y1="214.2" x2="1088" y2="214.2" class="grid"/>
+<text x="74" y="218.2" text-anchor="end" class="axis">5</text>
+<polyline points="139.2,131.7 192.3,172.5 245.5,209.9 298.6,247.4 351.8,284.9 404.9,322.5 458.1,358.9 511.3,390.7 564.4,415.9 617.6,437.2 670.7,453.4 723.9,466.6 777.0,477.2 830.2,485.6 883.3,492.0 936.5,497.2 989.7,501.4 1042.8,505.0 1088.0,507.5" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="1083.0" y="504.0" width="10" height="10" fill="#2563eb" stroke="#fff" stroke-width="1.5"/>
+<text x="1077.0" y="501.0" text-anchor="end" class="axis">val 1.3781</text>
+<line x1="86" y1="621" x2="114" y2="621" stroke="#2563eb" stroke-width="3"/>
+<text x="122" y="626" class="axis">通常 3層×1周</text>
+<polyline points="139.2,132.7 192.3,173.6 245.5,211.2 298.6,248.7 351.8,286.1 404.9,323.1 458.1,359.1 511.3,391.2 564.4,416.3 617.6,437.1 670.7,453.0 723.9,465.7 777.0,475.9 830.2,484.0 883.3,490.2 936.5,495.2 989.7,499.3 1042.8,502.7 1088.0,505.3" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="1083.0" y="501.6" width="10" height="10" fill="#ea580c" stroke="#fff" stroke-width="1.5"/>
+<text x="1077.0" y="483.6" text-anchor="end" class="axis">val 1.3925</text>
+<line x1="316" y1="621" x2="344" y2="621" stroke="#ea580c" stroke-width="3"/>
+<text x="352" y="626" class="axis">3層×2周</text>
+<polyline points="139.2,132.1 192.3,171.0 245.5,208.0 298.6,245.6 351.8,282.9 404.9,319.2 458.1,354.1 511.3,386.4 564.4,412.1 617.6,432.6 670.7,448.3 723.9,461.2 777.0,471.2 830.2,479.6 883.3,485.8 936.5,491.0 989.7,495.1 1042.8,498.4 1088.0,501.1" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linejoin="round"/>
+<rect x="1083.0" y="497.2" width="10" height="10" fill="#16a34a" stroke="#fff" stroke-width="1.5"/>
+<text x="1077.0" y="464.2" text-anchor="end" class="axis">val 1.4192</text>
+<line x1="546" y1="621" x2="574" y2="621" stroke="#16a34a" stroke-width="3"/>
+<text x="582" y="626" class="axis">3層×3周</text>
+<text x="560.0" y="595" text-anchor="middle" class="axis">Optimizer step</text>
+<text x="22" y="325.0" text-anchor="middle" class="axis" transform="rotate(-90 22 325.0)">Train loss（対数目盛）</text>
+</svg>

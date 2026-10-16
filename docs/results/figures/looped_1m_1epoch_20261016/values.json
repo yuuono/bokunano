@@ -1,0 +1,663 @@
+{
+  "losses": {
+    "u3": {
+      "train": [
+        [
+          20,
+          7.170557284355164
+        ],
+        [
+          40,
+          5.999295878410339
+        ],
+        [
+          60,
+          5.093450570106507
+        ],
+        [
+          80,
+          4.324113988876343
+        ],
+        [
+          100,
+          3.6694270730018617
+        ],
+        [
+          120,
+          3.1138399481773376
+        ],
+        [
+          140,
+          2.656100034713745
+        ],
+        [
+          160,
+          2.3111236810684206
+        ],
+        [
+          180,
+          2.070224416255951
+        ],
+        [
+          200,
+          1.8859887719154358
+        ],
+        [
+          220,
+          1.7567036032676697
+        ],
+        [
+          240,
+          1.6587968945503235
+        ],
+        [
+          260,
+          1.5834845304489136
+        ],
+        [
+          280,
+          1.5259804904460907
+        ],
+        [
+          300,
+          1.483922404050827
+        ],
+        [
+          320,
+          1.451112312078476
+        ],
+        [
+          340,
+          1.424241030216217
+        ],
+        [
+          360,
+          1.4024233758449554
+        ],
+        [
+          377,
+          1.3866237682454727
+        ]
+      ],
+      "validation_loss": 1.3781112136075977,
+      "validation_tokens": 468381
+    },
+    "u3_r2": {
+      "train": [
+        [
+          20,
+          7.138003921508789
+        ],
+        [
+          40,
+          5.969202017784118
+        ],
+        [
+          60,
+          5.065058255195618
+        ],
+        [
+          80,
+          4.300283598899841
+        ],
+        [
+          100,
+          3.651315653324127
+        ],
+        [
+          120,
+          3.1059253215789795
+        ],
+        [
+          140,
+          2.6537979364395143
+        ],
+        [
+          160,
+          2.3063118696212768
+        ],
+        [
+          180,
+          2.0659493148326873
+        ],
+        [
+          200,
+          1.8865863621234893
+        ],
+        [
+          220,
+          1.7597605168819428
+        ],
+        [
+          240,
+          1.6647581338882447
+        ],
+        [
+          260,
+          1.592231911420822
+        ],
+        [
+          280,
+          1.5368509531021117
+        ],
+        [
+          300,
+          1.4960863411426544
+        ],
+        [
+          320,
+          1.463640993833542
+        ],
+        [
+          340,
+          1.4372861862182618
+        ],
+        [
+          360,
+          1.416362202167511
+        ],
+        [
+          377,
+          1.4005890523686129
+        ]
+      ],
+      "validation_loss": 1.392492027009225,
+      "validation_tokens": 468381
+    },
+    "u3_r3": {
+      "train": [
+        [
+          20,
+          7.157032489776611
+        ],
+        [
+          40,
+          6.038016986846924
+        ],
+        [
+          60,
+          5.13599841594696
+        ],
+        [
+          80,
+          4.3584542036056515
+        ],
+        [
+          100,
+          3.703202545642853
+        ],
+        [
+          120,
+          3.159656846523285
+        ],
+        [
+          140,
+          2.711550772190094
+        ],
+        [
+          160,
+          2.3554364919662474
+        ],
+        [
+          180,
+          2.104639458656311
+        ],
+        [
+          200,
+          1.924047064781189
+        ],
+        [
+          220,
+          1.7962233662605285
+        ],
+        [
+          240,
+          1.6980818688869477
+        ],
+        [
+          260,
+          1.6252283334732056
+        ],
+        [
+          280,
+          1.5669416427612304
+        ],
+        [
+          300,
+          1.5247788429260254
+        ],
+        [
+          320,
+          1.4907523274421692
+        ],
+        [
+          340,
+          1.463906192779541
+        ],
+        [
+          360,
+          1.443065619468689
+        ],
+        [
+          377,
+          1.4263232736026539
+        ]
+      ],
+      "validation_loss": 1.4191900438992004,
+      "validation_tokens": 468381
+    }
+  },
+  "evaluation": {
+    "baseline": "u3",
+    "models": [
+      {
+        "variant": "u3",
+        "parameter_count": 1016704,
+        "effective_layers": 3,
+        "passed": 1467,
+        "total": 84550,
+        "pass_rate": 0.017350680070963926,
+        "suites": {
+          "boundary": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.06018518518518518,
+                "passed": 65,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.014939024390243902,
+                "passed": 343,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 1,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.01697171381031614,
+            "passed_record_count": 408,
+            "status": "completed",
+            "suite": "boundary",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 0
+          },
+          "compositional": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.0,
+                "passed": 0,
+                "total": 200
+              },
+              "3": {
+                "pass_rate": 0.007803030303030303,
+                "passed": 103,
+                "total": 13200
+              }
+            },
+            "evaluated_record_count": 13400,
+            "exact_code_match_count": 0,
+            "expected_record_count": 13400,
+            "new_record_count": 13400,
+            "pass_rate": 0.007686567164179104,
+            "passed_record_count": 103,
+            "status": "completed",
+            "suite": "compositional",
+            "termination_counts": {
+              "eos": 13400
+            },
+            "timeout_count": 0
+          },
+          "normal": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.06111111111111111,
+                "passed": 66,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.016550522648083623,
+                "passed": 380,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 1,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.018552412645590682,
+            "passed_record_count": 446,
+            "status": "completed",
+            "suite": "normal",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 1
+          },
+          "paraphrase": {
+            "by_operation_count": {
+              "1": {
+                "pass_rate": 0.06666666666666667,
+                "passed": 2,
+                "total": 30
+              }
+            },
+            "evaluated_record_count": 30,
+            "exact_code_match_count": 0,
+            "expected_record_count": 30,
+            "new_record_count": 30,
+            "pass_rate": 0.06666666666666667,
+            "passed_record_count": 2,
+            "status": "completed",
+            "suite": "paraphrase",
+            "termination_counts": {
+              "eos": 30
+            },
+            "timeout_count": 0
+          },
+          "repetition": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.075,
+                "passed": 36,
+                "total": 480
+              },
+              "3": {
+                "pass_rate": 0.020921985815602836,
+                "passed": 472,
+                "total": 22560
+              }
+            },
+            "evaluated_record_count": 23040,
+            "exact_code_match_count": 0,
+            "expected_record_count": 23040,
+            "new_record_count": 23040,
+            "pass_rate": 0.022048611111111113,
+            "passed_record_count": 508,
+            "status": "completed",
+            "suite": "repetition",
+            "termination_counts": {
+              "eos": 23040
+            },
+            "timeout_count": 0
+          }
+        },
+        "delta_vs_u3_percentage_points": 0.0
+      },
+      {
+        "variant": "u3_r2",
+        "parameter_count": 1016704,
+        "effective_layers": 6,
+        "passed": 1404,
+        "total": 84550,
+        "pass_rate": 0.016605558840922532,
+        "suites": {
+          "boundary": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.06018518518518518,
+                "passed": 65,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.014939024390243902,
+                "passed": 343,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 0,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.01697171381031614,
+            "passed_record_count": 408,
+            "status": "completed",
+            "suite": "boundary",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 0
+          },
+          "compositional": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.005,
+                "passed": 1,
+                "total": 200
+              },
+              "3": {
+                "pass_rate": 0.009393939393939394,
+                "passed": 124,
+                "total": 13200
+              }
+            },
+            "evaluated_record_count": 13400,
+            "exact_code_match_count": 0,
+            "expected_record_count": 13400,
+            "new_record_count": 13400,
+            "pass_rate": 0.009328358208955223,
+            "passed_record_count": 125,
+            "status": "completed",
+            "suite": "compositional",
+            "termination_counts": {
+              "eos": 13400
+            },
+            "timeout_count": 0
+          },
+          "normal": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.06018518518518518,
+                "passed": 65,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.01633275261324042,
+                "passed": 375,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 0,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.018302828618968387,
+            "passed_record_count": 440,
+            "status": "completed",
+            "suite": "normal",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 0
+          },
+          "paraphrase": {
+            "by_operation_count": {
+              "1": {
+                "pass_rate": 0.03333333333333333,
+                "passed": 1,
+                "total": 30
+              }
+            },
+            "evaluated_record_count": 30,
+            "exact_code_match_count": 0,
+            "expected_record_count": 30,
+            "new_record_count": 30,
+            "pass_rate": 0.03333333333333333,
+            "passed_record_count": 1,
+            "status": "completed",
+            "suite": "paraphrase",
+            "termination_counts": {
+              "eos": 30
+            },
+            "timeout_count": 0
+          },
+          "repetition": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.075,
+                "passed": 36,
+                "total": 480
+              },
+              "3": {
+                "pass_rate": 0.0174645390070922,
+                "passed": 394,
+                "total": 22560
+              }
+            },
+            "evaluated_record_count": 23040,
+            "exact_code_match_count": 0,
+            "expected_record_count": 23040,
+            "new_record_count": 23040,
+            "pass_rate": 0.018663194444444444,
+            "passed_record_count": 430,
+            "status": "completed",
+            "suite": "repetition",
+            "termination_counts": {
+              "eos": 23040
+            },
+            "timeout_count": 0
+          }
+        },
+        "delta_vs_u3_percentage_points": -0.07451212300413936
+      },
+      {
+        "variant": "u3_r3",
+        "parameter_count": 1016704,
+        "effective_layers": 9,
+        "passed": 1310,
+        "total": 84550,
+        "pass_rate": 0.015493790656416321,
+        "suites": {
+          "boundary": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.025,
+                "passed": 27,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.013937282229965157,
+                "passed": 320,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 0,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.014434276206322795,
+            "passed_record_count": 347,
+            "status": "completed",
+            "suite": "boundary",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 0
+          },
+          "compositional": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.0,
+                "passed": 0,
+                "total": 200
+              },
+              "3": {
+                "pass_rate": 0.005606060606060606,
+                "passed": 74,
+                "total": 13200
+              }
+            },
+            "evaluated_record_count": 13400,
+            "exact_code_match_count": 0,
+            "expected_record_count": 13400,
+            "new_record_count": 13400,
+            "pass_rate": 0.0055223880597014925,
+            "passed_record_count": 74,
+            "status": "completed",
+            "suite": "compositional",
+            "termination_counts": {
+              "eos": 13400
+            },
+            "timeout_count": 0
+          },
+          "normal": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.025,
+                "passed": 27,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.017770034843205575,
+                "passed": 408,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 0,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.018094841930116474,
+            "passed_record_count": 435,
+            "status": "completed",
+            "suite": "normal",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 0
+          },
+          "paraphrase": {
+            "by_operation_count": {
+              "1": {
+                "pass_rate": 0.03333333333333333,
+                "passed": 1,
+                "total": 30
+              }
+            },
+            "evaluated_record_count": 30,
+            "exact_code_match_count": 0,
+            "expected_record_count": 30,
+            "new_record_count": 30,
+            "pass_rate": 0.03333333333333333,
+            "passed_record_count": 1,
+            "status": "completed",
+            "suite": "paraphrase",
+            "termination_counts": {
+              "eos": 30
+            },
+            "timeout_count": 0
+          },
+          "repetition": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.11666666666666667,
+                "passed": 56,
+                "total": 480
+              },
+              "3": {
+                "pass_rate": 0.017597517730496455,
+                "passed": 397,
+                "total": 22560
+              }
+            },
+            "evaluated_record_count": 23040,
+            "exact_code_match_count": 0,
+            "expected_record_count": 23040,
+            "new_record_count": 23040,
+            "pass_rate": 0.019661458333333333,
+            "passed_record_count": 453,
+            "status": "completed",
+            "suite": "repetition",
+            "termination_counts": {
+              "eos": 23040
+            },
+            "timeout_count": 0
+          }
+        },
+        "delta_vs_u3_percentage_points": -0.1856889414547605
+      }
+    ]
+  }
+}

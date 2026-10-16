@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="360" viewBox="0 0 920 360" role="img">
+<title>loop回数別の参照領域</title>
+<desc>全生成step、全実効層、全headで平均したattention領域比率。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#172033}.title{font-size:21px;font-weight:600}.sub{font-size:12px;fill:#5b6577}.axis{font-size:12px}</style>
+<text x="460" y="31" text-anchor="middle" class="title">loop回数別の参照領域</text>
+<text x="460" y="52" text-anchor="middle" class="sub">全生成step・全head平均。attention配置の記述であり、因果的重要度ではない。</text>
+<text x="173" y="118" text-anchor="end" class="axis">通常 3層×1周</text>
+<rect x="185.00" y="88" width="259.21" height="48" fill="#64748b"/>
+<text x="314.60" y="117" text-anchor="middle" fill="#fff" class="axis">38.1%</text>
+<rect x="444.21" y="88" width="211.63" height="48" fill="#2563eb"/>
+<text x="550.02" y="117" text-anchor="middle" fill="#fff" class="axis">31.1%</text>
+<rect x="655.84" y="88" width="209.16" height="48" fill="#f97316"/>
+<text x="760.42" y="117" text-anchor="middle" fill="#fff" class="axis">30.8%</text>
+<text x="173" y="190" text-anchor="end" class="axis">3層×2周</text>
+<rect x="185.00" y="160" width="224.05" height="48" fill="#64748b"/>
+<text x="297.02" y="189" text-anchor="middle" fill="#fff" class="axis">32.9%</text>
+<rect x="409.05" y="160" width="203.01" height="48" fill="#2563eb"/>
+<text x="510.56" y="189" text-anchor="middle" fill="#fff" class="axis">29.9%</text>
+<rect x="612.06" y="160" width="252.94" height="48" fill="#f97316"/>
+<text x="738.53" y="189" text-anchor="middle" fill="#fff" class="axis">37.2%</text>
+<text x="173" y="262" text-anchor="end" class="axis">3層×3周</text>
+<rect x="185.00" y="232" width="224.89" height="48" fill="#64748b"/>
+<text x="297.44" y="261" text-anchor="middle" fill="#fff" class="axis">33.1%</text>
+<rect x="409.89" y="232" width="197.96" height="48" fill="#2563eb"/>
+<text x="508.87" y="261" text-anchor="middle" fill="#fff" class="axis">29.1%</text>
+<rect x="607.85" y="232" width="257.15" height="48" fill="#f97316"/>
+<text x="736.43" y="261" text-anchor="middle" fill="#fff" class="axis">37.8%</text>
+<rect x="185" y="323" width="14" height="14" fill="#64748b"/>
+<text x="207" y="335" class="axis">制御token</text>
+<rect x="370" y="323" width="14" height="14" fill="#2563eb"/>
+<text x="392" y="335" class="axis">日本語指示</text>
+<rect x="555" y="323" width="14" height="14" fill="#f97316"/>
+<text x="577" y="335" class="axis">生成済みコード</text>
+</svg>

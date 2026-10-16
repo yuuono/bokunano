@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="620" viewBox="0 0 1120 620" role="img">
+<title>1M通常版とloop版の固定5集合実行評価</title>
+<desc>生成したPythonコードを実行して正解した割合。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#172033}.title{font-size:22px;font-weight:600}.sub{font-size:12px;fill:#5b6577}.axis{font-size:11px}.value{font-size:10px}.grid{stroke:#dce3ec;stroke-width:1}</style>
+<text x="560" y="34" text-anchor="middle" class="title">固定5集合の実行正解率</text>
+<text x="560" y="57" text-anchor="middle" class="sub">高いほど良い。通常3層とloop版は同じパラメータ数・学習データ量。</text>
+<line x1="92" y1="505.0" x2="1090" y2="505.0" class="grid"/>
+<text x="82" y="509.0" text-anchor="end" class="axis">0%</text>
+<line x1="92" y1="88.0" x2="1090" y2="88.0" class="grid"/>
+<text x="82" y="92.0" text-anchor="end" class="axis">10%</text>
+<rect x="119.2" y="434.2" width="34.0" height="70.8" fill="#2563eb"/>
+<text x="136.2" y="429.2" text-anchor="middle" class="value">1.70</text>
+<rect x="158.2" y="434.2" width="34.0" height="70.8" fill="#ea580c"/>
+<text x="175.2" y="429.2" text-anchor="middle" class="value">1.70</text>
+<rect x="197.2" y="444.8" width="34.0" height="60.2" fill="#16a34a"/>
+<text x="214.2" y="439.8" text-anchor="middle" class="value">1.44</text>
+<text x="175.2" y="530" text-anchor="middle" class="axis">boundary</text>
+<rect x="285.5" y="472.9" width="34.0" height="32.1" fill="#2563eb"/>
+<text x="302.5" y="467.9" text-anchor="middle" class="value">0.77</text>
+<rect x="324.5" y="466.1" width="34.0" height="38.9" fill="#ea580c"/>
+<text x="341.5" y="461.1" text-anchor="middle" class="value">0.93</text>
+<rect x="363.5" y="482.0" width="34.0" height="23.0" fill="#16a34a"/>
+<text x="380.5" y="477.0" text-anchor="middle" class="value">0.55</text>
+<text x="341.5" y="530" text-anchor="middle" class="axis">compositional</text>
+<rect x="451.8" y="427.6" width="34.0" height="77.4" fill="#2563eb"/>
+<text x="468.8" y="422.6" text-anchor="middle" class="value">1.86</text>
+<rect x="490.8" y="428.7" width="34.0" height="76.3" fill="#ea580c"/>
+<text x="507.8" y="423.7" text-anchor="middle" class="value">1.83</text>
+<rect x="529.8" y="429.5" width="34.0" height="75.5" fill="#16a34a"/>
+<text x="546.8" y="424.5" text-anchor="middle" class="value">1.81</text>
+<text x="507.8" y="530" text-anchor="middle" class="axis">normal</text>
+<rect x="618.2" y="227.0" width="34.0" height="278.0" fill="#2563eb"/>
+<text x="635.2" y="222.0" text-anchor="middle" class="value">6.67</text>
+<rect x="657.2" y="366.0" width="34.0" height="139.0" fill="#ea580c"/>
+<text x="674.2" y="361.0" text-anchor="middle" class="value">3.33</text>
+<rect x="696.2" y="366.0" width="34.0" height="139.0" fill="#16a34a"/>
+<text x="713.2" y="361.0" text-anchor="middle" class="value">3.33</text>
+<text x="674.2" y="530" text-anchor="middle" class="axis">paraphrase</text>
+<rect x="784.5" y="413.1" width="34.0" height="91.9" fill="#2563eb"/>
+<text x="801.5" y="408.1" text-anchor="middle" class="value">2.20</text>
+<rect x="823.5" y="427.2" width="34.0" height="77.8" fill="#ea580c"/>
+<text x="840.5" y="422.2" text-anchor="middle" class="value">1.87</text>
+<rect x="862.5" y="423.0" width="34.0" height="82.0" fill="#16a34a"/>
+<text x="879.5" y="418.0" text-anchor="middle" class="value">1.97</text>
+<text x="840.5" y="530" text-anchor="middle" class="axis">repetition</text>
+<rect x="950.8" y="432.6" width="34.0" height="72.4" fill="#2563eb"/>
+<text x="967.8" y="427.6" text-anchor="middle" class="value">1.74</text>
+<rect x="989.8" y="435.8" width="34.0" height="69.2" fill="#ea580c"/>
+<text x="1006.8" y="430.8" text-anchor="middle" class="value">1.66</text>
+<rect x="1028.8" y="440.4" width="34.0" height="64.6" fill="#16a34a"/>
+<text x="1045.8" y="435.4" text-anchor="middle" class="value">1.55</text>
+<text x="1006.8" y="530" text-anchor="middle" class="axis">5集合合計</text>
+<rect x="92" y="590" width="13" height="13" fill="#2563eb"/>
+<text x="113" y="601" class="axis">通常 3層×1周</text>
+<rect x="322" y="590" width="13" height="13" fill="#ea580c"/>
+<text x="343" y="601" class="axis">3層×2周</text>
+<rect x="552" y="590" width="13" height="13" fill="#16a34a"/>
+<text x="573" y="601" class="axis">3層×3周</text>
+<text x="22" y="296.5" text-anchor="middle" class="axis" transform="rotate(-90 22 296.5)">Pass@1（実行正解率）</text>
+</svg>
