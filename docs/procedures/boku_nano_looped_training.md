@@ -1,6 +1,6 @@
-# 1M未満のLooped Boku-nano：学習と評価の実行手順
+# Looped Boku-nano：1M反復・小型化モデルの学習と評価
 
-[設計理由と比較条件](../policies/boku_nano_looped_transformer_plan.md)に基づく実装。1M・3層・3epochを基準に、1物理層×3周とembedding共有を比較する。以下はリポジトリのルートで実行する。モデルを一から学習するためのスクリプトであり、学習済みの高精度な小型重みを配布するものではない。
+[設計理由と比較条件](../policies/boku_nano_looped_transformer_plan.md)に基づく実装。既存1Mの3物理層を保持した1epoch反復比較と、1物理層・embedding共有を使う3epoch小型化比較を扱う。以下はリポジトリのルートで実行する。
 
 ## 準備
 
@@ -10,7 +10,84 @@ uv sync --python 3.12.12 --group model-training
 
 既存の標準BPE、訓練192,900レコードのZIP、validation ZIPを使う。設定に記載したSHA-256・件数・特殊token IDを検証する。標準はCUDA/bfloat16、CUDAのない環境では`auto`はCPUを選ぶ。CPU動作確認には下記の`--device cpu --dtype float32`を指定する。
 
-## まず本命0.426Mを学習する
+## 既存1Mの構造を保ち、1epochでloopの効果を比較する
+
+2026-10-16追加。[小型4モデルの結果](../results/boku_nano_looped_all_sizes_20261015.md)とは別実験である。今回の目的は容量削減ではなく、既存1Mの重み数・幅・3物理層を保ったまま反復計算を追加し、1epochの生成・実行正解率が上がるか調べること。
+
+| variant | 固有層×周回 | block適用回数 | parameters | epochs |
+| --- | ---: | ---: | ---: | ---: |
+| u3（通常版） | 3×1 | 3 | 1,016,704 | 1 |
+| u3_r2 | 3×2 | 6 | 1,016,704 | 1 |
+| u3_r3 | 3×3 | 9 | 1,016,704 | 1 |
+| u3_r6（任意） | 3×6 | 18 | 1,016,704 | 1 |
+
+```text
+通常: embedding → B0 → B1 → B2 → norm → head
+2周:  embedding → B0 → B1 → B2 → B0 → B1 → B2 → norm → head
+                   └─ 3種類のblockを次の周回でも再利用 ─┘
+```
+
+幅128・FFN256・4heads・語彙2048・context256・embedding/head非共有を維持する。入力再注入は`none`。B0/B1/B2はそれぞれ独立した重みを持ち、同じ番号のblockだけを周回間で共有する。初期化の残差スケールも物理3層基準を維持するため、同じseedで通常版とloop版の初期重みは完全一致する。学習済み1Mから継続するのではなく、各条件を同じseedのランダム初期値から学習する。
+
+**学習から固定5集合の評価まで一括実行：**
+
+```bash
+uv run --group model-training --python 3.12.12 python \
+  scripts/model/run_boku_nano_1m_looped_experiment.py \
+  --output-root data/models/looped_1m_1epoch_run \
+  --run --evaluate
+```
+
+既定は`u3 u3_r2 u3_r3`、1epoch、seed20260925。全候補で同じ訓練192,900件、377 optimizer更新、系列token6,939,466、教師token3,746,067を使う。optimizer・学習率scheduleは既存1M・1epoch設定と同じ。3epoch schedule途中のepoch 1とは区別する。1epochでもblock部分の計算は2周で約2倍・3周で約3倍になるため、同じデータ提示量の比較であり、同じ計算量・学習時間の比較ではない。
+
+`--run`を省けば設定生成だけ、`--validate`を付ければ入力hash等の検証まで行う。`--run`だけなら学習までで、生成・実行評価は後から実行できる。`--evaluate`には`--run`が必要で、`--max-steps`との併用は拒否する。
+
+```bash
+# 3周だけ学習する（通常版との比較は別途必要）
+uv run --group model-training --python 3.12.12 python \
+  scripts/model/run_boku_nano_1m_looped_experiment.py \
+  --output-root data/models/looped_1m_r3_run --variants u3_r3 --run
+
+# 6周を含める追加実験
+uv run --group model-training --python 3.12.12 python \
+  scripts/model/run_boku_nano_1m_looped_experiment.py \
+  --output-root data/models/looped_1m_r6_run \
+  --variants u3 u3_r2 u3_r3 u3_r6 --run --evaluate
+```
+
+メモリ不足時は全候補に同じ`--micro-batch-size 64 --gradient-accumulation-steps 8`を指定する。専用入口は1Mの4構成だけを受け付ける。`--epochs`による変更も可能だが、今回の主比較では既定の1を使う。
+
+### 結果の見方・評価の再開
+
+`<output-root>/<variant>_seed20260925/`の`model/training_manifest.json`と`model/training_metrics.jsonl`が学習記録。学習中の標準出力は`console.log`、評価中は`evaluation_console.log`へ保存する。全件評価後は`evaluation/evaluation_manifest.json`にsuite別の正解率・問題数・timeout等が入り、`evaluation/`内の問題別JSONLには生成コードと合否が残る。
+
+一括評価完了時の`<output-root>/comparison.json`には、全体の合格数・正解率、suite別結果、同じ実験内の`u3`との差`delta_vs_u3_percentage_points`を保存する。`u3`を省いた場合の差は`null`。部分評価が混じった場合は集計を拒否する。通常版から全体正解率が上がったかに加え、組合せ・反復・言い換えの個別得点も確認する。性能改善は実験前には保証しない。
+
+学習済みの3条件を後から評価、または中断した評価を再開する場合：
+
+```bash
+for variant in u3 u3_r2 u3_r3; do
+  uv run --group model-training --python 3.12.12 python \
+    scripts/model/evaluate_boku_nano.py \
+    --config "data/models/looped_1m_1epoch_run/${variant}_seed20260925/evaluation.yaml" \
+    --resume
+done
+```
+
+この手動実行では各モデルの評価manifestが更新される。一括runnerの`comparison.json`は再生成されない。runner自体は既存出力先への再実行を拒否するので、学習の再開には後述のtrainerの`--resume-from`を使う。
+
+CPUで3層×2周の学習経路だけを2更新確認する例：
+
+```bash
+OMP_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false \
+uv run --group model-training --python 3.12.12 python \
+  scripts/model/run_boku_nano_1m_looped_experiment.py \
+  --output-root data/models/looped_1m_cpu_smoke --variants u3_r2 \
+  --device cpu --dtype float32 \
+  --micro-batch-size 16 --gradient-accumulation-steps 32 --run --max-steps 2
+```
+
+## 0.426Mの小型モデルを学習する
 
 ```bash
 uv run --group model-training --python 3.12.12 python \

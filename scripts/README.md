@@ -29,7 +29,7 @@ scripts/
 
 ## Boku Nanoモデル評価
 
-1M未満の共有反復モデルの学習・比較・再開・ONNXは[Looped Boku-nano実行手順](../docs/procedures/boku_nano_looped_training.md)を参照する。
+既存1M・3層を保った1epoch反復比較は`model/run_boku_nano_1m_looped_experiment.py`を使う。通常版・2周・3周の学習と固定5集合評価を一括実行できる。小型化モデルも含む学習・比較・再開・ONNXは[Looped Boku-nano実行手順](../docs/procedures/boku_nano_looped_training.md)を参照する。
 
 学習済みモデルを5種類の固定テスト集合で生成・実行評価する。推論を行わず設定、hash、ZIP memberだけを確認する場合は次を実行する。
 
