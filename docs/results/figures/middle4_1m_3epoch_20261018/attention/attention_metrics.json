@@ -1,0 +1,40 @@
+{
+  "instruction": "整数リストxsと整数kを受け取り、k以下の値だけを残すsolve関数を書いてください。",
+  "prompt": "<|bos|><|task|>\n整数リストxsと整数kを受け取り、k以下の値だけを残すsolve関数を書いてください。\n<|code|>\n",
+  "models": [
+    {
+      "variant": "u3_middle4",
+      "label": "候補4・中間層4回",
+      "model_directory": "data/models/middle4_1m_3epoch_20261018/u3_middle4_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 4,
+      "effective_layers": 6,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    # k以下の値だけを残す\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    return result\n",
+      "generated_token_count": 12,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.34953086404129863,
+        "instruction": 0.30775443045422435,
+        "generated": 0.34271469665691257
+      },
+      "figure": "docs/results/figures/middle4_1m_3epoch_20261018/attention/u3_middle4_attention_heatmap.svg"
+    },
+    {
+      "variant": "u3_middle4_scaled025",
+      "label": "中間層4回・反復残差0.25倍",
+      "model_directory": "data/models/middle4_1m_3epoch_20261018/u3_middle4_scaled025_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 4,
+      "effective_layers": 6,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    result: list[int] = []\n    for x in xs:\n        if k >= x:\n            result += [x]\n    return result\n",
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.3464838751591742,
+        "instruction": 0.3610995543189347,
+        "generated": 0.2924165826290846
+      },
+      "figure": "docs/results/figures/middle4_1m_3epoch_20261018/attention/u3_middle4_scaled025_attention_heatmap.svg"
+    }
+  ]
+}

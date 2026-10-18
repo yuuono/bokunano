@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="252" viewBox="0 0 920 252" role="img">
+<title>loop回数別の参照領域</title>
+<desc>全生成step、全実効層、全headで平均したattention領域比率。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#172033}.title{font-size:21px;font-weight:600}.sub{font-size:12px;fill:#5b6577}.axis{font-size:12px}</style>
+<text x="460" y="31" text-anchor="middle" class="title">loop回数別の参照領域</text>
+<text x="460" y="52" text-anchor="middle" class="sub">全生成step・全head平均。attention配置の記述であり、因果的重要度ではない。</text>
+<text x="193" y="101" text-anchor="end" class="axis">候補4・中間層4回</text>
+<rect x="205.00" y="76" width="230.69" height="39" fill="#64748b"/>
+<text x="320.35" y="101" text-anchor="middle" fill="#fff" class="axis">35.0%</text>
+<rect x="435.69" y="76" width="203.12" height="39" fill="#2563eb"/>
+<text x="537.25" y="101" text-anchor="middle" fill="#fff" class="axis">30.8%</text>
+<rect x="638.81" y="76" width="226.19" height="39" fill="#f97316"/>
+<text x="751.90" y="101" text-anchor="middle" fill="#fff" class="axis">34.3%</text>
+<text x="193" y="163" text-anchor="end" class="axis">中間層4回・反復残差0.25倍</text>
+<rect x="205.00" y="138" width="228.68" height="39" fill="#64748b"/>
+<text x="319.34" y="163" text-anchor="middle" fill="#fff" class="axis">34.6%</text>
+<rect x="433.68" y="138" width="238.33" height="39" fill="#2563eb"/>
+<text x="552.84" y="163" text-anchor="middle" fill="#fff" class="axis">36.1%</text>
+<rect x="672.01" y="138" width="192.99" height="39" fill="#f97316"/>
+<text x="768.50" y="163" text-anchor="middle" fill="#fff" class="axis">29.2%</text>
+<rect x="205" y="215" width="14" height="14" fill="#64748b"/>
+<text x="227" y="227" class="axis">制御token</text>
+<rect x="390" y="215" width="14" height="14" fill="#2563eb"/>
+<text x="412" y="227" class="axis">日本語指示</text>
+<rect x="575" y="215" width="14" height="14" fill="#f97316"/>
+<text x="597" y="227" class="axis">生成済みコード</text>
+</svg>

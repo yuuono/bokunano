@@ -28,6 +28,7 @@ VARIANTS = {
     "u3_r2_scaled": (128, 256, 4, 3, 2, False, "none"),
     "u3_r2_add": (128, 256, 4, 3, 2, False, "add"),
     "u3_middle4": (128, 256, 4, 3, 4, False, "none"),
+    "u3_middle4_scaled025": (128, 256, 4, 3, 4, False, "none"),
     "u2": (128, 256, 4, 2, 1, False, "none"),
     "u1": (128, 256, 4, 1, 1, False, "none"),
     "l1": (128, 256, 4, 1, 3, False, "none"),
@@ -53,9 +54,16 @@ ONE_M_COMPARISON = ["u3", "u3_r2", "u3_r3"]
 # 修正4候補と、通常・元loop・日程変更のみ通常版の3対照
 REVISION_CANDIDATES = ["u3_r2_slow", "u3_r2_scaled", "u3_r2_add", "u3_middle4"]
 REVISION_COMPARISON = ["u3", "u3_r2", "u3_slow", *REVISION_CANDIDATES]
+MIDDLE4_3EPOCH_COMPARISON = ["u3_middle4", "u3_middle4_scaled025"]
 # 初期値は変えず、forwardの倍率または通過する層の順序だけを変える
-MODEL_OVERRIDES = {"u3_r2_scaled": {"residual_scale": 0.5},
-                   "u3_middle4": {"loop_pattern": "middle"}}
+MODEL_OVERRIDES = {
+    "u3_r2_scaled": {"residual_scale": 0.5},
+    "u3_middle4": {"loop_pattern": "middle", "recurrent_residual_scale": 1.0},
+    "u3_middle4_scaled025": {
+        "loop_pattern": "middle",
+        "recurrent_residual_scale": 0.25,
+    },
+}
 # warmup19更新は元の1epochと同じ。減衰終了だけを1131更新へ延ばす
 SLOW_SCHEDULE = {"learning_rate_schedule_steps": 1131, "warmup_steps": 19}
 
@@ -87,7 +95,8 @@ def build_configs(base: dict, evaluation_base: dict, variant: str, folder: Path,
     config["model_validation"]["expected_parameter_count"] = actual
     config["training"].update(epochs=epochs, seed=seed)
     # 旧実験には手を加えず、新しい日程候補だけを1epochへ固定する
-    if variant in ("u3_slow", *REVISION_CANDIDATES) and epochs != 1:
+    one_epoch_only = {"u3_slow", *REVISION_CANDIDATES} - {"u3_middle4"}
+    if variant in one_epoch_only and epochs != 1:
         raise ValueError("修正候補は1epoch比較です。epochs=1を指定してください")
     if variant in ("u3_slow", "u3_r2_slow"):
         config["optimizer"].update(SLOW_SCHEDULE)
@@ -120,12 +129,22 @@ def write_comparison(output: Path, jobs: list) -> dict:
                      "total": total, "pass_rate": passed / total, "suites": suites})
     # 今回一緒に学習した通常3層がある場合だけ差を算出する
     baseline = next((r for r in rows if r["variant"] == "u3"), None)
+    if baseline is None:
+        baseline = next((r for r in rows if r["variant"] == "u3_middle4"), None)
     for row in rows:
         row["delta_vs_u3_percentage_points"] = (
+            100 * (row["pass_rate"] - baseline["pass_rate"])
+            if baseline and baseline["variant"] == "u3" else None
+        )
+        row["baseline_variant"] = baseline["variant"] if baseline else None
+        row["delta_vs_baseline_percentage_points"] = (
             100 * (row["pass_rate"] - baseline["pass_rate"]) if baseline else None
         )
         # 修正候補は元loopとも比較し、日程変更では同日程の通常版も比べる
-        control_name = "u3_r2" if row["variant"] in REVISION_CANDIDATES else "u3"
+        if row["variant"] == "u3_middle4_scaled025":
+            control_name = "u3_middle4"
+        else:
+            control_name = "u3_r2" if row["variant"] in REVISION_CANDIDATES else "u3"
         matched_name = "u3_slow" if row["variant"] == "u3_r2_slow" else "u3"
         for label, name in (("control", control_name), ("matched_nonloop", matched_name)):
             control = next((r for r in rows if r["variant"] == name), None)
@@ -133,7 +152,7 @@ def write_comparison(output: Path, jobs: list) -> dict:
             row[f"delta_vs_{label}_percentage_points"] = (
                 100 * (row["pass_rate"] - control["pass_rate"]) if control else None)
     # 小さい言い換え集合が全体平均に埋もれないようsuite別値も残す
-    comparison = {"baseline": "u3" if baseline else None, "models": rows}
+    comparison = {"baseline": baseline["variant"] if baseline else None, "models": rows}
     (output / "comparison.json").write_text(
         json.dumps(comparison, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return comparison

@@ -49,6 +49,8 @@ data/final/evaluation/*.jsonl
 # data/models/
 data/models/looped_*/
 data/models/boku_nano_looped_*/
+data/models/middle4_*/
+data/models/composition_suite_*/
 
 # モデル生成コードを含む評価の生JSONLはローカル成果物として保持する。
 data/evaluations/

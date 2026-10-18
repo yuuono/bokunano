@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "status": "reconstructed because the 20261008 questions artifact is absent",
+  "question_count": 872,
+  "category_counts": {
+    "transfer_1op": 96,
+    "composition_2op": 100,
+    "transfer_3to2": 88,
+    "repeat_2": 96,
+    "composition_3op": 100,
+    "repeat_3": 96,
+    "general_4op": 100,
+    "repeat_abab": 100,
+    "repeat_4": 96
+  },
+  "test_case_count": 179,
+  "decoding": "greedy pass@1; no repair",
+  "passing_rule": "all 179 cases, contract, safe syntax, and input immutability",
+  "questions_sha256": "f8941b0bdfcea0461727eaaa049bc984ec40a500593dd5cb9147bcf0dfa45ace",
+  "test_cases_sha256": "0090a38d255848a813876ce3b64a8029603aa14e4181b453a89801b41ac67fc2",
+  "legacy_questions_sha256": "aa119fa2a9e8507136ad14a54b9d3d2e9043fd81af9e48251ef7f5c49c20f97f",
+  "sources": {
+    "data/archives/final_evaluation_dataset_records_2026-09-25.zip": "5b05b76202920f532cb379481d1cfab4adad74e936bdff518cb8b1750b33f0a1",
+    "data/archives/replacement_resolved_train_instructions_2026-09-25.zip": "7a90b24796e7ef2ad9d9510168e734df7556b18faa092a00f81466f96a9818c2",
+    "data/instruction_dictionaries/release/japanese_atomic_expressions.csv": "44a02a523464c488dafc2715b8227f60666b4e5eb6632030472635b7f5bf9914",
+    "config/build_approved_expression_dictionary.json": "32b3c5a9d1b8835979c28d4c806c6dbe645bb6f0a5cb665e848db1faf48e270d",
+    "data/semantic_asts/atomic_semantic_asts.jsonl": "23dbde0e7088a8c8f8792b31eab17929b0e6e031646a2539034927293073b53a"
+  }
+}

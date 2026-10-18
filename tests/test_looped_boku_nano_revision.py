@@ -103,8 +103,14 @@ class RevisionRunnerTest(unittest.TestCase):
                 torch.testing.assert_close(model.state_dict()[key], value, rtol=0, atol=0)
             if variant in REVISION_CANDIDATES:
                 self.assertEqual(model.config.effective_layers, 6)
-                with self.assertRaises(ValueError):
-                    build_configs(self.base, self.ev, variant, Path("/tmp/test"), 7, 3)
+                if variant == "u3_middle4":
+                    three, _ = build_configs(
+                        self.base, self.ev, variant, Path("/tmp/test"), 7, 3
+                    )
+                    self.assertEqual(three["training"]["epochs"], 3)
+                else:
+                    with self.assertRaises(ValueError):
+                        build_configs(self.base, self.ev, variant, Path("/tmp/test"), 7, 3)
 
     def test_schedule_preserves_warmup_and_legacy_resume(self):
         optimizer = self.base["optimizer"]

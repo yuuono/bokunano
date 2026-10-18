@@ -11,3 +11,7 @@ Boku1-nanoは、CNLから`solve(xs, k)`形式のPythonコードを生成する�
 - [課題仕様](boku1-nano.md)
 - [全ドキュメント](docs/README.md)
 - [3エポックモデル評価結果](docs/results/boku_nano_3epoch_evaluation_results.md)
+- [1M同一構造のlooped transformer・1エポック比較](docs/results/boku_nano_looped_1m_1epoch_20261016.md)
+- [1M looped transformer修正4候補・1エポック比較](docs/results/boku_nano_looped_revision_1m_1epoch_20261016.md)
+- [中間層4回反復・3エポック・反復残差1.0対0.25](docs/results/boku_nano_middle4_1m_3epoch_20261018.md)
+- [872問・組合せ汎化ベンチマーク（5モデル比較）](docs/results/composition_suite_872_v2_20261018.md)

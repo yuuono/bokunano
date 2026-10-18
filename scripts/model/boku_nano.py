@@ -49,6 +49,8 @@ class BokuNanoConfig:
     loop_pattern: str = "full"
     # attentionとFFNの各残差枝に、forwardのたびに掛ける固定倍率
     residual_scale: float = 1.0
+    # middle反復部だけの各残差枝に掛ける固定倍率
+    recurrent_residual_scale: float = 1.0
 
     @property
     def effective_layers(self) -> int:
@@ -95,6 +97,12 @@ class BokuNanoConfig:
         if (type(self.residual_scale) not in (int, float)
                 or not math.isfinite(self.residual_scale) or self.residual_scale <= 0):
             raise ValueError("residual_scaleは有限の正の数である必要があります")
+        if (type(self.recurrent_residual_scale) not in (int, float)
+                or not math.isfinite(self.recurrent_residual_scale)
+                or self.recurrent_residual_scale <= 0):
+            raise ValueError("recurrent_residual_scaleは有限の正の数である必要があります")
+        if self.recurrent_residual_scale != 1.0 and self.loop_pattern != "middle":
+            raise ValueError("recurrent_residual_scaleの変更にはloop_pattern=middleが必要です")
         # 語彙を正の値に限定する
         if self.vocab_size <= 0:
             # 不正値を明示する
@@ -314,19 +322,23 @@ class TransformerBlock(nn.Module):
         self.residual_scale = config.residual_scale
 
     # 二つのpre-norm残差更新を行う
-    def forward(self, hidden_states: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self, hidden_states: torch.Tensor, residual_scale: float | None = None
+    ) -> torch.Tensor:
         """attentionとFFNを残差接続付きで順に適用する。"""
 
+        # middle反復部だけ倍率を上書きでき、通常経路は保存設定の倍率を使う
+        scale = self.residual_scale if residual_scale is None else residual_scale
         # 正規化した入力のattention結果を残差加算する
         attention_update = self.attention(self.attention_norm(hidden_states))
         # 旧モデルの倍率1では計算経路をそのまま保つ
-        if self.residual_scale != 1.0:
-            attention_update = attention_update * self.residual_scale
+        if scale != 1.0:
+            attention_update = attention_update * scale
         hidden_states = hidden_states + attention_update
         # 正規化した中間値のFFN結果を残差加算する
         ffn_update = self.feed_forward(self.ffn_norm(hidden_states))
-        if self.residual_scale != 1.0:
-            ffn_update = ffn_update * self.residual_scale
+        if scale != 1.0:
+            ffn_update = ffn_update * scale
         hidden_states = hidden_states + ffn_update
         # 更新済み表現を返す
         return hidden_states
@@ -463,7 +475,13 @@ class BokuNanoForCausalLM(nn.Module):
             if loop_index > 0 and self.config.loop_input_mode == "add":
                 hidden_states = hidden_states + embedded
             for block in recurrent_blocks:
-                hidden_states = block(hidden_states)
+                if self.config.loop_pattern == "middle":
+                    hidden_states = block(
+                        hidden_states,
+                        residual_scale=self.config.recurrent_residual_scale,
+                    )
+                else:
+                    hidden_states = block(hidden_states)
         # middleの末尾は全反復が終わった後に一度だけ適用する
         if self.config.loop_pattern == "middle":
             hidden_states = self.blocks[-1](hidden_states)

@@ -1,0 +1,125 @@
+{
+  "instruction": "整数リストxsと整数kを受け取り、k以下の値だけを残すsolve関数を書いてください。",
+  "prompt": "<|bos|><|task|>\n整数リストxsと整数kを受け取り、k以下の値だけを残すsolve関数を書いてください。\n<|code|>\n",
+  "models": [
+    {
+      "variant": "u3",
+      "label": "通常 3層×1周",
+      "model_directory": "data/models/looped_revision_1m_1epoch_20261016/u3_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 1,
+      "effective_layers": 3,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value <= k:\n            result += [value]\n    return result\n",
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.3811859512701631,
+        "instruction": 0.3112278159707785,
+        "generated": 0.3075862269848585
+      },
+      "figure": "docs/results/figures/looped_revision_1m_1epoch_20261016/u3_attention_heatmap.svg"
+    },
+    {
+      "variant": "u3_r2",
+      "label": "元2周版",
+      "model_directory": "data/models/looped_revision_1m_1epoch_20261016/u3_r2_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 2,
+      "effective_layers": 6,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        if value % k == 0:\n            output += [value]\n    result = []\n    for value in output:\n        result += [abs(value)]\n    return result\n",
+      "generated_token_count": 15,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.32948528143266836,
+        "instruction": 0.2985483561952909,
+        "generated": 0.3719663545489311
+      },
+      "figure": "docs/results/figures/looped_revision_1m_1epoch_20261016/u3_r2_attention_heatmap.svg"
+    },
+    {
+      "variant": "u3_slow",
+      "label": "通常版・遅い減衰",
+      "model_directory": "data/models/looped_revision_1m_1epoch_20261016/u3_slow_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 1,
+      "effective_layers": 3,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for x in xs:\n        if k >= x:\n            output += [x]\n    return output\n",
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.3813677106052637,
+        "instruction": 0.3074917016550899,
+        "generated": 0.311140588670969
+      },
+      "figure": "docs/results/figures/looped_revision_1m_1epoch_20261016/u3_slow_attention_heatmap.svg"
+    },
+    {
+      "variant": "u3_r2_slow",
+      "label": "候補1・遅い減衰",
+      "model_directory": "data/models/looped_revision_1m_1epoch_20261016/u3_r2_slow_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 2,
+      "effective_layers": 6,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        if value % 2 == 0:\n            output += [value]\n    result: list[int] = []\n    for x in output:\n        result += [x + k]\n    return result\n",
+      "generated_token_count": 15,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.32723055022458236,
+        "instruction": 0.2973892773191134,
+        "generated": 0.3753801795343558
+      },
+      "figure": "docs/results/figures/looped_revision_1m_1epoch_20261016/u3_r2_slow_attention_heatmap.svg"
+    },
+    {
+      "variant": "u3_r2_scaled",
+      "label": "候補2・残差0.5倍",
+      "model_directory": "data/models/looped_revision_1m_1epoch_20261016/u3_r2_scaled_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 2,
+      "effective_layers": 6,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    output = [x for x in result if x % k == 0]\n    return output\n",
+      "generated_token_count": 14,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.3419552483995046,
+        "instruction": 0.3049984115308949,
+        "generated": 0.35304634512535166
+      },
+      "figure": "docs/results/figures/looped_revision_1m_1epoch_20261016/u3_r2_scaled_attention_heatmap.svg"
+    },
+    {
+      "variant": "u3_r2_add",
+      "label": "候補3・入力再注入",
+      "model_directory": "data/models/looped_revision_1m_1epoch_20261016/u3_r2_add_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 2,
+      "effective_layers": 6,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    result = []\n    for value in xs:\n        if value % k == 0:\n            result += [value]\n    output = []\n    for value in result:\n        output += [abs(value)]\n    return output\n",
+      "generated_token_count": 15,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.33153398024539155,
+        "instruction": 0.30217959843575953,
+        "generated": 0.3662864203254382
+      },
+      "figure": "docs/results/figures/looped_revision_1m_1epoch_20261016/u3_r2_add_attention_heatmap.svg"
+    },
+    {
+      "variant": "u3_middle4",
+      "label": "候補4・中間層4回",
+      "model_directory": "data/models/looped_revision_1m_1epoch_20261016/u3_middle4_seed20260925/model",
+      "n_layers": 3,
+      "n_loops": 4,
+      "effective_layers": 12,
+      "generated_text": "def solve(xs: list[int], k: int) -> list[int]:\n    output: list[int] = []\n    for value in xs:\n        if value == 0:\n            output += [value]\n    return output\n",
+      "generated_token_count": 10,
+      "reached_eos": true,
+      "region_attention": {
+        "control": 0.3890523426234722,
+        "instruction": 0.3129077203571796,
+        "generated": 0.2980399318039417
+      },
+      "figure": "docs/results/figures/looped_revision_1m_1epoch_20261016/u3_middle4_attention_heatmap.svg"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="590" viewBox="0 0 1080 590" role="img">
+<title>組合せ汎化・言い換えベンチマーク</title>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#172033}.title{font-size:22px;font-weight:650}.sub{font-size:12px;fill:#5b6577}.axis{font-size:11px}.value{font-size:11px;font-weight:650}.grid{stroke:#dce3ec;stroke-width:1}</style>
+<text x="540" y="32" text-anchor="middle" class="title">組合せ汎化・言い換えベンチマーク</text>
+<text x="540" y="54" text-anchor="middle" class="sub">実行正解率。集合サイズが異なるため列間ではなく、各列内で2条件を比較。</text>
+<line x1="92" y1="492.0" x2="1032" y2="492.0" class="grid"/>
+<text x="82" y="496.0" text-anchor="end" class="axis">0%</text>
+<line x1="92" y1="412.0" x2="1032" y2="412.0" class="grid"/>
+<text x="82" y="416.0" text-anchor="end" class="axis">20%</text>
+<line x1="92" y1="332.0" x2="1032" y2="332.0" class="grid"/>
+<text x="82" y="336.0" text-anchor="end" class="axis">40%</text>
+<line x1="92" y1="252.0" x2="1032" y2="252.0" class="grid"/>
+<text x="82" y="256.0" text-anchor="end" class="axis">60%</text>
+<line x1="92" y1="172.0" x2="1032" y2="172.0" class="grid"/>
+<text x="82" y="176.0" text-anchor="end" class="axis">80%</text>
+<line x1="92" y1="92.0" x2="1032" y2="92.0" class="grid"/>
+<text x="82" y="96.0" text-anchor="end" class="axis">100%</text>
+<rect x="127.5" y="99.2" width="54" height="392.8" fill="#2563eb"/>
+<text x="154.5" y="105.0" text-anchor="middle" class="value">98.21%</text>
+<rect x="190.5" y="100.3" width="54" height="391.7" fill="#e11d48"/>
+<text x="217.5" y="105.0" text-anchor="middle" class="value">97.92%</text>
+<text x="186.0" y="517" text-anchor="middle" class="axis">組合せ汎化</text>
+<text x="186.0" y="533" text-anchor="middle" class="axis">13,400問</text>
+<rect x="315.5" y="345.3" width="54" height="146.7" fill="#2563eb"/>
+<text x="342.5" y="338.3" text-anchor="middle" class="value">36.67%</text>
+<rect x="378.5" y="305.3" width="54" height="186.7" fill="#e11d48"/>
+<text x="405.5" y="298.3" text-anchor="middle" class="value">46.67%</text>
+<text x="374.0" y="517" text-anchor="middle" class="axis">未学習言い換え</text>
+<text x="374.0" y="533" text-anchor="middle" class="axis">30問</text>
+<rect x="503.5" y="284.0" width="54" height="208.0" fill="#2563eb"/>
+<text x="530.5" y="277.0" text-anchor="middle" class="value">52.00%</text>
+<rect x="566.5" y="276.0" width="54" height="216.0" fill="#e11d48"/>
+<text x="593.5" y="269.0" text-anchor="middle" class="value">54.00%</text>
+<text x="562.0" y="517" text-anchor="middle" class="axis">自然文dev50</text>
+<text x="562.0" y="533" text-anchor="middle" class="axis">50問</text>
+<rect x="691.5" y="492.0" width="54" height="0.0" fill="#2563eb"/>
+<text x="718.5" y="485.0" text-anchor="middle" class="value">0.00%</text>
+<rect x="754.5" y="492.0" width="54" height="0.0" fill="#e11d48"/>
+<text x="781.5" y="485.0" text-anchor="middle" class="value">0.00%</text>
+<text x="750.0" y="517" text-anchor="middle" class="axis">dev50新表現</text>
+<text x="750.0" y="533" text-anchor="middle" class="axis">C10・5問</text>
+<rect x="879.5" y="96.7" width="54" height="395.3" fill="#2563eb"/>
+<text x="906.5" y="105.0" text-anchor="middle" class="value">98.82%</text>
+<rect x="942.5" y="96.7" width="54" height="395.3" fill="#e11d48"/>
+<text x="969.5" y="105.0" text-anchor="middle" class="value">98.82%</text>
+<text x="938.0" y="517" text-anchor="middle" class="axis">正式5集合</text>
+<text x="938.0" y="533" text-anchor="middle" class="axis">84,550問</text>
+<rect x="350" y="555" width="16" height="16" fill="#2563eb"/>
+<text x="374" y="568" class="axis">反復残差 1.0</text>
+<rect x="650" y="555" width="16" height="16" fill="#e11d48"/>
+<text x="674" y="568" class="axis">反復残差 0.25</text>
+</svg>

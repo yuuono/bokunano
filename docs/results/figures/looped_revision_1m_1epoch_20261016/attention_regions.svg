@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="562" viewBox="0 0 920 562" role="img">
+<title>loop回数別の参照領域</title>
+<desc>全生成step、全実効層、全headで平均したattention領域比率。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#172033}.title{font-size:21px;font-weight:600}.sub{font-size:12px;fill:#5b6577}.axis{font-size:12px}</style>
+<text x="460" y="31" text-anchor="middle" class="title">loop回数別の参照領域</text>
+<text x="460" y="52" text-anchor="middle" class="sub">全生成step・全head平均。attention配置の記述であり、因果的重要度ではない。</text>
+<text x="193" y="101" text-anchor="end" class="axis">通常 3層×1周</text>
+<rect x="205.00" y="76" width="251.58" height="39" fill="#64748b"/>
+<text x="330.79" y="101" text-anchor="middle" fill="#fff" class="axis">38.1%</text>
+<rect x="456.58" y="76" width="205.41" height="39" fill="#2563eb"/>
+<text x="559.29" y="101" text-anchor="middle" fill="#fff" class="axis">31.1%</text>
+<rect x="661.99" y="76" width="203.01" height="39" fill="#f97316"/>
+<text x="763.50" y="101" text-anchor="middle" fill="#fff" class="axis">30.8%</text>
+<text x="193" y="163" text-anchor="end" class="axis">元2周版</text>
+<rect x="205.00" y="138" width="217.46" height="39" fill="#64748b"/>
+<text x="313.73" y="163" text-anchor="middle" fill="#fff" class="axis">32.9%</text>
+<rect x="422.46" y="138" width="197.04" height="39" fill="#2563eb"/>
+<text x="520.98" y="163" text-anchor="middle" fill="#fff" class="axis">29.9%</text>
+<rect x="619.50" y="138" width="245.50" height="39" fill="#f97316"/>
+<text x="742.25" y="163" text-anchor="middle" fill="#fff" class="axis">37.2%</text>
+<text x="193" y="225" text-anchor="end" class="axis">通常版・遅い減衰</text>
+<rect x="205.00" y="200" width="251.70" height="39" fill="#64748b"/>
+<text x="330.85" y="225" text-anchor="middle" fill="#fff" class="axis">38.1%</text>
+<rect x="456.70" y="200" width="202.94" height="39" fill="#2563eb"/>
+<text x="558.17" y="225" text-anchor="middle" fill="#fff" class="axis">30.7%</text>
+<rect x="659.65" y="200" width="205.35" height="39" fill="#f97316"/>
+<text x="762.32" y="225" text-anchor="middle" fill="#fff" class="axis">31.1%</text>
+<text x="193" y="287" text-anchor="end" class="axis">候補1・遅い減衰</text>
+<rect x="205.00" y="262" width="215.97" height="39" fill="#64748b"/>
+<text x="312.99" y="287" text-anchor="middle" fill="#fff" class="axis">32.7%</text>
+<rect x="420.97" y="262" width="196.28" height="39" fill="#2563eb"/>
+<text x="519.11" y="287" text-anchor="middle" fill="#fff" class="axis">29.7%</text>
+<rect x="617.25" y="262" width="247.75" height="39" fill="#f97316"/>
+<text x="741.12" y="287" text-anchor="middle" fill="#fff" class="axis">37.5%</text>
+<text x="193" y="349" text-anchor="end" class="axis">候補2・残差0.5倍</text>
+<rect x="205.00" y="324" width="225.69" height="39" fill="#64748b"/>
+<text x="317.85" y="349" text-anchor="middle" fill="#fff" class="axis">34.2%</text>
+<rect x="430.69" y="324" width="201.30" height="39" fill="#2563eb"/>
+<text x="531.34" y="349" text-anchor="middle" fill="#fff" class="axis">30.5%</text>
+<rect x="631.99" y="324" width="233.01" height="39" fill="#f97316"/>
+<text x="748.49" y="349" text-anchor="middle" fill="#fff" class="axis">35.3%</text>
+<text x="193" y="411" text-anchor="end" class="axis">候補3・入力再注入</text>
+<rect x="205.00" y="386" width="218.81" height="39" fill="#64748b"/>
+<text x="314.41" y="411" text-anchor="middle" fill="#fff" class="axis">33.2%</text>
+<rect x="423.81" y="386" width="199.44" height="39" fill="#2563eb"/>
+<text x="523.53" y="411" text-anchor="middle" fill="#fff" class="axis">30.2%</text>
+<rect x="623.25" y="386" width="241.75" height="39" fill="#f97316"/>
+<text x="744.13" y="411" text-anchor="middle" fill="#fff" class="axis">36.6%</text>
+<text x="193" y="473" text-anchor="end" class="axis">候補4・中間層4回</text>
+<rect x="205.00" y="448" width="256.77" height="39" fill="#64748b"/>
+<text x="333.39" y="473" text-anchor="middle" fill="#fff" class="axis">38.9%</text>
+<rect x="461.77" y="448" width="206.52" height="39" fill="#2563eb"/>
+<text x="565.03" y="473" text-anchor="middle" fill="#fff" class="axis">31.3%</text>
+<rect x="668.29" y="448" width="196.71" height="39" fill="#f97316"/>
+<text x="766.65" y="473" text-anchor="middle" fill="#fff" class="axis">29.8%</text>
+<rect x="205" y="525" width="14" height="14" fill="#64748b"/>
+<text x="227" y="537" class="axis">制御token</text>
+<rect x="390" y="525" width="14" height="14" fill="#2563eb"/>
+<text x="412" y="537" class="axis">日本語指示</text>
+<rect x="575" y="525" width="14" height="14" fill="#f97316"/>
+<text x="597" y="537" class="axis">生成済みコード</text>
+</svg>

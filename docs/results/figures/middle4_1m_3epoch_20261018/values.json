@@ -1,0 +1,813 @@
+{
+  "losses": {
+    "u3_middle4": {
+      "train": [
+        [
+          20,
+          7.405685186386108
+        ],
+        [
+          40,
+          6.691002130508423
+        ],
+        [
+          60,
+          5.83898229598999
+        ],
+        [
+          80,
+          4.991774010658264
+        ],
+        [
+          100,
+          4.229552578926087
+        ],
+        [
+          120,
+          3.5573679327964784
+        ],
+        [
+          140,
+          2.9675854444503784
+        ],
+        [
+          160,
+          2.4793609142303468
+        ],
+        [
+          180,
+          2.1210262060165403
+        ],
+        [
+          200,
+          1.8556552827358246
+        ],
+        [
+          220,
+          1.6693674743175506
+        ],
+        [
+          240,
+          1.5343886852264403
+        ],
+        [
+          260,
+          1.4162946701049806
+        ],
+        [
+          280,
+          1.3165185153484344
+        ],
+        [
+          300,
+          1.2291215062141418
+        ],
+        [
+          320,
+          1.1512060046195984
+        ],
+        [
+          340,
+          1.0837762951850891
+        ],
+        [
+          360,
+          1.0250734239816666
+        ],
+        [
+          380,
+          0.9726481109857559
+        ],
+        [
+          400,
+          0.9186178535223007
+        ],
+        [
+          420,
+          0.8723973006010055
+        ],
+        [
+          440,
+          0.8315542131662369
+        ],
+        [
+          460,
+          0.7918633669614792
+        ],
+        [
+          480,
+          0.758264085650444
+        ],
+        [
+          500,
+          0.7237506866455078
+        ],
+        [
+          520,
+          0.69605732858181
+        ],
+        [
+          540,
+          0.6712018191814423
+        ],
+        [
+          560,
+          0.6428970128297806
+        ],
+        [
+          580,
+          0.6227911055088043
+        ],
+        [
+          600,
+          0.6058543890714645
+        ],
+        [
+          620,
+          0.5854499518871308
+        ],
+        [
+          640,
+          0.5723415970802307
+        ],
+        [
+          660,
+          0.5567201137542724
+        ],
+        [
+          680,
+          0.545355686545372
+        ],
+        [
+          700,
+          0.5342177450656891
+        ],
+        [
+          720,
+          0.5227556139230728
+        ],
+        [
+          740,
+          0.5185277462005615
+        ],
+        [
+          760,
+          0.5111249044537545
+        ],
+        [
+          780,
+          0.49926934242248533
+        ],
+        [
+          800,
+          0.4977080300450325
+        ],
+        [
+          820,
+          0.49230060130357745
+        ],
+        [
+          840,
+          0.48772806078195574
+        ],
+        [
+          860,
+          0.48313080370426176
+        ],
+        [
+          880,
+          0.4790750339627266
+        ],
+        [
+          900,
+          0.47784584015607834
+        ],
+        [
+          920,
+          0.47502754628658295
+        ],
+        [
+          940,
+          0.4721818849444389
+        ],
+        [
+          960,
+          0.47078813016414645
+        ],
+        [
+          980,
+          0.4674491435289383
+        ],
+        [
+          1000,
+          0.46495464742183684
+        ],
+        [
+          1020,
+          0.46404785066843035
+        ],
+        [
+          1040,
+          0.4613305673003197
+        ],
+        [
+          1060,
+          0.46352650672197343
+        ],
+        [
+          1080,
+          0.46269182711839674
+        ],
+        [
+          1100,
+          0.4605049043893814
+        ],
+        [
+          1120,
+          0.45969444066286086
+        ],
+        [
+          1131,
+          0.4590571631084789
+        ]
+      ],
+      "final_train_loss": 0.4590571631084789,
+      "validation_loss": 0.45555865671103296,
+      "validation_perplexity": 1.5770541688777284
+    },
+    "u3_middle4_scaled025": {
+      "train": [
+        [
+          20,
+          7.403375792503357
+        ],
+        [
+          40,
+          6.684386563301087
+        ],
+        [
+          60,
+          5.839899182319641
+        ],
+        [
+          80,
+          4.97998194694519
+        ],
+        [
+          100,
+          4.2157693147659305
+        ],
+        [
+          120,
+          3.536084246635437
+        ],
+        [
+          140,
+          2.9365145206451415
+        ],
+        [
+          160,
+          2.4452794551849366
+        ],
+        [
+          180,
+          2.087423229217529
+        ],
+        [
+          200,
+          1.8214756369590759
+        ],
+        [
+          220,
+          1.6349729478359223
+        ],
+        [
+          240,
+          1.489589023590088
+        ],
+        [
+          260,
+          1.3714662671089173
+        ],
+        [
+          280,
+          1.2706921219825744
+        ],
+        [
+          300,
+          1.1864843547344208
+        ],
+        [
+          320,
+          1.1106675505638122
+        ],
+        [
+          340,
+          1.0420685946941375
+        ],
+        [
+          360,
+          0.982387375831604
+        ],
+        [
+          380,
+          0.9309365391731262
+        ],
+        [
+          400,
+          0.8787892073392868
+        ],
+        [
+          420,
+          0.833741107583046
+        ],
+        [
+          440,
+          0.7961084961891174
+        ],
+        [
+          460,
+          0.7578641206026078
+        ],
+        [
+          480,
+          0.7247998207807541
+        ],
+        [
+          500,
+          0.6904269248247147
+        ],
+        [
+          520,
+          0.6629611611366272
+        ],
+        [
+          540,
+          0.6374485194683075
+        ],
+        [
+          560,
+          0.6101073950529099
+        ],
+        [
+          580,
+          0.5919188737869263
+        ],
+        [
+          600,
+          0.5747472643852234
+        ],
+        [
+          620,
+          0.5573836743831635
+        ],
+        [
+          640,
+          0.5453484624624252
+        ],
+        [
+          660,
+          0.5315366506576538
+        ],
+        [
+          680,
+          0.5216252624988555
+        ],
+        [
+          700,
+          0.511903703212738
+        ],
+        [
+          720,
+          0.5036026760935783
+        ],
+        [
+          740,
+          0.5005032792687416
+        ],
+        [
+          760,
+          0.49416272938251493
+        ],
+        [
+          780,
+          0.4829732567071915
+        ],
+        [
+          800,
+          0.483068522810936
+        ],
+        [
+          820,
+          0.4778523057699203
+        ],
+        [
+          840,
+          0.4739708811044693
+        ],
+        [
+          860,
+          0.470041723549366
+        ],
+        [
+          880,
+          0.4669791877269745
+        ],
+        [
+          900,
+          0.4661537677049637
+        ],
+        [
+          920,
+          0.46435777097940445
+        ],
+        [
+          940,
+          0.462032550573349
+        ],
+        [
+          960,
+          0.45999604016542434
+        ],
+        [
+          980,
+          0.4572848126292229
+        ],
+        [
+          1000,
+          0.4553782925009727
+        ],
+        [
+          1020,
+          0.4545467898249626
+        ],
+        [
+          1040,
+          0.45161919146776197
+        ],
+        [
+          1060,
+          0.45441118627786636
+        ],
+        [
+          1080,
+          0.4536490082740784
+        ],
+        [
+          1100,
+          0.45194489508867264
+        ],
+        [
+          1120,
+          0.45093507170677183
+        ],
+        [
+          1131,
+          0.4502873827110637
+        ]
+      ],
+      "final_train_loss": 0.4502873827110637,
+      "validation_loss": 0.4475823847504873,
+      "validation_perplexity": 1.564525189628543
+    }
+  },
+  "evaluation": {
+    "baseline": "u3_middle4",
+    "models": [
+      {
+        "variant": "u3_middle4",
+        "parameter_count": 1016704,
+        "effective_layers": 6,
+        "passed": 83556,
+        "total": 84550,
+        "pass_rate": 0.9882436428149024,
+        "suites": {
+          "boundary": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.9768518518518519,
+                "passed": 1055,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.9893728222996516,
+                "passed": 22716,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 15,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.9888103161397671,
+            "passed_record_count": 23771,
+            "status": "completed",
+            "suite": "boundary",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 1
+          },
+          "compositional": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.985,
+                "passed": 197,
+                "total": 200
+              },
+              "3": {
+                "pass_rate": 0.9820454545454546,
+                "passed": 12963,
+                "total": 13200
+              }
+            },
+            "evaluated_record_count": 13400,
+            "exact_code_match_count": 9,
+            "expected_record_count": 13400,
+            "new_record_count": 13400,
+            "pass_rate": 0.982089552238806,
+            "passed_record_count": 13160,
+            "status": "completed",
+            "suite": "compositional",
+            "termination_counts": {
+              "eos": 13400
+            },
+            "timeout_count": 0
+          },
+          "normal": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.9768518518518519,
+                "passed": 1055,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.9893728222996516,
+                "passed": 22716,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 15,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.9888103161397671,
+            "passed_record_count": 23771,
+            "status": "completed",
+            "suite": "normal",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 1
+          },
+          "paraphrase": {
+            "by_operation_count": {
+              "1": {
+                "pass_rate": 0.36666666666666664,
+                "passed": 11,
+                "total": 30
+              }
+            },
+            "evaluated_record_count": 30,
+            "exact_code_match_count": 0,
+            "expected_record_count": 30,
+            "new_record_count": 30,
+            "pass_rate": 0.36666666666666664,
+            "passed_record_count": 11,
+            "status": "completed",
+            "suite": "paraphrase",
+            "termination_counts": {
+              "eos": 30
+            },
+            "timeout_count": 0
+          },
+          "repetition": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.9833333333333333,
+                "passed": 472,
+                "total": 480
+              },
+              "3": {
+                "pass_rate": 0.9916223404255319,
+                "passed": 22371,
+                "total": 22560
+              }
+            },
+            "evaluated_record_count": 23040,
+            "exact_code_match_count": 20,
+            "expected_record_count": 23040,
+            "new_record_count": 23040,
+            "pass_rate": 0.9914496527777777,
+            "passed_record_count": 22843,
+            "status": "completed",
+            "suite": "repetition",
+            "termination_counts": {
+              "eos": 23040
+            },
+            "timeout_count": 0
+          }
+        },
+        "delta_vs_u3_percentage_points": null,
+        "baseline_variant": "u3_middle4",
+        "delta_vs_baseline_percentage_points": 0.0,
+        "control_variant": "u3_r2",
+        "delta_vs_control_percentage_points": null,
+        "matched_nonloop_variant": "u3",
+        "delta_vs_matched_nonloop_percentage_points": null
+      },
+      {
+        "variant": "u3_middle4_scaled025",
+        "parameter_count": 1016704,
+        "effective_layers": 6,
+        "passed": 83550,
+        "total": 84550,
+        "pass_rate": 0.9881726788882318,
+        "suites": {
+          "boundary": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.9768518518518519,
+                "passed": 1055,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.9894599303135888,
+                "passed": 22718,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 14,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.9888935108153079,
+            "passed_record_count": 23773,
+            "status": "completed",
+            "suite": "boundary",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 0
+          },
+          "compositional": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.995,
+                "passed": 199,
+                "total": 200
+              },
+              "3": {
+                "pass_rate": 0.9789393939393939,
+                "passed": 12922,
+                "total": 13200
+              }
+            },
+            "evaluated_record_count": 13400,
+            "exact_code_match_count": 9,
+            "expected_record_count": 13400,
+            "new_record_count": 13400,
+            "pass_rate": 0.9791791044776119,
+            "passed_record_count": 13121,
+            "status": "completed",
+            "suite": "compositional",
+            "termination_counts": {
+              "eos": 13400
+            },
+            "timeout_count": 0
+          },
+          "normal": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.9768518518518519,
+                "passed": 1055,
+                "total": 1080
+              },
+              "3": {
+                "pass_rate": 0.9894599303135888,
+                "passed": 22718,
+                "total": 22960
+              }
+            },
+            "evaluated_record_count": 24040,
+            "exact_code_match_count": 14,
+            "expected_record_count": 24040,
+            "new_record_count": 24040,
+            "pass_rate": 0.9888935108153079,
+            "passed_record_count": 23773,
+            "status": "completed",
+            "suite": "normal",
+            "termination_counts": {
+              "eos": 24040
+            },
+            "timeout_count": 0
+          },
+          "paraphrase": {
+            "by_operation_count": {
+              "1": {
+                "pass_rate": 0.4666666666666667,
+                "passed": 14,
+                "total": 30
+              }
+            },
+            "evaluated_record_count": 30,
+            "exact_code_match_count": 0,
+            "expected_record_count": 30,
+            "new_record_count": 30,
+            "pass_rate": 0.4666666666666667,
+            "passed_record_count": 14,
+            "status": "completed",
+            "suite": "paraphrase",
+            "termination_counts": {
+              "eos": 30
+            },
+            "timeout_count": 0
+          },
+          "repetition": {
+            "by_operation_count": {
+              "2": {
+                "pass_rate": 0.9833333333333333,
+                "passed": 472,
+                "total": 480
+              },
+              "3": {
+                "pass_rate": 0.9927748226950355,
+                "passed": 22397,
+                "total": 22560
+              }
+            },
+            "evaluated_record_count": 23040,
+            "exact_code_match_count": 25,
+            "expected_record_count": 23040,
+            "new_record_count": 23040,
+            "pass_rate": 0.992578125,
+            "passed_record_count": 22869,
+            "status": "completed",
+            "suite": "repetition",
+            "termination_counts": {
+              "eos": 23040
+            },
+            "timeout_count": 0
+          }
+        },
+        "delta_vs_u3_percentage_points": null,
+        "baseline_variant": "u3_middle4",
+        "delta_vs_baseline_percentage_points": -0.007096392667060858,
+        "control_variant": "u3_middle4",
+        "delta_vs_control_percentage_points": -0.007096392667060858,
+        "matched_nonloop_variant": "u3",
+        "delta_vs_matched_nonloop_percentage_points": null
+      }
+    ]
+  },
+  "rates": {
+    "u3_middle4": {
+      "compositional": 98.2089552238806,
+      "paraphrase": 36.666666666666664,
+      "dev50": 52.0,
+      "dev50_c10": 0.0,
+      "all": 98.82436428149023
+    },
+    "u3_middle4_scaled025": {
+      "compositional": 97.91791044776119,
+      "paraphrase": 46.666666666666664,
+      "dev50": 54.0,
+      "dev50_c10": 0.0,
+      "all": 98.81726788882318
+    }
+  },
+  "dev50": {
+    "u3_middle4": {
+      "passed": 26,
+      "total": 50,
+      "categories": {
+        "C01": 4,
+        "C02": 1,
+        "C03": 2,
+        "C04": 1,
+        "C05": 0,
+        "C06": 4,
+        "C07": 5,
+        "C08": 4,
+        "C09": 5,
+        "C10": 0
+      }
+    },
+    "u3_middle4_scaled025": {
+      "passed": 27,
+      "total": 50,
+      "categories": {
+        "C01": 3,
+        "C02": 1,
+        "C03": 1,
+        "C04": 3,
+        "C05": 1,
+        "C06": 4,
+        "C07": 5,
+        "C08": 4,
+        "C09": 5,
+        "C10": 0
+      }
+    }
+  }
+}

@@ -59,6 +59,12 @@ docs/
 
 ## 結果
 
+- [`results/boku_nano_looped_revision_1m_1epoch_20261016.md`](results/boku_nano_looped_revision_1m_1epoch_20261016.md): 1M loop修正4候補と3対照の1 epoch比較。loss、固定5集合84,550件、周回別attentionを評価
+- [`results/boku_nano_middle4_1m_3epoch_20261018.md`](results/boku_nano_middle4_1m_3epoch_20261018.md): 中間層4回反復を3 epoch学習し、反復部の残差枝1.0倍と0.25倍をloss・組合せ汎化・言い換え・dev50・attentionで比較
+- [`results/composition_suite_872_v2_20261018.md`](results/composition_suite_872_v2_20261018.md): 9カテゴリ・872問を5モデルで再評価。固定179入力、カテゴリ別比較図、再構成版のhashと再現方法
+
+- [`results/boku_nano_looped_1m_1epoch_20261016.md`](results/boku_nano_looped_1m_1epoch_20261016.md): 既存1Mの3物理層・parameter数を維持した1周／2周／3周の1 epoch比較。loss、固定5集合84,550件、周回別attentionを評価
+
 - [`results/browser_100/dev50_20261006_qwen3_1_7b.md`](results/browser_100/dev50_20261006_qwen3_1_7b.md): Qwen3-1.7Bの条件A・50問追加評価（公式非量子化重みをFP16でMacのMPS実行）、全6モデル比較
 
 - [`results/browser_100/dev50_20261006_qwen3_4b_awq.md`](results/browser_100/dev50_20261006_qwen3_4b_awq.md): Qwen3-4B-AWQの条件A・50問追加評価（公式AWQ重みをFP16展開しMacのMPSで実行）

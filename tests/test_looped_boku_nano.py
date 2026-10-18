@@ -16,7 +16,8 @@ import yaml
 from scripts.model.boku_nano import BokuNanoConfig, BokuNanoForCausalLM, model_from_checkpoint
 from scripts.model.train_boku_nano import save_final_weights, save_training_checkpoint
 from scripts.model.run_boku_nano_looped_experiment import (
-    ROOT, VARIANTS, ONE_M_COMPARISON, REVISION_CANDIDATES, build_configs, parameter_count, write_comparison,
+    ROOT, VARIANTS, ONE_M_COMPARISON, REVISION_CANDIDATES,
+    MIDDLE4_3EPOCH_COMPARISON, build_configs, parameter_count, write_comparison,
 )
 
 
@@ -33,6 +34,7 @@ class LoopedModelTest(unittest.TestCase):
         values.pop("loop_input_mode")
         values.pop("loop_pattern")
         values.pop("residual_scale")
+        values.pop("recurrent_residual_scale")
         config = BokuNanoConfig.from_dict(values)
         self.assertEqual(config.n_loops, 1)
         model = BokuNanoForCausalLM(config)
@@ -53,6 +55,33 @@ class LoopedModelTest(unittest.TestCase):
                 replace(self.config, n_loops=value).validate()
         with self.assertRaises(ValueError):
             replace(self.config, loop_input_mode="bad").validate()
+        for value in [0, -1, True, float("inf"), "0.25"]:
+            with self.subTest(recurrent_residual_scale=value), self.assertRaises(ValueError):
+                replace(self.config, recurrent_residual_scale=value).validate()
+        with self.assertRaises(ValueError):
+            replace(self.config, recurrent_residual_scale=0.25).validate()
+
+    def test_middle_recurrent_residual_scale_changes_only_repeated_block(self):
+        config = BokuNanoConfig(
+            vocab_size=32, d_model=16, n_layers=3, n_heads=2, d_ff=32,
+            context_length=16, n_loops=4, loop_pattern="middle",
+            recurrent_residual_scale=0.25,
+        )
+        model = BokuNanoForCausalLM(config)
+        calls = []
+        originals = [block.forward for block in model.blocks]
+        for index, block in enumerate(model.blocks):
+            original = originals[index]
+
+            def recorded(hidden, residual_scale=None, *, i=index, call=original):
+                calls.append((i, residual_scale))
+                return call(hidden, residual_scale=residual_scale)
+
+            block.forward = recorded
+        with torch.inference_mode():
+            model(self.ids)
+        self.assertEqual(calls, [(0, None), (1, 0.25), (1, 0.25),
+                                 (1, 0.25), (1, 0.25), (2, None)])
 
     def test_unrolled_reference_outputs_and_summed_gradients(self):
         # 独立した展開位置の勾配の和と共有Parameterの勾配を照合する
@@ -231,7 +260,8 @@ class LoopedRunnerTest(unittest.TestCase):
                     "lt1": 426368, "lt2": 590464, "f128": 377216,
                     "w96": 289056, "w64": 172224}
         for name in VARIANTS:
-            epochs = 1 if name in ["u3_slow", *REVISION_CANDIDATES] else 3
+            epochs = 1 if name in (["u3_slow", *REVISION_CANDIDATES]
+                                   ) and name != "u3_middle4" else 3
             config, ev = build_configs(base, evaluation, name, Path("/tmp/test-loop") / name, 7, epochs)
             model_config = BokuNanoConfig.from_dict(config["model"])
             self.assertEqual(config["training"]["epochs"], epochs)
@@ -241,6 +271,24 @@ class LoopedRunnerTest(unittest.TestCase):
             if name in expected:
                 self.assertEqual(parameter_count(model_config), expected[name])
         self.assertNotIn("n_loops", base["model"])
+
+    def test_middle4_three_epoch_cli_defaults(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "plan"
+            command = [
+                sys.executable,
+                str(ROOT / "scripts/model/run_boku_nano_middle4_3epoch_experiment.py"),
+                "--output-root", str(output),
+            ]
+            subprocess.run(command, check=True, capture_output=True)
+            manifest = json.loads((output / "manifest.json").read_text())
+            self.assertEqual(manifest["epochs"], 3)
+            self.assertEqual([job["variant"] for job in manifest["jobs"]],
+                             MIDDLE4_3EPOCH_COMPARISON)
+            self.assertEqual([job["effective_layers"] for job in manifest["jobs"]], [6, 6])
+            scales = [job["model_config"]["recurrent_residual_scale"]
+                      for job in manifest["jobs"]]
+            self.assertEqual(scales, [1.0, 0.25])
 
     def test_cli_generates_without_training_and_refuses_overwrite(self):
         with tempfile.TemporaryDirectory() as directory:

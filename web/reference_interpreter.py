@@ -26,10 +26,10 @@ def interpret(semantic_ast: dict, xs: list[int], k: int) -> list[int]:
     if set(semantic_ast) == {"sequence"}:
         # 実行すべき操作のリストを取り出す
         sequence = semantic_ast["sequence"]
-        # リスト型かつ1〜3要素かを確認する
-        if not isinstance(sequence, list) or not 1 <= len(sequence) <= 3:
+        # Webと組合せ汎化評価が扱う上限に合わせ、1〜4要素か確認する
+        if not isinstance(sequence, list) or not 1 <= len(sequence) <= 4:
             # 条件を満たさなければエラーにする
-            raise ValueError("sequenceには1〜3個の操作が必要です")
+            raise ValueError("sequenceには1〜4個の操作が必要です")
     # それまでの条件に該当しない場合を処理する
     else:
         # 単独操作のASTは1要素のリストに包んで同じ処理に流す

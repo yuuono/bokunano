@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="540" viewBox="0 0 1120 540" role="img">
+<title>1M loop修正4候補の固定5集合実行評価</title>
+<desc>各セルは生成コードの実行正解率。濃いほど高い。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#172033}.title{font-size:22px;font-weight:600}.sub{font-size:12px;fill:#5b6577}.axis{font-size:11px}.value{font-size:12px;font-weight:600}</style>
+<text x="560" y="34" text-anchor="middle" class="title">固定5集合の実行正解率</text>
+<text x="560" y="57" text-anchor="middle" class="sub">全84,550件。候補は元2周版から一要因だけ変更。</text>
+<text x="313.0" y="83" text-anchor="middle" class="axis">boundary</text>
+<text x="449.0" y="83" text-anchor="middle" class="axis">compositional</text>
+<text x="585.0" y="83" text-anchor="middle" class="axis">normal</text>
+<text x="721.0" y="83" text-anchor="middle" class="axis">paraphrase</text>
+<text x="857.0" y="83" text-anchor="middle" class="axis">repetition</text>
+<text x="993.0" y="83" text-anchor="middle" class="axis">5集合合計</text>
+<text x="233" y="129" text-anchor="end" class="axis">通常版</text>
+<rect x="247.0" y="100.0" width="132.0" height="47.0" fill="#e1eafa"/>
+<text x="313.0" y="129.0" text-anchor="middle" class="value" fill="#172033">1.697%</text>
+<rect x="383.0" y="100.0" width="132.0" height="47.0" fill="#e8effd"/>
+<text x="449.0" y="129.0" text-anchor="middle" class="value" fill="#172033">0.769%</text>
+<rect x="519.0" y="100.0" width="132.0" height="47.0" fill="#e0e9fa"/>
+<text x="585.0" y="129.0" text-anchor="middle" class="value" fill="#172033">1.855%</text>
+<rect x="655.0" y="100.0" width="132.0" height="47.0" fill="#bfcced"/>
+<text x="721.0" y="129.0" text-anchor="middle" class="value" fill="#172033">6.667%</text>
+<rect x="791.0" y="100.0" width="132.0" height="47.0" fill="#dee7f9"/>
+<text x="857.0" y="129.0" text-anchor="middle" class="value" fill="#172033">2.205%</text>
+<rect x="927.0" y="100.0" width="132.0" height="47.0" fill="#e1eafa"/>
+<text x="993.0" y="129.0" text-anchor="middle" class="value" fill="#172033">1.735%</text>
+<text x="233" y="180" text-anchor="end" class="axis">元2周版</text>
+<rect x="247.0" y="151.0" width="132.0" height="47.0" fill="#e1eafa"/>
+<text x="313.0" y="180.0" text-anchor="middle" class="value" fill="#172033">1.697%</text>
+<rect x="383.0" y="151.0" width="132.0" height="47.0" fill="#e7eefd"/>
+<text x="449.0" y="180.0" text-anchor="middle" class="value" fill="#172033">0.933%</text>
+<rect x="519.0" y="151.0" width="132.0" height="47.0" fill="#e0e9fa"/>
+<text x="585.0" y="180.0" text-anchor="middle" class="value" fill="#172033">1.830%</text>
+<rect x="655.0" y="151.0" width="132.0" height="47.0" fill="#d6e0f6"/>
+<text x="721.0" y="180.0" text-anchor="middle" class="value" fill="#172033">3.333%</text>
+<rect x="791.0" y="151.0" width="132.0" height="47.0" fill="#e0e9fa"/>
+<text x="857.0" y="180.0" text-anchor="middle" class="value" fill="#172033">1.866%</text>
+<rect x="927.0" y="151.0" width="132.0" height="47.0" fill="#e2eafb"/>
+<text x="993.0" y="180.0" text-anchor="middle" class="value" fill="#172033">1.661%</text>
+<text x="233" y="231" text-anchor="end" class="axis">通常・遅い減衰</text>
+<rect x="247.0" y="202.0" width="132.0" height="47.0" fill="#7289d0"/>
+<text x="313.0" y="231.0" text-anchor="middle" class="value" fill="#fff">17.754%</text>
+<rect x="383.0" y="202.0" width="132.0" height="47.0" fill="#798fd2"/>
+<text x="449.0" y="231.0" text-anchor="middle" class="value" fill="#fff">16.731%</text>
+<rect x="519.0" y="202.0" width="132.0" height="47.0" fill="#7188cf"/>
+<text x="585.0" y="231.0" text-anchor="middle" class="value" fill="#fff">17.899%</text>
+<rect x="655.0" y="202.0" width="132.0" height="47.0" fill="#7a90d2"/>
+<text x="721.0" y="231.0" text-anchor="middle" class="value" fill="#fff">16.667%</text>
+<rect x="791.0" y="202.0" width="132.0" height="47.0" fill="#1e40af"/>
+<text x="857.0" y="231.0" text-anchor="middle" class="value" fill="#fff">29.961%</text>
+<rect x="927.0" y="202.0" width="132.0" height="47.0" fill="#5c76c7"/>
+<text x="993.0" y="231.0" text-anchor="middle" class="value" fill="#fff">20.959%</text>
+<text x="233" y="282" text-anchor="end" class="axis">候補1・遅い減衰</text>
+<rect x="247.0" y="253.0" width="132.0" height="47.0" fill="#a2b2e2"/>
+<text x="313.0" y="282.0" text-anchor="middle" class="value" fill="#172033">10.928%</text>
+<rect x="383.0" y="253.0" width="132.0" height="47.0" fill="#c3d0ef"/>
+<text x="449.0" y="282.0" text-anchor="middle" class="value" fill="#172033">6.075%</text>
+<rect x="519.0" y="253.0" width="132.0" height="47.0" fill="#9fb1e1"/>
+<text x="585.0" y="282.0" text-anchor="middle" class="value" fill="#172033">11.219%</text>
+<rect x="655.0" y="253.0" width="132.0" height="47.0" fill="#d6e0f6"/>
+<text x="721.0" y="282.0" text-anchor="middle" class="value" fill="#172033">3.333%</text>
+<rect x="791.0" y="253.0" width="132.0" height="47.0" fill="#5d76c7"/>
+<text x="857.0" y="282.0" text-anchor="middle" class="value" fill="#fff">20.911%</text>
+<rect x="927.0" y="253.0" width="132.0" height="47.0" fill="#93a6dc"/>
+<text x="993.0" y="282.0" text-anchor="middle" class="value" fill="#172033">12.959%</text>
+<text x="233" y="333" text-anchor="end" class="axis">候補2・残差0.5倍</text>
+<rect x="247.0" y="304.0" width="132.0" height="47.0" fill="#e7effd"/>
+<text x="313.0" y="333.0" text-anchor="middle" class="value" fill="#172033">0.890%</text>
+<rect x="383.0" y="304.0" width="132.0" height="47.0" fill="#e9f1fe"/>
+<text x="449.0" y="333.0" text-anchor="middle" class="value" fill="#172033">0.530%</text>
+<rect x="519.0" y="304.0" width="132.0" height="47.0" fill="#e6eefc"/>
+<text x="585.0" y="333.0" text-anchor="middle" class="value" fill="#172033">1.023%</text>
+<rect x="655.0" y="304.0" width="132.0" height="47.0" fill="#edf4ff"/>
+<text x="721.0" y="333.0" text-anchor="middle" class="value" fill="#172033">0.000%</text>
+<rect x="791.0" y="304.0" width="132.0" height="47.0" fill="#e3ebfb"/>
+<text x="857.0" y="333.0" text-anchor="middle" class="value" fill="#172033">1.445%</text>
+<rect x="927.0" y="304.0" width="132.0" height="47.0" fill="#e6eefc"/>
+<text x="993.0" y="333.0" text-anchor="middle" class="value" fill="#172033">1.022%</text>
+<text x="233" y="384" text-anchor="end" class="axis">候補3・入力再注入</text>
+<rect x="247.0" y="355.0" width="132.0" height="47.0" fill="#e7effd"/>
+<text x="313.0" y="384.0" text-anchor="middle" class="value" fill="#172033">0.807%</text>
+<rect x="383.0" y="355.0" width="132.0" height="47.0" fill="#eaf1fe"/>
+<text x="449.0" y="384.0" text-anchor="middle" class="value" fill="#172033">0.493%</text>
+<rect x="519.0" y="355.0" width="132.0" height="47.0" fill="#e7effd"/>
+<text x="585.0" y="384.0" text-anchor="middle" class="value" fill="#172033">0.890%</text>
+<rect x="655.0" y="355.0" width="132.0" height="47.0" fill="#edf4ff"/>
+<text x="721.0" y="384.0" text-anchor="middle" class="value" fill="#172033">0.000%</text>
+<rect x="791.0" y="355.0" width="132.0" height="47.0" fill="#e1e9fa"/>
+<text x="857.0" y="384.0" text-anchor="middle" class="value" fill="#172033">1.762%</text>
+<rect x="927.0" y="355.0" width="132.0" height="47.0" fill="#e6eefc"/>
+<text x="993.0" y="384.0" text-anchor="middle" class="value" fill="#172033">1.041%</text>
+<text x="233" y="435" text-anchor="end" class="axis">候補4・中間層4回</text>
+<rect x="247.0" y="406.0" width="132.0" height="47.0" fill="#e2ebfb"/>
+<text x="313.0" y="435.0" text-anchor="middle" class="value" fill="#172033">1.577%</text>
+<rect x="383.0" y="406.0" width="132.0" height="47.0" fill="#e7eefd"/>
+<text x="449.0" y="435.0" text-anchor="middle" class="value" fill="#172033">0.925%</text>
+<rect x="519.0" y="406.0" width="132.0" height="47.0" fill="#e1e9fa"/>
+<text x="585.0" y="435.0" text-anchor="middle" class="value" fill="#172033">1.755%</text>
+<rect x="655.0" y="406.0" width="132.0" height="47.0" fill="#edf4ff"/>
+<text x="721.0" y="435.0" text-anchor="middle" class="value" fill="#172033">0.000%</text>
+<rect x="791.0" y="406.0" width="132.0" height="47.0" fill="#e0e8fa"/>
+<text x="857.0" y="435.0" text-anchor="middle" class="value" fill="#172033">1.944%</text>
+<rect x="927.0" y="406.0" width="132.0" height="47.0" fill="#e2eafb"/>
+<text x="993.0" y="435.0" text-anchor="middle" class="value" fill="#172033">1.624%</text>
+</svg>

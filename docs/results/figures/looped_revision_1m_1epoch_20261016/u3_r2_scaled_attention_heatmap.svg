@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="414" viewBox="0 0 1000 414" role="img">
+<title>候補2・残差0.5倍の周回・物理層別attention</title>
+<desc>最終生成stepにおけるhead平均attention。濃いほど参照比率が高い。</desc>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:system-ui,sans-serif;fill:#172033}.title{font-size:21px;font-weight:600}.sub{font-size:12px;fill:#5b6577}.axis{font-size:10px}</style>
+<text x="500.0" y="31" text-anchor="middle" class="title">候補2・残差0.5倍：周回・物理層別attention</text>
+<text x="500.0" y="52" text-anchor="middle" class="sub">最終生成step・4 head平均（行和=100%）</text>
+<text x="145" y="95.7" text-anchor="end" class="axis">周回1 / L1</text>
+<rect x="155.00" y="76.00" width="32.96" height="27" fill="#7796e9"/>
+<rect x="187.76" y="76.00" width="32.96" height="27" fill="#819eeb"/>
+<rect x="220.52" y="76.00" width="32.96" height="27" fill="#89a4ec"/>
+<rect x="253.28" y="76.00" width="32.96" height="27" fill="#83a0eb"/>
+<rect x="286.04" y="76.00" width="32.96" height="27" fill="#7f9dea"/>
+<rect x="318.80" y="76.00" width="32.96" height="27" fill="#6285e5"/>
+<rect x="351.56" y="76.00" width="32.96" height="27" fill="#7b99e9"/>
+<rect x="384.32" y="76.00" width="32.96" height="27" fill="#7896e9"/>
+<rect x="417.08" y="76.00" width="32.96" height="27" fill="#819eeb"/>
+<rect x="449.84" y="76.00" width="32.96" height="27" fill="#6f8fe7"/>
+<rect x="482.60" y="76.00" width="32.96" height="27" fill="#85a1eb"/>
+<rect x="515.36" y="76.00" width="32.96" height="27" fill="#7a99e9"/>
+<rect x="548.12" y="76.00" width="32.96" height="27" fill="#7796e9"/>
+<rect x="580.88" y="76.00" width="32.96" height="27" fill="#7292e8"/>
+<rect x="613.64" y="76.00" width="32.96" height="27" fill="#7a98e9"/>
+<rect x="646.40" y="76.00" width="32.96" height="27" fill="#5f83e4"/>
+<rect x="679.16" y="76.00" width="32.96" height="27" fill="#7b99e9"/>
+<rect x="711.92" y="76.00" width="32.96" height="27" fill="#93acee"/>
+<rect x="744.68" y="76.00" width="32.96" height="27" fill="#7292e8"/>
+<rect x="777.44" y="76.00" width="32.96" height="27" fill="#7897e9"/>
+<rect x="810.20" y="76.00" width="32.96" height="27" fill="#6a8be6"/>
+<rect x="842.96" y="76.00" width="32.96" height="27" fill="#7192e8"/>
+<rect x="875.72" y="76.00" width="32.96" height="27" fill="#7897e9"/>
+<rect x="908.48" y="76.00" width="32.96" height="27" fill="#7b99ea"/>
+<rect x="941.24" y="76.00" width="32.96" height="27" fill="#6b8de7"/>
+<text x="145" y="124.7" text-anchor="end" class="axis">周回1 / L2</text>
+<rect x="155.00" y="105.00" width="32.96" height="27" fill="#9bb3ef"/>
+<rect x="187.76" y="105.00" width="32.96" height="27" fill="#9bb3ef"/>
+<rect x="220.52" y="105.00" width="32.96" height="27" fill="#98b0ef"/>
+<rect x="253.28" y="105.00" width="32.96" height="27" fill="#96afef"/>
+<rect x="286.04" y="105.00" width="32.96" height="27" fill="#9eb5f0"/>
+<rect x="318.80" y="105.00" width="32.96" height="27" fill="#93acee"/>
+<rect x="351.56" y="105.00" width="32.96" height="27" fill="#7494e8"/>
+<rect x="384.32" y="105.00" width="32.96" height="27" fill="#7594e8"/>
+<rect x="417.08" y="105.00" width="32.96" height="27" fill="#87a3ec"/>
+<rect x="449.84" y="105.00" width="32.96" height="27" fill="#88a4ec"/>
+<rect x="482.60" y="105.00" width="32.96" height="27" fill="#88a4ec"/>
+<rect x="515.36" y="105.00" width="32.96" height="27" fill="#6e8fe7"/>
+<rect x="548.12" y="105.00" width="32.96" height="27" fill="#86a2eb"/>
+<rect x="580.88" y="105.00" width="32.96" height="27" fill="#7897e9"/>
+<rect x="613.64" y="105.00" width="32.96" height="27" fill="#6184e5"/>
+<rect x="646.40" y="105.00" width="32.96" height="27" fill="#2252d9"/>
+<rect x="679.16" y="105.00" width="32.96" height="27" fill="#4e75e1"/>
+<rect x="711.92" y="105.00" width="32.96" height="27" fill="#5a7fe3"/>
+<rect x="744.68" y="105.00" width="32.96" height="27" fill="#7090e7"/>
+<rect x="777.44" y="105.00" width="32.96" height="27" fill="#7494e8"/>
+<rect x="810.20" y="105.00" width="32.96" height="27" fill="#6a8ce6"/>
+<rect x="842.96" y="105.00" width="32.96" height="27" fill="#5a7fe3"/>
+<rect x="875.72" y="105.00" width="32.96" height="27" fill="#839feb"/>
+<rect x="908.48" y="105.00" width="32.96" height="27" fill="#7897e9"/>
+<rect x="941.24" y="105.00" width="32.96" height="27" fill="#6a8ce6"/>
+<text x="145" y="153.7" text-anchor="end" class="axis">周回1 / L3</text>
+<rect x="155.00" y="134.00" width="32.96" height="27" fill="#97afef"/>
+<rect x="187.76" y="134.00" width="32.96" height="27" fill="#aabff2"/>
+<rect x="220.52" y="134.00" width="32.96" height="27" fill="#bccef6"/>
+<rect x="253.28" y="134.00" width="32.96" height="27" fill="#aec2f3"/>
+<rect x="286.04" y="134.00" width="32.96" height="27" fill="#a2b9f1"/>
+<rect x="318.80" y="134.00" width="32.96" height="27" fill="#aabff2"/>
+<rect x="351.56" y="134.00" width="32.96" height="27" fill="#a4baf1"/>
+<rect x="384.32" y="134.00" width="32.96" height="27" fill="#9bb3ef"/>
+<rect x="417.08" y="134.00" width="32.96" height="27" fill="#a4baf1"/>
+<rect x="449.84" y="134.00" width="32.96" height="27" fill="#89a5ec"/>
+<rect x="482.60" y="134.00" width="32.96" height="27" fill="#98b0ef"/>
+<rect x="515.36" y="134.00" width="32.96" height="27" fill="#547ae2"/>
+<rect x="548.12" y="134.00" width="32.96" height="27" fill="#809dea"/>
+<rect x="580.88" y="134.00" width="32.96" height="27" fill="#5278e2"/>
+<rect x="613.64" y="134.00" width="32.96" height="27" fill="#6e8fe7"/>
+<rect x="646.40" y="134.00" width="32.96" height="27" fill="#1d4ed8"/>
+<rect x="679.16" y="134.00" width="32.96" height="27" fill="#7897e9"/>
+<rect x="711.92" y="134.00" width="32.96" height="27" fill="#577ce3"/>
+<rect x="744.68" y="134.00" width="32.96" height="27" fill="#6e8fe7"/>
+<rect x="777.44" y="134.00" width="32.96" height="27" fill="#5a7ee3"/>
+<rect x="810.20" y="134.00" width="32.96" height="27" fill="#2857da"/>
+<rect x="842.96" y="134.00" width="32.96" height="27" fill="#446ddf"/>
+<rect x="875.72" y="134.00" width="32.96" height="27" fill="#7796e9"/>
+<rect x="908.48" y="134.00" width="32.96" height="27" fill="#7695e9"/>
+<rect x="941.24" y="134.00" width="32.96" height="27" fill="#1d4ed8"/>
+<text x="145" y="182.7" text-anchor="end" class="axis">周回2 / L1</text>
+<rect x="155.00" y="163.00" width="32.96" height="27" fill="#97b0ef"/>
+<rect x="187.76" y="163.00" width="32.96" height="27" fill="#9ab2ef"/>
+<rect x="220.52" y="163.00" width="32.96" height="27" fill="#97b0ef"/>
+<rect x="253.28" y="163.00" width="32.96" height="27" fill="#99b1ef"/>
+<rect x="286.04" y="163.00" width="32.96" height="27" fill="#8da8ed"/>
+<rect x="318.80" y="163.00" width="32.96" height="27" fill="#7897e9"/>
+<rect x="351.56" y="163.00" width="32.96" height="27" fill="#7594e8"/>
+<rect x="384.32" y="163.00" width="32.96" height="27" fill="#7d9aea"/>
+<rect x="417.08" y="163.00" width="32.96" height="27" fill="#7a98e9"/>
+<rect x="449.84" y="163.00" width="32.96" height="27" fill="#7393e8"/>
+<rect x="482.60" y="163.00" width="32.96" height="27" fill="#86a2ec"/>
+<rect x="515.36" y="163.00" width="32.96" height="27" fill="#6a8ce6"/>
+<rect x="548.12" y="163.00" width="32.96" height="27" fill="#5d81e4"/>
+<rect x="580.88" y="163.00" width="32.96" height="27" fill="#7695e9"/>
+<rect x="613.64" y="163.00" width="32.96" height="27" fill="#7897e9"/>
+<rect x="646.40" y="163.00" width="32.96" height="27" fill="#7d9bea"/>
+<rect x="679.16" y="163.00" width="32.96" height="27" fill="#6688e6"/>
+<rect x="711.92" y="163.00" width="32.96" height="27" fill="#90aaed"/>
+<rect x="744.68" y="163.00" width="32.96" height="27" fill="#7191e8"/>
+<rect x="777.44" y="163.00" width="32.96" height="27" fill="#6f90e7"/>
+<rect x="810.20" y="163.00" width="32.96" height="27" fill="#7393e8"/>
+<rect x="842.96" y="163.00" width="32.96" height="27" fill="#5e82e4"/>
+<rect x="875.72" y="163.00" width="32.96" height="27" fill="#577ce3"/>
+<rect x="908.48" y="163.00" width="32.96" height="27" fill="#6e8fe7"/>
+<rect x="941.24" y="163.00" width="32.96" height="27" fill="#4f76e1"/>
+<text x="145" y="211.7" text-anchor="end" class="axis">周回2 / L2</text>
+<rect x="155.00" y="192.00" width="32.96" height="27" fill="#8da8ed"/>
+<rect x="187.76" y="192.00" width="32.96" height="27" fill="#95aeee"/>
+<rect x="220.52" y="192.00" width="32.96" height="27" fill="#98b1ef"/>
+<rect x="253.28" y="192.00" width="32.96" height="27" fill="#91abee"/>
+<rect x="286.04" y="192.00" width="32.96" height="27" fill="#a0b7f0"/>
+<rect x="318.80" y="192.00" width="32.96" height="27" fill="#a1b7f0"/>
+<rect x="351.56" y="192.00" width="32.96" height="27" fill="#7d9bea"/>
+<rect x="384.32" y="192.00" width="32.96" height="27" fill="#86a2ec"/>
+<rect x="417.08" y="192.00" width="32.96" height="27" fill="#86a2ec"/>
+<rect x="449.84" y="192.00" width="32.96" height="27" fill="#7a98e9"/>
+<rect x="482.60" y="192.00" width="32.96" height="27" fill="#819eeb"/>
+<rect x="515.36" y="192.00" width="32.96" height="27" fill="#5d81e4"/>
+<rect x="548.12" y="192.00" width="32.96" height="27" fill="#7c9aea"/>
+<rect x="580.88" y="192.00" width="32.96" height="27" fill="#6f90e7"/>
+<rect x="613.64" y="192.00" width="32.96" height="27" fill="#4d74e1"/>
+<rect x="646.40" y="192.00" width="32.96" height="27" fill="#2e5bdb"/>
+<rect x="679.16" y="192.00" width="32.96" height="27" fill="#5d81e4"/>
+<rect x="711.92" y="192.00" width="32.96" height="27" fill="#7091e8"/>
+<rect x="744.68" y="192.00" width="32.96" height="27" fill="#7695e8"/>
+<rect x="777.44" y="192.00" width="32.96" height="27" fill="#6789e6"/>
+<rect x="810.20" y="192.00" width="32.96" height="27" fill="#7090e7"/>
+<rect x="842.96" y="192.00" width="32.96" height="27" fill="#7292e8"/>
+<rect x="875.72" y="192.00" width="32.96" height="27" fill="#809dea"/>
+<rect x="908.48" y="192.00" width="32.96" height="27" fill="#7a98e9"/>
+<rect x="941.24" y="192.00" width="32.96" height="27" fill="#6084e5"/>
+<text x="145" y="240.7" text-anchor="end" class="axis">周回2 / L3</text>
+<rect x="155.00" y="221.00" width="32.96" height="27" fill="#bbcdf5"/>
+<rect x="187.76" y="221.00" width="32.96" height="27" fill="#c6d5f7"/>
+<rect x="220.52" y="221.00" width="32.96" height="27" fill="#c4d3f7"/>
+<rect x="253.28" y="221.00" width="32.96" height="27" fill="#c3d3f7"/>
+<rect x="286.04" y="221.00" width="32.96" height="27" fill="#becef6"/>
+<rect x="318.80" y="221.00" width="32.96" height="27" fill="#bbcdf5"/>
+<rect x="351.56" y="221.00" width="32.96" height="27" fill="#b6c8f4"/>
+<rect x="384.32" y="221.00" width="32.96" height="27" fill="#acc0f3"/>
+<rect x="417.08" y="221.00" width="32.96" height="27" fill="#aec2f3"/>
+<rect x="449.84" y="221.00" width="32.96" height="27" fill="#7d9bea"/>
+<rect x="482.60" y="221.00" width="32.96" height="27" fill="#9db4f0"/>
+<rect x="515.36" y="221.00" width="32.96" height="27" fill="#2b59db"/>
+<rect x="548.12" y="221.00" width="32.96" height="27" fill="#6c8ee7"/>
+<rect x="580.88" y="221.00" width="32.96" height="27" fill="#2c5adb"/>
+<rect x="613.64" y="221.00" width="32.96" height="27" fill="#688ae6"/>
+<rect x="646.40" y="221.00" width="32.96" height="27" fill="#1d4ed8"/>
+<rect x="679.16" y="221.00" width="32.96" height="27" fill="#7e9bea"/>
+<rect x="711.92" y="221.00" width="32.96" height="27" fill="#6184e5"/>
+<rect x="744.68" y="221.00" width="32.96" height="27" fill="#7998e9"/>
+<rect x="777.44" y="221.00" width="32.96" height="27" fill="#4f76e1"/>
+<rect x="810.20" y="221.00" width="32.96" height="27" fill="#5077e2"/>
+<rect x="842.96" y="221.00" width="32.96" height="27" fill="#597ee3"/>
+<rect x="875.72" y="221.00" width="32.96" height="27" fill="#7796e9"/>
+<rect x="908.48" y="221.00" width="32.96" height="27" fill="#7595e8"/>
+<rect x="941.24" y="221.00" width="32.96" height="27" fill="#1d4ed8"/>
+<text x="171.38" y="257" class="axis" transform="rotate(60 171.38 257)">&lt;|bos|&gt;</text>
+<text x="204.14" y="257" class="axis" transform="rotate(60 204.14 257)">&lt;|task|&gt;</text>
+<text x="236.90" y="257" class="axis" transform="rotate(60 236.90 257)">↵</text>
+<text x="269.66" y="257" class="axis" transform="rotate(60 269.66 257)">整数リストxs�</text>
+<text x="302.42" y="257" class="axis" transform="rotate(60 302.42 257)">�整数kを受け</text>
+<text x="335.18" y="257" class="axis" transform="rotate(60 335.18 257)">取り、k以下の値</text>
+<text x="367.94" y="257" class="axis" transform="rotate(60 367.94 257)">だけを残す</text>
+<text x="400.70" y="257" class="axis" transform="rotate(60 400.70 257)">solve関数…</text>
+<text x="433.46" y="257" class="axis" transform="rotate(60 433.46 257)">いてください。</text>
+<text x="466.22" y="257" class="axis" transform="rotate(60 466.22 257)">↵</text>
+<text x="498.98" y="257" class="axis" transform="rotate(60 498.98 257)">&lt;|code|&gt;</text>
+<text x="531.74" y="257" class="axis" transform="rotate(60 531.74 257)">↵</text>
+<text x="564.50" y="257" class="axis" transform="rotate(60 564.50 257)">def␠sol…</text>
+<text x="597.26" y="257" class="axis" transform="rotate(60 597.26 257)">(xs:␠li…</text>
+<text x="630.02" y="257" class="axis" transform="rotate(60 630.02 257)">:␠int)␠</text>
+<text x="662.78" y="257" class="axis" transform="rotate(60 662.78 257)">-&gt;␠list…</text>
+<text x="695.54" y="257" class="axis" transform="rotate(60 695.54 257)">result</text>
+<text x="728.30" y="257" class="axis" transform="rotate(60 728.30 257)">␠=␠[]↵␠…</text>
+<text x="761.06" y="257" class="axis" transform="rotate(60 761.06 257)">xs:↵␠␠␠…</text>
+<text x="793.82" y="257" class="axis" transform="rotate(60 793.82 257)">%␠k␠==␠…</text>
+<text x="826.58" y="257" class="axis" transform="rotate(60 826.58 257)">result␠…</text>
+<text x="859.34" y="257" class="axis" transform="rotate(60 859.34 257)">]↵␠␠␠␠o…</text>
+<text x="892.10" y="257" class="axis" transform="rotate(60 892.10 257)">␠=␠[x␠f…</text>
+<text x="924.86" y="257" class="axis" transform="rotate(60 924.86 257)">result␠…</text>
+<text x="957.62" y="257" class="axis" transform="rotate(60 957.62 257)">%␠k␠==␠0</text>
+</svg>
