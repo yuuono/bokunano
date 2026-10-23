@@ -176,6 +176,14 @@ style: |
   section.temperature-current .temp-labels span { width: 60px; text-align: center; white-space: nowrap; }
   section.temperature-current .temp-takeaways { margin-top: 18px; padding: 10px 20px; background: #f1f6fb; border-left: 4px solid #245f8b; }
   section.temperature-current .temp-takeaways p { margin: 5px 0; font-size: 22px; line-height: 1.4; }
+  section.code-explain.temperature-code .code-columns { grid-template-columns: 1fr 1fr; gap: 30px; }
+  section.code-explain.temperature-code .code-columns > div:first-child pre { box-sizing: border-box; min-height: 476px; margin: 0; padding: 18px; font-size: 18.5px; line-height: 1.55; }
+  section.code-explain.temperature-code .code-columns h2 { margin: 0 0 12px; font-size: 24px; }
+  section.code-explain.temperature-code .code-columns h2:not(:first-child) { margin-top: 20px; }
+  section.code-explain.temperature-code .code-columns p { margin: 10px 0; font-size: 20px; line-height: 1.4; }
+  section.code-explain.temperature-code table { font-size: 20px; margin: 14px 0 18px; }
+  section.code-explain.temperature-code th, section.code-explain.temperature-code td { padding: 8px 12px; text-align: right; }
+  section.code-explain.temperature-code .temperature-selection { margin: 16px 0 0; padding: 10px 16px; border-left: 4px solid #245f8b; background: #f1f6fb; font-size: 22px; }
   section.logit-overview { padding: 48px 62px 44px; font-size: 22px; }
   section.logit-overview h1 { font-size: 38px; margin-bottom: 18px; }
   section.logit-overview p { margin: 10px 0; }
@@ -631,15 +639,19 @@ style: |
   section.slm-page .slm-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
   section.slm-page .slm-column { display: flex; flex-direction: column; padding: 0 28px 0 0; }
   section.slm-page .slm-column.domain { padding: 0 0 0 28px; border-left: 2px solid #c8d2db; }
-  section.slm-page .slm-eval { margin-top: auto !important; padding: 8px 12px; border-left: 4px solid #92b1c8; background: #f1f6fb; font-size: 18px !important; line-height: 1.4; }
+  section.slm-page .slm-eval { margin-top: 22px !important; padding: 8px 12px; border-left: 4px solid #92b1c8; background: #f1f6fb; font-size: 18px !important; line-height: 1.4; }
   section.slm-page .domain .slm-eval { border-left-color: #c9a86a; background: #fdf9f0; }
   section.slm-page .slm-eval strong { color: #245f8b; }
   section.slm-page .domain .slm-eval strong { color: #8a6d1f; }
-  section.slm-page .slm-column h2 { margin: 0 0 2px; font-size: 24px; color: #245f8b; }
+  section.slm-page .slm-column h2 { margin: 0 0 12px; font-size: 24px; color: #245f8b; }
   section.slm-page .slm-column.domain h2 { color: #8a6d1f; }
   section.slm-page .slm-column h2 + p { margin: 0 0 4px; font-size: 17px; color: #52606d; }
   section.slm-page .slm-column h3 { margin: 6px 0 0; font-size: 20px; color: #17212b; }
   section.slm-page .slm-column p { margin: 2px 0; font-size: 18px; line-height: 1.4; }
+  section.slm-page .slm-studies { display: grid; grid-template-rows: repeat(3, 114px); gap: 8px; }
+  section.slm-page .slm-study h3 { margin: 0 0 4px; font-size: 22px; line-height: 1.3; }
+  section.slm-page .slm-study p { margin: 0; font-size: 19px; line-height: 1.4; }
+  section.slm-page .slm-study p:last-child { margin-top: 6px; }
   section.slm-page .slm-column h3 a, section.summary-page .summary-step a { color: inherit; text-decoration: none; border-bottom: 1.5px solid #9aa5b1; }
   section.slm-page .slm-column .blank { margin: 2px 0 6px; color: #94a3b8; font-size: 17px; }
   section.slm-page > blockquote { margin: 12px 0 0; padding: 8px 16px; }
@@ -684,7 +696,7 @@ style: |
   section.agenda-page > p { font-size: 19px; color: #52606d; margin: 8px 0 0; }
 
   /* 2026-10-22: axes, synthesis flow, loss mask and result annotations */
-  section.slm-page .slm-eval { margin-top: auto !important; padding: 12px 14px; font-size: 21px !important; line-height: 1.45; }
+  section.slm-page .slm-eval { margin-top: 22px !important; padding: 12px 14px; font-size: 21px !important; line-height: 1.45; }
   section.slm-page .slm-eval b { color: #245f8b; font-size: 24px; }
   section.slm-page .domain .slm-eval b { color: #8a6d1f; }
   section.slm-page .rl-scope { font-size: 15px; color: #52606d; margin: 8px 0 0; }
@@ -798,7 +810,6 @@ style: |
   section.demo-video .demo-site { width: 832px; margin: 8px auto 0; text-align: right; font-size: 19px; }
   /* 本文量によるMarp既定の縦中央配置を止め、タイトルを同じ位置から始める。 */
   section { align-content: start !important; justify-content: flex-start !important; }
-  section.slm-page .slm-column > p:last-of-type { margin-bottom: 50px; }
   section.scientific.loss-plot h1 { margin-bottom: 8px; }
   section.scientific.loss-plot > p { font-size: 20px; line-height: 1.3; margin: 6px 0; }
   section.scientific.loss-plot img { margin: 6px auto; }
@@ -946,23 +957,35 @@ style: |
 
 ## 分野①　自然言語そのもの（物語）
 
+<div class="slm-studies">
+<div class="slm-study">
+
 ### [TinyStories](https://arxiv.org/abs/2305.07759)
 
-GPT-3.5/4による短い物語の合成<br>3〜4歳児が分かる語彙のみの使用
+GPT-3.5/4による短い物語の合成<br>3〜4歳児が分かる語彙に限定
 
-1.25MのTransformerでも一貫した文章生成
+1.25MのTransformerで一貫した文章生成
+
+</div>
+<div class="slm-study">
 
 ### [SimpleStories](https://arxiv.org/abs/2504.09184)
 
-平易な語彙のみの使用<br>話題・文体・文法・書き出しによるデータ多様性向上
+平易な語彙と話題・文体・文法の指定<br>書き出しの変化によるデータ多様性の向上
 
-より少ないパラメータでLLM評価の得点が向上
+より少ないパラメータ数でLLM評価の得点向上
+
+</div>
+<div class="slm-study">
 
 ### [WRAP](https://arxiv.org/abs/2401.16380)
 
-Webの文章の4文体への言い換えと350M・1.3Bの事前学習
+Web文書の4文体への言い換え<br>350M・1.3Bモデルの事前学習
 
-同じ性能に約3倍速く到達／perplexityが10%以上改善
+同等性能まで約3倍高速化／perplexity 10%以上改善
+
+</div>
+</div>
 
 <div class="slm-eval"><strong>文章の良さに対する人やLLMの評価</strong><br>人の好みを用いた学習：<b>RLHF</b><br>LLMによる採点：<b>LLM-as-a-Judge</b></div>
 
@@ -971,23 +994,35 @@ Webの文章の4文体への言い換えと350M・1.3Bの事前学習
 
 ## 分野②　code・math
 
+<div class="slm-studies">
+<div class="slm-study">
+
 ### [phi-1](https://arxiv.org/abs/2306.11644)：code
 
-教科書品質の選別データとGPT-3.5で合成した教科書・演習で1.3Bモデルの学習
+教科書品質の選別データとGPT-3.5の合成教材<br>約7Bトークンで1.3Bモデルの学習
 
-約7Bトークンの学習でHumanEval 50.6%
+HumanEval 50.6%
+
+</div>
+<div class="slm-study">
 
 ### [TinyGSM](https://arxiv.org/abs/2312.09241)：math
 
-GPT-3.5で合成した約1,230万件の算数問題とPython解答で1.3Bモデルの学習
+GPT-3.5による算数問題とPython解答の合成<br>約1,230万件で1.3Bモデルの学習
 
-検証器と組み合わせGSM8K 81.5%
+検証器との組み合わせでGSM8K 81.5%
+
+</div>
+<div class="slm-study">
 
 ### [HRM-Text（2026）](https://arxiv.org/abs/2605.20613)：math・言語
 
-指示・回答ペアで1Bのスクラッチ学習<br>回答部分のみの損失計算・計60Bトークンの学習
+指示・回答ペアで1Bのスクラッチ学習<br>回答のみの損失計算・計60Bトークンの学習
 
 GSM8K 84.5% ／ MATH 56.2%
+
+</div>
+</div>
 
 <div class="slm-eval"><strong>テストや正解照合で正誤の検証</strong><br>検証結果を報酬とした学習<br><b>RLVR</b>（検証可能な報酬による強化学習）</div>
 
@@ -1902,7 +1937,7 @@ BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_l
 ---
 
 
-<!-- _header: '④ 推論　1/4' -->
+<!-- _header: '④ 推論　1/5' -->
 <!-- _class: autoregressive ar-diagram -->
 # 自己回帰：出力の追加と次トークン予測の反復
 
@@ -2018,7 +2053,7 @@ Boku-nanoはDecoder-onlyであり、Encoder-Decoder構成のCross-Attentionは�
 ---
 
 
-<!-- _header: '④ 推論　2/4' -->
+<!-- _header: '④ 推論　2/5' -->
 <!-- _class: logit-overview -->
 # 次のトークン候補への確率の割り当て
 
@@ -2573,7 +2608,7 @@ Pythonのsampling関数はT>0のみを受け付ける。T=0を渡して分岐す
 ---
 
 
-<!-- _header: '④ 推論　3/4' -->
+<!-- _header: '④ 推論　3/5' -->
 <!-- _class: code-explain causal-code causal-generate -->
 # 生成時のコード：最後の予測の選択と入力への追加
 
@@ -2634,7 +2669,7 @@ def solve(xs):
 
 ---
 
-<!-- _header: '④ 推論　4/4' -->
+<!-- _header: '④ 推論　4/5' -->
 <!-- _class: temperature-current -->
 # 温度：次トークン候補の確率分布の調整
 
@@ -2668,6 +2703,65 @@ T=1は「次のトークン候補への確率の割り当て」の数値と一�
 確率に従うサンプリングとgreedyを区別する。今回のBoku評価は最大logitのargmaxであり、正の温度を変えても同じ0を選ぶ。
 数式はT>0のみ。T=0で除算せず、greedyは別処理として扱う。
 実装根拠：../../scripts/model/evaluate_boku_nano_comparison.py（正のtemperature検査、logit/temperature）、../../scripts/model/evaluate_boku_nano.py（argmax）
+-->
+
+---
+
+<!-- _header: '④ 推論　5/5' -->
+<!-- _class: code-explain temperature-code -->
+# 温度のコード：logitの調整と確率への変換
+
+<div class="code-columns"><div>
+
+```python
+# ① 全候補のlogitを温度Tで除算
+logits = (
+    model(input_ids).logits[:, -1, :]
+    / temperature
+)
+
+# ② 候補IDを保持した降順ソート
+sorted_logits, sorted_indices = torch.sort(
+    logits, descending=True, dim=-1
+)
+
+# ③ softmaxによる確率への変換
+sorted_probabilities = torch.softmax(
+    sorted_logits, dim=-1
+)
+```
+
+</div><div>
+
+## 温度で割った後のlogit（T > 0）
+
+前ページと同じ `… if v % 2 == ?` の4候補
+
+| 温度 T | `0` | `1` | `xs` | `def` |
+| ---: | ---: | ---: | ---: | ---: |
+| 0.5 | 6 | 4 | 2 | −4 |
+| 1 | 3 | 2 | 1 | −2 |
+| 2 | 1.5 | 1 | 0.5 | −1 |
+
+**低温**：点数差の拡大と高確率候補への集中<br>**高温**：点数差の縮小と他候補への確率の分配
+
+## 候補の対応を保った確率計算
+
+`sorted_indices` に元の候補IDを保持<br>`softmax` で合計1の確率分布へ変換
+
+</div></div>
+
+<p class="temperature-selection"><strong>今回のBoku評価</strong>：最大候補の選択（正の温度変更でも選択不変）</p>
+
+<!--
+コメントアウトされていた「④ 温度は、候補の確率の偏りを調整する」のコードを再掲。
+元の計算処理を保ち、説明と数値例を直前の温度グラフに合わせた。
+出典：../../scripts/model/evaluate_boku_nano_comparison.py 209–211行。正のtemperatureの検査は105–106行。
+温度調整・降順ソート・softmaxまでの抜粋。実装で後続するtop-pによる候補選別と抽選は省略。
+入力の4候補のlogitは[3,2,1,-2]という説明用の値で、実測値ではない。
+この例では元の候補順が降順なのでsorted_indicesの順序は[0,1,2,3]のまま。
+候補の点数とIDの対応を保持し、ソート後の確率を元の語彙へ対応付ける。
+旧ページの左下の出典コメントは再表示せず、出典はこの非表示コメントに記載。
 -->
 
 ---
