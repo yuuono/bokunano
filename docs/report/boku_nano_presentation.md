@@ -252,8 +252,8 @@ style: |
   section.model-settings { font-size: 22px; line-height: 1.3; }
   section.model-settings p { margin: 8px 0; }
   section.model-settings h1 { font-size: 38px; margin-bottom: 14px; }
-  section.model-settings table { font-size: 20px; margin: 12px 0; }
-  section.model-settings th, section.model-settings td { padding: 5px 12px; }
+  section.model-settings table { font-size: 20px; line-height: 1.2; margin: 10px 0; }
+  section.model-settings th, section.model-settings td { padding: 3px 12px; }
   section.model-settings h2 { font-size: 25px; margin: 12px 0; }
   section.model-settings .common-architecture { font-size: 20px; line-height: 1.5; margin: 12px 0 0; }
   section.model-settings .shared-settings { display: grid; grid-template-columns: 405px 1fr; gap: 34px; margin-top: 10px; }
@@ -1790,6 +1790,8 @@ labels[target_start:] = token_ids[target_start:]
 | 1 headの次元 | 32 | 64 | 64 |
 | FFNの中間次元 `d_ff` | 256 | 704 | 1,024 |
 | この後に示す学習曲線 | 3 epoch | 1 epoch | 1 epoch |
+| 更新回数 | 1,131 | 377 | 377 |
+| 入力トークン数（全epoch） | 約2,082万 | 約694万 | 約694万 |
 
 <p class="common-architecture"><strong>共通構造</strong>　RoPE（base 10,000）／ RMSNorm（ε = 10<sup>−5</sup>）／ SwiGLU ／ Linear層のbiasなし</p>
 
@@ -1816,6 +1818,7 @@ labels[target_start:] = token_ids[target_start:]
 BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_length=24、vocab_size=2048。
 共通構造：各model_config.jsonのrope_base=10000、rms_norm_eps=1e-5。../../scripts/model/boku_nano.py のSwiGLU（SiLUゲート）と各nn.Linearのbias=Falseを照合。3モデルの保存済み重みにgate_proj・up_proj・down_projがありbiasキーなし。
 学習設定：各モデルディレクトリのtraining_config.yaml（training節）。AdamWのeps=1e-8、weight_decay=0.1は2次元以上のパラメータのみ、RMSNormなど1次元には0。batch_size=512、gradient_accumulation_steps=1、grad_clip_norm=1.0。学習率は全更新数の5%を線形warmupし、3e-4から3e-5までcosine減衰。1M・3epochは1,131更新・warmup57更新、5M・15Mの1epochは377更新・warmup19更新。実装：../../scripts/model/train_boku_nano.py のbuild_optimizerとbuild_scheduler。
+入力トークン数：各training_manifest.jsonのseen_sequence_tokens。1M・3epochは20,818,398、5M・15Mの1epochは各6,939,466。paddingを除く日本語指示・コード・特殊トークン等の完成系列全体を全epochで累積した値で、コード部分のみの教師トークン数とは異なる。
 後続の1epoch比較には同じ1M構造の1epochチェックポイントもある。構造が同じならepoch数を変えてもパラメータ数は変わらない。
 -->
 
