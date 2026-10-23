@@ -1,6 +1,6 @@
 # Third-party software and model provenance
 
-この文書は、Boku1-nanoのデータ作成、学習、変換、ブラウザ実行に使用した主要な第三者成果物を記録する。ライセンス名は各配布元が示す情報であり、教師生成物を含む全成果物について第三者の権利が存在しないことを保証するものではない。
+この文書は、Boku-nanoのデータ作成、学習、変換、ブラウザ実行に使用した主要な第三者成果物を記録する。ライセンス名は各配布元が示す情報であり、教師生成物を含む全成果物について第三者の権利が存在しないことを保証するものではない。
 
 ## 教師モデル
 
@@ -14,7 +14,7 @@
 | 保存したLICENSE | [`third_party/qwen3-4b-awq/LICENSE`](third_party/qwen3-4b-awq/LICENSE) |
 | 取得記録 | [`third_party/qwen3-4b-awq/SOURCE.json`](third_party/qwen3-4b-awq/SOURCE.json) |
 
-Qwen3は日本語表現の候補作成だけに使用した。Qwen3へコード生成を依頼しておらず、Qwen3の重み、tokenizer、logit、埋め込み、内部状態をBoku1-nanoへ移植していない。
+Qwen3は日本語表現の候補作成だけに使用した。Qwen3へコード生成を依頼しておらず、Qwen3の重み、tokenizer、logit、埋め込み、内部状態をBoku-nanoへ移植していない。
 
 教師プロンプトは`prompts/japanese_instruction_generation/`、モデルrevisionと生成条件は`config/qwen_*.json`、採用表現ごとのmodel、revision、seed、sampling、prompt hashは`data/instruction_dictionaries/release/japanese_atomic_expression_provenance.jsonl`へ保存している。
 
@@ -34,13 +34,13 @@ Qwen3は日本語表現の候補作成だけに使用した。Qwen3へコード�
 | 保存したLICENSE | [`third_party/qwen3-0.6b-onnx/LICENSE`](third_party/qwen3-0.6b-onnx/LICENSE) |
 | 取得記録 | [`third_party/qwen3-0.6b-onnx/SOURCE.json`](third_party/qwen3-0.6b-onnx/SOURCE.json) |
 
-このQwenはデモ実行時にだけ使い、Boku1-nanoの再学習や重み更新には使わない。CNLを生成するのはQwenであり、JavaScriptは24操作・最大3操作の許可リストと文法を検査するだけである。ONNX成果物はリポジトリへ再配布せず、ブラウザが固定revisionから取得してキャッシュする。
+このQwenはデモ実行時にだけ使い、Boku-nanoの再学習や重み更新には使わない。CNLを生成するのはQwenであり、JavaScriptは24操作・最大3操作の許可リストと文法を検査するだけである。ONNX成果物はリポジトリへ再配布せず、ブラウザが固定revisionから取得してキャッシュする。
 
 ## ブラウザ推論ランタイム
 
 | 成果物 | Version | 用途 | ライセンス |
 | --- | ---: | --- | --- |
-| Microsoft ONNX Runtime Web | 1.30.0 | Boku1-nanoのGitHub Pages上のONNX推論 | MIT |
+| Microsoft ONNX Runtime Web | 1.30.0 | Boku-nanoのGitHub Pages上のONNX推論 | MIT |
 | Hugging Face Transformers.js | 4.3.0 | Qwen3-0.6B ONNXのブラウザ内推論 | Apache-2.0 |
 
 ONNX Runtime Webの配布用JavaScript・WASMは`web/vendor/`へ保存し、ライセンス本文は[`web/vendor/onnxruntime-web.LICENSE`](web/vendor/onnxruntime-web.LICENSE)へ同梱している。Transformers.jsはversionを固定してjsDelivrから実行時に読み込み、ライセンス本文と取得元は[`third_party/transformers-js/`](third_party/transformers-js/)へ保存している。

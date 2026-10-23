@@ -1,8 +1,8 @@
-# 条件A：Boku1-nanoとQwen3-0.6Bが失敗した例
+# 条件A：Boku-nanoとQwen3-0.6Bが失敗した例
 
 2026年10月5日の保存済み実測を整理。条件Aは、同じ自然な日本語から両モデルがそれぞれ直接Pythonコードを生成する比較。CNL変換・補正は挟まない。本書は条件Aだけを扱う。モデルの再生成や採点条件の変更は行っていない。
 
-Boku1-nanoは15M・1 epoch（15,735,168 parameters）、Qwen3-0.6BはONNX q4f16。両者ともWebGPU・greedy・T=0・1問1候補・会話履歴なし。Webデモ既定の5Mモデルの成績ではない。
+Boku-nanoは15M・1 epoch（15,735,168 parameters）、Qwen3-0.6BはONNX q4f16。両者ともWebGPU・greedy・T=0・1問1候補・会話履歴なし。Webデモ既定の5Mモデルの成績ではない。
 
 以下の当初集計は15M・1epochとQwenの比較。末尾の追記に5M・1epochと1M・3epochの結果を追加した。全4モデルの詳細は[追加評価レポート](dev50_20261005_additional_models.md)を参照。
 
@@ -11,17 +11,17 @@ Boku1-nanoは15M・1 epoch（15,735,168 parameters）、Qwen3-0.6BはONNX q4f16�
 | 結果 | 問題数 |
 | --- | ---: |
 | 両モデルとも合格 | 10 |
-| Boku1-nanoだけが不合格 | 9 |
+| Boku-nanoだけが不合格 | 9 |
 | Qwen3-0.6Bだけが不合格 | 20 |
 | 両モデルとも不合格 | 11 |
 
-**Boku1-nanoは30/50合格・20問不合格、Qwen3-0.6Bは19/50合格・31問不合格。** 少なくとも片方が不合格の全40問を以下に掲載する。同じ11問で両方が不合格なので、モデル別不合格件数の合計は51件となる。
+**Boku-nanoは30/50合格・20問不合格、Qwen3-0.6Bは19/50合格・31問不合格。** 少なくとも片方が不合格の全40問を以下に掲載する。同じ11問で両方が不合格なので、モデル別不合格件数の合計は51件となる。
 
 「不合格」は、固定した関数契約・許可構文・全179入力の検査を通らなかったという意味。別のプロンプトでも絶対に解けないという主張ではない。Qwenの3例（C04-03、C04-05、C10-03）は反転処理自体が正しく、引数契約や採点器の制限による不合格として区別する。
 
 ### モデルごとに目立った誤り
 
-- **Boku1-nano:** 指示にないkによる抽出を加える、操作を余分に繰り返す、新しい言い回しから別操作を生成する。C10の言い換え5問はすべて不合格だった。
+- **Boku-nano:** 指示にないkによる抽出を加える、操作を余分に繰り返す、新しい言い回しから別操作を生成する。C10の言い換え5問はすべて不合格だった。
 - **Qwen3-0.6B:** 複数操作の省略、反復回数の無視、先頭と末尾の混同。3操作と反復は各5問とも不合格。一方、基本的な値の変換は5問とも合格した。
 - **両モデル共通:** k以上／未満／以下の境界や、絶対値を「0からの距離」と表した問題で失敗した。
 
@@ -29,7 +29,7 @@ Boku1-nanoは15M・1 epoch（15,735,168 parameters）、Qwen3-0.6BはONNX q4f16�
 
 ### すぐ確認できる代表例
 
-| 指示の要点 | Boku1-nano | Qwen3-0.6B | 詳細 |
+| 指示の要点 | Boku-nano | Qwen3-0.6B | 詳細 |
 | --- | --- | --- | --- |
 | 各要素にkを足す | 先にkより大きい値を抽出してしまう | 合格 | [C03-01](#dev-c03-01) |
 | 符号を反転する | 反転した後に二乗してしまう | 合格 | [C03-04](#dev-c03-04) |
@@ -41,7 +41,7 @@ Boku1-nanoは15M・1 epoch（15,735,168 parameters）、Qwen3-0.6BはONNX q4f16�
 
 ### 不合格理由（最初に検出された理由で集計）
 
-| 理由 | Boku1-nano | Qwen3-0.6B |
+| 理由 | Boku-nano | Qwen3-0.6B |
 | --- | ---: | ---: |
 | 実行結果の不一致 | 16 | 19 |
 | 関数契約・許可構文の検査で拒否 | 3 | 8 |
@@ -53,7 +53,7 @@ Bokuの「関数契約・許可構文」3件は未定義変数の検出。Qwen�
 
 ### 分類別の不合格数（各5問）
 
-| 分類 | Boku1-nano | Qwen3-0.6B |
+| 分類 | Boku-nano | Qwen3-0.6B |
 | --- | ---: | ---: |
 | C01 基本的な抽出 | 1 | 1 |
 | C02 kを使う条件 | 4 | 4 |
@@ -74,7 +74,7 @@ Bokuの「関数契約・許可構文」3件は未定義変数の検出。Qwen�
 
 以下の生成コードは採点対象として抽出したコード（単一のMarkdownフェンスを除去したもの）。修理や意味の補正はしていない。「読み取り」はコード読解による説明、「実測」は採点記録からの転記を表す。失敗入力は最初に検出されたものなので、両モデルで異なる場合がある。静的検査で止まった例には実測反例がない。
 
-## 3. Boku1-nanoだけが不合格：9問
+## 3. Boku-nanoだけが不合格：9問
 
 | 問題 | 指示 |
 | --- | --- |
@@ -104,7 +104,7 @@ Bokuの「関数契約・許可構文」3件は未定義変数の検出。Qwen�
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c02-05)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -150,7 +150,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c03-01)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -194,7 +194,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c03-02)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -241,7 +241,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c03-04)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -290,7 +290,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c05-01)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -332,7 +332,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c05-04)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -377,7 +377,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c10-01)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -419,7 +419,7 @@ solve(xs, k)をお願いします。整数リストxsについて、左端から
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c10-04)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -466,7 +466,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c10-05)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -540,7 +540,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c02-01)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -585,7 +585,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c04-01)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -657,7 +657,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c04-02)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -701,7 +701,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c04-03)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -741,7 +741,7 @@ def solve(xs):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c04-04)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -813,7 +813,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c04-05)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -852,7 +852,7 @@ def solve(xs):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c05-02)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -893,7 +893,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c06-03)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -944,7 +944,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c07-01)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -995,7 +995,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c07-02)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1047,7 +1047,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c07-03)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1103,7 +1103,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c07-04)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1155,7 +1155,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c08-01)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1201,7 +1201,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c08-02)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1254,7 +1254,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c08-03)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1303,7 +1303,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c08-04)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1358,7 +1358,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c09-02)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1410,7 +1410,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c09-03)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1460,7 +1460,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c09-04)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1508,7 +1508,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c09-05)
 
-#### Boku1-nano：合格
+#### Boku-nano：合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1572,7 +1572,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c01-03)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1627,7 +1627,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c02-02)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1685,7 +1685,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c02-03)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1741,7 +1741,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c02-04)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1793,7 +1793,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c05-03)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1842,7 +1842,7 @@ def solve(xs):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c05-05)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1890,7 +1890,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c06-05)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1947,7 +1947,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c07-05)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -1997,7 +1997,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c08-05)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -2050,7 +2050,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c10-02)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -2104,7 +2104,7 @@ def solve(xs, k):
 
 [この問題の実プロンプト全文・生出力](dev50_20261005_details.md#dev-c10-03)
 
-#### Boku1-nano：不合格
+#### Boku-nano：不合格
 
 ````python
 def solve(xs: list[int], k: int) -> list[int]:
@@ -2157,9 +2157,9 @@ def solve(xs, k):
 
 | モデル | 合格 / 50問 | 正答率 | 不合格 |
 | --- | ---: | ---: | ---: |
-| Boku1-nano 15M・1epoch | 30/50 | 60% | 20 |
-| Boku1-nano 5M・1epoch | 28/50 | 56% | 22 |
-| Boku1-nano 1M・3epoch | 29/50 | 58% | 21 |
+| Boku-nano 15M・1epoch | 30/50 | 60% | 20 |
+| Boku-nano 5M・1epoch | 28/50 | 56% | 22 |
+| Boku-nano 1M・3epoch | 29/50 | 58% | 21 |
 | Qwen3-0.6B | 19/50 | 38% | 31 |
 
 15MとQwenは前回の条件Aの実測を再掲し、5M・1epochと1M・3epochだけを追加実行した。条件Bは追加評価していない。50問の固定集合・各1候補での結果であり、1Mのほうが5Mより一般に優れるとは結論しない。サイズに加えて学習epoch数も異なる。
@@ -2194,11 +2194,11 @@ def solve(xs, k):
 
 ### 追加モデルが失敗した問題
 
-**Boku1-nano 5M・1epoch：22問**
+**Boku-nano 5M・1epoch：22問**
 
 [C01-03](dev50_20261005_additional_models.md#dev-c01-03)、[C01-05](dev50_20261005_additional_models.md#dev-c01-05)、[C02-02](dev50_20261005_additional_models.md#dev-c02-02)、[C02-03](dev50_20261005_additional_models.md#dev-c02-03)、[C02-04](dev50_20261005_additional_models.md#dev-c02-04)、[C02-05](dev50_20261005_additional_models.md#dev-c02-05)、[C03-01](dev50_20261005_additional_models.md#dev-c03-01)、[C03-02](dev50_20261005_additional_models.md#dev-c03-02)、[C03-04](dev50_20261005_additional_models.md#dev-c03-04)、[C04-02](dev50_20261005_additional_models.md#dev-c04-02)、[C04-03](dev50_20261005_additional_models.md#dev-c04-03)、[C05-01](dev50_20261005_additional_models.md#dev-c05-01)、[C05-02](dev50_20261005_additional_models.md#dev-c05-02)、[C05-03](dev50_20261005_additional_models.md#dev-c05-03)、[C05-04](dev50_20261005_additional_models.md#dev-c05-04)、[C05-05](dev50_20261005_additional_models.md#dev-c05-05)、[C08-05](dev50_20261005_additional_models.md#dev-c08-05)、[C10-01](dev50_20261005_additional_models.md#dev-c10-01)、[C10-02](dev50_20261005_additional_models.md#dev-c10-02)、[C10-03](dev50_20261005_additional_models.md#dev-c10-03)、[C10-04](dev50_20261005_additional_models.md#dev-c10-04)、[C10-05](dev50_20261005_additional_models.md#dev-c10-05)
 
-**Boku1-nano 1M・3epoch：21問**
+**Boku-nano 1M・3epoch：21問**
 
 [C01-03](dev50_20261005_additional_models.md#dev-c01-03)、[C01-05](dev50_20261005_additional_models.md#dev-c01-05)、[C02-02](dev50_20261005_additional_models.md#dev-c02-02)、[C02-03](dev50_20261005_additional_models.md#dev-c02-03)、[C02-04](dev50_20261005_additional_models.md#dev-c02-04)、[C02-05](dev50_20261005_additional_models.md#dev-c02-05)、[C03-01](dev50_20261005_additional_models.md#dev-c03-01)、[C03-02](dev50_20261005_additional_models.md#dev-c03-02)、[C03-04](dev50_20261005_additional_models.md#dev-c03-04)、[C04-02](dev50_20261005_additional_models.md#dev-c04-02)、[C04-05](dev50_20261005_additional_models.md#dev-c04-05)、[C05-01](dev50_20261005_additional_models.md#dev-c05-01)、[C05-03](dev50_20261005_additional_models.md#dev-c05-03)、[C05-04](dev50_20261005_additional_models.md#dev-c05-04)、[C05-05](dev50_20261005_additional_models.md#dev-c05-05)、[C06-05](dev50_20261005_additional_models.md#dev-c06-05)、[C10-01](dev50_20261005_additional_models.md#dev-c10-01)、[C10-02](dev50_20261005_additional_models.md#dev-c10-02)、[C10-03](dev50_20261005_additional_models.md#dev-c10-03)、[C10-04](dev50_20261005_additional_models.md#dev-c10-04)、[C10-05](dev50_20261005_additional_models.md#dev-c10-05)
 
@@ -2218,9 +2218,9 @@ def solve(xs, k):
 
 | モデル | 合格 / 50問 | 正答率 | 実行方式 |
 | --- | ---: | ---: | --- |
-| Boku1-nano 15M・1epoch | 30/50 | 60% | ブラウザ・WebGPU |
-| Boku1-nano 5M・1epoch | 28/50 | 56% | ブラウザ・WebGPU |
-| Boku1-nano 1M・3epoch | 29/50 | 58% | ブラウザ・WebGPU |
+| Boku-nano 15M・1epoch | 30/50 | 60% | ブラウザ・WebGPU |
+| Boku-nano 5M・1epoch | 28/50 | 56% | ブラウザ・WebGPU |
+| Boku-nano 1M・3epoch | 29/50 | 58% | ブラウザ・WebGPU |
 | Qwen3-0.6B | 19/50 | 38% | ブラウザ・WebGPU |
 | **Qwen3-4B-AWQ（FP16展開・MPS）** | **32/50** | **64%** | **このMacのPython・Apple GPU** |
 
@@ -2257,9 +2257,9 @@ def solve(xs, k):
 
 | モデル | 合格 / 50問 | 正答率 | 実行方式 |
 | --- | ---: | ---: | --- |
-| Boku1-nano 15M・1epoch | 30/50 | 60% | ブラウザ・WebGPU |
-| Boku1-nano 5M・1epoch | 28/50 | 56% | ブラウザ・WebGPU |
-| Boku1-nano 1M・3epoch | 29/50 | 58% | ブラウザ・WebGPU |
+| Boku-nano 15M・1epoch | 30/50 | 60% | ブラウザ・WebGPU |
+| Boku-nano 5M・1epoch | 28/50 | 56% | ブラウザ・WebGPU |
+| Boku-nano 1M・3epoch | 29/50 | 58% | ブラウザ・WebGPU |
 | Qwen3-0.6B | 19/50 | 38% | ブラウザ・WebGPU |
 | Qwen3-1.7B（非量子化・FP16） | 23/50 | 46% | MacのPython・MPS |
 | Qwen3-4B-AWQ（FP16展開） | 32/50 | 64% | MacのPython・MPS |

@@ -43,7 +43,7 @@ async function run(){
  if(models.includes('boku')){
  const model=manifest.models.find(m=>m.id===config.boku_model);
  ort.env.wasm.wasmPaths=new URL('/web/vendor/',location.href).href;ort.env.wasm.numThreads=1;
- status('Boku1-nanoを準備しています');
+ status('Boku-nanoを準備しています');
  const session=await ort.InferenceSession.create(`/web/${model.path}`,{executionProviders:['webgpu']});
  const tokenizer=await BokuNanoTokenizer.load(`/web/${manifest.tokenizers[model.tokenizer_id].path}`);
  for(const condition of config.conditions){

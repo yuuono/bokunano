@@ -61,7 +61,7 @@ uv run --python 3.12.12 python \
 git status --short
 git add \
   .python-version pyproject.toml uv.lock \
-  boku1-nano.md docs/README.md \
+  boku-nano.md docs/README.md \
   config prompts scripts tests \
   .gitignore \
   docs/procedures/publishing_japanese_expression_dictionary.md \

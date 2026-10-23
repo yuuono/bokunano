@@ -87,7 +87,7 @@ function confirmReply(reply, validation) {
     const result = document.createElement("div");
     result.className = "cnl-result";
     const label = document.createElement("strong");
-    label.textContent = "Boku1-nanoへの入力（整形後のCNL）";
+    label.textContent = "Boku-nanoへの入力（整形後のCNL）";
     const content = document.createElement("p");
     content.textContent = validation.cnl + (validation.kValue != null ? `\nk=${validation.kValue}` : "");
     result.append(label, content);
@@ -177,7 +177,7 @@ function addProcessingStage(reply, kind) {
   number.className = "stage-number";
   number.textContent = String(Object.keys(reply.stages).length + 1).padStart(2, "0");
   const name = document.createElement("strong");
-  name.textContent = kind === "qwen" ? state.qwenManifest.label : "Boku1-nano";
+  name.textContent = kind === "qwen" ? state.qwenManifest.label : "Boku-nano";
   const purpose = document.createElement("span");
   purpose.textContent = kind === "qwen" ? "指示の整理" : "コード生成";
   heading.append(number, name, purpose);
@@ -385,7 +385,7 @@ async function translateInstruction(event) {
           reply.stages.qwen.body.append(metrics);
           confirmReply(reply, validation);
           job.autoGenerate = true;
-          setMessage($("translation-status"), "Qwenの整理が完了しました。Boku1-nanoへ切り替えています…", "success");
+          setMessage($("translation-status"), "Qwenの整理が完了しました。Boku-nanoへ切り替えています…", "success");
         }
       }
       if (message.type === "error") fail(message.message, qwenRuntimeFailure(message.message, message.phase, qwenModel.label));
@@ -416,7 +416,7 @@ function stopJob() {
   if (job.kind === "qwen") {
     job.worker?.terminate();
     if (state.confirmedReply?.message === job.reply.message && state.confirmedReply.handoff) {
-      state.confirmedReply.handoff.textContent = "処理を中止しました。Boku1-nanoは開始していません。";
+      state.confirmedReply.handoff.textContent = "処理を中止しました。Boku-nanoは開始していません。";
     }
     job.autoGenerate = false;
     finishThinking(job.reply, "生成を停止しました。");
@@ -497,7 +497,7 @@ function newCodeCard(model, validation, temperature) {
   const lastTurn = $("conversation").querySelector(".chat-turn:last-child");
   const sameTurn = confirmed?.reply.details.dataset.busy === "true" && confirmed.message.parentElement === lastTurn && confirmed.cnl === validation.cnl && confirmed.kValue === validation.kValue;
   if (!sameTurn) addMessage("user", validation.cnl + (validation.kValue !== null ? `\n使う数値: k=${validation.kValue}` : ""));
-  const reply = sameTurn ? confirmed.reply : addMessage("assistant", "Boku1-nanoを準備しています…", "normal", "boku");
+  const reply = sameTurn ? confirmed.reply : addMessage("assistant", "Boku-nanoを準備しています…", "normal", "boku");
   const boku = addProcessingStage(reply, "boku");
   reply.details.dataset.busy = "true";
   reply.summary.textContent = "思考中";
@@ -530,7 +530,7 @@ function newCodeCard(model, validation, temperature) {
   card.append(header, pre);
   const modelInfo = document.createElement("p");
   modelInfo.className = "metrics";
-  modelInfo.textContent = `Boku1-nano · ${model.label} · T=${temperature.toFixed(1)}`;
+  modelInfo.textContent = `Boku-nano · ${model.label} · T=${temperature.toFixed(1)}`;
   boku.body.append(modelInfo, instruction, meta);
   const inputCnl = document.createElement("p");
   inputCnl.className = "code-instruction";
@@ -566,7 +566,7 @@ async function generateCode() {
   // Preserve the confirmed meaning with this card, independently of later chat turns.
   view.card.semanticAst = semanticAst;
   $("metrics").textContent = "";
-  setMessage($("status"), "Boku1-nanoを準備しています…");
+  setMessage($("status"), "Boku-nanoを準備しています…");
   updateControls();
   const startedAt = performance.now();
   let generatedCount = 0;
@@ -580,7 +580,7 @@ async function generateCode() {
     if (promptIds.length >= model.context_length) throw new Error(`指示が長すぎます (${promptIds.length}/${model.context_length} tokens)。短くしてください。`);
     const runtime = await createSession(model, job);
     if (!runtime || !current(job)) return;
-    promptDetails(view.reply.stages.boku.body, "Boku1-nanoの実際のプロンプトを見る",
+    promptDetails(view.reply.stages.boku.body, "Boku-nanoの実際のプロンプトを見る",
       `モデル: ${model.id}\n温度: ${temperature}\n\n${formatBokuPrompt(validation.cnl)}\n入力トークンID:\n${JSON.stringify(promptIds)}${validation.kValue !== null ? `\n\nk=${validation.kValue} は生成後に関数の初期値として設定します。上記プロンプトには含めません。` : ""}`);
     const currentIds = [...promptIds];
     const generatedIds = [];

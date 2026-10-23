@@ -7,8 +7,8 @@ from pathlib import Path
 from report_browser_100_benchmark import ROOT, RUN, OUT, CATEGORIES, block, jsonl
 
 NEW_MODELS = ['5m-1epoch', '1m-3epoch']
-LABELS = {'15m-1epoch': 'Boku1-nano 15M・1epoch', '5m-1epoch': 'Boku1-nano 5M・1epoch',
-          '1m-3epoch': 'Boku1-nano 1M・3epoch', 'qwen': 'Qwen3-0.6B'}
+LABELS = {'15m-1epoch': 'Boku-nano 15M・1epoch', '5m-1epoch': 'Boku-nano 5M・1epoch',
+          '1m-3epoch': 'Boku-nano 1M・3epoch', 'qwen': 'Qwen3-0.6B'}
 ORDER = list(LABELS)
 DETAILS = 'dev50_20261005_additional_models.md'
 MARKER = '<!-- additional-condition-a-models -->'

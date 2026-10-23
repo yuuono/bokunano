@@ -1,8 +1,8 @@
-# Boku1-nano Model Card
+# Boku-nano Model Card
 
 ## モデル概要
 
-Boku1-nanoは、日本語指示から限定的なPython関数を生成する、ランダム初期値から学習したDecoder-only Transformerである。
+Boku-nanoは、日本語指示から限定的なPython関数を生成する、ランダム初期値から学習したDecoder-only Transformerである。
 
 | 項目 | 値 |
 | --- | ---: |
@@ -32,7 +32,7 @@ tokenizerは[`data/tokenizers/bpe_2048/tokenizer.json`](../../data/tokenizers/bp
 モデル重みとtokenizerは既存モデルから移植せず、訓練データからランダム初期値で作成した。Qwen3はオフラインの日本語表現候補作成にだけ使用した。
 
 - Qwen3の重み、埋め込み、tokenizer、logit、内部状態は使用していない。
-- 学習中およびBoku1-nano推論時にQwen3を呼び出さない。
+- 学習中およびBoku-nano推論時にQwen3を呼び出さない。
 - 教師モデルは`Qwen/Qwen3-4B-AWQ` revision `74d4bd2bd4bff9cafc9345221320bffb08b406a3`である。
 - Qwen3へ正解コード生成を依頼していない。
 
@@ -59,4 +59,4 @@ tokenizerは[`data/tokenizers/bpe_2048/tokenizer.json`](../../data/tokenizers/bp
 
 ## ライセンスと来歴
 
-Qwen3の公式LICENSEは`third_party/qwen3-4b-awq/LICENSE`へ保存している。Qwen3はApache License 2.0で公開されているが、このModel CardはBoku1-nanoの重みやデータセットへ自動的に同じライセンスを付与するものではない。リポジトリ全体またはBoku1-nano成果物のライセンスを別途定める場合は、第三者成果物の条件と教師生成物の権利確認を分けて行う。
+Qwen3の公式LICENSEは`third_party/qwen3-4b-awq/LICENSE`へ保存している。Qwen3はApache License 2.0で公開されているが、このModel CardはBoku-nanoの重みやデータセットへ自動的に同じライセンスを付与するものではない。リポジトリ全体またはBoku-nano成果物のライセンスを別途定める場合は、第三者成果物の条件と教師生成物の権利確認を分けて行う。

@@ -8,9 +8,9 @@
 
 | モデル | 合格 / 50問 | 正答率 | 不合格 |
 | --- | ---: | ---: | ---: |
-| Boku1-nano 15M・1epoch | 30/50 | 60% | 20 |
-| Boku1-nano 5M・1epoch | 28/50 | 56% | 22 |
-| Boku1-nano 1M・3epoch | 29/50 | 58% | 21 |
+| Boku-nano 15M・1epoch | 30/50 | 60% | 20 |
+| Boku-nano 5M・1epoch | 28/50 | 56% | 22 |
+| Boku-nano 1M・3epoch | 29/50 | 58% | 21 |
 | Qwen3-0.6B | 19/50 | 38% | 31 |
 
 15MとQwenは前回の条件Aの実測を再掲し、5M・1epochと1M・3epochだけを追加実行した。条件Bは追加評価していない。50問の固定集合・各1候補での結果であり、1Mのほうが5Mより一般に優れるとは結論しない。サイズに加えて学習epoch数も異なる。
@@ -45,11 +45,11 @@
 
 ### 追加モデルが失敗した問題
 
-**Boku1-nano 5M・1epoch：22問**
+**Boku-nano 5M・1epoch：22問**
 
 [C01-03](dev50_20261005_additional_models.md#dev-c01-03)、[C01-05](dev50_20261005_additional_models.md#dev-c01-05)、[C02-02](dev50_20261005_additional_models.md#dev-c02-02)、[C02-03](dev50_20261005_additional_models.md#dev-c02-03)、[C02-04](dev50_20261005_additional_models.md#dev-c02-04)、[C02-05](dev50_20261005_additional_models.md#dev-c02-05)、[C03-01](dev50_20261005_additional_models.md#dev-c03-01)、[C03-02](dev50_20261005_additional_models.md#dev-c03-02)、[C03-04](dev50_20261005_additional_models.md#dev-c03-04)、[C04-02](dev50_20261005_additional_models.md#dev-c04-02)、[C04-03](dev50_20261005_additional_models.md#dev-c04-03)、[C05-01](dev50_20261005_additional_models.md#dev-c05-01)、[C05-02](dev50_20261005_additional_models.md#dev-c05-02)、[C05-03](dev50_20261005_additional_models.md#dev-c05-03)、[C05-04](dev50_20261005_additional_models.md#dev-c05-04)、[C05-05](dev50_20261005_additional_models.md#dev-c05-05)、[C08-05](dev50_20261005_additional_models.md#dev-c08-05)、[C10-01](dev50_20261005_additional_models.md#dev-c10-01)、[C10-02](dev50_20261005_additional_models.md#dev-c10-02)、[C10-03](dev50_20261005_additional_models.md#dev-c10-03)、[C10-04](dev50_20261005_additional_models.md#dev-c10-04)、[C10-05](dev50_20261005_additional_models.md#dev-c10-05)
 
-**Boku1-nano 1M・3epoch：21問**
+**Boku-nano 1M・3epoch：21問**
 
 [C01-03](dev50_20261005_additional_models.md#dev-c01-03)、[C01-05](dev50_20261005_additional_models.md#dev-c01-05)、[C02-02](dev50_20261005_additional_models.md#dev-c02-02)、[C02-03](dev50_20261005_additional_models.md#dev-c02-03)、[C02-04](dev50_20261005_additional_models.md#dev-c02-04)、[C02-05](dev50_20261005_additional_models.md#dev-c02-05)、[C03-01](dev50_20261005_additional_models.md#dev-c03-01)、[C03-02](dev50_20261005_additional_models.md#dev-c03-02)、[C03-04](dev50_20261005_additional_models.md#dev-c03-04)、[C04-02](dev50_20261005_additional_models.md#dev-c04-02)、[C04-05](dev50_20261005_additional_models.md#dev-c04-05)、[C05-01](dev50_20261005_additional_models.md#dev-c05-01)、[C05-03](dev50_20261005_additional_models.md#dev-c05-03)、[C05-04](dev50_20261005_additional_models.md#dev-c05-04)、[C05-05](dev50_20261005_additional_models.md#dev-c05-05)、[C06-05](dev50_20261005_additional_models.md#dev-c06-05)、[C10-01](dev50_20261005_additional_models.md#dev-c10-01)、[C10-02](dev50_20261005_additional_models.md#dev-c10-02)、[C10-03](dev50_20261005_additional_models.md#dev-c10-03)、[C10-04](dev50_20261005_additional_models.md#dev-c10-04)、[C10-05](dev50_20261005_additional_models.md#dev-c10-05)
 
@@ -73,7 +73,7 @@
 
 問題SHA-256: `ba24af53978a61f3002834f9bd4914f40516eaa181b18d67cfe8cac1f5d91954`
 
-### Boku1-nano 5M・1epoch
+### Boku-nano 5M・1epoch
 
 - model_id: `5m-1epoch`、5,065,472 parameters、ONNX 20,560,021 bytes。
 - モデルSHA-256: `5e71bc0ef680408eab5fb5c0f3ff450e492d7edf0230bde7ef830fd92c54f1a7`
@@ -94,7 +94,7 @@
 }
 ````
 
-### Boku1-nano 1M・3epoch
+### Boku-nano 1M・3epoch
 
 - model_id: `1m-3epoch`、1,016,704 parameters、ONNX 4,233,585 bytes。
 - モデルSHA-256: `b882366c28977b2a88d5e71997db82bf3c8b28707d8c58a9772339a3a7b68bb3`
@@ -190,7 +190,7 @@
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c01-01)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -227,7 +227,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.168秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -277,7 +277,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c01-02)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -314,7 +314,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.147秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -367,7 +367,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c01-03)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -413,7 +413,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.216秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -469,7 +469,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c01-04)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -503,7 +503,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.104秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -553,7 +553,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c01-05)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -599,7 +599,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.230秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -663,7 +663,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c02-01)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -700,7 +700,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.128秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -750,7 +750,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c02-02)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -796,7 +796,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.167秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -858,7 +858,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c02-03)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -904,7 +904,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.142秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -966,7 +966,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c02-04)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -1009,7 +1009,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.106秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -1073,7 +1073,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c02-05)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -1118,7 +1118,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.115秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -1182,7 +1182,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c03-01)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -1227,7 +1227,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.115秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -1291,7 +1291,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c03-02)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -1336,7 +1336,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.115秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -1400,7 +1400,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c03-03)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -1436,7 +1436,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.107秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -1488,7 +1488,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c03-04)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -1536,7 +1536,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.169秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -1608,7 +1608,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c03-05)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -1644,7 +1644,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.088秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -1696,7 +1696,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c04-01)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -1730,7 +1730,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.080秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -1780,7 +1780,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c04-02)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -1826,7 +1826,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.123秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -1896,7 +1896,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c04-03)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -1942,7 +1942,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.123秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -1992,7 +1992,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c04-04)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -2026,7 +2026,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.080秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -2076,7 +2076,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c04-05)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -2110,7 +2110,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.071秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -2163,7 +2163,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c05-01)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -2210,7 +2210,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.140秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -2275,7 +2275,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c05-02)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -2320,7 +2320,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.106秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -2370,7 +2370,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c05-03)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -2415,7 +2415,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.123秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -2464,7 +2464,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c05-04)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -2507,7 +2507,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.094秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -2572,7 +2572,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c05-05)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -2617,7 +2617,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.123秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -2682,7 +2682,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c06-01)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -2719,7 +2719,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.132秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -2770,7 +2770,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c06-02)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -2807,7 +2807,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.130秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -2863,7 +2863,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c06-03)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -2898,7 +2898,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.126秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -2949,7 +2949,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c06-04)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -2986,7 +2986,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.120秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3039,7 +3039,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c06-05)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3076,7 +3076,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.125秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -3141,7 +3141,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c07-01)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3177,7 +3177,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.137秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3231,7 +3231,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c07-02)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3272,7 +3272,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.193秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3329,7 +3329,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c07-03)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3367,7 +3367,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.141秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3422,7 +3422,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c07-04)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3460,7 +3460,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.122秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3515,7 +3515,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c07-05)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3553,7 +3553,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.140秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3608,7 +3608,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c08-01)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3645,7 +3645,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.114秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3698,7 +3698,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c08-02)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3737,7 +3737,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.185秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3796,7 +3796,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c08-03)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3831,7 +3831,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.106秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3884,7 +3884,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c08-04)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -3920,7 +3920,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.124秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -3978,7 +3978,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c08-05)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -4024,7 +4024,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.134秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -4075,7 +4075,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c09-01)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -4112,7 +4112,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.141秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -4166,7 +4166,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c09-02)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -4206,7 +4206,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.132秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -4262,7 +4262,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c09-03)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -4297,7 +4297,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.105秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -4348,7 +4348,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c09-04)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -4383,7 +4383,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.098秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -4434,7 +4434,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c09-05)
 
-#### Boku1-nano 5M・1epoch：合格
+#### Boku-nano 5M・1epoch：合格
 
 実プロンプト:
 
@@ -4471,7 +4471,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.116秒。
 
-#### Boku1-nano 1M・3epoch：合格
+#### Boku-nano 1M・3epoch：合格
 
 実プロンプト:
 
@@ -4527,7 +4527,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c10-01)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -4565,7 +4565,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.141秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -4624,7 +4624,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c10-02)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -4680,7 +4680,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.159秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -4740,7 +4740,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c10-03)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -4786,7 +4786,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.151秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -4834,7 +4834,7 @@ solve(xs, k)をお願いします。整数リストxsについて、左端から
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c10-04)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -4872,7 +4872,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.151秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -4941,7 +4941,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 [15MとQwenの元のプロンプト・結果](dev50_20261005_details.md#dev-c10-05)
 
-#### Boku1-nano 5M・1epoch：不合格
+#### Boku-nano 5M・1epoch：不合格
 
 実プロンプト:
 
@@ -4989,7 +4989,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 終了: `eos`。生成時間: 0.168秒。
 
-#### Boku1-nano 1M・3epoch：不合格
+#### Boku-nano 1M・3epoch：不合格
 
 実プロンプト:
 
@@ -5036,7 +5036,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ## 5. 元データと再現
 
-**Boku1-nano 5M・1epoch**
+**Boku-nano 5M・1epoch**
 
 - [config.json](../../../data/benchmarks/browser_100/runs/dev50-20261005-5m-1epoch/config.json)
 - [raw_inference.jsonl](../../../data/benchmarks/browser_100/runs/dev50-20261005-5m-1epoch/raw_inference.jsonl)
@@ -5045,7 +5045,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 - [test_cases.json](../../../data/benchmarks/browser_100/runs/dev50-20261005-5m-1epoch/test_cases.json)
 - [source_hashes.json](../../../data/benchmarks/browser_100/runs/dev50-20261005-5m-1epoch/source_hashes.json)
 
-**Boku1-nano 1M・3epoch**
+**Boku-nano 1M・3epoch**
 
 - [config.json](../../../data/benchmarks/browser_100/runs/dev50-20261005-1m-3epoch/config.json)
 - [raw_inference.jsonl](../../../data/benchmarks/browser_100/runs/dev50-20261005-1m-3epoch/raw_inference.jsonl)
@@ -5074,9 +5074,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 | モデル | 合格 / 50問 | 正答率 | 実行方式 |
 | --- | ---: | ---: | --- |
-| Boku1-nano 15M・1epoch | 30/50 | 60% | ブラウザ・WebGPU |
-| Boku1-nano 5M・1epoch | 28/50 | 56% | ブラウザ・WebGPU |
-| Boku1-nano 1M・3epoch | 29/50 | 58% | ブラウザ・WebGPU |
+| Boku-nano 15M・1epoch | 30/50 | 60% | ブラウザ・WebGPU |
+| Boku-nano 5M・1epoch | 28/50 | 56% | ブラウザ・WebGPU |
+| Boku-nano 1M・3epoch | 29/50 | 58% | ブラウザ・WebGPU |
 | Qwen3-0.6B | 19/50 | 38% | ブラウザ・WebGPU |
 | **Qwen3-4B-AWQ（FP16展開・MPS）** | **32/50** | **64%** | **このMacのPython・Apple GPU** |
 
@@ -5113,9 +5113,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 | モデル | 合格 / 50問 | 正答率 | 実行方式 |
 | --- | ---: | ---: | --- |
-| Boku1-nano 15M・1epoch | 30/50 | 60% | ブラウザ・WebGPU |
-| Boku1-nano 5M・1epoch | 28/50 | 56% | ブラウザ・WebGPU |
-| Boku1-nano 1M・3epoch | 29/50 | 58% | ブラウザ・WebGPU |
+| Boku-nano 15M・1epoch | 30/50 | 60% | ブラウザ・WebGPU |
+| Boku-nano 5M・1epoch | 28/50 | 56% | ブラウザ・WebGPU |
+| Boku-nano 1M・3epoch | 29/50 | 58% | ブラウザ・WebGPU |
 | Qwen3-0.6B | 19/50 | 38% | ブラウザ・WebGPU |
 | Qwen3-1.7B（非量子化・FP16） | 23/50 | 46% | MacのPython・MPS |
 | Qwen3-4B-AWQ（FP16展開） | 32/50 | 64% | MacのPython・MPS |

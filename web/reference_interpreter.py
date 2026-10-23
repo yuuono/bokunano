@@ -1,4 +1,4 @@
-"""Boku1-nanoの意味ASTを直接実行する参照インタプリタ。
+"""Boku-nanoの意味ASTを直接実行する参照インタプリタ。
 
 生成対象の ``solve`` 関数とは実装経路を分けるため、値の操作には
 ``operator``、``itertools``、``heapq``、``collections.deque`` を使う。

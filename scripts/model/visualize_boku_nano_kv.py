@@ -1,4 +1,4 @@
-"""Boku1-nanoの一時K/V状態と、KV cacheを導入した場合の容量を可視化する。"""
+"""Boku-nanoの一時K/V状態と、KV cacheを導入した場合の容量を可視化する。"""
 
 from __future__ import annotations
 
@@ -34,7 +34,7 @@ DEFAULT_METRICS = PROJECT_ROOT / "docs/results/boku_nano_kv_visualization_metric
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Boku1-nanoのK/V内部状態とKV cache容量をSVGへ出力します。"
+        description="Boku-nanoのK/V内部状態とKV cache容量をSVGへ出力します。"
     )
     parser.add_argument("--model-directory", type=Path, default=DEFAULT_MODEL)
     parser.add_argument("--tokenizer", type=Path, default=DEFAULT_TOKENIZER)
@@ -181,7 +181,7 @@ def heatmap_svg(
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
         '<rect width="100%" height="100%" fill="#ffffff"/>',
         '<style>text{font-family:system-ui,sans-serif;fill:#17212b;font-size:13px}.small{font-size:11px;fill:#4b5967}.title{font-size:20px;font-weight:500}.label{font-size:14px;font-weight:500}</style>',
-        '<text x="24" y="32" class="title">Boku1-nanoの一時K/V状態</text>',
+        '<text x="24" y="32" class="title">Boku-nanoの一時K/V状態</text>',
         '<text x="24" y="56" class="small">各セルは6 head × 64次元のRMS。現在の実装では生成stepをまたいで保持しない。</text>',
     ]
     panels = [("Key（RoPE適用後）", keys, top), ("Value", values, top + panel_height + gap)]

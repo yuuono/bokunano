@@ -54,8 +54,8 @@ docs/
 
 ## 発表資料
 
-- [`report/boku1_nano_presentation.md`](report/boku1_nano_presentation.md): Boku1-nanoの発表用ドキュメント
-- [`report/boku1_nano_presentation_facts.md`](report/boku1_nano_presentation_facts.md): 発表内容の根拠と説明用ファクト集
+- [`report/boku_nano_presentation_notes.md`](report/boku_nano_presentation_notes.md): Boku-nanoの発表用ドキュメント
+- [`report/boku_nano_presentation_facts.md`](report/boku_nano_presentation_facts.md): 発表内容の根拠と説明用ファクト集
 
 ## 結果
 

@@ -2,7 +2,7 @@
 from collections import Counter
 from report_browser_100_benchmark import ROOT, RUN, OUT, CATEGORIES, block, jsonl
 
-NAMES = {'boku': 'Boku1-nano', 'qwen': 'Qwen3-0.6B'}
+NAMES = {'boku': 'Boku-nano', 'qwen': 'Qwen3-0.6B'}
 REASONS = {
     'output_mismatch': '実行結果の不一致',
     'contract_or_allowed_syntax': '関数契約・許可構文の検査で拒否',
@@ -77,26 +77,26 @@ def main():
     for m in NAMES:
         assert set(NOTES[m]) == {qid.removeprefix('dev-') for (model, qid), s in scores.items() if model == m and not s['passed']}
     groups = [
-        ('Boku1-nanoだけが不合格', False, True, 9),
+        ('Boku-nanoだけが不合格', False, True, 9),
         ('Qwen3-0.6Bだけが不合格', True, False, 20),
         ('両モデルとも不合格', False, False, 11),
     ]
-    lines = ['# 条件A：Boku1-nanoとQwen3-0.6Bが失敗した例', '',
+    lines = ['# 条件A：Boku-nanoとQwen3-0.6Bが失敗した例', '',
         '2026年10月5日の保存済み実測を整理。条件Aは、同じ自然な日本語から両モデルがそれぞれ直接Pythonコードを生成する比較。CNL変換・補正は挟まない。本書は条件Aだけを扱う。モデルの再生成や採点条件の変更は行っていない。', '',
-        'Boku1-nanoは15M・1 epoch（15,735,168 parameters）、Qwen3-0.6BはONNX q4f16。両者ともWebGPU・greedy・T=0・1問1候補・会話履歴なし。Webデモ既定の5Mモデルの成績ではない。', '',
+        'Boku-nanoは15M・1 epoch（15,735,168 parameters）、Qwen3-0.6BはONNX q4f16。両者ともWebGPU・greedy・T=0・1問1候補・会話履歴なし。Webデモ既定の5Mモデルの成績ではない。', '',
         '以下の当初集計は15M・1epochとQwenの比較。末尾の追記に5M・1epochと1M・3epochの結果を追加した。全4モデルの詳細は[追加評価レポート](dev50_20261005_additional_models.md)を参照。', '', '## 1. 結果の見取り図', '',
         '| 結果 | 問題数 |', '| --- | ---: |',
-        '| 両モデルとも合格 | 10 |', '| Boku1-nanoだけが不合格 | 9 |',
+        '| 両モデルとも合格 | 10 |', '| Boku-nanoだけが不合格 | 9 |',
         '| Qwen3-0.6Bだけが不合格 | 20 |', '| 両モデルとも不合格 | 11 |', '',
-        '**Boku1-nanoは30/50合格・20問不合格、Qwen3-0.6Bは19/50合格・31問不合格。** 少なくとも片方が不合格の全40問を以下に掲載する。同じ11問で両方が不合格なので、モデル別不合格件数の合計は51件となる。', '',
+        '**Boku-nanoは30/50合格・20問不合格、Qwen3-0.6Bは19/50合格・31問不合格。** 少なくとも片方が不合格の全40問を以下に掲載する。同じ11問で両方が不合格なので、モデル別不合格件数の合計は51件となる。', '',
         '「不合格」は、固定した関数契約・許可構文・全179入力の検査を通らなかったという意味。別のプロンプトでも絶対に解けないという主張ではない。Qwenの3例（C04-03、C04-05、C10-03）は反転処理自体が正しく、引数契約や採点器の制限による不合格として区別する。', '',
         '### モデルごとに目立った誤り', '',
-        '- **Boku1-nano:** 指示にないkによる抽出を加える、操作を余分に繰り返す、新しい言い回しから別操作を生成する。C10の言い換え5問はすべて不合格だった。',
+        '- **Boku-nano:** 指示にないkによる抽出を加える、操作を余分に繰り返す、新しい言い回しから別操作を生成する。C10の言い換え5問はすべて不合格だった。',
         '- **Qwen3-0.6B:** 複数操作の省略、反復回数の無視、先頭と末尾の混同。3操作と反復は各5問とも不合格。一方、基本的な値の変換は5問とも合格した。',
         '- **両モデル共通:** k以上／未満／以下の境界や、絶対値を「0からの距離」と表した問題で失敗した。', '',
         'これらは生成コードから観察した傾向であり、学習過程などの内部原因を特定したものではない。', '',
         '### すぐ確認できる代表例', '',
-        '| 指示の要点 | Boku1-nano | Qwen3-0.6B | 詳細 |', '| --- | --- | --- | --- |',
+        '| 指示の要点 | Boku-nano | Qwen3-0.6B | 詳細 |', '| --- | --- | --- | --- |',
         '| 各要素にkを足す | 先にkより大きい値を抽出してしまう | 合格 | [C03-01](#dev-c03-01) |',
         '| 符号を反転する | 反転した後に二乗してしまう | 合格 | [C03-04](#dev-c03-04) |',
         '| 奇数抽出→3倍→昇順 | 合格 | 3倍を省略し降順にする | [C07-01](#dev-c07-01) |',
@@ -105,12 +105,12 @@ def main():
         '| 0からの距離に置き換える | 負の値だけ残して2倍 | k倍 | [C10-02](#dev-c10-02) |',
         '| 今の順序を反転する | 合格 | 処理は正しいがk引数を欠く | [C04-03](#dev-c04-03) |', '',
         '### 不合格理由（最初に検出された理由で集計）', '',
-        '| 理由 | Boku1-nano | Qwen3-0.6B |', '| --- | ---: | ---: |']
+        '| 理由 | Boku-nano | Qwen3-0.6B |', '| --- | ---: | ---: |']
     counts = {m: Counter(s['reason'] for (model, _), s in scores.items() if model == m and not s['passed']) for m in NAMES}
     for reason, label in REASONS.items():
         lines.append(f'| {label} | {counts["boku"][reason]} | {counts["qwen"][reason]} |')
     lines += ['', 'Bokuの「関数契約・許可構文」3件は未定義変数の検出。Qwenの同分類8件は引数不足3件、許可外の呼出し3件、lambda使用2件。許可外と判定されたコードには意味誤りも含まれ得るが、実行しなかったものに実測出力は付けない。', '',
-        '### 分類別の不合格数（各5問）', '', '| 分類 | Boku1-nano | Qwen3-0.6B |', '| --- | ---: | ---: |']
+        '### 分類別の不合格数（各5問）', '', '| 分類 | Boku-nano | Qwen3-0.6B |', '| --- | ---: | ---: |']
     for i, name in enumerate(CATEGORIES, 1):
         nums = [sum(not s['passed'] for (model, _), s in scores.items() if model == m and s['category_id'] == f'C{i:02}') for m in NAMES]
         lines.append(f'| C{i:02} {name} | {nums[0]} | {nums[1]} |')

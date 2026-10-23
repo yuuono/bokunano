@@ -6,9 +6,9 @@
 
 | モデル | 合格 / 50問 | 正答率 | 実行方式 |
 | --- | ---: | ---: | --- |
-| Boku1-nano 15M・1epoch（既存結果） | 30/50 | 60% | ブラウザ・WebGPU |
-| Boku1-nano 5M・1epoch（既存結果） | 28/50 | 56% | ブラウザ・WebGPU |
-| Boku1-nano 1M・3epoch（既存結果） | 29/50 | 58% | ブラウザ・WebGPU |
+| Boku-nano 15M・1epoch（既存結果） | 30/50 | 60% | ブラウザ・WebGPU |
+| Boku-nano 5M・1epoch（既存結果） | 28/50 | 56% | ブラウザ・WebGPU |
+| Boku-nano 1M・3epoch（既存結果） | 29/50 | 58% | ブラウザ・WebGPU |
 | Qwen3-0.6B（既存結果） | 19/50 | 38% | ブラウザ・WebGPU |
 | Qwen3-1.7B（非量子化・FP16）（既存結果） | 23/50 | 46% | Mac・Python/MPS |
 | Qwen3-4B-AWQ（FP16展開）（既存結果） | 32/50 | 64% | Mac・Python/MPS |

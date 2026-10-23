@@ -1,8 +1,8 @@
-# Boku1-nanoのK/V内部状態とKVキャッシュ可視化
+# Boku-nanoのK/V内部状態とKVキャッシュ可視化
 
 ## 結論
 
-Boku1-nanoは、自由な日本語全般を扱うモデルではなく、24種類の操作を最大3個まで組み合わせた制限自然言語からPythonコードを生成するSLMである。最大系列長も256 tokenに限定している。
+Boku-nanoは、自由な日本語全般を扱うモデルではなく、24種類の操作を最大3個まで組み合わせた制限自然言語からPythonコードを生成するSLMである。最大系列長も256 tokenに限定している。
 
 今回の本質は、大規模モデルと同じ規模のKVキャッシュを作ることではない。次の二つを機械化することで、データ作成・学習・評価を学生一人で実行できる範囲へ収めた点にある。
 
@@ -16,15 +16,15 @@ KVの可視化は、この限定SLMがtoken列をどのように内部表現へ�
 
 ## 重要な事実
 
-**現在のBoku1-nanoには、生成stepをまたいでKとVを保持するKVキャッシュは実装されていない。**
+**現在のBoku-nanoには、生成stepをまたいでKとVを保持するKVキャッシュは実装されていない。**
 
 PyTorch実装は各forwardで入力系列全体のQ、K、Vを作り直す。ブラウザ版ONNXも、生成済みtokenを含む`input_ids`全体を毎step入力している。したがって、本書で示すヒートマップは、forward中に一時的に作られるK/V内部状態である。容量図は、同じ構造へ永続KVキャッシュを追加した場合の上限を示す。
 
-この区別を付けずに「Boku1-nanoはKVキャッシュを使っている」と説明してはいけない。
+この区別を付けずに「Boku-nanoはKVキャッシュを使っている」と説明してはいけない。
 
 ## モデル内部のKとV
 
-Boku1-nanoの各Transformer blockでは、同じhidden stateからQuery、Key、Valueをまとめて作る。
+Boku-nanoの各Transformer blockでは、同じhidden stateからQuery、Key、Valueをまとめて作る。
 
 ```python
 query, key, value = self.qkv_proj(hidden_states).chunk(3, dim=-1)
@@ -97,7 +97,7 @@ $$
 
 ここで、$a_{l,h,t,j}$は層$l$、head $h$、生成step $t$から参照位置$j$へ向くattention weightである。参照可能な位置$j$について合計すると1になる。
 
-Boku1-nano本体はPyTorchのfused attentionを使い、attention weightを直接返さない。このため、同じQ/Kをhookで取得して上式により推論後に復元した。最後のQueryには未来tokenが存在しないため、参照可能なprefix全体が計算対象となる。全528行（11 step × 8層 × 6 head）のattention合計は`0.99999976`〜`1.00000024`であり、softmaxの確率分布として整合している。**ただし、行和が約1であることだけでは、fused attentionと同じ重みを復元できた証明にはならない。**
+Boku-nano本体はPyTorchのfused attentionを使い、attention weightを直接返さない。このため、同じQ/Kをhookで取得して上式により推論後に復元した。最後のQueryには未来tokenが存在しないため、参照可能なprefix全体が計算対象となる。全528行（11 step × 8層 × 6 head）のattention合計は`0.99999976`〜`1.00000024`であり、softmaxの確率分布として整合している。**ただし、行和が約1であることだけでは、fused attentionと同じ重みを復元できた証明にはならない。**
 
 そこで、復元した重みとValueから`attention @ V`を計算し、モデル本体のfused attentionが`out_proj`へ渡した直前の出力と、11 step × 8層の88組すべてで比較した。
 
@@ -225,7 +225,7 @@ Valueでは同じ改行tokenの2位置が非常に近い表現になった。Key
 
 | 項目 | 条件 |
 | --- | --- |
-| モデル | 3エポックBoku1-nano |
+| モデル | 3エポックBoku-nano |
 | 指示 | 24単独操作のcanonical指示を各1件 |
 | 生成 | greedy、合計208生成token |
 | hidden test | 1問当たり境界9件＋seed固定ランダム24件＝33件 |
@@ -484,7 +484,7 @@ L3H2は日本語attentionとNLL影響がともに最大で、日本語条件を�
 
 ## 狭い文脈でのKVキャッシュ容量
 
-Boku1-nanoへ永続KVキャッシュを追加すると仮定した場合、batch 1の1 token当たり要素数は次の式になる。
+Boku-nanoへ永続KVキャッシュを追加すると仮定した場合、batch 1の1 token当たり要素数は次の式になる。
 
 $$
 8\;\mathrm{layers}
@@ -562,7 +562,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ## 学生へ説明する要点
 
-- Boku1-nanoは制限自然言語専用のSLMであり、自由な日本語全般を理解するモデルではない。
+- Boku-nanoは制限自然言語専用のSLMであり、自由な日本語全般を理解するモデルではない。
 - K/Vはモデルが過去tokenを参照するための内部表現であり、学習データやルール表そのものを格納したものではない。
 - KVキャッシュはK/Vを次の生成stepへ再利用する推論最適化であり、モデルの能力を増やす仕組みではない。
 - 現行版は実装を単純にするためKVキャッシュを持たず、毎step全prefixを再計算する。

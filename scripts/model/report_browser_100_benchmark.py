@@ -20,7 +20,7 @@ def main():
     assert len(records)==300 and len(scores)==250 and any(r['kind']=='complete' for r in raw)
     summary=json.loads((RUN/'summary.json').read_text());pre=json.loads((RUN/'preflight_review.json').read_text());overlap=json.loads((ROOT/'data/benchmarks/browser_100/authoring/overlap_summary.json').read_text());env=next(r for r in raw if r['kind']=='environment');complete=next(r for r in raw if r['kind']=='complete')
     OUT.mkdir(parents=True,exist_ok=True)
-    lines=['# ブラウザ版QwenとBoku1-nano：開発用50問の実測結果','', '実施日: 2026年10月5日（日本時間）。10分類×5問。100問本番ではなく、初回の開発用評価。報告対象は条件A・B。保存済みの実行記録は変更せず、不要になった条件Cは本報告・付録から除外した。','', '## 1. 結果','', '| 条件 | Boku1-nano | Qwen3-0.6B |','| --- | ---: | ---: |']
+    lines=['# ブラウザ版QwenとBoku-nano：開発用50問の実測結果','', '実施日: 2026年10月5日（日本時間）。10分類×5問。100問本番ではなく、初回の開発用評価。報告対象は条件A・B。保存済みの実行記録は変更せず、不要になった条件Cは本報告・付録から除外した。','', '## 1. 結果','', '| 条件 | Boku-nano | Qwen3-0.6B |','| --- | ---: | ---: |']
     def score(m,c):
         r=summary[f'{m}/{c}'];return f"{r['passed']}/50（{r['passed']*2}%）"
     lines += [f'| A：同じ日本語から直接コード生成（主比較） | {score("boku","A")} | {score("qwen","A")} |',f'| B：同じ正解CNLから直接コード生成 | {score("boku","B")} | {score("qwen","B")} |','', '1問1点、50点満点。括弧内は正答率であり、100問の実測点ではない。各問は全179ケース一致・整数リスト返却・入力非破壊で合格とした。得点が70点相当になるような問題選別や再生成は行っていない。','', '### 分類別（各5問）','', '| 分類 | Boku A | Qwen A | Boku B | Qwen B |','| --- | ---: | ---: | ---: | ---: |']

@@ -1,10 +1,10 @@
-# Boku1-nano 発表ドキュメント
+# Boku-nano 発表ドキュメント
 
 日本語指示から限定的なPythonコードを生成する、約15.7Mパラメータの小規模言語モデル
 
 - 想定発表時間: 20～25分
-- Webデモ: [Boku1-nano Webデモ](https://yuuono.github.io/bokunano/)
-- 詳細な数値と根拠: [`boku1_nano_presentation_facts.md`](boku1_nano_presentation_facts.md)
+- Webデモ: [Boku-nano Webデモ](https://yuuono.github.io/bokunano/)
+- 詳細な数値と根拠: [`boku_nano_presentation_facts.md`](boku_nano_presentation_facts.md)
 
 この文書は、各節の「画面に出す内容」をスライドの要点として使い、「話す内容」を発表原稿として使う構成にしている。
 
@@ -14,7 +14,7 @@
 
 ### 画面に出す内容
 
-- Boku1-nano: 日本語の限定的な指示からPython関数を生成
+- Boku-nano: 日本語の限定的な指示からPython関数を生成
 - 15,735,168 parameters
 - 3エポック版と10エポック版を公開
 - ブラウザだけでONNX推論
@@ -24,11 +24,11 @@
 
 ### 話す内容
 
-今回は、Boku1-nanoという小規模言語モデルを作りました。
+今回は、Boku-nanoという小規模言語モデルを作りました。
 
 このモデルは、整数リストに対する日本語の指示を受け取り、`solve(xs, k)`という形式のPython関数を生成します。モデルもBPEトークナイザも既存のものを移植せず、ランダム初期値から学習しています。
 
-最初に完成物をお見せします。Webデモでは、自由な日本語を入力し、その解釈を確認してから、3エポック版または10エポック版のBoku1-nanoでコードを生成できます。
+最初に完成物をお見せします。Webデモでは、自由な日本語を入力し、その解釈を確認してから、3エポック版または10エポック版のBoku-nanoでコードを生成できます。
 
 最終的に採用した3エポック版は、正式評価84,550問中84,434問に合格しました。合格率は99.8628%です。ただし、この数字は一般的なPython生成能力ではなく、24種類の操作と最大3操作の組合せに限定した評価結果です。
 
@@ -51,7 +51,7 @@
 5. 同じCNLを10エポックモデルでも試す。
 6. `Qwenに渡すプロンプトを見る`を開く。
 
-初回のQwen読込みは約543 MiBあるため、会場回線やWebGPUが不安定な場合はCNLを直接入力してBoku1-nanoだけを実演する。
+初回のQwen読込みは約543 MiBあるため、会場回線やWebGPUが不安定な場合はCNLを直接入力してBoku-nanoだけを実演する。
 
 ---
 
@@ -68,28 +68,28 @@ JavaScript: 24操作・最大3操作の文法検査
     ↓
 人が解釈結果を確認
     ↓
-Boku1-nano ONNX: Pythonコード生成
+Boku-nano ONNX: Pythonコード生成
 ```
 
 | 担当 | 役割 |
 | --- | --- |
 | Qwen3-0.6B | 自由な日本語をCNLへ翻訳 |
 | JavaScript | CNLの形式を検査 |
-| Boku1-nano | CNLからPythonコードを生成 |
+| Boku-nano | CNLからPythonコードを生成 |
 
 ### 話す内容
 
-デモでは、自由な日本語をBoku1-nanoへ直接渡しているわけではありません。
+デモでは、自由な日本語をBoku-nanoへ直接渡しているわけではありません。
 
 最初に、ブラウザ内のQwen3-0.6Bが自由な日本語をControlled Natural Language、つまりCNLへ翻訳します。JavaScriptは、出力が許可された24操作、最大3操作、決められた文型になっているかだけを検査します。JavaScriptが入力の意味を解釈してコードやCNLを組み立てるわけではありません。
 
-検査済みCNLと操作順を画面へ出し、ユーザーが解釈を確認した後に、Boku1-nano ONNXがPythonコードを生成します。入力例にも固定コードを割り当てておらず、自由入力と同じ推論経路を通ります。
+検査済みCNLと操作順を画面へ出し、ユーザーが解釈を確認した後に、Boku-nano ONNXがPythonコードを生成します。入力例にも固定コードを割り当てておらず、自由入力と同じ推論経路を通ります。
 
-ここで重要なのは、自由な日本語の正規化とコード生成を分離していることです。自由文の理解はQwen、限定言語からのコード生成はBoku1-nanoが担当します。
+ここで重要なのは、自由な日本語の正規化とコード生成を分離していることです。自由文の理解はQwen、限定言語からのコード生成はBoku-nanoが担当します。
 
 ---
 
-## 3. Boku1-nanoが解く問題
+## 3. Boku-nanoが解く問題
 
 ### 画面に出す内容
 
@@ -111,7 +111,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 基本操作は24種類です。内訳は、条件に合う値を残す抽出が10種類、各要素を変更する変換が8種類、並べ替えが3種類、切り出しが3種類です。
 
-Boku1-nanoは一般的なPythonコーディングモデルではありません。外部I/O、任意ライブラリ、クラス、一般的なアルゴリズム問題を対象にせず、この固定領域だけを扱います。
+Boku-nanoは一般的なPythonコーディングモデルではありません。外部I/O、任意ライブラリ、クラス、一般的なアルゴリズム問題を対象にせず、この固定領域だけを扱います。
 
 ---
 
@@ -485,7 +485,7 @@ byte単位から開始
 
 ### 話す内容
 
-BPEトークナイザを固定した後に、Boku1-nano本体を作ります。Boku1-nanoは、8層のDecoder-only Transformerです。hidden sizeは384、Attention head数は6、FFN sizeは1,024、最大系列長は256です。総パラメータ数は15,735,168、約15.7Mです。
+BPEトークナイザを固定した後に、Boku-nano本体を作ります。Boku-nanoは、8層のDecoder-only Transformerです。hidden sizeは384、Attention head数は6、FFN sizeは1,024、最大系列長は256です。総パラメータ数は15,735,168、約15.7Mです。
 
 Attentionは通常のMulti-Head Attentionで、Grouped Query Attentionではありません。入力embeddingと出力headは共有していません。位置表現にはRoPE、正規化にはRMSNorm、活性化にはSwiGLUを使っています。
 
@@ -495,7 +495,7 @@ Attentionは通常のMulti-Head Attentionで、Grouped Query Attentionではあ�
 
 ![3エポックモデルの一時K/V状態](../results/figures/boku_nano_kv_state_heatmap.svg)
 
-Boku1-nanoは最大256 token、8層、6 headという狭い構成です。各層では、tokenごとに6 head掛ける64次元のKeyとValueを作ります。
+Boku-nanoは最大256 token、8層、6 headという狭い構成です。各層では、tokenごとに6 head掛ける64次元のKeyとValueを作ります。
 
 ただし、現在の実装には生成stepをまたいでK/Vを保持するKVキャッシュはありません。ブラウザ版は、新しいtokenを1個生成するたびに、それまでの入力系列全体を再計算します。図は3エポックモデルのforward中に一時的に作られたK/VのRMSであり、永続キャッシュの内容ではありません。
 
@@ -509,7 +509,7 @@ Boku1-nanoは最大256 token、8層、6 headという狭い構成です。各層
 
 図中の赤い縦線より左がprompt、右が生成済みコードです。
 
-詳細は[「Boku1-nanoのK/V内部状態とKVキャッシュ可視化」](../results/boku_nano_kv_cache_visualization.md)に、全48 layer-headの図、生成token別上位5参照、領域比率、Key／Value類似度、参照の多い・少ないtokenをまとめています。
+詳細は[「Boku-nanoのK/V内部状態とKVキャッシュ可視化」](../results/boku_nano_kv_cache_visualization.md)に、全48 layer-headの図、生成token別上位5参照、領域比率、Key／Value類似度、参照の多い・少ないtokenをまとめています。
 
 ---
 
@@ -766,11 +766,11 @@ pass@5で改善したのは、「最初のk個を取り出す」という日本�
 
 ### 画面に出す内容
 
-- Boku1-nano ONNX: 各約60.4 MiB
+- Boku-nano ONNX: 各約60.4 MiB
 - 3エポック・10エポックを選択可能
 - PyTorchとONNXのlogitsを比較
 - greedy生成token列の完全一致を確認
-- WebGPU優先、Boku1-nanoはWASM fallbackあり
+- WebGPU優先、Boku-nanoはWASM fallbackあり
 
 ### 話す内容
 
@@ -778,9 +778,9 @@ pass@5で改善したのは、「最初のk個を取り出す」という日本�
 
 変換時にはONNX形式検査だけでなく、PyTorch版とのlogits比較と、複数プロンプトに対するgreedy生成token列の完全一致を確認しています。
 
-Boku1-nanoはWebGPUを優先し、利用できない場合はWASMへ切り替えます。Firefox headlessのWASM試験では、3エポック・10エポックの両方で、2操作・3操作のコード生成を確認しました。
+Boku-nanoはWebGPUを優先し、利用できない場合はWASMへ切り替えます。Firefox headlessのWASM試験では、3エポック・10エポックの両方で、2操作・3操作のコード生成を確認しました。
 
-一方、自由文をCNLへ翻訳するQwen3-0.6BはWebGPU必須です。Qwen処理後にWorkerを終了してモデルを解放し、その後Boku1-nanoを読み込むことで、二つのモデルを同時にGPUメモリへ保持しない構成にしています。
+一方、自由文をCNLへ翻訳するQwen3-0.6BはWebGPU必須です。Qwen処理後にWorkerを終了してモデルを解放し、その後Boku-nanoを読み込むことで、二つのモデルを同時にGPUメモリへ保持しない構成にしています。
 
 ---
 
@@ -821,7 +821,7 @@ Qwen3はApache License 2.0ですが、そのことだけで教師生成文や最
 
 ### 話す内容
 
-Boku1-nanoでは、24操作の意味ASTを最初に定義し、参照インタプリタ、正解コード、日本語指示、BPEトークナイザ、Transformer、hidden test評価までを一つの意味仕様でつなぎました。
+Boku-nanoでは、24操作の意味ASTを最初に定義し、参照インタプリタ、正解コード、日本語指示、BPEトークナイザ、Transformer、hidden test評価までを一つの意味仕様でつなぎました。
 
 モデルとtokenizerはランダム初期値から作り、3エポック版は正式評価84,550問中84,434問に合格しました。一方で、未学習の否定表現や方向表現、同じ操作の反復に弱いことも分かりました。
 
@@ -879,7 +879,7 @@ Boku1-nanoでは、24操作の意味ASTを最初に定義し、参照インタ�
 
 ## Q. Qwenを使っているならフルスクラッチではないのでは
 
-Qwenは日本語表現候補と言い換え、Webデモの自由文正規化に使っています。Boku1-nanoの重み、embedding、tokenizerはランダム初期値から学習し、Qwenの重みやlogitは移植していません。
+Qwenは日本語表現候補と言い換え、Webデモの自由文正規化に使っています。Boku-nanoの重み、embedding、tokenizerはランダム初期値から学習し、Qwenの重みやlogitは移植していません。
 
 ## Q. なぜ参照コードとの文字列一致を使わないのですか
 
@@ -891,7 +891,7 @@ Qwenは日本語表現候補と言い換え、Webデモの自由文正規化に�
 
 ## Q. コード生成がルールベースに見えませんか
 
-正解データ作成はルールとテンプレートですが、Webデモのコード生成は学習済みBoku1-nano ONNXのgreedy推論です。入力例にも固定コードを割り当てていません。
+正解データ作成はルールとテンプレートですが、Webデモのコード生成は学習済みBoku-nano ONNXのgreedy推論です。入力例にも固定コードを割り当てていません。
 
 ## Q. データ生成全体に何時間かかりましたか
 
@@ -907,7 +907,7 @@ Qwenは日本語表現候補と言い換え、Webデモの自由文正規化に�
 
 | 内容 | 文書 |
 | --- | --- |
-| 詳細ファクト | [`boku1_nano_presentation_facts.md`](boku1_nano_presentation_facts.md) |
+| 詳細ファクト | [`boku_nano_presentation_facts.md`](boku_nano_presentation_facts.md) |
 | モデル概要 | [`MODEL_CARD.md`](../cards/MODEL_CARD.md) |
 | データ概要 | [`DATASET_CARD.md`](../cards/DATASET_CARD.md) |
 | 意味AST | [`atomic_semantic_asts.md`](../specifications/atomic_semantic_asts.md) |

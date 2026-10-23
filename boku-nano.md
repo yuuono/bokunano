@@ -8,7 +8,7 @@
 
 対象: 学部4年生 / 期間: 6週間 / 計算資源: GeForce RTX 5090 × 1
 
-必修モデルを「Boku1-nano」、発展課題として作成する約1Bパラメータのモデルを「Boku1 1B」と呼ぶ。
+必修モデルを「Boku-nano」、発展課題として作成する約1Bパラメータのモデルを「Boku1 1B」と呼ぶ。
 
 ## 課題の目的
 
@@ -357,7 +357,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 <|explanation|>
 ```
 
-## 必修モデル：Boku1-nano
+## 必修モデル：Boku-nano
 
 推奨構成は約70MパラメータのDecoder-only Transformerである。
 
@@ -524,7 +524,7 @@ Pythonのリスト内包表記は、リストを簡潔に作る構文です。�
 
 - まず10M tokensの動作確認
 - 次に50〜200M tokensの短期学習
-- Boku1-nanoとloss、生成例、速度を比較
+- Boku-nanoとloss、生成例、速度を比較
 - 学習不足の1Bモデルが小型モデルより良いとは限らないことを確認
 
 ## ライセンスと来歴管理

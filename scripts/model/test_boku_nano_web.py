@@ -54,7 +54,7 @@ class QuietHandler(SimpleHTTPRequestHandler):
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Boku1-nano Webデモを実ブラウザで確認します。")
+    parser = argparse.ArgumentParser(description="Boku-nano Webデモを実ブラウザで確認します。")
     parser.add_argument("--geckodriver", type=Path, help="geckodriverのパス")
     parser.add_argument("--timeout-seconds", type=float, default=600.0)
     return parser.parse_args()

@@ -1,4 +1,4 @@
-"""複数prompt・norm・rollout・ablationでBoku1-nanoのattentionを解析する。"""
+"""複数prompt・norm・rollout・ablationでBoku-nanoのattentionを解析する。"""
 
 from __future__ import annotations
 

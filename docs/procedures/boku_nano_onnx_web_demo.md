@@ -1,6 +1,6 @@
 > 2026年10月5日更新: 白背景のチャット内に入力欄を置き、最新のやり取りを下へ追加する。操作検索・選択とPythonの色分けに対応。モデル・温度・CNLの編集は設定欄に置く。以下の過去の試験結果は当時の条件を維持して記載している。
 
-# Boku1-nano ONNX Webデモ手順書
+# Boku-nano ONNX Webデモ手順書
 
 ## 目的
 
@@ -9,9 +9,9 @@ GitHub Pages上のブラウザだけで、自由な日本語からPythonコー�
 1. Qwen3-0.6Bが自由な日本語をControlled Natural Language（CNL）へ翻訳する。
 2. JavaScriptがQwenの操作名を検査し、24種類・最大4操作のCNLへ整形して再検査する。
 3. ユーザーがCNLと操作順を確認する。
-4. 1M・5M・15Mの学習済み10モデルから選んだBoku1-nanoが、検査済みCNLからコードを生成する。
+4. 1M・5M・15Mの学習済み10モデルから選んだBoku-nanoが、検査済みCNLからコードを生成する。
 
-生成時に検査済みの操作列をデータセット互換の意味ASTとして保存し、コードごとの実行比較に使用する。操作ボタンと入力例は自然な日本語の下書きを入力欄へ挿入し、自由に編集して送信できる。チャットの指示はすべてQwenへ渡す。JavaScriptはQwenの出力について、番号なし・箇条書き・全角・連番の欠け・既知の日本語表現・正規CNLを受け付け、操作の順序と重複を保持してCNL化する。不明な操作、否定、5操作以上は黙って捨てず再試行対象にする。Qwenのk行は任意の補助情報とし、kを使わない処理では破棄する。不正なk表記や矛盾する補助値だけでは操作を拒否せず、値が確定しなければ関数の引数として扱う。操作文や既知の入力で明示された数値を補助情報より優先する。操作ボタン・入力例の明示的な選択は下書きと対応づけて保持し、Qwenの出力がずれた場合は補正を表示して選択内容からCNLを確定する。自由に編集した時点で保持した選択は無効にし、Qwenに解釈させる。変換失敗時は現在のCNLと操作一覧を空にし、過去の結果は会話履歴だけに残す。コードはBoku1-nanoが生成する。
+生成時に検査済みの操作列をデータセット互換の意味ASTとして保存し、コードごとの実行比較に使用する。操作ボタンと入力例は自然な日本語の下書きを入力欄へ挿入し、自由に編集して送信できる。チャットの指示はすべてQwenへ渡す。JavaScriptはQwenの出力について、番号なし・箇条書き・全角・連番の欠け・既知の日本語表現・正規CNLを受け付け、操作の順序と重複を保持してCNL化する。不明な操作、否定、5操作以上は黙って捨てず再試行対象にする。Qwenのk行は任意の補助情報とし、kを使わない処理では破棄する。不正なk表記や矛盾する補助値だけでは操作を拒否せず、値が確定しなければ関数の引数として扱う。操作文や既知の入力で明示された数値を補助情報より優先する。操作ボタン・入力例の明示的な選択は下書きと対応づけて保持し、Qwenの出力がずれた場合は補正を表示して選択内容からCNLを確定する。自由に編集した時点で保持した選択は無効にし、Qwenに解釈させる。変換失敗時は現在のCNLと操作一覧を空にし、過去の結果は会話履歴だけに残す。コードはBoku-nanoが生成する。
 
 詳細方針は[`browser_cnl_normalization_policy.md`](../policies/browser_cnl_normalization_policy.md)を参照する。
 
@@ -20,7 +20,7 @@ GitHub Pages上のブラウザだけで、自由な日本語からPythonコー�
 - `web/cnl.js`: 24操作、CNL文法、検査器、Qwen用prompt
 - `web/qwen-worker.js`: Qwenの読込、最大2回のCNL生成、モデル解放
 - `web/qwen-manifest.json`: Qwenモデル、revision、成果物hash、Transformers.js version
-- `web/demo.js`: UI状態管理、CNL検査、Boku1-nano ONNX推論
+- `web/demo.js`: UI状態管理、CNL検査、Boku-nano ONNX推論
 - `scripts/model/export_boku_nano_onnx.py`: 学習済み学生モデル10種のONNX変換、モデル別tokenizer配置、PyTorch比較
 - `scripts/model/test_boku_nano_web.py`: FirefoxによるCNL検査と学生モデルのスモークテスト
 - `.github/workflows/pages.yml`: `main`更新時のPages公開
@@ -38,7 +38,7 @@ GitHub Pages上のブラウザだけで、自由な日本語からPythonコー�
 | 1M・3エポック | 既存BPE | [boku-nano-1m-3epoch.onnx](../../web/models/boku-nano-1m-3epoch.onnx) |
 | 1M・3エポック | 短いpiece版BPE | [boku-nano-1m-short-3epoch.onnx](../../web/models/boku-nano-1m-short-3epoch.onnx) |
 
-Qwen3-0.6B q4f16は569,789,750 bytesである。Pages成果物へ複製せず、初回翻訳時に固定したHugging Face revisionから取得してブラウザキャッシュへ保存する。Boku1-nanoのONNXは1M級約4.0 MiB、5M級約19.6 MiB、15M級約60.4 MiBで、選択モデルだけを初回生成時にPagesから取得する。モデル切替時は直前のONNXセッションを解放し、複数モデルのメモリ常駐を避ける。
+Qwen3-0.6B q4f16は569,789,750 bytesである。Pages成果物へ複製せず、初回翻訳時に固定したHugging Face revisionから取得してブラウザキャッシュへ保存する。Boku-nanoのONNXは1M級約4.0 MiB、5M級約19.6 MiB、15M級約60.4 MiBで、選択モデルだけを初回生成時にPagesから取得する。モデル切替時は直前のONNXセッションを解放し、複数モデルのメモリ常駐を避ける。
 
 ## ONNXの再生成
 
@@ -67,7 +67,7 @@ uv run --group onnx-export python scripts/model/export_boku_nano_onnx.py \
 uv run --group onnx-export python -m http.server 8000 --directory web
 ```
 
-デスクトップ版ChromeまたはEdgeで`http://127.0.0.1:8000/`を開く。Qwen翻訳にはWebGPUが必要である。Boku1-nanoはWebGPUを優先し、初期化できない場合だけWASMを使用する。自由文とCNLは外部APIへ送信しないが、モデルとJavaScriptの取得通信は発生する。
+デスクトップ版ChromeまたはEdgeで`http://127.0.0.1:8000/`を開く。Qwen翻訳にはWebGPUが必要である。Boku-nanoはWebGPUを優先し、初期化できない場合だけWASMを使用する。自由文とCNLは外部APIへ送信しないが、モデルとJavaScriptの取得通信は発生する。
 
 ## 操作手順
 
@@ -116,7 +116,7 @@ uv run --group onnx-export python scripts/model/test_boku_nano_web.py \
 | 1M・1ep・既存BPE | smoke | 13 | 15 | 93.2 tokens/s | 推論完了、`solve`生成 |
 | 1M・1ep・短いpiece | smoke | 28 | 61 | 111.5 tokens/s | 推論完了、`solve`生成 |
 
-Firefox headlessではWebGPU Qwenを起動せず、CNLを直接入力して検査器からBoku1-nanoまでを確認した。この実行環境にはChrome系ブラウザがないため、Qwenの実推論は未確認であり、次のChrome手動試験で確認する。
+Firefox headlessではWebGPU Qwenを起動せず、CNLを直接入力して検査器からBoku-nanoまでを確認した。この実行環境にはChrome系ブラウザがないため、Qwenの実推論は未確認であり、次のChrome手動試験で確認する。
 
 ## Qwen翻訳の初回検証
 
@@ -129,7 +129,7 @@ Firefox headlessではWebGPU Qwenを起動せず、CNLを直接入力して検�
 - 操作種別と操作順の完全一致
 - 1回目または再生成のどちらで合格したか
 - 初回モデル読込時間、キャッシュ後読込時間、生成時間
-- Boku1-nanoのコードとhidden test結果
+- Boku-nanoのコードとhidden test結果
 
 操作数1・2・3の評価件数は同数を前提にせず、各区分の件数を明記した上で区分別の成功率を報告する。0.6Bの採否はCNL構文合格率だけでなく、期待した操作列の完全一致率と端末上の速度で判断する。
 
@@ -155,11 +155,11 @@ Firefox headlessではWebGPU Qwenを起動せず、CNLを直接入力して検�
 - QwenのCNL文法合格は、自由文の意味を正しく翻訳した保証ではない。
 - Qwen翻訳はWebGPUを必須とし、WASMへ自動切替しない。
 - CNLは許可された24種類の操作を1～4個含められる。4操作は学習範囲外の実験。
-- Boku1-nanoの最大系列長は入力と生成を合わせて256 tokenである。
-- Boku1-nanoはT=0なら既存評価と同じgreedy、T>0ならsampling。生成長は系列長256 tokenの残りまでで、打ち切りを表示する。
-- Boku1-nanoにはKV cacheがなく、生成tokenごとに現在の系列全体を再計算する。
+- Boku-nanoの最大系列長は入力と生成を合わせて256 tokenである。
+- Boku-nanoはT=0なら既存評価と同じgreedy、T>0ならsampling。生成長は系列長256 tokenの残りまでで、打ち切りを表示する。
+- Boku-nanoにはKV cacheがなく、生成tokenごとに現在の系列全体を再計算する。
 - 画面はコードを表示するだけで、生成コードを自動実行しない。
-- Qwenの処理終了後にWorkerを閉じてモデルを解放してから、Boku1-nanoを読み込む。
+- Qwenの処理終了後にWorkerを閉じてモデルを解放してから、Boku-nanoを読み込む。
 
 2026-10-05の全24単独操作の実機確認は[検証結果](../results/chat_v10_single_operation_browser.md)を参照。
 
@@ -190,7 +190,7 @@ Web側の参照ファイルはルートのreference_interpreter.pyの複製。�
 
 「操作を追加」は一度開けば続けて選べる。「完了」で入力欄に戻る。例は1〜4操作の4ボタンから選択する。設定上部でモデル・温度を選び、その下にCNLの直接編集と生成を配置した。
 
-変更モードの選択は不要。同じ入力欄から「kを5に変えて」などを送信する。選択肢や例で新しく手順を作った場合は前の手順を混ぜない。Qwenの生出力、整形したCNL、Boku1-nanoのPython出力を別の見出しで表示する。アプリによる番号付きの確認説明は削除した。
+変更モードの選択は不要。同じ入力欄から「kを5に変えて」などを送信する。選択肢や例で新しく手順を作った場合は前の手順を混ぜない。Qwenの生出力、整形したCNL、Boku-nanoのPython出力を別の見出しで表示する。アプリによる番号付きの確認説明は削除した。
 
 v12の実ブラウザ確認：一覧を閉じずに偶数・2倍・昇順・逆順を順に選択でき、4操作で追加ボタンが無効になることを確認。全4個の例ボタンが対応する下書きを入れること、「各要素に3を足す」に続けて「kを5に変えて」でk=5へ変更され、そのコードと検証欄が生成されることを確認した。その後「2操作」の例を送信すると、以前の加算やk=5を引き継がず絶対値→降順となった。モード切り替えと重複確認文は表示されず、設定欄の見出し順はモデルと温度→内容確認となっている。
 
@@ -208,6 +208,6 @@ v11で追加した実行・比較欄はPagesから外した。実装はリポジ
 
 ## v18：自動生成と新規入力の独立性
 
-Qwenの検査通過・GPU解放後にBoku1-nanoを自動実行し、確認ボタンは表示しない。モデルの切り替えはチャット内の状態表示で確認できる。新規入力には過去の操作・kを送らず、明示的な変更依頼だけ履歴を使う。
+Qwenの検査通過・GPU解放後にBoku-nanoを自動実行し、確認ボタンは表示しない。モデルの切り替えはチャット内の状態表示で確認できる。新規入力には過去の操作・kを送らず、明示的な変更依頼だけ履歴を使う。
 
 実ブラウザで4操作の入力からクリックなしでコードが生成され、続く「偶数のみ抽出」が単独の偶数抽出になり、今回のQwenプロンプトに前の会話が入っていないことを確認した。Qwenを停止すると、そのターンのコードカードは作られなかった。40件のテストが通過。自由文の意味の正しさと4操作でのBoku出力の正しさは保証していない（中央値の依頼をQwenが別操作に誤変換するケースは残る）。

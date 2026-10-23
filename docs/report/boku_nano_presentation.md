@@ -1238,7 +1238,7 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 <div class="fv-box fv-side fv-goal"><span class="fv-no">5</span><p class="fv-title">訓練データ</p><p class="fv-key">192,900<small>件</small></p><p class="fv-sub">指示と正解コードの組</p></div>
 </div>
 
-<!-- 原仕様：../../boku1-nano.md。実績では24操作の順序付き1〜3操作（重複なし）で12,720 AST。組合せ汎化670件を先に確保し、残り12,050件を訓練9,646・検証1,202・通常テスト1,202へ分割。日本語表現は各操作30候補を生成し、20件以上の承認を目標とした。操作別の最終承認数は12〜29件。訓練指示の一部96,390件はQwenによる全文言い換えで置換し、総数192,900件を維持。全文候補は一括承認であり、原子表現の個別人手確認と区別。根拠：../results/japanese_atomic_expression_expansion_history.md、../results/instruction_paraphrase_approval_results.md。Qwenは日本語の表現辞書作成に使用。合成データの正解コードはASTから生成する。先にASTを分割し、同一ASTの言い換え・等価コードを同じ集合にまとめる。コード生成時の照合は境界9件＋ランダム32件の41入力であり、全入力に対する証明ではない。生成コード全文の完全重複0件は、訓練・検証・通常テスト・組合せ汎化・反復汎化の5集合の候補277,440件について確認済み。SHA-256で候補を照合し、同一ハッシュでは全文を比較。最終訓練192,900件は重複のない候補の部分集合。意味上の重複や評価レコードでのコード再利用を否定する主張ではない。根拠：../results/evaluation_python_code_generation_results.md、../results/multi_operation_python_code_generation_results.md。根拠：../policies/ast_split_policy.md、../results/japanese_atomic_expression_generation_results.md、../results/rule_generated_instruction_results.md、../results/multi_operation_python_code_generation_results.md、../results/final_train_dataset_results.md。本文から外した補足：日本語の指示文はQwen3-4B-AWQで各操作30候補を生成し、人が意味を確認・承認した表現をルールで結合して作る。正解コードはASTからルールベースで等価なコードを生成し、構造・変数名を変える。検証は構文検査と、参照インタプリタとの出力照合（境界値9件＋ランダム32件の41入力）。参照インタプリタと出力が一致したコードだけを採用し、同じASTの指示文と組にする。訓練データ1件は日本語の指示と正解コードの組。 -->
+<!-- 原仕様：../../boku-nano.md。実績では24操作の順序付き1〜3操作（重複なし）で12,720 AST。組合せ汎化670件を先に確保し、残り12,050件を訓練9,646・検証1,202・通常テスト1,202へ分割。日本語表現は各操作30候補を生成し、20件以上の承認を目標とした。操作別の最終承認数は12〜29件。訓練指示の一部96,390件はQwenによる全文言い換えで置換し、総数192,900件を維持。全文候補は一括承認であり、原子表現の個別人手確認と区別。根拠：../results/japanese_atomic_expression_expansion_history.md、../results/instruction_paraphrase_approval_results.md。Qwenは日本語の表現辞書作成に使用。合成データの正解コードはASTから生成する。先にASTを分割し、同一ASTの言い換え・等価コードを同じ集合にまとめる。コード生成時の照合は境界9件＋ランダム32件の41入力であり、全入力に対する証明ではない。生成コード全文の完全重複0件は、訓練・検証・通常テスト・組合せ汎化・反復汎化の5集合の候補277,440件について確認済み。SHA-256で候補を照合し、同一ハッシュでは全文を比較。最終訓練192,900件は重複のない候補の部分集合。意味上の重複や評価レコードでのコード再利用を否定する主張ではない。根拠：../results/evaluation_python_code_generation_results.md、../results/multi_operation_python_code_generation_results.md。根拠：../policies/ast_split_policy.md、../results/japanese_atomic_expression_generation_results.md、../results/rule_generated_instruction_results.md、../results/multi_operation_python_code_generation_results.md、../results/final_train_dataset_results.md。本文から外した補足：日本語の指示文はQwen3-4B-AWQで各操作30候補を生成し、人が意味を確認・承認した表現をルールで結合して作る。正解コードはASTからルールベースで等価なコードを生成し、構造・変数名を変える。検証は構文検査と、参照インタプリタとの出力照合（境界値9件＋ランダム32件の41入力）。参照インタプリタと出力が一致したコードだけを採用し、同じASTの指示文と組にする。訓練データ1件は日本語の指示と正解コードの組。 -->
 
 
 ---
@@ -4015,7 +4015,7 @@ def solve(xs: list[int], k: int) -> list[int]:
         </div>
         <div class="arrow">→</div>
         <div class="box model">
-            <b class="t">Boku1-nano ONNX</b>
+            <b class="t">Boku-nano ONNX</b>
             学習済みモデルを選んで<br>
             ブラウザ内でgreedy生成
         </div>
