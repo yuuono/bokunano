@@ -588,24 +588,21 @@ style: |
   section.quadrant-page .h-line::before { content: ""; position: absolute; left: -24px; top: -12px; width: 0; height: 0; border-top: 16px solid transparent; border-bottom: 16px solid transparent; border-right: 26px solid #17212b; }
   section.quadrant-page .ax { position: absolute; margin: 0; font-size: 34px; font-weight: 700; line-height: 44px; color: #17212b; white-space: nowrap; }
   section.quadrant-page .ax-name { font-size: 34px; }
-  section.quadrant-page .ax-top { left: 553px; top: -4px; width: 50px; text-align: center; }
-  section.quadrant-page .ax-mid { left: 398px; top: 496px; width: 300px; text-align: center; }
-  section.quadrant-page .ax-bottom { left: 666px; top: 496px; width: 50px; text-align: center; }
-  section.quadrant-page .ax-left { left: 36px; top: 288px; }
-  section.quadrant-page .ax-center { left: 820px; top: 216px; width: 306px; text-align: center; }
-  section.quadrant-page .ax-right { left: 1064px; top: 288px; width: 50px; text-align: right; }
+  section.quadrant-page .ax-top { left: 398px; top: -4px; width: 360px; text-align: center; }
+  section.quadrant-page .ax-bottom { left: 398px; top: 496px; width: 360px; text-align: center; }
+  section.quadrant-page .ax-left { left: 36px; top: 216px; }
+  section.quadrant-page .ax-right { right: 30px; top: 216px; text-align: right; }
   section.quadrant-page .item { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 320px; margin: 0; font-size: 27px; line-height: 40px; color: #17212b; white-space: nowrap; }
   section.quadrant-page .mk { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; }
   section.quadrant-page .dot { display: block; width: 22px; height: 22px; border-radius: 50%; background: #17212b; }
-  section.quadrant-page .ring { display: block; box-sizing: border-box; width: 32px; height: 32px; border-radius: 50%; background: #fff; border: 4px solid #245f8b; }
-  section.quadrant-page .item.goal { color: #245f8b; font-weight: 400; }
+  section.quadrant-page .ring { display: block; box-sizing: border-box; width: 32px; height: 32px; border-radius: 50%; background: #fff; border: 4px solid #d33743; }
+  section.quadrant-page .item.goal { color: #d33743; font-weight: 400; }
   section.quadrant-page .slm { left: 122px; top: 118px; }
   section.quadrant-page .early { left: 180px; top: 345px; }
   section.quadrant-page .goal { left: 730px; top: 118px; }
   section.quadrant-page .frontier { left: 670px; top: 391px; }
-  section.quadrant-page .flow-line { position: absolute; left: 316px; top: 131px; width: 514px; height: 5px; background: #245f8b; box-shadow: 0 0 0 4px #fff; }
-  section.quadrant-page .flow-head { position: absolute; left: 830px; top: 122px; width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 22px solid #245f8b; }
-  section.quadrant-page .flow-label { position: absolute; left: 600px; top: 78px; width: 170px; margin: 0; text-align: center; font-size: 28px; font-weight: 400; line-height: 40px; color: #245f8b; }
+  section.quadrant-page .flow-curve { position: absolute; inset: 0; width: 1156px; height: 540px; }
+  section.quadrant-page .flow-label { position: absolute; left: 620px; top: 87px; width: 170px; margin: 0; text-align: center; font-size: 28px; font-weight: 400; line-height: 40px; color: #d33743; }
   section.slm-page { font-size: 22px; }
   section.slm-page h1 { margin-bottom: 8px; }
   section.slm-page > p { font-size: 22px; margin: 0 0 10px; }
@@ -658,8 +655,8 @@ style: |
   section.bpe-page .bpe-tokens code:first-child, section.bpe-page .bpe-tokens code:nth-child(2), section.bpe-page .bpe-tokens code:nth-child(9), section.bpe-page .bpe-tokens code:last-child { background: #eaf3fb; border-color: #245f8b; color: #245f8b; }
   section.agenda-page { font-size: 24px; }
   section.agenda-page h1 { margin-bottom: 18px; }
-  section.agenda-page table { font-size: 22px; margin: 0 0 16px; }
-  section.agenda-page th, section.agenda-page td { padding: 9px 14px; vertical-align: top; line-height: 1.45; }
+  section.agenda-page table { font-size: 24px; margin: 0 0 24px; }
+  section.agenda-page th, section.agenda-page td { padding: 17px 14px; vertical-align: middle; line-height: 1.5; }
   section.agenda-page td:first-child { width: 5%; font-size: 26px; color: #245f8b; font-weight: 600; }
   section.agenda-page td:nth-child(2) { width: 27%; font-weight: 600; white-space: nowrap; }
   section.agenda-page > p { font-size: 19px; color: #52606d; margin: 8px 0 0; }
@@ -778,6 +775,37 @@ style: |
   section.demo-video .demo-site { width: 832px; margin: 8px auto 0; text-align: right; font-size: 19px; }
   /* 本文量によるMarp既定の縦中央配置を止め、タイトルを同じ位置から始める。 */
   section { align-content: start !important; justify-content: flex-start !important; }
+  section.slm-page .slm-column > p:last-of-type { margin-bottom: 50px; }
+  section.scientific.loss-plot h1 { margin-bottom: 8px; }
+  section.scientific.loss-plot > p { font-size: 20px; line-height: 1.3; margin: 6px 0; }
+  section.scientific.loss-plot img { margin: 6px auto; }
+  section.scientific.loss-plot > p:last-of-type { font-size: 21px; margin-top: 8px; }
+  section.ar-diagram .ar-flow { margin: 26px auto 22px; }
+  section.ar-diagram .ar-flow-row { height: 90px; }
+  section.ar-diagram .ar-feedback { height: 58px; }
+  section.code-explain.causal-code:not(.causal-generate) .code-columns > div:first-child pre { font-size: 18px; line-height: 1.48; padding: 18px; }
+  section.code-explain.shifted-loss .code-columns > div:first-child pre { font-size: 20px; line-height: 1.7; padding: 20px 18px; }
+  section.code-explain.shifted-loss .code-columns > div:last-child { padding-top: 12px; }
+  section.code-explain.shifted-loss table { margin: 22px 0 32px; }
+  section.code-explain.shifted-loss p { margin: 24px 0; }
+  section.code-explain.causal-generate .code-columns > div:first-child pre { font-size: 18px; line-height: 1.4; padding: 18px; }
+  section.failure-short pre { font-size: 19px; line-height: 1.6; }
+  section.failure-short .failure-trace { margin-top: 20px; padding: 0 18px; }
+  section.failure-short .failure-trace p { margin: 10px 0; font-size: 24px; line-height: 1.65; }
+  section.failure-short .failure-trace code { font-size: 23px; }
+  section.failure-tight .failure-observation > p { margin-bottom: 10px; }
+  section.failure-tight .failure-outputs { margin-top: 12px; }
+  section.failure-tight .failure-note { margin-top: 10px; }
+  section.roomy-table > p { margin: 28px 0; line-height: 1.65; }
+  section.roomy-table table { font-size: 25px; margin: 28px 0; }
+  section.roomy-table th, section.roomy-table td { padding: 18px 16px; line-height: 1.6; }
+  section.ablation-table > p { margin: 18px 0; line-height: 1.5; }
+  section.ablation-table table { margin: 22px 0; }
+  section.ablation-table th, section.ablation-table td { padding: 14px 16px; }
+  section.roomy-copy > p { margin: 32px 0; line-height: 1.75; }
+  section.roomy-copy li { margin: 28px 0; line-height: 1.75; }
+  section.roomy-copy table { margin: 34px 0; }
+  section.roomy-copy th, section.roomy-copy td { padding: 24px 16px; }
 
 ---
 <!-- _class: cover -->
@@ -806,7 +834,7 @@ style: |
 
 # 本発表の概要
 
-> 制限された日本語指示からPython関数を生成する小型言語モデルをゼロから構築し、<br>合成データのみの学習で、Chatgpt 6 Astraを匹敵する精度を達成　
+> 制限された日本語指示からPython関数を生成する小型言語モデルをゼロから構築し<br>合成データのみの学習でChatgpt 6 Astraに匹敵する精度の達成　
 
 <!-- 比較は本編の未学習2操作。Boku 1M・3 epochは99/100、Astraは同カテゴリから抽出した10問で9/10。評価集合・実行条件が異なる参考比較で、一般的な優位を意味しない。 -->
 
@@ -815,13 +843,13 @@ style: |
 
 ## 特徴
 
-**中間表現により生成した合成データの質で、大規模計算に対抗**
+**中間表現により生成した合成データの質で大規模計算に対抗**
 
 ## 利点
 <!-- 利点は、質的なものだけではなく、量的なものをあると良いよね -->
 - 約1Mのモデル・5090で1分で訓練可能
-- 訓練データの制御性：文の形、操作の数（難しさ・文の長さ）、使う語彙の数を制御可能
-- 応用範囲：関数で書ける処理なら、同じ方法でデータ合成からモデル学習まで全て可能
+- 訓練データの制御性：文の形・操作の数（難しさ・文の長さ）・使う語彙の数の制御が可能
+- 応用範囲：関数で書ける処理なら同じ方法でデータ合成からモデル学習まで全て可能
 
 ---
 
@@ -831,16 +859,18 @@ style: |
 
 <div class="map">
 <div class="v-line"></div><div class="v-head"></div>
-<p class="ax ax-top">少</p>
-<p class="ax ax-name ax-mid">学習データ量</p>
-<p class="ax ax-bottom">多</p>
+<p class="ax ax-top">学習データ量 少</p>
+<p class="ax ax-bottom">学習データ量 多</p>
 <div class="h-line"></div><div class="h-head"></div>
-<p class="ax ax-left">低</p>
-<p class="ax ax-name ax-center">モデルの制御性</p>
-<p class="ax ax-right">高</p>
+<p class="ax ax-left">モデルの制御性 低</p>
+<p class="ax ax-right">モデルの制御性 高</p>
 <p class="item slm"><span class="mk"><span class="dot"></span></span>SLM（小型言語モデル）</p>
 <!-- <p class="item-detail">既存コーパスの一部・蒸留データ</p> -->
-<div class="flow-line"></div><div class="flow-head"></div>
+<svg class="flow-curve" viewBox="0 0 1156 540" aria-label="中間表現により左から右へ制御性が向上">
+<path d="M316 132 Q578 -8 850 132" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
+<path d="M316 132 Q578 -8 850 132" fill="none" stroke="#d33743" stroke-width="5" stroke-linecap="round"/>
+<path d="M831 112 L850 132 L823 133" fill="none" stroke="#d33743" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
 <p class="flow-label">中間表現</p>
 <p class="item goal"><span class="mk"><span class="ring"></span></span>本研究が目指す領域</p>
 <!-- <p class="item-detail">少量の合成データの設計・検証</p> -->
@@ -858,7 +888,7 @@ style: |
 図は上ほどデータ量が少なく、下ほど多い向きです。右下は、制御性が高くデータ量も多いフロンティアモデルです。大量のデータに加え、データの選別・合成・フィードバック学習で制御しています。
 左下は、制御性が低くデータ量が多い従来のLLMです。Webコーパスをほぼそのまま学習し、規模で性能を伸ばしてきました。
 左上は、制御性が低くデータ量が少ないSLMです。既存コーパスの一部や蒸留データで小さなモデルを学習しますが、容量が限られ、必要な能力を学びにくい制約があります。
-右上の白抜きの点が、本研究の目指す位置です。SLMの点から青い矢印で示したとおり、限られたデータで制御性を高める方向を目指します。語彙・文型・難易度・件数を設計した合成データで、必要な能力を学ばせます。
+右上の白抜きの点が、本研究の目指す位置です。SLMの点から赤い曲線矢印で示したとおり、限られたデータで制御性を高める方向を目指します。語彙・文型・難易度・件数を設計した合成データで、必要な能力を学ばせます。
 
 【補足】
 4象限は説明のための整理であり、個々のモデルの正確な分類ではない。「モデルの制御性」は、学習データの内容（語彙・文型・難易度・件数）をどの程度設計でき、モデルの振る舞いをどの程度決められるかを指す。
@@ -879,23 +909,23 @@ style: |
 
 ### [TinyStories](https://arxiv.org/abs/2305.07759)
 
-3〜4歳児が分かる語彙のみで短い物語をGPT-3.5/4で合成
+GPT-3.5/4による短い物語の合成<br>3〜4歳児が分かる語彙のみの使用
 
 1.25MのTransformerでも一貫した文章生成
 
 ### [SimpleStories](https://arxiv.org/abs/2504.09184)
 
-平易な語彙のみで、話題・文体・文法・書き出しによりデータ多様性向上
+平易な語彙のみの使用<br>話題・文体・文法・書き出しによるデータ多様性向上
 
-より少ないパラメータで、LLM評価の得点が向上
+より少ないパラメータでLLM評価の得点が向上
 
 ### [WRAP](https://arxiv.org/abs/2401.16380)
 
-Webの文章を4つの文体に言い換え、350M・1.3Bを事前学習
+Webの文章の4文体への言い換えと350M・1.3Bの事前学習
 
-同じ性能に約3倍速く到達し、perplexityが10%以上改善
+同じ性能に約3倍速く到達／perplexityが10%以上改善
 
-<div class="slm-eval"><strong>文章の良さを、人やLLMが評価</strong><br>人の好みを用いた学習：<b>RLHF</b><br>LLMによる採点：<b>LLM-as-a-Judge</b></div>
+<div class="slm-eval"><strong>文章の良さに対する人やLLMの評価</strong><br>人の好みを用いた学習：<b>RLHF</b><br>LLMによる採点：<b>LLM-as-a-Judge</b></div>
 
 </div>
 <div class="slm-column domain">
@@ -904,17 +934,17 @@ Webの文章を4つの文体に言い換え、350M・1.3Bを事前学習
 
 ### [phi-1](https://arxiv.org/abs/2306.11644)：code
 
-教科書品質の選別データとGPT-3.5で合成した教科書・演習で1.3Bモデルを学習
+教科書品質の選別データとGPT-3.5で合成した教科書・演習で1.3Bモデルの学習
 
 約7Bトークンの学習でHumanEval 50.6%
 
 ### [TinyGSM](https://arxiv.org/abs/2312.09241)：math
 
-GPT-3.5で合成した約1,230万件の算数問題とPython解答で1.3Bモデルを学習
+GPT-3.5で合成した約1,230万件の算数問題とPython解答で1.3Bモデルの学習
 
 検証器と組み合わせGSM8K 81.5%
 
-<div class="slm-eval"><strong>テストや正解照合で、正誤を検証</strong><br>検証結果を報酬とした学習<br><b>RLVR</b>（検証可能な報酬による強化学習）</div>
+<div class="slm-eval"><strong>テストや正解照合で正誤の検証</strong><br>検証結果を報酬とした学習<br><b>RLVR</b>（検証可能な報酬による強化学習）</div>
 
 </div>
 </div>
@@ -949,7 +979,7 @@ LLM-as-a-Judgeは評価方法であり、RLHFそのものではない。列内�
 
 ---
 <!-- _class: ast-training-pair ast-merged ast-paraphrase -->
-# 意味ASTによる意味の固定と、言い換えの生成
+# 意味ASTによる意味の固定と言い換えの生成
 
 <div class="ast-source">
 
@@ -972,9 +1002,9 @@ LLM-as-a-Judgeは評価方法であり、RLHFそのものではない。列内�
 
 #### 生成の手順
 
-**Qwen3-4B-AWQで各操作の日本語表現を生成**
-承認済みの表現をASTの順に組み合わせ、
-同じ処理を指す指示文を生成
+**Qwen3-4B-AWQで各操作の日本語表現生成**
+承認済みの表現をASTの順に組み合わせ
+同じ処理を指す指示文生成
 
 </div>
 <div class="ast-example">
@@ -995,9 +1025,7 @@ LLM-as-a-Judgeは評価方法であり、RLHFそのものではない。列内�
 
 #### 生成の手順
 
-**ASTの操作をPythonコードへ変換**  
-構文を確認し、実行結果を  
-参照インタプリタの結果と検証
+**ASTの操作からPythonコードへの変換**<br>構文の確認と<br>参照インタプリタとの実行結果の照合
 
 </div>
 <div class="ast-example">
@@ -1014,7 +1042,7 @@ def solve(xs, k):
 </div>
 </div>
 
-<p class="paraphrase-take"><strong>共通の中間表現による、意味の対応を保った合成データの拡充</strong><br>意味の保持を重視した言い換えによるデータ効率の改善：<a href="https://arxiv.org/abs/2605.17849">SynPro（Yu &amp; Xiong, 2026）</a> の報告</p>
+<p class="paraphrase-take"><strong>共通の中間表現による意味の対応を保った合成データの拡充</strong><br>意味の保持を重視した言い換えによるデータ効率の改善：<a href="https://arxiv.org/abs/2605.17849">SynPro（Yu &amp; Xiong, 2026）</a> の報告</p>
 
 <!--
 日本語の言い換えは説明例。コードと同じfilter(even)→map(add_k)を表す。本研究で言い換えの有無だけを変えた実験はしていない。
@@ -1085,11 +1113,11 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 
 | | 章 | 内容 |
 | :--- | :--- | :--- |
-| ① | 意味AST（DSL） | 24操作を組み合わせ、処理の意味を共通に定義 |
-| ② | 合成データ | 生成フロー、ASTの分割、日本語の言い換え、コード生成・検証 |
-| ③ | 学習 | トークナイザ、参照範囲、コード部分の損失、モデル構成と学習結果 |
-| ④ | 推論 | 次のトークンを選び、出力を入力に加えてコードを生成 |
-| ⑤ | 評価 | ベンチマークの設計と結果、5モデルの失敗例 |
+| ① | 意味AST（DSL） | 24操作の組み合わせによる処理の意味の共通定義 |
+| ② | 合成データ | 生成フロー・ASTの分割・日本語の言い換え・コード生成・検証 |
+| ③ | 学習 | トークナイザ・参照範囲・コード部分の損失・モデル構成と学習結果 |
+| ④ | 推論 | 次のトークンを選び出力を入力に加えてコード生成 |
+| ⑤ | 評価 | ベンチマークの設計と結果・5モデルの失敗例 |
 
 以降のページ右上の「章名　n/m」：章内のページ番号（n）と総枚数（m）
 
@@ -1113,10 +1141,10 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 
 | 種類 | 操作数 | 例 |
 | :--- | ---: | :--- |
-| 条件に合う数の抽出 | 10 | 偶数、奇数、正の値、kより大きい値 |
-| 要素ごとの値の変換 | 8 | kを加える、2倍、絶対値、二乗 |
-| 順序の変更 | 3 | 昇順、降順、現在の順序の反転 |
-| 一部の切り出し | 3 | 先頭k個、末尾k個、1個おき |
+| 条件に合う数の抽出 | 10 | 偶数・奇数・正の値・kより大きい値 |
+| 要素ごとの値の変換 | 8 | kを加える・2倍・絶対値・二乗 |
+| 順序の変更 | 3 | 昇順・降順・現在の順序の反転 |
+| 一部の切り出し | 3 | 先頭k個・末尾k個・1個おき |
 
 ## 操作の組み合わせ
 
@@ -1165,7 +1193,7 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 <!-- _class: synthetic-flow -->
 # 合成データ生成の全体フロー
 
-<p class="fv-lead">同じ<strong>意味AST</strong>から、日本語の指示文と正解コードを別々に作って組にする</p>
+<p class="fv-lead">同じ<strong>意味AST</strong>から日本語の指示文と正解コードを別々に作って組にする</p>
 
 <div class="fv-flow">
 <div class="fv-box fv-side fv-pre"><span class="fv-no">1</span><p class="fv-title">意味AST</p><p class="fv-key">12,720<small>通り</small></p><p class="fv-sub">24操作・最大3操作</p></div>
@@ -1173,8 +1201,8 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 <div class="fv-box fv-side fv-pre"><span class="fv-no">2</span><p class="fv-title">AST単位で分割</p><p class="fv-key">約8：1：1</p><p class="fv-sub">訓練・検証・通常テスト</p></div>
 <div class="fv-fork"><span class="fv-bar"></span><i></i><i></i></div>
 <div class="fv-lanes">
-<div class="fv-box fv-lane"><span class="fv-no">3</span><p class="fv-title">日本語の指示文</p><div class="fv-chain"><div class="fv-pill"><b>表現を作成</b><span>Qwen3-4B-AWQ</span></div><div class="fv-to"></div><div class="fv-pill"><b>組み合わせ</b><span>ASTに沿って</span></div></div></div>
-<div class="fv-box fv-lane"><span class="fv-no">4</span><p class="fv-title">正解のPythonコード</p><div class="fv-chain"><div class="fv-pill"><b>コードを作成</b><span>ASTからルールで</span></div><div class="fv-to"></div><div class="fv-pill"><b>出力を照合</b><span>参照インタプリタ</span></div></div></div>
+<div class="fv-box fv-lane"><span class="fv-no">3</span><p class="fv-title">日本語の指示文</p><div class="fv-chain"><div class="fv-pill"><b>表現作成</b><span>Qwen3-4B-AWQ</span></div><div class="fv-to"></div><div class="fv-pill"><b>組み合わせ</b><span>ASTに沿って</span></div></div></div>
+<div class="fv-box fv-lane"><span class="fv-no">4</span><p class="fv-title">正解のPythonコード</p><div class="fv-chain"><div class="fv-pill"><b>コード作成</b><span>ASTからルールで</span></div><div class="fv-to"></div><div class="fv-pill"><b>出力照合</b><span>参照インタプリタ</span></div></div></div>
 </div>
 <div class="fv-merge"><span class="fv-bar"></span><i></i></div>
 <div class="fv-box fv-side fv-goal"><span class="fv-no">5</span><p class="fv-title">訓練データ</p><p class="fv-key">192,900<small>件</small></p><p class="fv-sub">指示と正解コードの組</p></div>
@@ -1188,19 +1216,19 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 <!-- _class: split-design -->
 # 意味AST単位での訓練・検証・テストの分割
 
-<div class="split-order">意味ASTを分割　→　<strong>各集合の中で</strong>言い換え・コード変換</div>
+<div class="split-order">意味ASTの分割　→　<strong>各集合の中で</strong>言い換え・コード変換</div>
 
 訓練 **約80%** ／ 検証 **約10%** ／ 通常テスト **約10%**
 
 | テスト | 変更点・確認対象 |
 | :--- | :--- |
-| **通常** | 同じ基本操作の範囲で、訓練に含まれない意味ASTの評価 |
-| **言い換え** | 既知の単独操作への、訓練で使わなかった日本語表現の適用 |
+| **通常** | 同じ基本操作の範囲で訓練に含まれない意味ASTの評価 |
+| **言い換え** | 既知の単独操作への訓練で使わなかった日本語表現の適用 |
 | **組合せ汎化** | 例：別々に学んだ「偶数抽出」と「降順整列」の組み合わせ |
 | **同じ操作の反復** | 同じ操作の2回・3回の連続適用（例：「各要素にkを加える」の2回適用） |
-| **境界値** | 空リスト、要素1個、条件を満たす要素なし、全要素同値、負数など |
+| **境界値** | 空リスト・要素1個・条件を満たす要素なし・全要素同値・負数など |
 
-<div class="split-warning"><strong>生成後の分割では、同じ問題の表記違いが訓練とテストに混入</strong><br>同じ意味ASTから作った言い換え・等価コードは、同じ分割先に集約</div>
+<div class="split-warning"><strong>生成後の分割では同じ問題の表記違いが訓練とテストに混入</strong><br>同じ意味ASTから作った言い換え・等価コードは同じ分割先に集約</div>
 
 <!-- <div class="split-note">組合せ汎化用のASTを先に確保し、残りを約80：10：10に分割。言い換えは表現の汎化を測る別枠。<br>実際の評価には「同じ操作の反復」も追加し、計5種類のテストを使う。</div> -->
 
@@ -1224,14 +1252,14 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 
 # Qwen3-4B-AWQによる日本語表現の生成と組み合わせ
 
-**表現辞書の作成**と**承認済み表現の組み合わせ**による、二段階の指示文生成
+**表現辞書の作成**と**承認済み表現の組み合わせ**による二段階の指示文生成
 
 <div class="generation-columns">
 <div class="generation-stage">
 
 ## ① 表現辞書の作成：Qwen3-4B-AWQ
 
-各操作30候補の生成と、人による意味の確認・承認<br>各操作20件以上の承認を目標
+各操作30候補の生成と人による意味の確認・承認<br>各操作20件以上の承認が目標
 
 ### 保存済みプロンプト（要約）
 
@@ -1248,14 +1276,14 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 「偶数を選び出す」／「偶数を選び出して」
 </div>
 
-**人が意味を確認し、承認した表現だけを辞書に登録**
+**人による意味確認と承認済み表現のみの辞書登録**
 
 </div>
 <div class="generation-stage">
 
 ## ② 指示文の作成：ルールベース
 
-意味ASTに沿った、承認済み表現の組み合わせ
+意味ASTに沿った承認済み表現の組み合わせ
 
 ### 例：偶数を残す → 各要素にkを加える
 
@@ -1296,7 +1324,7 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 
 # ルールベースで等価なPythonコード生成
 
-同じ意味ASTでも、異なる書き方のコードを生成
+同じ意味ASTでも異なる書き方のコード生成
 
 <div class="generation-columns">
 <div>
@@ -1335,7 +1363,7 @@ def solve(xs, k):
 | 名前・補足 | 変数名の変更 ／ コメント・型注釈の有無 |
 | 条件・並べ替え | 独立した条件の順序変更 ／ `reverse=True` ↔ 昇順ソート後の逆順（整数） |
 
-**生成コードは、完全重複がなく、意味ASTの参照実装との結果一致を確認**
+**生成コードは完全重複なし／意味ASTの参照実装との結果一致の確認**
 
 <!-- <div class="generation-note">生成器はCodexで実装してよい。変換ルールは人が確認し、意味を変えない範囲で適用する。</div> -->
 
@@ -1361,7 +1389,7 @@ def solve(xs, k):
 
 
 
-<!-- _class: default -->
+<!-- _class: default roomy-table -->
 
 # 学習用の合成データ192,900件
 
@@ -1409,7 +1437,7 @@ def solve(xs, k):
 <!-- _class: bpe-page -->
 # BPEトークナイザ：頻出する文字列のトークン化
 
-バイト単位から開始し、語彙が **2,048** になるまで、**最も多く隣り合う組の結合**を反復
+バイト単位から開始し語彙が **2,048** になるまで**最も多く隣り合う組の結合**の反復
 
 <div class="bpe-tokens">
 
@@ -1417,11 +1445,11 @@ def solve(xs, k):
 
 </div>
 
-この1件は **29トークン**<br>「偶数だけを残す」が1トークンになるのは、訓練データに頻出するため
+この1件は **29トークン**<br>「偶数だけを残す」が1トークンになるのは訓練データに頻出するため
 
 | 設定 | 値 | 意味 |
 | :--- | ---: | :--- |
-| 語彙数 | 2,048 | 特殊トークン7個を含む、結合を繰り返す際の語彙数の上限 |
+| 語彙数 | 2,048 | 特殊トークン7個を含む結合を繰り返す際の語彙数の上限 |
 | 最小頻度 `min_frequency` | 5 | 訓練データに5回以上現れる組だけの結合 |
 | 最大piece長 `max_token_length` | 24 | 1トークンは最大24バイト（日本語なら8文字まで） |
 
@@ -1501,7 +1529,7 @@ table.cs-mask th.t { color: #245f8b; font-weight: 700; font-size: 14px; white-sp
 <tr><th>xs</th><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="arw">→</td><td class="t"><span>if</span></td></tr>
 </tbody>
 </table>
-<div class="cs-foot">→ 1つの系列で<strong>5問ぶんの「次のトークン当て」</strong>を同時に学習</div>
+<div class="cs-foot">→ 1つの系列で<strong>5問ぶんの「次のトークン当て」</strong>の同時学習</div>
 </div>
 
 <div class="cs-panel">
@@ -1519,7 +1547,7 @@ table.cs-mask th.t { color: #245f8b; font-weight: 700; font-size: 14px; white-sp
 
 </div>
 
-<div class="cs-take"><strong>学習時と生成時に共通の参照範囲</strong>による、一貫した次トークン予測</div>
+<div class="cs-take"><strong>学習時と生成時に共通の参照範囲</strong>による一貫した次トークン予測</div>
 
 <!-- 例は訓練データ「整数リストxsから偶数だけを残すsolve関数」のコード部分 return [v for v in xs if v % 2 == 0] のうち [v〜if を、説明のため単語・記号単位のトークンとして示した。実際のBPE分割・実測出力ではない。参照範囲は「自分より前だけ」でなく現在位置を含む因果マスク。学習は正解prefix、生成は自身の出力prefixを使う点は異なる。図はAttentionの参照範囲を示し、各位置を損失対象にするかは前後ページのlabelsで別に決まる。補足の小さな文字（cs-cap・cs-step・cs-note：KVキャッシュの説明など）はCSSで非表示にしてあり、表示したいときは display: none を外す。 -->
 ---
@@ -1571,9 +1599,9 @@ def solve(xs):
 | `def solve(xs):` ～ `return` | ○ 現在位置まで参照可能 |
 | 後続の `[v for …]` | × 未来の位置は参照不可 |
 
-**正解コードの入力時も、次に予測する答えは参照対象外**
+**正解コードの入力時も次に予測する答えは参照対象外**
 
-`is_causal=True` で未来へのAttentionの重みを0に固定し、指示とそこまでのコードから続きを予測
+`is_causal=True` で未来へのAttentionの重みを0に固定し指示とそこまでのコードから続きの予測
 
 </div></div>
 
@@ -1582,7 +1610,7 @@ def solve(xs):
 ---
 
 <!-- _header: '③ 学習　4/9' -->
-<!-- _class: code-explain -->
+<!-- _class: code-explain shifted-loss -->
 # 一つ先の正解を使った次トークンの学習
 
 <div class="code-columns"><div>
@@ -1621,7 +1649,7 @@ $$
 
 $C$：コード開始後〜EOSの位置（指示・paddingは除外）
 
-訓練時は**正解の続きを予測**<br>生成時は**自分が出したトークンの続きを予測**
+訓練時は**正解の続きの予測**<br>生成時は**自分が出したトークンの続きの予測**
 
 </div></div>
 
@@ -1631,15 +1659,15 @@ $C$：コード開始後〜EOSの位置（指示・paddingは除外）
 
 <!-- _header: '③ 学習　5/9' -->
 <!-- _class: loss-mask-page -->
-# 日本語指示は条件として読み、コード部分だけで損失を計算
+# 日本語指示は条件として読みコード部分だけで損失計算
 
-<p class="lm-intro">学習時は<strong>指示と正解コードを両方入力</strong>し、次の正解トークンを予測</p>
+<p class="lm-intro">学習時は<strong>指示と正解コードを両方入力</strong>し次の正解トークン予測</p>
 <div class="lm-grid">
 <div class="lm-label">入力系列</div><div class="lm-prompt"><b>日本語の指示</b><br>偶数だけを残す<br>solve関数を書いてください</div><div class="lm-marker"><code>&lt;|code|&gt;</code></div><div class="lm-code"><b>正解のPythonコード</b><br><code>def solve(xs):</code><br><code>　return [v for v in xs if v % 2 == 0]</code></div><div class="lm-eos"><code>EOS</code></div>
 <div class="lm-label">正解ラベル</div><div class="lm-ignore">−100</div><div class="lm-ignore">−100</div><div class="lm-target">各コードトークンのID</div><div class="lm-target">EOSのID</div>
 <div class="lm-label">損失の対象</div><div class="lm-off">損失計算の対象外</div><div class="lm-off">対象外</div><div class="lm-on">損失の計算対象</div><div class="lm-on">計算対象</div>
 </div>
-<p class="lm-connection">日本語の指示を参照した、コードの続きの予測　→</p>
+<p class="lm-connection">日本語の指示を参照したコードの続きの予測　→</p>
 <div class="lm-bottom"><div>
 
 ```python
@@ -1648,7 +1676,7 @@ labels[target_start:] = token_ids[target_start:]
 # target_start は <|code|> の直後
 ```
 
-</div><div><strong>入力範囲と損失の計算対象は別</strong><br>指示文の予測は採点対象外<br>コード側の損失により、<br>指示を処理する重みも学習</div></div>
+</div><div><strong>入力範囲と損失の計算対象は別</strong><br>指示文の予測は採点対象外<br>コード側の損失により<br>指示を処理する重みも学習</div></div>
 
 <!-- 原20ページのloss対象を図示。文字列は説明用のまとまりで、実際のBPE分割ではない。BOS・task区切り・paddingは図で省略し、これらも-100。実装ではinput_idsとlabelsを1位置ずらしてcross entropyを計算するため、code marker位置から最初のコードトークン（改行を含む）を予測する項が最初の採点対象。code marker自体の予測は対象外。コード直後のEOSまで採点する。図の短縮コードは説明用の1系列の擬似コード。実装：../../scripts/model/train_boku_nano.py のtarget_start（423行）、collate_training_batch（496–513行）。損失：../../scripts/model/boku_nano.py のshifted labelsとcross_entropy。コード側の損失はattentionを介して参照した指示側の表現・共有パラメータにも依存するが、全tokenが同じ強さの勾配を得るとは主張しない。 -->
 
@@ -1698,12 +1726,12 @@ BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_l
 ---
 
 <!-- _header: '③ 学習　7/9' -->
-<!-- _class: scientific -->
+<!-- _class: scientific loss-plot -->
 # 1M：3 epochまでの損失の推移
 
-3 epochの学習（訓練損失は20 stepごと、検証損失は各epoch終了時の実測値）
+3 epochの学習（訓練損失は20 stepごと／検証損失は各epoch終了時の実測値）
 
-![w:1100 h:380](figure/loss_1m_3epoch.png)
+![w:1040 h:500](figure/loss_1m_3epoch.png)
 
 **val loss：1 epoch 0.8737 ／ 2 epoch 0.4691 ／ 3 epoch 0.4364**
 
@@ -1720,12 +1748,12 @@ BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_l
 ---
 
 <!-- _header: '③ 学習　8/9' -->
-<!-- _class: scientific -->
+<!-- _class: scientific loss-plot -->
 # 5M：損失の推移
 
-1 epochの学習における、訓練損失と検証データでの損失
+1 epochの学習における訓練損失と検証データでの損失
 
-![w:1100 h:380](figure/loss_5m.png)
+![w:1040 h:500](figure/loss_5m.png)
 
 **学習終了時の val loss：0.4855**
 
@@ -1740,12 +1768,12 @@ BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_l
 ---
 
 <!-- _header: '③ 学習　9/9' -->
-<!-- _class: scientific -->
+<!-- _class: scientific loss-plot -->
 # 15M：損失の推移
 
-1 epochの学習における、訓練損失と検証データでの損失
+1 epochの学習における訓練損失と検証データでの損失
 
-![w:1100 h:380](figure/loss_15m.png)
+![w:1040 h:500](figure/loss_15m.png)
 
 **学習終了時の val loss：0.4106**
 
@@ -1761,18 +1789,9 @@ BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_l
 
 <!-- _header: '④ 推論　1/3' -->
 <!-- _class: autoregressive ar-diagram -->
-# 自己回帰：出力を次の入力に加え、予測を反復
+# 自己回帰：出力の追加と次トークン予測の反復
 
-訓練データ1件は、特殊トークンで区切った「指示＋コード」の1本の系列<br>直前までのトークンから次のトークンを予測
-
-```text
-<|bos|><|task|>
-整数リストxsから偶数だけを残すsolve関数を書いてください。
-<|code|>
-def solve(xs):
-    return [v for v in xs if v % 2 == 0]
-<|eos|>
-```
+訓練データ1件は特殊トークンで区切った「指示＋コード」の1本の系列<br>直前までのトークンから次のトークン予測
 
 <div class="ar-flow">
 <div class="ar-flow-row">
@@ -1804,7 +1823,7 @@ def solve(xs):
 </div>
 <div class="ar-feedback">
 
-出力した `==` を、次の入力の末尾へ
+次の入力の末尾への `==` の追加
 
 </div>
 <div class="ar-flow-row">
@@ -1834,12 +1853,44 @@ def solve(xs):
 
 </div>
 </div>
+<div class="ar-feedback">
+
+次の入力の末尾への `0` の追加
+
+</div>
+<div class="ar-flow-row">
+<div class="ar-tokens ar-appended">
+
+`…` `if` `v` `%` `2` `==` `0`
+
+</div>
+<div class="ar-arrow">
+
+→
+
+</div>
+<div class="ar-model">
+
+**Decoder**
+
+</div>
+<div class="ar-arrow">
+
+→
+
+</div>
+<div class="ar-output">
+
+**]**
+
+</div>
+</div>
 </div>
 
-> **学習時**：系列の途中までを入力し、実際に続くトークンを予測<br>**生成時**：`<|eos|>` が出るまで予測を反復
+> **学習時**：系列の途中までを入力し実際に続くトークンの予測<br>**生成時**：`<|eos|>` が出るまで予測の反復
 
 <!--
-図の「…」は <|bos|><|task|> から xs までのトークン。上段で「==」を生成し、その出力を次の入力の末尾へ加える。下段は同じモデルをもう一度使い、「0」を生成する。二つの別モデルを直列に学習するという意味ではない。
+図の「…」は <|bos|><|task|> から xs までのトークン。上段で「==」を生成し、その出力を次の入力の末尾へ加える。中段は同じモデルをもう一度使い、「0」を生成する。さらに出力を末尾へ加え、下段で「]」を生成する。別のモデルを直列に学習するという意味ではない。
 説明のためトークンを単語や記号の単位で区切った。実際のBPEトークン分割とは異なり、実測出力でもない。
 学習では正解系列の直前までから実際に続くトークンを予測し、正解トークンの確率を高めるように重みを更新する。causal maskにより未来の正解は見えない。学習時は各位置の予測を一括して計算できる。
 生成時には自分で出したトークンを次の入力へ加える。候補は確率分布として予測され、次のトークンが一意に決まるわけではない。
@@ -1854,7 +1905,7 @@ Boku-nanoはDecoder-onlyであり、Encoder-Decoder構成のCross-Attentionは�
 <!-- _class: logit-overview -->
 # 次のトークン候補への確率の割り当て
 
-`… if v % 2 ==` の続きも、候補のlogitを確率に変換し、その中から1つを選択
+`… if v % 2 ==` の続きも候補のlogitを確率に変換し1つの候補の選択
 
 <div class="lp-context">
 <div class="lp-input">… v % 2 == <strong>？</strong></div>
@@ -1867,7 +1918,7 @@ Boku-nanoはDecoder-onlyであり、Encoder-Decoder構成のCross-Attentionは�
 
 ## ① logit
 
-logit：負の値も取る、確率変換前のスコア
+logit：負の値も取る確率変換前のスコア
 
 <div class="lp-row"><span>0</span><div class="lp-track"><span class="lp-bar" style="width:60%"></span></div><b>3.0</b></div>
 <div class="lp-row"><span>1</span><div class="lp-track"><span class="lp-bar" style="width:40%"></span></div><b>2.0</b></div>
@@ -1904,7 +1955,7 @@ logit：負の値も取る、確率変換前のスコア
 </div>
 </div>
 
-<div class="lp-summary">logitを<strong>softmax</strong>で確率に変換し、最も確率の高い候補を次のトークンに採用</div>
+<div class="lp-summary">logitを<strong>softmax</strong>で確率に変換し最も確率の高い候補を次のトークンとして採用</div>
 
 <!-- <div class="figure-reference">説明用のトークンと数値。実際は全語彙を対象に、BPEトークン単位で生成する。<br>参考：<a href="https://www.3blue1brown.com/lessons/gpt/">3Blue1Brown：Softmax</a>・<a href="https://www.youtube.com/watch?v=yMQPQuz5WpA">指定動画</a>。</div> -->
 
@@ -2405,7 +2456,7 @@ Pythonのsampling関数はT>0のみを受け付ける。T=0を渡して分岐す
 
 <!-- _header: '④ 推論　3/3' -->
 <!-- _class: code-explain causal-code causal-generate -->
-# 生成時のコード：最後の予測を選択し、入力に追加
+# 生成時のコード：最後の予測の選択と入力への追加
 
 <div class="code-columns"><div>
 
@@ -2431,7 +2482,7 @@ input_ids = torch.cat(
 )
 ```
 
-<div class="code-source">evaluate_boku_nano.py（488–490、522–524行）</div>
+<div class="code-source">evaluate_boku_nano.py（488–490・522–524行）</div>
 
 </div><div>
 
@@ -2447,15 +2498,15 @@ def solve(xs):
 
 | 処理 | 上の入力から1トークン進む例 |
 | :--- | :--- |
-| ① 最後の位置の使用 | 入力末尾から、続きの候補を予測 |
-| ② 候補の選択 | 例：`v` のトークンIDを選択 |
+| ① 最後の位置の使用 | 入力末尾から続きの候補の予測 |
+| ② 候補の選択 | 例：`v` のトークンIDの選択 |
 | ③ 末尾に追加 | `return [` → `return [v` |
-| 次のループ | 日本語指示と追加済みコード全体を入力 |
+| 次のループ | 日本語指示と追加済みコード全体の入力 |
 
-**正解の続きを渡す学習時と異なり、生成時は自分が選んだトークンを追加**
+**正解の続きを渡す学習時と異なり生成時は自分が選んだトークンの追加**
 
 `[:, -1, :]` は「全系列・最後の位置・全候補」
-`<|eos|>` で終了 ／ それまでは上限まで予測を反復
+`<|eos|>` で終了 ／ それまでは上限まで予測の反復
 
 </div></div>
 
@@ -2467,7 +2518,7 @@ def solve(xs):
 <!-- _class: test-summary -->
 # モデル規模・学習回数による違い：五つのテスト別結果
 
-各モデルの列は **合格数・pass@1（合格率）**<br>各問1本を生成し、検査入力をすべて満たせば合格
+各モデルの列は **合格数・pass@1（合格率）**<br>各問1本を生成し検査入力をすべて満たせば合格
 
 | テスト | 1M・1 epoch | 1M・3 epoch | 5M・1 epoch | 15M・1 epoch |
 | :--- | ---: | ---: | ---: | ---: |
@@ -2477,9 +2528,9 @@ def solve(xs):
 | 同じ操作の反復（23,040問） | 508問（2.20%） | 22,945問（99.59%） | 22,370問（97.09%） | **22,971問（99.70%）** |
 | 境界値（24,040問） | 408問（1.70%） | 23,950問（99.63%） | 23,261問（96.76%） | **24,003問（99.85%）** |
 
-**1Mは3 epochで大きく改善<br>一方、言い換えは1M・3 epochと15M・1 epochでも50%**
+**1Mは3 epochで大きく改善<br>一方言い換えは1M・3 epochと15M・1 epochでも50%**
 
-<div class="result-note">毎回、最も確率の高いトークンを選択 ／ 再生成なし ／ pass@1 ＝ 合格数 ÷ 評価件数<br>共通BPE・単一seed ／ 通常と境界値は同じ指示・異なる検査入力 ／ 次の872問の評価とは別</div>
+<div class="result-note">毎回最も確率の高いトークンの選択 ／ 再生成なし ／ pass@1 ＝ 合格数 ÷ 評価件数<br>共通BPE・単一seed ／ 通常と境界値は同じ指示・異なる検査入力 ／ 次の872問の評価とは別</div>
 
 <!--
 各結果は保存済みのモデル別評価報告から取得。合格率は合格数/評価件数から小数点以下2桁に丸めた。
@@ -2490,22 +2541,22 @@ def solve(xs):
 
 <!-- _header: '⑤ 評価　2/11' -->
 <!-- _class: compact -->
-# ベンチマークの役割と、自分の研究での作り方
+# ベンチマークの役割と自分の研究での作り方
 
-**モデルの能力と限界を観測し、次に取り組む研究課題を明確化**
-成功例だけで判断せず、共通の基準で能力の向上を定量的に確認
+**モデルの能力と限界を観測し次に取り組む研究課題の明確化**
+成功例だけで判断せず共通の基準で能力向上の定量的な確認
 
 | 設計・評価の手順 | 自分の研究での検討点 |
 | :--- | :--- |
 | ① 測定する能力の選定 | 確認したい能力とその変化 |
 | ② 課題と正解基準の作成 | 変更する条件・固定する条件・正誤の判定方法 |
-| ③ 共通条件での測定・分析 | 成功・失敗の条件の分析と、比較条件・作成手順の記録 |
-| ④ 次の課題への接続 | 残る誤りの分析と、高得点で差が見えない場合の評価の見直し |
+| ③ 共通条件での測定・分析 | 成功・失敗の条件の分析と比較条件・作成手順の記録 |
+| ④ 次の課題への接続 | 残る誤りの分析と高得点で差が見えない場合の評価の見直し |
 
 ## 一例：組み合わせ汎化の評価
 
-**学習済みの操作を、新しい組み合わせでも実行する能力の評価**
-今回は既知の日本語表現を用いて構成を変更し、生成コードの実行結果で正誤を判定
+**学習済みの操作を新しい組み合わせでも実行する能力の評価**
+今回は既知の日本語表現を用いて構成を変更し生成コードの実行結果で正誤判定
 
 <!--
 組み合わせ汎化は、研究目的に合わせたベンチマーク設計の一例として紹介する。
@@ -2523,17 +2574,17 @@ def solve(xs):
 
 | 操作数 | 問題の種類 | 問数 | 構成 |
 | ---: | :--- | ---: | :--- |
-| 1 | 複数操作で学んだ表現を1操作に適用 | 96 | 24操作 × 4表現 |
+| 1 | 複数操作で学んだ表現の1操作への適用 | 96 | 24操作 × 4表現 |
 | 2 | 初めて組み合わせる2操作 | 100 | 5ペア × 両順序 × 10表現 |
-| 2 | 同じ操作を2回 | 96 | 24操作 × 4表現 |
-| 2 | 3操作で学んだ順序を2操作に適用 | 88 | 88種類の操作列 |
+| 2 | 同じ操作の2回反復 | 96 | 24操作 × 4表現 |
+| 2 | 3操作で学んだ順序の2操作への適用 | 88 | 88種類の操作列 |
 | 3 | 初めてのペアを含む3操作 | 100 | 100種類の操作列 |
-| 3 | 同じ操作を3回 | 96 | 24操作 × 4表現 |
-| 4 | 同じ操作を4回 | 96 | 24操作 × 4表現 |
+| 3 | 同じ操作の3回反復 | 96 | 24操作 × 4表現 |
+| 4 | 同じ操作の4回反復 | 96 | 24操作 × 4表現 |
 | 4 | 異なる4操作の組み合わせ | 100 | 100種類の操作列 |
 | 4 | 2操作の組の2回反復 | 100 | A・B・A・Bの100種類 |
 
-各問題でコードを1つ生成<br>正答率は、**179通りの共通テスト入力ですべて合格した問題の割合**
+各問題で1つのコード生成<br>正答率は**179通りの共通テスト入力ですべて合格した問題の割合**
 
 <!--
 関数契約・許可構文・入力非変更も採点条件。179入力は境界9、固定seedのランダム128、k関連40、操作順序確認2。任意入力での正しさの証明ではない。
@@ -2544,20 +2595,20 @@ def solve(xs):
 
 <!-- _header: '⑤ 評価　4/11' -->
 <!-- _class: astra-settings -->
-# Astraの評価設定：思考low・ツール使用を禁止
+# Astraの評価設定：思考low・ツール使用禁止
 
 | 項目 | 設定 |
 | :--- | :--- |
 | モデル・推論設定 | `gpt-6-astra` ／ reasoning effort：**low** |
-| 評価対象 | 872問から固定seedで抽出した各カテゴリ10問、計90問 |
-| 会話・回答 | 1問ごとに独立チャット ／ 最初の回答1回を採点 ／ 修正・再生成なし |
-| ツール | 使用禁止を指示 ／ **90問すべての実行記録で使用0件を確認** |
+| 評価対象 | 872問から固定seedで抽出した各カテゴリ10問・計90問 |
+| 会話・回答 | 1問ごとに独立チャット ／ 最初の回答1回の採点 ／ 修正・再生成なし |
+| ツール | 使用禁止の指示 ／ **90問すべての実行記録で使用0件の確認** |
 
 各問題の冒頭に与えた指示：
 
 > ツールは一切使用せず、このメッセージだけから回答してください。ファイル閲覧、検索、コード実行、他のエージェントへの依頼は行わないでください。回答は一度だけ、指定されたコードのみを出力してください。
 
-ツールの技術的な無効化ではなく、**指示による禁止と記録確認**<br>採点は回答保存後 ／ Astraへの結果のフィードバックなし
+ツールの技術的な無効化ではなく**指示による禁止と記録確認**<br>採点は回答保存後 ／ Astraへの結果のフィードバックなし
 
 <!--
 上記の後にQwenと同じ共通のコード生成指示と各問題の日本語指示を続けた。AST・参照コード・テスト入力・過去の得点は渡していない。
@@ -2580,7 +2631,7 @@ def solve(xs):
 </svg>
 </div>
 <div class="focus-captions"><div><b>① 未学習の2操作</b><br>1M・3 epoch：99%<br>Astra参考値：90%</div><div><b>② 未学習の3操作</b><br>1M・3 epoch：100%<br>学習済みの操作による新しい組み合わせ</div><div><b>③ 異なる4操作</b><br>Bokuは7〜43%<br>訓練範囲の3操作を超えると低下</div></div>
-<p class="focus-note">Boku・Qwenは全872問、Astraは各カテゴリ10問の参考値（評価集合・実行条件の違いに留意）</p>
+<p class="focus-note">Boku・Qwenは全872問／Astraは各カテゴリ10問の参考値（評価集合・実行条件の違いに留意）</p>
 
 <!--
 赤丸は元グラフの上にSVGとして重ね、棒・軸・数値を変更しない。1M3epochのcomposition_2op=99/100、composition_3op=100/100。Astraのcomposition_2op=9/10。general_4opはBoku15M29/100、5M7/100、1M3epoch43/100。
@@ -2606,14 +2657,14 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 | ⑤ Boku 15M・1 epoch | 降順整列の欠落 | [66] | [28] |
 
 <p class="failure-summary-note">各モデルの保存済み失敗入力に対する出力（詳細は次の5ページ）<br>Astraの指示「大小順」には解釈の余地 ／ Bokuの3条件は同じ指示・異なる検査入力での比較</p>
-<p class="failure-summary-stat"><strong>Bokuの異なる4操作・100問の集計</strong>：合格／出力不一致は、1M：43／57、5M：7／93、15M：29／71<br>3条件とも構文・実行エラーの判定は0件</p>
+<p class="failure-summary-stat"><strong>Bokuの異なる4操作・100問の集計</strong>：合格／出力不一致は1M：43／57・5M：7／93・15M：29／71<br>3条件とも構文・実行エラーの判定は0件</p>
 
 <!-- 根拠：../results/boku_four_operation_error_examples.md。条件A、各問題179入力。保存済みscored.jsonlのgeneral_4op全100問のreasonを再集計し、general4-001のコードを読んで操作列を確認。同じ操作4回・ABABのカテゴリとは区別する。 -->
 
 ---
 
 <!-- _header: '⑤ 評価　7/11' -->
-<!-- _class: failure-example -->
+<!-- _class: failure-example failure-short -->
 # 失敗例① Astra：参照定義と整列方向の不一致
 
 <blockquote class="failure-instruction">整数リストxsから偶数を切りとって、値を大小順に並べるsolve関数を書いてください。</blockquote>
@@ -2627,6 +2678,15 @@ def solve(xs: list[int], k: int) -> list[int]:
     return sorted([x for x in xs if x % 2 == 0])
 ```
 
+<div class="failure-trace">
+
+## コード内の処理
+
+<p>偶数抽出後の <code>[4, 2]</code></p>
+<p>↓ <code>sorted</code> の既定の昇順</p>
+<p>出力 <code>[2, 4]</code></p>
+</div>
+
 </div><div class="failure-observation">
 
 ## 実行して分かった誤り
@@ -2636,7 +2696,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 <div class="failure-outputs"><div><span>正解</span><b>[4, 2]</b></div><div class="wrong"><span>実際の出力</span><b>[2, 4]</b></div></div>
 
 </div></div>
-<p class="failure-note">「大小順」の参照定義は降順 ／ 指示文の曖昧さを含む例であり、モデル一般の推論能力の断定は対象外<br>問題ID：comp2v2-01-ab-08 ／ Astra（思考low） ／ A-chat</p>
+<p class="failure-note">「大小順」の参照定義は降順 ／ 指示文の曖昧さを含む例でありモデル一般の推論能力の断定は対象外<br>問題ID：comp2v2-01-ab-08 ／ Astra（思考low） ／ A-chat</p>
 
 <!-- 保存済みの生成コードを全文掲載。検査入力・期待値・出力はscored.jsonlの最初の失敗入力をそのまま使用。179入力中の1件。再実行で保存出力と一致を確認。個別例から全失敗の原因分布を主張しない。
 question: ../../data/benchmarks/composition_suite_20261008/questions.jsonl:104
@@ -2649,7 +2709,7 @@ chart: ../../docs/report/figure/composition_benchmark_with_5m_no_title/values.js
 ---
 
 <!-- _header: '⑤ 評価　8/11' -->
-<!-- _class: failure-example -->
+<!-- _class: failure-example failure-short -->
 # 失敗例② Qwen：3倍からk倍への置き換え
 
 <blockquote class="failure-instruction">整数リストxsからすべてを三倍するsolve関数を書いてください。</blockquote>
@@ -2666,11 +2726,19 @@ def solve(xs, k):
     return result
 ```
 
+<div class="failure-trace">
+
+## コード内の処理
+
+<p>乗数に固定値3ではなく引数 <code>k</code></p>
+<p><code>k = 1</code> の検査入力では1倍</p>
+</div>
+
 </div><div class="failure-observation">
 
 ## 実行して分かった誤り
 
-<p>指定された3倍ではなく、<br>引数kによる乗算</p>
+<p>指定された3倍ではなく<br>引数kによる乗算</p>
 <div class="failure-input"><b>検査入力</b><br><code>xs = [1]</code><br><code>k = 1</code></div>
 <div class="failure-outputs"><div><span>正解</span><b>[3]</b></div><div class="wrong"><span>実際の出力</span><b>[1]</b></div></div>
 
@@ -2719,7 +2787,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 <div class="failure-outputs"><div><span>正解</span><b>[100]</b></div><div class="wrong"><span>実際の出力</span><b>[100, 100]</b></div></div>
 
 </div></div>
-<p class="failure-note">Bokuの3条件は同じ指示を比較 ／ 入力例は各モデルの保存済み失敗ログ<br>問題ID：general4-001 ／ Boku Nano 1M・3 epoch ／ A</p>
+<p class="failure-note">Bokuの3条件は同じ指示の比較 ／ 入力例は各モデルの保存済み失敗ログ<br>問題ID：general4-001 ／ Boku Nano 1M・3 epoch ／ A</p>
 
 <!-- 保存済みの生成コードを全文掲載。検査入力・期待値・出力はscored.jsonlの最初の失敗入力をそのまま使用。179入力中の1件。再実行で保存出力と一致を確認。個別例から全失敗の原因分布を主張しない。
 question: ../../data/benchmarks/composition_suite_20261008/questions.jsonl:673
@@ -2732,7 +2800,7 @@ chart: ../../docs/report/figure/composition_benchmark_with_5m_no_title/values.js
 ---
 
 <!-- _header: '⑤ 評価　10/11' -->
-<!-- _class: failure-example -->
+<!-- _class: failure-example failure-tight -->
 # 失敗例④ Boku 5M：操作の欠落と実行順序の変化
 
 <blockquote class="failure-instruction">整数リストxsと整数kを受け取り、絶対値を導き出して、偶数だけを切り出して、大きい順に並べて、頭k個を抜き出すsolve関数を書いてください。</blockquote>
@@ -2763,7 +2831,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 <div class="failure-outputs"><div><span>正解</span><b>[0]</b></div><div class="wrong"><span>実際の出力</span><b>[]</b></div></div>
 
 </div></div>
-<p class="failure-note">Bokuの3条件は同じ指示を比較 ／ 入力例は各モデルの保存済み失敗ログ<br>問題ID：general4-001 ／ Boku Nano 5M・1 epoch ／ A</p>
+<p class="failure-note">Bokuの3条件は同じ指示の比較 ／ 入力例は各モデルの保存済み失敗ログ<br>問題ID：general4-001 ／ Boku Nano 5M・1 epoch ／ A</p>
 
 <!-- 保存済みの生成コードを全文掲載。検査入力・期待値・出力はscored.jsonlの最初の失敗入力をそのまま使用。179入力中の1件。再実行で保存出力と一致を確認。個別例から全失敗の原因分布を主張しない。
 question: ../../data/benchmarks/composition_suite_20261008/questions.jsonl:673
@@ -2807,7 +2875,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 <div class="failure-outputs"><div><span>正解</span><b>[66]</b></div><div class="wrong"><span>実際の出力</span><b>[28]</b></div></div>
 
 </div></div>
-<p class="failure-note">Bokuの3条件は同じ指示を比較 ／ 入力例は各モデルの保存済み失敗ログ<br>問題ID：general4-001 ／ Boku Nano 15M・1 epoch ／ A</p>
+<p class="failure-note">Bokuの3条件は同じ指示の比較 ／ 入力例は各モデルの保存済み失敗ログ<br>問題ID：general4-001 ／ Boku Nano 15M・1 epoch ／ A</p>
 
 <!-- 保存済みの生成コードを全文掲載。検査入力・期待値・出力はscored.jsonlの最初の失敗入力をそのまま使用。179入力中の1件。再実行で保存出力と一致を確認。個別例から全失敗の原因分布を主張しない。
 question: ../../data/benchmarks/composition_suite_20261008/questions.jsonl:673
@@ -2822,22 +2890,22 @@ chart: ../../docs/report/figure/composition_benchmark_with_5m_no_title/values.js
 <!-- _class: section-break -->
 # 考察
 
-できたことと残った誤りを、次の学習につなげる
+できたことと残った誤りを次の学習につなげる
 
 ---
 
 <!-- _header: '考察　1/2' -->
 <!-- _class: default -->
-# 今回の結果の意義と、次の研究課題
+# 今回の結果の意義と次の研究課題
 
-**指示側の予測を損失に含めず、<br>コード側だけを採点する学習によるコード生成の実現**
+**指示側の予測を損失に含めず<br>コード側だけを採点する学習によるコード生成の実現**
 
-今回の課題における**組み合わせ汎化**の確認：学習済み操作の新しい構成での利用<br>1M・3 epoch：未学習の2操作 **99/100**、未学習ペアを含む3操作 **100/100**
+今回の課題における**組み合わせ汎化**の確認：学習済み操作の新しい構成での利用<br>1M・3 epoch：未学習の2操作 **99/100** ／ 未学習ペアを含む3操作 **100/100**
 
-今後の課題：比較条件を揃えた、より大きなモデルとの追加比較と、<br>**評価設計・作成手順の明文化**
+今後の課題：比較条件を揃えたより大きなモデルとの追加比較と<br>**評価設計・作成手順の明文化**
 
-- 比較条件：訓練回数・プロンプト・生成上限などの記録と、揃えられる条件の統一
-- 評価設計：既知・未知の範囲と、検出対象とする誤りの定義
+- 比較条件：訓練回数・プロンプト・生成上限などの記録と揃えられる条件の統一
+- 評価設計：既知・未知の範囲と検出対象とする誤りの定義
 - 作成手順：問題選定・訓練との照合・採点方法・再現手順の公開に向けた整理
 
 <!--
@@ -2859,19 +2927,19 @@ th, td { padding: 8px 12px; }
 
 # 考察：問題単位の合否を次の訓練へ生かす方針
 
-## 既知の表現でも、4操作の組み合わせで残る課題
+## 既知の表現でも4操作の組み合わせで残る課題
 
-1M・3 epoch：未学習の2操作 **99 / 100**、未学習ペアを含む3操作 **100 / 100**<br>学習済みの表現を用いた、新しい2・3操作の構成への対応
+1M・3 epoch：未学習の2操作 **99 / 100** ／ 未学習ペアを含む3操作 **100 / 100**<br>学習済みの表現を用いた新しい2・3操作の構成への対応
 
-異なる4操作では **43 / 100**<br>観察された操作の欠落・順序の誤りと、要求された処理を最後まで揃える課題
+異なる4操作では **43 / 100**<br>観察された操作の欠落・順序の誤りと要求された処理を最後まで揃える課題
 
 ## 問題単位の採点を訓練へ反映する方法
 
-pass@1：コードの長さによらず、**1問を1件として採点**<br>各問題の検査入力をすべて満たすかによる評価
+pass@1：コードの長さによらず**1問1件としての採点**<br>各問題の検査入力をすべて満たすかによる評価
 
-**得点の比較に加え、採点結果を訓練へ反映する方法の検討**
+**得点の比較に加え採点結果を訓練へ反映する方法の検討**
 
-2・3操作での達成と4操作での不足を踏まえた、<br>訓練データの構成・学習方法の見直し
+2・3操作での達成と4操作での不足を踏まえた<br>訓練データの構成・学習方法の見直し
 
 
 <!--
@@ -2883,7 +2951,7 @@ pass@1：コードの長さによらず、**1問を1件として採点**<br>各�
 ---
 <!-- _class: summary-page -->
 
-# まとめ：二つの系統と、その先にある学習方法
+# まとめ：二つの系統とその先にある学習方法
 
 <div class="summary-columns">
 <div class="summary-column">
@@ -2943,22 +3011,22 @@ RLHF：Reinforcement Learning from Human Feedback。RLVR：Reinforcement Learnin
 -->
 
 ---
-<!-- _class: default -->
+<!-- _class: default roomy-table -->
 # Appendix：追加解析と補足資料
 
-本編評価を補足する、日本語表現への弱さとモデル内部の挙動の解析
+本編評価を補足する日本語表現への弱さとモデル内部の挙動の解析
 
 | 内容 | 確かめること |
 | :--- | :--- |
 | A. 日本語表現への頑健性 | 言い換え・指示冒頭の変更による生成結果の変化 |
-| B. Attentionの可視化と介入 | 参照先と、指示情報のコード生成への寄与 |
+| B. Attentionの可視化と介入 | 参照先と指示情報のコード生成への寄与 |
 | C. 追加解析のまとめと限界 | 結果から言える範囲と追加検証の必要な点 |
 | D. 全体図 | データ生成・学習・評価・デモのつながり |
 
 ---
 <!-- _class: compact -->
 
-# 高い全体精度と、未学習の言い換えへの弱さ
+# 高い全体精度と未学習の言い換えへの弱さ
 
 1M・3 epochと15M・1 epochの比較 ／ 各セルは合格数（合格率）
 
@@ -2980,7 +3048,7 @@ RLHF：Reinforcement Learning from Human Feedback。RLVR：Reinforcement Learnin
 
 <!-- 1M・3 epochの追加根拠：../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/analysis.json、../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/prompt_prefix_comparison.json、../results/model_reports/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch.md。冒頭変更は2026-10-13に同じ14操作・33入力・seed=20260930・最大64新規tokenで評価。変更前の14生成コードが保存済み結果と一致することを確認。 -->
 ---
-<!-- _class: sources -->
+<!-- _class: sources roomy-copy -->
 
 # 先行研究：日本語の書き方による正解率の変化
 
@@ -2992,7 +3060,7 @@ Gan and Mori（2023）：意味や指示の近い5種類のプロンプトの比
 | :--- | :--- | :--- |
 | 2文の意味関係を分類するJNLI | GPT-4 | **25.44〜49.21%** |
 
-意味の近い指示でも、書き方によって性能が大きく変わる可能性
+意味の近い指示でも書き方によって性能が大きく変わる可能性
 
 出典：[Gan and Mori, PACLIC 2023, Table 3](https://aclanthology.org/2023.paclic-1.1/)
 
@@ -3011,11 +3079,11 @@ Takayama et al.（2026）：<br>日本語を含む「はい／いいえ」質問
 | 表現の変え方 | 日本語での観察 |
 | :--- | :--- |
 | 同意を求める「〜ですよね？」 | 道徳判断で「はい」が増える傾向 |
-| 反対語への置き換え | 答えの反転を考慮しても、一貫性が低下 |
+| 反対語への置き換え | 答えの反転を考慮しても一貫性が低下 |
 
-**同じ判断を求める質問でも、表現によって変わる回答傾向**
+**同じ判断を求める質問でも表現によって変わる回答傾向**
 
-モデル評価における、複数の言い回しを含めた検証の必要性
+モデル評価における複数の言い回しを含めた検証の必要性
 
 出典：[Takayama et al., LREC 2026, Table 1](https://aclanthology.org/2026.lrec-1.225/)
 
@@ -3025,7 +3093,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 -->
 
 ---
-<!-- _class: default -->
+<!-- _class: default roomy-copy -->
 
 # 指示の冒頭だけを変えた比較
 
@@ -3034,9 +3102,9 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 | 変更前 | **整数リストxsから偶数だけを残すsolve関数を書いてください。** |
 | 変更後 | **整数リストxsに対して、偶数だけを残すsolve関数を書いてください。** |
 
-後半の操作の指示をそろえ、冒頭だけが異なる**14操作**を比較
+後半の操作の指示をそろえ冒頭だけが異なる**14操作**の比較
 
-同じモデル・同じ検査入力による、追加学習なしでのコード検証
+同じモデル・同じ検査入力による追加学習なしでのコード検証
 
 <!--
 保存済み24操作から、kを使わず「整数リストxsから」で始まる14操作を抽出。残り10操作は「xsと整数kを受け取り、」も変更するため除外。「から」の変更には読点の追加も含みます。各指示33入力、greedy最大64 token。
@@ -3055,11 +3123,11 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 | 整数リストxsから | ■■■■■■■■■■■■□□ | **12 / 14・85.7%** |
 | 整数リストxsに対して、 | ■□□□□□□□□□□□□□ | **1 / 14・7.1%** |
 
-■は合格1件、□は不合格1件（左から合格数を並べた図）
+■は合格1件・□は不合格1件（左から合格数を並べた図）
 
-1M・3 epochでも、同じ14操作で **12 / 14 → 9 / 14** に低下
+1M・3 epochでも同じ14操作で **12 / 14 → 9 / 14** に低下
 
-**冒頭の変更に伴う、5Mモデルの合格数の大幅な低下**
+**冒頭の変更に伴う5Mモデルの合格数の大幅な低下**
 
 <!--
 図は合格数・不合格数の内訳で、各操作の並びではありません。合格は固定33ケースの検査をすべて通ること。24操作全体の22→1を「から」だけの変更として扱わず、14操作に限定。
@@ -3069,7 +3137,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 
 <!-- 1M・3 epochの追加根拠：../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/analysis.json、../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/prompt_prefix_comparison.json、../results/model_reports/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch.md。冒頭変更は2026-10-13に同じ14操作・33入力・seed=20260930・最大64新規tokenで評価。変更前の14生成コードが保存済み結果と一致することを確認。 -->
 ---
-<!-- _class: default -->
+<!-- _class: default roomy-table -->
 
 # 失敗例：偶数抽出から別の処理への変化
 
@@ -3081,7 +3149,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 | 同じ検査入力 | `xs = [0], k = 1` | `xs = [0], k = 1` | `xs = [0], k = 1` |
 | 出力 | `[0]` | `[]` | `[]` |
 
-両モデルとも正しい構文<br>**指示された処理と、生成された処理の意味の不一致**
+両モデルとも正しい構文<br>**指示された処理と生成された処理の意味の不一致**
 
 <!--
 5Mモデルのatomic-000001の実際の生成コードと最初の不一致入力。変更前はvalue % 2 == 0で抽出し33ケース合格。変更後はlist(reversed(xs))の後にk <= xで抽出。評価器は全操作でsolve(xs, k)を要求するため、指示にkがなくても検査入力にはkがあります。
@@ -3091,7 +3159,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 
 <!-- 1M・3 epochの追加根拠：../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/analysis.json、../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/prompt_prefix_comparison.json、../results/model_reports/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch.md。冒頭変更は2026-10-13に同じ14操作・33入力・seed=20260930・最大64新規tokenで評価。変更前の14生成コードが保存済み結果と一致することを確認。 -->
 ---
-<!-- _class: default -->
+<!-- _class: default roomy-table -->
 
 # 表現への頑健性に見られるモデル間の差
 
@@ -3103,7 +3171,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 | 5M・1 epoch | **12 / 14** | **1 / 14** |
 | 15M・1 epoch | 12 / 14 | 12 / 14 |
 
-1M・3 epochでは3件の減少、15M・1 epochでは合格数の維持
+1M・3 epochでは3件の減少／15M・1 epochでは合格数の維持
 **モデル・学習回数によって異なる変化の大きさ**
 
 <!--
@@ -3114,7 +3182,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 
 <!-- 1M・3 epochの追加根拠：../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/analysis.json、../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/prompt_prefix_comparison.json、../results/model_reports/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch.md。冒頭変更は2026-10-13に同じ14操作・33入力・seed=20260930・最大64新規tokenで評価。変更前の14生成コードが保存済み結果と一致することを確認。 -->
 ---
-<!-- _class: default -->
+<!-- _class: default roomy-table -->
 
 # 訓練データの文型との結び付きの可能性
 
@@ -3128,7 +3196,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 
 この文型を複数の操作と結び付けて学習した可能性
 
-**原因の確定に向けた、合成データを変えた追加比較の必要性**
+**原因の確定に向けた合成データを変えた追加比較の必要性**
 
 <!--
 解釈は仮説です。頻度や操作数の偏り以外に、モデル規模も関係し得ます。失敗だけで原因を断定しません。
@@ -3136,21 +3204,21 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 -->
 
 ---
-<!-- _class: compact -->
+<!-- _class: compact roomy-table -->
 
 # モデルが情報を読み取る仕組み
 
-**アテンション**：次のコード生成時に、情報の参照先を決める仕組み
+**アテンション**：次のコード生成時に情報の参照先を決める仕組み
 
 | 参照できる情報 | 内容 |
 | :--- | :--- |
-| 日本語の指示 | 「偶数」「残す」など、求める処理 |
-| すでに生成したコード | 変数名、構文、処理の続き |
+| 日本語の指示 | 「偶数」「残す」など求める処理 |
+| すでに生成したコード | 変数名・構文・処理の続き |
 | 開始の印など | 入力の始まりや区切り |
 
-参照割合だけでは確定できない、各情報の必要性
+参照割合だけでは確定できない各情報の必要性
 
-**情報の受け渡しを止めた場合の、生成結果の変化の検証**
+**情報の受け渡しを止めた場合の生成結果の変化の検証**
 
 <!--
 図の読み方を説明した後の6ページは、同一の絶対値・降順の指示について、1M（1・3 epoch）・5M・15Mの全層・全ヘッドの生成中のattentionを表示する。Value ablationでは指示位置のKeyとattention weightを保ち、Valueだけを0にします。
@@ -3179,7 +3247,7 @@ row = record["attention"][layer, head]
 fill = blue(float(row[position]), maximum)
 ```
 
-<div class="code-source">analyze_boku_nano_attention.py：capture_qkv、generate（133–139行）、attention_grid（224–229行）</div>
+<div class="code-source">analyze_boku_nano_attention.py：capture_qkv・generate（133–139行）・attention_grid（224–229行）</div>
 
 </div><div>
 
@@ -3192,7 +3260,7 @@ fill = blue(float(row[position]), maximum)
 <div class="att-boundary">赤線：指示側と生成コード側の境界</div>
 </div>
 
-灰色の領域：その生成時点では、まだ存在しない位置
+灰色の領域：その生成時点ではまだ存在しない位置
 
 15M・1 epochのL8・H5の例<br>色の上限：各モデルの98パーセンタイル<br>**モデル間での濃さの直接比較は不可**
 
@@ -3239,7 +3307,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 **生成結果：未定義の output の参照による実行失敗**
 
-3層・4 head、12生成step<br>色の濃さのモデル間での直接比較は不可
+3層・4 head・12生成step<br>色の濃さのモデル間での直接比較は不可
 
 <!--
 保存済みSVGのviewBoxを48 62 618 320に設定し、他のページと同じくヘッド別ヒートマップ領域だけを切り抜いて掲載。セル・色・順序は変更していない。1 epochと同じ指示全文：xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。
@@ -3255,7 +3323,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ![w:1100 h:380](figure/attention_5m_l1_l3.png)
 
-**生成結果：絶対値処理に加えた不要なk加算と、降順整列の欠落**
+**生成結果：絶対値処理に加えた不要なk加算と降順整列の欠落**
 
 色：各モデル内の相対的な強さ<br>モデル間での濃さの直接比較は不可
 
@@ -3286,7 +3354,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ![w:1100 h:380](figure/attention_5m_l4_l5.png)
 
-**生成結果：絶対値処理に加えた不要なk加算と、降順整列の欠落**
+**生成結果：絶対値処理に加えた不要なk加算と降順整列の欠落**
 
 色：各モデル内の相対的な強さ<br>モデル間での濃さの直接比較は不可
 
@@ -3372,7 +3440,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 -->
 
 ---
-<!-- _class: compact -->
+<!-- _class: compact roomy-table ablation-table -->
 
 # 指示情報の遮断による合格数の低下
 
@@ -3385,7 +3453,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 | 5M・1 epoch | 22 / 24 | **0 / 24** |
 | 15M・1 epoch | 22 / 24 | **2 / 24** |
 
-**操作の選択に対する、指示情報の寄与**
+**操作の選択に対する指示情報の寄与**
 
 24操作の内部診断<br>冒頭変更の14操作・固定5テストとは別の評価
 
@@ -3397,17 +3465,17 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 <!-- 1M・3 epochの追加根拠：../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/analysis.json、../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/prompt_prefix_comparison.json、../results/model_reports/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch.md。冒頭変更は2026-10-13に同じ14操作・33入力・seed=20260930・最大64新規tokenで評価。変更前の14生成コードが保存済み結果と一致することを確認。 -->
 ---
-<!-- _class: default -->
+<!-- _class: default roomy-table -->
 
 # 表現を変えた場合の性能評価
 
-| 調べること | 今回、分かったこと |
+| 調べること | 今回分かったこと |
 | :--- | :--- |
 | 決めた文型での動作 | 1M・3 epochでも高い全体合格率 |
 | 未学習の言い換え | 1M・3 epochと15M・1 epochは15 / 30 |
-| 指示の冒頭の変更 | 1M・3 epochは12→9、5M・1 epochは12→1（各14操作） |
+| 指示の冒頭の変更 | 1M・3 epochは12→9 ／ 5M・1 epochは12→1（各14操作） |
 
-**一種類のプロンプトでの精度に加え、<br>表現を変えても性能を保てるかの評価の必要性**
+**一種類のプロンプトでの精度に加え<br>表現を変えても性能を保てるかの評価の必要性**
 
 <!--
 先行研究は分類・二択質問、今回の実験は限定したコード生成。課題と指標が違うことに注意。
@@ -3417,7 +3485,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 <!-- 1M・3 epochの追加根拠：../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/analysis.json、../results/attention_3epoch/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/prompt_prefix_comparison.json、../results/model_reports/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch.md。冒頭変更は2026-10-13に同じ14操作・33入力・seed=20260930・最大64新規tokenで評価。変更前の14生成コードが保存済み結果と一致することを確認。 -->
 ---
-<!-- _class: default -->
+<!-- _class: default roomy-copy -->
 
 # この結果が示す範囲
 
@@ -3425,7 +3493,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 - 冒頭変更の比較：14操作に限定（日本語能力全体を対象としない測定）
 - 学習：一つの乱数設定（繰り返し実験によるばらつきは未確認）
 
-今後の課題：文型の偏りを減らした合成データによる、表現への頑健性の再評価
+今後の課題：文型の偏りを減らした合成データによる表現への頑健性の再評価
 
 <!--
 乱数seedは学習20260925、内部診断20260930。追加実験は今後の提案です。
@@ -3438,7 +3506,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 <h1>Appendix D：Boku-nano 全体図</h1>
 
 <div class="canvas">
-<div class="sub">日本語の限定的な指示から solve(xs, k) を生成する小型Decoder-only Transformer<br>意味ASTを起点に、共通の意味仕様で接続するデータ生成・学習・評価</div>
+<div class="sub">日本語の限定的な指示から solve(xs, k) を生成する小型Decoder-only Transformer<br>意味ASTを起点に共通の意味仕様で接続するデータ生成・学習・評価</div>
 
 <div class="lane">
     <div class="lname"><span class="n">1</span><span class="t">意味</span></div>
@@ -3451,7 +3519,7 @@ def solve(xs: list[int], k: int) -> list[int]:
     <div class="arrow">→</div>
     <div class="box rule">
         <b class="t">意味AST　12,720仕様</b>
-        24操作からの、順序付き1〜3操作の選択（重複なし）<br>
+        24操作からの順序付き1〜3操作の選択（重複なし）<br>
         24 ＋ 24×23 ＋ 24×23×22 ＝ 12,720<br>
         <span class="mono">{"sequence": [{"filter": ["even"]}, {"map": ["add_k"]}]}</span><br>
         <span class="note">※日本語・コード・期待値・splitの共通の根拠</span>
@@ -3459,8 +3527,8 @@ def solve(xs: list[int], k: int) -> list[int]:
     <div class="arrow">→</div>
     <div class="box rule span-c3c4">
         <b class="t">参照インタプリタ（期待値の計算）</b>
-        意味ASTの入力リストへの適用と、正しい出力の計算<br>
-        operator・itertools・heapq・deque・while による、生成solve関数の表現空間の外側での実装<br>
+        意味ASTの入力リストへの適用と正しい出力の計算<br>
+        operator・itertools・heapq・deque・while による生成solve関数の表現空間の外側での実装<br>
         → 正解コードの検証（2）とhidden test採点（4）に利用<br>
         <span class="note">※参照実装と生成コードが同じ式を書いて誤りを共有しないため</span>
     </div>
@@ -3468,7 +3536,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 <div class="conn">
     <div></div>
-    <div>↓ 意味ASTを分割</div>
+    <div>↓ 意味ASTの分割</div>
     <div></div>
     <div class="dash" style="text-align:right">⇣ 期待値で検証（参照インタプリタ → 正解コード生成）</div>
 </div>
@@ -3477,8 +3545,8 @@ def solve(xs: list[int], k: int) -> list[int]:
     <div class="lname"><span class="n">2</span><span class="t">データ</span></div>
     <div class="box rule">
         <b class="t">意味ASTの分割</b>
-        12,720 のうち 670 を組合せ汎化用に確保<br>
-        残り 12,050 をハッシュ順で分割<br>
+        組合せ汎化用：全12,720のうち670<br>
+        残り 12,050 のハッシュ順での分割<br>
         　train　9,646（1操作24は全部）<br>
         　validation　1,202<br>
         　通常テスト　1,202（境界値も流用）<br>
@@ -3497,7 +3565,7 @@ def solve(xs: list[int], k: int) -> list[int]:
             <b class="t">日本語指示生成</b>
             ルール：承認済み表現辞書（train 522件）を定型文へ連結<br>
             教師言い換え：Qwen3-4B-AWQ が意味と順序を保って言い換え<br>
-            <span class="note">※Qwenは日本語だけを作り、コードや重みは提供しない</span>
+            <span class="note">※Qwenは日本語だけを作りコードや重みは提供しない</span>
         </div>
     </div>
     <div class="arrow">→</div>
@@ -3558,7 +3626,7 @@ def solve(xs: list[int], k: int) -> list[int]:
         　1M　d=128・3層・4 head<br>
         　5M　d=256・5層・4 head<br>
         　15M　d=384・8層・6 head<br>
-        3つの規模を、それぞれ1エポック学習（RTX 5090）
+        3つの規模をそれぞれ1エポック学習（RTX 5090）
     </div>
 </div>
 
@@ -3575,7 +3643,7 @@ def solve(xs: list[int], k: int) -> list[int]:
         <b class="t">hidden test評価（正式5テスト 84,550問）</b>
         greedy生成 → 構文 → Safe-AST → signature → 隔離実行<br>
         → hidden入力すべてで参照インタプリタと同じ出力なら合格<br>
-        文字列一致ではなく、実行結果による判定<br>
+        文字列一致ではなく実行結果による判定<br>
         　通常 24,040　　組合せ汎化 13,400　　日本語言い換え 30<br>
         　同一操作の反復 23,040　　境界値 24,040<br>
         <span class="note">※attention診断の24問（1操作）はこれとは別の解析用テスト</span>
@@ -3595,7 +3663,7 @@ def solve(xs: list[int], k: int) -> list[int]:
         head別のattention配分・Value norm・<br>
         BOS sink・attention rollout<br>
         head／位置ablation：NLL差（nat）と<br>
-        再生成コードの合格数で因果を確認
+        再生成コードの合格数で因果の確認
     </div>
 </div>
 
