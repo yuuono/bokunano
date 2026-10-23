@@ -156,6 +156,26 @@ style: |
   section.benchmark-data { font-size: 22px; }
   section.benchmark-data table { font-size: 20px; margin: 14px 0; }
   section.benchmark-data th, section.benchmark-data td { padding: 7px 11px; }
+  section.temperature-current { font-size: 23px; }
+  section.temperature-current h1 { margin-bottom: 14px; }
+  section.temperature-current .temp-context { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 28px; margin: 0 0 12px; }
+  section.temperature-current .temp-context p { margin: 0; font-size: 24px; line-height: 1.5; }
+  section.temperature-current .temp-input { display: inline-block; margin-left: 14px; padding: 9px 14px; border: 1.5px solid #9aa5b1; border-radius: 6px; font-family: Menlo, monospace; font-size: 26px; background: #fff; }
+  section.temperature-current .temp-formula { font-size: 21px; white-space: nowrap; }
+  section.temperature-current .temp-formula p { margin: 0; }
+  section.temperature-current .temp-score { margin: 8px 0 16px; font-size: 23px; }
+  section.temperature-current .temp-panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  section.temperature-current .temp-panel { border: 1.5px solid #c8d2db; border-radius: 10px; padding: 14px 18px; background: #f7f9fc; }
+  section.temperature-current .temp-panel h2 { font-size: 28px; line-height: 1.25; margin: 0 0 6px; color: #245f8b; }
+  section.temperature-current .temp-panel > p { margin: 0; font-size: 22px; line-height: 1.4; }
+  section.temperature-current .temp-bars { height: 126px; display: flex; align-items: flex-end; justify-content: space-around; border-bottom: 2px solid #64748b; margin: 24px 0 8px; }
+  section.temperature-current .temp-bar { position: relative; width: 43px; height: calc(var(--p) * 1%); background: #8ea3b6; }
+  section.temperature-current .temp-bar:first-child { background: #245f8b; }
+  section.temperature-current .temp-bar span { position: absolute; top: -28px; left: 50%; transform: translateX(-50%); font-size: 19px; white-space: nowrap; color: #17212b; }
+  section.temperature-current .temp-labels { display: flex; justify-content: space-around; font-size: 22px; line-height: 1.3; font-family: Menlo, monospace; }
+  section.temperature-current .temp-labels span { width: 60px; text-align: center; white-space: nowrap; }
+  section.temperature-current .temp-takeaways { margin-top: 18px; padding: 10px 20px; background: #f1f6fb; border-left: 4px solid #245f8b; }
+  section.temperature-current .temp-takeaways p { margin: 5px 0; font-size: 22px; line-height: 1.4; }
   section.logit-overview { padding: 48px 62px 44px; font-size: 22px; }
   section.logit-overview h1 { font-size: 38px; margin-bottom: 18px; }
   section.logit-overview p { margin: 10px 0; }
@@ -701,13 +721,13 @@ style: |
   section.synthetic-flow .fv-arrow::before { content: ""; position: absolute; left: 0; right: 12px; top: 195px; border-top: 2px solid #9aa5b1; }
   section.synthetic-flow .fv-fork::before { content: ""; position: absolute; left: 0; width: 16px; top: 195px; border-top: 2px solid #9aa5b1; }
   section.synthetic-flow .fv-merge::before { content: ""; position: absolute; left: 16px; right: 12px; top: 195px; border-top: 2px solid #9aa5b1; }
-  section.synthetic-flow .fv-bar { position: absolute; top: 84px; bottom: 84px; border: 2px solid #9aa5b1; }
+  section.synthetic-flow .fv-bar { position: absolute; top: 108px; bottom: 58px; border: 2px solid #9aa5b1; }
   section.synthetic-flow .fv-fork .fv-bar { left: 16px; right: 12px; border-right: 0; border-radius: 10px 0 0 10px; }
   section.synthetic-flow .fv-merge .fv-bar { left: 0; right: 16px; border-left: 0; border-radius: 0 10px 10px 0; }
   section.synthetic-flow .fv-arrow::after, section.synthetic-flow .fv-fork i, section.synthetic-flow .fv-merge i { content: ""; position: absolute; right: 2px; width: 0; height: 0; border-left: 12px solid #9aa5b1; border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
   section.synthetic-flow .fv-arrow::after, section.synthetic-flow .fv-merge i { top: 189px; }
-  section.synthetic-flow .fv-fork i:first-of-type { top: 78px; }
-  section.synthetic-flow .fv-fork i:last-of-type { top: 300px; }
+  section.synthetic-flow .fv-fork i:first-of-type { top: 102px; }
+  section.synthetic-flow .fv-fork i:last-of-type { top: 326px; }
   section.failure-summary table { table-layout: fixed; font-size: 21px; margin: 20px 0 14px; }
   section.failure-summary th, section.failure-summary td { padding: 12px 13px; line-height: 1.45; vertical-align: middle; }
   section.failure-summary th:nth-child(1) { width: 25%; }
@@ -1140,7 +1160,7 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 | ① | 全体フロー・意味AST | 合成データ生成の流れと24操作の共通定義 |
 | ② | 合成データ | ASTの分割・日本語の言い換え・コード生成・検証 |
 | ③ | 学習 | トークナイザ・参照範囲・コード部分の損失・モデル構成と学習結果 |
-| ④ | 推論 | 次のトークンを選び出力を入力に加えてコード生成 |
+| ④ | 推論 | 自己回帰・温度・次トークンの選択とコード生成 |
 | ⑤ | 評価 | ベンチマークの設計と結果・5モデルの失敗例 |
 
 <!-- 以降のページ右上の「章名　n/m」：章内のページ番号（n）と総枚数（m） -->
@@ -1867,7 +1887,7 @@ BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_l
 ---
 
 
-<!-- _header: '④ 推論　1/3' -->
+<!-- _header: '④ 推論　1/4' -->
 <!-- _class: autoregressive ar-diagram -->
 # 自己回帰：出力の追加と次トークン予測の反復
 
@@ -1983,7 +2003,45 @@ Boku-nanoはDecoder-onlyであり、Encoder-Decoder構成のCross-Attentionは�
 ---
 
 
-<!-- _header: '④ 推論　2/3' -->
+<!-- _header: '④ 推論　2/4' -->
+<!-- _class: temperature-current -->
+# 温度：次トークン候補の確率分布の調整
+
+<div class="temp-context">
+<p>計算例<span class="temp-input">… if v % 2 == ?</span></p>
+<div class="temp-formula">
+
+$p_i(T)=\dfrac{e^{z_i/T}}{\sum_j e^{z_j/T}}\quad T>0$
+
+</div></div>
+
+<p class="temp-score">固定するスコア（logit）：<code>0 → 3</code> ／ <code>1 → 2</code> ／ <code>xs → 1</code> ／ <code>def → −2</code></p>
+
+<div class="temp-panels">
+<div class="temp-panel"><h2>T = 0.5</h2><p>高確率候補への集中</p><div class="temp-bars"><div class="temp-bar" style="--p:86.677922161"><span>86.7%</span></div><div class="temp-bar" style="--p:11.730581146"><span>11.7%</span></div><div class="temp-bar" style="--p:1.587561522"><span>1.6%</span></div><div class="temp-bar" style="--p:0.003935172"><span>&lt;0.01%</span></div></div><div class="temp-labels"><span>0</span><span>1</span><span>xs</span><span>def</span></div></div>
+<div class="temp-panel"><h2>T = 1</h2><p>基準の分布</p><div class="temp-bars"><div class="temp-bar" style="--p:66.227241352"><span>66.2%</span></div><div class="temp-bar" style="--p:24.363640539"><span>24.4%</span></div><div class="temp-bar" style="--p:8.962882466"><span>9.0%</span></div><div class="temp-bar" style="--p:0.446235642"><span>0.4%</span></div></div><div class="temp-labels"><span>0</span><span>1</span><span>xs</span><span>def</span></div></div>
+<div class="temp-panel"><h2>T = 2</h2><p>他の候補への確率の分配</p><div class="temp-bars"><div class="temp-bar" style="--p:48.626422705"><span>48.6%</span></div><div class="temp-bar" style="--p:29.493416243"><span>29.5%</span></div><div class="temp-bar" style="--p:17.888661211"><span>17.9%</span></div><div class="temp-bar" style="--p:3.991499841"><span>4.0%</span></div></div><div class="temp-labels"><span>0</span><span>1</span><span>xs</span><span>def</span></div></div>
+</div>
+
+<div class="temp-takeaways">
+<p><strong>確率に従う抽選</strong>：高い温度による候補の多様化</p>
+<p><strong>最大確率の選択</strong>：正の温度変更でも選択不変（今回のBoku評価）</p>
+</div>
+
+<!--
+以前の温度説明2ページの趣旨を、現在のコード生成例に合わせて1ページに再構成。
+自己回帰の第2段階と同じ … if v % 2 == の続きを対象とする説明用の計算例。
+候補0・1・xs・defのlogitを[3,2,1,-2]と仮定。実測logitではなく、実際のBPEトークン分割でもない。
+T=0.5,1,2についてsoftmax(z/T)を計算。棒は全パネル共通の0〜100%尺度。T=0.5のdefは約0.003935%なので<0.01%と表示。
+T=1は次ページの数値と一致。温度でlogitの差を拡大・縮小し、学習済みの重みや候補の順位は変更しない。
+確率に従うサンプリングとgreedyを区別する。今回のBoku評価は最大logitのargmaxであり、正の温度を変えても同じ0を選ぶ。
+数式はT>0のみ。T=0で除算せず、greedyは別処理として扱う。
+実装根拠：../../scripts/model/evaluate_boku_nano_comparison.py（正のtemperature検査、logit/temperature）、../../scripts/model/evaluate_boku_nano.py（argmax）
+-->
+
+---
+
+<!-- _header: '④ 推論　3/4' -->
 <!-- _class: logit-overview -->
 # 次のトークン候補への確率の割り当て
 
@@ -2538,7 +2596,7 @@ Pythonのsampling関数はT>0のみを受け付ける。T=0を渡して分岐す
 ---
 
 
-<!-- _header: '④ 推論　3/3' -->
+<!-- _header: '④ 推論　4/4' -->
 <!-- _class: code-explain causal-code causal-generate -->
 # 生成時のコード：最後の予測の選択と入力への追加
 
@@ -2742,7 +2800,7 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 
 <!-- _header: '⑤ 評価　6/11' -->
 <!-- _class: failure-summary -->
-# 失敗例の一覧：5モデルの誤りと実行結果
+# ベンチマークの失敗例一覧：5モデルの誤りと実行結果
 
 | モデル | 確認された誤り | 正解 | 実際の出力 |
 | :--- | :--- | :--- | :--- |
