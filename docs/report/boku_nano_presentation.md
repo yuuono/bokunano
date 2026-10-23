@@ -612,17 +612,17 @@ style: |
   section.quadrant-page .ax-name { font-size: 34px; }
   section.quadrant-page .ax-top { left: 277px; top: 8px; width: 270px; text-align: right; }
   section.quadrant-page .ax-bottom { left: 277px; top: 486px; width: 270px; text-align: right; }
-  section.quadrant-page .ax-left { left: 36px; top: 216px; }
-  section.quadrant-page .ax-right { right: 30px; top: 216px; text-align: right; }
+  section.quadrant-page .ax-left { left: 36px; top: 288px; }
+  section.quadrant-page .ax-right { right: 30px; top: 288px; text-align: right; }
   section.quadrant-page .item { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 320px; margin: 0; font-size: 27px; line-height: 40px; color: #17212b; white-space: nowrap; }
   section.quadrant-page .mk { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; }
-  section.quadrant-page .dot { display: block; width: 22px; height: 22px; border-radius: 50%; background: #17212b; }
+  section.quadrant-page .dot { display: block; width: 16px; height: 16px; border-radius: 50%; background: #17212b; }
   section.quadrant-page .ring { display: block; box-sizing: border-box; width: 32px; height: 32px; border-radius: 50%; background: #fff; border: 4px solid #d33743; }
   section.quadrant-page .item.goal { color: #d33743; font-weight: 400; }
   section.quadrant-page .slm { left: 52px; top: 118px; }
   section.quadrant-page .early { left: 180px; top: 345px; }
   section.quadrant-page .goal { left: 730px; top: 118px; }
-  section.quadrant-page .frontier { left: 802px; top: 428px; }
+  section.quadrant-page .frontier { left: 832px; top: 454px; }
   section.quadrant-page .flow-curve { position: absolute; inset: 0; width: 1156px; height: 540px; }
   section.quadrant-page .flow-label { position: absolute; left: 622px; top: 20px; width: 390px; margin: 0; text-align: center; font-size: 28px; font-weight: 400; line-height: 40px; color: #d33743; }
   section.slm-page { font-size: 22px; }
@@ -706,7 +706,7 @@ style: |
   section.synthetic-flow .fv-pre .fv-no { background: #64748b; }
   section.synthetic-flow .fv-box p { margin: 0; white-space: nowrap; }
   section.synthetic-flow .fv-box .fv-title { font-size: 23px; font-weight: 700; line-height: 1.4; color: #17212b; }
-  section.synthetic-flow .fv-box .fv-key { margin-top: 10px; font-size: 35px; font-weight: 700; line-height: 1.25; color: #17212b; }
+  section.synthetic-flow .fv-box .fv-key { margin-top: 10px; font-size: 35px; font-weight: 400; line-height: 1.25; color: #17212b; }
   section.synthetic-flow .fv-pre .fv-key { font-size: 28px; }
   section.synthetic-flow .fv-goal .fv-key { color: #245f8b; }
   section.synthetic-flow .fv-box .fv-key small { font-size: 22px; }
@@ -867,7 +867,9 @@ style: |
 
 # 本発表の概要
 
-> 制限された日本語指示からPython関数を生成する小型言語モデルをゼロから構築し<br>合成データのみの学習でChatgpt 6 Astraに匹敵する精度の達成　
+> 自作した合成データでフルスクラッチ学習し、制限された日本語指示からのPython関数生成に特化させた小型言語モデルが、ChatGPT 6 Astraの精度を一部凌駕した。
+<!-- > 制限された日本語指示からPython関数を生成する小型言語モデルを、<br>自作した合成データでフルスクラッチ学習し、ChatGPT 6 Astraを一部凌駕した。 -->
+<!-- > 制限された日本語指示からPython関数を生成する小型言語モデルをゼロから構築し<br>合成データのみの学習でChatgpt 6 Astraに匹敵する精度を達成した　 -->
 
 <!-- 比較は本編の未学習2操作。Boku 1M・3 epochは99/100、Astraは同カテゴリから抽出した10問で9/10。評価集合・実行条件が異なる参考比較で、一般的な優位を意味しない。 -->
 
@@ -899,7 +901,7 @@ style: |
 <div class="h-line"></div><div class="h-head"></div>
 <p class="ax ax-left">モデルの制御性 低</p>
 <p class="ax ax-right">モデルの制御性 高</p>
-<p class="item slm"><span class="mk"><span class="dot"></span></span>SLM（小型言語モデル）</p>
+<p class="item slm"><span class="mk"><span class="dot"></span></span>従来の小型言語モデル</p>
 <!-- <p class="item-detail">既存コーパスの一部・蒸留データ</p> -->
 <svg class="flow-curve" viewBox="0 0 1156 540" aria-label="中間表現により左から右へ制御性が向上">
 <path d="M246 132 Q548 -8 850 132" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round"/>
@@ -981,6 +983,12 @@ GPT-3.5で合成した約1,230万件の算数問題とPython解答で1.3Bモデ�
 
 検証器と組み合わせGSM8K 81.5%
 
+### [HRM-Text（2026）](https://arxiv.org/abs/2605.20613)：math・言語
+
+指示・回答ペアで1Bのスクラッチ学習<br>回答部分のみの損失計算・計60Bトークンの学習
+
+GSM8K 84.5% ／ MATH 56.2%
+
 <div class="slm-eval"><strong>テストや正解照合で正誤の検証</strong><br>検証結果を報酬とした学習<br><b>RLVR</b>（検証可能な報酬による強化学習）</div>
 
 </div>
@@ -1004,6 +1012,7 @@ LLM-as-a-Judgeは評価方法であり、RLHFそのものではない。列内�
 - SimpleStoriesの比較は、1.25M〜35Mのモデルの生成物をGPT-4o-miniが採点したもので、比較相手はTinyStories-33M。専用トークナイザの効果との交絡は切り分けられていない。
 - phi-1はWebから選別した約6Bトークンと合成した約1Bトークンで学習し、さらに約180Mトークンの合成演習で微調整したモデル。HumanEval pass@1 50.6%、MBPP 55.5%。
 - TinyGSMは生成モデル1.3Bと検証器1.3Bの組合せで81.5%。生成モデル単体の値ではない。
+- HRM-Textは1Bをランダム初期化から学習。40Bの一意なトークンを反復も含め計60Bトークン使用。学習データは合成データだけではなく、人手の指示データやWeb由来の質問なども含む。回答部分のみの損失とPrefixLM、階層的な反復構造を組み合わせた結果。GSM8K 84.53%、MATH 56.16%は原論文Table 3の値を小数1桁に丸めた。RLVRを実施した例ではなく、下段は分野全体の評価・学習方法の対応。https://arxiv.org/html/2605.20613v1
 - securityの例は未記入。
 
 【文献（見出しのリンク先）】
@@ -1012,6 +1021,7 @@ LLM-as-a-Judgeは評価方法であり、RLHFそのものではない。列内�
 - Maini, P. et al. (2024). Rephrasing the Web: A Recipe for Compute and Data-Efficient Language Modeling (WRAP). arXiv:2401.16380。言い換えは指示調整済みモデルで行い、4文体は易しい文・Wikipedia風・難しい文・QA風。速度と改善幅は論文の報告値で、本資料で再現していない。
 - Gunasekar, S. et al. (2023). Textbooks Are All You Need. arXiv:2306.11644
 - Liu, B. et al. (2023). TinyGSM: achieving >80% on GSM8k with small language models. arXiv:2312.09241
+- Wang, G. et al. (2026). HRM-Text: Efficient Pretraining Beyond Scaling. arXiv:2605.20613
 -->
 
 
@@ -1081,14 +1091,12 @@ def solve(xs, k):
 </div>
 </div>
 
-<p class="paraphrase-take"><strong>共通の中間表現による意味の対応を保った合成データの拡充</strong><br>意味の保持を重視した言い換えによるデータ効率の改善：<a href="https://arxiv.org/abs/2605.17849">SynPro（Yu &amp; Xiong, 2026）</a> の報告</p>
+<p class="paraphrase-take"><strong>共通の中間表現による意味の対応を保った合成データの拡充</strong><br>Web文書の言い換えによる事前学習の効率改善：<a href="https://arxiv.org/abs/2401.16380">WRAP（Maini et al., 2024）</a> の報告</p>
 
 <!--
 日本語の言い換えは説明例。コードと同じfilter(even)→map(add_k)を表す。本研究で言い換えの有無だけを変えた実験はしていない。
-Yu, Z. and Xiong, C. (2026). Generating Pretraining Tokens from Organic Data for Data-Bound Scaling (SynPro). COLM 2026. 初稿は2026-05-18。https://arxiv.org/abs/2605.17849
-SynProは中心的な意味を保ち、語彙・構文などを変える言い換えを使用（§3.3）。400Mモデル・元データ0.8B tokensの条件で、形式変換を除く構成も単純反復に対して有効トークン数1.8倍（§5.2, Table 3, w/o Reformatting）。この構成も生成器のRL最適化を含む。全体の3.4–5.2倍は言い換え・形式変換・生成器更新を合わせた結果なので、言い換え単独の効果とはしない。有効トークン数は同じ性能に相当する一意な元データ量への換算であり、学習時間の短縮を表さない。https://arxiv.org/html/2605.17849v2
-関連：Kim, K. et al. (2026). Data-efficient pre-training by scaling synthetic megadocs. COLM 2026. 初稿は2026-03-19。300Mモデル・元データ200M tokensで、元文書と言い換えを混ぜる方法は、1文書32言い換えの条件でデータ効率1.48倍と報告（§3）。1.80倍はmegadoc化を加えた結果。これも計算時間の短縮を意味しない。https://arxiv.org/html/2603.18534v1
-いずれも英語テキストの事前学習の報告であり、DSLを使った意味対応の保証や、本研究の日本語からコードへの生成の効果を直接検証した研究ではない。共通ASTによる対応付けは本研究の設計として説明する。
+Maini, P. et al. (2024). Rephrasing the Web: A Recipe for Compute and Data-Efficient Language Modeling (WRAP). arXiv:2401.16380。Web文書を4文体に言い換え、元文書と混合して事前学習する手法。同等の性能まで約3倍の学習効率を報告。https://arxiv.org/abs/2401.16380
+WRAPは英語テキストの事前学習の報告であり、DSLを使った意味対応の保証や、本研究の日本語からコードへの生成の効果を直接検証した研究ではない。共通ASTによる対応付けは本研究の設計として説明する。
 -->
 
 <!--
@@ -1161,7 +1169,7 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 | ① | 全体フロー・意味AST | 合成データ生成の流れと24操作の共通定義 |
 | ② | 合成データ | ASTの分割・日本語の言い換え・コード生成・検証 |
 | ③ | 学習 | トークナイザ・参照範囲・コード部分の損失・モデル構成と学習結果 |
-| ④ | 推論 | 自己回帰・温度・次トークンの選択とコード生成 |
+| ④ | 推論 | 自己回帰・次トークンの選択とコード生成・温度 |
 | ⑤ | 評価 | ベンチマークの設計と結果・5モデルの失敗例 |
 
 <!-- 以降のページ右上の「章名　n/m」：章内のページ番号（n）と総枚数（m） -->
@@ -1225,7 +1233,7 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 | 1操作 | 24 | 24 |
 | 2操作 | 24 × 23 | 552 |
 | 3操作 | 24 × 23 × 22 | 12,144 |
-| 合計 | 24 ＋ 552 ＋ 12,144 | **12,720** |
+| 合計 | 24 ＋ 552 ＋ 12,144 | 12,720 |
 
 </div>
 <div class="operation-ast">
@@ -1462,7 +1470,7 @@ def solve(xs, k):
 | 1操作 | 460 |
 | 2操作 | 8,680 |
 | 3操作 | 183,760 |
-| 合計 | **192,900** |
+| 合計 | 192,900 |
 
 **約95%が3操作**
 
@@ -2011,44 +2019,6 @@ Boku-nanoはDecoder-onlyであり、Encoder-Decoder構成のCross-Attentionは�
 
 
 <!-- _header: '④ 推論　2/4' -->
-<!-- _class: temperature-current -->
-# 温度：次トークン候補の確率分布の調整
-
-<div class="temp-context">
-<p>計算例<span class="temp-input">… if v % 2 == ?</span></p>
-<div class="temp-formula">
-
-$p_i(T)=\dfrac{e^{z_i/T}}{\sum_j e^{z_j/T}}\quad T>0$
-
-</div></div>
-
-<p class="temp-score">固定するスコア（logit）：<code>0 → 3</code> ／ <code>1 → 2</code> ／ <code>xs → 1</code> ／ <code>def → −2</code></p>
-
-<div class="temp-panels">
-<div class="temp-panel"><h2>T = 0.5</h2><p>高確率候補への集中</p><div class="temp-bars"><div class="temp-bar" style="--p:86.677922161"><span>86.7%</span></div><div class="temp-bar" style="--p:11.730581146"><span>11.7%</span></div><div class="temp-bar" style="--p:1.587561522"><span>1.6%</span></div><div class="temp-bar" style="--p:0.003935172"><span>&lt;0.01%</span></div></div><div class="temp-labels"><span>0</span><span>1</span><span>xs</span><span>def</span></div></div>
-<div class="temp-panel"><h2>T = 1</h2><p>基準の分布</p><div class="temp-bars"><div class="temp-bar" style="--p:66.227241352"><span>66.2%</span></div><div class="temp-bar" style="--p:24.363640539"><span>24.4%</span></div><div class="temp-bar" style="--p:8.962882466"><span>9.0%</span></div><div class="temp-bar" style="--p:0.446235642"><span>0.4%</span></div></div><div class="temp-labels"><span>0</span><span>1</span><span>xs</span><span>def</span></div></div>
-<div class="temp-panel"><h2>T = 2</h2><p>他の候補への確率の分配</p><div class="temp-bars"><div class="temp-bar" style="--p:48.626422705"><span>48.6%</span></div><div class="temp-bar" style="--p:29.493416243"><span>29.5%</span></div><div class="temp-bar" style="--p:17.888661211"><span>17.9%</span></div><div class="temp-bar" style="--p:3.991499841"><span>4.0%</span></div></div><div class="temp-labels"><span>0</span><span>1</span><span>xs</span><span>def</span></div></div>
-</div>
-
-<div class="temp-takeaways">
-<p><strong>確率に従う抽選</strong>：高い温度による候補の多様化</p>
-<p><strong>最大確率の選択</strong>：正の温度変更でも選択不変（今回のBoku評価）</p>
-</div>
-
-<!--
-以前の温度説明2ページの趣旨を、現在のコード生成例に合わせて1ページに再構成。
-自己回帰の第2段階と同じ … if v % 2 == の続きを対象とする説明用の計算例。
-候補0・1・xs・defのlogitを[3,2,1,-2]と仮定。実測logitではなく、実際のBPEトークン分割でもない。
-T=0.5,1,2についてsoftmax(z/T)を計算。棒は全パネル共通の0〜100%尺度。T=0.5のdefは約0.003935%なので<0.01%と表示。
-T=1は次ページの数値と一致。温度でlogitの差を拡大・縮小し、学習済みの重みや候補の順位は変更しない。
-確率に従うサンプリングとgreedyを区別する。今回のBoku評価は最大logitのargmaxであり、正の温度を変えても同じ0を選ぶ。
-数式はT>0のみ。T=0で除算せず、greedyは別処理として扱う。
-実装根拠：../../scripts/model/evaluate_boku_nano_comparison.py（正のtemperature検査、logit/temperature）、../../scripts/model/evaluate_boku_nano.py（argmax）
--->
-
----
-
-<!-- _header: '④ 推論　3/4' -->
 <!-- _class: logit-overview -->
 # 次のトークン候補への確率の割り当て
 
@@ -2603,7 +2573,7 @@ Pythonのsampling関数はT>0のみを受け付ける。T=0を渡して分岐す
 ---
 
 
-<!-- _header: '④ 推論　4/4' -->
+<!-- _header: '④ 推論　3/4' -->
 <!-- _class: code-explain causal-code causal-generate -->
 # 生成時のコード：最後の予測の選択と入力への追加
 
@@ -2661,6 +2631,44 @@ def solve(xs):
 
 <!-- 実際の評価処理では終了済みの系列にpaddingを追加する。入力は前ページの偶数抽出コードを途中まで生成した説明例。vを選ぶのは説明用の仮定で、実測出力ではない。手元のdata/tokenizers/bpe_2048/tokenizer.jsonでreturn [とvが別トークンになることを確認。コードブロック末尾の表示上の改行は入力に追加しない。毎回伸びた全系列をmodelに渡す実装であり、KVキャッシュは使用しない。 -->
 
+
+---
+
+<!-- _header: '④ 推論　4/4' -->
+<!-- _class: temperature-current -->
+# 温度：次トークン候補の確率分布の調整
+
+<div class="temp-context">
+<p>計算例<span class="temp-input">… if v % 2 == ?</span></p>
+<div class="temp-formula">
+
+$p_i(T)=\dfrac{e^{z_i/T}}{\sum_j e^{z_j/T}}\quad T>0$
+
+</div></div>
+
+<p class="temp-score">固定するスコア（logit）：<code>0 → 3</code> ／ <code>1 → 2</code> ／ <code>xs → 1</code> ／ <code>def → −2</code></p>
+
+<div class="temp-panels">
+<div class="temp-panel"><h2>T = 0.5</h2><p>高確率候補への集中</p><div class="temp-bars"><div class="temp-bar" style="--p:86.677922161"><span>86.7%</span></div><div class="temp-bar" style="--p:11.730581146"><span>11.7%</span></div><div class="temp-bar" style="--p:1.587561522"><span>1.6%</span></div><div class="temp-bar" style="--p:0.003935172"><span>&lt;0.01%</span></div></div><div class="temp-labels"><span>0</span><span>1</span><span>xs</span><span>def</span></div></div>
+<div class="temp-panel"><h2>T = 1</h2><p>基準の分布</p><div class="temp-bars"><div class="temp-bar" style="--p:66.227241352"><span>66.2%</span></div><div class="temp-bar" style="--p:24.363640539"><span>24.4%</span></div><div class="temp-bar" style="--p:8.962882466"><span>9.0%</span></div><div class="temp-bar" style="--p:0.446235642"><span>0.4%</span></div></div><div class="temp-labels"><span>0</span><span>1</span><span>xs</span><span>def</span></div></div>
+<div class="temp-panel"><h2>T = 2</h2><p>他の候補への確率の分配</p><div class="temp-bars"><div class="temp-bar" style="--p:48.626422705"><span>48.6%</span></div><div class="temp-bar" style="--p:29.493416243"><span>29.5%</span></div><div class="temp-bar" style="--p:17.888661211"><span>17.9%</span></div><div class="temp-bar" style="--p:3.991499841"><span>4.0%</span></div></div><div class="temp-labels"><span>0</span><span>1</span><span>xs</span><span>def</span></div></div>
+</div>
+
+<div class="temp-takeaways">
+<p><strong>確率に従う抽選</strong>：高い温度による候補の多様化</p>
+<p><strong>最大確率の選択</strong>：正の温度変更でも選択不変（今回のBoku評価）</p>
+</div>
+
+<!--
+以前の温度説明2ページの趣旨を、現在のコード生成例に合わせて1ページに再構成。
+自己回帰の第2段階と同じ … if v % 2 == の続きを対象とする説明用の計算例。
+候補0・1・xs・defのlogitを[3,2,1,-2]と仮定。実測logitではなく、実際のBPEトークン分割でもない。
+T=0.5,1,2についてsoftmax(z/T)を計算。棒は全パネル共通の0〜100%尺度。T=0.5のdefは約0.003935%なので<0.01%と表示。
+T=1は「次のトークン候補への確率の割り当て」の数値と一致。温度でlogitの差を拡大・縮小し、学習済みの重みや候補の順位は変更しない。
+確率に従うサンプリングとgreedyを区別する。今回のBoku評価は最大logitのargmaxであり、正の温度を変えても同じ0を選ぶ。
+数式はT>0のみ。T=0で除算せず、greedyは別処理として扱う。
+実装根拠：../../scripts/model/evaluate_boku_nano_comparison.py（正のtemperature検査、logit/temperature）、../../scripts/model/evaluate_boku_nano.py（argmax）
+-->
 
 ---
 
@@ -3951,6 +3959,7 @@ def solve(xs: list[int], k: int) -> list[int]:
 <p><strong>Yu &amp; Xiong (2026), COLM</strong><br><a href="https://arxiv.org/abs/2605.17849">Generating Pretraining Tokens from Organic Data for Data-Bound Scaling (SynPro)</a></p>
 <p><strong>Gunasekar et al. (2023)</strong><br><a href="https://arxiv.org/abs/2306.11644">Textbooks Are All You Need</a></p>
 <p><strong>Liu et al. (2023)</strong><br><a href="https://arxiv.org/abs/2312.09241">TinyGSM: achieving &gt;80% on GSM8k with small language models</a></p>
+<p><strong>Wang et al. (2026)</strong><br><a href="https://arxiv.org/abs/2605.20613">HRM-Text: Efficient Pretraining Beyond Scaling</a></p>
 </div>
 <div>
 <p><strong>Kim et al. (2026), COLM</strong><br><a href="https://arxiv.org/abs/2603.18534">Data-efficient pre-training by scaling synthetic megadocs</a></p>
