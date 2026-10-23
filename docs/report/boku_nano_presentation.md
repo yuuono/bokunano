@@ -9,7 +9,7 @@ title: Boku-nano 日本語の指示からコードを作る小さなモデル
 description: モデル規模別評価、1Mの3epoch loss、attention、組み合わせ汎化ベンチマークと評価設計
 style: |
   section { display: block; padding: 48px 62px 46px; background: #fff; color: #17212b; font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 27px; line-height: 1.5; }
-  h1 { font-size: 38px; line-height: 1.3; color: #245f8b; margin: 0 0 24px; }
+  h1 { font-size: 38px; line-height: 1.3; color: #17212b; margin: 0 0 24px; }
   h2 { font-size: 30px; line-height: 1.4; margin: 20px 0; }
   p { margin: 18px 0; }
   strong { color: #245f8b; }
@@ -26,7 +26,7 @@ style: |
   pre { padding: 16px 22px; border: 1px solid #d8e1e9; background: #f7f9fc; font-size: 23px; line-height: 1.45; }
   pre code { font-size: 1em; background: transparent; }
   a { color: #2877aa; }
-    section.cover { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 65px 540px 65px 100px; }
+    section.cover { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: center !important; padding: 65px 540px 65px 100px; }
   section.cover h1 { font-size: 62px; }
     section.cover h2 { font-size: 36px; margin-top: 42px; color: #17212b; }
     section.cover img.cover-avatar { position: absolute; top: 42%; right: 90px; width: 360px; height: 360px; transform: translateY(-50%); object-fit: cover; border-radius: 50%; }
@@ -38,9 +38,9 @@ style: |
         section.closing table { font-size: 20px; margin: 8px 0; }
         section.closing th, section.closing td { padding: 6px 10px; }
     section.closing > h2 { font-size: 26px; margin: 26px 0 10px; padding-top: 18px; border-top: 1px solid #d8e1e9; }
-      section.overview-original { padding: 0; }
-    section.overview-original .canvas { width: 1920px; height: 1080px; box-sizing: border-box; padding: 22px 28px 16px; transform: scale(0.6666667); transform-origin: 0 0; color: #17212b; font-family: Arial, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 14px; font-weight: 400; line-height: 1.33; display: block; }
-    section.overview-original h1 { margin: 0; font-size: 32px; font-weight: 600; line-height: 1.2; color: #17212b; }
+      section.overview-original { padding: 48px 62px 46px; }
+    section.overview-original .canvas { position: absolute; left: 62px; top: 126px; width: 1920px; height: auto; box-sizing: border-box; padding: 0; transform: scale(0.6020833); transform-origin: 0 0; color: #17212b; font-family: Arial, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", sans-serif; font-size: 14px; font-weight: 400; line-height: 1.33; display: block; }
+    section.overview-original h1 { margin: 0; font-size: 38px; font-weight: 700; line-height: 1.3; color: #17212b; }
     section.overview-original .sub { margin: 2px 0 8px; font-size: 16px; color: #52606d; }
     section.overview-original .lane { display: grid; grid-template-columns: 52px 330px 34px 520px 34px 400px 26px 1fr; align-items: stretch; background: #f5f7f9; border-radius: 10px; padding: 7px 12px 7px 0; }
     section.overview-original .lane.alt { background: #fbfcfd; border: 1px solid #edf0f3; }
@@ -101,7 +101,7 @@ style: |
   section.key-data p { margin: 18px 0; }
   section.key-data blockquote p { font-size: 27px; }
     section.operation-scope { font-size: 21px; }
-    section.operation-scope h1 { font-size: 34px; margin-bottom: 14px; }
+    section.operation-scope h1 { font-size: 38px; margin-bottom: 14px; }
     section.operation-scope h2 { font-size: 23px; margin: 12px 0 6px; }
     section.operation-scope p { font-size: 18px; margin: 6px 0; }
     section.operation-scope table { font-size: 18px; margin: 6px 0; }
@@ -115,7 +115,7 @@ style: |
 
   /* 全体図の文字は2ページ目のMarkdown本文で編集する */
   section.intro-overview { font-size: 17px; line-height: 1.45; }
-  section.intro-overview h1 { margin: 0 0 6px; font-size: 35px; line-height: 1.25; color: #17212b; }
+  section.intro-overview h1 { margin: 0 0 6px; font-size: 38px; line-height: 1.25; color: #17212b; }
   section.intro-overview h1 + p { margin: 0; font-size: 18px; color: #52606d; }
   section.intro-overview h2 { margin: 27px 0 12px; font-size: 19px; line-height: 1.25; color: #334155; }
     section.intro-overview .ov-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px; height: 220px; }
@@ -145,7 +145,7 @@ style: |
   section.intro-overview blockquote { margin: 31px 0 0; padding: 10px 18px; border: 0; border-radius: 11px; background: #f4f6f9; }
   section.intro-overview blockquote p { margin: 0; color: #46566a; font-size: 14px; line-height: 1.5; }
   section.astra-matched { font-size: 20px; }
-  section.astra-matched h1 { font-size: 34px; margin-bottom: 12px; }
+  section.astra-matched h1 { font-size: 38px; margin-bottom: 12px; }
   section.astra-matched p { margin: 10px 0; }
   section.astra-matched table { font-size: 18px; margin: 10px 0; }
   section.astra-matched th, section.astra-matched td { padding: 4px 10px; }
@@ -156,34 +156,35 @@ style: |
   section.benchmark-data { font-size: 22px; }
   section.benchmark-data table { font-size: 20px; margin: 14px 0; }
   section.benchmark-data th, section.benchmark-data td { padding: 7px 11px; }
-  section.logit-overview { padding: 44px 54px; font-size: 22px; }
-  section.logit-overview h1 { font-size: 36px; margin-bottom: 18px; }
+  section.logit-overview { padding: 48px 62px 44px; font-size: 22px; }
+  section.logit-overview h1 { font-size: 38px; margin-bottom: 18px; }
   section.logit-overview p { margin: 10px 0; }
   section.logit-overview .lp-context { display: flex; align-items: center; gap: 18px; margin: 18px 0 24px; }
-  section.logit-overview .lp-input { padding: 12px 18px; background: #eaf3fb; font-size: 27px; }
-  section.logit-overview .lp-model { padding: 12px 22px; background: #efeaf8; color: #685098; font-weight: 700; }
+  section.logit-overview .lp-input { padding: 12px 18px; background: #fff; border: 1.5px solid #9aa5b1; border-radius: 6px; font-size: 26px; font-family: "SFMono-Regular", Menlo, monospace; }
+  section.logit-overview .lp-input strong { color: #245f8b; font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; }
+  section.logit-overview .lp-model { padding: 12px 22px; background: #f3f5f7; border: 1.5px solid #9aa5b1; border-radius: 8px; color: #17212b; font-weight: 700; }
     section.logit-overview .lp-grid { display: grid; grid-template-columns: minmax(0, 0.95fr) 76px minmax(0, 0.95fr) 76px minmax(0, 1.1fr); column-gap: 6px; align-items: stretch; }
-    section.logit-overview .lp-panel { min-width: 0; padding: 12px; border: 1px solid #cddae6; border-radius: 8px; background: #f8fafc; }
+    section.logit-overview .lp-panel { min-width: 0; padding: 12px; border: 1.5px solid #c8d2db; border-radius: 8px; background: #fff; }
   section.logit-overview .lp-panel h2 { font-size: 23px; margin: 0 0 10px; line-height: 1.35; }
     section.logit-overview .lp-panel:last-child h2 { font-size: 21px; }
-  section.logit-overview .lp-panel p { font-size: 17px; margin: 8px 0 12px; }
-  section.logit-overview .lp-arrow { align-self: center; text-align: center; font-size: 29px; color: #685098; }
-    section.logit-overview .lp-arrow small { display: table; min-width: 58px; box-sizing: border-box; margin: 0 auto 4px; padding: 3px 6px; border-radius: 4px; background: #efeaf8; color: #514078; font-size: 12px; font-weight: 700; white-space: nowrap; }
-  section.logit-overview .lp-row { display: grid; grid-template-columns: 48px 1fr 76px; gap: 8px; align-items: center; height: 36px; font-size: 22px; }
+  section.logit-overview .lp-panel p { font-size: 19px; margin: 8px 0 12px; }
+  section.logit-overview .lp-arrow { align-self: center; text-align: center; font-size: 29px; color: #9aa5b1; }
+    section.logit-overview .lp-arrow small { display: table; min-width: 58px; box-sizing: border-box; margin: 0 auto 4px; padding: 3px 6px; border-radius: 4px; background: #f3f5f7; color: #17212b; font-size: 14px; font-weight: 700; white-space: nowrap; }
+  section.logit-overview .lp-row { display: grid; grid-template-columns: 56px 1fr 76px; gap: 8px; align-items: center; height: 36px; font-size: 22px; }
+  section.logit-overview .lp-row > span:first-child { font-family: "SFMono-Regular", Menlo, monospace; }
   section.logit-overview .lp-track { position: relative; height: 25px; }
   section.logit-overview .lp-score .lp-track::before { content: ''; position: absolute; left: 40%; top: -9px; bottom: -9px; border-left: 1px solid #8b98a5; }
-  section.logit-overview .lp-bar { display: block; height: 25px; background: #d9822b; }
+  section.logit-overview .lp-bar { display: block; height: 25px; background: #9aa5b1; }
   section.logit-overview .lp-score .lp-bar { position: absolute; left: 40%; }
-  section.logit-overview .lp-row:nth-of-type(2) .lp-bar { background: #5b8fc7; }
-  section.logit-overview .lp-row:nth-of-type(3) .lp-bar { background: #5a9a6a; }
-  section.logit-overview .lp-row:nth-of-type(4) .lp-bar { background: #aaa; }
+  section.logit-overview .lp-row:nth-of-type(1) .lp-bar { background: #245f8b; }
   section.logit-overview .lp-row b { font-size: 20px; font-weight: 500; white-space: nowrap; }
-  section.logit-overview .lp-pick { margin: 25px 0 14px; padding: 15px 10px; border: 2px solid #d9822b; background: #fff3e5; text-align: center; font-size: 30px; color: #b8661a; }
-  section.logit-overview .lp-panel .lp-next { font-size: 23px; text-align: center; margin: 12px 0; }
-  section.logit-overview .lp-summary { margin-top: 20px; padding: 10px 15px; background: #f3f1f9; border-left: 4px solid #8b74c4; font-size: 22px; }
+  section.logit-overview .lp-pick { margin: 25px 0 14px; padding: 15px 10px; border: 2px solid #245f8b; background: #eaf3fb; text-align: center; font-size: 30px; color: #245f8b; font-family: "SFMono-Regular", Menlo, monospace; }
+  section.logit-overview .lp-panel .lp-next { font-size: 22px; text-align: center; margin: 12px 0; font-family: "SFMono-Regular", Menlo, monospace; }
+  section.logit-overview .lp-next strong { color: #245f8b; }
+  section.logit-overview .lp-summary { margin-top: 20px; padding: 10px 15px; background: #f3f5f7; border-left: 4px solid #245f8b; font-size: 22px; }
   section.logit-overview .figure-reference { font-size: 14px; color: #52606d; margin-top: 10px; }
   section.generation-page { font-size: 22px; line-height: 1.45; }
-  section.generation-page h1 { font-size: 35px; margin-bottom: 16px; }
+  section.generation-page h1 { font-size: 38px; margin-bottom: 16px; }
   section.generation-page h2 { font-size: 24px; margin: 0 0 12px; }
   section.generation-page h3 { font-size: 21px; margin: 16px 0 8px; color: #245f8b; }
   section.generation-page p { margin: 10px 0; }
@@ -201,9 +202,9 @@ style: |
   section.generation-page pre { font-size: 19px; line-height: 1.3; padding: 12px 16px; margin: 8px 0; }
   section.generation-page table { font-size: 19px; margin: 14px 0; }
   section.generation-page th, section.generation-page td { padding: 5px 10px; }
-  section.generation-page .generation-result { padding: 10px 16px; background: #edf6ef; margin-top: 16px; }
+  section.generation-page .generation-result { padding: 10px 16px; background: #f1f6fb; margin-top: 16px; }
   section.split-design { font-size: 22px; line-height: 1.4; }
-  section.split-design h1 { font-size: 35px; margin-bottom: 18px; }
+  section.split-design h1 { font-size: 38px; margin-bottom: 18px; }
   section.split-design .split-key { font-size: 29px; padding: 15px 20px; background: #eaf3fb; border-left: 5px solid #2877aa; margin-bottom: 16px; }
   section.split-design .split-order { font-size: 24px; margin: 15px 0; }
   section.split-design table { font-size: 20px; margin: 16px 0; }
@@ -211,7 +212,7 @@ style: |
   section.split-design .split-warning { font-size: 22px; background: #fff5e9; border-left: 4px solid #cf7d31; padding: 12px 16px; }
   section.split-design .split-note { font-size: 15px; color: #52606d; margin-top: 12px; }
   section.four-operation-findings { font-size: 20px; line-height: 1.3; }
-  section.four-operation-findings h1 { font-size: 33px; }
+  section.four-operation-findings h1 { font-size: 38px; }
   section.four-operation-findings h2 { font-size: 24px; margin: 14px 0 8px; }
   section.four-operation-findings table { font-size: 19px; margin: 10px 0; }
   section.four-operation-findings td, section.four-operation-findings th { padding: 6px 9px; }
@@ -220,7 +221,7 @@ style: |
   section.benchmark-findings table { font-size: 20px; }
   section.benchmark-findings th, section.benchmark-findings td { padding: 8px 7px; }
   section.test-summary { font-size: 22px; line-height: 1.4; }
-  section.test-summary h1 { font-size: 35px; }
+  section.test-summary h1 { font-size: 38px; }
   section.test-summary .result-columns { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; }
   section.test-summary h2 { font-size: 25px; margin: 12px 0; }
   section.test-summary table { font-size: 18px; margin: 12px 0; }
@@ -230,14 +231,17 @@ style: |
   section.test-summary .result-note { font-size: 17px; color: #52606d; margin-top: 18px; }
   section.model-settings { font-size: 22px; line-height: 1.3; }
   section.model-settings p { margin: 8px 0; }
-  section.model-settings h1 { font-size: 35px; margin-bottom: 14px; }
+  section.model-settings h1 { font-size: 38px; margin-bottom: 14px; }
   section.model-settings table { font-size: 20px; margin: 12px 0; }
   section.model-settings th, section.model-settings td { padding: 5px 12px; }
   section.model-settings h2 { font-size: 25px; margin: 12px 0; }
-  section.model-settings .tokenizer-settings { padding: 12px 18px; background: #edf6ef; line-height: 1.6; }
-  section.model-settings .settings-note { font-size: 16px; margin-top: 12px; color: #52606d; }
+  section.model-settings .shared-settings { display: grid; grid-template-columns: 405px 1fr; gap: 34px; margin-top: 18px; }
+  section.model-settings .shared-settings > div { border-top: 3px solid #245f8b; padding-top: 8px; }
+  section.model-settings .shared-settings h2 { font-size: 24px; color: #245f8b; margin: 0 0 8px; }
+  section.model-settings .shared-settings p { font-size: 21px; line-height: 1.5; margin: 3px 0; }
+  section.model-settings .shared-settings .lr-schedule { color: #245f8b; }
   section.causal-compare { font-size: 21px; line-height: 1.3; }
-  section.causal-compare h1 { font-size: 34px; margin-bottom: 14px; }
+  section.causal-compare h1 { font-size: 38px; margin-bottom: 14px; }
   section.causal-compare > p { margin: 10px 0 14px; }
   section.causal-compare .causal-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
   section.causal-compare h2 { font-size: 24px; margin: 4px 0 8px; }
@@ -284,7 +288,7 @@ style: |
   section.causal-reference .takeaway { border-left: 4px solid #8b74c4; background: #f3f1f9; margin-top: 15px; padding: 13px 17px; font-size: 20px; }
   section.causal-reference .diagram-caption { font-size: 15px; margin: 8px 0 0; }
   section.code-explain { font-size: 21px; line-height: 1.4; }
-  section.code-explain h1 { font-size: 33px; margin-bottom: 18px; }
+  section.code-explain h1 { font-size: 38px; margin-bottom: 18px; }
   section.code-explain .code-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
   section.code-explain .code-columns > div { min-width: 0; }
   section.code-explain pre { font-size: 17px; line-height: 1.35; padding: 14px; margin: 10px 0; }
@@ -311,7 +315,7 @@ style: |
   section.code-explain .att-boundary { grid-column: 2 / 4; color: #b23930; font-size: 15px; margin-top: 4px; }
   section.code-explain .attention-example { width: 100%; height: 275px; object-fit: contain; }
   section.ar-code { font-size: 21px; line-height: 1.4; }
-  section.ar-code h1 { font-size: 34px; margin-bottom: 22px; }
+  section.ar-code h1 { font-size: 38px; margin-bottom: 22px; }
   section.ar-code .code-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
   section.ar-code .code-columns > div { min-width: 0; }
   section.ar-code h2 { font-size: 24px; margin: 6px 0 14px; }
@@ -323,7 +327,7 @@ style: |
   section.ar-code li { margin: 9px 0; }
   section.ar-code .code-source { font-size: 14px; color: #52606d; margin-top: 12px; }
   section.temperature-example .katex-display { margin: 6px 0; }
-  section.decoder-logits h1 { font-size: 33px; margin-bottom: 18px; }
+  section.decoder-logits h1 { font-size: 38px; margin-bottom: 18px; }
   section.decoder-logits .code-columns { grid-template-columns: 1fr 1fr; gap: 36px; }
   section.decoder-logits pre { font-size: 17px; line-height: 1.35; margin-bottom: 10px; }
   section.decoder-logits .decoder-flow { font-size: 17px; line-height: 1.2; text-align: center; }
@@ -372,13 +376,13 @@ style: |
   section.ar-code .prob-labels { display: flex; justify-content: space-around; font-size: 18px; margin-top: 4px; }
   /* 損失とattentionは保存済みの結果図をファイル参照で使用する。 */
   section.scientific { font-size: 23px; }
-  section.scientific h1 { margin: 0 0 14px; font-size: 36px; }
+  section.scientific h1 { margin: 0 0 14px; font-size: 38px; }
   section.scientific p { margin: 12px 0; line-height: 1.4; }
   section.scientific .result-figure { display: block; width: 1100px; height: 380px; margin: 14px auto; }
   section.scientific p:last-of-type { font-size: 19px; color: #52606d; }
-  section.attention-result h1 { font-size: 35px; }
+  section.attention-result h1 { font-size: 38px; }
   /* 元資料25ページの拡大図の配置 */
-  section.chart { padding: 50px 62px 46px; font-size: 27px; line-height: 1.55; }
+  section.chart { padding: 48px 62px 46px; font-size: 27px; line-height: 1.55; }
   section.chart h1 { margin: 0 0 12px; font-size: 38px; line-height: 1.3; }
   section.chart p { margin: 12px 0; font-size: 25px; }
   section.chart svg.figure { display: block; margin: 12px auto; max-width: 100%; }
@@ -428,7 +432,7 @@ style: |
   section.ast-merged .ast-example p { margin: 0; font-size: 22px; line-height: 1.5; }
   section.ast-merged .ast-example pre { margin: 0; padding: 0; font-size: 21px; line-height: 1.5; }
   section.autoregressive { font-size: 25px; }
-  section.autoregressive h1 { font-size: 36px; margin-bottom: 20px; }
+  section.autoregressive h1 { font-size: 38px; margin-bottom: 20px; }
   section.autoregressive table { table-layout: fixed; margin: 22px 0 14px; font-size: 26px; }
   section.autoregressive table th:first-child { width: 60%; }
   section.autoregressive th, section.autoregressive td { padding: 12px 18px; }
@@ -436,31 +440,344 @@ style: |
   section.autoregressive blockquote { margin: 22px 0 16px; }
   section.autoregressive > p { margin: 16px 0; }
   /* 自己回帰の図は本文の語句を枠と矢印で配置する。 */
-  section.ar-diagram h1 { font-size: 36px; margin-bottom: 18px; }
-  section.ar-diagram > p { margin: 14px 0 18px; font-size: 25px; }
-  section.ar-diagram .ar-flow { width: 1100px; margin: 16px auto 20px; }
-  section.ar-diagram .ar-labels { display: grid; grid-template-columns: 520px 380px 200px; margin-bottom: 8px; color: #52606d; font-size: 21px; }
-  section.ar-diagram .ar-labels p { margin: 0; text-align: center; }
-  section.ar-diagram .ar-labels p:first-child { text-align: left; }
-  section.ar-diagram .ar-flow-row { display: grid; grid-template-columns: 520px 80px 220px 80px 200px; align-items: center; height: 104px; }
+  section.ar-diagram { padding: 48px 62px 30px; }
+  section.ar-diagram h1 { font-size: 38px; margin-bottom: 10px; }
+  section.ar-diagram > p { margin: 6px 0 10px; font-size: 22px; }
+  section.ar-diagram pre { margin: 0 0 8px; padding: 10px 18px; font-size: 19px; line-height: 1.35; }
+  section.ar-diagram .ar-flow { width: 1100px; margin: 6px auto 10px; }
+  section.ar-diagram .ar-flow-row { display: grid; grid-template-columns: 520px 80px 220px 80px 200px; align-items: center; height: 80px; }
   section.ar-diagram .ar-flow-row p { margin: 0; }
-  section.ar-diagram .ar-tokens p { display: flex; align-items: center; gap: 12px; }
-  section.ar-diagram .ar-tokens code { display: inline-block; box-sizing: border-box; width: 80px; height: 70px; line-height: 66px; padding: 0; text-align: center; font-family: "Hiragino Sans", sans-serif; font-size: 28px; background: #eaf3fb; border: 2px solid #92b1c8; border-radius: 6px; }
-  section.ar-diagram .ar-arrow p { text-align: center; color: #697786; font-size: 38px; }
-  section.ar-diagram .ar-model { box-sizing: border-box; height: 84px; display: flex; justify-content: center; align-items: center; border: 2px solid #8a79c8; border-radius: 8px; background: #f0ecf8; }
-  section.ar-diagram .ar-model strong { color: #685098; font-size: 28px; }
-  section.ar-diagram .ar-output { box-sizing: border-box; width: 120px; height: 80px; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 2px solid #cf7d31; border-radius: 6px; background: #fff1df; }
-  section.ar-diagram .ar-output strong { color: #a75a15; font-size: 30px; }
-  section.ar-diagram .ar-appended code:last-child { background: #fff1df; color: #a75a15; border-color: #cf7d31; }
-  section.ar-diagram .ar-next { background: #edf7ef; border-color: #78a785; }
-  section.ar-diagram .ar-next strong { color: #327c50; }
-  section.ar-diagram .ar-feedback { position: relative; height: 76px; color: #a75a15; }
-    section.ar-diagram .ar-feedback::before { content: ""; position: absolute; left: 408px; right: 100px; top: -12px; height: 48px; border-right: 3px solid #cf7d31; border-bottom: 3px solid #cf7d31; }
-  section.ar-diagram .ar-feedback::after { content: ""; position: absolute; left: 401px; top: 37px; width: 14px; height: 54px; background: #cf7d31; clip-path: polygon(40% 0, 60% 0, 60% 85%, 100% 85%, 50% 100%, 0 85%, 40% 85%); }
-  section.ar-diagram .ar-feedback p { position: absolute; left: 442px; top: 3px; margin: 0; font-size: 22px; background: #fff; }
-  section.ar-diagram > blockquote { margin: 22px 0 16px; padding: 14px 18px; }
-  section.ar-diagram > blockquote p { font-size: 24px; }
+  section.ar-diagram .ar-tokens p { display: flex; align-items: center; gap: 8px; }
+  section.ar-diagram .ar-tokens code { display: inline-block; box-sizing: border-box; min-width: 64px; height: 60px; line-height: 56px; padding: 0 12px; text-align: center; font-family: "SFMono-Regular", Menlo, monospace; font-size: 24px; background: #fff; border: 1.5px solid #9aa5b1; border-radius: 6px; color: #17212b; }
+  section.ar-diagram .ar-arrow p { text-align: center; color: #9aa5b1; font-size: 36px; }
+  section.ar-diagram .ar-model { box-sizing: border-box; height: 64px; display: flex; justify-content: center; align-items: center; border: 1.5px solid #9aa5b1; border-radius: 8px; background: #f3f5f7; }
+  section.ar-diagram .ar-model strong { color: #17212b; font-size: 26px; }
+  section.ar-diagram .ar-output { box-sizing: border-box; width: 120px; height: 64px; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 2px solid #245f8b; border-radius: 6px; background: #eaf3fb; }
+  section.ar-diagram .ar-output strong { color: #245f8b; font-size: 28px; font-family: "SFMono-Regular", Menlo, monospace; }
+  section.ar-diagram .ar-appended code:last-child { background: #eaf3fb; color: #245f8b; border: 2px solid #245f8b; }
+  section.ar-diagram .ar-feedback { position: relative; height: 50px; color: #245f8b; }
+  section.ar-diagram .ar-feedback::before { content: ""; position: absolute; left: 468px; right: 100px; top: -8px; height: 30px; border-right: 2.5px solid #245f8b; border-bottom: 2.5px solid #245f8b; }
+  section.ar-diagram .ar-feedback::after { content: ""; position: absolute; left: 461px; top: 15px; width: 14px; height: 40px; background: #245f8b; clip-path: polygon(40% 0, 60% 0, 60% 80%, 100% 80%, 50% 100%, 0 80%, 40% 80%); }
+  section.ar-diagram .ar-feedback p { position: absolute; left: 500px; top: 0; margin: 0; font-size: 21px; background: #fff; padding: 0 8px; }
+  section.ar-diagram .ar-feedback code { font-family: "SFMono-Regular", Menlo, monospace; color: #245f8b; background: transparent; }
+  section.ar-diagram > blockquote { margin: 6px 0 0; padding: 10px 18px; }
+  section.ar-diagram > blockquote p { font-size: 22px; }
   section.ar-diagram .ar-note p { margin: 16px 0 0; font-size: 19px; }
+
+  /* 統合先へ影響しないよう、この3枚のクラス内だけにスタイルを適用する。 */
+  section.research-intro {
+    display: block;
+    padding: 48px 62px 46px;
+    background: #ffffff;
+    color: #17212b;
+    font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+    font-size: 27px;
+    line-height: 1.5;
+  }
+  section.research-intro h1 {
+    color: #000000;
+    font-size: 38px;
+    line-height: 1.3;
+    margin: 0 0 26px;
+    padding: 0;
+    border: 0;
+  }
+  section.research-intro h2 {
+    color: #17212b;
+    font-size: 28px;
+    line-height: 1.4;
+    margin: 18px 0 12px;
+  }
+  section.research-intro p { margin: 14px 0; }
+  section.research-intro strong { color: #245f8b; }
+  section.research-intro h1 strong { color: #000000; }
+  section.research-intro a { color: #2877aa; }
+  section.research-intro ul { padding-left: 1.25em; margin: 14px 0; }
+  section.research-intro li { margin: 12px 0; }
+  section.research-intro blockquote {
+    margin: 20px 0;
+    padding: 14px 20px;
+    border-left: 4px solid #745db3;
+    background: #f5f3fa;
+    color: #17212b;
+  }
+  section.research-intro blockquote p { margin: 0; font-size: 25px; }
+  section.research-intro table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 24px;
+    line-height: 1.5;
+    margin: 20px 0;
+  }
+  section.research-intro th, section.research-intro td {
+    padding: 10px 13px;
+    border: 1px solid #d8e1e9;
+    text-align: left;
+    vertical-align: top;
+  }
+  section.research-intro th { background: #eaf3fb; color: #245f8b; }
+  section.research-intro tr { background: #ffffff; }
+  section.research-intro tbody tr:nth-child(even) { background: #f7f9fc; }
+  section.research-intro::after { color: #64748b; font-size: 16px; }
+  section.research-motivation .research-reason { margin: 0 0 18px; }
+  section.research-motivation .research-reason h2 { margin: 0 0 10px; font-size: 27px; }
+  section.research-motivation .research-reason p { margin: 0; font-size: 25px; }
+  section.research-motivation table { margin-top: 22px; }
+  section.research-related .research-studies {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin: 0 0 16px;
+  }
+  section.research-related .research-studies > div + div {
+    padding-left: 30px;
+    border-left: 1px solid #d8e1e9;
+  }
+  section.research-related .research-studies h2 { margin: 0 0 14px; font-size: 28px; }
+  section.research-related .research-studies h2 a {
+    color: #245f8b;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+  }
+  section.research-related .research-studies ul { margin: 0; }
+  section.research-related .research-studies li { font-size: 25px; margin: 14px 0; }
+  section.research-related .research-citation { font-size: 18px; color: #52606d; margin: 14px 0 0; }
+  section.research-related .research-note { font-size: 18px; color: #52606d; margin: 18px 0 24px; }
+  section.research-related .research-implication {
+    border-top: 1px solid #d8e1e9;
+    padding-top: 18px;
+  }
+  section.research-related .research-implication h2 { margin: 0 0 12px; }
+  section.research-related .research-implication p { font-size: 25px; margin: 12px 0; }
+  section.research-objective h2 { margin: 0 0 12px; }
+  section.research-objective ul { font-size: 25px; margin: 0 0 22px; }
+  section.research-objective blockquote { margin: 22px 0 26px; padding: 18px 22px; }
+  section.research-objective blockquote p { font-size: 28px; }
+  section.research-objective table { margin: 0 0 20px; }
+  section.research-objective th { width: 25%; font-size: 26px; vertical-align: middle; }
+  section.research-objective td { font-size: 25px; padding: 10px 18px; background: #ffffff; }
+  section.research-objective td strong { color: #17212b; }
+  section.research-objective .research-evaluation { font-size: 23px; color: #52606d; margin-top: 18px; }
+  /* 2〜4ページ（概要・背景の4象限・SLMの背景）専用。文字はMarkdown本文で編集する */
+  section.overview-page { font-size: 23px; }
+  section.overview-page h1 { margin-bottom: 14px; }
+  section.overview-page h2 { font-size: 25px; margin: 0 0 12px; color: #245f8b; }
+  section.overview-page blockquote { margin: 0 0 24px; padding: 12px 22px; }
+  section.overview-page blockquote p { font-size: 26px; line-height: 1.5; }
+  section.overview-page .overview-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  section.overview-page .overview-column { padding: 0 28px 0 0; }
+  section.overview-page .overview-column + .overview-column { padding: 0 0 0 28px; border-left: 2px solid #c8d2db; }
+  section.overview-page .overview-column ul { margin: 0; padding-left: 1.1em; }
+  section.overview-page .overview-column li { margin: 0 0 14px; font-size: 22px; line-height: 1.5; }
+  section.overview-page .overview-column li strong { color: #17212b; }
+  section.overview-page > p strong, section.overview-page > ul strong { color: #17212b; }
+  section.overview-page > p { font-size: 24px; margin: 0 0 18px; }
+  section.overview-page > ul li { margin: 0 0 12px; font-size: 23px; line-height: 1.5; }
+  section.quadrant-page { font-size: 27px; }
+  section.quadrant-page h1 { margin-bottom: 14px; }
+  /* 中央で交差する太い軸と点。中間表現の矢印は左から右へ。 */
+  section.quadrant-page .map { position: relative; width: 1156px; height: 540px; }
+  section.quadrant-page .v-line { position: absolute; left: 574px; top: 65px; width: 8px; height: 395px; background: #17212b; }
+  section.quadrant-page .v-head { position: absolute; left: 562px; top: 458px; width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent; border-top: 26px solid #17212b; }
+  section.quadrant-page .v-line::before { content: ""; position: absolute; left: -12px; top: -24px; width: 0; height: 0; border-left: 16px solid transparent; border-right: 16px solid transparent; border-bottom: 26px solid #17212b; }
+  section.quadrant-page .h-line { position: absolute; left: 60px; top: 270px; width: 1030px; height: 8px; background: #17212b; }
+  section.quadrant-page .h-head { position: absolute; left: 1088px; top: 258px; width: 0; height: 0; border-top: 16px solid transparent; border-bottom: 16px solid transparent; border-left: 26px solid #17212b; }
+  section.quadrant-page .h-line::before { content: ""; position: absolute; left: -24px; top: -12px; width: 0; height: 0; border-top: 16px solid transparent; border-bottom: 16px solid transparent; border-right: 26px solid #17212b; }
+  section.quadrant-page .ax { position: absolute; margin: 0; font-size: 34px; font-weight: 700; line-height: 44px; color: #17212b; white-space: nowrap; }
+  section.quadrant-page .ax-name { font-size: 34px; }
+  section.quadrant-page .ax-top { left: 553px; top: -4px; width: 50px; text-align: center; }
+  section.quadrant-page .ax-mid { left: 398px; top: 496px; width: 300px; text-align: center; }
+  section.quadrant-page .ax-bottom { left: 666px; top: 496px; width: 50px; text-align: center; }
+  section.quadrant-page .ax-left { left: 36px; top: 288px; }
+  section.quadrant-page .ax-center { left: 820px; top: 216px; width: 306px; text-align: center; }
+  section.quadrant-page .ax-right { left: 1064px; top: 288px; width: 50px; text-align: right; }
+  section.quadrant-page .item { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 320px; margin: 0; font-size: 27px; line-height: 40px; color: #17212b; white-space: nowrap; }
+  section.quadrant-page .mk { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; }
+  section.quadrant-page .dot { display: block; width: 22px; height: 22px; border-radius: 50%; background: #17212b; }
+  section.quadrant-page .ring { display: block; box-sizing: border-box; width: 32px; height: 32px; border-radius: 50%; background: #fff; border: 4px solid #245f8b; }
+  section.quadrant-page .item.goal { color: #245f8b; font-weight: 400; }
+  section.quadrant-page .slm { left: 122px; top: 118px; }
+  section.quadrant-page .early { left: 180px; top: 345px; }
+  section.quadrant-page .goal { left: 730px; top: 118px; }
+  section.quadrant-page .frontier { left: 670px; top: 391px; }
+  section.quadrant-page .flow-line { position: absolute; left: 316px; top: 131px; width: 514px; height: 5px; background: #245f8b; box-shadow: 0 0 0 4px #fff; }
+  section.quadrant-page .flow-head { position: absolute; left: 830px; top: 122px; width: 0; height: 0; border-top: 12px solid transparent; border-bottom: 12px solid transparent; border-left: 22px solid #245f8b; }
+  section.quadrant-page .flow-label { position: absolute; left: 600px; top: 78px; width: 170px; margin: 0; text-align: center; font-size: 28px; font-weight: 400; line-height: 40px; color: #245f8b; }
+  section.slm-page { font-size: 22px; }
+  section.slm-page h1 { margin-bottom: 8px; }
+  section.slm-page > p { font-size: 22px; margin: 0 0 10px; }
+  section.slm-page .slm-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+  section.slm-page .slm-column { display: flex; flex-direction: column; padding: 0 28px 0 0; }
+  section.slm-page .slm-column.domain { padding: 0 0 0 28px; border-left: 2px solid #c8d2db; }
+  section.slm-page .slm-eval { margin-top: auto !important; padding: 8px 12px; border-left: 4px solid #92b1c8; background: #f1f6fb; font-size: 18px !important; line-height: 1.4; }
+  section.slm-page .domain .slm-eval { border-left-color: #c9a86a; background: #fdf9f0; }
+  section.slm-page .slm-eval strong { color: #245f8b; }
+  section.slm-page .domain .slm-eval strong { color: #8a6d1f; }
+  section.slm-page .slm-column h2 { margin: 0 0 2px; font-size: 24px; color: #245f8b; }
+  section.slm-page .slm-column.domain h2 { color: #8a6d1f; }
+  section.slm-page .slm-column h2 + p { margin: 0 0 4px; font-size: 17px; color: #52606d; }
+  section.slm-page .slm-column h3 { margin: 6px 0 0; font-size: 20px; color: #17212b; }
+  section.slm-page .slm-column p { margin: 2px 0; font-size: 18px; line-height: 1.4; }
+  section.slm-page .slm-column h3 a, section.summary-page .summary-step a { color: inherit; text-decoration: none; border-bottom: 1.5px solid #9aa5b1; }
+  section.slm-page .slm-column .blank { margin: 2px 0 6px; color: #94a3b8; font-size: 17px; }
+  section.slm-page > blockquote { margin: 12px 0 0; padding: 8px 16px; }
+  section.slm-page > blockquote p { font-size: 22px; }
+  /* 目次ページと、各ページ右上の章ヘッダー（_header: '章名　n/m'：章内の何枚目／章の枚数） */
+  header { position: absolute; top: 16px; left: auto; right: 62px; margin: 0; padding: 0; font-size: 17px; line-height: 1.3; color: #64748b; text-align: right; }
+  section.benchmark-figure { padding: 48px 62px 20px; }
+  section.benchmark-figure h1 { font-size: 38px; margin: 0 0 6px; }
+  section.benchmark-figure img { display: block; margin: 0 auto; }
+  section.summary-page { font-size: 22px; }
+  section.summary-page h1 { margin-bottom: 14px; }
+  section.summary-page .summary-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  section.summary-page .summary-column { padding: 0 28px 0 0; }
+  section.summary-page .summary-column.domain { padding: 0 0 0 28px; border-left: 2px solid #c8d2db; }
+  section.summary-page .summary-column h2 { margin: 0 0 6px; font-size: 25px; color: #245f8b; }
+  section.summary-page .summary-column.domain h2 { color: #8a6d1f; }
+  section.summary-page .summary-column p { margin: 6px 0; font-size: 20px; line-height: 1.45; }
+  section.summary-page .summary-step { margin: 8px 0; padding: 8px 14px; border-left: 4px solid #92b1c8; background: #f1f6fb; }
+  section.summary-page .domain .summary-step { border-left-color: #c9a86a; background: #fdf9f0; }
+  section.summary-page .summary-arrow { text-align: center; color: #697786; font-size: 26px; margin: 0; line-height: 1.2; }
+  section.summary-page .summary-goal { padding: 10px 16px; border-radius: 8px; background: #edf7ef; border: 2px solid #78a785; }
+  section.summary-page .summary-goal strong { color: #327c50; }
+  section.summary-page > blockquote { margin: 14px 0 0; padding: 10px 18px; }
+  section.summary-page > blockquote p { font-size: 23px; }
+  section.bpe-page { font-size: 23px; }
+  section.bpe-page h1 { margin-bottom: 12px; }
+  section.bpe-page > p { font-size: 23px; margin: 10px 0; }
+  section.bpe-page .bpe-tokens { margin: 10px 0; padding: 12px 18px; border: 1.5px solid #c8d2db; border-radius: 10px; }
+  section.bpe-page table { font-size: 20px; margin: 10px 0 0; }
+  section.bpe-page th, section.bpe-page td { padding: 6px 12px; }
+  section.bpe-page td:first-child { white-space: nowrap; }
+  section.bpe-page td code { font-size: .85em; }
+  section.bpe-page .bpe-tokens p { display: flex; flex-wrap: wrap; gap: 8px 6px; margin: 0; }
+  section.bpe-page .bpe-tokens code { display: inline-block; padding: 6px 10px; border: 1.5px solid #9aa5b1; border-radius: 6px; background: #fff; font-family: "SFMono-Regular", Menlo, "Hiragino Sans", monospace; font-size: 22px; line-height: 1.3; white-space: pre; color: #17212b; }
+  section.bpe-page .bpe-tokens code:first-child, section.bpe-page .bpe-tokens code:nth-child(2), section.bpe-page .bpe-tokens code:nth-child(9), section.bpe-page .bpe-tokens code:last-child { background: #eaf3fb; border-color: #245f8b; color: #245f8b; }
+  section.agenda-page { font-size: 24px; }
+  section.agenda-page h1 { margin-bottom: 18px; }
+  section.agenda-page table { font-size: 22px; margin: 0 0 16px; }
+  section.agenda-page th, section.agenda-page td { padding: 9px 14px; vertical-align: top; line-height: 1.45; }
+  section.agenda-page td:first-child { width: 5%; font-size: 26px; color: #245f8b; font-weight: 600; }
+  section.agenda-page td:nth-child(2) { width: 27%; font-weight: 600; white-space: nowrap; }
+  section.agenda-page > p { font-size: 19px; color: #52606d; margin: 8px 0 0; }
+
+  /* 2026-10-22: axes, synthesis flow, loss mask and result annotations */
+  section.slm-page .slm-eval { margin-top: auto !important; padding: 12px 14px; font-size: 21px !important; line-height: 1.45; }
+  section.slm-page .slm-eval b { color: #245f8b; font-size: 24px; }
+  section.slm-page .domain .slm-eval b { color: #8a6d1f; }
+  section.slm-page .rl-scope { font-size: 15px; color: #52606d; margin: 8px 0 0; }
+  section.ast-paraphrase .ast-method { min-height: 108px; padding-bottom: 10px; }
+  section.ast-paraphrase .ast-example { height: 120px; }
+  section.ast-paraphrase .ast-example p { font-size: 20px; margin-bottom: 10px; }
+  section.ast-paraphrase .ast-output { padding: 12px 20px; }
+  section.ast-paraphrase .paraphrase-take { margin: 14px 0 0; font-size: 19px; line-height: 1.45; }
+  section.synthetic-flow h1 { margin-bottom: 12px; }
+  section.synthetic-flow .fv-lead { margin: 0; font-size: 24px; line-height: 1.5; color: #52606d; }
+  section.synthetic-flow .fv-lead strong { color: #245f8b; }
+  section.synthetic-flow .fv-flow { display: grid; grid-template-columns: 220px 28px 236px 34px 1fr 34px 220px; align-items: center; height: 392px; margin-top: 66px; }
+  section.synthetic-flow .fv-box { position: relative; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: #f7f9fc; border: 1.5px solid #c8d2db; border-radius: 12px; padding: 22px 8px 18px; }
+  section.synthetic-flow .fv-side { height: 240px; }
+  section.synthetic-flow .fv-lanes { display: flex; flex-direction: column; justify-content: space-between; height: 392px; }
+  section.synthetic-flow .fv-lane { height: 168px; padding: 20px 10px 14px; }
+  section.synthetic-flow .fv-goal { background: #f3f5f7; border: 2px solid #9aa5b1; }
+  section.synthetic-flow .fv-no { position: absolute; top: -19px; left: 50%; margin-left: -19px; width: 38px; height: 38px; border-radius: 50%; background: #2877aa; color: #fff; font-size: 20px; font-weight: 700; line-height: 38px; text-align: center; }
+  section.synthetic-flow .fv-pre .fv-no { background: #64748b; }
+  section.synthetic-flow .fv-box p { margin: 0; white-space: nowrap; }
+  section.synthetic-flow .fv-box .fv-title { font-size: 23px; font-weight: 700; line-height: 1.4; color: #17212b; }
+  section.synthetic-flow .fv-box .fv-key { margin-top: 10px; font-size: 35px; font-weight: 700; line-height: 1.25; color: #17212b; }
+  section.synthetic-flow .fv-goal .fv-key { color: #245f8b; }
+  section.synthetic-flow .fv-box .fv-key small { font-size: 22px; }
+  section.synthetic-flow .fv-box .fv-sub { margin-top: 8px; font-size: 20px; line-height: 1.45; color: #52606d; }
+  section.synthetic-flow .fv-chain { display: grid; grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); align-items: center; width: 100%; margin-top: 12px; }
+  section.synthetic-flow .fv-pill { box-sizing: border-box; padding: 6px 8px 7px; border-radius: 10px; background: #eef2f6; border: 1px solid #d8e1e9; white-space: nowrap; }
+  section.synthetic-flow .fv-pill b { display: block; font-size: 20px; font-weight: 700; line-height: 1.35; color: #17212b; }
+  section.synthetic-flow .fv-pill span { display: block; font-size: 18px; line-height: 1.35; color: #52606d; }
+  section.synthetic-flow .fv-to { position: relative; height: 14px; }
+  section.synthetic-flow .fv-to::before { content: ""; position: absolute; left: 3px; right: 10px; top: 6px; border-top: 2px solid #9aa5b1; }
+  section.synthetic-flow .fv-to::after { content: ""; position: absolute; right: 2px; top: 1px; width: 0; height: 0; border-left: 10px solid #9aa5b1; border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+  section.synthetic-flow .fv-arrow, section.synthetic-flow .fv-fork, section.synthetic-flow .fv-merge { position: relative; align-self: stretch; }
+  section.synthetic-flow .fv-arrow::before { content: ""; position: absolute; left: 0; right: 12px; top: 195px; border-top: 2px solid #9aa5b1; }
+  section.synthetic-flow .fv-fork::before { content: ""; position: absolute; left: 0; width: 16px; top: 195px; border-top: 2px solid #9aa5b1; }
+  section.synthetic-flow .fv-merge::before { content: ""; position: absolute; left: 16px; right: 12px; top: 195px; border-top: 2px solid #9aa5b1; }
+  section.synthetic-flow .fv-bar { position: absolute; top: 84px; bottom: 84px; border: 2px solid #9aa5b1; }
+  section.synthetic-flow .fv-fork .fv-bar { left: 16px; right: 12px; border-right: 0; border-radius: 10px 0 0 10px; }
+  section.synthetic-flow .fv-merge .fv-bar { left: 0; right: 16px; border-left: 0; border-radius: 0 10px 10px 0; }
+  section.synthetic-flow .fv-arrow::after, section.synthetic-flow .fv-fork i, section.synthetic-flow .fv-merge i { content: ""; position: absolute; right: 2px; width: 0; height: 0; border-left: 12px solid #9aa5b1; border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+  section.synthetic-flow .fv-arrow::after, section.synthetic-flow .fv-merge i { top: 189px; }
+  section.synthetic-flow .fv-fork i:first-of-type { top: 78px; }
+  section.synthetic-flow .fv-fork i:last-of-type { top: 300px; }
+  section.failure-summary table { table-layout: fixed; font-size: 21px; margin: 20px 0 14px; }
+  section.failure-summary th, section.failure-summary td { padding: 12px 13px; line-height: 1.45; vertical-align: middle; }
+  section.failure-summary th:nth-child(1) { width: 25%; }
+  section.failure-summary th:nth-child(2) { width: 40%; }
+  section.failure-summary th:nth-child(3) { width: 15%; }
+  section.failure-summary th:nth-child(4) { width: 20%; }
+  section.failure-summary td:nth-child(3) { color: #327c50; }
+  section.failure-summary td:nth-child(4) { color: #c02e3a; }
+  section.failure-summary td:nth-child(n+3) { white-space: nowrap; }
+  section.failure-summary .failure-summary-note { font-size: 17px; line-height: 1.5; margin: 12px 0; color: #52606d; }
+  section.failure-summary .failure-summary-stat { font-size: 19px; line-height: 1.5; padding-top: 12px; border-top: 1px solid #d8e1e9; margin: 16px 0 0; }
+  section.loss-mask-page h1 { font-size: 36px; margin-bottom: 20px; }
+  section.loss-mask-page .lm-intro { font-size: 23px; margin: 10px 0 24px; }
+  section.loss-mask-page .lm-grid { display: grid; grid-template-columns: 125px 270px 110px 1fr 115px; gap: 8px; align-items: stretch; }
+  section.loss-mask-page .lm-grid > div { padding: 11px 8px; font-size: 20px; line-height: 1.5; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+  section.loss-mask-page .lm-grid .lm-label { padding-left: 0; text-align: left; font-size: 19px; }
+  section.loss-mask-page .lm-prompt, section.loss-mask-page .lm-marker { background: #f0f2f5; border: 2px solid #a5afb9; }
+  section.loss-mask-page .lm-code, section.loss-mask-page .lm-eos { background: #edf7ef; border: 2px solid #3b9460; }
+  section.loss-mask-page .lm-grid code { font-size: 15px; background: transparent; white-space: nowrap; }
+  section.loss-mask-page .lm-grid br { display: none; }
+  section.loss-mask-page .lm-ignore, section.loss-mask-page .lm-off { background: #f0f2f5; color: #64748b; }
+  section.loss-mask-page .lm-target { background: #edf7ef; color: #327c50; }
+  section.loss-mask-page .lm-on { background: #327c50; color: #fff; font-weight: 700; }
+  section.loss-mask-page .lm-connection { text-align: center; margin: 16px 0 22px; padding-bottom: 10px; border-bottom: 2px solid #245f8b; font-size: 23px; color: #245f8b; }
+  section.loss-mask-page .lm-bottom { display: grid; grid-template-columns: 1.15fr 1fr; gap: 30px; align-items: center; }
+  section.loss-mask-page .lm-bottom pre { font-size: 17px; margin: 0; padding: 14px; }
+  section.loss-mask-page .lm-bottom > div:last-child { font-size: 22px; line-height: 1.6; }
+  section.benchmark-focus { padding: 48px 62px 24px; }
+  section.benchmark-focus h1 { margin-bottom: 2px; }
+  section.benchmark-focus .focus-chart { position: relative; width: 920px; height: 488px; margin: -7px auto 0; overflow: hidden; }
+  section.benchmark-focus .focus-chart > img { width: 920px; height: 517.5px; margin: 0; }
+  section.benchmark-focus .focus-marks { position: absolute; left: 0; top: 0; width: 920px; height: 517.5px; }
+  section.benchmark-focus .focus-captions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 4px 35px 0; position: relative; background: #fff; font-size: 19px; line-height: 1.4; }
+  section.benchmark-focus .focus-captions > div { border-top: 3px solid #d33743; padding-top: 6px; }
+  section.benchmark-focus .focus-captions b { color: #c02e3a; }
+  section.benchmark-focus .focus-note { font-size: 14px; color: #52606d; margin: 8px 35px 0; }
+  section.failure-example { font-size: 23px; }
+  section.failure-example h1 { font-size: 34px; margin-bottom: 16px; }
+  section.failure-example .failure-instruction { font-size: 22px; line-height: 1.5; margin: 0 0 10px; padding: 10px 18px; }
+  section.failure-example .failure-expected { font-size: 21px; margin: 0 0 18px; }
+  section.failure-example .failure-columns { display: grid; grid-template-columns: 1.14fr 1fr; gap: 32px; }
+  section.failure-example h2 { font-size: 24px; margin: 0 0 12px; }
+  section.failure-example pre { font-size: 18px; line-height: 1.45; padding: 14px 16px; margin: 0; }
+  section.failure-example .failure-observation > p { font-size: 23px; margin: 0 0 16px; }
+  section.failure-example .failure-input { padding: 10px 14px; background: #f1f6fb; font-size: 19px; }
+  section.failure-example .failure-input code { background: transparent; font-size: 18px; overflow-wrap: anywhere; }
+  section.failure-example .failure-outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+  section.failure-example .failure-outputs > div { border-top: 4px solid #3b9460; padding: 8px; background: #edf7ef; }
+  section.failure-example .failure-outputs > .wrong { border-color: #d33743; background: #fff0f0; }
+  section.failure-example .failure-outputs span { display: block; font-size: 18px; }
+  section.failure-example .failure-outputs b { display: block; font-size: 27px; font-family: Menlo, monospace; margin-top: 8px; }
+  section.failure-example .failure-note { font-size: 16px; color: #52606d; margin: 16px 0 0; line-height: 1.45; }
+  section.section-break { display: flex; flex-direction: column; justify-content: center !important; padding-left: 100px; }
+  section.section-break h1 { font-size: 64px; margin-bottom: 28px; color: #245f8b; }
+  section.section-break p { font-size: 28px; color: #52606d; }
+  section.bibliography { padding: 48px 62px 42px; }
+  section.bibliography h1 { margin-bottom: 24px; }
+  section.bibliography .reference-columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
+  section.bibliography .reference-columns > div + div { padding-left: 30px; border-left: 1px solid #d8e1e9; }
+  section.bibliography .reference-columns > div { min-width: 0; }
+  section.bibliography p { font-size: 18px; line-height: 1.4; margin: 0 0 16px; overflow-wrap: anywhere; }
+  section.bibliography a { color: #17212b; text-decoration: none; }
+  section.demo-video { padding: 48px 62px 32px; }
+  section.demo-video h1 { margin-bottom: 10px; }
+  section.demo-video > p { font-size: 21px; margin: 8px 0; }
+  section.demo-video .demo-space { width: 832px; height: 468px; margin: 10px auto 6px; }
+  section.demo-video .demo-site { width: 832px; margin: 8px auto 0; text-align: right; font-size: 19px; }
+  /* 本文量によるMarp既定の縦中央配置を止め、タイトルを同じ位置から始める。 */
+  section { align-content: start !important; justify-content: flex-start !important; }
 
 ---
 <!-- _class: cover -->
@@ -484,255 +801,155 @@ style: |
 -->
 
 ---
-<!-- _class: intro-overview -->
-# Boku-nano：限られた日本語指示からPython関数を生成するSLM
 
-24種類の整数リスト操作を扱う、小型言語モデルをフルスクラッチ学習
+<!-- _class: overview-page -->
 
-##
+# 本発表の概要
 
-<div class="ov-flow">
-<div class="ov-card">
+> 制限された日本語指示からPython関数を生成する小型言語モデルをゼロから構築し、<br>合成データのみの学習で、Chatgpt 6 Astraを匹敵する精度を達成　
 
-### ① 制限された日本語指示文
+<!-- 比較は本編の未学習2操作。Boku 1M・3 epochは99/100、Astraは同カテゴリから抽出した10問で9/10。評価集合・実行条件が異なる参考比較で、一般的な優位を意味しない。 -->
 
-整数リストxsと整数kを受け取り、  
-偶数だけを残し、 
-各要素に k を加える  
-solve 関数を書いてください
+## 目的
+**学部生が1人でフロンティアモデルに匹敵する小型モデルの作成方法が分かる**
 
-決められた操作・文型の範囲
+## 特徴
 
+**中間表現により生成した合成データの質で、大規模計算に対抗**
+
+## 利点
+<!-- 利点は、質的なものだけではなく、量的なものをあると良いよね -->
+- 約1Mのモデル・5090で1分で訓練可能
+- 訓練データの制御性：文の形、操作の数（難しさ・文の長さ）、使う語彙の数を制御可能
+- 応用範囲：関数で書ける処理なら、同じ方法でデータ合成からモデル学習まで全て可能
+
+---
+
+<!-- _class: quadrant-page -->
+
+# 背景：モデルの制御性と学習データ量による位置づけ
+
+<div class="map">
+<div class="v-line"></div><div class="v-head"></div>
+<p class="ax ax-top">少</p>
+<p class="ax ax-name ax-mid">学習データ量</p>
+<p class="ax ax-bottom">多</p>
+<div class="h-line"></div><div class="h-head"></div>
+<p class="ax ax-left">低</p>
+<p class="ax ax-name ax-center">モデルの制御性</p>
+<p class="ax ax-right">高</p>
+<p class="item slm"><span class="mk"><span class="dot"></span></span>SLM（小型言語モデル）</p>
+<!-- <p class="item-detail">既存コーパスの一部・蒸留データ</p> -->
+<div class="flow-line"></div><div class="flow-head"></div>
+<p class="flow-label">中間表現</p>
+<p class="item goal"><span class="mk"><span class="ring"></span></span>本研究が目指す領域</p>
+<!-- <p class="item-detail">少量の合成データの設計・検証</p> -->
+<p class="item early"><span class="mk"><span class="dot"></span></span>初期のLLM</p>
+<!-- <p class="item-detail">Webコーパスの大量学習</p> -->
+<p class="item frontier"><span class="mk"><span class="dot"></span></span>フロンティアモデル</p>
+<!-- <p class="item-detail">大量データ・選別・合成</p> -->
+<!-- <p class="item-detail">フィードバック学習</p> -->
+<!-- <p class="map-note">概念的な配置（実測値との対応なし）</p> -->
 </div>
-<div class="ov-card">
-
-### ② Boku-nano
-
-語彙数2048のトークナイザ
-1M, 5M & 15M パラメータ
-トークナイザとモデルをゼロから学習
-decoder Transformerによる
-next token prediction 
-
-日本語指示から、python関数を生成
-
-</div>
-<div class="ov-card">
-
-### ③ Python関数
-
-```python
-def solve(xs, k):
-    return [x + k for x in xs
-            if x % 2 == 0]
-```
-
-参照インタプリタによる実行・検証
-</div>
-</div>
-
-## 合成データ生成と評価方法
-
-<div class="ov-steps">
-<div class="ov-step">
-
-### **1** 中間表現を定義
-
-訓練データ合成のための<br>中間表現（意味AST）
-24基本操作を最大3つ組み合せ
-
-```json
-{"sequence": [{"filter": ["even"]},
-              {"map": ["add_k"]}]}
-```
-
-</div>
-<div class="ov-step">
-
-### **2** 合成データ作成
-
-意味ASTから、日本語指示文と
-pythonコードを生成
-
-各基本操作に対して、20通りの
-日本語表現とpythonコード合成し、
-ルールベースで組み合わせる
-訓練データ 約19万件
-
-</div>
-<div class="ov-step">
-
-### **3** フルスクラッチ学習
-
-トークナイザと
-transformer をゼロから学習
-
-15M parameter
-8 layers・6 heads
-1ヘッドあたり64次元
-
-</div>
-<div class="ov-step">
-
-### **4** テスト検証・<br>ベンチマークによる評価
-
-出力されたコードを
-参照インタプリタで検証
-
-組み合わせ汎化性能を評価
-
-</div>
-</div>
-
-<!-- > 評価結果は「24操作・最大3操作」という限定された範囲でのものです。ブラウザデモの自由な日本語入力は、別モデルで決められた文型に整えてから -nano に渡します。 -->
 
 <!--
-日本語の指示からPython関数を作る流れと、合成データ生成・学習・実行評価の流れを説明する。
-このページの本文はboku1_nano_overview_intro_marp.mdからコピーした。
-根拠：../results/model_reports/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch.md
--->
+【話す内容】
+言語モデルを、横軸にモデルの制御性、縦軸に学習データ量をとって整理します。
+図は上ほどデータ量が少なく、下ほど多い向きです。右下は、制御性が高くデータ量も多いフロンティアモデルです。大量のデータに加え、データの選別・合成・フィードバック学習で制御しています。
+左下は、制御性が低くデータ量が多い従来のLLMです。Webコーパスをほぼそのまま学習し、規模で性能を伸ばしてきました。
+左上は、制御性が低くデータ量が少ないSLMです。既存コーパスの一部や蒸留データで小さなモデルを学習しますが、容量が限られ、必要な能力を学びにくい制約があります。
+右上の白抜きの点が、本研究の目指す位置です。SLMの点から青い矢印で示したとおり、限られたデータで制御性を高める方向を目指します。語彙・文型・難易度・件数を設計した合成データで、必要な能力を学ばせます。
 
-<!-- ---  -->
-<!-- 1_class: key-goal -->
-<!-- # 課題と狙い
-
-抽出や順序の変更など、**対象を24種類の操作に限定**する
-
-| 範囲を絞る | 目指すモデル |
-| :--- | :--- |
-| あらかじめ定めた整数リストの操作 | 学生一人でもフルスクラッチで作れる |
-| 操作を組み合わせて処理を表す | **小規模言語モデル（SLM）** |
-
-## 別の用途への応用
-
-関数の組み合わせで表せる処理なら、  
-同じ考え方を **NPCの挙動などにも応用できる可能性**がある -->
-
-<!--
-目安：60秒
-
-今回の対象は、抽出・変換・順序変更・切り出しの24操作です。あらゆるコード生成を扱うのではなく、対象の処理をあらかじめ定めることで、学生一人でトークナイザーとTransformerをフルスクラッチで作れる規模を目指しました。既存のモデル重みは使わず学習しています。
-関数の組み合わせで表現できる処理なら、同じ考え方をNPCの挙動など別の用途へ応用できる可能性があります。これは今後の構想であり、今回実装・評価した成果ではありません。
-
-根拠：
-- [atomic_semantic_asts.md](../specifications/atomic_semantic_asts.md)
-- [trained_model_inventory.md](../results/trained_model_inventory.md)
--->
-
-<!-- --- -->
-<!-- 2_class: default -->
-<!-- # 意味ASTの具体例
-
-日本語：**偶数だけを残して、各要素にkを加える**
-
-```json
-{
-  "sequence": [
-    {"filter": ["even"]},
-    {"map": ["add_k"]}
-  ]
-}
-```
-
-偶数の抽出 → kを加える、という処理の順序を保存 -->
-
-<!--
-目安：40秒
-
-実際の仕様からsemantic_astの部分を抜き出しています。抽出がfilter、各要素への変換がmapです。ASTは合成データを作るために使用し、推論時には日本語だけをモデルへ渡します。
-
-根拠：
-- [atomic_semantic_asts.md](../specifications/atomic_semantic_asts.md)
+【補足】
+4象限は説明のための整理であり、個々のモデルの正確な分類ではない。「モデルの制御性」は、学習データの内容（語彙・文型・難易度・件数）をどの程度設計でき、モデルの振る舞いをどの程度決められるかを指す。
 -->
 
 ---
-<!-- _class: operation-scope -->
 
-# 意味ASTは24種類、3操作まで組み合せで12,720通り
+<!-- _class: slm-page -->
 
-<div class="operation-layout">
-<div class="operation-tables">
+# SLMの発展
 
-## 基本操作
+<!-- SLMの先行研究の二つの分野：**完全な自然言語**と**code・math** -->
 
-| 種類 | 操作数 | 例 |
-| ---: | ---: | ---: |
-| 条件に合う数を残す | 10 | 偶数、奇数、正の値、kより大きい値 |
-| 一つずつ値を変える | 8 | kを加える、2倍、絶対値、二乗 |
-| 順序を変える | 3 | 昇順、降順、現在の順序の反転 |
-| 一部を取り出す | 3 | 先頭k個、末尾k個、1個おき |
+<div class="slm-columns">
+<div class="slm-column">
 
-## 操作の組み合わせ
+## 分野①　自然言語そのもの（物語）
 
-<!-- 同じ操作を繰り返さず、順序を区別して数える。 -->
+### [TinyStories](https://arxiv.org/abs/2305.07759)
 
-| 操作数 | 数え方 | 意味の種類 |
-| ---: | ---: | ---: |
-| 1操作 | 24 | 24 |
-| 2操作 | 24 × 23 | 552 |
-| 3操作 | 24 × 23 × 22 | 12,144 |
-| 合計 | 24 ＋ 552 ＋ 12,144 | **12,720** |
+3〜4歳児が分かる語彙のみで短い物語をGPT-3.5/4で合成
 
-</div>
-<div class="operation-ast">
+1.25MのTransformerでも一貫した文章生成
 
-## 意味ASTの例
+### [SimpleStories](https://arxiv.org/abs/2504.09184)
 
-日本語：奇数だけを残し、各要素を2倍して降順に並べる
+平易な語彙のみで、話題・文体・文法・書き出しによりデータ多様性向上
 
-```json
-{
-    "sequence": [
-        {"filter": ["odd"]},
-        {"map": ["mul_const", 2]},
-        {"order": "descending"}
-    ]
-}
-```
+より少ないパラメータで、LLM評価の得点が向上
+
+### [WRAP](https://arxiv.org/abs/2401.16380)
+
+Webの文章を4つの文体に言い換え、350M・1.3Bを事前学習
+
+同じ性能に約3倍速く到達し、perplexityが10%以上改善
+
+<div class="slm-eval"><strong>文章の良さを、人やLLMが評価</strong><br>人の好みを用いた学習：<b>RLHF</b><br>LLMによる採点：<b>LLM-as-a-Judge</b></div>
 
 </div>
+<div class="slm-column domain">
+
+## 分野②　code・math
+
+### [phi-1](https://arxiv.org/abs/2306.11644)：code
+
+教科書品質の選別データとGPT-3.5で合成した教科書・演習で1.3Bモデルを学習
+
+約7Bトークンの学習でHumanEval 50.6%
+
+### [TinyGSM](https://arxiv.org/abs/2312.09241)：math
+
+GPT-3.5で合成した約1,230万件の算数問題とPython解答で1.3Bモデルを学習
+
+検証器と組み合わせGSM8K 81.5%
+
+<div class="slm-eval"><strong>テストや正解照合で、正誤を検証</strong><br>検証結果を報酬とした学習<br><b>RLVR</b>（検証可能な報酬による強化学習）</div>
+
+</div>
 </div>
 
-<!-- 同じ操作の反復は、テストで確かめる。 -->
+<!-- <p class="rl-scope">下段は評価・学習方法の対応（本研究ではRLHF・RLVRは未実施）</p> -->
+
+<!-- > 合成データの**語彙・多様性・対象ドメイン**の設計が、小型モデルの性能を左右しうる -->
 
 <!--
-汎用のプログラミング全般を扱う実験ではありません。
-根拠：../specifications/atomic_semantic_asts.md
+【話す内容】
+SLMの先行研究には、完全な自然言語を扱う分野があります。そして、code・math・securityのような分野があります。
+左は自然言語、特に物語の系統です。TinyStoriesは、3〜4歳の子どもが分かる言葉だけを使った短い物語をGPTに合成させ、1,000万パラメータ未満の小さなTransformerでも一貫した文章を生成できることを示しました。SimpleStoriesはその続きで、簡単な語彙を保ちながら文体や文法、書き出しを指定して多様性を高め、より少ないパラメータで高い評価を得たと報告しています。WRAPは、WebテキストのC4をWikipedia風やQA風など4つの文体に言い換えた合成データで350Mと1.3Bのモデルを事前学習し、同じ性能に約3倍速く到達し、perplexityが10%以上改善したと報告しています。言い換えで文体を制御する点で、物語の系統と同じ発想です。
+右はmath・code・securityなど、対象ドメインを絞った系統です。phi-1は、教科書品質に選別したコードと合成した教科書・演習で1.3Bのモデルを学習し、HumanEvalで50.6%に達しました。TinyGSMは、合成した約1,230万件の算数問題で1.3Bのモデルを学習し、検証器と組み合わせてGSM8Kで81.5%に達しました。
+どちらの系統でも、合成データの語彙・多様性・対象ドメインの設計が、小型モデルの性能を左右しています。
+
+【補足】
+LLM-as-a-Judgeは評価方法であり、RLHFそのものではない。列内のすべての先行研究がRLHF/RLVRを実施したという意味ではない。
+参考：Ouyang et al. (2022), https://arxiv.org/abs/2203.02155；Zheng et al. (2023), https://arxiv.org/abs/2306.05685；Lambert et al. (2024), https://arxiv.org/abs/2411.15124。
+- TinyStoriesの評価はGPT-4による採点。arXivのプレプリントで、査読付きの採録先は確認していない。
+- SimpleStoriesの比較は、1.25M〜35Mのモデルの生成物をGPT-4o-miniが採点したもので、比較相手はTinyStories-33M。専用トークナイザの効果との交絡は切り分けられていない。
+- phi-1はWebから選別した約6Bトークンと合成した約1Bトークンで学習し、さらに約180Mトークンの合成演習で微調整したモデル。HumanEval pass@1 50.6%、MBPP 55.5%。
+- TinyGSMは生成モデル1.3Bと検証器1.3Bの組合せで81.5%。生成モデル単体の値ではない。
+- securityの例は未記入。
+
+【文献（見出しのリンク先）】
+- Eldan, R. and Li, Y. (2023). TinyStories: How Small Can Language Models Be and Still Speak Coherent English? arXiv:2305.07759
+- Finke, L. et al. (2025). Parameterized Synthetic Text Generation with SimpleStories. NeurIPS 2025 Datasets and Benchmarks Track. arXiv:2504.09184
+- Maini, P. et al. (2024). Rephrasing the Web: A Recipe for Compute and Data-Efficient Language Modeling (WRAP). arXiv:2401.16380。言い換えは指示調整済みモデルで行い、4文体は易しい文・Wikipedia風・難しい文・QA風。速度と改善幅は論文の報告値で、本資料で再現していない。
+- Gunasekar, S. et al. (2023). Textbooks Are All You Need. arXiv:2306.11644
+- Liu, B. et al. (2023). TinyGSM: achieving >80% on GSM8k with small language models. arXiv:2312.09241
 -->
 
 ---
-<!-- _class: split-design -->
-# 訓練・検証・テストは、意味ASTの段階で分ける
-
-<div class="split-key"><strong>日本語文やコードを生成する前に、意味AST単位で分割する。</strong></div>
-
-<div class="split-order">意味ASTを分割　→　<strong>各集合の中で</strong>言い換え・コード変換</div>
-
-訓練 **約80%** ／ 検証 **約10%** ／ 通常テスト **約10%**
-
-| テスト | 何を変えて確かめるか |
-| :--- | :--- |
-| **通常** | 同じ基本操作の範囲で、訓練に含まれない意味ASTを評価する。 |
-| **言い換え** | 既知の単独操作に、訓練で使わなかった日本語表現を使う。 |
-| **組合せ汎化** | 例：別々に学んだ「偶数抽出」と「降順整列」を組み合わせる。 |
-| **同じ操作の反復** | 同じ操作を2回・3回続けて適用する。例：「各要素にkを加える」を2回行う。 |
-| **境界値** | 空リスト、要素1個、条件を満たす要素なし、全要素同値、負数など。 |
-
-<div class="split-warning"><strong>生成してから分けると、同じ問題の表記違いが訓練とテストに混入する。</strong><br>同じ意味ASTから作った言い換え・等価コードは、同じ分割先にまとめる。</div>
-
-<!-- <div class="split-note">組合せ汎化用のASTを先に確保し、残りを約80：10：10に分割。言い換えは表現の汎化を測る別枠。<br>実際の評価には「同じ操作の反復」も追加し、計5種類のテストを使う。</div> -->
-
-<!--
-既存の「五つのテストで、生成コードを実行する」を4ページ目に移し、生成前の分割を主題に改訂。
-根拠：../policies/ast_split_policy.md。compositional=670を先に確保し、残り12,050をtrain=9,646、val=1,202、normal=1,202へ分割。約80/10/10であり全12,720の一律分割ではない。
-通常テストを「同じ操作の組み合わせで指示と定数だけ変更」とすると既存の意味AST分割と矛盾するため、訓練にないASTと記載。言い換えは訓練済み単独ASTと未学習表現の組による独立評価で、通常テストとの違いを明示。
-境界値はnormalと同じASTで実行入力を変える。反復AST1,152件は別途生成。
-固定5テストの指示件数はnormal=24,040、compositional=13,400、paraphrase=30、repetition=23,040、boundary=24,040。合計84,550であり一意な指示数ではない。生成コードを実行し、参照実装との一致等を確認する。
--->
-
----
-<!-- _class: ast-training-pair ast-merged -->
-# 意味ASTから訓練データを自動生成・検証する
+<!-- _class: ast-training-pair ast-merged ast-paraphrase -->
+# 意味ASTによる意味の固定と、言い換えの生成
 
 <div class="ast-source">
 
@@ -749,24 +966,24 @@ transformer をゼロから学習
 <div class="ast-outputs">
 <div class="ast-output">
 
-### 日本語の指示文
+### 同じ意味を持つ日本語の言い換え
 
 <div class="ast-method">
 
 #### 生成の手順
 
 **Qwen3-4B-AWQで各操作の日本語表現を生成**
-ASTの順に結合し、テンプレートの
-`{operations}`をルールベースで埋める。
+承認済みの表現をASTの順に組み合わせ、
+同じ処理を指す指示文を生成
 
 </div>
 <div class="ast-example">
 
 #### 生成例
 
-整数リストxsと整数kを受け取り、  
-偶数だけを残し、各要素にkを加える  
-solve関数を書いてください
+「偶数だけを残し、各要素にkを加える」
+
+「偶数を選び出して、各要素にkを足す」
 
 </div>
 </div>
@@ -797,6 +1014,16 @@ def solve(xs, k):
 </div>
 </div>
 
+<p class="paraphrase-take"><strong>共通の中間表現による、意味の対応を保った合成データの拡充</strong><br>意味の保持を重視した言い換えによるデータ効率の改善：<a href="https://arxiv.org/abs/2605.17849">SynPro（Yu &amp; Xiong, 2026）</a> の報告</p>
+
+<!--
+日本語の言い換えは説明例。コードと同じfilter(even)→map(add_k)を表す。本研究で言い換えの有無だけを変えた実験はしていない。
+Yu, Z. and Xiong, C. (2026). Generating Pretraining Tokens from Organic Data for Data-Bound Scaling (SynPro). COLM 2026. 初稿は2026-05-18。https://arxiv.org/abs/2605.17849
+SynProは中心的な意味を保ち、語彙・構文などを変える言い換えを使用（§3.3）。400Mモデル・元データ0.8B tokensの条件で、形式変換を除く構成も単純反復に対して有効トークン数1.8倍（§5.2, Table 3, w/o Reformatting）。この構成も生成器のRL最適化を含む。全体の3.4–5.2倍は言い換え・形式変換・生成器更新を合わせた結果なので、言い換え単独の効果とはしない。有効トークン数は同じ性能に相当する一意な元データ量への換算であり、学習時間の短縮を表さない。https://arxiv.org/html/2605.17849v2
+関連：Kim, K. et al. (2026). Data-efficient pre-training by scaling synthetic megadocs. COLM 2026. 初稿は2026-03-19。300Mモデル・元データ200M tokensで、元文書と言い換えを混ぜる方法は、1文書32言い換えの条件でデータ効率1.48倍と報告（§3）。1.80倍はmegadoc化を加えた結果。これも計算時間の短縮を意味しない。https://arxiv.org/html/2603.18534v1
+いずれも英語テキストの事前学習の報告であり、DSLを使った意味対応の保証や、本研究の日本語からコードへの生成の効果を直接検証した研究ではない。共通ASTによる対応付けは本研究の設計として説明する。
+-->
+
 <!--
 旧5ページの分岐図に、旧6ページの合成データ生成・検証の説明を統合。
 意味ASTが共通の生成元であり、そこから日本語の指示文と正解のPythonコードの両方を作る。日本語をモデルでコードに翻訳して合成データを作るという図ではない。
@@ -813,18 +1040,198 @@ def solve(xs, k):
 -->
 
 ---
+<!-- _class: benchmark-figure -->
+
+# 独自ベンチマークによる評価結果
+
+![h:590](figure/composition_benchmark_with_5m_no_title/plot.png)
+
+<!--
+Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。Astraは独立チャット・low、各カテゴリ10問のみの参考値。
+3操作と4操作の間のオレンジの実線は、訓練データの範囲（最大3操作）と未学習の長さ（4操作）の境目。他の点線は操作数の区切り。Astraの温度は未指定でありgreedyとは主張しない。訓練回数・生成上限・実行基盤などは一致しない。
+図：figure/composition_benchmark_with_5m_no_title/plot.png（図内タイトルなし・棒の数値ラベルなし。タイトルはMarp側の見出し）
+数値・実行条件・入力hash：figure/composition_benchmark_with_5m_no_title/values.json
+作図：.venv/bin/python scripts/model/benchmark.py --models boku-15m-1epoch boku-5m-1epoch boku-1m-3epoch qwen3-1.7b --astra-reference --presentation --rows 1 --columns 9 --values no --title "" --output docs/report/figure/composition_benchmark_with_5m_no_title
+-->
+
+---
+
+<!-- _class: benchmark-figure benchmark-focus -->
+# 評価結果の注目点3か所
+
+<div class="focus-chart">
+<img src="figure/composition_benchmark_with_5m_no_title/plot.png" alt="5モデルの9カテゴリ正答率。未学習2操作、未学習3操作、異なる4操作を赤丸で強調。">
+<svg class="focus-marks" viewBox="0 0 2880 1620" aria-hidden="true">
+<g fill="none" stroke="#d33743" stroke-width="8"><ellipse cx="617" cy="575" rx="115" ry="78"/><ellipse cx="1498" cy="563" rx="112" ry="70"/><ellipse cx="2041" cy="1115" rx="63" ry="185"/></g>
+<g fill="#d33743" font-family="sans-serif" font-size="50" font-weight="700"><text x="486" y="470">①</text><text x="1370" y="465">②</text><text x="1895" y="880">③</text></g>
+</svg>
+</div>
+<div class="focus-captions"><div><b>① 未学習の2操作</b><br>1M・3 epoch：99%<br>Astra参考値：90%</div><div><b>② 未学習の3操作</b><br>1M・3 epoch：100%<br>学習済みの操作による新しい組み合わせ</div><div><b>③ 異なる4操作</b><br>Bokuは7〜43%<br>訓練範囲の3操作を超えると低下</div></div>
+<!-- <p class="focus-note">Boku・Qwenは全872問、Astraは各カテゴリ10問の参考値（評価集合・実行条件の違いに留意）</p> -->
+
+<!--
+赤丸は元グラフの上にSVGとして重ね、棒・軸・数値を変更しない。1M3epochのcomposition_2op=99/100、composition_3op=100/100。Astraのcomposition_2op=9/10。general_4opはBoku15M29/100、5M7/100、1M3epoch43/100。
+Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。Astraは独立チャット・low、各カテゴリ10問のみの参考値。
+3操作と4操作の間のオレンジの実線は、訓練データの範囲（最大3操作）と未学習の長さ（4操作）の境目。他の点線は操作数の区切り。Astraの温度は未指定でありgreedyとは主張しない。訓練回数・生成上限・実行基盤などは一致しない。
+図：figure/composition_benchmark_with_5m_no_title/plot.png（図内タイトルなし・棒の数値ラベルなし。タイトルはMarp側の見出し）
+数値・実行条件・入力hash：figure/composition_benchmark_with_5m_no_title/values.json
+作図：.venv/bin/python scripts/model/benchmark.py --models boku-15m-1epoch boku-5m-1epoch boku-1m-3epoch qwen3-1.7b --astra-reference --presentation --rows 1 --columns 9 --values no --title "" --output docs/report/figure/composition_benchmark_with_5m_no_title
+-->
+
+---
+<!-- _class: agenda-page -->
+
+# 発表の流れ
+
+| | 章 | 内容 |
+| :--- | :--- | :--- |
+| ① | 意味AST（DSL） | 24操作を組み合わせ、処理の意味を共通に定義 |
+| ② | 合成データ | 生成フロー、ASTの分割、日本語の言い換え、コード生成・検証 |
+| ③ | 学習 | トークナイザ、参照範囲、コード部分の損失、モデル構成と学習結果 |
+| ④ | 推論 | 次のトークンを選び、出力を入力に加えてコードを生成 |
+| ⑤ | 評価 | ベンチマークの設計と結果、5モデルの失敗例 |
+
+以降のページ右上の「章名　n/m」：章内のページ番号（n）と総枚数（m）
+
+<!--
+【話す内容】
+ここからの流れです。意味ASTを定義した後、合成データの全体フローを示し、分割、日本語の言い換え、コード生成・検証を一つの章で説明します。その後は学習、推論、評価の順です。評価では5モデルの失敗例を示し、区切りのページを挟んで考察に進みます。
+各ページの右上に、その章の中で何枚目かを示しています。
+-->
+
+---
+
+<!-- _header: '① 意味AST（DSL）　1/1' -->
+<!-- _class: operation-scope -->
+
+# 意味AST（DSL）：24操作から最大3操作の組み合わせ
+
+<div class="operation-layout">
+<div class="operation-tables">
+
+## 基本操作
+
+| 種類 | 操作数 | 例 |
+| :--- | ---: | :--- |
+| 条件に合う数の抽出 | 10 | 偶数、奇数、正の値、kより大きい値 |
+| 要素ごとの値の変換 | 8 | kを加える、2倍、絶対値、二乗 |
+| 順序の変更 | 3 | 昇順、降順、現在の順序の反転 |
+| 一部の切り出し | 3 | 先頭k個、末尾k個、1個おき |
+
+## 操作の組み合わせ
+
+| 操作数 | 数え方 | 意味の種類 |
+| :--- | ---: | ---: |
+| 1操作 | 24 | 24 |
+| 2操作 | 24 × 23 | 552 |
+| 3操作 | 24 × 23 × 22 | 12,144 |
+| 合計 | 24 ＋ 552 ＋ 12,144 | **12,720** |
+
+</div>
+<div class="operation-ast">
+
+## 意味ASTの例
+
+日本語：奇数だけを残し、各要素を2倍して降順に並べる
+
+```json
+{
+    "sequence": [
+        {"filter": ["odd"]},
+        {"map": ["mul_const", 2]},
+        {"order": "descending"}
+    ]
+}
+```
+
+</div>
+</div>
+
+<!--
+【話す内容】
+処理の意味を表す中間表現として、意味ASTを定義しました。基本操作は24種類で、条件で残す・一つずつ値を変える・順序を変える・一部を取り出すの4種類に分かれます。これを順序を区別して最大3つ組み合わせると、12,720通りの処理になります。右はその一例で、奇数だけを残し、2倍して、降順に並べる処理です。
+意味ASTは合成データを作るための表現で、学習と推論でモデルに渡すのは日本語の指示だけです。
+
+【補足】
+同じ操作を繰り返さず、順序を区別して数えている。同じ操作の反復はテストで確かめる。
+汎用のプログラミング全般を扱う実験ではない。
+退避していた旧ページ「意味ASTは24種類、3操作まで組み合せで12,720通り」を移した。
+根拠：../specifications/atomic_semantic_asts.md
+-->
+
+---
+
+<!-- _header: '② 合成データ　1/5' -->
+<!-- _class: synthetic-flow -->
+# 合成データ生成の全体フロー
+
+<p class="fv-lead">同じ<strong>意味AST</strong>から、日本語の指示文と正解コードを別々に作って組にする</p>
+
+<div class="fv-flow">
+<div class="fv-box fv-side fv-pre"><span class="fv-no">1</span><p class="fv-title">意味AST</p><p class="fv-key">12,720<small>通り</small></p><p class="fv-sub">24操作・最大3操作</p></div>
+<div class="fv-arrow"></div>
+<div class="fv-box fv-side fv-pre"><span class="fv-no">2</span><p class="fv-title">AST単位で分割</p><p class="fv-key">約8：1：1</p><p class="fv-sub">訓練・検証・通常テスト</p></div>
+<div class="fv-fork"><span class="fv-bar"></span><i></i><i></i></div>
+<div class="fv-lanes">
+<div class="fv-box fv-lane"><span class="fv-no">3</span><p class="fv-title">日本語の指示文</p><div class="fv-chain"><div class="fv-pill"><b>表現を作成</b><span>Qwen3-4B-AWQ</span></div><div class="fv-to"></div><div class="fv-pill"><b>組み合わせ</b><span>ASTに沿って</span></div></div></div>
+<div class="fv-box fv-lane"><span class="fv-no">4</span><p class="fv-title">正解のPythonコード</p><div class="fv-chain"><div class="fv-pill"><b>コードを作成</b><span>ASTからルールで</span></div><div class="fv-to"></div><div class="fv-pill"><b>出力を照合</b><span>参照インタプリタ</span></div></div></div>
+</div>
+<div class="fv-merge"><span class="fv-bar"></span><i></i></div>
+<div class="fv-box fv-side fv-goal"><span class="fv-no">5</span><p class="fv-title">訓練データ</p><p class="fv-key">192,900<small>件</small></p><p class="fv-sub">指示と正解コードの組</p></div>
+</div>
+
+<!-- 原仕様：../../boku1-nano.md。実績では24操作の順序付き1〜3操作（重複なし）で12,720 AST。組合せ汎化670件を先に確保し、残り12,050件を訓練9,646・検証1,202・通常テスト1,202へ分割。日本語表現は各操作30候補を生成し、20件以上の承認を目標とした。操作別の最終承認数は12〜29件。訓練指示の一部96,390件はQwenによる全文言い換えで置換し、総数192,900件を維持。全文候補は一括承認であり、原子表現の個別人手確認と区別。根拠：../results/japanese_atomic_expression_expansion_history.md、../results/instruction_paraphrase_approval_results.md。Qwenは日本語の表現辞書作成に使用。合成データの正解コードはASTから生成する。先にASTを分割し、同一ASTの言い換え・等価コードを同じ集合にまとめる。コード生成時の照合は境界9件＋ランダム32件の41入力であり、全入力に対する証明ではない。生成コード全文の完全重複0件は、訓練・検証・通常テスト・組合せ汎化・反復汎化の5集合の候補277,440件について確認済み。SHA-256で候補を照合し、同一ハッシュでは全文を比較。最終訓練192,900件は重複のない候補の部分集合。意味上の重複や評価レコードでのコード再利用を否定する主張ではない。根拠：../results/evaluation_python_code_generation_results.md、../results/multi_operation_python_code_generation_results.md。根拠：../policies/ast_split_policy.md、../results/japanese_atomic_expression_generation_results.md、../results/rule_generated_instruction_results.md、../results/multi_operation_python_code_generation_results.md、../results/final_train_dataset_results.md。本文から外した補足：日本語の指示文はQwen3-4B-AWQで各操作30候補を生成し、人が意味を確認・承認した表現をルールで結合して作る。正解コードはASTからルールベースで等価なコードを生成し、構造・変数名を変える。検証は構文検査と、参照インタプリタとの出力照合（境界値9件＋ランダム32件の41入力）。参照インタプリタと出力が一致したコードだけを採用し、同じASTの指示文と組にする。訓練データ1件は日本語の指示と正解コードの組。 -->
+
+---
+
+<!-- _header: '② 合成データ　2/5' -->
+<!-- _class: split-design -->
+# 意味AST単位での訓練・検証・テストの分割
+
+<div class="split-order">意味ASTを分割　→　<strong>各集合の中で</strong>言い換え・コード変換</div>
+
+訓練 **約80%** ／ 検証 **約10%** ／ 通常テスト **約10%**
+
+| テスト | 変更点・確認対象 |
+| :--- | :--- |
+| **通常** | 同じ基本操作の範囲で、訓練に含まれない意味ASTの評価 |
+| **言い換え** | 既知の単独操作への、訓練で使わなかった日本語表現の適用 |
+| **組合せ汎化** | 例：別々に学んだ「偶数抽出」と「降順整列」の組み合わせ |
+| **同じ操作の反復** | 同じ操作の2回・3回の連続適用（例：「各要素にkを加える」の2回適用） |
+| **境界値** | 空リスト、要素1個、条件を満たす要素なし、全要素同値、負数など |
+
+<div class="split-warning"><strong>生成後の分割では、同じ問題の表記違いが訓練とテストに混入</strong><br>同じ意味ASTから作った言い換え・等価コードは、同じ分割先に集約</div>
+
+<!-- <div class="split-note">組合せ汎化用のASTを先に確保し、残りを約80：10：10に分割。言い換えは表現の汎化を測る別枠。<br>実際の評価には「同じ操作の反復」も追加し、計5種類のテストを使う。</div> -->
+
+<!--
+【話す内容】
+訓練・検証・テストは、日本語文やコードを生成する前に、意味ASTの段階で分けます。意味ASTを先に分割し、各集合の中で言い換えとコード変換を行います。生成してから分けると、同じ問題の表記違いが訓練とテストの両方に入ってしまうためです。
+テストは5種類です。訓練にない意味ASTを評価する通常テスト、既知の操作に未学習の日本語表現を使う言い換え、別々に学んだ操作を組み合わせる組合せ汎化、同じ操作の反復、そして空リストや負数などの境界値です。
+
+【補足】
+退避していた旧ページ「訓練・検証・テストは、意味ASTの段階で分ける」を移した。
+根拠：../policies/ast_split_policy.md。compositional=670を先に確保し、残り12,050をtrain=9,646、val=1,202、normal=1,202へ分割。約80/10/10であり全12,720の一律分割ではない。
+通常テストを「同じ操作の組み合わせで指示と定数だけ変更」とすると既存の意味AST分割と矛盾するため、訓練にないASTと記載。言い換えは訓練済み単独ASTと未学習表現の組による独立評価で、通常テストとの違いを明示。
+境界値はnormalと同じASTで実行入力を変える。反復AST1,152件は別途生成。
+固定5テストの指示件数はnormal=24,040、compositional=13,400、paraphrase=30、repetition=23,040、boundary=24,040。合計84,550であり一意な指示数ではない。生成コードを実行し、参照実装との一致等を確認する。
+-->
+
+---
+
+<!-- _header: '② 合成データ　3/5' -->
 <!-- _class: generation-page -->
 
-# Qwen3-4B-AWQで日本語表現を生成し、組み合わせで指示文作成
+# Qwen3-4B-AWQによる日本語表現の生成と組み合わせ
 
-**表現辞書の作成**と、**承認済み表現の組み合わせ**の二段階で指示を作る。
+**表現辞書の作成**と**承認済み表現の組み合わせ**による、二段階の指示文生成
 
 <div class="generation-columns">
 <div class="generation-stage">
 
-## ① 表現辞書を作る：Qwen3-4B-AWQ ＋ 人
+## ① 表現辞書の作成：Qwen3-4B-AWQ
 
-Qwen3-4B-AWQに、各基本操作の表現を約20種類作成
+各操作30候補の生成と、人による意味の確認・承認<br>各操作20件以上の承認を目標
 
 ### 保存済みプロンプト（要約）
 
@@ -846,25 +1253,25 @@ Qwen3-4B-AWQに、各基本操作の表現を約20種類作成
 </div>
 <div class="generation-stage">
 
-## ② 指示を作る：ルールベース
+## ② 指示文の作成：ルールベース
 
-意味ASTに沿って、承認済みの表現を組み合わせる
+意味ASTに沿った、承認済み表現の組み合わせ
 
 ### 例：偶数を残す → 各要素にkを加える
 
 <div class="generation-example">
 
-**選ぶ表現**
+**選択する表現**
 
 「偶数の要素を取り出す」<br class="compact-break">「各要素にkを加える」
 
-**つなぐルール**
+**接続のルール**
 
 操作1し、操作2する
 
 </div>
 
-**生成する日本語指示**
+**生成した日本語指示**
 
 「偶数の要素を取り出し、各要素にkを加える」
 
@@ -883,16 +1290,18 @@ Qwen3-4B-AWQに、各基本操作の表現を約20種類作成
 -->
 
 ---
+
+<!-- _header: '② 合成データ　4/5' -->
 <!-- _class: generation-page -->
 
-# 意味ASTから、ルールで等価なPythonコード生成
+# ルールベースで等価なPythonコード生成
 
 同じ意味ASTでも、異なる書き方のコードを生成
 
 <div class="generation-columns">
 <div>
 
-## 内包表記でまとめて選ぶ
+## 内包表記による一括抽出
 
 ```python
 def solve(xs, k):
@@ -906,7 +1315,7 @@ def solve(xs, k):
 </div>
 <div>
 
-## forループで順に選ぶ
+## forループによる逐次抽出
 ```python
 def solve(xs, k):
     result = []
@@ -920,7 +1329,7 @@ def solve(xs, k):
 
 <div class="generation-result">共通の入力：<code>[3, 2, 4, 2]</code>　→　どちらの出力も <strong><code>[2, 4, 2]</code></strong></div>
 
-| 変える箇所 | 変換例 |
+| 変更箇所 | 変換例 |
 | :--- | :--- |
 | 処理の構造 | 内包表記 ↔ forループ ／ 直接return ↔ 一時変数を使う複数行 |
 | 名前・補足 | 変数名の変更 ／ コメント・型注釈の有無 |
@@ -939,6 +1348,8 @@ def solve(xs, k):
 -->
 
 ---
+
+<!-- _header: '② 合成データ　5/5' -->
 <!-- _class: default -->
 
 
@@ -952,9 +1363,9 @@ def solve(xs, k):
 
 <!-- _class: default -->
 
-# 学習に使った合成データは192,900件
+# 学習用の合成データ192,900件
 
-1件は「日本語の指示」と「正解コード」の組。
+1件は「日本語の指示」と「正解コード」の組
 
 | 処理の長さ | 訓練データの件数 |
 | :--- | ---: |
@@ -963,7 +1374,7 @@ def solve(xs, k):
 | 3操作 | 183,760 |
 | 合計 | **192,900** |
 
-**約95%が3操作の合成データ。** 単独操作の合成データは少ない。
+**約95%が3操作の合成データ** ／ 単独操作の合成データは少数
 
 <!--
 3操作の割合は95.2618%。データの偏りは文型依存の考察につながります。
@@ -993,25 +1404,381 @@ def solve(xs, k):
 -->
 
 ---
-<!-- _class: autoregressive ar-diagram -->
-# 自己回帰：出力を次の入力に加えて繰り返す
 
-decoder型transformerは、直前までの言葉から次の言葉を予測する。
+<!-- _header: '③ 学習　1/9' -->
+<!-- _class: bpe-page -->
+# BPEトークナイザ：頻出する文字列のトークン化
 
-<div class="ar-flow">
-<div class="ar-labels">
+バイト単位から開始し、語彙が **2,048** になるまで、**最も多く隣り合う組の結合**を反復
 
-入力：ここまでの文章
+<div class="bpe-tokens">
 
-予測するモデル
-
-出力：次の言葉
+`<|bos|>` `<|task|>` `⏎` `整数リストxsから` `偶数だけを残す` `solve関数を書` `いてください。` `⏎` `<|code|>` `⏎` `def␣solve` `(xs` `)` `:⏎␣␣␣␣` `return␣[` `v` `␣` `for␣` `v` `␣` `in␣` `xs␣if␣` `v` `␣` `%␣2` `␣` `==␣0` `]` `<|eos|>`
 
 </div>
+
+この1件は **29トークン**<br>「偶数だけを残す」が1トークンになるのは、訓練データに頻出するため
+
+| 設定 | 値 | 意味 |
+| :--- | ---: | :--- |
+| 語彙数 | 2,048 | 特殊トークン7個を含む、結合を繰り返す際の語彙数の上限 |
+| 最小頻度 `min_frequency` | 5 | 訓練データに5回以上現れる組だけの結合 |
+| 最大piece長 `max_token_length` | 24 | 1トークンは最大24バイト（日本語なら8文字まで） |
+
+<!--
+【話す内容】
+モデルに入れる前に、文字列をトークンのID列に変えます。BPEは、バイト単位から始めて、最も多く隣り合う組を1つにまとめる操作を、語彙が2,048になるまで繰り返す方法です。訓練データの日本語指示とPythonコードだけから学習しました。
+上の例は、先ほどの訓練データ1件を実際にこのトークナイザで分割した結果です。日本語の指示は「偶数だけを残す」のように句の単位でまとまり、4トークンになります。コードは「def solve」「return [」のように細かく分かれ、18トークンです。訓練データに多く現れる文字列ほど長い1トークンになります。
+
+【補足】
+分割結果は data/tokenizers/bpe_2048/tokenizer.json で実際に符号化したもの。␣は空白、⏎は改行を表す。<|bos|><|task|><|code|><|eos|>は特殊トークン（7個を語彙に含む）。
+設定：byte-level BPE、byte fallbackあり、min_frequency=5、max_token_length=24、normalizerなし、正規表現による事前分割なし。語彙は日本語とコードで共通。訓練データ192,900件の指示とコードだけから学習。
+max_token_lengthは結合後のトークンの長さの上限で、byte-levelでは1バイト＝1記号なので24バイト。日本語はUTF-8で1文字3バイトのため8文字まで。例の「偶数だけを残す」は7文字＝21バイトで上限内。
+min_frequencyは、結合候補の組が訓練コーパスに現れる回数の下限。2,048は特殊トークン7個（pad, bos, eos, unk, task, code, explanation）とバイト256個を含む語彙全体の数。
+日本語とコードを別の語彙にしていないので、同じ系列として扱える。
+根拠：../../config/tokenizer_bpe_2048.yaml、../results/bpe_tokenizer_training_results.md、../policies/tokenizer_training_policy.md
+-->
+
+---
+
+<!-- _header: '③ 学習　2/9' -->
+<!-- _class: causal-svg -->
+<style scoped>
+section { padding: 48px 62px 30px; font-size: 20px; line-height: 1.35; }
+h1 { font-size: 38px; margin: 0 0 6px; color: #17212b; }
+section > p { margin: 0 0 14px; font-size: 22px; }
+.cs-cols { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 20px; margin: 0 -22px; }
+.cs-panel { background: #fff; border: 1.5px solid #c8d2db; border-radius: 10px; padding: 14px 16px 12px; height: 430px; box-sizing: border-box; display: flex; flex-direction: column; }
+.cs-panel h2 { font-size: 21px; margin: 0 0 10px; color: #17212b; white-space: nowrap; }
+.cs-cap { display: none; }
+/* ① マスク表（○＝見える、×＝見えない） */
+table.cs-mask { display: table; width: auto; margin: 2px auto 0; border-collapse: separate; border-spacing: 3px; font-size: 19px; font-family: "SFMono-Regular", Menlo, monospace; }
+table.cs-mask th, table.cs-mask td { border: 0; padding: 0; width: 50px; height: 46px; text-align: center; vertical-align: middle; background: transparent; color: #17212b; font-weight: 400; }
+table.cs-mask tr { background: transparent !important; }
+table.cs-mask thead th { height: 30px; }
+table.cs-mask tbody th { width: 56px; text-align: right; padding-right: 10px; }
+table.cs-mask td.o { background: #eaf3fb; color: #245f8b; }
+table.cs-mask td.x { background: #f3f5f7; color: #c0c8d0; }
+table.cs-mask td.arw { width: 30px; color: #9aa5b1; }
+table.cs-mask td.t, table.cs-mask th.t { width: 66px; }
+table.cs-mask td.t span { display: block; margin: 0 4px; padding: 6px 0; border: 2px solid #245f8b; border-radius: 6px; background: #fff; color: #245f8b; font-size: 18px; }
+table.cs-mask th.t { color: #245f8b; font-weight: 700; font-size: 14px; white-space: nowrap; font-family: "Hiragino Sans", sans-serif; }
+.cs-foot { margin-top: auto; font-size: 18px; }
+/* ② 生成ループ（トークン幅52px・間隔3px。幅を変えたらSVGのx座標も合わせる） */
+.cs-gen { width: 558px; margin: 4px auto 0; }
+.cs-row { display: grid; grid-template-columns: 36px 330px 22px 90px 22px 58px; align-items: center; height: 48px; }
+.cs-step { visibility: hidden; } /* グリッドの1列目を保つため非表示は visibility で行う */
+.cs-tok { display: flex; gap: 3px; }
+.cs-tok span { width: 52px; height: 46px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: #fff; border: 1.5px solid #9aa5b1; border-radius: 6px; font-size: 19px; font-family: "SFMono-Regular", Menlo, monospace; }
+.cs-tok span.new1, .cs-tok span.new2, .cs-out { background: #eaf3fb; border: 2px solid #245f8b; color: #245f8b; }
+.cs-arw { text-align: center; color: #9aa5b1; }
+.cs-dec { height: 46px; display: flex; align-items: center; justify-content: center; background: #f3f5f7; border: 1.5px solid #9aa5b1; border-radius: 8px; color: #17212b; font-weight: 700; font-size: 18px; }
+.cs-out { height: 46px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: 7px; font-weight: 700; font-size: 19px; font-family: "SFMono-Regular", Menlo, monospace; }
+.cs-loop { display: block; height: 36px; }
+.cs-note { display: none; }
+/* まとめ */
+.cs-take { margin-top: 14px; padding: 9px 18px; background: #f3f5f7; border-left: 6px solid #245f8b; font-size: 20px; }
+.cs-take .sub { font-size: 16px; color: #555; }
+.cs-small { display: none; }
+</style>
+
+# Decoder-onlyが自己回帰に向いている理由
+
+学習・生成に共通の<strong>「今の位置までのトークンだけを見る」</strong>というルール（例は `[v for v in xs if` の部分）
+
+<div class="cs-cols">
+
+<div class="cs-panel">
+<h2>① 学習時：未来のマスク　○ 参照可能　× 参照不可</h2>
+<div class="cs-cap">行＝今処理中のトークン　列＝参照先</div>
+<table class="cs-mask">
+<thead><tr><th></th><th>[v</th><th>for</th><th>v</th><th>in</th><th>xs</th><th></th><th class="t">当てるトークン</th></tr></thead>
+<tbody>
+<tr><th>[v</th><td class="o">○</td><td class="x">×</td><td class="x">×</td><td class="x">×</td><td class="x">×</td><td class="arw">→</td><td class="t"><span>for</span></td></tr>
+<tr><th>for</th><td class="o">○</td><td class="o">○</td><td class="x">×</td><td class="x">×</td><td class="x">×</td><td class="arw">→</td><td class="t"><span>v</span></td></tr>
+<tr><th>v</th><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="x">×</td><td class="x">×</td><td class="arw">→</td><td class="t"><span>in</span></td></tr>
+<tr><th>in</th><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="x">×</td><td class="arw">→</td><td class="t"><span>xs</span></td></tr>
+<tr><th>xs</th><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="arw">→</td><td class="t"><span>if</span></td></tr>
+</tbody>
+</table>
+<div class="cs-foot">→ 1つの系列で<strong>5問ぶんの「次のトークン当て」</strong>を同時に学習</div>
+</div>
+
+<div class="cs-panel">
+<h2>② 生成時：末尾への出力追加と予測の反復</h2>
+<div class="cs-cap">学習と同じ「今の位置まで」のルールで、そのまま続きを書ける</div>
+<div class="cs-gen">
+<div class="cs-row"><span class="cs-step">1回目</span><div class="cs-tok"><span>[v</span><span>for</span><span>v</span><span>in</span></div><span class="cs-arw">→</span><div class="cs-dec">Decoder</div><span class="cs-arw">→</span><div class="cs-out">xs</div></div>
+<svg class="cs-loop" width="558" height="36" viewBox="0 0 558 40" preserveAspectRatio="none"><polyline points="529,0 529,14 282,14 282,32" fill="none" stroke="#245f8b" stroke-width="2.5"/><polygon points="282,40 276,30 288,30" fill="#245f8b"/></svg>
+<div class="cs-row"><span class="cs-step">2回目</span><div class="cs-tok"><span>[v</span><span>for</span><span>v</span><span>in</span><span class="new1">xs</span></div><span class="cs-arw">→</span><div class="cs-dec">Decoder</div><span class="cs-arw">→</span><div class="cs-out">if</div></div>
+<svg class="cs-loop" width="558" height="36" viewBox="0 0 558 40" preserveAspectRatio="none"><polyline points="529,0 529,14 337,14 337,32" fill="none" stroke="#245f8b" stroke-width="2.5"/><polygon points="337,40 331,30 343,30" fill="#245f8b"/></svg>
+<div class="cs-row"><span class="cs-step">3回目</span><div class="cs-tok"><span>[v</span><span>for</span><span>v</span><span>in</span><span>xs</span><span class="new2">if</span></div><span class="cs-arw">→</span><div class="cs-dec">Decoder</div><span class="cs-arw">→</span><div class="cs-out">v</div></div>
+</div>
+<div class="cs-note">前の位置の結果は後ろに足しても<strong>変わらない → 使い回せる</strong>（KVキャッシュ）</div>
+</div>
+
+</div>
+
+<div class="cs-take"><strong>学習時と生成時に共通の参照範囲</strong>による、一貫した次トークン予測</div>
+
+<!-- 例は訓練データ「整数リストxsから偶数だけを残すsolve関数」のコード部分 return [v for v in xs if v % 2 == 0] のうち [v〜if を、説明のため単語・記号単位のトークンとして示した。実際のBPE分割・実測出力ではない。参照範囲は「自分より前だけ」でなく現在位置を含む因果マスク。学習は正解prefix、生成は自身の出力prefixを使う点は異なる。図はAttentionの参照範囲を示し、各位置を損失対象にするかは前後ページのlabelsで別に決まる。補足の小さな文字（cs-cap・cs-step・cs-note：KVキャッシュの説明など）はCSSで非表示にしてあり、表示したいときは display: none を外す。 -->
+---
+
+<!-- _header: '③ 学習　3/9' -->
+<!-- _class: code-explain causal-code -->
+# 学習時のコード：未来の位置への参照制限
+
+<div class="code-columns"><div>
+
+```python
+# ① 各位置の表現からQ・K・Vを作る
+query, key, value = self.qkv_proj(
+    hidden_states
+).chunk(3, dim=-1)
+# …（各テンソルをheadごとに並べ替える）
+
+# ② Q・Kに位置情報を加える
+query, key = self.rope(query, key)
+
+# ③ 現在位置までのK・Vだけを参照する
+attended = F.scaled_dot_product_attention(
+    query,
+    key,
+    value,
+    dropout_p=self.dropout if self.training else 0.0,
+    is_causal=True,
+)
+```
+
+<div class="code-source">boku_nano.py：CausalSelfAttention.forward（207–229行）</div>
+
+</div><div>
+
+## 例：日本語指示から「偶数抽出」のコードへ
+
+```text
+<|bos|><|task|>
+整数リストxsから偶数だけを残すsolve関数を書いてください。
+<|code|>
+def solve(xs):
+    return [v for v in xs if v % 2 == 0]
+<|eos|>
+```
+
+| `return`の末尾位置を基準とした区分 | 参照範囲 |
+| :--- | :--- |
+| 日本語指示・区切り | ○ 参照可能 |
+| `def solve(xs):` ～ `return` | ○ 現在位置まで参照可能 |
+| 後続の `[v for …]` | × 未来の位置は参照不可 |
+
+**正解コードの入力時も、次に予測する答えは参照対象外**
+
+`is_causal=True` で未来へのAttentionの重みを0に固定し、指示とそこまでのコードから続きを予測
+
+</div></div>
+
+<!-- 指示は保存済みの偶数抽出例。コードは同じ課題の説明用正解例であり、モデル出力の引用ではない。実際にはBPEトークン列として入力し、表は読みやすい文字列のまとまりで示す。「returnの末尾位置」はreturnまでを表すprefixの最終トークン位置を意味する。is_causal=Trueは現在位置を含む因果マスク。Attentionの参照制限と指示部分の損失除外は別の処理。 -->
+
+---
+
+<!-- _header: '③ 学習　4/9' -->
+<!-- _class: code-explain -->
+# 一つ先の正解を使った次トークンの学習
+
+<div class="code-columns"><div>
+
+```python
+# ① 最後以外の位置の予測を取り出す
+shifted_logits = logits[:, :-1, :].contiguous()
+
+# ② 正解を一つ先の位置にずらす
+shifted_labels = labels[:, 1:].contiguous()
+
+# ③ 正解トークンの確率から損失を計算
+loss = F.cross_entropy(
+    shifted_logits.view(
+        -1, shifted_logits.size(-1)),
+    shifted_labels.view(-1),
+    ignore_index=-100,
+)
+```
+
+<div class="code-source">boku_nano.py：BokuNanoForCausalLM.forward（501–509行）</div>
+
+</div><div>
+
+## 今の位置の出力と「次の正解」の比較
+
+| 出力を使う位置 | 予測すべき正解 |
+| :--- | :--- |
+| コード直前 | 最初のコードtoken |
+| 最初のコードtoken | 2番目のコードtoken |
+| 最後のコードtoken | EOS（生成終了） |
+
+$$
+\mathcal{L}=-\frac{1}{|C|}\sum_{t\in C}\log P_\theta(x_t\mid x_{<t})
+$$
+
+$C$：コード開始後〜EOSの位置（指示・paddingは除外）
+
+訓練時は**正解の続きを予測**<br>生成時は**自分が出したトークンの続きを予測**
+
+</div></div>
+
+<!-- cross_entropyはlogitsから計算する。明示的なsoftmaxを前置しない。損失の平均は当該バッチのignore_index以外のラベルに対するもの。 -->
+
+---
+
+<!-- _header: '③ 学習　5/9' -->
+<!-- _class: loss-mask-page -->
+# 日本語指示は条件として読み、コード部分だけで損失を計算
+
+<p class="lm-intro">学習時は<strong>指示と正解コードを両方入力</strong>し、次の正解トークンを予測</p>
+<div class="lm-grid">
+<div class="lm-label">入力系列</div><div class="lm-prompt"><b>日本語の指示</b><br>偶数だけを残す<br>solve関数を書いてください</div><div class="lm-marker"><code>&lt;|code|&gt;</code></div><div class="lm-code"><b>正解のPythonコード</b><br><code>def solve(xs):</code><br><code>　return [v for v in xs if v % 2 == 0]</code></div><div class="lm-eos"><code>EOS</code></div>
+<div class="lm-label">正解ラベル</div><div class="lm-ignore">−100</div><div class="lm-ignore">−100</div><div class="lm-target">各コードトークンのID</div><div class="lm-target">EOSのID</div>
+<div class="lm-label">損失の対象</div><div class="lm-off">損失計算の対象外</div><div class="lm-off">対象外</div><div class="lm-on">損失の計算対象</div><div class="lm-on">計算対象</div>
+</div>
+<p class="lm-connection">日本語の指示を参照した、コードの続きの予測　→</p>
+<div class="lm-bottom"><div>
+
+```python
+labels[:] = IGNORE_INDEX  # -100
+labels[target_start:] = token_ids[target_start:]
+# target_start は <|code|> の直後
+```
+
+</div><div><strong>入力範囲と損失の計算対象は別</strong><br>指示文の予測は採点対象外<br>コード側の損失により、<br>指示を処理する重みも学習</div></div>
+
+<!-- 原20ページのloss対象を図示。文字列は説明用のまとまりで、実際のBPE分割ではない。BOS・task区切り・paddingは図で省略し、これらも-100。実装ではinput_idsとlabelsを1位置ずらしてcross entropyを計算するため、code marker位置から最初のコードトークン（改行を含む）を予測する項が最初の採点対象。code marker自体の予測は対象外。コード直後のEOSまで採点する。図の短縮コードは説明用の1系列の擬似コード。実装：../../scripts/model/train_boku_nano.py のtarget_start（423行）、collate_training_batch（496–513行）。損失：../../scripts/model/boku_nano.py のshifted labelsとcross_entropy。コード側の損失はattentionを介して参照した指示側の表現・共有パラメータにも依存するが、全tokenが同じ強さの勾配を得るとは主張しない。 -->
+
+---
+
+<!-- _header: '③ 学習　6/9' -->
+<!-- _class: model-settings -->
+# モデル構成とトークナイザー
+
+<!-- 本編で比較する既存BPEの **1M・5M・15M**。Mは約100万パラメータを表す。 -->
+
+| 項目 | 1M | 5M | 15M |
+| :--- | ---: | ---: | ---: |
+| **総パラメータ数** | **1,016,704** | **5,065,472** | **15,735,168** |
+| 隠れ次元 `d_model` | 128 | 256 | 384 |
+| 層数 `n_layers` | 3 | 5 | 8 |
+| Attentionのhead数 | 4 | 4 | 6 |
+| 1 headの次元 | 32 | 64 | 64 |
+| FFNの中間次元 `d_ff` | 256 | 704 | 1,024 |
+| この後に示す学習曲線 | 3 epoch | 1 epoch | 1 epoch |
+
+<div class="shared-settings">
+<div>
+<h2>共通のトークナイザー</h2>
+<p>BPE ／ 語彙数 2,048</p>
+<p>最小頻度 5 ／ 最大piece長 24</p>
+<p>最大系列長 256 token</p>
+<p>埋め込み・出力層の重み共有なし</p>
+</div>
+<div>
+<h2>共通の学習設定</h2>
+<p>AdamW ／ β = (0.9, 0.95) ／ batch size 512</p>
+<p>重み減衰 0.1（行列重み）／ dropout 0</p>
+<p class="lr-schedule">5%の線形warmup → cosine減衰<br>学習率 3×10<sup>−4</sup> → 3×10<sup>−5</sup></p>
+<p>勾配クリッピング 1.0 ／ bfloat16での計算</p>
+</div>
+</div>
+
+<!--
+モデル設定：../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/model_config.json、../../data/models/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/model_config.json、../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch/model_config.json。
+パラメータ数：../results/trained_model_inventory.md。head_dim=d_model/n_heads。
+BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_length=24、vocab_size=2048。
+学習設定：各モデルディレクトリのtraining_config.yaml（training節）。AdamWのeps=1e-8、weight_decay=0.1は2次元以上のパラメータのみ、RMSNormなど1次元には0。batch_size=512、gradient_accumulation_steps=1、grad_clip_norm=1.0。学習率は全更新数の5%を線形warmupし、3e-4から3e-5までcosine減衰。1M・3epochは1,131更新・warmup57更新、5M・15Mの1epochは377更新・warmup19更新。実装：../../scripts/model/train_boku_nano.py のbuild_optimizerとbuild_scheduler。
+後続の1epoch比較には同じ1M構造の1epochチェックポイントもある。構造が同じならepoch数を変えてもパラメータ数は変わらない。
+-->
+
+---
+
+<!-- _header: '③ 学習　7/9' -->
+<!-- _class: scientific -->
+# 1M：3 epochまでの損失の推移
+
+3 epochの学習（訓練損失は20 stepごと、検証損失は各epoch終了時の実測値）
+
+![w:1100 h:380](figure/loss_1m_3epoch.png)
+
+**val loss：1 epoch 0.8737 ／ 2 epoch 0.4691 ／ 3 epoch 0.4364**
+
+<!-- 20 stepごとのvalidationは未記録。図は保存済みの3点を表示。 -->
+
+<!--
+3epoch設定の1回の訓練ログを使用。train loss 57点、validation loss 3点。最終stepは1131、epoch境界は377・754・1131。validationは24,040レコードのコード部分を評価。
+1epoch専用runとは学習率スケジュールが異なるため、1epoch専用runの終了値1.3781と接続しない。
+5M・15Mと同じ描画器・表示領域を使用。図内のタイトルと説明を除き、軸・凡例・線色・文字サイズを統一。3点のvalidation lossは実測値のみを表示。
+使用図：figure/loss_1m_3epoch.svg
+根拠：../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/training_metrics.jsonl
+-->
+
+---
+
+<!-- _header: '③ 学習　8/9' -->
+<!-- _class: scientific -->
+# 5M：損失の推移
+
+1 epochの学習における、訓練損失と検証データでの損失
+
+![w:1100 h:380](figure/loss_5m.png)
+
+**学習終了時の val loss：0.4855**
+
+<!-- val lossは終了時の1点。途中の検証値は保存されていない。 -->
+
+<!--
+保存された19点のtrain lossと、1点のvalidation lossをすべて使用。曲線はtrain lossだけであり、val lossの推移を補間していない。縦軸は保存済みの各モデルの図の対数目盛をそのまま使用する。モデルごとに範囲は異なる。最終stepは377。validationは24,040レコードのコード部分を評価。
+使用図：../results/figures/training_loss_20step/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch.svg
+根拠：../../data/models/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/training_metrics.jsonl
+-->
+
+---
+
+<!-- _header: '③ 学習　9/9' -->
+<!-- _class: scientific -->
+# 15M：損失の推移
+
+1 epochの学習における、訓練損失と検証データでの損失
+
+![w:1100 h:380](figure/loss_15m.png)
+
+**学習終了時の val loss：0.4106**
+
+<!-- val lossは終了時の1点。途中の検証値は保存されていない。 -->
+
+<!--
+保存された19点のtrain lossと、1点のvalidation lossをすべて使用。曲線はtrain lossだけであり、val lossの推移を補間していない。縦軸は保存済みの各モデルの図の対数目盛をそのまま使用する。モデルごとに範囲は異なる。最終stepは377。validationは24,040レコードのコード部分を評価。
+使用図：../results/figures/training_loss_20step/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch.svg
+根拠：../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch/training_metrics.jsonl
+-->
+
+---
+
+<!-- _header: '④ 推論　1/3' -->
+<!-- _class: autoregressive ar-diagram -->
+# 自己回帰：出力を次の入力に加え、予測を反復
+
+訓練データ1件は、特殊トークンで区切った「指示＋コード」の1本の系列<br>直前までのトークンから次のトークンを予測
+
+```text
+<|bos|><|task|>
+整数リストxsから偶数だけを残すsolve関数を書いてください。
+<|code|>
+def solve(xs):
+    return [v for v in xs if v % 2 == 0]
+<|eos|>
+```
+
+<div class="ar-flow">
 <div class="ar-flow-row">
 <div class="ar-tokens">
 
-`私` `は` `猫` `が`
+`…` `if` `v` `%` `2`
 
 </div>
 <div class="ar-arrow">
@@ -1021,7 +1788,7 @@ decoder型transformerは、直前までの言葉から次の言葉を予測す�
 </div>
 <div class="ar-model">
 
-**transformer**
+**Decoder**
 
 </div>
 <div class="ar-arrow">
@@ -1031,19 +1798,19 @@ decoder型transformerは、直前までの言葉から次の言葉を予測す�
 </div>
 <div class="ar-output">
 
-**好き**
+**==**
 
 </div>
 </div>
 <div class="ar-feedback">
 
-出力した「好き」を、次の入力の末尾へ
+出力した `==` を、次の入力の末尾へ
 
 </div>
 <div class="ar-flow-row">
 <div class="ar-tokens ar-appended">
 
-`私` `は` `猫` `が` `好き`
+`…` `if` `v` `%` `2` `==`
 
 </div>
 <div class="ar-arrow">
@@ -1053,7 +1820,7 @@ decoder型transformerは、直前までの言葉から次の言葉を予測す�
 </div>
 <div class="ar-model">
 
-**transformer**
+**Decoder**
 
 </div>
 <div class="ar-arrow">
@@ -1061,44 +1828,38 @@ decoder型transformerは、直前までの言葉から次の言葉を予測す�
 →
 
 </div>
-<div class="ar-output ar-next">
+<div class="ar-output">
 
-**です**
-
-</div>
-</div>
-</div>
-
-> **学習では**、文章の途中までを見せ、実際の次の言葉を当てるように学ぶ。
-
-<div class="ar-note">
-
-<!-- 説明用に言葉で区切った例。実際はトークン単位で予測し、生成を繰り返す。 -->
+**0**
 
 </div>
+</div>
+</div>
+
+> **学習時**：系列の途中までを入力し、実際に続くトークンを予測<br>**生成時**：`<|eos|>` が出るまで予測を反復
 
 <!--
-図の例は「私は猫が好きです」。上段で「好き」を生成し、その出力を次の入力の末尾へ加える。下段は同じモデルをもう一度使い、「です」を生成する。二つの別モデルを直列に学習するという意味ではない。
-各語を囲む枠、モデル、矢印、出力を入力へ戻す経路を使い、自己回帰生成を説明する。実際のモデルの実測出力やトークン分割結果ではない。
-学習では正解文章の直前までの系列から実際に続くトークンを予測し、正解トークンの確率を高めるように重みを更新する。causal maskにより未来の正解は見えない。学習時は各位置の予測を一括して計算できる。
-図の生成時には自分で出したトークンを次の入力へ加える。候補は確率分布として予測され、次の言葉が一意に決まるわけではない。
-Boku1-nanoはDecoder-onlyであり、この記事のEncoder-Decoder構成のCross-Attentionは本モデルに含まれない。
-図示の参考： https://disassemble-channel.com/transformer-decoder/ （Decoderの役割・自己回帰生成）
-参考記事の画像自体は使用せず、説明図をMarkdownの本文とCSSの配置で作成。
+図の「…」は <|bos|><|task|> から xs までのトークン。上段で「==」を生成し、その出力を次の入力の末尾へ加える。下段は同じモデルをもう一度使い、「0」を生成する。二つの別モデルを直列に学習するという意味ではない。
+説明のためトークンを単語や記号の単位で区切った。実際のBPEトークン分割とは異なり、実測出力でもない。
+学習では正解系列の直前までから実際に続くトークンを予測し、正解トークンの確率を高めるように重みを更新する。causal maskにより未来の正解は見えない。学習時は各位置の予測を一括して計算できる。
+生成時には自分で出したトークンを次の入力へ加える。候補は確率分布として予測され、次のトークンが一意に決まるわけではない。
+Boku-nanoはDecoder-onlyであり、Encoder-Decoder構成のCross-Attentionは含まれない。
 実装の根拠：../../scripts/model/boku_nano.py（causal attention、shifted labels、cross entropy）
 実装の根拠：../../scripts/model/train_boku_nano.py（collate_training_batch）
+訓練データの形式の根拠：../specifications/training_sequence_format.md（存在しない場合は train_boku_nano.py の特殊トークン定義）
 -->
-
 ---
-<!-- _class: logit-overview -->
-# 次の言葉の候補に確率が割り当てられる
 
-「私は猫が…」の続きも、候補のlogitを確率に直し、その中から1つ選ぶ。
+<!-- _header: '④ 推論　2/3' -->
+<!-- _class: logit-overview -->
+# 次のトークン候補への確率の割り当て
+
+`… if v % 2 ==` の続きも、候補のlogitを確率に変換し、その中から1つを選択
 
 <div class="lp-context">
-<div class="lp-input">私 は 猫 が <strong>？</strong></div>
-<span>→</span><div class="lp-model">transformer </div><span>→</span>
-<span>次の単語候補に対するlogit</span>
+<div class="lp-input">… v % 2 == <strong>？</strong></div>
+<span>→</span><div class="lp-model">transformer</div><span>→</span>
+<span>次のトークン候補に対するlogit</span>
 </div>
 
 <div class="lp-grid">
@@ -1106,12 +1867,12 @@ Boku1-nanoはDecoder-onlyであり、この記事のEncoder-Decoder構成のCros
 
 ## ① logit
 
-logitは確率ではなく、負にもなる
+logit：負の値も取る、確率変換前のスコア
 
-<div class="lp-row"><span>好き</span><div class="lp-track"><span class="lp-bar" style="width:60%"></span></div><b>3.0</b></div>
-<div class="lp-row"><span>嫌い</span><div class="lp-track"><span class="lp-bar" style="width:40%"></span></div><b>2.0</b></div>
-<div class="lp-row"><span>苦手</span><div class="lp-track"><span class="lp-bar" style="width:20%"></span></div><b>1.0</b></div>
-<div class="lp-row"><span>机</span><div class="lp-track"><span class="lp-bar" style="left:0;width:40%"></span></div><b>−2.0</b></div>
+<div class="lp-row"><span>0</span><div class="lp-track"><span class="lp-bar" style="width:60%"></span></div><b>3.0</b></div>
+<div class="lp-row"><span>1</span><div class="lp-track"><span class="lp-bar" style="width:40%"></span></div><b>2.0</b></div>
+<div class="lp-row"><span>xs</span><div class="lp-track"><span class="lp-bar" style="width:20%"></span></div><b>1.0</b></div>
+<div class="lp-row"><span>def</span><div class="lp-track"><span class="lp-bar" style="left:0;width:40%"></span></div><b>−2.0</b></div>
 
 <!-- <p>縦線は0。説明用に4候補と仮定。</p> -->
 </div>
@@ -1120,46 +1881,46 @@ logitは確率ではなく、負にもなる
 
 ## ② 合計1となる確率
 
-softmaxで変換。
+<!-- <p>softmaxで変換。</p> -->
 
-<div class="lp-row"><span>好き</span><div class="lp-track"><span class="lp-bar" style="width:66.2272%"></span></div><b>66.2%</b></div>
-<div class="lp-row"><span>嫌い</span><div class="lp-track"><span class="lp-bar" style="width:24.3636%"></span></div><b>24.4%</b></div>
-<div class="lp-row"><span>苦手</span><div class="lp-track"><span class="lp-bar" style="width:8.9629%"></span></div><b>9.0%</b></div>
-<div class="lp-row"><span>机</span><div class="lp-track"><span class="lp-bar" style="width:0.4462%"></span></div><b>0.4%</b></div>
+<div class="lp-row"><span>0</span><div class="lp-track"><span class="lp-bar" style="width:66.2272%"></span></div><b>66.2%</b></div>
+<div class="lp-row"><span>1</span><div class="lp-track"><span class="lp-bar" style="width:24.3636%"></span></div><b>24.4%</b></div>
+<div class="lp-row"><span>xs</span><div class="lp-track"><span class="lp-bar" style="width:8.9629%"></span></div><b>9.0%</b></div>
+<div class="lp-row"><span>def</span><div class="lp-track"><span class="lp-bar" style="width:0.4462%"></span></div><b>0.4%</b></div>
 
 <!-- <p>棒の長さは確率。順位は変わらない。</p> -->
 </div>
-<div class="lp-arrow"><small>選ぶ</small>→</div>
+<div class="lp-arrow"><small>選択</small>→</div>
 <div class="lp-panel">
 
-## ③ 最も確率が高い候補を選ぶ
+## ③ 最も確率が高い候補の選択
 
-今回のBoku評価で使う選び方。
+<!-- <p>今回のBoku評価で使う選び方。</p> -->
 
-<div class="lp-pick"><strong>好き</strong>　66.2%</div>
-<div class="lp-next">↓ 入力の末尾に追加<br>私は猫が<strong>好き</strong></div>
+<div class="lp-pick"><strong>0</strong>　66.2%</div>
+<div class="lp-next">↓ 入力の末尾に追加<br>… v % 2 == <strong>0</strong></div>
 
-<p>新たな入力で、次のトークンを予測する。</p>
+<!-- <p>新たな入力で、次のトークンを予測する。</p> -->
 </div>
 </div>
 
-<div class="lp-summary">logitは<strong>softmax</strong>で、確率に変換される。</div>
+<div class="lp-summary">logitを<strong>softmax</strong>で確率に変換し、最も確率の高い候補を次のトークンに採用</div>
 
-<!-- <div class="figure-reference">説明用の単語と数値。実際は全語彙を対象に、トークン（単語や単語の一部など）単位で生成する。<br>参考：<a href="https://www.3blue1brown.com/lessons/gpt/">3Blue1Brown：Softmax</a>・<a href="https://www.youtube.com/watch?v=yMQPQuz5WpA">指定動画</a>。</div> -->
+<!-- <div class="figure-reference">説明用のトークンと数値。実際は全語彙を対象に、BPEトークン単位で生成する。<br>参考：<a href="https://www.3blue1brown.com/lessons/gpt/">3Blue1Brown：Softmax</a>・<a href="https://www.youtube.com/watch?v=yMQPQuz5WpA">指定動画</a>。</div> -->
 
 <!--
-自己回帰の説明とPythonコードの間をつなぐ概念図。添付SVGを構成の参考にし、文字・棒グラフ・矢印をすべてMarkdown内のHTML/CSSで記述。画像ファイルは参照しない。
-説明用に語彙を「好き・嫌い・苦手・机」の4候補に限定し、ロジット[3,2,1,-2]をsoftmaxで変換。T=1の確率は約[66.2272,24.3636,8.9629,0.4462]%。表示は小数1桁に丸める。
+自己回帰の説明とPythonコードの間をつなぐ概念図。文字・棒グラフ・矢印をすべてMarkdown内のHTML/CSSで記述。画像ファイルは参照しない。
+説明用に語彙を「0・1・xs・def」の4候補に限定し、ロジット[3,2,1,-2]をsoftmaxで変換。T=1の確率は約[66.2272,24.3636,8.9629,0.4462]%。表示は小数1桁に丸める。
 実測出力やBokuの実際のトークン分割ではない。「上位3候補だけに絞る」処理でもない。
-元SVGのくじ引きの例を、今回のBoku評価の最大確率選択に修正。実装では順位が同じなのでロジットのargmaxを使い、確率への変換を省略できる。
-元SVGの「大小だけが意味を持つ」は不正確なので、ロジットの差が確率の比を決めると修正。
-YouTubeの動画本文は直接取得できず、ユーザー添付のキャプチャと3Blue1Brownの公式テキスト解説を参照。
+Boku評価では最大確率選択（greedy）。実装では順位が同じなのでロジットのargmaxを使い、確率への変換を省略できる。
 https://www.3blue1brown.com/lessons/gpt/ （Unembedding / Softmax）
 https://www.youtube.com/watch?v=yMQPQuz5WpA
 -->
-
----
-<!-- _class: ar-code decoder-logits -->
+<!--
+非表示：logit・softmax・生成ループの3ページ（① logit は Transformerの出力／② softmaxでlogitを合計1の確率へ変換／③ 選んだトークンを入力に加え、予測を繰り返す）。復元時はコメント記号を外し、[元ページ区切り] を --- に戻す。
+[元ページ区切り]
+&lt;!-- _header: '⑤ 学習：トークナイザ・Transformer・自己回帰・損失　4/15' --&gt;
+&lt;!-- _class: ar-code decoder-logits --&gt;
 <style scoped>
 .residual-map .decoder-attention { display: block !important; font-size: 12px !important; line-height: 1.15 !important; padding: 2px !important; }
 .decoder-output { width: 48%; box-sizing: border-box; margin: 0 auto; }
@@ -1213,10 +1974,10 @@ logits = self.lm_head(h).float()
 
 
 
-<!-- **`lm_head` の出力がlogit** -->
+&lt;!-- **`lm_head` の出力がlogit** --&gt;
 
 <div class="code-source">boku_nano.py：RMSNorm・CausalSelfAttention・TransformerBlock
-<!-- 図の左の青線はh0、右の青線はAttention残差加算後のh1を足す経路。 -->
+&lt;!-- 図の左の青線はh0、右の青線はAttention残差加算後のh1を足す経路。 --&gt;
 </div>
 
 </div>
@@ -1256,15 +2017,15 @@ logits = self.lm_head(h).float()
 </div>
 </div>
 
-<!--
+&lt;!--
 図はboku_nano_presentation_copy.mdの11ページからHTML/CSSを移植。下から上へ読む。
 左コードは現行版を維持。図の最初の「正規化前のh」はh0、MLP側の「正規化前のh」はAttentionの残差加算後のh1を指す。
 左の残差経路はh0からAttention後のAddへ、右はそのAdd後からMLP後のAddへ。AddとNormは別の箱。
 型変換と推論時に無効なAttention dropoutは説明用コードでは省略。実装の処理順は変更していない。
--->
+--&gt;
 
 
-<!-- 非表示の詳細ページ（復元時はコメントを外し、ページ区切りを戻す）
+&lt;!-- 非表示の詳細ページ（復元時はコメントを外し、ページ区切りを戻す）
 
 ［注記： _class: code-explain causal-code ］
 
@@ -1387,9 +2148,10 @@ $M$ は現在以前が $0$、未来が $-\infty$。未来の重みは $0$ にな
 ［注記： 実装はPyTorchの融合Attention APIを利用。数式はその意味を示すもので、別実装の引用ではない。B=バッチ数、L=系列長、D=モデル次元、H=head数、d=head次元、D=H*d。dropoutは実装どおりコードに保持。 ］
 
 
-非表示の詳細ページここまで -->
----
-<!-- _class: ar-code -->
+非表示の詳細ページここまで --&gt;
+[元ページ区切り]
+&lt;!-- _header: '⑤ 学習：トークナイザ・Transformer・自己回帰・損失　5/15' --&gt;
+&lt;!-- _class: ar-code --&gt;
 
 # ② softmaxでlogitを合計1の確率へ変換
 
@@ -1435,20 +2197,21 @@ $z_i$：候補 $i$ のlogit、$p_i$：各候補の選択確率<br>
 
 $$p_A=\frac{7.389}{7.389+2.718+1}\approx0.665$$
 
-<!-- 点数0でも確率0ではない。$e^0=1$ だから。 -->
+&lt;!-- 点数0でも確率0ではない。$e^0=1$ だから。 --&gt;
 
 </div>
 </div>
 
-<!--
+&lt;!--
 3候補の数値は説明用。実際は全語彙に対する分布。候補をソートしても各トークンの確率は変わらない。
 temperature=1.0なので左の除算は点数を変えない。モデルの直接出力はロジット。
 出典：../../scripts/model/evaluate_boku_nano_comparison.py sample_generate_equal_length、209–211行。
 softmaxは最後の語彙次元dim=-1に適用する。表はsoftmaxで計算した確率。
--->
+--&gt;
 
----
-<!-- _class: ar-code code-explain generate-explain -->
+[元ページ区切り]
+&lt;!-- _header: '⑤ 学習：トークナイザ・Transformer・自己回帰・損失　6/15' --&gt;
+&lt;!-- _class: ar-code code-explain generate-explain --&gt;
 
 # ③ 選んだトークンを入力に加え、予測を繰り返す
 
@@ -1502,14 +2265,17 @@ with torch.inference_mode():
 </div>
 </div>
 
-<!--
+&lt;!--
 出典：../../scripts/model/export_boku_nano_onnx.py generate_with_pytorch、232–241行。
 ONNXとの一致確認に使う実際のPyTorch推論ループ。通常のバッチ評価にも同じargmax方式がある：../../scripts/model/evaluate_boku_nano.py 488–490行。
 currentは特殊トークンを含むプロンプトIDと生成済みID。毎回全入力を与える実装。KVキャッシュの説明ではない。
--->
+--&gt;
 
----
-<!-- _class: ar-code -->
+&lt;!--
+非表示：温度の2ページ（④ 温度は、候補の確率の偏りを調整する／⑤ 温度を上げると…）。復元時はコメント記号を外し、[元ページ区切り] を --- に戻す。
+[元ページ区切り]
+&lt;!-- _header: '⑤ 学習：トークナイザ・Transformer・自己回帰・損失　7/17' --&gt;
+&lt;!-- _class: ar-code --&gt;
 
 # ④ 温度は、候補の確率の偏りを調整する
 
@@ -1561,15 +2327,16 @@ AとBのlogitが2と1なら、差は1となる。割った後の差は **$1/T$**
 </div>
 </div>
 
-<!--
+&lt;!--
 出典：../../scripts/model/evaluate_boku_nano_comparison.py 209–211行。正のtemperatureの検査は105–106行。
 温度を変更しても学習済み重みは変わらない。softmaxに入力する相対的な点数差を調整する。
 参考：https://aman.ai/primers/ai/token-sampling/#temperature （The Role of Temperature in Softmax）。Tが0に近づくと最大候補に集中（最大が一つの場合）、十分大きくなると有限語彙上の一様分布に近づく。T=0で除算しない。
 数式と順位不変性は3Blue1Brown公式解説およびローカルPython実装でも照合。
--->
+--&gt;
 
----
-<!-- _class: ar-code temperature-example -->
+[元ページ区切り]
+&lt;!-- _header: '⑤ 学習：トークナイザ・Transformer・自己回帰・損失　8/17' --&gt;
+&lt;!-- _class: ar-code temperature-example --&gt;
 
 # ⑤ 温度を上げると、低い確率の候補も選ばれやすくなる
 
@@ -1620,158 +2387,25 @@ $T=0.5$ なら約 **7.39倍**、$T=1$ なら約 **2.72倍**、$T=2$ なら約 **
 
 <div class="code-source">参考：<a href="https://aman.ai/primers/ai/token-sampling/#temperature">Aman AI：Temperature</a>。温度は正解率の向上を保証しない。</div>
 
-<!--
+&lt;!--
 参考：ユーザー提供の書籍画像 IMG_0947.jpg（p.124）、IMG_0948.jpg（p.125）。書名・著者は画像から未確認。説明の構成を参考にし、図は独自の3候補の数値からMarkdown/CSSで作成。
 3候補の説明用の計算例。丸めにより合計100%にならない場合がある。
 確率比ではsoftmaxの共通分母が相殺される。図はtemperatureだけを変えたsoftmaxの分布。
 Pythonのsampling関数はT>0のみを受け付ける。T=0を渡して分岐する実装ではなく、greedyは別の実装。
 出典：../../scripts/model/evaluate_boku_nano_comparison.py 105–106、209–211行、../../scripts/model/export_boku_nano_onnx.py 237行。
+--&gt;
+
+非表示：温度の2ページここまで
+--&gt;
+
+非表示：logit・softmax・生成ループの3ページここまで
 -->
 
 ---
-<!-- _class: causal-svg -->
-<style scoped>
-section { padding: 50px 40px 30px; font-size: 20px; line-height: 1.35; }
-h1 { font-size: 36px; margin: 0 0 6px; color: #1f5f8b; }
-section > p { margin: 0 0 14px; font-size: 22px; }
-.cs-cols { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 20px; }
-.cs-panel { background: #fafbfd; border: 1.5px solid #d5dde7; border-radius: 10px; padding: 14px 16px 12px; height: 430px; box-sizing: border-box; display: flex; flex-direction: column; }
-.cs-panel h2 { font-size: 23px; margin: 0 0 4px; color: #1f5f8b; }
-.cs-cap { font-size: 15px; color: #666; margin: 0 0 8px; }
-.cs-cap .ok { color: #3f6f9f; } .cs-cap .ng { color: #999; }
-/* ① マスク表 */
-table.cs-mask { display: table; width: auto; margin: 2px auto 0; border-collapse: separate; border-spacing: 3px; font-size: 20px; }
-table.cs-mask th, table.cs-mask td { border: 0; padding: 0; width: 50px; height: 46px; text-align: center; vertical-align: middle; background: transparent; color: #333; font-weight: 400; }
-table.cs-mask tr { background: transparent !important; }
-table.cs-mask thead th { height: 30px; }
-table.cs-mask tbody th { width: 56px; text-align: right; padding-right: 10px; }
-table.cs-mask td.o { background: #cfe0f3; color: #3f6f9f; }
-table.cs-mask td.x { background: #eeeeee; color: #bbb; }
-table.cs-mask td.arw { width: 30px; color: #888; }
-table.cs-mask td.t, table.cs-mask th.t { width: 66px; }
-table.cs-mask td.t span { display: block; margin: 0 4px; padding: 6px 0; border: 2px solid #d9822b; border-radius: 6px; background: #fdf0e0; color: #b8661a; font-size: 18px; }
-table.cs-mask th.t { color: #b8661a; font-weight: 700; font-size: 14px; white-space: nowrap; }
-.cs-foot { margin-top: auto; font-size: 17px; }
-/* ② 生成ループ */
-.cs-gen { width: 534px; margin: 4px auto 0; }
-.cs-row { display: grid; grid-template-columns: 48px 276px 26px 100px 26px 58px; align-items: center; height: 48px; }
-.cs-step { font-size: 14px; color: #888; }
-.cs-tok { display: flex; gap: 4px; }
-.cs-tok span { width: 42px; height: 46px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; background: #eaf2fb; border: 2px solid #8fb0cc; border-radius: 6px; font-size: 20px; }
-.cs-tok span.s { font-size: 15px; }
-.cs-tok span.new1, .cs-out.o1 { background: #fdf0e0; border-color: #d9822b; color: #b8661a; }
-.cs-tok span.new2, .cs-out.o2 { background: #eaf5ea; border-color: #5a9a6a; color: #3f7a4c; }
-.cs-arw { text-align: center; color: #777; }
-.cs-dec { height: 46px; display: flex; align-items: center; justify-content: center; background: #efeaf8; border: 2px solid #8b74c4; border-radius: 8px; color: #5e46a0; font-weight: 700; font-size: 18px; }
-.cs-out { height: 46px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid #999; border-radius: 7px; background: #f3f3f3; font-weight: 700; font-size: 18px; }
-.cs-loop { display: block; height: 36px; }
-.cs-note { margin-top: auto; background: #eef4fb; border-radius: 6px; padding: 7px 12px; font-size: 15px; }
-/* まとめ */
-.cs-take { margin-top: 14px; padding: 9px 18px; background: #f3f1f9; border-left: 6px solid #8b74c4; font-size: 19px; }
-.cs-take .sub { font-size: 16px; color: #555; }
-.cs-small { font-size: 13px; color: #888; }
-</style>
 
-# Decoder-onlyが自己回帰に向いている理由
-
-学習も生成も **「今の位置までの単語だけを見る」** という同じルールで動く。
-
-<div class="cs-cols">
-
-<div class="cs-panel">
-<h2>① 学習時：マスクで未来を隠す</h2>
-<div class="cs-cap">行＝今処理中の単語　列＝参照先　<span class="ok">○ 見える</span>　<span class="ng">× 見えない（未来）</span></div>
-<table class="cs-mask">
-<thead><tr><th></th><th>私</th><th>は</th><th>猫</th><th>が</th><th>好き</th><th></th><th class="t">当てる単語</th></tr></thead>
-<tbody>
-<tr><th>私</th><td class="o">○</td><td class="x">×</td><td class="x">×</td><td class="x">×</td><td class="x">×</td><td class="arw">→</td><td class="t"><span>は</span></td></tr>
-<tr><th>は</th><td class="o">○</td><td class="o">○</td><td class="x">×</td><td class="x">×</td><td class="x">×</td><td class="arw">→</td><td class="t"><span>猫</span></td></tr>
-<tr><th>猫</th><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="x">×</td><td class="x">×</td><td class="arw">→</td><td class="t"><span>が</span></td></tr>
-<tr><th>が</th><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="x">×</td><td class="arw">→</td><td class="t"><span>好き</span></td></tr>
-<tr><th>好き</th><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="o">○</td><td class="arw">→</td><td class="t"><span>です</span></td></tr>
-</tbody>
-</table>
-<div class="cs-foot">→ 1つの文で<strong>5問ぶんの「次の単語当て」</strong>を同時に練習できる</div>
-</div>
-
-<div class="cs-panel">
-<h2>② 生成時：出力を末尾に足して繰り返す</h2>
-<div class="cs-cap">学習と同じ「今の位置まで」のルールで、そのまま続きを書ける</div>
-<div class="cs-gen">
-<div class="cs-row"><span class="cs-step">1回目</span><div class="cs-tok"><span>私</span><span>は</span><span>猫</span><span>が</span></div><span class="cs-arw">→</span><div class="cs-dec">Decoder</div><span class="cs-arw">→</span><div class="cs-out o1">好き</div></div>
-<svg class="cs-loop" width="534" height="36" viewBox="0 0 534 40" preserveAspectRatio="none"><polyline points="505,0 505,14 253,14 253,32" fill="none" stroke="#d9822b" stroke-width="2.5"/><polygon points="253,40 247,30 259,30" fill="#d9822b"/><text x="380" y="30" font-size="13" fill="#b8661a" text-anchor="middle">出力を入力の末尾へ</text></svg>
-<div class="cs-row"><span class="cs-step">2回目</span><div class="cs-tok"><span>私</span><span>は</span><span>猫</span><span>が</span><span class="s new1">好き</span></div><span class="cs-arw">→</span><div class="cs-dec">Decoder</div><span class="cs-arw">→</span><div class="cs-out o2">です</div></div>
-<svg class="cs-loop" width="534" height="36" viewBox="0 0 534 40" preserveAspectRatio="none"><polyline points="505,0 505,14 299,14 299,32" fill="none" stroke="#5a9a6a" stroke-width="2.5"/><polygon points="299,40 293,30 305,30" fill="#5a9a6a"/></svg>
-<div class="cs-row"><span class="cs-step">3回目</span><div class="cs-tok"><span>私</span><span>は</span><span>猫</span><span>が</span><span class="s">好き</span><span class="s new2">です</span></div><span class="cs-arw">→</span><div class="cs-dec">Decoder</div><span class="cs-arw">→</span><div class="cs-out">。</div></div>
-</div>
-<div class="cs-note">前の位置の結果は後ろに足しても<strong>変わらない → 使い回せる</strong>（KVキャッシュ）</div>
-</div>
-
-</div>
-
-<div class="cs-take"><strong>練習（学習）と本番（生成）の参照ルールが同じ</strong>なので、ズレなく「続きを書く」力がつく。</div>
-<!-- <div class="cs-take"><strong>練習（学習）と本番（生成）の参照ルールが同じ</strong>なので、ズレなく「続きを書く」力がつく。<br><span class="sub">比較：Encoder（BERTなど）は前後両方を見るため穴埋めは得意だが、「続きを書く」練習にはならない。</span></div> -->
-
-<!-- decoder_only_autoregressive.svg（ユーザー承認済みのデザイン）をMarp/HTML/CSSで再現した編集可能版。参照範囲は「自分より前だけ」でなく現在位置を含む因果マスク。例文は説明用で、Boku-nanoの文章生成実測ではない。学習は正解prefix、生成は自身の出力prefixを使う点は異なる。KVキャッシュは一般的な性質の説明で、この資料の生成ループでは未使用。図はAttentionの参照範囲を示し、各位置を損失対象にするかは前後ページのlabelsで別に決まる。生成時の矢印はSVG座標（トークン幅42px・間隔4px基準）で描いているため、トークン幅を変えたらpolylineのx座標も合わせて調整する。 -->
-
----
-<!-- _class: code-explain causal-code -->
-# 学習時のコード：未来の位置を参照できなくする
-
-<div class="code-columns"><div>
-
-```python
-# ① 各位置の表現からQ・K・Vを作る
-query, key, value = self.qkv_proj(
-    hidden_states
-).chunk(3, dim=-1)
-# …（各テンソルをheadごとに並べ替える）
-
-# ② Q・Kに位置情報を加える
-query, key = self.rope(query, key)
-
-# ③ 現在位置までのK・Vだけを参照する
-attended = F.scaled_dot_product_attention(
-    query,
-    key,
-    value,
-    dropout_p=self.dropout if self.training else 0.0,
-    is_causal=True,
-)
-```
-
-<div class="code-source">boku_nano.py：CausalSelfAttention.forward（207–229行）。</div>
-
-</div><div>
-
-## 例：日本語指示から「偶数抽出」のコードへ
-
-```text
-<|bos|><|task|>
-整数リストxsから偶数だけを残すsolve関数を書いてください。
-<|code|>
-def solve(xs):
-    return [v for v in xs if v % 2 == 0]
-<|eos|>
-```
-
-| `return`の末尾位置から見ると | 参照できる範囲 |
-| :--- | :--- |
-| 日本語指示・区切り | ○ 参照できる |
-| `def solve(xs):` ～ `return` | ○ 現在位置まで見える |
-| 後続の `[v for …]` | × 未来なので見えない |
-
-**正解コードを力しても、次に予測する答えは見せない**
-
-`is_causal=True` が未来へのAttentionの重みを0することで、指示とそこまでのコードから続きを予測
-
-</div></div>
-
-<!-- 指示は保存済みの偶数抽出例。コードは同じ課題の説明用正解例であり、モデル出力の引用ではない。実際にはBPEトークン列として入力し、表は読みやすい文字列のまとまりで示す。「returnの末尾位置」はreturnまでを表すprefixの最終トークン位置を意味する。is_causal=Trueは現在位置を含む因果マスク。Attentionの参照制限と指示部分の損失除外は別の処理。 -->
-
----
+<!-- _header: '④ 推論　3/3' -->
 <!-- _class: code-explain causal-code causal-generate -->
-# 生成時のコード：最後の予測を選び、入力を伸ばす
+# 生成時のコード：最後の予測を選択し、入力に追加
 
 <div class="code-columns"><div>
 
@@ -1797,11 +2431,11 @@ input_ids = torch.cat(
 )
 ```
 
-<div class="code-source">evaluate_boku_nano.py（488–490、522–524行）。</div>
+<div class="code-source">evaluate_boku_nano.py（488–490、522–524行）</div>
 
 </div><div>
 
-## 前ページと同じ「偶数抽出」の続きを生成する
+## 「偶数抽出」のコードの続きの生成
 
 ```text
 <|bos|><|task|>
@@ -1813,203 +2447,27 @@ def solve(xs):
 
 | 処理 | 上の入力から1トークン進む例 |
 | :--- | :--- |
-| ① 最後の位置を使う | 入力末尾から、続きの候補を予測 |
-| ② 候補を選ぶ | 例：`v` のトークンIDを選択 |
+| ① 最後の位置の使用 | 入力末尾から、続きの候補を予測 |
+| ② 候補の選択 | 例：`v` のトークンIDを選択 |
 | ③ 末尾に追加 | `return [` → `return [v` |
 | 次のループ | 日本語指示と追加済みコード全体を入力 |
 
-**正解の続きを渡す学習時と違い、生成時は自分が選んだトークンを足す。**
+**正解の続きを渡す学習時と異なり、生成時は自分が選んだトークンを追加**
 
-`[:, -1, :]` は「全系列・最後の位置・全候補」。
-`<|eos|>` が出たら終了。それまでは上限まで繰り返す。
+`[:, -1, :]` は「全系列・最後の位置・全候補」
+`<|eos|>` で終了 ／ それまでは上限まで予測を反復
 
 </div></div>
 
 <!-- 実際の評価処理では終了済みの系列にpaddingを追加する。入力は前ページの偶数抽出コードを途中まで生成した説明例。vを選ぶのは説明用の仮定で、実測出力ではない。手元のdata/tokenizers/bpe_2048/tokenizer.jsonでreturn [とvが別トークンになることを確認。コードブロック末尾の表示上の改行は入力に追加しない。毎回伸びた全系列をmodelに渡す実装であり、KVキャッシュは使用しない。 -->
 
 ---
-<!-- _class: code-explain -->
-# 一つ先の正解にずらして、次のトークンを学習する
 
-<div class="code-columns"><div>
-
-```python
-# ① 最後以外の位置の予測を取り出す
-shifted_logits = logits[:, :-1, :].contiguous()
-
-# ② 正解を一つ先の位置にずらす
-shifted_labels = labels[:, 1:].contiguous()
-
-# ③ 正解トークンの確率から損失を計算
-loss = F.cross_entropy(
-    shifted_logits.view(
-        -1, shifted_logits.size(-1)),
-    shifted_labels.view(-1),
-    ignore_index=-100,
-)
-```
-
-<div class="code-source">boku_nano.py：BokuNanoForCausalLM.forward（407–415行）。</div>
-
-</div><div>
-
-## 今の位置の出力を「次の正解」と比べる
-
-| 出力を使う位置 | 予測すべき正解 |
-| :--- | :--- |
-| コード直前 | 最初のコードtoken |
-| 最初のコードtoken | 2番目のコードtoken |
-| 最後のコードtoken | EOS（生成終了） |
-
-$$
-\mathcal{L}=-\frac{1}{|C|}\sum_{t\in C}\log P_\theta(x_t\mid x_{<t})
-$$
-
-$C$：コード開始後〜EOSの位置。指示・paddingは除外。
-
-訓練では**正解の続きを予測**する。生成時は**自分が出したトークンの続きを予測**する。
-
-</div></div>
-
-<!-- cross_entropyはlogitsから計算する。明示的なsoftmaxを前置しない。損失の平均は当該バッチのignore_index以外のラベルに対するもの。 -->
-
----
-<!-- _class: model-settings -->
-# モデル構成とトークナイザー
-
-<!-- 本編で比較する既存BPEの **1M・5M・15M**。Mは約100万パラメータを表す。 -->
-
-| 項目 | 1M | 5M | 15M |
-| :--- | ---: | ---: | ---: |
-| **総パラメータ数** | **1,016,704** | **5,065,472** | **15,735,168** |
-| 隠れ次元 `d_model` | 128 | 256 | 384 |
-| 層数 `n_layers` | 3 | 5 | 8 |
-| Attentionのhead数 | 4 | 4 | 6 |
-| 1 headの次元 | 32 | 64 | 64 |
-| FFNの中間次元 `d_ff` | 256 | 704 | 1,024 |
-| この後に示す学習曲線 | 3 epoch | 1 epoch | 1 epoch |
-
-## トークナイザーは共通
-
-<div class="tokenizer-settings">
-<strong>BPE</strong> ／ 語彙数 <strong>2,048</strong><br>
-最小頻度 <code>min_frequency = 5</code> ／ 最大piece長 <code>max_token_length = 24</code>
-</div>
-
-<!-- <div class="settings-note">共通：最大系列長256 token、dropout 0、入力埋め込みと出力層の重み共有なし。<br>数値は保存済みのモデル設定と学習記録に基づく。</div> -->
-
-<!--
-モデル設定：../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/model_config.json、../../data/models/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/model_config.json、../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch/model_config.json。
-パラメータ数：../results/trained_model_inventory.md。head_dim=d_model/n_heads。
-BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_length=24、vocab_size=2048。
-後続の1epoch比較には同じ1M構造の1epochチェックポイントもある。構造が同じならepoch数を変えてもパラメータ数は変わらない。
--->
-
----
-<!-- _class: code-explain -->
-# 指示は入力するが、指示文の予測は採点しない
-
-<div class="code-columns"><div>
-
-```python
-# ① ラベルを「損失から除外」で初期化
-labels = torch.full(
-    (len(batch), maximum_length),
-    IGNORE_INDEX, dtype=torch.long
-)
-# …（各系列を処理するループ内）
-# ② 指示と正解コードの両方を入力する
-input_ids[row, :sequence_length] = token_ids
-
-# ③ コード開始後〜EOSだけを採点対象に
-labels[row, target_start:sequence_length] = (
-    token_ids[target_start:]
-)
-```
-
-`IGNORE_INDEX = -100`。`target_start`は`<|code|>`の直後。
-
-<div class="code-source">train_boku_nano.py：collate_training_batch（496–513行）、target_startの設定（423–425行）。</div>
-
-</div><div>
-
-## 学習目的：指示を条件としてコードを生成
-
-| 系列の部分 | 入力 | 正解ラベル |
-| :--- | :--- | :--- |
-| 日本語指示・区切り | 入れる | −100（採点しない） |
-| コード・EOS | 入れる | 正解のトークンID |
-| 右側のpadding | 埋める | −100（採点しない） |
-
-指示文そのものを次々に生成する能力には、**直接の教師信号を与えない。**
-
-**指示を処理するための学習は止まらない。**
-コードの予測が指示側の表現を参照するため、コード側の損失から、その計算にも勾配が伝わる。
-
-</div></div>
-
-<!-- loss対象はcode marker直後のtokenからEOSまで。コード側の損失はattentionを介して参照した指示側の表現・共有パラメータにも依存する。全tokenが必ず同じ強さの勾配を得るとは主張しない。 -->
-
----
-<!-- _class: scientific -->
-# 1M：3 epochまでの損失の推移
-
-3 epochの学習。訓練損失は20 stepごと、検証損失は各epoch終了時の実測値。
-
-![w:1100 h:380](figure/loss_1m_3epoch.png)
-
-**val loss：1 epoch 0.8737 ／ 2 epoch 0.4691 ／ 3 epoch 0.4364**
-
-<!-- 20 stepごとのvalidationは未記録。図は保存済みの3点を表示。 -->
-
-<!--
-3epoch設定の1回の訓練ログを使用。train loss 57点、validation loss 3点。最終stepは1131、epoch境界は377・754・1131。validationは24,040レコードのコード部分を評価。
-1epoch専用runとは学習率スケジュールが異なるため、1epoch専用runの終了値1.3781と接続しない。
-使用図：figure/loss_1m_3epoch.svg
-根拠：../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/training_metrics.jsonl
--->
-
----
-<!-- _class: scientific -->
-# 5M：損失の推移
-
-1 epochの学習。訓練損失と、検証データで測った損失を示す。
-
-![w:1100 h:380](figure/loss_5m.png)
-
-**学習終了時の val loss：0.4855**
-
-<!-- val lossは終了時の1点。途中の検証値は保存されていない。 -->
-
-<!--
-保存された19点のtrain lossと、1点のvalidation lossをすべて使用。曲線はtrain lossだけであり、val lossの推移を補間していない。縦軸は保存済みの各モデルの図の対数目盛をそのまま使用する。モデルごとに範囲は異なる。最終stepは377。validationは24,040レコードのコード部分を評価。
-使用図：../results/figures/training_loss_20step/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch.svg
-根拠：../../data/models/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/training_metrics.jsonl
--->
-
----
-<!-- _class: scientific -->
-# 15M：損失の推移
-
-1 epochの学習。訓練損失と、検証データで測った損失を示す。
-
-![w:1100 h:380](figure/loss_15m.png)
-
-**学習終了時の val loss：0.4106**
-
-<!-- val lossは終了時の1点。途中の検証値は保存されていない。 -->
-
-<!--
-保存された19点のtrain lossと、1点のvalidation lossをすべて使用。曲線はtrain lossだけであり、val lossの推移を補間していない。縦軸は保存済みの各モデルの図の対数目盛をそのまま使用する。モデルごとに範囲は異なる。最終stepは377。validationは24,040レコードのコード部分を評価。
-使用図：../results/figures/training_loss_20step/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch.svg
-根拠：../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch/training_metrics.jsonl
--->
-
----
+<!-- _header: '⑤ 評価　1/11' -->
 <!-- _class: test-summary -->
 # モデル規模・学習回数による違い：五つのテスト別結果
 
-各モデルの列は **合格数・pass@1（合格率）**。各問1本を生成し、検査入力をすべて満たせば合格。
+各モデルの列は **合格数・pass@1（合格率）**<br>各問1本を生成し、検査入力をすべて満たせば合格
 
 | テスト | 1M・1 epoch | 1M・3 epoch | 5M・1 epoch | 15M・1 epoch |
 | :--- | ---: | ---: | ---: | ---: |
@@ -2019,9 +2477,9 @@ labels[row, target_start:sequence_length] = (
 | 同じ操作の反復（23,040問） | 508問（2.20%） | 22,945問（99.59%） | 22,370問（97.09%） | **22,971問（99.70%）** |
 | 境界値（24,040問） | 408問（1.70%） | 23,950問（99.63%） | 23,261問（96.76%） | **24,003問（99.85%）** |
 
-**1Mは3 epochで大きく改善。一方、言い換えは1M・3 epochと15M・1 epochでも50%。**
+**1Mは3 epochで大きく改善<br>一方、言い換えは1M・3 epochと15M・1 epochでも50%**
 
-<div class="result-note">毎回、最も確率の高いトークンを選択。再生成なし。pass@1 ＝ 合格数 ÷ 評価件数。<br>共通BPE・単一seed。通常と境界値は同じ指示・異なる検査入力。次の872問の評価とは別。</div>
+<div class="result-note">毎回、最も確率の高いトークンを選択 ／ 再生成なし ／ pass@1 ＝ 合格数 ÷ 評価件数<br>共通BPE・単一seed ／ 通常と境界値は同じ指示・異なる検査入力 ／ 次の872問の評価とは別</div>
 
 <!--
 各結果は保存済みのモデル別評価報告から取得。合格率は合格数/評価件数から小数点以下2桁に丸めた。
@@ -2029,23 +2487,25 @@ labels[row, target_start:sequence_length] = (
 -->
 
 ---
+
+<!-- _header: '⑤ 評価　2/11' -->
 <!-- _class: compact -->
 # ベンチマークの役割と、自分の研究での作り方
 
-**モデルの能力と限界を観測し、次に取り組む研究課題を明確にする。**
-成功例だけで判断せず、共通の基準で能力の向上を定量的に確かめる。
+**モデルの能力と限界を観測し、次に取り組む研究課題を明確化**
+成功例だけで判断せず、共通の基準で能力の向上を定量的に確認
 
-| 設計・評価の手順 | 自分の研究で考えること |
+| 設計・評価の手順 | 自分の研究での検討点 |
 | :--- | :--- |
-| ① 測りたい能力を決める | 何ができるようになったかを確かめたいのか |
-| ② 課題と正解基準を作る | 何を変え、何を固定し、どう正誤を判定するか |
-| ③ 共通条件で測り、分析する | 成功・失敗の条件を調べ、比較条件と作成手順を記録する |
-| ④ 次の課題につなげる | 残る誤りを調べ、高得点で差が見えなくなれば評価を見直す |
+| ① 測定する能力の選定 | 確認したい能力とその変化 |
+| ② 課題と正解基準の作成 | 変更する条件・固定する条件・正誤の判定方法 |
+| ③ 共通条件での測定・分析 | 成功・失敗の条件の分析と、比較条件・作成手順の記録 |
+| ④ 次の課題への接続 | 残る誤りの分析と、高得点で差が見えない場合の評価の見直し |
 
-## 一例：組み合わせ汎化を測る
+## 一例：組み合わせ汎化の評価
 
-**学習済みの操作を、新しい組み合わせでも実行できるか。**
-今回は既知の日本語表現を使って構成を変え、生成コードの実行結果で正誤を判定する。
+**学習済みの操作を、新しい組み合わせでも実行する能力の評価**
+今回は既知の日本語表現を用いて構成を変更し、生成コードの実行結果で正誤を判定
 
 <!--
 組み合わせ汎化は、研究目的に合わせたベンチマーク設計の一例として紹介する。
@@ -2055,23 +2515,25 @@ labels[row, target_start:sequence_length] = (
 -->
 
 ---
+
+<!-- _header: '⑤ 評価　3/11' -->
 <!-- _class: benchmark-data -->
 
 # データセットの構成：9種類・872問
 
 | 操作数 | 問題の種類 | 問数 | 構成 |
 | ---: | :--- | ---: | :--- |
-| 1 | 複数操作で学んだ表現を1操作で使う | 96 | 24操作 × 4表現 |
+| 1 | 複数操作で学んだ表現を1操作に適用 | 96 | 24操作 × 4表現 |
 | 2 | 初めて組み合わせる2操作 | 100 | 5ペア × 両順序 × 10表現 |
 | 2 | 同じ操作を2回 | 96 | 24操作 × 4表現 |
-| 2 | 3操作で学んだ順序を2操作で使う | 88 | 88種類の操作列 |
+| 2 | 3操作で学んだ順序を2操作に適用 | 88 | 88種類の操作列 |
 | 3 | 初めてのペアを含む3操作 | 100 | 100種類の操作列 |
 | 3 | 同じ操作を3回 | 96 | 24操作 × 4表現 |
 | 4 | 同じ操作を4回 | 96 | 24操作 × 4表現 |
-| 4 | 異なる4操作を組み合わせる | 100 | 100種類の操作列 |
-| 4 | 2操作の組を2回繰り返す | 100 | A・B・A・Bの100種類 |
+| 4 | 異なる4操作の組み合わせ | 100 | 100種類の操作列 |
+| 4 | 2操作の組の2回反復 | 100 | A・B・A・Bの100種類 |
 
-各問題でコードを1つ生成。**179通りの共通テスト入力ですべて合格した問題の割合**を正答率とする。
+各問題でコードを1つ生成<br>正答率は、**179通りの共通テスト入力ですべて合格した問題の割合**
 
 <!--
 関数契約・許可構文・入力非変更も採点条件。179入力は境界9、固定seedのランダム128、k関連40、操作順序確認2。任意入力での正しさの証明ではない。
@@ -2079,6 +2541,8 @@ labels[row, target_start:sequence_length] = (
 -->
 
 ---
+
+<!-- _header: '⑤ 評価　4/11' -->
 <!-- _class: astra-settings -->
 # Astraの評価設定：思考low・ツール使用を禁止
 
@@ -2086,14 +2550,14 @@ labels[row, target_start:sequence_length] = (
 | :--- | :--- |
 | モデル・推論設定 | `gpt-6-astra` ／ reasoning effort：**low** |
 | 評価対象 | 872問から固定seedで抽出した各カテゴリ10問、計90問 |
-| 会話・回答 | 1問ごとに独立チャット。最初の回答1回を採点。修正・再生成なし |
-| ツール | 使用禁止を指示。**90問すべての実行記録で使用0件を確認** |
+| 会話・回答 | 1問ごとに独立チャット ／ 最初の回答1回を採点 ／ 修正・再生成なし |
+| ツール | 使用禁止を指示 ／ **90問すべての実行記録で使用0件を確認** |
 
 各問題の冒頭に与えた指示：
 
 > ツールは一切使用せず、このメッセージだけから回答してください。ファイル閲覧、検索、コード実行、他のエージェントへの依頼は行わないでください。回答は一度だけ、指定されたコードのみを出力してください。
 
-ツールの技術的な無効化ではなく、**指示による禁止と記録確認**。採点は回答保存後に行い、結果をAstraへ返していない。
+ツールの技術的な無効化ではなく、**指示による禁止と記録確認**<br>採点は回答保存後 ／ Astraへの結果のフィードバックなし
 
 <!--
 上記の後にQwenと同じ共通のコード生成指示と各問題の日本語指示を続けた。AST・参照コード・テスト入力・過去の得点は渡していない。
@@ -2103,88 +2567,311 @@ labels[row, target_start:sequence_length] = (
 -->
 
 ---
-<!-- _class: default -->
-![bg contain](figure/composition_benchmark_with_5m_no_values/plot.png)
+
+<!-- _header: '⑤ 評価　5/11' -->
+<!-- _class: benchmark-figure benchmark-focus -->
+# 評価結果の注目点3か所
+
+<div class="focus-chart">
+<img src="figure/composition_benchmark_with_5m_no_title/plot.png" alt="5モデルの9カテゴリ正答率。未学習2操作、未学習3操作、異なる4操作を赤丸で強調。">
+<svg class="focus-marks" viewBox="0 0 2880 1620" aria-hidden="true">
+<g fill="none" stroke="#d33743" stroke-width="8"><ellipse cx="617" cy="575" rx="115" ry="78"/><ellipse cx="1498" cy="563" rx="112" ry="70"/><ellipse cx="2041" cy="1115" rx="63" ry="185"/></g>
+<g fill="#d33743" font-family="sans-serif" font-size="50" font-weight="700"><text x="486" y="470">①</text><text x="1370" y="465">②</text><text x="1895" y="880">③</text></g>
+</svg>
+</div>
+<div class="focus-captions"><div><b>① 未学習の2操作</b><br>1M・3 epoch：99%<br>Astra参考値：90%</div><div><b>② 未学習の3操作</b><br>1M・3 epoch：100%<br>学習済みの操作による新しい組み合わせ</div><div><b>③ 異なる4操作</b><br>Bokuは7〜43%<br>訓練範囲の3操作を超えると低下</div></div>
+<p class="focus-note">Boku・Qwenは全872問、Astraは各カテゴリ10問の参考値（評価集合・実行条件の違いに留意）</p>
 
 <!--
-Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。Astraは独立チャット・low、各カテゴリ10問のみの参考値。Astraの温度は未指定でありgreedyとは主張しない。訓練回数・生成上限・実行基盤などは一致しない。
-図：figure/composition_benchmark_with_5m_no_values/plot.png（棒の数値ラベルなし）
-数値・実行条件・入力hash：figure/composition_benchmark_with_5m_no_values/values.json
-作図：.venv/bin/python scripts/model/benchmark.py --models boku-15m-1epoch boku-5m-1epoch boku-1m-3epoch qwen3-1.7b --astra-reference --presentation --rows 1 --columns 9 --values no --output docs/report/figure/composition_benchmark_with_5m_no_values
+赤丸は元グラフの上にSVGとして重ね、棒・軸・数値を変更しない。1M3epochのcomposition_2op=99/100、composition_3op=100/100。Astraのcomposition_2op=9/10。general_4opはBoku15M29/100、5M7/100、1M3epoch43/100。
+Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。Astraは独立チャット・low、各カテゴリ10問のみの参考値。
+3操作と4操作の間のオレンジの実線は、訓練データの範囲（最大3操作）と未学習の長さ（4操作）の境目。他の点線は操作数の区切り。Astraの温度は未指定でありgreedyとは主張しない。訓練回数・生成上限・実行基盤などは一致しない。
+図：figure/composition_benchmark_with_5m_no_title/plot.png（図内タイトルなし・棒の数値ラベルなし。タイトルはMarp側の見出し）
+数値・実行条件・入力hash：figure/composition_benchmark_with_5m_no_title/values.json
+作図：.venv/bin/python scripts/model/benchmark.py --models boku-15m-1epoch boku-5m-1epoch boku-1m-3epoch qwen3-1.7b --astra-reference --presentation --rows 1 --columns 9 --values no --title "" --output docs/report/figure/composition_benchmark_with_5m_no_title
 -->
 
 ---
-<!-- _class: compact four-operation-findings -->
-# 4操作で残る課題：操作の欠落と、実行順序の変化
 
-**異なる4操作の100問**：不正解はすべて出力の不一致。構文・実行エラーの判定は0件。
+<!-- _header: '⑤ 評価　6/11' -->
+<!-- _class: failure-summary -->
+# 失敗例の一覧：5モデルの誤りと実行結果
 
-| モデル | 合格 | 出力不一致 |
-| :--- | ---: | ---: |
-| 1M・3 epoch | 43 / 100 | 57 / 100 |
-| 5M・1 epoch | 7 / 100 | 93 / 100 |
-| 15M・1 epoch | 29 / 100 | 71 / 100 |
+| モデル | 確認された誤り | 正解 | 実際の出力 |
+| :--- | :--- | :--- | :--- |
+| ① Astra | 参照定義の降順に対する昇順整列 | [4, 2] | [2, 4] |
+| ② Qwen3-1.7B | 3倍に対するk倍への置換 | [3] | [1] |
+| ③ Boku 1M・3 epoch | 最後の「先頭k個」の欠落 | [100] | [100, 100] |
+| ④ Boku 5M・1 epoch | 降順整列の欠落と切り出しの先行 | [0] | [] |
+| ⑤ Boku 15M・1 epoch | 降順整列の欠落 | [66] | [28] |
 
-## 同じ問題で、どの処理が抜けたか
-
-要求：**絶対値 → 偶数抽出 → 降順整列 → 先頭k個**
-
-| モデル | 実際の生成コードが行う処理 | 確認できた誤り |
-| :--- | :--- | :--- |
-| 1M・3 epoch | 絶対値 → 偶数抽出 → 降順整列 | **先頭k個の切り出しがない** |
-| 5M・1 epoch | 絶対値 → 先頭k個 → 偶数抽出 | **降順がなく、切り出しの順序も違う** |
-| 15M・1 epoch | 絶対値 → 偶数抽出 → 先頭k個 | **降順整列がない** |
-
-1Mの実例：`xs=[-100, 100], k=1` → 正解 `[100]`、生成コードの出力 `[100, 100]`。
-
-<div class="fourop-note">下表は同一問題 general4-001 の実例。全失敗の内訳を分類した集計ではない。<br>構文が通るだけでなく、要求された全操作と順序が実行結果に反映されるかを確認する必要がある。</div>
+<p class="failure-summary-note">各モデルの保存済み失敗入力に対する出力（詳細は次の5ページ）<br>Astraの指示「大小順」には解釈の余地 ／ Bokuの3条件は同じ指示・異なる検査入力での比較</p>
+<p class="failure-summary-stat"><strong>Bokuの異なる4操作・100問の集計</strong>：合格／出力不一致は、1M：43／57、5M：7／93、15M：29／71<br>3条件とも構文・実行エラーの判定は0件</p>
 
 <!-- 根拠：../results/boku_four_operation_error_examples.md。条件A、各問題179入力。保存済みscored.jsonlのgeneral_4op全100問のreasonを再集計し、general4-001のコードを読んで操作列を確認。同じ操作4回・ABABのカテゴリとは区別する。 -->
 
 ---
+
+<!-- _header: '⑤ 評価　7/11' -->
+<!-- _class: failure-example -->
+# 失敗例① Astra：参照定義と整列方向の不一致
+
+<blockquote class="failure-instruction">整数リストxsから偶数を切りとって、値を大小順に並べるsolve関数を書いてください。</blockquote>
+<p class="failure-expected">参照ASTの処理：<strong>偶数抽出 → 降順整列</strong></p>
+<div class="failure-columns"><div>
+
+## 実際に生成したコード
+
+```python
+def solve(xs: list[int], k: int) -> list[int]:
+    return sorted([x for x in xs if x % 2 == 0])
+```
+
+</div><div class="failure-observation">
+
+## 実行して分かった誤り
+
+<p>偶数抽出後に昇順で整列<br>参照定義の降順との不一致</p>
+<div class="failure-input"><b>検査入力</b><br><code>xs = [5, 4, 3, 2, 1]</code><br><code>k = 5</code></div>
+<div class="failure-outputs"><div><span>正解</span><b>[4, 2]</b></div><div class="wrong"><span>実際の出力</span><b>[2, 4]</b></div></div>
+
+</div></div>
+<p class="failure-note">「大小順」の参照定義は降順 ／ 指示文の曖昧さを含む例であり、モデル一般の推論能力の断定は対象外<br>問題ID：comp2v2-01-ab-08 ／ Astra（思考low） ／ A-chat</p>
+
+<!-- 保存済みの生成コードを全文掲載。検査入力・期待値・出力はscored.jsonlの最初の失敗入力をそのまま使用。179入力中の1件。再実行で保存出力と一致を確認。個別例から全失敗の原因分布を主張しない。
+question: ../../data/benchmarks/composition_suite_20261008/questions.jsonl:104
+scored: ../../data/benchmarks/composition_suite_20261008/runs/astra-chat-low/sample90/scored.jsonl:11
+raw: ../../data/benchmarks/composition_suite_20261008/runs/astra-chat-low/sample90/raw_inference.jsonl:12
+tests: ../../data/benchmarks/composition_suite_20261008/test_cases.json
+chart: ../../docs/report/figure/composition_benchmark_with_5m_no_title/values.json
+-->
+
+---
+
+<!-- _header: '⑤ 評価　8/11' -->
+<!-- _class: failure-example -->
+# 失敗例② Qwen：3倍からk倍への置き換え
+
+<blockquote class="failure-instruction">整数リストxsからすべてを三倍するsolve関数を書いてください。</blockquote>
+<p class="failure-expected">参照ASTの処理：<strong>各要素の3倍</strong></p>
+<div class="failure-columns"><div>
+
+## 実際に生成したコード
+
+```python
+def solve(xs, k):
+    result = list(xs)
+    for i in range(len(result)):
+        result[i] *= k
+    return result
+```
+
+</div><div class="failure-observation">
+
+## 実行して分かった誤り
+
+<p>指定された3倍ではなく、<br>引数kによる乗算</p>
+<div class="failure-input"><b>検査入力</b><br><code>xs = [1]</code><br><code>k = 1</code></div>
+<div class="failure-outputs"><div><span>正解</span><b>[3]</b></div><div class="wrong"><span>実際の出力</span><b>[1]</b></div></div>
+
+</div></div>
+<p class="failure-note">関数契約上の引数k（この指示での乗数としての利用なし）<br>問題ID：transfer1-000015-v4 ／ Qwen3-1.7B ／ A</p>
+
+<!-- 保存済みの生成コードを全文掲載。検査入力・期待値・出力はscored.jsonlの最初の失敗入力をそのまま使用。179入力中の1件。再実行で保存出力と一致を確認。個別例から全失敗の原因分布を主張しない。
+question: ../../data/benchmarks/composition_suite_20261008/questions.jsonl:60
+scored: ../../data/benchmarks/composition_suite_20261008/runs/qwen3-1.7b/scored.jsonl:60
+raw: ../../data/benchmarks/composition_suite_20261008/runs/qwen3-1.7b/raw_inference.jsonl:61
+tests: ../../data/benchmarks/composition_suite_20261008/test_cases.json
+chart: ../../docs/report/figure/composition_benchmark_with_5m_no_title/values.json
+-->
+
+---
+
+<!-- _header: '⑤ 評価　9/11' -->
+<!-- _class: failure-example -->
+# 失敗例③ Boku 1M・3 epoch：最後の切り出しの欠落
+
+<blockquote class="failure-instruction">整数リストxsと整数kを受け取り、絶対値を導き出して、偶数だけを切り出して、大きい順に並べて、頭k個を抜き出すsolve関数を書いてください。</blockquote>
+<p class="failure-expected">参照ASTの処理：<strong>絶対値 → 偶数抽出 → 降順整列 → 先頭k個</strong></p>
+<div class="failure-columns"><div>
+
+## 実際に生成したコード
+
+```python
+def solve(xs: list[int], k: int) -> list[int]:
+    result: list[int] = []
+    for x in xs:
+        result += [abs(x)]
+    output: list[int] = []
+    for x in result:
+        if x % 2 == 0:
+            output += [x]
+    output = sorted(output, reverse=True)
+    return output
+```
+
+</div><div class="failure-observation">
+
+## 実行して分かった誤り
+
+<p>最後の「先頭k個」の<br>切り出しの欠落</p>
+<div class="failure-input"><b>検査入力</b><br><code>xs = [-100, 100]</code><br><code>k = 1</code></div>
+<div class="failure-outputs"><div><span>正解</span><b>[100]</b></div><div class="wrong"><span>実際の出力</span><b>[100, 100]</b></div></div>
+
+</div></div>
+<p class="failure-note">Bokuの3条件は同じ指示を比較 ／ 入力例は各モデルの保存済み失敗ログ<br>問題ID：general4-001 ／ Boku Nano 1M・3 epoch ／ A</p>
+
+<!-- 保存済みの生成コードを全文掲載。検査入力・期待値・出力はscored.jsonlの最初の失敗入力をそのまま使用。179入力中の1件。再実行で保存出力と一致を確認。個別例から全失敗の原因分布を主張しない。
+question: ../../data/benchmarks/composition_suite_20261008/questions.jsonl:673
+scored: ../../data/benchmarks/composition_suite_20261008/runs/boku-1m-3epoch/scored.jsonl:673
+raw: ../../data/benchmarks/composition_suite_20261008/runs/boku-1m-3epoch/raw_inference.jsonl:674
+tests: ../../data/benchmarks/composition_suite_20261008/test_cases.json
+chart: ../../docs/report/figure/composition_benchmark_with_5m_no_title/values.json
+-->
+
+---
+
+<!-- _header: '⑤ 評価　10/11' -->
+<!-- _class: failure-example -->
+# 失敗例④ Boku 5M：操作の欠落と実行順序の変化
+
+<blockquote class="failure-instruction">整数リストxsと整数kを受け取り、絶対値を導き出して、偶数だけを切り出して、大きい順に並べて、頭k個を抜き出すsolve関数を書いてください。</blockquote>
+<p class="failure-expected">参照ASTの処理：<strong>絶対値 → 偶数抽出 → 降順整列 → 先頭k個</strong></p>
+<div class="failure-columns"><div>
+
+## 実際に生成したコード
+
+```python
+def solve(xs: list[int], k: int) -> list[int]:
+    result: list[int] = []
+    for x in xs:
+        result += [abs(x)]
+    output: list[int] = result[0:k]
+    result = []
+    for value in output:
+        if value % 2 == 0:
+            result += [value]
+    return result
+```
+
+</div><div class="failure-observation">
+
+## 実行して分かった誤り
+
+<p>降順整列の欠落<br>偶数抽出より前での<br>「先頭k個」の切り出し</p>
+<div class="failure-input"><b>検査入力</b><br><code>xs = [-5, -1, 0, 1, 5]</code><br><code>k = 2</code></div>
+<div class="failure-outputs"><div><span>正解</span><b>[0]</b></div><div class="wrong"><span>実際の出力</span><b>[]</b></div></div>
+
+</div></div>
+<p class="failure-note">Bokuの3条件は同じ指示を比較 ／ 入力例は各モデルの保存済み失敗ログ<br>問題ID：general4-001 ／ Boku Nano 5M・1 epoch ／ A</p>
+
+<!-- 保存済みの生成コードを全文掲載。検査入力・期待値・出力はscored.jsonlの最初の失敗入力をそのまま使用。179入力中の1件。再実行で保存出力と一致を確認。個別例から全失敗の原因分布を主張しない。
+question: ../../data/benchmarks/composition_suite_20261008/questions.jsonl:673
+scored: ../../data/benchmarks/composition_suite_20261008/runs/boku-5m-1epoch/scored.jsonl:673
+raw: ../../data/benchmarks/composition_suite_20261008/runs/boku-5m-1epoch/raw_inference.jsonl:674
+tests: ../../data/benchmarks/composition_suite_20261008/test_cases.json
+chart: ../../docs/report/figure/composition_benchmark_with_5m_no_title/values.json
+-->
+
+---
+
+<!-- _header: '⑤ 評価　11/11' -->
+<!-- _class: failure-example -->
+# 失敗例⑤ Boku 15M：降順整列の欠落
+
+<blockquote class="failure-instruction">整数リストxsと整数kを受け取り、絶対値を導き出して、偶数だけを切り出して、大きい順に並べて、頭k個を抜き出すsolve関数を書いてください。</blockquote>
+<p class="failure-expected">参照ASTの処理：<strong>絶対値 → 偶数抽出 → 降順整列 → 先頭k個</strong></p>
+<div class="failure-columns"><div>
+
+## 実際に生成したコード
+
+```python
+def solve(xs: list[int], k: int) -> list[int]:
+    # 各要素の絶対値を取る
+    result: list[int] = []
+    for value in xs:
+        result += [abs(value)]
+    # 偶数だけを残す
+    output: list[int] = [x for x in result if x % 2 == 0]
+    # 先頭からk個を取る
+    output = output[0:k]
+    return output
+```
+
+</div><div class="failure-observation">
+
+## 実行して分かった誤り
+
+<p>降順整列の欠落<br>元の順序での「先頭k個」の出力</p>
+<div class="failure-input"><b>検査入力</b><br><code>xs = [53, -28, 35, -66, -69, -14, -23]</code><br><code>k = 1</code></div>
+<div class="failure-outputs"><div><span>正解</span><b>[66]</b></div><div class="wrong"><span>実際の出力</span><b>[28]</b></div></div>
+
+</div></div>
+<p class="failure-note">Bokuの3条件は同じ指示を比較 ／ 入力例は各モデルの保存済み失敗ログ<br>問題ID：general4-001 ／ Boku Nano 15M・1 epoch ／ A</p>
+
+<!-- 保存済みの生成コードを全文掲載。検査入力・期待値・出力はscored.jsonlの最初の失敗入力をそのまま使用。179入力中の1件。再実行で保存出力と一致を確認。個別例から全失敗の原因分布を主張しない。
+question: ../../data/benchmarks/composition_suite_20261008/questions.jsonl:673
+scored: ../../data/benchmarks/composition_suite_20261008/runs/boku-15m-1epoch/scored.jsonl:673
+raw: ../../data/benchmarks/composition_suite_20261008/runs/boku-15m-1epoch/raw_inference.jsonl:674
+tests: ../../data/benchmarks/composition_suite_20261008/test_cases.json
+chart: ../../docs/report/figure/composition_benchmark_with_5m_no_title/values.json
+-->
+
+---
+
+<!-- _class: section-break -->
+# 考察
+
+できたことと残った誤りを、次の学習につなげる
+
+---
+
+<!-- _header: '考察　1/2' -->
 <!-- _class: default -->
 # 今回の結果の意義と、次の研究課題
 
-**指示文の予測に損失を掛けず、コード側だけを採点する学習でも、コード生成を学習できた。**
+**指示側の予測を損失に含めず、<br>コード側だけを採点する学習によるコード生成の実現**
 
-さらに、学習済みの操作を新しい構成で使う**組み合わせ汎化**が今回の課題で確認できた。1M・3 epochは未学習の2操作で99/100、未学習のペアを含む3操作で100/100。
+今回の課題における**組み合わせ汎化**の確認：学習済み操作の新しい構成での利用<br>1M・3 epoch：未学習の2操作 **99/100**、未学習ペアを含む3操作 **100/100**
 
-今後は比較条件を揃え、より大きなモデルとの比較を追加するとともに、**評価設計と作成手順を明文化する。**
+今後の課題：比較条件を揃えた、より大きなモデルとの追加比較と、<br>**評価設計・作成手順の明文化**
 
-- 比較条件：訓練回数、プロンプト、生成上限などを記録し、揃えられる条件を揃える。
-- 評価設計：何を既知・未知とするか、どの誤りを検出したいかを定める。
-- 作成手順：問題の選定、訓練との照合、採点方法、再現手順を公開可能な形に整理する。
+- 比較条件：訓練回数・プロンプト・生成上限などの記録と、揃えられる条件の統一
+- 評価設計：既知・未知の範囲と、検出対象とする誤りの定義
+- 作成手順：問題選定・訓練との照合・採点方法・再現手順の公開に向けた整理
 
 <!--
 小規模モデルの一般的優位を主張するものではなく、今回の限定した課題での結果と今後の研究方針。
 -->
 
 ---
+
+<!-- _header: '考察　2/2' -->
 <!-- _class: default -->
 <style scoped>
 section { font-size: 23px; line-height: 1.45; }
-h1 { font-size: 34px; margin-bottom: 20px; }
+h1 { font-size: 38px; margin-bottom: 20px; }
 h2 { font-size: 27px; margin: 14px 0 10px; }
 p { margin: 10px 0; }
 table { font-size: 21px; margin: 14px 0; }
 th, td { padding: 8px 12px; }
 </style>
 
-# 考察：問題単位の合否を、次の訓練にどう生かすか
+# 考察：問題単位の合否を次の訓練へ生かす方針
 
-## 既知の表現でも、4操作を組み合わせると難しくなる
+## 既知の表現でも、4操作の組み合わせで残る課題
 
-1M・3 epochは、未学習の2操作で **99 / 100**、未学習のペアを含む3操作で **100 / 100**。学習で見た表現を、新しい2・3操作の構成で使えている。
+1M・3 epoch：未学習の2操作 **99 / 100**、未学習ペアを含む3操作 **100 / 100**<br>学習済みの表現を用いた、新しい2・3操作の構成への対応
 
-一方、異なる4操作では **43 / 100**。操作の欠落や順序の誤りが見られ、要求された処理を最後まで揃えることが課題となる。
+異なる4操作では **43 / 100**<br>観察された操作の欠落・順序の誤りと、要求された処理を最後まで揃える課題
 
-## この採点を、どのように訓練に反映していくべきか
+## 問題単位の採点を訓練へ反映する方法
 
-pass@1は、コードの長さによらず**1問を1件として採点**し、その問題の検査入力をすべて満たしたかを評価する。
+pass@1：コードの長さによらず、**1問を1件として採点**<br>各問題の検査入力をすべて満たすかによる評価
 
-**重要なのは、得点を比較するだけでなく、この採点をどのように訓練に反映していくべきかを考慮すること。**
+**得点の比較に加え、採点結果を訓練へ反映する方法の検討**
 
-2・3操作ではできていることと、4操作で不足していることを踏まえ、訓練データの構成や学習方法をどう変えるかを検討する。
+2・3操作での達成と4操作での不足を踏まえた、<br>訓練データの構成・学習方法の見直し
 
 
 <!--
@@ -2194,27 +2881,64 @@ pass@1は、コードの長さによらず**1問を1件として採点**し、�
 -->
 
 ---
-<!-- _class: closing -->
+<!-- _class: summary-page -->
 
-# デモ：学習済みモデルをブラウザで試す
+# まとめ：二つの系統と、その先にある学習方法
 
-ベンチマークでは、2・3操作で有望な結果が得られ、4操作では課題が残った。
+<div class="summary-columns">
+<div class="summary-column">
 
-**ここからは、自由な日本語を文型に整え、コードが生成されるまでを実演する。**
+## 自然言語（物語）系
 
-ONNX形式で保存したモデルを、ONNX Runtimeでブラウザ内実行。Python環境・推論サーバーは不要。
+<p class="summary-step"><a href="https://arxiv.org/abs/2305.07759">TinyStories</a>・<a href="https://arxiv.org/abs/2504.09184">SimpleStories</a><br>語彙・文体を限定した合成物語で学習</p>
+<p class="summary-arrow">↓</p>
+<p class="summary-step">文章の良さに対する人・LLMの評価<br><strong>LLM-as-a-Judge</strong>：LLMによる採点</p>
+<p class="summary-arrow">↓</p>
+<p class="summary-step"><strong>RLHF</strong>への接続：<br>人の好みを表す報酬モデルを用いた学習</p>
 
-| デモの流れ | 役割 |
-| :--- | :--- |
-| ① 自由な日本語を入力 | 作りたい処理を伝える |
-| ② Qwen3-0.6Bで文型を整える | 自由文を決められた文型（CNL）に変換。コードは書かない |
-| ③ JavaScriptで指示を検査 | 24操作・最大3操作・定型文法に合うか確認 |
-| ④ Boku-nanoでコードを生成 | 選択した学習済みモデルがPython関数を出力 |
+</div>
+<div class="summary-column domain">
 
-<p class="demo-link"><a href="https://yuuono.github.io/bokunano/">ブラウザデモを開く</a></p>
+## math・code系
+
+<p class="summary-step"><a href="https://arxiv.org/abs/2306.11644">phi-1</a>・<a href="https://arxiv.org/abs/2312.09241">TinyGSM</a><br>対象ドメインの合成・選別データで学習</p>
+<p class="summary-arrow">↓</p>
+<p class="summary-step">テスト・実行による評価<br>正誤の0・1判定</p>
+<p class="summary-arrow">↓</p>
+<p class="summary-step"><strong>RLVR</strong>への接続：<br>検証可能な報酬を用いた学習</p>
+
+<p class="summary-goal"><strong>Boku-nano</strong>：参照インタプリタによる0・1判定<br>合成データの選別とベンチマークに利用</p>
+
+</div>
+</div>
+
+> 本研究の成果：**制御した合成データ＋実行検証**による小型モデルの組合せ汎化
 
 <!--
-デモの文型整形の効果は上記の実験評価値に含めていません。整形はQwen3-0.6B、生成は選択したBoku Nano。デモでは1 epochモデルを選択してください。自由な日本語をBoku Nano単体が扱うとは説明しないこと。
+【話す内容】
+最後に、背景で示した二つの系統をまとめます。
+物語などの文章の良さは、人やLLMによる採点で評価できます。LLMによる評価をLLM-as-a-Judgeと呼び、人の好みを報酬モデルにして学習する方法がRLHFです。両者は同義ではありません。
+math・code・security系は、テストや実行で正誤を0か1で判定できます。検証できる報酬で学習するRLVRの流れにつながります。
+Boku-nanoは右の系統です。参照インタプリタによる検証を合成データの選別とベンチマークに使いました。
+
+【補足】
+RLHF：Reinforcement Learning from Human Feedback。RLVR：Reinforcement Learning with Verifiable Rewards。
+本研究ではRLHF・RLVRのどちらも実施していない。接続の主張は方向性であり、実験結果ではない。
+-->
+
+---
+<!-- _class: closing demo-video -->
+
+# デモ：学習済みモデルのブラウザ実行
+
+日本語入力 → Qwen3-0.6Bによる文型整形 → Boku-nano 15MによるPythonコード生成
+
+<div class="demo-space" aria-label="デモ動画を配置するための空白"></div>
+
+<p class="demo-site"><a href="https://yuuono.github.io/bokunano/">公開サイト：yuuono.github.io/bokunano</a></p>
+
+<!--
+デモの文型整形の効果は上記の実験評価値に含めていない。整形はQwen3-0.6B、生成はBoku Nano。自由な日本語をBoku Nano単体が扱うとは説明しない。公開UIは最大4操作まで受け付けるが、4操作は訓練範囲外。現行サイトはコード生成までを提供する。
 根拠：../../web/index.html、../../web/app.js、../procedures/boku_nano_onnx_web_demo.md
 -->
 
@@ -2222,21 +2946,21 @@ ONNX形式で保存したモデルを、ONNX Runtimeでブラウザ内実行。P
 <!-- _class: default -->
 # Appendix：追加解析と補足資料
 
-本編の評価を補足し、日本語表現への弱さとモデル内部の挙動を調べる。
+本編評価を補足する、日本語表現への弱さとモデル内部の挙動の解析
 
 | 内容 | 確かめること |
 | :--- | :--- |
-| A. 日本語表現への頑健性 | 言い換えや指示の冒頭を変えると、生成結果はどう変わるか |
-| B. Attentionの可視化と介入 | どこを参照し、指示の情報が生成にどう寄与するか |
-| C. 追加解析のまとめと限界 | 結果から言えることと、追加検証が必要なこと |
+| A. 日本語表現への頑健性 | 言い換え・指示冒頭の変更による生成結果の変化 |
+| B. Attentionの可視化と介入 | 参照先と、指示情報のコード生成への寄与 |
+| C. 追加解析のまとめと限界 | 結果から言える範囲と追加検証の必要な点 |
 | D. 全体図 | データ生成・学習・評価・デモのつながり |
 
 ---
 <!-- _class: compact -->
 
-# 全体が高精度でも、言い換えには弱い
+# 高い全体精度と、未学習の言い換えへの弱さ
 
-1M・3 epochと15M・1 epochの比較。各セルは合格数（合格率）。
+1M・3 epochと15M・1 epochの比較 ／ 各セルは合格数（合格率）
 
 | テスト（評価件数） | 1M・3 epoch | 15M・1 epoch |
 | :--- | ---: | ---: |
@@ -2246,7 +2970,7 @@ ONNX形式で保存したモデルを、ONNX Runtimeでブラウザ内実行。P
 | 同じ操作の反復（23,040問） | 22,945（99.59%） | 22,971（99.70%） |
 | 境界値（24,040問） | 23,950（99.63%） | 24,003（99.85%） |
 
-**どちらも全体では約99.6%だが、未学習の言い換えは50%にとどまる。**
+**全体の合格率はどちらも約99.6%<br>未学習の言い換えの合格率は50%**
 
 <!--
 固定30表現の言い換えテストです。後の14操作の冒頭変更とは別の評価。
@@ -2258,17 +2982,17 @@ ONNX形式で保存したモデルを、ONNX Runtimeでブラウザ内実行。P
 ---
 <!-- _class: sources -->
 
-# 先行研究：日本語の書き方で正解率が変わる
+# 先行研究：日本語の書き方による正解率の変化
 
-Gan and Mori（2023）は、意味や指示が近い5種類のプロンプトを比較した。
+Gan and Mori（2023）：意味や指示の近い5種類のプロンプトの比較
 
-**プロンプト**は、モデルに渡す指示文や質問文のこと。
+**プロンプト**：モデルに渡す指示文や質問文
 
 | 日本語の課題 | モデル | 正解率の範囲 |
 | :--- | :--- | :--- |
 | 2文の意味関係を分類するJNLI | GPT-4 | **25.44〜49.21%** |
 
-意味が近くても、書き方によって性能が大きく変わる場合がある。
+意味の近い指示でも、書き方によって性能が大きく変わる可能性
 
 出典：[Gan and Mori, PACLIC 2023, Table 3](https://aclanthology.org/2023.paclic-1.1/)
 
@@ -2280,18 +3004,18 @@ Chengguang Gan and Tatsunori Mori. Sensitivity and Robustness of Large Language 
 ---
 <!-- _class: sources -->
 
-# 先行研究：言い換えで回答の傾向も変わる
+# 先行研究：言い換えによる回答傾向の変化
 
-Takayama et al.（2026）は、日本語を含む「はい／いいえ」の質問を評価した。
+Takayama et al.（2026）：<br>日本語を含む「はい／いいえ」質問の評価
 
 | 表現の変え方 | 日本語での観察 |
 | :--- | :--- |
 | 同意を求める「〜ですよね？」 | 道徳判断で「はい」が増える傾向 |
 | 反対語への置き換え | 答えの反転を考慮しても、一貫性が低下 |
 
-**同じ判断を求めても、表現によって答えが動く。**
+**同じ判断を求める質問でも、表現によって変わる回答傾向**
 
-モデルの評価には、複数の言い回しを含める必要がある。
+モデル評価における、複数の言い回しを含めた検証の必要性
 
 出典：[Takayama et al., LREC 2026, Table 1](https://aclanthology.org/2026.lrec-1.225/)
 
@@ -2303,16 +3027,16 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 ---
 <!-- _class: default -->
 
-# 今回は、指示の冒頭だけを変えて比較する
+# 指示の冒頭だけを変えた比較
 
 | 条件 | モデルに渡す指示 |
 | :--- | :--- |
 | 変更前 | **整数リストxsから偶数だけを残すsolve関数を書いてください。** |
 | 変更後 | **整数リストxsに対して、偶数だけを残すsolve関数を書いてください。** |
 
-後半の操作の指示をそろえ、冒頭だけが異なる**14操作**を比較。
+後半の操作の指示をそろえ、冒頭だけが異なる**14操作**を比較
 
-同じモデルを使い、追加学習せず、同じ入力でコードを検査する。
+同じモデル・同じ検査入力による、追加学習なしでのコード検証
 
 <!--
 保存済み24操作から、kを使わず「整数リストxsから」で始まる14操作を抽出。残り10操作は「xsと整数kを受け取り、」も変更するため除外。「から」の変更には読点の追加も含みます。各指示33入力、greedy最大64 token。
@@ -2322,20 +3046,20 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 ---
 <!-- _class: result -->
 
-# 5Mモデルでは、12件の合格が1件に減った
+# 5Mモデル：合格数12件から1件への低下
 
-**5M・1 epoch。比較した14操作の合格数。**
+**5M・1 epoch：比較した14操作の合格数**
 
 | 指示の冒頭 | 合格数を表す図 | 合格数・合格率 |
 | :--- | :--- | :--- |
 | 整数リストxsから | ■■■■■■■■■■■■□□ | **12 / 14・85.7%** |
 | 整数リストxsに対して、 | ■□□□□□□□□□□□□□ | **1 / 14・7.1%** |
 
-■は合格1件、□は不合格1件。左から合格数を並べた図。
+■は合格1件、□は不合格1件（左から合格数を並べた図）
 
-1M・3 epochでも、同じ14操作で **12 / 14 → 9 / 14** に低下した。
+1M・3 epochでも、同じ14操作で **12 / 14 → 9 / 14** に低下
 
-**冒頭を変えただけで、ほとんど正しく生成できなくなった。**
+**冒頭の変更に伴う、5Mモデルの合格数の大幅な低下**
 
 <!--
 図は合格数・不合格数の内訳で、各操作の並びではありません。合格は固定33ケースの検査をすべて通ること。24操作全体の22→1を「から」だけの変更として扱わず、14操作に限定。
@@ -2347,17 +3071,17 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 ---
 <!-- _class: default -->
 
-# 失敗例：偶数を残す指示を別の処理にした
+# 失敗例：偶数抽出から別の処理への変化
 
 変更後の指示：**整数リストxsに対して、偶数だけを残すsolve関数を書いてください。**
 
 | | 指示どおり | 5M・1 epoch | 1M・3 epoch |
 | :--- | :--- | :--- | :--- |
-| 処理 | 偶数だけを残す | 順序を反転し、k以上を残す | 正の数だけを残す |
+| 処理 | 偶数のみの抽出 | 順序反転後のk以上の抽出 | 正の数のみの抽出 |
 | 同じ検査入力 | `xs = [0], k = 1` | `xs = [0], k = 1` | `xs = [0], k = 1` |
 | 出力 | `[0]` | `[]` | `[]` |
 
-両モデルとも構文は正しいが、**指示された処理の意味が変わった。**
+両モデルとも正しい構文<br>**指示された処理と、生成された処理の意味の不一致**
 
 <!--
 5Mモデルのatomic-000001の実際の生成コードと最初の不一致入力。変更前はvalue % 2 == 0で抽出し33ケース合格。変更後はlist(reversed(xs))の後にk <= xで抽出。評価器は全操作でsolve(xs, k)を要求するため、指示にkがなくても検査入力にはkがあります。
@@ -2369,9 +3093,9 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 ---
 <!-- _class: default -->
 
-# 表現への強さは、モデルによって違う
+# 表現への頑健性に見られるモデル間の差
 
-冒頭だけを変えた14操作の合格数。学習回数も併記する。
+冒頭だけを変えた14操作の合格数と学習回数
 
 | モデル | 「xsから」 | 「xsに対して、」 |
 | :--- | ---: | ---: |
@@ -2379,8 +3103,8 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 | 5M・1 epoch | **12 / 14** | **1 / 14** |
 | 15M・1 epoch | 12 / 14 | 12 / 14 |
 
-1M・3 epochでは3件減り、15M・1 epochでは合格数を保った。
-**変化の大きさは、モデルと学習回数によって異なる。**
+1M・3 epochでは3件の減少、15M・1 epochでは合格数の維持
+**モデル・学習回数によって異なる変化の大きさ**
 
 <!--
 共通の分割設定。samplesをoperation_idで対応付け、指示が「整数リストxsから」で始まる14操作を集計。後半の文が同じと確認。合格数が同じでも生成コードの一致を主張しない。
@@ -2392,9 +3116,9 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 ---
 <!-- _class: default -->
 
-# 学習データの文型との結び付きが考えられる
+# 訓練データの文型との結び付きの可能性
 
-訓練データで「整数リストxsに対して、」と始まる指示は84件。
+訓練データで「整数リストxsに対して、」と始まる指示は84件
 
 | その文型で学習した処理 | 件数 |
 | :--- | ---: |
@@ -2402,9 +3126,9 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 | 2操作 | 1 |
 | 3操作 | 83 |
 
-この文型を、複数の操作と結び付けて覚えた可能性がある。
+この文型を複数の操作と結び付けて学習した可能性
 
-**原因の確定には、合成データを変えた追加比較が必要。**
+**原因の確定に向けた、合成データを変えた追加比較の必要性**
 
 <!--
 解釈は仮説です。頻度や操作数の偏り以外に、モデル規模も関係し得ます。失敗だけで原因を断定しません。
@@ -2416,7 +3140,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 
 # モデルが情報を読み取る仕組み
 
-**アテンション**は、次のコードを作るときに、どこから情報を読むかを決める仕組み。
+**アテンション**：次のコード生成時に、情報の参照先を決める仕組み
 
 | 参照できる情報 | 内容 |
 | :--- | :--- |
@@ -2424,9 +3148,9 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 | すでに生成したコード | 変数名、構文、処理の続き |
 | 開始の印など | 入力の始まりや区切り |
 
-参照割合だけでは、その情報が必要だったかは確定できない。
+参照割合だけでは確定できない、各情報の必要性
 
-**情報の受け渡しを止めて、生成結果が変わるかを調べる。**
+**情報の受け渡しを止めた場合の、生成結果の変化の検証**
 
 <!--
 図の読み方を説明した後の6ページは、同一の絶対値・降順の指示について、1M（1・3 epoch）・5M・15Mの全層・全ヘッドの生成中のattentionを表示する。Value ablationでは指示位置のKeyとattention weightを保ち、Valueだけを0にします。
@@ -2435,7 +3159,7 @@ Junya Takayama, Masaya Ohagi, Tomoya Mizumoto, and Katsumasa Yoshikawa. Evaluati
 
 ---
 <!-- _class: code-explain -->
-# Attentionの可視化：Q・Kから参照の強さを復元する
+# Attentionの可視化：Q・Kによる参照の強さの復元
 
 <div class="code-columns"><div>
 
@@ -2455,7 +3179,7 @@ row = record["attention"][layer, head]
 fill = blue(float(row[position]), maximum)
 ```
 
-<div class="code-source">analyze_boku_nano_attention.py：capture_qkv、generate（133–139行）、attention_grid（224–229行）。</div>
+<div class="code-source">analyze_boku_nano_attention.py：capture_qkv、generate（133–139行）、attention_grid（224–229行）</div>
 
 </div><div>
 
@@ -2468,9 +3192,9 @@ fill = blue(float(row[position]), maximum)
 <div class="att-boundary">赤線：指示側と生成コード側の境界</div>
 </div>
 
-灰色の領域：その生成時点では、まだ存在しない位置。
+灰色の領域：その生成時点では、まだ存在しない位置
 
-15M・1 epochのL8・H5の例。各モデルの98パーセンタイルを色の上限に使うため、**モデル間で濃さを直接比較しない。**
+15M・1 epochのL8・H5の例<br>色の上限：各モデルの98パーセンタイル<br>**モデル間での濃さの直接比較は不可**
 
 </div></div>
 
@@ -2484,9 +3208,9 @@ fill = blue(float(row[position]), maximum)
 
 ![w:1100 h:380](figure/attention_1m_l1_l3.png)
 
-**生成結果：未定義の result を参照し、この指示では実行できなかった。**
+**生成結果：未定義の result の参照による実行失敗**
 
-色は各モデル内の相対的な強さ。モデル間で濃さを直接比較しない。
+色：各モデル内の相対的な強さ<br>モデル間での濃さの直接比較は不可
 
 <!--
 入力全文：xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。
@@ -2513,9 +3237,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ![w:1100 h:380](figure/attention_1m_3epoch_l1_l3.svg)
 
-**生成結果：未定義の output を参照し、この指示では実行できなかった。**
+**生成結果：未定義の output の参照による実行失敗**
 
-3層・4 head、12生成step。色の濃さはモデル間で直接比較しない。
+3層・4 head、12生成step<br>色の濃さのモデル間での直接比較は不可
 
 <!--
 保存済みSVGのviewBoxを48 62 618 320に設定し、他のページと同じくヘッド別ヒートマップ領域だけを切り抜いて掲載。セル・色・順序は変更していない。1 epochと同じ指示全文：xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。
@@ -2531,9 +3255,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ![w:1100 h:380](figure/attention_5m_l1_l3.png)
 
-**生成結果：絶対値の処理は生成したが、k加算が入り、降順の処理が抜けた。**
+**生成結果：絶対値処理に加えた不要なk加算と、降順整列の欠落**
 
-色は各モデル内の相対的な強さ。モデル間で濃さを直接比較しない。
+色：各モデル内の相対的な強さ<br>モデル間での濃さの直接比較は不可
 
 <!--
 入力全文：xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。
@@ -2562,9 +3286,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ![w:1100 h:380](figure/attention_5m_l4_l5.png)
 
-**生成結果：絶対値の処理は生成したが、k加算が入り、降順の処理が抜けた。**
+**生成結果：絶対値処理に加えた不要なk加算と、降順整列の欠落**
 
-色は各モデル内の相対的な強さ。モデル間で濃さを直接比較しない。
+色：各モデル内の相対的な強さ<br>モデル間での濃さの直接比較は不可
 
 <!--
 入力全文：xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。
@@ -2593,9 +3317,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ![w:1100 h:380](figure/attention_15m_l1_l4.png)
 
-**生成結果：絶対値を取って降順に並べるコードを生成した。**
+**生成結果：絶対値化と降順整列のコード生成**
 
-色は各モデル内の相対的な強さ。モデル間で濃さを直接比較しない。
+色：各モデル内の相対的な強さ<br>モデル間での濃さの直接比較は不可
 
 <!--
 入力全文：xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。
@@ -2624,9 +3348,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 ![w:1100 h:380](figure/attention_15m_l5_l8.png)
 
-**生成結果：絶対値を取って降順に並べるコードを生成した。**
+**生成結果：絶対値化と降順整列のコード生成**
 
-色は各モデル内の相対的な強さ。モデル間で濃さを直接比較しない。
+色：各モデル内の相対的な強さ<br>モデル間での濃さの直接比較は不可
 
 <!--
 入力全文：xsの各要素を絶対値にして降順に並べるsolve関数を書いてください。
@@ -2650,9 +3374,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 ---
 <!-- _class: compact -->
 
-# 指示の情報を止めると合格数が落ちる
+# 指示情報の遮断による合格数の低下
 
-学習時に準拠した文型で、24操作を診断。
+学習時に準拠した文型による24操作の診断
 
 | モデル | 通常の生成 | 指示の情報を止めた生成 |
 | :--- | ---: | ---: |
@@ -2661,9 +3385,9 @@ def solve(xs: list[int], k: int) -> list[int]:
 | 5M・1 epoch | 22 / 24 | **0 / 24** |
 | 15M・1 epoch | 22 / 24 | **2 / 24** |
 
-**指示から受け取る情報が、操作の選択に寄与している。**
+**操作の選択に対する、指示情報の寄与**
 
-24操作の内部診断。冒頭変更の14操作、固定5テストとは別。
+24操作の内部診断<br>冒頭変更の14操作・固定5テストとは別の評価
 
 <!--
 本編採用の4構成の実測値。全層で日本語指示位置のValueを0にした介入であり、指示自体を削除したものではない。各prompt33入力、greedy最大64 token。
@@ -2675,15 +3399,15 @@ def solve(xs: list[int], k: int) -> list[int]:
 ---
 <!-- _class: default -->
 
-# 評価では、表現を変えた場合も確かめる
+# 表現を変えた場合の性能評価
 
 | 調べること | 今回、分かったこと |
 | :--- | :--- |
-| 決めた文型での動作 | 1M・3 epochも高い全体合格率を示した |
+| 決めた文型での動作 | 1M・3 epochでも高い全体合格率 |
 | 未学習の言い換え | 1M・3 epochと15M・1 epochは15 / 30 |
 | 指示の冒頭の変更 | 1M・3 epochは12→9、5M・1 epochは12→1（各14操作） |
 
-**一種類のプロンプトでの精度に加え、表現を変えても性能が保たれるかを評価する必要がある。**
+**一種類のプロンプトでの精度に加え、<br>表現を変えても性能を保てるかの評価の必要性**
 
 <!--
 先行研究は分類・二択質問、今回の実験は限定したコード生成。課題と指標が違うことに注意。
@@ -2697,11 +3421,11 @@ def solve(xs: list[int], k: int) -> list[int]:
 
 # この結果が示す範囲
 
-- 訓練は24操作を最大3つ組み合わせるコード生成。追加評価では4操作まで調べた。
-- 冒頭変更の比較は14操作。日本語能力全体の測定ではない。
-- 学習は一つの乱数設定。繰り返し実験のばらつきは未確認。
+- 訓練：24操作から最大3操作を組み合わせるコード生成 ／ 追加評価：4操作までの評価
+- 冒頭変更の比較：14操作に限定（日本語能力全体を対象としない測定）
+- 学習：一つの乱数設定（繰り返し実験によるばらつきは未確認）
 
-今後は文型の偏りを減らした合成データで、表現への強さを再評価する。
+今後の課題：文型の偏りを減らした合成データによる、表現への頑健性の再評価
 
 <!--
 乱数seedは学習20260925、内部診断20260930。追加実験は今後の提案です。
@@ -2711,10 +3435,10 @@ def solve(xs: list[int], k: int) -> list[int]:
 ---
 <!-- _class: overview-original -->
 <!-- _paginate: false -->
-<div class="canvas">
-
 <h1>Appendix D：Boku-nano 全体図</h1>
-<div class="sub">日本語の限定的な指示から solve(xs, k) を生成する小型Decoder-only Transformer。意味ASTを起点に、データ生成・学習・評価をすべて同じ意味仕様でつなぐ。</div>
+
+<div class="canvas">
+<div class="sub">日本語の限定的な指示から solve(xs, k) を生成する小型Decoder-only Transformer<br>意味ASTを起点に、共通の意味仕様で接続するデータ生成・学習・評価</div>
 
 <div class="lane">
     <div class="lname"><span class="n">1</span><span class="t">意味</span></div>
@@ -2727,7 +3451,7 @@ def solve(xs: list[int], k: int) -> list[int]:
     <div class="arrow">→</div>
     <div class="box rule">
         <b class="t">意味AST　12,720仕様</b>
-        24操作から1〜3操作を順序付きで選ぶ（重複なし）<br>
+        24操作からの、順序付き1〜3操作の選択（重複なし）<br>
         24 ＋ 24×23 ＋ 24×23×22 ＝ 12,720<br>
         <span class="mono">{"sequence": [{"filter": ["even"]}, {"map": ["add_k"]}]}</span><br>
         <span class="note">※日本語・コード・期待値・splitの共通の根拠</span>
@@ -2735,9 +3459,9 @@ def solve(xs: list[int], k: int) -> list[int]:
     <div class="arrow">→</div>
     <div class="box rule span-c3c4">
         <b class="t">参照インタプリタ（期待値の計算）</b>
-        意味ASTを入力リストに適用して、正しい出力を計算する<br>
-        operator・itertools・heapq・deque・while で実装し、生成されるsolve関数の表現空間の外側に置く<br>
-        → 正解コードの検証（2）とhidden test採点（4）に使う<br>
+        意味ASTの入力リストへの適用と、正しい出力の計算<br>
+        operator・itertools・heapq・deque・while による、生成solve関数の表現空間の外側での実装<br>
+        → 正解コードの検証（2）とhidden test採点（4）に利用<br>
         <span class="note">※参照実装と生成コードが同じ式を書いて誤りを共有しないため</span>
     </div>
 </div>
@@ -2753,7 +3477,7 @@ def solve(xs: list[int], k: int) -> list[int]:
     <div class="lname"><span class="n">2</span><span class="t">データ</span></div>
     <div class="box rule">
         <b class="t">意味ASTの分割</b>
-        12,720 から 670 を組合せ汎化へ<br>
+        12,720 のうち 670 を組合せ汎化用に確保<br>
         残り 12,050 をハッシュ順で分割<br>
         　train　9,646（1操作24は全部）<br>
         　validation　1,202<br>
@@ -2765,9 +3489,9 @@ def solve(xs: list[int], k: int) -> list[int]:
     <div class="stack">
         <div class="box rule">
             <b class="t">正解コード生成（自作テンプレート）</b>
-            style_specでfor／内包表記・変数名・スライス表記などを変える<br>
-            277,440候補 → 構文・Safe-AST・signature・入力非破壊・<br>
-            41入力で参照インタプリタと出力一致、を全部通したものだけ
+            style_specによるfor／内包表記・変数名・スライス表記などの変更<br>
+            277,440候補から全条件の通過例のみ採用<br>
+            構文・Safe-AST・signature・入力非破壊・41入力での参照インタプリタとの出力一致
         </div>
         <div class="box teacher">
             <b class="t">日本語指示生成</b>
@@ -2782,7 +3506,7 @@ def solve(xs: list[int], k: int) -> list[int]:
             <b class="t">評価JSONL　108,590件</b>
             validation 24,040<br>
             正式5テスト 84,550問<br>
-            hidden入力はコード作成時と別
+            hidden入力はコード作成時と別の入力
         </div>
         <div class="box data">
             <b class="t">訓練JSONL　192,900件</b>
@@ -2815,7 +3539,7 @@ def solve(xs: list[int], k: int) -> list[int]:
         <b class="t">BPEトークナイザ</b>
         ByteLevel BPE・語彙 2,048<br>
         trainの日本語指示と正解コードだけから学習<br>
-        （評価データは入れない）<br>
+        （評価データの除外）<br>
         min_frequency 5・最大token長 24<br>
         unknown token 0件
     </div>
@@ -2824,7 +3548,7 @@ def solve(xs: list[int], k: int) -> list[int]:
         <b class="t">学習系列とloss</b>
         <span class="mono">&lt;|bos|&gt;&lt;|task|&gt; {instruction_ja}</span><br>
         <span class="mono">&lt;|code|&gt; {reference_code}&lt;|eos|&gt;</span><br>
-        lossはコードとEOSだけ（指示は条件として読むだけ）<br>
+        lossの対象はコードとEOSのみ（指示は条件としての参照のみ）<br>
         batch 512件・1エポック 377 step・AdamW・bf16
     </div>
     <div class="arrow">→</div>
@@ -2851,7 +3575,7 @@ def solve(xs: list[int], k: int) -> list[int]:
         <b class="t">hidden test評価（正式5テスト 84,550問）</b>
         greedy生成 → 構文 → Safe-AST → signature → 隔離実行<br>
         → hidden入力すべてで参照インタプリタと同じ出力なら合格<br>
-        文字列一致ではなく、実行結果で判定する<br>
+        文字列一致ではなく、実行結果による判定<br>
         　通常 24,040　　組合せ汎化 13,400　　日本語言い換え 30<br>
         　同一操作の反復 23,040　　境界値 24,040<br>
         <span class="note">※attention診断の24問（1操作）はこれとは別の解析用テスト</span>
@@ -2887,8 +3611,8 @@ def solve(xs: list[int], k: int) -> list[int]:
         <div class="arrow">→</div>
         <div class="box teacher">
             <b class="t">Qwen3-0.6B（ブラウザ）</b>
-            自由文をCNLへ翻訳するだけ<br>
-            追加学習なし・コードは書かない
+            自由文からCNLへの翻訳のみ<br>
+            追加学習なし・コード生成なし
         </div>
         <div class="arrow">→</div>
         <div class="box rule">
@@ -2919,4 +3643,28 @@ def solve(xs: list[int], k: int) -> list[int]:
     <div style="color:#8a6d1f">⇣ 参照インタプリタによる検証</div>
 </div>
 
+</div>
+
+---
+
+<!-- _class: bibliography -->
+# 参考文献
+
+<div class="reference-columns">
+<div>
+<p><strong>Eldan & Li (2023)</strong><br><a href="https://arxiv.org/abs/2305.07759">TinyStories: How Small Can Language Models Be and Still Speak Coherent English?</a></p>
+<p><strong>Finke et al. (2025)</strong><br><a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/34696303f5996d5c54e699c0b462ae48-Abstract-Datasets_and_Benchmarks_Track.html">Parameterized Synthetic Text Generation with SimpleStories</a></p>
+<p><strong>Maini et al. (2024)</strong><br><a href="https://arxiv.org/abs/2401.16380">Rephrasing the Web: A Recipe for Compute and Data-Efficient Language Modeling</a></p>
+<p><strong>Yu &amp; Xiong (2026), COLM</strong><br><a href="https://arxiv.org/abs/2605.17849">Generating Pretraining Tokens from Organic Data for Data-Bound Scaling (SynPro)</a></p>
+<p><strong>Gunasekar et al. (2023)</strong><br><a href="https://arxiv.org/abs/2306.11644">Textbooks Are All You Need</a></p>
+<p><strong>Liu et al. (2023)</strong><br><a href="https://arxiv.org/abs/2312.09241">TinyGSM: achieving &gt;80% on GSM8k with small language models</a></p>
+</div>
+<div>
+<p><strong>Kim et al. (2026), COLM</strong><br><a href="https://arxiv.org/abs/2603.18534">Data-efficient pre-training by scaling synthetic megadocs</a></p>
+<p><strong>Ouyang et al. (2022)</strong><br><a href="https://arxiv.org/abs/2203.02155">Training language models to follow instructions with human feedback</a></p>
+<p><strong>Zheng et al. (2023)</strong><br><a href="https://arxiv.org/abs/2306.05685">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena</a></p>
+<p><strong>Lambert et al. (2024)</strong><br><a href="https://arxiv.org/abs/2411.15124">Tulu 3: Pushing Frontiers in Open Language Model Post-Training</a></p>
+<p><strong>Gan & Mori (2023)</strong><br><a href="https://aclanthology.org/2023.paclic-1.1/">Sensitivity and Robustness of Large Language Models to Prompt Template in Japanese Text Classification Tasks</a></p>
+<p><strong>Takayama et al. (2026)</strong><br><a href="https://aclanthology.org/2026.lrec-1.225/">Evaluating the Effect of Question Wording Variations on Answer Consistency in Large Language Models</a></p>
+</div>
 </div>
