@@ -4,9 +4,9 @@
 
 [デモはこちらです](https://yuuono.github.io/bokunano/)
 
-日本語の指示からPythonコードを生成するデモ動画（約1分16秒）。画像をクリックするとMP4をダウンロードできます。
+日本語の指示からPythonコードを生成するデモ動画（約1分16秒）。下の再生ボタンから視聴できます。
 
-[![Boku1-nano：日本語の指示からPythonコードを生成するデモ動画](docs/report/media/demo-poster.png)](docs/report/media/demo.mp4?raw=true)
+https://github.com/user-attachments/assets/3db99024-2bba-4e75-a3bf-54b14790f976
 
 [デモ動画をダウンロード（MP4・約20MB）](docs/report/media/demo.mp4?raw=true)
 
