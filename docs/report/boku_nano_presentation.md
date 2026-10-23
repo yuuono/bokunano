@@ -878,7 +878,7 @@ style: |
 
 # 本発表の概要
 
-> 自作した合成データでフルスクラッチ学習し、制限された日本語指示からのPython関数生成に特化させた小型言語モデルが、ChatGPT 6 Astraの精度を一部凌駕した。
+> 自作した合成データでフルスクラッチ学習し、制限された日本語指示からのPython関数生成に特化させた小型言語モデルが、ChatGPT 6 Astraの精度を一部凌駕した
 <!-- > 制限された日本語指示からPython関数を生成する小型言語モデルを、<br>自作した合成データでフルスクラッチ学習し、ChatGPT 6 Astraを一部凌駕した。 -->
 <!-- > 制限された日本語指示からPython関数を生成する小型言語モデルをゼロから構築し<br>合成データのみの学習でChatgpt 6 Astraに匹敵する精度を達成した　 -->
 
@@ -1228,7 +1228,7 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 <div class="fv-flow">
 <div class="fv-box fv-side fv-pre"><span class="fv-no">1</span><p class="fv-title">意味AST</p><p class="fv-key">12,720<small>通り</small></p><p class="fv-sub">24操作・最大3操作</p></div>
 <div class="fv-arrow"></div>
-<div class="fv-box fv-side fv-pre"><span class="fv-no">2</span><p class="fv-title">AST単位で分割</p><p class="fv-key">約8：1：1</p><p class="fv-sub">訓練・検証・通常テスト</p></div>
+<div class="fv-box fv-side fv-pre"><span class="fv-no">2</span><p class="fv-title">AST単位で分割</p><p class="fv-key">8 : 1 : 1</p><p class="fv-sub">訓練・検証・通常テスト</p></div>
 <div class="fv-fork"><span class="fv-bar"></span><i></i><i></i></div>
 <div class="fv-lanes">
 <div class="fv-box fv-lane"><span class="fv-no">3</span><p class="fv-title">日本語の指示文</p><div class="fv-chain"><div class="fv-pill"><b>表現作成</b><span>Qwen3-4B-AWQ</span></div><div class="fv-to"></div><div class="fv-pill"><b>組み合わせ</b><span>ASTに沿って</span></div></div></div>
@@ -1254,7 +1254,7 @@ Boku・Qwenは条件A、greedy、全872問で各問題1生成・修復なし。A
 
 ## 基本操作
 
-| 種類 | 操作数 | 例 |
+| 種類 | 操作数 |　 例 　|
 | :--- | ---: | :--- |
 | 条件に合う数の抽出 | 10 | 偶数・奇数・正の値・kより大きい値 |
 | 要素ごとの値の変換 | 8 | kを加える・2倍・絶対値・二乗 |
@@ -2061,7 +2061,7 @@ Boku-nanoはDecoder-onlyであり、Encoder-Decoder構成のCross-Attentionは�
 
 <div class="lp-context">
 <div class="lp-input">… v % 2 == <strong>？</strong></div>
-<span>→</span><div class="lp-model">transformer</div><span>→</span>
+<span>→</span><div class="lp-model">Decoder</div><span>→</span>
 <span>次のトークン候補に対するlogit</span>
 </div>
 
