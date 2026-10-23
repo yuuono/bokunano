@@ -255,10 +255,11 @@ style: |
   section.model-settings table { font-size: 20px; margin: 12px 0; }
   section.model-settings th, section.model-settings td { padding: 5px 12px; }
   section.model-settings h2 { font-size: 25px; margin: 12px 0; }
-  section.model-settings .shared-settings { display: grid; grid-template-columns: 405px 1fr; gap: 34px; margin-top: 18px; }
+  section.model-settings .common-architecture { font-size: 20px; line-height: 1.5; margin: 12px 0 0; }
+  section.model-settings .shared-settings { display: grid; grid-template-columns: 405px 1fr; gap: 34px; margin-top: 10px; }
   section.model-settings .shared-settings > div { padding-top: 8px; }
   section.model-settings .shared-settings h2 { font-size: 24px; color: #245f8b; margin: 0 0 8px; }
-  section.model-settings .shared-settings p { font-size: 21px; line-height: 1.5; margin: 3px 0; }
+  section.model-settings .shared-settings p { font-size: 21px; line-height: 1.4; margin: 3px 0; }
   section.model-settings .shared-settings .lr-schedule { color: #245f8b; }
   section.causal-compare { font-size: 21px; line-height: 1.3; }
   section.causal-compare h1 { font-size: 38px; margin-bottom: 14px; }
@@ -1790,6 +1791,8 @@ labels[target_start:] = token_ids[target_start:]
 | FFNの中間次元 `d_ff` | 256 | 704 | 1,024 |
 | この後に示す学習曲線 | 3 epoch | 1 epoch | 1 epoch |
 
+<p class="common-architecture"><strong>共通構造</strong>　RoPE（base 10,000）／ RMSNorm（ε = 10<sup>−5</sup>）／ SwiGLU ／ Linear層のbiasなし</p>
+
 <div class="shared-settings">
 <div>
 <h2>共通のトークナイザー</h2>
@@ -1800,7 +1803,7 @@ labels[target_start:] = token_ids[target_start:]
 </div>
 <div>
 <h2>共通の学習設定</h2>
-<p>AdamW ／ β = (0.9, 0.95) ／ batch size 512</p>
+<p>AdamW ／ β = (0.9, 0.95) ／ ε = 10<sup>−8</sup> ／ batch size 512</p>
 <p>重み減衰 0.1（行列重み）／ dropout 0</p>
 <p class="lr-schedule">5%の線形warmup → cosine減衰<br>学習率 3×10<sup>−4</sup> → 3×10<sup>−5</sup></p>
 <p>勾配クリッピング 1.0 ／ bfloat16での計算</p>
@@ -1811,6 +1814,7 @@ labels[target_start:] = token_ids[target_start:]
 モデル設定：../../data/models/boku_nano_1m_bpe_2048_minfreq5_maxlen24_3epoch/model_config.json、../../data/models/boku_nano_5m_bpe_2048_minfreq5_maxlen24_1epoch/model_config.json、../../data/models/boku_nano_15m_bpe_2048_minfreq5_maxlen24_1epoch/model_config.json。
 パラメータ数：../results/trained_model_inventory.md。head_dim=d_model/n_heads。
 BPE設定：../../config/tokenizer_bpe_2048.yaml。min_frequency=5、max_token_length=24、vocab_size=2048。
+共通構造：各model_config.jsonのrope_base=10000、rms_norm_eps=1e-5。../../scripts/model/boku_nano.py のSwiGLU（SiLUゲート）と各nn.Linearのbias=Falseを照合。3モデルの保存済み重みにgate_proj・up_proj・down_projがありbiasキーなし。
 学習設定：各モデルディレクトリのtraining_config.yaml（training節）。AdamWのeps=1e-8、weight_decay=0.1は2次元以上のパラメータのみ、RMSNormなど1次元には0。batch_size=512、gradient_accumulation_steps=1、grad_clip_norm=1.0。学習率は全更新数の5%を線形warmupし、3e-4から3e-5までcosine減衰。1M・3epochは1,131更新・warmup57更新、5M・15Mの1epochは377更新・warmup19更新。実装：../../scripts/model/train_boku_nano.py のbuild_optimizerとbuild_scheduler。
 後続の1epoch比較には同じ1M構造の1epochチェックポイントもある。構造が同じならepoch数を変えてもパラメータ数は変わらない。
 -->
