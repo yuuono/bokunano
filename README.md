@@ -5,10 +5,6 @@
 自作した合成データでフルスクラッチ学習し、制限された日本語指示からのPython関数生成に<br>
 特化させた小型言語モデルが、ChatGPT 6 Astraの精度を一部凌駕した
 
-## デモ動画
-
-日本語の指示からPythonコードを生成するデモ（約1分16秒・自動再生・ループ）。
-
 ![Boku-nano：日本語の指示からPythonコードを生成するデモ](docs/report/media/demo.gif)
 
 [デモ動画をダウンロード（MP4・約20MB）](docs/report/media/demo.mp4?raw=true)
