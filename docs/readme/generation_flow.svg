@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="310" viewBox="0 0 1320 310" role="img" aria-labelledby="title description">
+  <title id="title">日本語の指示からBoku-nanoでPython関数を生成する流れ</title>
+  <desc id="description">偶数を残して各要素にkを加える日本語の指示を、1M・5M・15MのDecoder-only TransformerであるBoku-nanoが読み、対応するPython関数を生成する説明例</desc>
+  <style>
+    text { font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif; fill: #17212b; }
+    .heading { font-size: 28px; font-weight: 700; fill: #245f8b; }
+    .body { font-size: 23px; }
+    .architecture { font-size: 22px; }
+    .code { font-family: "SFMono-Regular", Menlo, Consolas, monospace; font-size: 19px; }
+    .arrow { fill: none; stroke: #45556a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <rect width="1320" height="310" fill="#fff"/>
+  <rect x="20" y="16" width="390" height="278" rx="20" fill="#eaf3fb"/>
+  <rect x="465" y="16" width="390" height="278" rx="20" fill="#e9e7f8"/>
+  <rect x="910" y="16" width="390" height="278" rx="20" fill="#e9f5ed"/>
+
+  <text class="heading" x="44" y="62">① 日本語の指示</text>
+  <text class="body" x="44" y="113">整数リストxsから</text>
+  <text class="body" x="44" y="151">偶数だけを残し</text>
+  <text class="body" x="44" y="189">各要素にkを加える</text>
+  <text class="body" x="44" y="227">solve関数を書いて</text>
+
+  <path class="arrow" d="M425 155 H450 M440 145 L450 155 L440 165"/>
+
+  <text class="heading" x="489" y="62">② Boku-nano</text>
+  <text class="body" x="489" y="113">1M / 5M / 15M パラメータ</text>
+  <text class="architecture" x="489" y="151">Decoder-only Transformer</text>
+  <text class="body" x="489" y="213">日本語の指示を読み</text>
+  <text class="body" x="489" y="251">コードを生成</text>
+
+  <path class="arrow" d="M870 155 H895 M885 145 L895 155 L885 165"/>
+
+  <text class="heading" x="934" y="62">③ Pythonの関数</text>
+  <text class="code" xml:space="preserve"><tspan x="934" y="117">def solve(xs, k):</tspan><tspan x="934" y="155">    return [x + k for x in xs</tspan><tspan x="934" y="193">            if x % 2 == 0]</tspan></text>
+</svg>

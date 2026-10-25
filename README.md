@@ -2,6 +2,8 @@
 
 **限られた日本語指示からPython関数を生成する小型言語モデル**
 
+![日本語の指示 → Boku-nano（1M・5M・15MのDecoder-only Transformer）→ Python関数の生成例](docs/readme/generation_flow.svg)
+
 自作した合成データでフルスクラッチ学習し、日本語指示からのPython関数生成に特化した小型モデルを構築して、独自ベンチマークの一部でChatGPT 6 Astraの参考値を上回る精度を達成
 
 [ブラウザで試す](https://yuuono.github.io/bokunano/) · [発表資料（PDF）](docs/report/boku_nano_presentation.pdf) · [発表原稿（Markdown）](docs/report/boku_nano_presentation.md)
