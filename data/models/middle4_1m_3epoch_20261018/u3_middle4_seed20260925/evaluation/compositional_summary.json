@@ -1,0 +1,26 @@
+{
+  "by_operation_count": {
+    "2": {
+      "pass_rate": 0.985,
+      "passed": 197,
+      "total": 200
+    },
+    "3": {
+      "pass_rate": 0.9820454545454546,
+      "passed": 12963,
+      "total": 13200
+    }
+  },
+  "evaluated_record_count": 13400,
+  "exact_code_match_count": 9,
+  "expected_record_count": 13400,
+  "new_record_count": 13400,
+  "pass_rate": 0.982089552238806,
+  "passed_record_count": 13160,
+  "status": "completed",
+  "suite": "compositional",
+  "termination_counts": {
+    "eos": 13400
+  },
+  "timeout_count": 0
+}

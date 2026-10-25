@@ -1,0 +1,21 @@
+{
+  "by_operation_count": {
+    "1": {
+      "pass_rate": 0.4666666666666667,
+      "passed": 14,
+      "total": 30
+    }
+  },
+  "evaluated_record_count": 30,
+  "exact_code_match_count": 0,
+  "expected_record_count": 30,
+  "new_record_count": 30,
+  "pass_rate": 0.4666666666666667,
+  "passed_record_count": 14,
+  "status": "completed",
+  "suite": "paraphrase",
+  "termination_counts": {
+    "eos": 30
+  },
+  "timeout_count": 0
+}

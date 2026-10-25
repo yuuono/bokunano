@@ -1,0 +1,105 @@
+{
+  "format_version": 1,
+  "epochs": 3,
+  "seed": 20260925,
+  "smoke_test": false,
+  "evaluate_after_training": true,
+  "jobs": [
+    {
+      "variant": "u3_middle4",
+      "model_config": {
+        "vocab_size": 2048,
+        "d_model": 128,
+        "n_layers": 3,
+        "n_heads": 4,
+        "d_ff": 256,
+        "context_length": 256,
+        "dropout": 0.0,
+        "rope_base": 10000.0,
+        "rms_norm_eps": 1e-05,
+        "tie_word_embeddings": false,
+        "n_loops": 4,
+        "loop_input_mode": "none",
+        "loop_pattern": "middle",
+        "recurrent_residual_scale": 1.0
+      },
+      "effective_layers": 6,
+      "optimizer_config": {
+        "type": "adamw",
+        "learning_rate": 0.0003,
+        "minimum_learning_rate": 3e-05,
+        "warmup_ratio": 0.05,
+        "betas": [
+          0.9,
+          0.95
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.1,
+        "gradient_clip_norm": 1.0,
+        "fused": true
+      },
+      "parameter_count": 1016704,
+      "command": [
+        "/home/ono_yusuke/my_git/bokunano/.venv/bin/python",
+        "/home/ono_yusuke/my_git/bokunano/scripts/model/train_boku_nano.py",
+        "--config",
+        "/home/ono_yusuke/my_git/bokunano/data/models/middle4_1m_3epoch_20261018/u3_middle4_seed20260925/config.yaml"
+      ],
+      "evaluation_config": "/home/ono_yusuke/my_git/bokunano/data/models/middle4_1m_3epoch_20261018/u3_middle4_seed20260925/evaluation.yaml",
+      "evaluation_command": [
+        "/home/ono_yusuke/my_git/bokunano/.venv/bin/python",
+        "/home/ono_yusuke/my_git/bokunano/scripts/model/evaluate_boku_nano.py",
+        "--config",
+        "/home/ono_yusuke/my_git/bokunano/data/models/middle4_1m_3epoch_20261018/u3_middle4_seed20260925/evaluation.yaml"
+      ]
+    },
+    {
+      "variant": "u3_middle4_scaled025",
+      "model_config": {
+        "vocab_size": 2048,
+        "d_model": 128,
+        "n_layers": 3,
+        "n_heads": 4,
+        "d_ff": 256,
+        "context_length": 256,
+        "dropout": 0.0,
+        "rope_base": 10000.0,
+        "rms_norm_eps": 1e-05,
+        "tie_word_embeddings": false,
+        "n_loops": 4,
+        "loop_input_mode": "none",
+        "loop_pattern": "middle",
+        "recurrent_residual_scale": 0.25
+      },
+      "effective_layers": 6,
+      "optimizer_config": {
+        "type": "adamw",
+        "learning_rate": 0.0003,
+        "minimum_learning_rate": 3e-05,
+        "warmup_ratio": 0.05,
+        "betas": [
+          0.9,
+          0.95
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.1,
+        "gradient_clip_norm": 1.0,
+        "fused": true
+      },
+      "parameter_count": 1016704,
+      "command": [
+        "/home/ono_yusuke/my_git/bokunano/.venv/bin/python",
+        "/home/ono_yusuke/my_git/bokunano/scripts/model/train_boku_nano.py",
+        "--config",
+        "/home/ono_yusuke/my_git/bokunano/data/models/middle4_1m_3epoch_20261018/u3_middle4_scaled025_seed20260925/config.yaml"
+      ],
+      "evaluation_config": "/home/ono_yusuke/my_git/bokunano/data/models/middle4_1m_3epoch_20261018/u3_middle4_scaled025_seed20260925/evaluation.yaml",
+      "evaluation_command": [
+        "/home/ono_yusuke/my_git/bokunano/.venv/bin/python",
+        "/home/ono_yusuke/my_git/bokunano/scripts/model/evaluate_boku_nano.py",
+        "--config",
+        "/home/ono_yusuke/my_git/bokunano/data/models/middle4_1m_3epoch_20261018/u3_middle4_scaled025_seed20260925/evaluation.yaml"
+      ]
+    }
+  ]
+}

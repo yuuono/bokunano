@@ -106,4 +106,4 @@ uv run --python 3.12.12 python \
   --device cuda --dtype bfloat16 --run --evaluate
 ```
 
-学習済みweight、84,550件の生成結果、dev50生出力は`data/models/middle4_1m_3epoch_20261018/`へローカル保存した。Gitには再現コード、集計値、図、レポートだけを含める。
+学習成果物は`data/models/middle4_1m_3epoch_20261018/`へ保存した。3 epoch終了時の両モデルの`model.safetensors`と、モデル設定・学習来歴・評価集計・dev50設定などのJSONはGitに含める。各epochの学習再開用checkpoint、生成結果・dev50生出力のJSONL、ログはローカルのみで保持する。

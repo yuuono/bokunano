@@ -1,0 +1,26 @@
+{
+  "by_operation_count": {
+    "2": {
+      "pass_rate": 0.9768518518518519,
+      "passed": 1055,
+      "total": 1080
+    },
+    "3": {
+      "pass_rate": 0.9894599303135888,
+      "passed": 22718,
+      "total": 22960
+    }
+  },
+  "evaluated_record_count": 24040,
+  "exact_code_match_count": 14,
+  "expected_record_count": 24040,
+  "new_record_count": 24040,
+  "pass_rate": 0.9888935108153079,
+  "passed_record_count": 23773,
+  "status": "completed",
+  "suite": "normal",
+  "termination_counts": {
+    "eos": 24040
+  },
+  "timeout_count": 0
+}

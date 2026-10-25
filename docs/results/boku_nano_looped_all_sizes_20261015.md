@@ -49,6 +49,8 @@ validation lossは各epoch終了時に、固定24,040件・468,381教師tokenの
 
 各modelディレクトリには最終`model.safetensors`、`model_config.json`、解決済み`training_config.yaml`、`training_manifest.json`、`training_metrics.jsonl`と、3個のepoch checkpointがある。
 
+2026-10-25の保存状態確認では、この系列にはGit管理済みの最終重み4個だけが残っていた。欠けていた`model_config.json`は、`config/boku_nano_looped_lt1_3epoch.yaml`と実験runnerの各variant定義から復元してGitへ追加した。4モデルとも重みをstrictに読み込めることとparameter数の一致を確認した。学習当時のcheckpointやログは、この復元には含まない。
+
 ## 固定5集合の実行評価
 
 greedy生成、最大160 token、CUDA bfloat16、1コード5秒timeoutで評価した。参照コードとの文字列一致ではなく、構文・安全AST・`solve(xs, k)`のsignature・入力非変更・固定hidden testをすべて満たした場合を合格とした。

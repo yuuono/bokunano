@@ -1,0 +1,9 @@
+{
+  "run_id": "middle4-3epoch-u3_middle4_scaled025-dev50",
+  "variant": "u3_middle4_scaled025",
+  "question_count": 50,
+  "questions_sha256": "ba24af53978a61f3002834f9bd4914f40516eaa181b18d67cfe8cac1f5d91954",
+  "decoding": "greedy",
+  "max_new_tokens": 160,
+  "elapsed_seconds": 0.31896652840077877
+}
