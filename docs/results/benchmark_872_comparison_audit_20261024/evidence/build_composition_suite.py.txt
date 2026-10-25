@@ -1,0 +1,158 @@
+"""Build the user-approved 772 questions before any new model scores are observed."""
+from pathlib import Path
+import collections
+import hashlib
+import itertools
+import json
+import random
+import sys
+import zipfile
+from datetime import datetime, timezone
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from scripts.model.composition_suite_common import BASE, SEED, SUITES, key, sha, read_jsonl, interpret, reference_code
+from scripts.model.score_browser_100_benchmark import validate
+from tokenizers import Tokenizer
+
+OLD = ROOT / 'data/benchmarks/generalization_diagnostic_20261007'
+rank = lambda text: hashlib.sha256((str(SEED)+':'+text).encode()).hexdigest()
+
+def main():
+    assert not (BASE/'questions.jsonl').exists(), 'Frozen dataset already exists'
+    dictionary = read_jsonl(ROOT/'data/benchmarks/browser_100/authoring/train_reference.jsonl')
+    byid = {r['expression_id']:r for r in dictionary}
+    train = json.loads((OLD/'train_ast_reference.json').read_text())['counts']
+    cases = json.loads((OLD/'test_cases.json').read_text())
+    atomic = read_jsonl(ROOT/'data/semantic_asts/atomic_semantic_asts.jsonl')
+    atomic_ids = {key(a['semantic_ast']):a['spec_id'] for a in atomic}
+    labels = {key(e['operation_ast']):e['canonical_meaning_ja'] for e in dictionary}
+    seen_forms = collections.defaultdict(lambda: {'final':0,'connective':0,'atomic':0})
+    evidence = {}
+    print('Auditing dictionary expressions against actual training records', flush=True)
+    with zipfile.ZipFile(ROOT/'data/archives/final_train_dataset_records_2026-09-25.zip') as z:
+        with z.open('final_dataset_records.jsonl') as f:
+            for line in f:
+                r=json.loads(line);count=len(r['semantic_ast']['sequence'])
+                for eid in r.get('expression_ids',[]):
+                    if eid not in byid: continue
+                    e=byid[eid];text=r['instruction_ja']
+                    if e['expression_ja'] in text:
+                        seen_forms[eid]['final']+=1
+                        evidence.setdefault(eid,{'record_id':r['record_id'],'instruction':text,'operation_count':count})
+                        if count==1: seen_forms[eid]['atomic']+=1
+                    if count>1 and e['connective_expression_ja'] in text:seen_forms[eid]['connective']+=1
+    options=collections.defaultdict(list)
+    for e in dictionary:
+        counts=seen_forms[e['expression_id']]
+        if counts['final'] and counts['connective']:options[key(e['operation_ast'])].append(e)
+    for op, es in options.items():
+        es.sort(key=lambda e:rank(e['expression_id']));assert len(es)>=4,(op,len(es))
+    assert len(options)==24
+    print('Known training expression choices:',{atomic_ids[k]:len(v) for k,v in options.items()},flush=True)
+    questions=[]
+    def question(qid,suite,ast,es,category,meta=None,instruction=None):
+        phrases=[e['expression_ja'] if i==len(es)-1 else e['connective_expression_ja'] for i,e in enumerate(es)]
+        uses_k=any(isinstance(v,list) and v[0] in {'gt_k','ge_k','lt_k','le_k','multiple_of_k','add_k','sub_k','mul_k','take_first_k','take_last_k'} for op in ast['sequence'] for v in op.values())
+        prefix='整数リストxsと整数kを受け取り、' if uses_k else '整数リストxsから'
+        return {'question_id':qid,'suite':suite,'category_id':category,'ast_id':hashlib.sha256(key(ast).encode()).hexdigest()[:16], 'instruction_ja':instruction or prefix+'、'.join(phrases)+'solve関数を書いてください。','semantic_ast':ast,'operation_count':len(ast['sequence']),'reference_code':reference_code(ast),'expression_sources':[{'expression_id':e['expression_id'],'used_expression_ja':p,'training_counts':dict(seen_forms[e['expression_id']])} for e,p in zip(es,phrases)],'audit':{'training_ast_records':train.get(key(ast),0),**(meta or {})}}
+    # Retain previously evaluated 50 questions exactly, including instructions and codes.
+    originals=read_jsonl(OLD/'composition50.jsonl')
+    for q in originals:
+        questions.append({**q,'suite':'composition_original','ast_id':hashlib.sha256(key(q['semantic_ast']).encode()).hexdigest()[:16]})
+    # 24 ASTs x four distinct expressions seen only in compound instructions.
+    candidates=json.loads((OLD/'training_expression_audit.json').read_text())['transfer_candidates']
+    groups=collections.defaultdict(list)
+    for e in candidates:groups[e['operation_id']].append(e)
+    for opid,es in sorted(groups.items()):
+        es.sort(key=lambda e:rank(e['expression_id']))
+        for v,e in enumerate(es[:4],1):
+            assert e['all_atomic_final_phrase_count']==0 and e['all_atomic_connective_phrase_count']==0
+            questions.append(question(f'transfer1-{opid[-6:]}-v{v}','transfer_1op',{'sequence':[e['operation_ast']]},[e],opid,{'expression_transfer_evidence':e}))
+    def fp(ast):return tuple(tuple(interpret(ast,c['xs'],c['k'])) for c in cases)
+    print('Computing training fingerprints',flush=True)
+    train_fp={fp(json.loads(a)) for a in train}
+    used_fp=train_fp | {fp(q['semantic_ast']) for q in originals}
+    original_keys={key(q['semantic_ast']) for q in originals}
+    pairs=[({'filter':['even']},{'order':'descending'}),({'filter':['odd']},{'map':['add_k']}),({'filter':['ge_k']},{'slice':['take_last_k']}),({'map':['mul_const',2]},{'order':'reverse'}),({'map':['abs']},{'slice':['every_other']})]
+    pool=read_jsonl(ROOT/'data/semantic_asts/compositional_semantic_asts.jsonl')
+    for pid,pair in enumerate(pairs,1):
+        selected=0
+        for r in sorted(pool,key=lambda r:rank(r['spec_id'])):
+            ast=r['semantic_ast'];opkeys={key(o) for o in ast['sequence']}
+            if len(ast['sequence'])!=3 or key(ast) in original_keys or not {key(o) for o in pair}<=opkeys:continue
+            value=fp(ast)
+            if value in used_fp:continue
+            assert key(ast) not in train
+            selected+=1;used_fp.add(value)
+            questions.append(question(f'comp3-{pid:02}-{selected:02}','composition_3op',ast,[options[key(o)][0] for o in ast['sequence']],f'pair-{pid:02}',{'source_spec_id':r['spec_id'],'held_out_pair':pair,'functional_distinct_from_training_on_fixed_inputs':True}))
+            if selected==10:break
+        assert selected==10
+    # Each repetition length gets all 24 ASTs, with four wordings per AST.
+    for length in (2,3,4):
+        for a in atomic:
+            op=a['semantic_ast'];opid=a['spec_id'];ast={'sequence':[op]*length}
+            assert key(ast) not in train
+            for v,e in enumerate(options[key(op)][:4],1):
+                questions.append(question(f'repeat{length}-{opid[-6:]}-v{v}',f'repeat_{length}',ast,[e]*length,opid,{'known_expression_evidence':evidence[e['expression_id']],'repetition_count':length}))
+    # Keep the former four-op ten, then extend to 100 distinct functional questions.
+    former=read_jsonl(ROOT/'data/benchmarks/composition_extension_20261007/composition4_10.jsonl')
+    accepted=[];seen_ast=set();rejections=collections.Counter()
+    rng=random.Random(SEED);random_candidates=[]
+    for _ in range(6000):random_candidates.append({'sequence':[a['semantic_ast'] for a in rng.sample(atomic,4)]})
+    for ast in [q['semantic_ast'] for q in former]+random_candidates:
+        if key(ast) in seen_ast:continue
+        value=fp(ast)
+        if value in used_fp:rejections['functional_duplicate']+=1;continue
+        if any(fp({'sequence':ast['sequence'][:i]+ast['sequence'][i+1:]})==value for i in range(4)):
+            rejections['removable_operation_on_fixed_inputs']+=1;continue
+        seen_ast.add(key(ast));used_fp.add(value);accepted.append(ast)
+        i=len(accepted)
+        if i<=10:
+            old=former[i-1];assert old['semantic_ast']==ast
+            q={**old,'question_id':f'general4-{i:03}','suite':'general_4op','category_id':'four-distinct-operations','ast_id':hashlib.sha256(key(ast).encode()).hexdigest()[:16]}
+        else:q=question(f'general4-{i:03}','general_4op',ast,[options[key(o)][0] for o in ast['sequence']],'four-distinct-operations',{'functional_distinct_from_training_on_fixed_inputs':True,'every_operation_contributes_on_fixed_inputs':True})
+        questions.append(q)
+        if len(accepted)==100:break
+    assert len(accepted)==100
+    # All audited reverse two-op ASTs, including the output-equivalent group.
+    order=json.loads((ROOT/'docs/results/generalization_diagnostic_20261007/order_reversal_audit.json').read_text())['rows']
+    for r in order:
+        ast=r['reversed_ast'];assert key(ast) not in train
+        questions.append(question(f'transfer32-{r["id"]:02}','transfer_3to2',ast,[options[key(o)][0] for o in ast['sequence']],'order-different-48' if r['witness'] else 'order-no-difference-40',r))
+    # Fifty unordered pairs, both orientations: 100 ABAB ASTs. Include all 24 atoms.
+    unordered=list(itertools.combinations(atomic,2));unordered.sort(key=lambda pair:rank(key([x['semantic_ast'] for x in pair])))
+    covered=set();chosen=[]
+    for pair in unordered:
+        ids={x['spec_id'] for x in pair}
+        if not ids<=covered:chosen.append(pair);covered|=ids
+    for pair in unordered:
+        if len(chosen)==50:break
+        if pair not in chosen:chosen.append(pair)
+    assert len(chosen)==50 and len(covered)==24
+    for i,pair in enumerate(chosen,1):
+        for direction, seq in [('ab',pair),('ba',pair[::-1])]:
+            opseq=[x['semantic_ast'] for x in seq]*2;ast={'sequence':opseq}
+            questions.append(question(f'abab-{i:02}-{direction}','repeat_abab',ast,[options[key(o)][0] for o in opseq],f'pair-{i:02}',{'atomic_ids':[x['spec_id'] for x in seq],'repetition_count':2,'pair_length':2}))
+    expected={'transfer_1op':96,'composition_original':50,'composition_3op':50,'repeat_2':96,'repeat_3':96,'repeat_4':96,'general_4op':100,'transfer_3to2':88,'repeat_abab':100}
+    assert dict(collections.Counter(q['suite'] for q in questions))==expected
+    assert len(questions)==772 and len({q['question_id'] for q in questions})==772
+    tok=Tokenizer.from_file(str(ROOT/'web/tokenizers/bpe-2048-minfreq5-maxlen24.json'))
+    print('Validating all reference codes and token coverage',flush=True)
+    for q in questions:
+        validate(q['reference_code']);ns={};exec(q['reference_code'],ns)
+        ast=q['semantic_ast'];value=fp(ast)
+        for c,expect in zip(cases,value):
+            xs=list(c['xs']);assert ns['solve'](xs,c['k'])==list(expect) and xs==c['xs'],q['question_id']
+        q['audit']['functional_match_to_training_on_179_inputs']=value in train_fp
+        q['audit']['reference_tests_passed']=len(cases)
+        prompt='<|bos|><|task|>\n'+q['instruction_ja']+'\n<|code|>\n';ids=tok.encode(prompt,add_special_tokens=False).ids
+        assert 3 not in ids and len(ids)<256,(q['question_id'],ids)
+        q['audit']['prompt_tokens']=len(ids)
+    for name,qs in [('questions',questions)]+[(suite,[q for q in questions if q['suite']==suite]) for suite in expected]:
+        (BASE/f'{name}.jsonl').write_text(''.join(json.dumps(q,ensure_ascii=False)+'\n' for q in qs))
+    (BASE/'test_cases.json').write_bytes((OLD/'test_cases.json').read_bytes())
+    config={'frozen_at':datetime.now(timezone.utc).isoformat(),'seed':SEED,'questions':772,'suites':expected,'suite_labels':SUITES,'questions_sha256':sha(BASE/'questions.jsonl'),'test_cases_sha256':sha(BASE/'test_cases.json'),'test_cases':179,'models':['boku-15m-1epoch','boku-5m-1epoch','boku-1m-3epoch','qwen3-0.6b','qwen3-1.7b','qwen3-4b-awq'],'new_model_scores_seen_before_freeze':False,'selection_rejections_general4':dict(rejections),'transfer_3to2_prior_split_counts':dict(collections.Counter(r['reversed_split'] for r in order)),'source_hashes':{str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__),ROOT/'scripts/model/composition_suite_common.py',OLD/'training_expression_audit.json',OLD/'train_ast_reference.json',ROOT/'data/archives/final_train_dataset_records_2026-09-25.zip']}}
+    (BASE/'protocol.json').write_text(json.dumps(config,ensure_ascii=False,indent=2)+'\n')
+    print(json.dumps(config,ensure_ascii=False,indent=2))
+
+if __name__=='__main__':main()

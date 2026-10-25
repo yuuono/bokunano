@@ -1,0 +1,18 @@
+{
+  "scorer_sha256": "e4d86b978fb968040371ce12ee0c8903f056ae2a303426c4b4bebe0b3e4ab8e1",
+  "common_sha256": "a38d66004952c7e896824fe6c9af36ea2f45d4848897f2ced877926deaa1da72",
+  "raw_inference_sha256": "594d3a2a2884e24133ecd1729cf95418935560b8bdaeec736a9565fcf4d8ad46",
+  "questions_sha256": "aa119fa2a9e8507136ad14a54b9d3d2e9043fd81af9e48251ef7f5c49c20f97f",
+  "test_cases_sha256": "0090a38d255848a813876ce3b64a8029603aa14e4181b453a89801b41ac67fc2",
+  "assembly_sha256": "84d341ed13d10957a1ff4f55e1eb0a98576d4b2876b25dc3cd93163111392f70",
+  "assembly_sources": {
+    "data/benchmarks/composition_suite_20261007/runs/boku-5m-1epoch/raw_inference.jsonl": "fb32adb3a35e2182565cb64fc74c606cf921f8d6c98350a73d2976b04af4af4e",
+    "data/benchmarks/composition_suite_20261007/runs/boku-5m-1epoch/scored.jsonl": "1756f21843315dd66f37224699bc87537d695277559f9fd559fc53f94f1e59e2",
+    "data/benchmarks/composition_suite_20261007/runs/boku-5m-1epoch/config.json": "fe6107da629b1c15a3361b531fa7752464f4859febbaffc65a891e9363e79c39",
+    "data/benchmarks/composition_suite_20261007/runs/boku-5m-1epoch/scoring_provenance.json": "72d395834fefd7a1c59a159f65284a3505cd47d711b020e6b15e16ba14cd6749",
+    "data/benchmarks/composition_suite_20261008/delta/runs/boku-5m-1epoch/raw_inference.jsonl": "4be6bb709bc70f71124ceb10c028594dac54ce2cb969fc45908956117974c79e",
+    "data/benchmarks/composition_suite_20261008/delta/runs/boku-5m-1epoch/scored.jsonl": "c57df3b869be596810c0589bebe001b1f33254dc5fc26d88bb3902ba54d0fc4a",
+    "data/benchmarks/composition_suite_20261008/delta/runs/boku-5m-1epoch/config.json": "a9276a5843f8aaef502c2f957424b57fc5284a3bf8b0eb6d7bd9d0717b5b59ae",
+    "data/benchmarks/composition_suite_20261008/delta/runs/boku-5m-1epoch/scoring_provenance.json": "af3c4f28a6c9695c7b7f62b9390a29d54fdba34cd6dc2e857241e98175b543c3"
+  }
+}

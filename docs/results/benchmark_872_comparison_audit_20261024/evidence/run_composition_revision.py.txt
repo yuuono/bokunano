@@ -1,0 +1,102 @@
+"""Evaluate the revision's 200 changed questions, then assemble verified 872 runs."""
+import argparse
+import concurrent.futures
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+import subprocess
+import sys
+from types import SimpleNamespace
+
+ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT))
+from scripts.model.composition_suite_common import BASE as OLD, sha, read_jsonl
+from scripts.model import composition_model_catalog as catalog
+from scripts.model.build_composition_revision import BASE, dump, write_rows
+DELTA=BASE/'delta'
+
+
+def merge(ident):
+    model=catalog.catalog()[ident]
+    catalog.BASE=OLD
+    old_scores=catalog.verify_run(model)
+    old_raw=catalog.verify_run(model,require_scores=False)
+    catalog.BASE=DELTA
+    new_scores=catalog.verify_run(model)
+    new_raw=catalog.verify_run(model,require_scores=False)
+    questions=read_jsonl(BASE/'questions.jsonl')
+    rawmap={r['question_id']:r for r in old_raw+new_raw}
+    scoremap={r['question_id']:r for r in old_scores+new_scores}
+    delta_ids={r['question_id'] for r in new_raw}
+    out=BASE/'runs'/ident
+    out.mkdir(parents=True,exist_ok=True)
+    config=json.loads((DELTA/'runs'/ident/'config.json').read_text())
+    config.update(question_count=len(questions),questions_sha256=sha(BASE/'questions.jsonl'),assembly='200 newly evaluated questions + 672 unchanged verified cached questions')
+    dump(out/'config.json',config)
+    raw=[{'kind':'environment','config':config,'assembled_at':datetime.now(timezone.utc).isoformat()}]
+    scores=[]
+    for q in questions:
+        r=rawmap[q['question_id']]
+        assert r['instruction']==q['instruction_ja']
+        s=scoremap[q['question_id']]
+        assert s['ast_id']==q['ast_id'] and s['suite']==q['suite']
+        source=DELTA if q['question_id'] in delta_ids else OLD
+        raw.append({**r,'source_benchmark':str(source.relative_to(ROOT))})
+        scores.append(s)
+    raw.append({'kind':'complete','records':len(questions),'completed_at':datetime.now(timezone.utc).isoformat()})
+    write_rows(out/'raw_inference.jsonl',raw);write_rows(out/'scored.jsonl',scores)
+    protocol=json.loads((BASE/'protocol.json').read_text())
+    dump(out/'summary.json',{s:{'passed':sum(r['passed'] for r in scores if r['suite']==s),'total':sum(r['suite']==s for r in scores)} for s in protocol['suites']})
+    dump(out/'scoring_provenance.json',{'scorer_sha256':sha(ROOT/'scripts/model/score_composition_suite.py'),'common_sha256':sha(ROOT/'scripts/model/composition_suite_common.py'),'raw_inference_sha256':sha(out/'raw_inference.jsonl'),'questions_sha256':sha(BASE/'questions.jsonl'),'test_cases_sha256':sha(BASE/'test_cases.json'),'assembly_sha256':sha(Path(__file__)),'assembly_sources':{str((source/'runs'/ident/name).relative_to(ROOT)):sha(source/'runs'/ident/name) for source in [OLD,DELTA] for name in ['raw_inference.jsonl','scored.jsonl','config.json','scoring_provenance.json']}})
+    catalog.BASE=BASE
+    catalog.verify_run(model)
+    print(f'{ident}: verified 872 questions (200 new, 672 reused)',flush=True)
+
+
+def worker(ident):
+    from scripts.model import evaluate_boku_composition as boku
+    from scripts.model import run_composition_suite as qwen
+    from scripts.model import score_composition_suite as scorer
+    catalog.BASE=DELTA;boku.BASE=DELTA;qwen.BASE=DELTA;scorer.BASE=DELTA
+    model=catalog.catalog()[ident]
+    out=DELTA/'runs'/ident
+    out.mkdir(parents=True,exist_ok=True)
+    provenance={'adapter_sha256':sha(Path(__file__)),'questions_sha256':sha(DELTA/'questions.jsonl'),'model':ident}
+    adapterfile=out/'adapter_provenance.json'
+    if adapterfile.exists() and json.loads(adapterfile.read_text())!=provenance:
+        raise ValueError('Adapter or dataset changed during evaluation')
+    dump(adapterfile,provenance)
+    try:catalog.verify_run(model,require_scores=False)
+    except (FileNotFoundError,ValueError):
+        if model['family']=='boku':boku.run(ident)
+        else:qwen.run(SimpleNamespace(model=ident,model_path=Path('/tmp')/('bokunano-'+ident),batch_size=8,resume=True))
+    try:catalog.verify_run(model)
+    except (FileNotFoundError,ValueError):scorer.main(SimpleNamespace(model=ident))
+    merge(ident)
+
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--models',nargs='+',default=['all'])
+    parser.add_argument('--worker')
+    parser.add_argument('--jobs',type=int,default=2)
+    args=parser.parse_args()
+    if args.worker:
+        worker(args.worker);return
+    models=catalog.catalog();ids=catalog.select_models(args.models,models)
+    def execute(ident):
+        log=BASE/'runs'/ident/'evaluation.log';log.parent.mkdir(parents=True,exist_ok=True)
+        python=ROOT/'.venv/bin/python' if models[ident]['family']=='boku' else Path('/tmp/bokunano-qwen-awq-venv/bin/python')
+        print(f'Start {ident}',flush=True)
+        with log.open('a') as f:
+            subprocess.run([str(python),str(Path(__file__)),'--worker',ident],cwd=ROOT,stdout=f,stderr=subprocess.STDOUT,check=True)
+        print(f'Complete {ident}',flush=True)
+    # Qwen processes share the Mac accelerator and run one at a time.
+    boku_ids=[i for i in ids if models[i]['family']=='boku']
+    qwen_ids=[i for i in ids if models[i]['family']=='qwen']
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max(1,min(args.jobs,4))) as pool:
+        futures=[pool.submit(execute,i) for i in boku_ids]
+        for i in qwen_ids:execute(i)
+        for f in concurrent.futures.as_completed(futures):f.result()
+
+if __name__=='__main__':main()

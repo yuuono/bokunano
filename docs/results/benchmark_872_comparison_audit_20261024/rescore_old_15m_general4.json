@@ -1,0 +1,1514 @@
+{
+  "purpose": "Only rescore 100 saved old 15M general_4op outputs with reconstructed-benchmark verifier; no model generation",
+  "dataset": "data/benchmarks/composition_suite_20261008",
+  "model": "boku-15m-1epoch",
+  "category": "general_4op",
+  "questions": 100,
+  "test_cases": 179,
+  "old_passed": 29,
+  "new_passed": 29,
+  "changed_pass_fail": [],
+  "seconds": 0.15048833299988473,
+  "results": [
+    {
+      "question_id": "general4-001",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[53, -28, 35, -66, -69, -14, -23], k=1, expected=[66], actual=[28]"
+      }
+    },
+    {
+      "question_id": "general4-002",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-003",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[], actual=[2]"
+      }
+    },
+    {
+      "question_id": "general4-004",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[25, 25], actual=[25, 0]"
+      }
+    },
+    {
+      "question_id": "general4-005",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[6, 8, 10], actual=[10, 8, 6]"
+      }
+    },
+    {
+      "question_id": "general4-006",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[53, -28, 35, -66, -69, -14, -23], k=1, expected=[14], actual=[14, 23, 28, 66, 69]"
+      }
+    },
+    {
+      "question_id": "general4-007",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-008",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-009",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[7, 3], actual=[3, 7]"
+      }
+    },
+    {
+      "question_id": "general4-010",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-011",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[12, 6], actual=[4, 2]"
+      }
+    },
+    {
+      "question_id": "general4-012",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[], actual=[-1]"
+      }
+    },
+    {
+      "question_id": "general4-013",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-014",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[53, -28, 35, -66, -69, -14, -23], k=1, expected=[-23, -69], actual=[-69, -23]"
+      }
+    },
+    {
+      "question_id": "general4-015",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-016",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[1], actual=[]"
+      }
+    },
+    {
+      "question_id": "general4-017",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-018",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-019",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-020",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[], actual=[9]"
+      }
+    },
+    {
+      "question_id": "general4-021",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-74, -92, 77, -51, 29, -64, -72, -25, -21, -65, 25, 46, 69, -26, 65, -80], k=10, expected=[], actual=[36]"
+      }
+    },
+    {
+      "question_id": "general4-022",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[53, -28, 35, -66, -69, -14, -23], k=1, expected=[318], actual=[159]"
+      }
+    },
+    {
+      "question_id": "general4-023",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[-2], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-024",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-025",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[], actual=[-2]"
+      }
+    },
+    {
+      "question_id": "general4-026",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[1]"
+      }
+    },
+    {
+      "question_id": "general4-027",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-028",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-029",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[53, -28, 35, -66, -69, -14, -23], k=1, expected=[68, 65, 27, 22, 13], actual=[27, 65, 68, 13, 22]"
+      }
+    },
+    {
+      "question_id": "general4-030",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[], actual=[1]"
+      }
+    },
+    {
+      "question_id": "general4-031",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-74, -92, 77, -51, 29, -64, -72, -25, -21, -65, 25, 46, 69, -26, 65, -80], k=10, expected=[67, 59, 55, 19, 15], actual=[67, 19, 15, 59, 55]"
+      }
+    },
+    {
+      "question_id": "general4-032",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[], actual=[-2]"
+      }
+    },
+    {
+      "question_id": "general4-033",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[], actual=[-1]"
+      }
+    },
+    {
+      "question_id": "general4-034",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[53, -28, 35, -66, -69, -14, -23], k=1, expected=[68, 65, 52, 34, 27, 22, 13], actual=[52, 27, 34, 65, 68, 13, 22]"
+      }
+    },
+    {
+      "question_id": "general4-035",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-036",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[53, -28, 35, -66, -69, -14, -23], k=1, expected=[14, 66, 28], actual=[]"
+      }
+    },
+    {
+      "question_id": "general4-037",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[1], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-038",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[1], actual=[-1]"
+      }
+    },
+    {
+      "question_id": "general4-039",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[-1]"
+      }
+    },
+    {
+      "question_id": "general4-040",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-9, 89, -3, 80, -25, -78], k=7, expected=[240, 267], actual=[267, 240]"
+      }
+    },
+    {
+      "question_id": "general4-041",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-042",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-043",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[3, 4, 5, 5, 9], actual=[9, 5, 4, 3, 5]"
+      }
+    },
+    {
+      "question_id": "general4-044",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-045",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0, 0, 0], k=3, expected=[9, 9, 9], actual=[3, 3, 3]"
+      }
+    },
+    {
+      "question_id": "general4-046",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-047",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[23, 23, 1, 1, 2], actual=[23, 1, 2, 1, 23]"
+      }
+    },
+    {
+      "question_id": "general4-048",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[25], actual=[625]"
+      }
+    },
+    {
+      "question_id": "general4-049",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[24, 12], actual=[12, 6]"
+      }
+    },
+    {
+      "question_id": "general4-050",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-051",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1, 1, 1, 1, 1], k=1, expected=[0], actual=[0, 0, 0, 0, 0]"
+      }
+    },
+    {
+      "question_id": "general4-052",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-053",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-054",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[3], actual=[4]"
+      }
+    },
+    {
+      "question_id": "general4-055",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-056",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-057",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[3], actual=[]"
+      }
+    },
+    {
+      "question_id": "general4-058",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-059",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-060",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-061",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-062",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[-2], actual=[-1]"
+      }
+    },
+    {
+      "question_id": "general4-063",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-12, 4], actual=[-6, 2]"
+      }
+    },
+    {
+      "question_id": "general4-064",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[], actual=[2]"
+      }
+    },
+    {
+      "question_id": "general4-065",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-100, 100], k=1, expected=[], actual=[100]"
+      }
+    },
+    {
+      "question_id": "general4-066",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-067",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-068",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-069",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[3], actual=[5]"
+      }
+    },
+    {
+      "question_id": "general4-070",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[-4, -3, -2, -1, 0], actual=[0, -1, -2, -3, -4]"
+      }
+    },
+    {
+      "question_id": "general4-071",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[0], actual=[4, 0, 4, 100]"
+      }
+    },
+    {
+      "question_id": "general4-072",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0, 0, 0], k=3, expected=[0, 0], actual=[0, 0, 0]"
+      }
+    },
+    {
+      "question_id": "general4-073",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-074",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[], actual=[-3]"
+      }
+    },
+    {
+      "question_id": "general4-075",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[-3, -7], actual=[-7, -3]"
+      }
+    },
+    {
+      "question_id": "general4-076",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[], actual=[64]"
+      }
+    },
+    {
+      "question_id": "general4-077",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[-6], actual=[6]"
+      }
+    },
+    {
+      "question_id": "general4-078",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-74, -92, 77, -51, 29, -64, -72, -25, -21, -65, 25, 46, 69, -26, 65, -80], k=10, expected=[-80, -72, -26], actual=[-72, -26, -80]"
+      }
+    },
+    {
+      "question_id": "general4-079",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[], actual=[-2]"
+      }
+    },
+    {
+      "question_id": "general4-080",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-081",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[], actual=[1]"
+      }
+    },
+    {
+      "question_id": "general4-082",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-083",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[5, 4, 3, 2, 1], k=5, expected=[], actual=[7, 9]"
+      }
+    },
+    {
+      "question_id": "general4-084",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[5], actual=[]"
+      }
+    },
+    {
+      "question_id": "general4-085",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[20], actual=[2]"
+      }
+    },
+    {
+      "question_id": "general4-086",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-087",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1, 1, 2, 2, 3, 3], k=10, expected=[9, 9, 6, 6, 3, 3], actual=[3, 3, 6, 6, 9, 9]"
+      }
+    },
+    {
+      "question_id": "general4-088",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[53, -28, 35, -66, -69, -14, -23], k=1, expected=[69], actual=[-69]"
+      }
+    },
+    {
+      "question_id": "general4-089",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-090",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-091",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[1], k=1, expected=[-7], actual=[-3]"
+      }
+    },
+    {
+      "question_id": "general4-092",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[3, 2], actual=[2, 3]"
+      }
+    },
+    {
+      "question_id": "general4-093",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[-1], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-094",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-1], k=10, expected=[30], actual=[3]"
+      }
+    },
+    {
+      "question_id": "general4-095",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-096",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-097",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    },
+    {
+      "question_id": "general4-098",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[0], k=1, expected=[1], actual=[0]"
+      }
+    },
+    {
+      "question_id": "general4-099",
+      "old_passed": false,
+      "old_reason": "output_mismatch",
+      "new_passed": false,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": false,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": "不一致: xs=[-5, -1, 0, 1, 5], k=2, expected=[0], actual=[0, 8]"
+      }
+    },
+    {
+      "question_id": "general4-100",
+      "old_passed": true,
+      "old_reason": "pass",
+      "new_passed": true,
+      "new_verification": {
+        "syntax_ok": true,
+        "ast_safe": true,
+        "signature_ok": true,
+        "tests_passed": true,
+        "input_unchanged": true,
+        "timeout": false,
+        "error": null
+      }
+    }
+  ]
+}

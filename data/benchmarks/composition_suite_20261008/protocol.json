@@ -1,0 +1,36 @@
+{
+  "frozen_at": "2026-10-08T03:16:41.629918+00:00",
+  "seed": 2026100801,
+  "questions": 872,
+  "suites": {
+    "transfer_1op": 96,
+    "composition_2op": 100,
+    "repeat_2": 96,
+    "transfer_3to2": 88,
+    "composition_3op": 100,
+    "repeat_3": 96,
+    "repeat_4": 96,
+    "general_4op": 100,
+    "repeat_abab": 100
+  },
+  "suite_labels": {
+    "transfer_1op": "複合→単独への表現の転用",
+    "composition_2op": "未学習の2操作",
+    "repeat_2": "同一操作の2回反復",
+    "transfer_3to2": "既知の操作列の3操作→2操作",
+    "composition_3op": "未学習の3操作",
+    "repeat_3": "同一操作の3回反復",
+    "repeat_4": "同一操作の4回反復",
+    "general_4op": "一般の4操作",
+    "repeat_abab": "2操作の組の2回反復（ABAB）"
+  },
+  "questions_sha256": "aa119fa2a9e8507136ad14a54b9d3d2e9043fd81af9e48251ef7f5c49c20f97f",
+  "test_cases_sha256": "0090a38d255848a813876ce3b64a8029603aa14e4181b453a89801b41ac67fc2",
+  "test_cases": 179,
+  "selection": "Fixed deterministic seed; no new inference scores used. Previous benchmark results are known; this is a revised diagnostic, not a blind holdout.",
+  "source_hashes": {
+    "scripts/model/build_composition_revision.py": "cf471438e5afc0f207a3668807eb8e88e69f7292dafaffd47821150efb9149d7",
+    "data/archives/final_train_dataset_records_2026-09-25.zip": "799e6dd8be7e80e48df69fed4f70f5922f7a215a8669cf0f523f3de59ae91807",
+    "data/benchmarks/composition_suite_20261007/questions.jsonl": "ef71547b554397f9ac1709fdb494bf2c8c17bdfccd389fbafa406fe96882881a"
+  }
+}

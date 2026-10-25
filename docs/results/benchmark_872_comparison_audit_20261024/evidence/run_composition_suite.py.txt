@@ -1,0 +1,97 @@
+"""Evaluate the frozen composition suite: direct instruction to code, no repairs."""
+from pathlib import Path
+import argparse
+import json
+import sys
+import time
+from datetime import datetime, timezone
+ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT))
+from scripts.model.composition_suite_common import BASE,sha,read_jsonl
+from scripts.model.run_generalization_diagnostic import dense_load
+
+def run(args):
+    protocol=json.loads((BASE/'protocol.json').read_text());questions=BASE/'questions.jsonl'
+    assert sha(questions)==protocol['questions_sha256']
+    rows=read_jsonl(questions);outdir=BASE/'runs'/args.model;outdir.mkdir(parents=True,exist_ok=True)
+    output=outdir/'raw_inference.jsonl';prior=read_jsonl(output) if output.exists() else []
+    if prior and not args.resume:raise ValueError('Use --resume for a partial run')
+    done={r['question_id'] for r in prior if r['kind']=='inference'}
+    assert len(done)==sum(r['kind']=='inference' for r in prior)
+    if len(done)==len(rows):print('Already complete');return
+    conf={'model':args.model,'condition':'A','question_count':len(rows),'questions_sha256':sha(questions),'temperature':0,'history':False,'repair':False,'runner_sha256':sha(Path(__file__)),'batch_size':1 if args.model.startswith('boku-') else args.batch_size}
+    sources={str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__),questions,BASE/'protocol.json',ROOT/'scripts/model/run_generalization_diagnostic.py',ROOT/'scripts/model/run_qwen_awq_mac_benchmark.py']}
+    if args.model.startswith('boku-'):
+        import numpy as np
+        import onnxruntime as ort
+        from tokenizers import Tokenizer
+        manifest=json.loads((ROOT/'web/model-manifest.json').read_text());ident=args.model.removeprefix('boku-')
+        m=next(m for m in manifest['models'] if m['id']==ident);t=manifest['tokenizers'][m['tokenizer_id']]
+        path=ROOT/'web'/m['path'];tokenpath=ROOT/'web'/t['path']
+        assert sha(path)==m['sha256'] and sha(tokenpath)==t['sha256']
+        options=ort.SessionOptions();options.intra_op_num_threads=4;options.inter_op_num_threads=1
+        model=ort.InferenceSession(str(path),sess_options=options,providers=['CPUExecutionProvider']);tokenizer=Tokenizer.from_file(str(tokenpath))
+        conf.update({'weight_sha256':m['sha256'],'context_length':256,'prompt_template':manifest['prompt_template']})
+        sources.update({str(path.relative_to(ROOT)):sha(path),str(tokenpath.relative_to(ROOT)):sha(tokenpath)})
+        def infer_batch(batch):
+            results=[]
+            for q in batch:
+                prompt=manifest['prompt_template'].format(instruction_ja=q['instruction_ja']);ids=tokenizer.encode(prompt,add_special_tokens=False).ids;original=list(ids);out=[]
+                assert 3 not in ids and len(ids)<256
+                termination='max_context'
+                while len(ids)<256:
+                    logits=model.run(['logits'],{'input_ids':np.asarray([ids],dtype=np.int64)})[0];token=int(np.argmax(logits[0]))
+                    if token==2:termination='eos';break
+                    ids.append(token);out.append(token)
+                results.append({'prompt':prompt,'prompt_ids':original,'output_ids':out,'raw_output':tokenizer.decode(out,skip_special_tokens=True),'termination':termination})
+            return results
+    else:
+        import torch
+        from transformers import AutoTokenizer,GenerationConfig
+        assert torch.backends.mps.is_available()
+        path=args.model_path
+        if args.model=='qwen3-4b-awq':
+            from scripts.model.run_qwen_awq_mac_benchmark import load_model,validate_decoder,REVISION
+            model,validation=load_model(path);validation.update(validate_decoder());revision=REVISION
+        else:
+            model,validation=dense_load(path)
+            revision='70d244cc86ccca08cf5af4e1e306ecf908b1ad5e' if args.model=='qwen3-1.7b' else json.loads((path/'download_revision.json').read_text())['revision']
+        (outdir/'loading_validation.json').write_text(json.dumps(validation,indent=2)+'\n')
+        for p in path.glob('*.safetensors'):
+            digest=sha(p);metadata=(path/'.cache/huggingface/download'/f'{p.name}.metadata').read_text().splitlines();assert metadata[0]==revision and metadata[1]==digest
+            sources['model/'+p.name]=digest
+        tokenizer=AutoTokenizer.from_pretrained(path,local_files_only=True);tokenizer.padding_side='left'
+        if tokenizer.pad_token_id is None:tokenizer.pad_token=tokenizer.eos_token
+        old=read_jsonl(ROOT/'data/benchmarks/browser_100/runs/dev50-20261005/raw_inference.jsonl')
+        system=next(r['messages'][0] for r in old if r['kind']=='inference' and r['model']=='qwen' and r['condition']=='A')
+        generation=GenerationConfig.from_pretrained(path,local_files_only=True);generation.do_sample=False;generation.temperature=None;generation.top_p=None;generation.top_k=None;generation.max_new_tokens=512;generation.repetition_penalty=1;generation.pad_token_id=tokenizer.pad_token_id
+        conf.update({'revision':revision,'max_new_tokens':512,'enable_thinking':False,'system_message':system,'padding_side':'left','torch':torch.__version__,'attention':'eager','dtype':'float16'})
+        def infer_batch(batch):
+            messages=[[system,{'role':'user','content':q['instruction_ja']}] for q in batch]
+            prompts=[tokenizer.apply_chat_template(m,tokenize=False,add_generation_prompt=True,enable_thinking=False) for m in messages]
+            encoded=tokenizer(prompts,return_tensors='pt',padding=True,add_special_tokens=False).to('mps')
+            with torch.inference_mode():ids=model.generate(**encoded,generation_config=generation)
+            torch.mps.synchronize();outs=ids[:,encoded['input_ids'].shape[1]:].tolist();eos=generation.eos_token_id;eos={eos} if isinstance(eos,int) else set(eos)
+            results=[]
+            for msg,prompt,out in zip(messages,prompts,outs):
+                stop=next((i for i,t in enumerate(out) if t in eos),None)
+                if stop is not None:out=out[:stop+1]
+                results.append({'messages':msg,'prompt':prompt,'prompt_ids':tokenizer.encode(prompt,add_special_tokens=False),'output_ids':out,'raw_output':tokenizer.decode(out,skip_special_tokens=True),'termination':'eos' if stop is not None else 'max_new_tokens'})
+            return results
+    if prior:
+        assert json.loads((outdir/'config.json').read_text())==conf,'Resume config changed'
+        assert json.loads((outdir/'source_hashes.json').read_text())==sources,'Resume sources changed'
+    else:
+        (outdir/'config.json').write_text(json.dumps(conf,ensure_ascii=False,indent=2)+'\n');(outdir/'source_hashes.json').write_text(json.dumps(sources,indent=2)+'\n')
+    def save(r):
+        with output.open('a') as f:f.write(json.dumps(r,ensure_ascii=False)+'\n');f.flush()
+    if not prior:save({'kind':'environment','started_at':datetime.now(timezone.utc).isoformat(),'config':conf})
+    pending=[q for q in rows if q['question_id'] not in done];batch_size=conf['batch_size'];completed=len(done)
+    for start in range(0,len(pending),batch_size):
+        batch=pending[start:start+batch_size];begin=time.perf_counter();results=infer_batch(batch);elapsed=time.perf_counter()-begin
+        assert len(results)==len(batch)
+        for q,result in zip(batch,results):save({'kind':'inference','model':args.model,'condition':'A','question_id':q['question_id'],'suite':q['suite'],'category_id':q['category_id'],'instruction':q['instruction_ja'],'batch_elapsed_seconds':elapsed,'batch_size':len(batch),**result})
+        completed+=len(batch);print(f'{args.model} {completed}/{len(rows)} {batch[-1]["suite"]} batch={len(batch)} {elapsed:.2f}s',flush=True)
+    save({'kind':'complete','records':len(rows),'completed_at':datetime.now(timezone.utc).isoformat()})
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--model',required=True);parser.add_argument('--model-path',type=Path);parser.add_argument('--batch-size',type=int,default=8);parser.add_argument('--resume',action='store_true');run(parser.parse_args())

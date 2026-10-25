@@ -1,0 +1,706 @@
+{
+  "date": "2026-10-24",
+  "data_comparison": {
+    "hashes": {
+      "data/benchmarks/composition_suite_20261008/questions.jsonl": "aa119fa2a9e8507136ad14a54b9d3d2e9043fd81af9e48251ef7f5c49c20f97f",
+      "data/benchmarks/composition_suite_872_v2_20261018/questions.jsonl": "f8941b0bdfcea0461727eaaa049bc984ec40a500593dd5cb9147bcf0dfa45ace",
+      "data/benchmarks/composition_suite_20261008/test_cases.json": "0090a38d255848a813876ce3b64a8029603aa14e4181b453a89801b41ac67fc2",
+      "data/benchmarks/composition_suite_872_v2_20261018/test_cases.json": "0090a38d255848a813876ce3b64a8029603aa14e4181b453a89801b41ac67fc2",
+      "scripts/model/benchmark.py": "5117d04d10b20b08804f7babfbf4e8b198711b0b4f646468105941da33200213",
+      "/tmp/bokunano-benchmark-audit-20261024/benchmark_at_2c414ac.py": "0dd37bc3cd09ae828ded9d155b859edae448dc3c7faa8e8acf4e16cce7392009"
+    },
+    "overlap": [
+      {
+        "category": "transfer_1op",
+        "old": 96,
+        "new": 96,
+        "common_prompts": 21,
+        "common_unique_asts": 24,
+        "old_unique_asts": 24,
+        "new_unique_asts": 24
+      },
+      {
+        "category": "composition_2op",
+        "old": 100,
+        "new": 100,
+        "common_prompts": 2,
+        "common_unique_asts": 10,
+        "old_unique_asts": 10,
+        "new_unique_asts": 10
+      },
+      {
+        "category": "repeat_2",
+        "old": 96,
+        "new": 96,
+        "common_prompts": 0,
+        "common_unique_asts": 24,
+        "old_unique_asts": 24,
+        "new_unique_asts": 24
+      },
+      {
+        "category": "transfer_3to2",
+        "old": 88,
+        "new": 88,
+        "common_prompts": 0,
+        "common_unique_asts": 14,
+        "old_unique_asts": 88,
+        "new_unique_asts": 88
+      },
+      {
+        "category": "composition_3op",
+        "old": 100,
+        "new": 100,
+        "common_prompts": 0,
+        "common_unique_asts": 16,
+        "old_unique_asts": 100,
+        "new_unique_asts": 100
+      },
+      {
+        "category": "repeat_3",
+        "old": 96,
+        "new": 96,
+        "common_prompts": 1,
+        "common_unique_asts": 24,
+        "old_unique_asts": 24,
+        "new_unique_asts": 24
+      },
+      {
+        "category": "repeat_4",
+        "old": 96,
+        "new": 96,
+        "common_prompts": 23,
+        "common_unique_asts": 24,
+        "old_unique_asts": 24,
+        "new_unique_asts": 24
+      },
+      {
+        "category": "general_4op",
+        "old": 100,
+        "new": 100,
+        "common_prompts": 0,
+        "common_unique_asts": 0,
+        "old_unique_asts": 100,
+        "new_unique_asts": 100
+      },
+      {
+        "category": "repeat_abab",
+        "old": 100,
+        "new": 100,
+        "common_prompts": 0,
+        "common_unique_asts": 20,
+        "old_unique_asts": 100,
+        "new_unique_asts": 100
+      }
+    ],
+    "total_common_prompts": 47,
+    "examples": {
+      "general_4op": {
+        "old": {
+          "question_id": "general4-001",
+          "instruction_ja": "整数リストxsと整数kを受け取り、絶対値を導き出して、偶数だけを切り出して、大きい順に並べて、頭k個を抜き出すsolve関数を書いてください。",
+          "semantic_ast": {
+            "sequence": [
+              {
+                "map": [
+                  "abs"
+                ]
+              },
+              {
+                "filter": [
+                  "even"
+                ]
+              },
+              {
+                "order": "descending"
+              },
+              {
+                "slice": [
+                  "take_first_k"
+                ]
+              }
+            ]
+          }
+        },
+        "new_same_ast": null,
+        "new_first": {
+          "category_id": "general_4op",
+          "expression_ids": [
+            "expr-candidate-24068ee022766bcfbe70afea35429f5c50ae509c0175223390bed5be7a2fd42d",
+            "expr-candidate-1ea630157f2e97cd286791a2e3d1deda44330368ad2f6aaea8893642a9501338",
+            "expr-candidate-d1edb689f7649175447b252c013e94582f569aa18929e216ceb77613bebf9ba6",
+            "expr-candidate-aaaac0699a3d94c5f51c87699cdcf930f41e5f5a2acee19c716271ca005aec9a"
+          ],
+          "instruction_ja": "整数リストxsと整数kを受け取り、偶数だけを残し、kより大きい値だけを残して、各要素の絶対値を取って、末尾からk個を取るsolve関数を書いてください。",
+          "operation_count": 4,
+          "question_id": "general_4op-001",
+          "semantic_ast": {
+            "sequence": [
+              {
+                "filter": [
+                  "even"
+                ]
+              },
+              {
+                "filter": [
+                  "gt_k"
+                ]
+              },
+              {
+                "map": [
+                  "abs"
+                ]
+              },
+              {
+                "slice": [
+                  "take_last_k"
+                ]
+              }
+            ]
+          },
+          "source": "deterministic 20261008 construction"
+        }
+      },
+      "repeat_abab": {
+        "old": {
+          "question_id": "abab-01-ab",
+          "instruction_ja": "整数リストxsと整数kを受け取り、k以下のものを収集して、各数にkをかけて、k以下のものを収集して、各数にkをかけるsolve関数を書いてください。",
+          "semantic_ast": {
+            "sequence": [
+              {
+                "filter": [
+                  "le_k"
+                ]
+              },
+              {
+                "map": [
+                  "mul_k"
+                ]
+              },
+              {
+                "filter": [
+                  "le_k"
+                ]
+              },
+              {
+                "map": [
+                  "mul_k"
+                ]
+              }
+            ]
+          }
+        },
+        "new_same_ast": null,
+        "new_first": {
+          "category_id": "repeat_abab",
+          "expression_ids": [
+            "expr-candidate-7ee8880f16bf553d0d59ff6f7cc051d5f8b8e8652ffb64b0a35aee4a60b606a9",
+            "expr-candidate-aaaac0699a3d94c5f51c87699cdcf930f41e5f5a2acee19c716271ca005aec9a",
+            "expr-candidate-7ee8880f16bf553d0d59ff6f7cc051d5f8b8e8652ffb64b0a35aee4a60b606a9",
+            "expr-candidate-aaaac0699a3d94c5f51c87699cdcf930f41e5f5a2acee19c716271ca005aec9a"
+          ],
+          "instruction_ja": "整数リストxsと整数kを受け取り、kの倍数だけを残し、末尾からk個を取って、kの倍数だけを残し、末尾からk個を取るsolve関数を書いてください。",
+          "operation_count": 4,
+          "question_id": "repeat_abab-001",
+          "semantic_ast": {
+            "sequence": [
+              {
+                "filter": [
+                  "multiple_of_k"
+                ]
+              },
+              {
+                "slice": [
+                  "take_last_k"
+                ]
+              },
+              {
+                "filter": [
+                  "multiple_of_k"
+                ]
+              },
+              {
+                "slice": [
+                  "take_last_k"
+                ]
+              }
+            ]
+          },
+          "source": "deterministic 20261008 construction"
+        }
+      },
+      "transfer_1op": {
+        "old": {
+          "question_id": "transfer1-000001-v1",
+          "instruction_ja": "整数リストxsから偶数を取捨するsolve関数を書いてください。",
+          "semantic_ast": {
+            "sequence": [
+              {
+                "filter": [
+                  "even"
+                ]
+              }
+            ]
+          }
+        },
+        "new_same_ast": {
+          "category_id": "transfer_1op",
+          "expression_ids": [
+            "expr-candidate-20fb8cc14fedfd18b8129bc3b36d4fb78fa9451978ddcc4f62eb4fda1b14cf33"
+          ],
+          "instruction_ja": "整数リストxsから偶数を選んで残すsolve関数を書いてください。",
+          "operation_count": 1,
+          "question_id": "transfer_1op-001",
+          "semantic_ast": {
+            "sequence": [
+              {
+                "filter": [
+                  "even"
+                ]
+              }
+            ]
+          },
+          "source": "training expression observed in a multi-operation instruction"
+        },
+        "new_first": {
+          "category_id": "transfer_1op",
+          "expression_ids": [
+            "expr-candidate-20fb8cc14fedfd18b8129bc3b36d4fb78fa9451978ddcc4f62eb4fda1b14cf33"
+          ],
+          "instruction_ja": "整数リストxsから偶数を選んで残すsolve関数を書いてください。",
+          "operation_count": 1,
+          "question_id": "transfer_1op-001",
+          "semantic_ast": {
+            "sequence": [
+              {
+                "filter": [
+                  "even"
+                ]
+              }
+            ]
+          },
+          "source": "training expression observed in a multi-operation instruction"
+        }
+      }
+    }
+  },
+  "semantic_difficulty": {
+    "presentation": {
+      "general_4op": {
+        "questions": 100,
+        "all_empty": 0,
+        "any_single_operation_removable": 0,
+        "same_as_first_two_operations": 0,
+        "distinct_output_patterns_on_179": 100,
+        "examples": []
+      },
+      "repeat_abab": {
+        "questions": 100,
+        "all_empty": 10,
+        "any_single_operation_removable": 88,
+        "same_as_first_two_operations": 45,
+        "distinct_output_patterns_on_179": 63,
+        "examples": [
+          {
+            "id": "abab-01-ab",
+            "instruction": "整数リストxsと整数kを受け取り、k以下のものを収集して、各数にkをかけて、k以下のものを収集して、各数にkをかけるsolve関数を書いてください。",
+            "ast": {
+              "sequence": [
+                {
+                  "filter": [
+                    "le_k"
+                  ]
+                },
+                {
+                  "map": [
+                    "mul_k"
+                  ]
+                },
+                {
+                  "filter": [
+                    "le_k"
+                  ]
+                },
+                {
+                  "map": [
+                    "mul_k"
+                  ]
+                }
+              ]
+            },
+            "always_empty_on_179": false,
+            "removable_positions": [
+              0
+            ]
+          },
+          {
+            "id": "abab-01-ba",
+            "instruction": "整数リストxsと整数kを受け取り、各数にkをかけて、k以下のものを収集して、各数にkをかけて、k以下のものを収集するsolve関数を書いてください。",
+            "ast": {
+              "sequence": [
+                {
+                  "map": [
+                    "mul_k"
+                  ]
+                },
+                {
+                  "filter": [
+                    "le_k"
+                  ]
+                },
+                {
+                  "map": [
+                    "mul_k"
+                  ]
+                },
+                {
+                  "filter": [
+                    "le_k"
+                  ]
+                }
+              ]
+            },
+            "always_empty_on_179": false,
+            "removable_positions": [
+              1
+            ]
+          },
+          {
+            "id": "abab-02-ab",
+            "instruction": "整数リストxsと整数kを受け取り、kを上回った値を残して、各項目の値を三倍して、kを上回った値を残して、各項目の値を三倍するsolve関数を書いてください。",
+            "ast": {
+              "sequence": [
+                {
+                  "filter": [
+                    "gt_k"
+                  ]
+                },
+                {
+                  "map": [
+                    "mul_const",
+                    3
+                  ]
+                },
+                {
+                  "filter": [
+                    "gt_k"
+                  ]
+                },
+                {
+                  "map": [
+                    "mul_const",
+                    3
+                  ]
+                }
+              ]
+            },
+            "always_empty_on_179": false,
+            "removable_positions": [
+              2
+            ]
+          }
+        ]
+      }
+    },
+    "reconstructed": {
+      "general_4op": {
+        "questions": 100,
+        "all_empty": 26,
+        "any_single_operation_removable": 59,
+        "same_as_first_two_operations": 12,
+        "distinct_output_patterns_on_179": 74,
+        "examples": [
+          {
+            "id": "general_4op-001",
+            "instruction": "整数リストxsと整数kを受け取り、偶数だけを残し、kより大きい値だけを残して、各要素の絶対値を取って、末尾からk個を取るsolve関数を書いてください。",
+            "ast": {
+              "sequence": [
+                {
+                  "filter": [
+                    "even"
+                  ]
+                },
+                {
+                  "filter": [
+                    "gt_k"
+                  ]
+                },
+                {
+                  "map": [
+                    "abs"
+                  ]
+                },
+                {
+                  "slice": [
+                    "take_last_k"
+                  ]
+                }
+              ]
+            },
+            "always_empty_on_179": false,
+            "removable_positions": [
+              2
+            ]
+          },
+          {
+            "id": "general_4op-004",
+            "instruction": "整数リストxsと整数kを受け取り、奇数だけを残し、偶数だけを残し、隔番で取って、k以下の値だけを残すsolve関数を書いてください。",
+            "ast": {
+              "sequence": [
+                {
+                  "filter": [
+                    "odd"
+                  ]
+                },
+                {
+                  "filter": [
+                    "even"
+                  ]
+                },
+                {
+                  "slice": [
+                    "every_other"
+                  ]
+                },
+                {
+                  "filter": [
+                    "le_k"
+                  ]
+                }
+              ]
+            },
+            "always_empty_on_179": true,
+            "removable_positions": [
+              2,
+              3
+            ]
+          },
+          {
+            "id": "general_4op-010",
+            "instruction": "整数リストxsから奇数だけを残し、値を昇順に並べて、値を降順に並べ替えて、各要素を三倍するsolve関数を書いてください。",
+            "ast": {
+              "sequence": [
+                {
+                  "filter": [
+                    "odd"
+                  ]
+                },
+                {
+                  "order": "ascending"
+                },
+                {
+                  "order": "descending"
+                },
+                {
+                  "map": [
+                    "mul_const",
+                    3
+                  ]
+                }
+              ]
+            },
+            "always_empty_on_179": false,
+            "removable_positions": [
+              1
+            ]
+          }
+        ]
+      },
+      "repeat_abab": {
+        "questions": 100,
+        "all_empty": 6,
+        "any_single_operation_removable": 89,
+        "same_as_first_two_operations": 39,
+        "distinct_output_patterns_on_179": 88,
+        "examples": [
+          {
+            "id": "repeat_abab-001",
+            "instruction": "整数リストxsと整数kを受け取り、kの倍数だけを残し、末尾からk個を取って、kの倍数だけを残し、末尾からk個を取るsolve関数を書いてください。",
+            "ast": {
+              "sequence": [
+                {
+                  "filter": [
+                    "multiple_of_k"
+                  ]
+                },
+                {
+                  "slice": [
+                    "take_last_k"
+                  ]
+                },
+                {
+                  "filter": [
+                    "multiple_of_k"
+                  ]
+                },
+                {
+                  "slice": [
+                    "take_last_k"
+                  ]
+                }
+              ]
+            },
+            "always_empty_on_179": false,
+            "removable_positions": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "id": "repeat_abab-002",
+            "instruction": "整数リストxsから各要素の絶対値を取って、負の値だけを残し、各要素の絶対値を取って、負の値だけを残すsolve関数を書いてください。",
+            "ast": {
+              "sequence": [
+                {
+                  "map": [
+                    "abs"
+                  ]
+                },
+                {
+                  "filter": [
+                    "negative"
+                  ]
+                },
+                {
+                  "map": [
+                    "abs"
+                  ]
+                },
+                {
+                  "filter": [
+                    "negative"
+                  ]
+                }
+              ]
+            },
+            "always_empty_on_179": true,
+            "removable_positions": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "id": "repeat_abab-003",
+            "instruction": "整数リストxsと整数kを受け取り、すべての要素をk倍して、偶数だけを残し、すべての要素をk倍して、偶数だけを残すsolve関数を書いてください。",
+            "ast": {
+              "sequence": [
+                {
+                  "map": [
+                    "mul_k"
+                  ]
+                },
+                {
+                  "filter": [
+                    "even"
+                  ]
+                },
+                {
+                  "map": [
+                    "mul_k"
+                  ]
+                },
+                {
+                  "filter": [
+                    "even"
+                  ]
+                }
+              ]
+            },
+            "always_empty_on_179": false,
+            "removable_positions": [
+              1,
+              3
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "models": [
+    {
+      "model_id": "boku-15m-1epoch",
+      "presentation_passed": 728,
+      "total": 872,
+      "presentation_general4": 29,
+      "reconstructed_general4": 63,
+      "presentation_categories": {
+        "composition_2op": 98,
+        "repeat_4": 71,
+        "transfer_1op": 88,
+        "repeat_abab": 70,
+        "composition_3op": 96,
+        "repeat_3": 94,
+        "repeat_2": 94,
+        "transfer_3to2": 88,
+        "general_4op": 29
+      },
+      "presentation_source_weight_sha256": "1a0002e1b50aeae59805d8087fbaa16be1b6e2716d78a085230f2cc35edbf68f",
+      "reconstructed_weight_sha256": "1a0002e1b50aeae59805d8087fbaa16be1b6e2716d78a085230f2cc35edbf68f",
+      "same_source_weights": true
+    },
+    {
+      "model_id": "boku-5m-1epoch",
+      "presentation_passed": 676,
+      "total": 872,
+      "presentation_general4": 7,
+      "presentation_categories": {
+        "composition_2op": 94,
+        "repeat_4": 72,
+        "transfer_1op": 81,
+        "repeat_abab": 62,
+        "composition_3op": 95,
+        "repeat_3": 91,
+        "repeat_2": 89,
+        "transfer_3to2": 85,
+        "general_4op": 7
+      },
+      "presentation_source_weight_sha256": "027fe1b64c4495dd39322f0ade7824e085b7315543c840b031742e42f4a4c0c6",
+      "reconstructed_weight_sha256": "027fe1b64c4495dd39322f0ade7824e085b7315543c840b031742e42f4a4c0c6",
+      "same_source_weights": true
+    },
+    {
+      "model_id": "boku-1m-3epoch",
+      "presentation_passed": 751,
+      "total": 872,
+      "presentation_general4": 43,
+      "presentation_categories": {
+        "composition_2op": 99,
+        "repeat_4": 70,
+        "transfer_1op": 82,
+        "repeat_abab": 78,
+        "composition_3op": 100,
+        "repeat_3": 95,
+        "repeat_2": 96,
+        "transfer_3to2": 88,
+        "general_4op": 43
+      },
+      "presentation_source_weight_sha256": "e9eafad8c5195b501414c4456b04918258cc1a3a6ef799d5d77f3ea69cd17533",
+      "reconstructed_weight_sha256": "e9eafad8c5195b501414c4456b04918258cc1a3a6ef799d5d77f3ea69cd17533",
+      "same_source_weights": true
+    }
+  ],
+  "script_hashes": {
+    "scripts/model/benchmark.py": "5117d04d10b20b08804f7babfbf4e8b198711b0b4f646468105941da33200213",
+    "scripts/model/run_composition_suite.py": "7036ca62ef8fdd1c146f413146af9e70181fc816e4cc3f13065c20f371cfd194",
+    "scripts/model/evaluate_boku_composition.py": "b384453bec58de1d96410641c2136494323345c42ed8ac677ab904d0242b40ad",
+    "scripts/model/run_composition_revision.py": "84d341ed13d10957a1ff4f55e1eb0a98576d4b2876b25dc3cd93163111392f70",
+    "scripts/model/score_composition_suite.py": "e4d86b978fb968040371ce12ee0c8903f056ae2a303426c4b4bebe0b3e4ab8e1",
+    "scripts/model/composition_suite_common.py": "a38d66004952c7e896824fe6c9af36ea2f45d4848897f2ced877926deaa1da72",
+    "scripts/model/build_composition_suite.py": "d8467414f88a0b149dbcdcc80ee971e5c477205e84141979b0d4233dedc0dba7"
+  },
+  "reconstructed_benchmark_commit": "2c414ac33c04bc0f928e3c9dd24790611908a094",
+  "reconstructed_benchmark_sha256": "0dd37bc3cd09ae828ded9d155b859edae448dc3c7faa8e8acf4e16cce7392009",
+  "limitations": [
+    "No model inference rerun. Reconstructed per-question raw and scored artifacts are absent locally.",
+    "Functional equivalence counts apply only to the shared 179 fixed inputs.",
+    "Exact attribution of score differences to dataset, backend, and scoring cannot be inferred from these aggregates."
+  ],
+  "disposition": {
+    "updated": "2026-10-25",
+    "reconstructed_artifacts": "Removed from current Git tree; history retained.",
+    "scores": "Among withdrawn reconstructed scores, only historical 15M general4 29 vs 63 is retained to explain non-comparability.",
+    "historical_hash_scope": "script_hashes and data_comparison.hashes describe the 2026-10-24 audit, before the CUDA entry-point replacement."
+  }
+}

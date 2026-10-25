@@ -1,0 +1,73 @@
+"""Extend evaluation to all local Boku exports without modifying the frozen runner."""
+from pathlib import Path
+import argparse
+from datetime import datetime, timezone
+import json
+import sys
+import time
+
+ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT))
+from scripts.model.composition_suite_common import BASE,sha,read_jsonl
+from scripts.model.composition_model_catalog import catalog,verify_run
+
+def run(ident):
+    import numpy as np
+    import onnxruntime as ort
+    from tokenizers import Tokenizer
+    m=catalog()[ident]
+    if m['family']!='boku':raise ValueError('This runner accepts Boku models only')
+    protocol=json.loads((BASE/'protocol.json').read_text())
+    if sha(BASE/'questions.jsonl')!=protocol['questions_sha256']:raise ValueError('Questions changed')
+    qs=read_jsonl(BASE/'questions.jsonl');out=BASE/'runs'/ident;out.mkdir(parents=True,exist_ok=True)
+    raw=out/'raw_inference.jsonl'
+    if raw.exists():
+        try:verify_run(m,require_scores=False);print(ident,'already generated',flush=True);return
+        except ValueError:pass
+    modelpath=ROOT/m['model_path'];tokenpath=ROOT/m['tokenizer_path']
+    if sha(modelpath)!=m['weight_sha256'] or sha(tokenpath)!=m['tokenizer_sha256']:raise ValueError('Weight/tokenizer hash mismatch')
+    conf={'model':ident,'condition':'A','question_count':len(qs),'questions_sha256':sha(BASE/'questions.jsonl'),
+          'temperature':0,'history':False,'repair':False,'batch_size':1,'context_length':m['context_length'],
+          'prompt_template':m['prompt_template'],'weight_sha256':m['weight_sha256'],
+          'tokenizer_sha256':m['tokenizer_sha256'],'runner_sha256':sha(Path(__file__)),
+          'onnxruntime':ort.__version__,'catalog_entry':m}
+    sources={str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__),ROOT/'scripts/model/composition_model_catalog.py',
+        ROOT/'scripts/model/composition_suite_common.py',ROOT/m['training_manifest'],modelpath,tokenpath,BASE/'questions.jsonl',BASE/'protocol.json']}
+    prior=read_jsonl(raw) if raw.exists() else []
+    if prior:
+        if json.loads((out/'config.json').read_text())!=conf or json.loads((out/'source_hashes.json').read_text())!=sources:
+            raise ValueError('Resume configuration changed; preserve and inspect existing run')
+    else:
+        (out/'config.json').write_text(json.dumps(conf,ensure_ascii=False,indent=2)+'\n')
+        (out/'source_hashes.json').write_text(json.dumps(sources,indent=2)+'\n')
+    tokenizer=Tokenizer.from_file(str(tokenpath));prompts={}
+    for q in qs:
+        prompt=m['prompt_template'].format(instruction_ja=q['instruction_ja']);ids=tokenizer.encode(prompt,add_special_tokens=False).ids
+        if 3 in ids or len(ids)>=m['context_length']:raise ValueError(f'Unusable prompt: {q["question_id"]}')
+        prompts[q['question_id']]=(prompt,ids)
+    options=ort.SessionOptions();options.intra_op_num_threads=4;options.inter_op_num_threads=1
+    model=ort.InferenceSession(str(modelpath),sess_options=options,providers=['CPUExecutionProvider'])
+    def save(r):
+        with raw.open('a') as f:f.write(json.dumps(r,ensure_ascii=False)+'\n');f.flush()
+    if not prior:save({'kind':'environment','started_at':datetime.now(timezone.utc).isoformat(),'config':conf})
+    done={r['question_id'] for r in prior if r['kind']=='inference'}
+    if len(done)!=sum(r['kind']=='inference' for r in prior) or not done<={q['question_id'] for q in qs}:raise ValueError('Invalid partial run')
+    for q in qs:
+        if q['question_id'] in done:continue
+        prompt,original=prompts[q['question_id']];ids=list(original);tokens=[];termination='max_context';started=time.perf_counter()
+        while len(ids)<m['context_length']:
+            logits=model.run(['logits'],{'input_ids':np.asarray([ids],dtype=np.int64)})[0]
+            token=int(np.argmax(logits[0]))
+            if token==2:termination='eos';break
+            ids.append(token);tokens.append(token)
+        save({'kind':'inference','model':ident,'condition':'A','question_id':q['question_id'],'suite':q['suite'],
+              'category_id':q['category_id'],'instruction':q['instruction_ja'],'prompt':prompt,'prompt_ids':original,
+              'output_ids':tokens,'raw_output':tokenizer.decode(tokens,skip_special_tokens=True),
+              'termination':termination,'batch_size':1,'batch_elapsed_seconds':time.perf_counter()-started})
+        done.add(q['question_id'])
+        if len(done)%50==0:print(f'{ident}: {len(done)}/{len(qs)}',flush=True)
+    save({'kind':'complete','records':len(qs),'completed_at':datetime.now(timezone.utc).isoformat()})
+    verify_run(m,require_scores=False);print(f'{ident}: complete {len(qs)}',flush=True)
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser();parser.add_argument('--model',required=True);args=parser.parse_args();run(args.model)

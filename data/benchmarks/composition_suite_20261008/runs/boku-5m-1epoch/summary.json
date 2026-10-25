@@ -1,0 +1,38 @@
+{
+  "transfer_1op": {
+    "passed": 81,
+    "total": 96
+  },
+  "composition_2op": {
+    "passed": 94,
+    "total": 100
+  },
+  "repeat_2": {
+    "passed": 89,
+    "total": 96
+  },
+  "transfer_3to2": {
+    "passed": 85,
+    "total": 88
+  },
+  "composition_3op": {
+    "passed": 95,
+    "total": 100
+  },
+  "repeat_3": {
+    "passed": 91,
+    "total": 96
+  },
+  "repeat_4": {
+    "passed": 72,
+    "total": 96
+  },
+  "general_4op": {
+    "passed": 7,
+    "total": 100
+  },
+  "repeat_abab": {
+    "passed": 62,
+    "total": 100
+  }
+}
