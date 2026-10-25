@@ -2,9 +2,16 @@
 
 **限られた日本語指示からPython関数を生成する小型言語モデル**
 
-![日本語の指示 → Boku-nano（1M・5M・15MのDecoder-only Transformer）→ Python関数の生成例](docs/readme/generation_flow.svg)
+自作した合成データでフルスクラッチ学習し、制限された日本語指示からのPython関数生成に<br>
+特化させた小型言語モデルが、ChatGPT 6 Astraの精度を一部凌駕した
 
-自作した合成データでフルスクラッチ学習し、日本語指示からのPython関数生成に特化した小型モデルを構築して、独自ベンチマークの一部でChatGPT 6 Astraの参考値を上回る精度を達成
+## デモ動画
+
+日本語の指示からPythonコードを生成するデモ（約1分16秒・自動再生・ループ）。
+
+![Boku-nano：日本語の指示からPythonコードを生成するデモ](docs/report/media/demo.gif)
+
+[デモ動画をダウンロード（MP4・約20MB）](docs/report/media/demo.mp4?raw=true)
 
 [ブラウザで試す](https://yuuono.github.io/bokunano/) · [発表資料（PDF）](docs/report/boku_nano_presentation.pdf) · [発表原稿（Markdown）](docs/report/boku_nano_presentation.md)
 
@@ -98,17 +105,11 @@ def solve(xs, k):
 
 Boku・Qwenは全872問、Astraは各カテゴリ10問での参考比較であり、評価集合・実行条件は異なる
 
-ここまでのモデルの動作を試せるブラウザデモと、実装・評価の資料を以下に掲載
+ブラウザデモの使い方と、実装・評価の資料を以下に掲載
 
-## Demo
+## ブラウザデモの使い方
 
 [デモはこちらです](https://yuuono.github.io/bokunano/)
-
-日本語の指示からPythonコードを生成するデモ（約1分16秒・自動再生・ループ）。
-
-![Boku-nano：日本語の指示からPythonコードを生成するデモ](docs/report/media/demo.gif)
-
-[デモ動画をダウンロード（MP4・約20MB）](docs/report/media/demo.mp4?raw=true)
 
 Boku-nanoは、CNLから`solve(xs, k)`形式のPythonコードを生成する小規模なDecoder-only Transformerです。トークナイザとモデルをランダム初期値から学習しています。ブラウザ版は、チャット内で指示を送り、Qwen3-0.6Bによる日本語の整理とBoku-nanoのコード生成を続けて確認するベージュ基調のUIです。先頭には1〜4操作の文章例を表示し、入力した日本語をQwenで整理します。番号や箇条書きの形式差は吸収し、操作内容と順序を検査してCNLへ整形します。掲載例の操作列はQwenの出力検査にだけ使い、欠落・順序・数値が違えば理由を返して1回再試行します。2回とも失敗した場合はCNLを確定せず、アプリによる操作の補完は行いません。各回の実際のプロンプト・出力・検査結果を確認できます。検査通過後はBoku-nanoのコード生成へ自動で進み、モデル間の切り替えを表示します。通常の新しい指示には前の操作を渡さず、「前の処理に追加」「kを5に変えて」など明示的な変更依頼だけ履歴を引き継ぎます。既定は5M・1エポック・既存BPEで、設定ボタンから1M・3エポックの2種類を含む10モデルと温度を選べます。
 
