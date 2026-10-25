@@ -7,8 +7,6 @@
 
 ![Boku-nano：日本語の指示からPythonコードを生成するデモ](docs/report/media/demo.gif)
 
-[デモ動画をダウンロード（MP4・約20MB）](docs/report/media/demo.mp4?raw=true)
-
 [ブラウザで試す](https://yuuono.github.io/bokunano/) · [発表資料（PDF）](docs/report/boku_nano_presentation.pdf) · [発表原稿（Markdown）](docs/report/boku_nano_presentation.md)
 
 ## 概要
