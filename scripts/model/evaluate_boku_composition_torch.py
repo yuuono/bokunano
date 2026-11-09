@@ -179,6 +179,52 @@ def validate_model(name: str, directory: Path, *, tokenizer_sha256: str = TOKENI
             "source_hashes": {display_path(path): sha(path) for path in paths.values()}}
 
 
+def validate_recovered_model(name: str, manifest_path: Path, *, tokenizer_sha256: str) -> dict:
+    """報告で特定した4 checkpointのみ、明示的な評価用復元記録で受け入れる。"""
+    from scripts.model import prepare_looped_evaluation_recovery as recovery
+    if name in DEFAULT_MODELS:
+        raise ValueError("復元モデルには既定モデルと異なる名前を付けてください")
+    manifest = read_json(manifest_path)
+    variant = manifest.get("variant")
+    if (manifest.get("status") != "recovered_for_evaluation" or variant not in recovery.VARIANTS
+            or manifest.get("original_training_manifest_present") is not False):
+        raise ValueError("明示的な評価用復元manifestが必要です")
+    d_model, d_ff, heads, count, expected_sha = recovery.VARIANTS[variant]
+    expected_config = dict(vocab_size=2048, d_model=d_model, n_layers=1, n_heads=heads,
+                           d_ff=d_ff, context_length=256, dropout=0.0, rope_base=10000.0,
+                           rms_norm_eps=1e-5, tie_word_embeddings=True, n_loops=3,
+                           loop_input_mode="none", loop_pattern="full", residual_scale=1.0,
+                           recurrent_residual_scale=1.0)
+    weights = resolve_path(manifest["weights_path"])
+    config_path = resolve_path(manifest["model_config_path"])
+    tokenizer_path = resolve_path(manifest["tokenizer_path"])
+    if (manifest.get("model_config") != expected_config or read_json(config_path) != expected_config
+            or manifest.get("parameter_count") != count or manifest.get("expected_parameter_count") != count
+            or manifest.get("weights_sha256") != expected_sha
+            or manifest.get("expected_weights_sha256") != expected_sha
+            or tokenizer_sha256 != TOKENIZER_SHA256 or manifest.get("tokenizer_sha256") != TOKENIZER_SHA256
+            or manifest.get("reported_training", {}).get("epochs") != 3):
+        raise ValueError("固定した小型loopの報告条件と復元設定が一致しません")
+    report = manifest["source_report"]
+    if resolve_path(report["path"]) != recovery.REPORT or report["sha256"] != recovery.REPORT_SHA256:
+        raise ValueError("復元根拠の報告書が一致しません")
+    expected_sources = dict(manifest["configuration_sources"])
+    expected_sources.update({display_path(weights): expected_sha,
+                             display_path(config_path): manifest["model_config_sha256"],
+                             display_path(tokenizer_path): TOKENIZER_SHA256,
+                             display_path(recovery.REPORT): recovery.REPORT_SHA256})
+    for path, expected in expected_sources.items():
+        if sha(resolve_path(path)) != expected:
+            raise ValueError(f"復元根拠またはartifactのhashが一致しません: {path}")
+    expected_sources[display_path(manifest_path)] = sha(manifest_path)
+    expected_sources[display_path(Path(recovery.__file__))] = sha(Path(recovery.__file__))
+    return {"name": name, "directory": display_path(weights.parent), "model_config": expected_config,
+            "parameter_count": count, "epochs": 3, "weight_sha256": expected_sha,
+            "tokenizer_sha256": TOKENIZER_SHA256, "tokenizer_path": display_path(tokenizer_path),
+            "artifact_provenance": "recovered_for_evaluation", "recovery_manifest_path": display_path(manifest_path),
+            "original_training_manifest_present": False, "source_hashes": expected_sources}
+
+
 def encode_prompts(questions: Sequence[dict], tokenizer) -> list[list[int]]:
     expected_tokens = {"<|pad|>": 0, "<|bos|>": 1, "<|eos|>": 2,
                        "<|unk|>": 3, "<|task|>": 4, "<|code|>": 5}
@@ -363,6 +409,8 @@ def parse_args(argv: list[str] | None = None):
     parser.add_argument("--models", nargs="+", choices=list(DEFAULT_MODELS), help="省略時は基準3個。middle4候補2個は明示指定")
     parser.add_argument("--model", action="append", default=[], metavar="NAME=DIRECTORY",
                         help="学習済みartifactの追加・配置変更。これだけ指定した場合は指定モデルのみ")
+    parser.add_argument("--recovered-model", action="append", default=[], metavar="NAME=RECOVERY_JSON",
+                        help="報告hashに固定した小型loop4種の評価専用復元manifest。元学習manifestとは区別して保存")
     parser.add_argument("--tokenizer-sha256", default=TOKENIZER_SHA256,
                         help="全選択モデルの訓練時tokenizerのSHA-256。既定は発表資料の標準BPE。別BPEは別モデル名で明示指定")
     parser.add_argument("--batch-size", type=int, default=32)
@@ -391,9 +439,16 @@ def main(argv: list[str] | None = None) -> None:
     output = args.output_root.resolve()
     require_new_output(output)
     questions, cases, protocol = validate_dataset()
-    selected = select_models(args.models, args.model)
+    selected = ({} if args.recovered_model and args.models is None and not args.model
+                else select_models(args.models, args.model))
     specs = [validate_model(name, path, tokenizer_sha256=args.tokenizer_sha256)
              for name, path in selected.items()]
+    if args.recovered_model:
+        recovered = select_models([], args.recovered_model)
+        if set(selected) & set(recovered):
+            raise ValueError("通常modelと復元modelの名前が重複しています")
+        specs.extend(validate_recovered_model(name, path, tokenizer_sha256=args.tokenizer_sha256)
+                     for name, path in recovered.items())
     # validate-onlyでもprompt検査を行うが、torchやsafetensorsはimportしない。
     from tokenizers import Tokenizer
     tokenizer = Tokenizer.from_file(str(resolve_path(specs[0]["tokenizer_path"])))
@@ -446,6 +501,8 @@ def main(argv: list[str] | None = None) -> None:
         conf = {key: value for key, value in configuration.items() if key != "models"}
         conf.update(model=name, weight_sha256=spec["weight_sha256"], model_metadata=spec)
         write_json(directory / "config.json", conf)
+        if spec.get("recovery_manifest_path"):
+            write_json(directory / "recovery_manifest.json", read_json(resolve_path(spec["recovery_manifest_path"])))
         write_json(directory / "source_hashes.json", {**source_hashes, **spec["source_hashes"]})
         model = BokuNanoForCausalLM(BokuNanoConfig.from_dict(spec["model_config"]))
         model.load_state_dict(load_file(str(resolve_path(spec["directory"]) / "model.safetensors"), device="cpu"), strict=True)
