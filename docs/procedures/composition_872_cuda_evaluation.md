@@ -1,5 +1,7 @@
 # 発表資料の872問をNVIDIA CUDA・PyTorchで評価する
 
+> **カテゴリ別pass@1 / pass@5**：[18モデル・9カテゴリの結果](../results/composition872_pass5_cuda_20261025/README.md)と[追加4候補の評価・作図手順](../results/composition872_pass5_cuda_20261025/reproduction.md)を追加しました。
+
 > **2026-10-25の初回評価**：[18モデルのCUDA評価報告](../results/composition872_cuda_20261025/README.md)に、全モデル図とONNX比較を掲載しました。[全モデルの実行コマンド](../results/composition872_cuda_20261025/reproduction.md)には短いBPEの明示指定、小型loopの評価用設定復元、作図・数値診断も含みます。middle4は今回の18モデルに含みません。
 
 2026-10-25作成。発表資料の日本語指示872問を変更せず、通常モデルとloopモデルを同じ問題・同じ採点基準で比較する。モデルにはPythonの`solve(xs, k)`を生成させ、各問について固定179入力のすべてを正しく処理した場合に合格とする。

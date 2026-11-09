@@ -59,6 +59,7 @@ docs/
 
 ## 結果
 
+- [`results/composition872_pass5_cuda_20261025/README.md`](results/composition872_pass5_cuda_20261025/README.md): Boku-nano 18モデル・全872問のカテゴリ別pass@1 / pass@5。9カテゴリの棒グラフ、全数値表、新規sampling 62,784候補のCUDA評価と生結果ZIP
 - [`results/composition872_cuda_20261025/README.md`](results/composition872_cuda_20261025/README.md): 発表資料の固定872問・179入力でBoku-nano 18モデルをCUDA評価。全モデル図、旧ONNX・batch1との一致検証、81 prefix数値診断、生結果ZIP
 - [`results/boku_nano_looped_diagnosis_and_improvement_plan_20261024.md`](results/boku_nano_looped_diagnosis_and_improvement_plan_20261024.md): Looped Transformerの性能不振を3 epoch結果まで整理した調査報告。872問v2部分は後日の比較監査で撤回されたため、現行評価は発表資料の固定872問を使用
 - [`results/boku_nano_looped_revision_1m_1epoch_20261016.md`](results/boku_nano_looped_revision_1m_1epoch_20261016.md): 1M loop修正4候補と3対照の1 epoch比較。loss、固定5集合84,550件、周回別attentionを評価

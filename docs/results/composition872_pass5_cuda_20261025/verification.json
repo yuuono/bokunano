@@ -1,0 +1,328 @@
+{
+  "status": "verified",
+  "model_count": 18,
+  "question_count_per_model": 872,
+  "category_count": 9,
+  "greedy_reused_candidates": 15696,
+  "new_sampling_candidates": 62784,
+  "total_candidates": 78480,
+  "all_pass5_at_least_pass1": true,
+  "models": [
+    {
+      "model": "boku-15m-1epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 728,
+      "pass_at_5_count": 830,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2928,
+        "output_mismatch": 527,
+        "contract_or_code_extraction": 7,
+        "runtime_error": 15,
+        "syntax_error": 11
+      }
+    },
+    {
+      "model": "boku-15m-3epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 687,
+      "pass_at_5_count": 709,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2704,
+        "contract_or_code_extraction": 1,
+        "runtime_error": 5,
+        "output_mismatch": 765,
+        "syntax_error": 13
+      }
+    },
+    {
+      "model": "boku-15m-10epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 612,
+      "pass_at_5_count": 676,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2456,
+        "output_mismatch": 706,
+        "contract_or_code_extraction": 23,
+        "syntax_error": 267,
+        "runtime_error": 35,
+        "timeout_or_process_exit": 1
+      }
+    },
+    {
+      "model": "boku-5m-1epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 676,
+      "pass_at_5_count": 758,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2288,
+        "contract_or_code_extraction": 51,
+        "output_mismatch": 1003,
+        "syntax_error": 45,
+        "runtime_error": 101
+      }
+    },
+    {
+      "model": "boku-1m-1epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 33,
+      "pass_at_5_count": 51,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "contract_or_code_extraction": 727,
+        "runtime_error": 873,
+        "syntax_error": 1067,
+        "output_mismatch": 792,
+        "pass": 19,
+        "timeout_or_process_exit": 10
+      }
+    },
+    {
+      "model": "boku-1m-3epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 751,
+      "pass_at_5_count": 835,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2790,
+        "syntax_error": 41,
+        "runtime_error": 60,
+        "output_mismatch": 581,
+        "contract_or_code_extraction": 14,
+        "timeout_or_process_exit": 2
+      }
+    },
+    {
+      "model": "boku-15m-short-1epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 721,
+      "pass_at_5_count": 831,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2989,
+        "syntax_error": 25,
+        "output_mismatch": 467,
+        "runtime_error": 6,
+        "contract_or_code_extraction": 1
+      }
+    },
+    {
+      "model": "boku-5m-short-1epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 725,
+      "pass_at_5_count": 826,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2928,
+        "output_mismatch": 522,
+        "syntax_error": 22,
+        "runtime_error": 14,
+        "contract_or_code_extraction": 2
+      }
+    },
+    {
+      "model": "boku-1m-short-1epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 15,
+      "pass_at_5_count": 34,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "contract_or_code_extraction": 659,
+        "runtime_error": 1213,
+        "pass": 24,
+        "syntax_error": 851,
+        "output_mismatch": 687,
+        "timeout_or_process_exit": 54
+      }
+    },
+    {
+      "model": "boku-1m-short-3epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 724,
+      "pass_at_5_count": 793,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2847,
+        "output_mismatch": 590,
+        "contract_or_code_extraction": 12,
+        "syntax_error": 30,
+        "runtime_error": 4,
+        "timeout_or_process_exit": 5
+      }
+    },
+    {
+      "model": "ablation-layers6",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 743,
+      "pass_at_5_count": 805,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2755,
+        "output_mismatch": 629,
+        "syntax_error": 40,
+        "runtime_error": 53,
+        "contract_or_code_extraction": 11
+      }
+    },
+    {
+      "model": "ablation-heads4-dim64",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 749,
+      "pass_at_5_count": 824,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2841,
+        "syntax_error": 27,
+        "output_mismatch": 583,
+        "contract_or_code_extraction": 15,
+        "runtime_error": 22
+      }
+    },
+    {
+      "model": "ablation-layers4",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 708,
+      "pass_at_5_count": 804,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2795,
+        "contract_or_code_extraction": 20,
+        "runtime_error": 39,
+        "output_mismatch": 606,
+        "syntax_error": 28
+      }
+    },
+    {
+      "model": "ablation-layers2",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 667,
+      "pass_at_5_count": 751,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2541,
+        "output_mismatch": 827,
+        "runtime_error": 55,
+        "syntax_error": 51,
+        "contract_or_code_extraction": 14
+      }
+    },
+    {
+      "model": "loop-lt1-3epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 243,
+      "pass_at_5_count": 377,
+      "sampling_terminations": {
+        "eos": 3487,
+        "max_context": 1
+      },
+      "sampling_scoring_reasons": {
+        "contract_or_code_extraction": 486,
+        "pass": 333,
+        "output_mismatch": 1636,
+        "runtime_error": 875,
+        "syntax_error": 158
+      }
+    },
+    {
+      "model": "loop-f128-3epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 147,
+      "pass_at_5_count": 266,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 201,
+        "runtime_error": 994,
+        "output_mismatch": 1217,
+        "contract_or_code_extraction": 790,
+        "syntax_error": 283,
+        "timeout_or_process_exit": 3
+      }
+    },
+    {
+      "model": "loop-w96-3epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 14,
+      "pass_at_5_count": 52,
+      "sampling_terminations": {
+        "eos": 3481,
+        "max_context": 7
+      },
+      "sampling_scoring_reasons": {
+        "runtime_error": 1315,
+        "output_mismatch": 1052,
+        "contract_or_code_extraction": 770,
+        "syntax_error": 235,
+        "pass": 42,
+        "timeout_or_process_exit": 74
+      }
+    },
+    {
+      "model": "loop-w64-3epoch",
+      "candidate_count": 4360,
+      "question_count": 872,
+      "pass_at_1_count": 2,
+      "pass_at_5_count": 8,
+      "sampling_terminations": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "output_mismatch": 618,
+        "runtime_error": 1418,
+        "contract_or_code_extraction": 634,
+        "syntax_error": 784,
+        "timeout_or_process_exit": 28,
+        "pass": 6
+      }
+    }
+  ]
+}
