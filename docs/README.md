@@ -59,6 +59,7 @@ docs/
 
 ## 結果
 
+- [`results/composition872_cuda_20261025/README.md`](results/composition872_cuda_20261025/README.md): 発表資料の固定872問・179入力でBoku-nano 18モデルをCUDA評価。全モデル図、旧ONNX・batch1との一致検証、81 prefix数値診断、生結果ZIP
 - [`results/boku_nano_looped_revision_1m_1epoch_20261016.md`](results/boku_nano_looped_revision_1m_1epoch_20261016.md): 1M loop修正4候補と3対照の1 epoch比較。loss、固定5集合84,550件、周回別attentionを評価
 - [`results/boku_nano_middle4_1m_3epoch_20261018.md`](results/boku_nano_middle4_1m_3epoch_20261018.md): 中間層4回反復を3 epoch学習し、反復部の残差枝1.0倍と0.25倍をloss・組合せ汎化・言い換え・dev50・attentionで比較
 - [`procedures/composition_872_cuda_evaluation.md`](procedures/composition_872_cuda_evaluation.md): 発表資料の固定872問をNVIDIA CUDA・PyTorchバッチで評価。旧出力との照合とloopモデルの比較

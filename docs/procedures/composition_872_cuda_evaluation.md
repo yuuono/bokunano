@@ -1,5 +1,7 @@
 # 発表資料の872問をNVIDIA CUDA・PyTorchで評価する
 
+> **2026-10-25の初回評価**：[18モデルのCUDA評価報告](../results/composition872_cuda_20261025/README.md)に、全モデル図とONNX比較を掲載しました。[全モデルの実行コマンド](../results/composition872_cuda_20261025/reproduction.md)には短いBPEの明示指定、小型loopの評価用設定復元、作図・数値診断も含みます。middle4は今回の18モデルに含みません。
+
 2026-10-25作成。発表資料の日本語指示872問を変更せず、通常モデルとloopモデルを同じ問題・同じ採点基準で比較する。モデルにはPythonの`solve(xs, k)`を生成させ、各問について固定179入力のすべてを正しく処理した場合に合格とする。
 
 新しい実行入口は[`scripts/model/benchmark.py`](../../scripts/model/benchmark.py)、本体は[`evaluate_boku_composition_torch.py`](../../scripts/model/evaluate_boku_composition_torch.py)。NVIDIA CUDA専用で、ONNX Runtimeは不要。モデル推論は同じprompt長ごとのバッチで行う。生成されたPythonコードの採点は従来どおりCPUの隔離プロセスで行う。
