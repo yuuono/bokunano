@@ -87,7 +87,7 @@
 
 この節に掲載していた再構成版の結果は2026-10-25に撤回・削除した。発表資料とは問題集合が異なり、特に「異なる4操作」の難度条件が維持されていなかったためである。[比較監査](benchmark_872_comparison_audit_20261024/README.md)に理由と診断事実を保存した。
 
-今後は発表資料の固定872問を[CUDAバッチ評価手順](../procedures/composition_872_cuda_evaluation.md)で評価する。middle4の同一872問に対する結果は未取得であり、通常1Mとの優劣はまだ判断しない。本報告の正式5集合・dev50・attentionの結果は別の評価であり、そのまま保持する。
+2026-10-25、発表資料の固定872問を[CUDAバッチ評価手順](../procedures/composition_872_cuda_evaluation.md)で評価し、[通常1M・3 epochとのカテゴリ別pass@1 / pass@5比較](composition872_middle4_cuda_20261025/README.md)を追加した。一般4操作は通常版43% / 80%、middle4残差1.0は53% / 88%、残差0.25は37% / 77%だった。本報告の正式5集合・dev50・attentionの結果は別の評価であり、そのまま保持する。
 
 ## 成果物と再現
 

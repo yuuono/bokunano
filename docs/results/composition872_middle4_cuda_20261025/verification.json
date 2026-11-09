@@ -1,0 +1,46 @@
+{
+  "status": "verified",
+  "git_commit": "2cefb4a",
+  "new_model_count": 2,
+  "new_greedy_candidates": 1744,
+  "new_sampling_candidates": 6976,
+  "new_total_candidates": 8720,
+  "unit_tests_passed": 31,
+  "models": [
+    {
+      "model": "middle4-1m-3epoch",
+      "question_count": 872,
+      "candidate_count": 4360,
+      "pass_at_1_count": 748,
+      "pass_at_5_count": 846,
+      "sampling_termination_counts": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2553,
+        "syntax_error": 62,
+        "output_mismatch": 757,
+        "contract_or_code_extraction": 26,
+        "runtime_error": 87,
+        "timeout_or_process_exit": 3
+      }
+    },
+    {
+      "model": "middle4-scaled025-1m-3epoch",
+      "question_count": 872,
+      "candidate_count": 4360,
+      "pass_at_1_count": 730,
+      "pass_at_5_count": 831,
+      "sampling_termination_counts": {
+        "eos": 3488
+      },
+      "sampling_scoring_reasons": {
+        "pass": 2682,
+        "output_mismatch": 659,
+        "syntax_error": 49,
+        "contract_or_code_extraction": 37,
+        "runtime_error": 61
+      }
+    }
+  ]
+}

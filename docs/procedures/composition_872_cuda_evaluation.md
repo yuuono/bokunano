@@ -1,8 +1,12 @@
 # 発表資料の872問をNVIDIA CUDA・PyTorchで評価する
 
+> **middle4 2モデルを追加評価済み**：`origin/main`の`2cefb4a`に元重み・設定・学習完了記録が収録されました。[1M・3 epochのカテゴリ別pass@1 / pass@5比較](../results/composition872_middle4_cuda_20261025/README.md)と[今回の再現手順](../results/composition872_middle4_cuda_20261025/reproduction.md)を参照してください。
+
+> **今後の対象（2026-10-25、ユーザー指定）**：1M・1 epochは追加実験・再評価の対象から外す。標準BPE・短いBPEの既存結果は履歴として保持し、1Mの比較は3 epochの通常版と訓練済みloop版を優先する。過去の18モデル評価の再現コマンドは実行記録であり、次回の全件再実行を勧めるものではない。
+
 > **カテゴリ別pass@1 / pass@5**：[18モデル・9カテゴリの結果](../results/composition872_pass5_cuda_20261025/README.md)と[追加4候補の評価・作図手順](../results/composition872_pass5_cuda_20261025/reproduction.md)を追加しました。
 
-> **2026-10-25の初回評価**：[18モデルのCUDA評価報告](../results/composition872_cuda_20261025/README.md)に、全モデル図とONNX比較を掲載しました。[全モデルの実行コマンド](../results/composition872_cuda_20261025/reproduction.md)には短いBPEの明示指定、小型loopの評価用設定復元、作図・数値診断も含みます。middle4は今回の18モデルに含みません。
+> **2026-10-25の初回評価**：[18モデルのCUDA評価報告](../results/composition872_cuda_20261025/README.md)に、全モデル図とONNX比較を掲載しました。[全モデルの実行コマンド](../results/composition872_cuda_20261025/reproduction.md)には短いBPEの明示指定、小型loopの評価用設定復元、作図・数値診断も含みます。middle4は後から取得し、上記の追加評価に収録しました。
 
 2026-10-25作成。発表資料の日本語指示872問を変更せず、通常モデルとloopモデルを同じ問題・同じ採点基準で比較する。モデルにはPythonの`solve(xs, k)`を生成させ、各問について固定179入力のすべてを正しく処理した場合に合格とする。
 
@@ -65,7 +69,7 @@ GPUメモリ不足なら`--batch-size 16`または`8`に下げ、新しい`--out
 
 ## 4. middle4の2候補を含む5モデルを比較する
 
-middle4の重みはGit配布に含まれない。NVIDIA環境に以前の3epoch学習成果物があることを確認する。
+middle4の最終重み・構造設定・元学習manifestは`2cefb4a`からGit配布に含まれる。最新のmainを取り込み、以下の3epoch学習成果物があることを確認する。
 
 | モデル名 | 必要なディレクトリ |
 |---|---|
