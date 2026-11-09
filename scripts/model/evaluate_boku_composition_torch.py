@@ -137,8 +137,12 @@ def select_models(names: list[str] | None, overrides: list[str]) -> dict[str, Pa
     return selected
 
 
-def validate_model(name: str, directory: Path) -> dict:
+def validate_model(name: str, directory: Path, *, tokenizer_sha256: str = TOKENIZER_SHA256) -> dict:
     """JSONとファイルhashだけを読む。重みの復元・モデル初期化・CUDA呼出はしない。"""
+    if not re.fullmatch(r"[0-9a-f]{64}", tokenizer_sha256):
+        raise ValueError("tokenizer SHA-256は64桁の小文字16進数で指定してください")
+    if name in DEFAULT_MODELS and tokenizer_sha256 != TOKENIZER_SHA256:
+        raise ValueError(f"既定モデル名では発表資料のtokenizerを変更できません。別名で評価してください: {name}")
     paths = {"weights": directory / "model.safetensors", "model_config": directory / "model_config.json",
              "training_manifest": directory / "training_manifest.json"}
     for path in paths.values():
@@ -165,12 +169,12 @@ def validate_model(name: str, directory: Path) -> dict:
                 or config.get("recurrent_residual_scale", 1.0) != scale or manifest.get("epochs") != 3):
             raise ValueError(f"既定middle4候補と異なります。別名で評価してください: {name}")
     tokenizer_path = resolve_path(manifest["tokenizer_path"])
-    if manifest.get("tokenizer_sha256") != TOKENIZER_SHA256 or sha(tokenizer_path) != TOKENIZER_SHA256:
-        raise ValueError(f"発表資料と同じtokenizerが必要です: {name}")
+    if manifest.get("tokenizer_sha256") != tokenizer_sha256 or sha(tokenizer_path) != tokenizer_sha256:
+        raise ValueError(f"指定tokenizerと学習manifest・実ファイルのhashが一致しません: {name}")
     paths["tokenizer"] = tokenizer_path
     return {"name": name, "directory": display_path(directory), "model_config": config,
             "parameter_count": manifest.get("parameter_count"), "epochs": manifest.get("epochs"),
-            "weight_sha256": weights_sha, "tokenizer_sha256": TOKENIZER_SHA256,
+            "weight_sha256": weights_sha, "tokenizer_sha256": tokenizer_sha256,
             "tokenizer_path": display_path(tokenizer_path),
             "source_hashes": {display_path(path): sha(path) for path in paths.values()}}
 
@@ -279,9 +283,15 @@ def load_reference(root: Path | None, spec: dict, questions: Sequence[dict], pro
     directory = root / spec["name"]
     config = read_json(directory / "config.json")
     provenance = read_json(directory / "scoring_provenance.json")
+    tokenizer_sha256 = spec.get("tokenizer_sha256", TOKENIZER_SHA256)
+    # 旧標準BPEのprovenanceはtokenizer欄を持たない。別BPEには明示記録を要求する。
+    provenance_tokenizer = provenance.get("tokenizer_sha256")
+    if (provenance_tokenizer is not None and provenance_tokenizer != tokenizer_sha256
+            or tokenizer_sha256 != TOKENIZER_SHA256 and provenance_tokenizer is None):
+        raise ValueError(f"比較対象のtokenizer provenance hashが一致しません: {directory}")
     source_weight = config.get("catalog_entry", {}).get("source_weight_sha256", config.get("weight_sha256"))
     if (config.get("questions_sha256") != QUESTIONS_SHA256
-            or config.get("tokenizer_sha256") != TOKENIZER_SHA256
+            or config.get("tokenizer_sha256") != tokenizer_sha256
             or source_weight != spec["weight_sha256"]
             or config.get("prompt_template") != PROMPT_TEMPLATE
             or config.get("context_length") != CONTEXT_LENGTH
@@ -353,6 +363,8 @@ def parse_args(argv: list[str] | None = None):
     parser.add_argument("--models", nargs="+", choices=list(DEFAULT_MODELS), help="省略時は基準3個。middle4候補2個は明示指定")
     parser.add_argument("--model", action="append", default=[], metavar="NAME=DIRECTORY",
                         help="学習済みartifactの追加・配置変更。これだけ指定した場合は指定モデルのみ")
+    parser.add_argument("--tokenizer-sha256", default=TOKENIZER_SHA256,
+                        help="全選択モデルの訓練時tokenizerのSHA-256。既定は発表資料の標準BPE。別BPEは別モデル名で明示指定")
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--score-workers", type=int, default=4)
     parser.add_argument("--reference-root", type=Path, help="旧runsを指定すると同条件の保存出力・合否と照合")
@@ -364,6 +376,8 @@ def parse_args(argv: list[str] | None = None):
         parser.error("--output-rootが必要です")
     if args.batch_size <= 0 or args.score_workers <= 0:
         parser.error("--batch-sizeと--score-workersは正整数にしてください")
+    if not re.fullmatch(r"[0-9a-f]{64}", args.tokenizer_sha256):
+        parser.error("--tokenizer-sha256は64桁の小文字16進数で指定してください")
     return args
 
 
@@ -378,7 +392,8 @@ def main(argv: list[str] | None = None) -> None:
     require_new_output(output)
     questions, cases, protocol = validate_dataset()
     selected = select_models(args.models, args.model)
-    specs = [validate_model(name, path) for name, path in selected.items()]
+    specs = [validate_model(name, path, tokenizer_sha256=args.tokenizer_sha256)
+             for name, path in selected.items()]
     # validate-onlyでもprompt検査を行うが、torchやsafetensorsはimportしない。
     from tokenizers import Tokenizer
     tokenizer = Tokenizer.from_file(str(resolve_path(specs[0]["tokenizer_path"])))
@@ -391,6 +406,9 @@ def main(argv: list[str] | None = None) -> None:
                      [*script_paths, *[DATASET / name for name in ("questions.jsonl", "test_cases.json", "protocol.json")]]}
     configuration = {"format_version": 1, "dataset": display_path(DATASET), "question_count": 872,
                      "test_case_count": 179, "questions_sha256": QUESTIONS_SHA256, "test_cases_sha256": TEST_CASES_SHA256,
+                     "tokenizer_sha256": args.tokenizer_sha256,
+                     "tokenizer_policy": ("fixed_presentation" if args.tokenizer_sha256 == TOKENIZER_SHA256
+                                          else "explicit_training_tokenizer"),
                      "prompt_template": PROMPT_TEMPLATE, "context_length": CONTEXT_LENGTH, "condition": "A",
                      "decoding": "greedy", "temperature": 0, "history": False, "repair": False,
                      "batch_size": args.batch_size, "batching": "equal_prompt_length_no_padding",
@@ -426,7 +444,7 @@ def main(argv: list[str] | None = None) -> None:
         directory = output / name
         directory.mkdir()
         conf = {key: value for key, value in configuration.items() if key != "models"}
-        conf.update(model=name, weight_sha256=spec["weight_sha256"], tokenizer_sha256=TOKENIZER_SHA256, model_metadata=spec)
+        conf.update(model=name, weight_sha256=spec["weight_sha256"], model_metadata=spec)
         write_json(directory / "config.json", conf)
         write_json(directory / "source_hashes.json", {**source_hashes, **spec["source_hashes"]})
         model = BokuNanoForCausalLM(BokuNanoConfig.from_dict(spec["model_config"]))
@@ -477,6 +495,7 @@ def main(argv: list[str] | None = None) -> None:
         provenance = {"scorer_sha256": SCORING_HASHES["scripts/model/score_composition_suite.py"],
                       "common_sha256": SCORING_HASHES["scripts/model/composition_suite_common.py"],
                       "questions_sha256": QUESTIONS_SHA256, "test_cases_sha256": TEST_CASES_SHA256,
+                      "tokenizer_sha256": args.tokenizer_sha256,
                       "raw_inference_sha256": sha(directory / "raw_inference.jsonl"),
                       "scored_sha256": sha(directory / "scored.jsonl"), "summary_sha256": sha(directory / "summary.json"),
                       "source_hashes": {**source_hashes, **spec["source_hashes"]}}

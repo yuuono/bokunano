@@ -85,6 +85,19 @@ class FrozenTorchRunnerTests(unittest.TestCase):
             tokenizer.encode = lambda *args, **kwargs: SimpleNamespace(ids=ids)
             with self.assertRaises(ValueError):
                 runner.encode_prompts(questions, tokenizer)
+        tokenizer = FakeTokenizer()
+        tokenizer.token_to_id = lambda token: 99
+        with self.assertRaisesRegex(ValueError, "特殊token"):
+            runner.encode_prompts(questions, tokenizer)
+
+    def test_tokenizer_option_preserves_default_and_rejects_malformed_hash(self):
+        arguments = ["--output-root", "/unused"]
+        self.assertEqual(runner.parse_args(arguments).tokenizer_sha256, runner.TOKENIZER_SHA256)
+        self.assertEqual(runner.parse_args(arguments + ["--tokenizer-sha256", "a" * 64]).tokenizer_sha256,
+                         "a" * 64)
+        for value in ("", "a" * 63, "g" * 64):
+            with self.subTest(value=value), patch("sys.stderr"), self.assertRaises(SystemExit):
+                runner.parse_args(arguments + ["--tokenizer-sha256", value])
 
     def test_model_selection_and_output_guards(self):
         self.assertEqual(list(runner.select_models(None, [])), runner.DEFAULT_SELECTION)
@@ -158,6 +171,25 @@ class FrozenTorchRunnerTests(unittest.TestCase):
                 "raw_inference_sha256": runner.sha(directory / "raw_inference.jsonl")})
             reference = runner.load_reference(root, spec, [question], prompts)
             self.assertEqual(reference["scored"], scored)
+            alternate_spec = {**spec, "tokenizer_sha256": "a" * 64}
+            with self.assertRaisesRegex(ValueError, "hash"):
+                runner.load_reference(root, alternate_spec, [question], prompts)
+            config["tokenizer_sha256"] = "a" * 64
+            runner.write_json(directory / "config.json", config)
+            with self.assertRaisesRegex(ValueError, "provenance"):
+                runner.load_reference(root, alternate_spec, [question], prompts)
+            provenance = runner.read_json(directory / "scoring_provenance.json")
+            provenance["tokenizer_sha256"] = "a" * 64
+            runner.write_json(directory / "scoring_provenance.json", provenance)
+            self.assertEqual(runner.load_reference(root, alternate_spec, [question], prompts)["scored"], scored)
+            with self.assertRaisesRegex(ValueError, "hash"):
+                runner.load_reference(root, spec, [question], prompts)
+            config["tokenizer_sha256"] = runner.TOKENIZER_SHA256
+            runner.write_json(directory / "config.json", config)
+            with self.assertRaisesRegex(ValueError, "hash"):
+                runner.load_reference(root, alternate_spec, [question], prompts)
+            provenance["tokenizer_sha256"] = runner.TOKENIZER_SHA256
+            runner.write_json(directory / "scoring_provenance.json", provenance)
             scored[0]["ast_id"] = "different-ast"
             (directory / "scored.jsonl").write_text(json.dumps(scored[0]) + "\n")
             with self.assertRaisesRegex(ValueError, "AST"):
@@ -223,6 +255,39 @@ class FrozenTorchRunnerTests(unittest.TestCase):
                 self.assertEqual(spec["model_config"]["n_loops"], 2)
                 self.assertEqual(spec["weight_sha256"], runner.BASELINE_WEIGHTS[baseline])
 
+    def test_alternate_tokenizer_requires_opt_in_and_both_artifact_hashes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = {"context_length": 256, "vocab_size": 2048}
+            (root / "model.safetensors").write_bytes(b"mock-not-weights")
+            tokenizer_path = root / "tokenizer.json"
+            tokenizer_path.write_text('{"alternate": true}')
+            tokenizer_sha256 = runner.sha(tokenizer_path)
+            runner.write_json(root / "model_config.json", config)
+            manifest = {"status": "completed", "model_config": config,
+                        "model_sha256": runner.sha(root / "model.safetensors"),
+                        "tokenizer_path": str(tokenizer_path), "tokenizer_sha256": tokenizer_sha256}
+            runner.write_json(root / "training_manifest.json", manifest)
+            with self.assertRaisesRegex(ValueError, "tokenizer"):
+                runner.validate_model("short-bpe", root)
+            spec = runner.validate_model("short-bpe", root, tokenizer_sha256=tokenizer_sha256)
+            self.assertEqual(spec["tokenizer_sha256"], tokenizer_sha256)
+            self.assertEqual(spec["source_hashes"][str(tokenizer_path)], tokenizer_sha256)
+            for name in runner.DEFAULT_MODELS:
+                with self.subTest(name=name), self.assertRaisesRegex(ValueError, "既定モデル名"):
+                    runner.validate_model(name, root, tokenizer_sha256=tokenizer_sha256)
+            with self.assertRaisesRegex(ValueError, "64桁"):
+                runner.validate_model("short-bpe", root, tokenizer_sha256="invalid")
+            manifest["tokenizer_sha256"] = runner.TOKENIZER_SHA256
+            runner.write_json(root / "training_manifest.json", manifest)
+            with self.assertRaisesRegex(ValueError, "hash"):
+                runner.validate_model("short-bpe", root, tokenizer_sha256=tokenizer_sha256)
+            manifest["tokenizer_sha256"] = tokenizer_sha256
+            runner.write_json(root / "training_manifest.json", manifest)
+            tokenizer_path.write_text('{"tampered": true}')
+            with self.assertRaisesRegex(ValueError, "hash"):
+                runner.validate_model("short-bpe", root, tokenizer_sha256=tokenizer_sha256)
+
     def test_validate_only_cannot_import_torch_or_load_weights_or_create_output(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "results"
@@ -246,10 +311,17 @@ class FrozenTorchRunnerTests(unittest.TestCase):
 
     def test_mock_run_writes_complete_artifacts_and_calls_original_score_entry(self):
         """モデル・torch・旧採点関数を全てfake化し、実推論やコード実行を起こさない。"""
+        self.assert_mock_run_artifacts(runner.TOKENIZER_SHA256)
+
+    def test_mock_alternate_tokenizer_run_records_its_own_hash_and_policy(self):
+        self.assert_mock_run_artifacts("a" * 64)
+
+    def assert_mock_run_artifacts(self, tokenizer_sha256):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / "results"
             spec = {"name": "custom", "directory": "/unused", "model_config": {}, "parameter_count": 1,
-                    "epochs": 1, "tokenizer_path": "fake.json", "source_hashes": {}, "weight_sha256": "fake"}
+                    "epochs": 1, "tokenizer_path": "fake.json", "source_hashes": {}, "weight_sha256": "fake",
+                    "tokenizer_sha256": tokenizer_sha256}
             question = {"question_id": "q", "instruction_ja": "指示", "suite": "general_4op", "category_id": "c"}
             cases = [{"xs": [], "k": 1}]
 
@@ -306,10 +378,19 @@ class FrozenTorchRunnerTests(unittest.TestCase):
                        "scripts.model.score_composition_suite": SimpleNamespace(score_one=score_mock),
                        "tokenizers": fake_tokenizers}
             with patch.object(runner, "validate_dataset", return_value=([question], cases, {})), \
-                    patch.object(runner, "validate_model", return_value=spec), patch.dict(sys.modules, modules), \
+                    patch.object(runner, "validate_model", return_value=spec) as validate_model, patch.dict(sys.modules, modules), \
                     patch("builtins.print"):
-                runner.main(["--model", "custom=/unused", "--output-root", str(output), "--check-batch-size-one"])
+                runner.main(["--model", "custom=/unused", "--output-root", str(output), "--check-batch-size-one",
+                             "--tokenizer-sha256", tokenizer_sha256])
+            validate_model.assert_called_once_with("custom", Path("/unused"), tokenizer_sha256=tokenizer_sha256)
             self.assertEqual(score_mock.call_count, 2)
+            policy = "fixed_presentation" if tokenizer_sha256 == runner.TOKENIZER_SHA256 else "explicit_training_tokenizer"
+            for relative in ("config.json", "custom/config.json"):
+                config = runner.read_json(output / relative)
+                self.assertEqual(config["tokenizer_sha256"], tokenizer_sha256)
+                self.assertEqual(config["tokenizer_policy"], policy)
+            self.assertEqual(runner.read_json(output / "custom/scoring_provenance.json")["tokenizer_sha256"],
+                             tokenizer_sha256)
             comparison = runner.read_json(output / "comparison.json")
             self.assertEqual(comparison["status"], "completed")
             self.assertEqual(comparison["models"][0]["passed"], 1)
